@@ -18,5 +18,5 @@ public interface StockDataHelper {
      * @param stockCode  指定股票代码
      * @return List<StockPO> 指定股票所有数据
      */
-    List<StockPO> getStockData(String stockCode) throws IOException;
+    List<StockPO> getStock(String stockCode) throws IOException;
 }

@@ -14,14 +14,14 @@ import java.util.List;
  */
 public class StockDataHelperImpl implements StockDataHelper {
 
-    private final String pathPre = "/stock_records/";
+    private final String pathPre = "stock_records/";
     private final String pathPost = ".txt";
 
     private BufferedReader br;
 
     @Override
     public List<StockPO> getStock(String stockCode) throws IOException {
-        br = new BufferedReader(new InputStreamReader(new FileInputStream(pathPre+stockCode+pathPost)));
+        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(pathPre + stockCode + pathPost)));
 
         List<StockPO> result = new LinkedList<StockPO>();
 
