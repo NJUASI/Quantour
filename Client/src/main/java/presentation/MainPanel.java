@@ -27,7 +27,7 @@ class MainPanel extends JFrame {
 
     public MainPanel(){
         createWindow();
-        
+
         cardPanel = new JPanel();
         getContentPane().add(cardPanel, BorderLayout.CENTER);
         card = new CardLayout();
@@ -52,8 +52,7 @@ class MainPanel extends JFrame {
         bounds.width   -=   insets.left   +   insets.right;
         bounds.height   -=   insets.top   +   insets.bottom;
 
-        new WindowData(bounds.width,bounds.height);//save the window's data
-
+        WindowData.setWindowData(bounds.width,bounds.height);//save the window's data
         setBounds(bounds);
 
         setUndecorated(false);
