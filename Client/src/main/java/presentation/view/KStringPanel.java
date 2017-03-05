@@ -1,11 +1,8 @@
 package presentation.view;
 
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
+import com.qt.datapicker.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -38,15 +35,7 @@ public class KStringPanel extends NavigationBar {
             }
         });
         add(kString);
-        JDatePickerImpl datePicker;
 
-        UtilDateModel model = new UtilDateModel();
-        model.setDate(1990, 8, 24);
-        model.setSelected(true);
-        JDatePanelImpl datePanel = new JDatePanelImpl(model);
-        datePicker = new JDatePickerImpl(datePanel, null);
-        datePicker.setBounds(300,300,330,330);
-        add(datePicker);
     }
 
     /**
