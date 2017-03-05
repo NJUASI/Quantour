@@ -117,6 +117,7 @@ public class ChartServiceImpl extends UnicastRemoteObject implements ChartServic
         if(interval<=day){
             return false;
         }
+
         return true;
     }
 }
