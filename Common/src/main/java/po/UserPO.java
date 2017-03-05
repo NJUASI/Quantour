@@ -15,10 +15,10 @@ public class UserPO {
     //用户密码
     private String password;
 
-    public UserPO(String userName, String password, Iterator<StockPO> optionalStock) {
+    public UserPO(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.optionalStock = optionalStock;
+
     }
 
     public UserPO(UserVO userVO) {
