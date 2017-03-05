@@ -1,5 +1,6 @@
 package vo;
 
+import po.StockPO;
 import utilities.enums.Market;
 
 import java.time.LocalDate;
@@ -46,4 +47,17 @@ public class StockVO {
     public Market market;
 
 
+    public StockVO(StockPO po) {
+        this.adjClose = po.getAdjClose();
+        this.close = po.getClose();
+        this.code = po.getCode();
+        this.date = po.getDate();
+        this.high = po.getHigh();
+        this.low = po.getLow();
+        this.market = po.getMarket();
+        this.name = po.getName();
+        this.open = po.getOpen();
+        this.close = po.getClose();
+        this.serial = po.getSerial();
+    }
 }
