@@ -2,6 +2,7 @@ package service;
 
 import vo.StockSituationVO;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 
@@ -10,13 +11,14 @@ import java.time.LocalDate;
  *
  * 市场情况温度计
  */
-public interface StockSituationService {
+public interface StockSituationService extends Remote{
 
     /**
+     * 显示市场情况温度计.
      *
-     * @param date 特定的日期
-     * @return 单日的股票市场情况温度计
-     * @throws RemoteException
+     * @param date the date
+     * @return the stock situation vo
+     * @throws RemoteException the remote exception
      */
-    StockSituationVO show(LocalDate date) throws RemoteException;
+    public StockSituationVO showStockSituation(LocalDate date) throws RemoteException;
 }

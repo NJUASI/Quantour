@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class ChartShowCriteriaVO {
 
     // 股票代码
-    public int code;
+    public String code;
 
     // 区间内开始时间
     public LocalDate start;
@@ -18,7 +18,7 @@ public class ChartShowCriteriaVO {
     // 区间内结束时间
     public LocalDate end;
 
-    public ChartShowCriteriaVO(int code, LocalDate start, LocalDate end) {
+    public ChartShowCriteriaVO(String code, LocalDate start, LocalDate end) {
         this.code = code;
         this.start = start;
         this.end = end;

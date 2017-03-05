@@ -1,5 +1,7 @@
 package vo;
 
+import po.UserPO;
+
 import java.util.Iterator;
 
 /**
@@ -16,4 +18,8 @@ public class UserVO {
     //用户的自选股（用户未选择时为null）
     public Iterator<StockVO> optionalStock;
 
+    public UserVO(UserPO po) {
+        this.userName = po.getUserName();
+        this.password = po.getPassword();
+    }
 }
