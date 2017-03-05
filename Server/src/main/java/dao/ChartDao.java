@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface ChartDao {
 
-    List<StockPO> getCandlestickData();
+    List<StockPO> getCandlestickData(String code);
 
-    List<StockPO> getCandlestickData(LocalDate start, LocalDate end);
+    List<StockPO> getCandlestickData(LocalDate start, LocalDate end, String code);
 
-    List<AveragePO> getAverageData();
+    List<AveragePO> getAverageData(String code);
 
 
 }

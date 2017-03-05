@@ -1,6 +1,8 @@
 package dao.daoImpl;
 
 import dao.UserDao;
+import dataHelper.UserDataHelper;
+import dataHelper.dataHelperImpl.UserDataHelperImpl;
 import po.UserPO;
 import utilities.enums.ResultMessage;
 
@@ -9,19 +11,24 @@ import utilities.enums.ResultMessage;
  */
 public class UserDaoImpl implements UserDao {
 
+    private UserDataHelper userHelper;
+
+    public UserDaoImpl() {
+        this.userHelper = new UserDataHelperImpl();
+    }
 
     @Override
     public ResultMessage add(UserPO userPO) {
-        return null;
+        return this.userHelper.add(userPO);
     }
 
     @Override
     public UserPO get(String username) {
-        return null;
+        return this.userHelper.get(username);
     }
 
     @Override
     public ResultMessage modify(UserPO userPO) {
-        return null;
+        return this.userHelper.modify(userPO);
     }
 }

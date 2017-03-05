@@ -19,7 +19,7 @@ public class UserPO {
     public UserPO(String userName, String password, Iterator<StockPO> optionalStock) {
         this.userName = userName;
         this.password = password;
-        optionalStock = optionalStock;
+        this.optionalStock = optionalStock;
     }
 
     public String getUserName() {
