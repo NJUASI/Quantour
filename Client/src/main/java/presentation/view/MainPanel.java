@@ -7,24 +7,24 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
-//import java.awt.event.MouseAdapter;
-//import java.awt.event.MouseEvent;
-//import javax.imageio.ImageIO;
-//import javax.swing.ImageIcon;
-//import javax.swing.JButton;
-//import javax.swing.JFrame;
-//import javax.swing.JLabel;
-
 /**
  * Created by 61990 on 2017/3/5.
  */
 class MainPanel extends JFrame {
+    //一些主原件
     private static MainPanel mainPanel;
-    public JLayeredPane mainPane;
     private static JPanel cardPanel;
     private static CardLayout card;
 
-    public MainPanel(){
+    /**
+     * 构造器
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
+    public MainPanel() {
         createWindow();
 
         cardPanel = new JPanel();
@@ -32,7 +32,7 @@ class MainPanel extends JFrame {
         card = new CardLayout();
         cardPanel.setLayout(card);
 
-        mainPane = new JLayeredPane();
+        JLayeredPane mainPane = new JLayeredPane();
         cardPanel.add(mainPane, "mainPane");
 
 
@@ -42,22 +42,30 @@ class MainPanel extends JFrame {
         card.show(cardPanel, "loginPanel");
     }
 
-    private void createWindow(){
+    /**
+     * 创建窗口
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
+    private void createWindow() {
 
         setTitle("ASI");
         getContentPane().setLayout(new BorderLayout(0, 0));
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        Insets   insets   =   Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
-        Rectangle   bounds   =   new   Rectangle(dim);
+        Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
+        Rectangle bounds = new Rectangle(dim);
 
         //set the windows large
-        bounds.x   +=   insets.left;
-        bounds.y   +=   insets.top;
-        bounds.width   -=   insets.left   +   insets.right;
-        bounds.height   -=   insets.top   +   insets.bottom;
+        bounds.x += insets.left;
+        bounds.y += insets.top;
+        bounds.width -= insets.left + insets.right;
+        bounds.height -= insets.top + insets.bottom;
 
-        WindowData.setWindowData(bounds.width,bounds.height);//save the window's data
+        WindowData.setWindowData(bounds.width, bounds.height);//save the window's data
         setBounds(bounds);
 
         setUndecorated(false);
@@ -67,17 +75,37 @@ class MainPanel extends JFrame {
         setResizable(false);
     }
 
-    public static MainPanel getInstance() {
-        if (mainPanel == null) {
-            mainPanel = new MainPanel();
-        }
-        return mainPanel;
-    }
+//    /**
+//     * 单件模式
+//     *
+//     * @param
+//     * @return
+//     * @author 61990
+//     * @updateTime 2017/3/5
+//     */
+//    public static MainPanel getInstance() {
+//        if (mainPanel == null) {
+//            mainPanel = new MainPanel();
+//        }
+//        return mainPanel;
+//    }
 
+    /**
+     * @param
+     * @return cardPanel
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static JPanel getCardPanel() {
         return cardPanel;
     }
 
+    /**
+     * @param
+     * @return card
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static CardLayout getCard() {
         return card;
     }

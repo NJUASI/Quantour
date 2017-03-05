@@ -9,6 +9,14 @@ import java.awt.event.MouseEvent;
  * Created by 61990 on 2017/3/5.
  */
 class RegisterPanel extends JPanel {
+    /**
+     * 构造器
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public RegisterPanel() {
         setLayout(null);
 
