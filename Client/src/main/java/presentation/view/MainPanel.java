@@ -1,9 +1,9 @@
-package presentation;
+package presentation.view;
 
 
 import java.awt.Dimension;
 import java.awt.*;
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
@@ -14,8 +14,7 @@ import java.awt.CardLayout;
 //import javax.swing.JButton;
 //import javax.swing.JFrame;
 //import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+
 /**
  * Created by 61990 on 2017/3/5.
  */
@@ -32,9 +31,15 @@ class MainPanel extends JFrame {
         getContentPane().add(cardPanel, BorderLayout.CENTER);
         card = new CardLayout();
         cardPanel.setLayout(card);
+
         mainPane = new JLayeredPane();
         cardPanel.add(mainPane, "mainPane");
 
+
+        //加载login界面
+        LoginPanel loginPanel = new LoginPanel();
+        cardPanel.add(loginPanel, "loginPanel");
+        card.show(cardPanel, "loginPanel");
     }
 
     private void createWindow(){
@@ -67,5 +72,13 @@ class MainPanel extends JFrame {
             mainPanel = new MainPanel();
         }
         return mainPanel;
+    }
+
+    public static JPanel getCardPanel() {
+        return cardPanel;
+    }
+
+    public static CardLayout getCard() {
+        return card;
     }
 }
