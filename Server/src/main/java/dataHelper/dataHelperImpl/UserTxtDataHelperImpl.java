@@ -1,9 +1,9 @@
 package dataHelper.dataHelperImpl;
 
-import dataHelper.UserTxtDataHelper;
+import dataHelper.UserDataHelper;
 
 /**
  * Created by cuihua on 2017/3/4.
  */
-public class UserTxtDataHelperImpl implements UserTxtDataHelper {
+public class UserTxtDataHelperImpl implements UserDataHelper {
 }

@@ -10,7 +10,7 @@ import java.time.LocalTime;
  *
  * 股票
  */
-public class Stock {
+public class StockPO {
 
     // 记录编号
     private int serial;
@@ -19,16 +19,16 @@ public class Stock {
     private LocalDate date;
 
     // 开盘指数
-    private LocalTime open;
+    private double open;
 
     // 最高指数
-    private LocalTime high;
+    private double high;
 
     // 最低指数
-    private LocalTime low;
+    private double low;
 
     // 收盘指数
-    private LocalTime close;
+    private double close;
 
     // 成交量
     private String volume;
@@ -46,7 +46,7 @@ public class Stock {
     private Market market;
 
 
-    public Stock(int serial, LocalDate date, LocalTime open, LocalTime high, LocalTime low, LocalTime close, String volume, double adjClose, int code, String name, Market market) {
+    public StockPO(int serial, LocalDate date, double open, double high, double low, double close, String volume, double adjClose, int code, String name, Market market) {
         this.serial = serial;
         this.date = date;
         this.open = open;
@@ -76,35 +76,35 @@ public class Stock {
         this.date = date;
     }
 
-    public LocalTime getOpen() {
+    public double getOpen() {
         return open;
     }
 
-    public void setOpen(LocalTime open) {
+    public void setOpen(double open) {
         this.open = open;
     }
 
-    public LocalTime getHigh() {
+    public double getHigh() {
         return high;
     }
 
-    public void setHigh(LocalTime high) {
+    public void setHigh(double high) {
         this.high = high;
     }
 
-    public LocalTime getLow() {
+    public double getLow() {
         return low;
     }
 
-    public void setLow(LocalTime low) {
+    public void setLow(double low) {
         this.low = low;
     }
 
-    public LocalTime getClose() {
+    public double getClose() {
         return close;
     }
 
-    public void setClose(LocalTime close) {
+    public void setClose(double close) {
         this.close = close;
     }
 

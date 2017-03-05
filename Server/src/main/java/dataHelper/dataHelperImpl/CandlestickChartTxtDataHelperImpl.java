@@ -1,9 +1,9 @@
 package dataHelper.dataHelperImpl;
 
-import dataHelper.CandlestickChartTxtDataHelper;
+import dataHelper.CandlestickChartDataHelper;
 
 /**
  * Created by cuihua on 2017/3/4.
  */
-public class CandlestickChartTxtDataHelperImpl implements CandlestickChartTxtDataHelper {
+public class CandlestickChartTxtDataHelperImpl implements CandlestickChartDataHelper {
 }
