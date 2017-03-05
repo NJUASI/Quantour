@@ -21,7 +21,6 @@ public class AveragePO {
     }
 
     public double getClose() {
-
         return close;
     }
 
