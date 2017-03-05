@@ -31,12 +31,13 @@
             <version>1.0.19</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.jdatepicker/jdatepicker -->
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.jdatepicker/jdatepicker -->
         <dependency>
-            <groupId>org.jdatepicker</groupId>
+            <groupId>net.sourceforge.jdatepicker</groupId>
             <artifactId>jdatepicker</artifactId>
-            <version>1.3.4</version>
+            <version>1.3.2</version>
         </dependency>
+
 
 
 
