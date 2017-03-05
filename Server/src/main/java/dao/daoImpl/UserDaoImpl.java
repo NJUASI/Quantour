@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao {
      * @return ResultMessage 是否成功添加用户
      */
     @Override
-    public ResultMessage add(UserPO userPO) {
+    public boolean add(UserPO userPO) {
         return this.userHelper.add(userPO);
     }
 
@@ -57,7 +57,7 @@ public class UserDaoImpl implements UserDao {
      * @return ResultMessage 是否成功修改用户
      */
     @Override
-    public ResultMessage modify(UserPO userPO) {
+    public boolean modify(UserPO userPO) {
         return this.userHelper.modify(userPO);
     }
 }

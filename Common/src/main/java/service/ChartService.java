@@ -33,5 +33,5 @@ public interface ChartService extends Remote{
      * @return the ave data 用户所选天数的均线图的平均值
      * @throws RemoteException the remote exception
      */
-    Iterator<Iterator<Double>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO,int[] days) throws RemoteException, DateShortException;
+    Iterator<Iterator<Double>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws RemoteException, DateShortException;
 }

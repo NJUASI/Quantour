@@ -4,7 +4,6 @@ import dao.UserDao;
 import dao.daoImpl.UserDaoImpl;
 import po.UserPO;
 import service.UserService;
-import utilities.enums.ResultMessage;
 import vo.UserVO;
 
 import java.rmi.RemoteException;
@@ -31,7 +30,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @description 用户注册
      */
     @Override
-    public ResultMessage registerUser(UserVO userVO) throws RemoteException {
+    public boolean registerUser(UserVO userVO) throws RemoteException {
         return userDao.add(new UserPO(userVO));
     }
 
@@ -44,7 +43,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @throws RemoteException the remote exception
      */
     @Override
-    public ResultMessage modifyUser(UserVO userVO) throws RemoteException {
+    public boolean modifyUser(UserVO userVO) throws RemoteException {
         return userDao.modify(new UserPO(userVO));
     }
 
@@ -71,9 +70,9 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @throws RemoteException the remote exception
      */
     @Override
-    public ResultMessage login(UserVO userVo) throws RemoteException {
-        //TODO
-        return ResultMessage.SUCCESS;
+    public boolean login(UserVO userVo) throws RemoteException {
+        // TODO
+        return true;
     }
 
     /**
@@ -81,14 +80,15 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @auther Harvey
      * @updateTime 2017/3/5
      * @param userName 用户姓名
-     * @return ResultMessage  是否注销成功
+     * @return boolean  是否注销成功
      * @throws RemoteException the remote exception
      * @auther Harvey
      * @updateTime 2017/3/5
      */
     @Override
-    public ResultMessage logout(String userName) throws RemoteException {
-        return null;
+    public boolean logout(String userName) throws RemoteException {
+        // TODO
+        return true;
     }
 
 }

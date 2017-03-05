@@ -32,7 +32,7 @@ public interface StockService extends Remote{
      * @return the iterator 自选股信息列表
      * @throws RemoteException the remote exception
      */
-    public Iterator<StockVO> showPrivateStocks(String userName,LocalDate date) throws RemoteException;
+    public Iterator<StockVO> showPrivateStocks(String userName, LocalDate date) throws RemoteException;
 
     /**
      * 用户添加自选股
@@ -43,7 +43,7 @@ public interface StockService extends Remote{
      * @return the boolean 是否添加成功
      * @throws RemoteException the remote exception
      */
-    public boolean addPrivateStock(String userName,String stockCode) throws RemoteException;
+    public boolean addPrivateStock(String userName, String stockCode) throws RemoteException;
 
     /**
      * 用户删除自选股
@@ -54,7 +54,7 @@ public interface StockService extends Remote{
      * @return the boolean 是否删除成功
      * @throws RemoteException the remote exception
      */
-    public boolean deletePrivateStock(String userName,String stockCode) throws RemoteException;
+    public boolean deletePrivateStock(String userName, String stockCode) throws RemoteException;
 
 
 }

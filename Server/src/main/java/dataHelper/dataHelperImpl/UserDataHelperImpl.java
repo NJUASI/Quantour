@@ -10,8 +10,8 @@ import utilities.enums.ResultMessage;
 public class UserDataHelperImpl implements UserDataHelper {
 
     @Override
-    public ResultMessage add(UserPO userPO) {
-        return null;
+    public boolean add(UserPO userPO) {
+        return true;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class UserDataHelperImpl implements UserDataHelper {
     }
 
     @Override
-    public ResultMessage modify(UserPO userPO) {
-        return null;
+    public boolean modify(UserPO userPO) {
+        return true;
     }
 }

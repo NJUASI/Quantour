@@ -16,7 +16,7 @@ public interface UserDao {
      * @param userPO 用户信息载体
      * @return ResultMessage 是否成功添加用户
      */
-     ResultMessage add(UserPO userPO);
+     boolean add(UserPO userPO);
 
     /**
      * 获取指定用户信息
@@ -36,6 +36,6 @@ public interface UserDao {
      * @param userPO 用户信息载体
      * @return ResultMessage 是否成功修改用户
      */
-     ResultMessage modify(UserPO userPO);
+     boolean modify(UserPO userPO);
 
 }
