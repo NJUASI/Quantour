@@ -1,7 +1,5 @@
 package serviceImpl;
 
-import dao.ChartDao;
-import dao.daoImpl.ChartDaoImpl;
 import exceptions.DateShortException;
 import service.ChartService;
 import vo.ChartShowCriteriaVO;
@@ -10,7 +8,6 @@ import vo.StockVO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Iterator;
 
 /**
