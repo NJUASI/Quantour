@@ -1,5 +1,7 @@
 package vo;
 
+import po.StockSituationPO;
+
 /**
  * Created by cuihua on 2017/3/4.
  *
@@ -36,5 +38,15 @@ public class StockSituationVO {
         this.slumpingNum = slumpingNum;
         this.climbingNum = climbingNum;
         this.slipingNum = slipingNum;
+    }
+
+    public StockSituationVO(StockSituationPO stockSituation) {
+        this.volume = stockSituation.getVolume();
+        this.limitUpNum = stockSituation.getLimitUpNum();
+        this.limitDownNum = stockSituation.getLimitDownNum();
+        this.surgingNum = stockSituation.getSurgingNum();
+        this.slumpingNum = stockSituation.getSlumpingNum();
+        this.climbingNum = stockSituation.getClimbingNum();
+        this.slipingNum = stockSituation.getSlipingNum();
     }
 }

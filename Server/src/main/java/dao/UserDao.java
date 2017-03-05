@@ -8,10 +8,10 @@ import utilities.enums.ResultMessage;
  */
 public interface UserDao {
 
-    ResultMessage add(UserPO userPO);
+    public ResultMessage add(UserPO userPO);
 
-    UserPO get(String username);
+    public UserPO get(String username);
 
-    ResultMessage modify(UserPO userPO);
+    public ResultMessage modify(UserPO userPO);
 
 }

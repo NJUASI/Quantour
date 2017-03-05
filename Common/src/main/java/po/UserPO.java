@@ -1,5 +1,7 @@
 package po;
 
+import vo.UserVO;
+
 import java.util.Iterator;
 
 /**
@@ -13,13 +15,15 @@ public class UserPO {
     //用户密码
     private String password;
 
-    //用户的自选股（用户未选择时为null）
-    private Iterator<StockPO> optionalStock;
-
     public UserPO(String userName, String password, Iterator<StockPO> optionalStock) {
         this.userName = userName;
         this.password = password;
         this.optionalStock = optionalStock;
+    }
+
+    public UserPO(UserVO userVO) {
+        this.userName = userVO.userName;
+        this.password = userVO.password;
     }
 
     public String getUserName() {
@@ -36,14 +40,6 @@ public class UserPO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Iterator<StockPO> getOptionalStock() {
-        return optionalStock;
-    }
-
-    public void setOptionalStock(Iterator<StockPO> optionalStock) {
-        this.optionalStock = optionalStock;
     }
 
 }
