@@ -17,6 +17,8 @@ import java.util.List;
 
 /**
  * Created by cuihua on 2017/3/4.
+ *
+ * K线、均线数据获取
  */
 public class ChartServiceImpl extends UnicastRemoteObject implements ChartService {
 
@@ -24,7 +26,8 @@ public class ChartServiceImpl extends UnicastRemoteObject implements ChartServic
 
     /**
      * Instantiates a new Chart service.
-     *
+     * @auther Harvey
+     * @updateTime 2017/3/5
      * @throws RemoteException the remote exception
      */
     protected ChartServiceImpl() throws RemoteException {
@@ -33,7 +36,8 @@ public class ChartServiceImpl extends UnicastRemoteObject implements ChartServic
 
     /**
      * 获取单支股票的一段日期内的信息
-     *
+     * @auther Harvey
+     * @updateTime 2017/3/5
      * @param vo 股票的选择标准
      * @return 特定股票的所有交易信息
      * @throws RemoteException RMI
@@ -49,9 +53,10 @@ public class ChartServiceImpl extends UnicastRemoteObject implements ChartServic
 
     /**
      * 获取单支股票一段日期内，用户所选天数的均线图的平均值.
-     *
+     * @auther Harvey
+     * @updateTime 2017/3/5
      * @param chartShowCriteriaVO the chart show criteria vo 股票的选择标准
-     * @param days
+     * @param days 天数指标的数组
      * @return the ave data 用户所选天数的均线图的平均值
      * @throws RemoteException the remote exception
      */
@@ -71,7 +76,8 @@ public class ChartServiceImpl extends UnicastRemoteObject implements ChartServic
 
     /**
      * 获取StockPO的列表
-     *
+     * @auther Harvey
+     * @updateTime 2017/3/5
      * @param vo the vo 选择条件
      * @return the list StockPO的列表
      */
@@ -81,10 +87,11 @@ public class ChartServiceImpl extends UnicastRemoteObject implements ChartServic
 
 
     /**
-     * Calculate iterator.
-     *
-     * @param chartShowCriteriaVO the chart show criteria vo
-     * @param day                 the day
+     * 计算以确定天数指标为标准的.
+     * @auther Harvey
+     * @updateTime 2017/3/5
+     * @param chartShowCriteriaVO the chart show criteria vo 选择条件
+     * @param day                 the day 天数指标
      * @return the iterator
      */
     private Iterator<Double> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day) {
@@ -105,9 +112,10 @@ public class ChartServiceImpl extends UnicastRemoteObject implements ChartServic
 
     /**
      * 判断所选日期是否小于等于均线图的时间.
-     *
-     * @param chartShowCriteriaVO the chart show criteria vo
-     * @param day                 the day
+     * @auther Harvey
+     * @updateTime 2017/3/5
+     * @param chartShowCriteriaVO the chart show criteria vo 选择条件
+     * @param day                 the day  天数指标
      * @return the boolean
      */
     private boolean isDateTooShort(ChartShowCriteriaVO chartShowCriteriaVO,int day) {
@@ -117,7 +125,6 @@ public class ChartServiceImpl extends UnicastRemoteObject implements ChartServic
         if(interval<=day){
             return false;
         }
-
         return true;
     }
 }
