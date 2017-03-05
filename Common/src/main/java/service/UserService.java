@@ -13,9 +13,10 @@ public interface UserService extends Remote{
 
     /**
      * 用户注册.
-     *
-     * @param userVO the user vo
-     * @return the boolean
+     * @auther Harvey
+     * @updateTime 2017/3/5
+     * @param userVO the user vo 注册用户信息
+     * @return the boolean 是否注册成功
      * @throws RemoteException the remote exception
      * @description 用户注册
      */
@@ -23,37 +24,41 @@ public interface UserService extends Remote{
 
     /**
      * 修改用户信息.
-     *
-     * @param userVO the user vo
-     * @return the boolean
+     * @auther Harvey
+     * @updateTime 2017/3/5
+     * @param userVO the user vo 修改后的用户信息
+     * @return the boolean 是否修改成功
      * @throws RemoteException the remote exception
      */
     public ResultMessage modifyUser(UserVO userVO) throws RemoteException;
 
     /**
      * 查看用户信息
-     *
+     * @auther Harvey
+     * @updateTime 2017/3/5
      * @param  userName 用户姓名
-     * @return the boolean
+     * @return UserVO   用户信息
      * @throws RemoteException the remote exception
      */
     public UserVO checkUserInfo(String userName) throws RemoteException;
 
     /**
      * 用户登录.
-     *
-     * @param userVo the user vo
-     * @return the boolean
+     * @auther Harvey
+     * @updateTime 2017/3/5
+     * @param userVo the user vo 用户登录信息
+     * @return ResultMessage 是否登录成功
      * @throws RemoteException the remote exception
      */
     public ResultMessage login(UserVO userVo) throws RemoteException;
 
     /**
      * 用户注销
-     *
-     * @param userVO the user vo
-     * @return the boolean
+     * @auther Harvey
+     * @updateTime 2017/3/5
+     * @param userName 用户姓名
+     * @return ResultMessage  是否注销成功
      * @throws RemoteException the remote exception
      */
-    public ResultMessage logout(UserVO userVO) throws RemoteException;
+    public ResultMessage logout(String userName) throws RemoteException;
 }

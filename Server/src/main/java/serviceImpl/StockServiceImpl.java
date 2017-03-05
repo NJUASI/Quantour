@@ -9,7 +9,9 @@ import java.time.LocalDate;
 import java.util.Iterator;
 
 /**
- * Created by Administrator on 2017/3/5.
+ * Created by Harvey on 2017/3/5.
+ *
+ * 股票、自选股信息获取
  */
 public class StockServiceImpl extends UnicastRemoteObject implements StockService {
 
@@ -18,7 +20,8 @@ public class StockServiceImpl extends UnicastRemoteObject implements StockServic
 
     /**
      * 显示所有股票信息的列表
-     *
+     * @auther Harvey
+     * @updateTime 2017/3/5
      * @param date
      * @return the iterator
      * @throws RemoteException the remote exception
@@ -31,10 +34,11 @@ public class StockServiceImpl extends UnicastRemoteObject implements StockServic
 
     /**
      * 显示用户的自选股信息列表
-     *
+     * @auther Harvey
+     * @updateTime 2017/3/5
      * @param userName the user name 用户名称
      * @param date     用户选择日期
-     * @return the iterator
+     * @return the iterator 用户自选股列表
      * @throws RemoteException the remote exception
      */
     @Override
@@ -44,10 +48,11 @@ public class StockServiceImpl extends UnicastRemoteObject implements StockServic
 
     /**
      * 用户添加自选股
-     *
-     * @param userName  the user name
-     * @param stockCode the stock code
-     * @return the boolean
+     * @auther Harvey
+     * @updateTime 2017/3/5
+     * @param userName  the user name   用户名称
+     * @param stockCode the stock code 股票代码
+     * @return the boolean 是否添加成功
      * @throws RemoteException the remote exception
      */
     @Override
@@ -57,10 +62,11 @@ public class StockServiceImpl extends UnicastRemoteObject implements StockServic
 
     /**
      * 用户删除自选股
-     *
-     * @param userName  the user name
-     * @param stockCode the stock code
-     * @return the boolean
+     * @auther Harvey
+     * @updateTime 2017/3/5
+     * @param userName  the user name   用户名称
+     * @param stockCode the stock code  股票代码
+     * @return the boolean  是否删除成功
      * @throws RemoteException the remote exception
      */
     @Override
