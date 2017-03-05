@@ -20,7 +20,7 @@ public class StockDataHelperImpl implements StockDataHelper {
     private BufferedReader br;
 
     @Override
-    public List<StockPO> getStock(String stockCode) throws IOException {
+    public List<StockPO> getStockRecords(String stockCode) throws IOException {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(pathPre + stockCode + pathPost)));
 
         List<StockPO> result = new LinkedList<StockPO>();

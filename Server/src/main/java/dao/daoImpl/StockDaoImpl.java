@@ -37,7 +37,7 @@ public class StockDaoImpl implements StockDao {
     @Override
     public List<StockPO> getStockData(String code) {
         try {
-            return this.stockHelper.getStock(code);
+            return this.stockHelper.getStockRecords(code);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -59,7 +59,7 @@ public class StockDaoImpl implements StockDao {
         List<StockPO> resultStockList = new ArrayList<StockPO>();
         List<StockPO> tempStockList = null;
         try {
-            tempStockList = this.stockHelper.getStock(code);
+            tempStockList = this.stockHelper.getStockRecords(code);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
