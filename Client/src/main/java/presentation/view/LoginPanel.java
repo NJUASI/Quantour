@@ -10,8 +10,19 @@ import java.awt.event.MouseEvent;
  * Created by 61990 on 2017/3/5.
  */
 class LoginPanel extends JPanel {
+    //注册面板
     RegisterPanel registerPanel;
+    //功能菜单
     MenuPanel menuPanel;
+
+    /**
+     * 构造器
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public LoginPanel() {
         setLayout(null);
 

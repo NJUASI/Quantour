@@ -5,7 +5,15 @@ package presentation.view;
  */
 class Main {
 
+    /**
+     * main入口
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static void main(String[] args) {
-        MainPanel.getInstance();
+        new MainPanel();
     }
 }
