@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
 /**
  * Created by 61990 on 2017/3/5.
  */
@@ -20,6 +21,8 @@ public class KStringPanel extends NavigationBar {
      * @updateTime 2017/3/5
      */
     public KStringPanel(){
+        //开始日期
+
         //the door of function 1
         JButton kString =new JButton("test");
         kString.setBounds(500, 530, 100, 50);
