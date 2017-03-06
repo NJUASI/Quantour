@@ -16,7 +16,10 @@ class LoginPanel extends JPanel {
     RegisterPanel registerPanel;
     //功能菜单
     MenuPanel menuPanel;
-
+    //屏幕大小
+    WindowData windowData;
+    int width;
+    int height;
     /**
      * 构造器
      *
@@ -26,31 +29,34 @@ class LoginPanel extends JPanel {
      * @updateTime 2017/3/5
      */
     public LoginPanel() {
+        WindowData windowData = WindowData.getInstance();
+
+        width = windowData.getWidth();
+        height =windowData.getHeight();
         setLayout(null);
 
-        WindowData windowData = WindowData.getInstance();
         //to write your message
         JTextField admin=new JTextField("Enter your admin");
-        admin.setForeground(Color.GREEN);
         admin.setFont(new Font("微软雅黑",Font.BOLD,25));
-        admin.setBounds(190,203,300,50);
+        admin.setBounds(width*300/1920,height*400/1080,width*300/1920,height*50/1080);
 //        admin.setOpaque(false);
 //        admin.setBorder(null);
+//        admin.setForeground(new Color(122,2,2));
         admin.setVisible(true);
         add(admin);
 
         JPasswordField password=new JPasswordField();
-        password.setForeground(Color.GREEN);
         password.setFont(new Font("微软雅黑",Font.BOLD,25));
-        password.setBounds(190,282,300,50);
+        password.setBounds(width*300/1920,height*500/1080,width*300/1920,height*50/1080);
 //        password.setBorder(null);
 //        password.setOpaque(false);
         password.setVisible(true);
         add(password);
 
         //the Button setting of login to mainPanel
-        JButton login =new JButton("login");
-        login.setBounds(210, 360, 80, 40);
+        JButton login =new JButton("登录");
+        login.setBounds(width*360/1920,height*600/1080,width*80/1920,height*40/1080);
+        login.setFont(new Font("",Font.CENTER_BASELINE,20));
         login.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -73,8 +79,10 @@ class LoginPanel extends JPanel {
 
 
         //the Button setting of opening register panel
-        JButton openRegister =new JButton("register");
-        openRegister.setBounds(330, 360, 80, 40);
+        JButton openRegister =new JButton("注册");
+        openRegister.setForeground(Color.BLACK);
+        openRegister.setFont(new Font("",Font.CENTER_BASELINE,15));
+        openRegister.setBounds(width*470/1920,height*610/1080,width*60/1920,height*30/1080);
         openRegister.setContentAreaFilled(false);
         openRegister.addMouseListener(new MouseAdapter() {
             @Override
@@ -83,7 +91,23 @@ class LoginPanel extends JPanel {
                 MainPanel.getCardPanel().add(registerPanel, "registerPanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "registerPanel");
             }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+//                openRegister.setFont(new Font("",Font.HANGING_BASELINE,15));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                openRegister.setFont(new Font("",Font.CENTER_BASELINE,15));
+            }
         });
         add(openRegister);
+
+        ImageIcon bgPicture =new ImageIcon(getClass().getClassLoader().getResource("bg.png"));
+        bgPicture.setImage(bgPicture.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        JLabel bg= new JLabel(bgPicture);
+
+        bg.setBounds(0,0,width,height);
+        add(bg);
     }
 }

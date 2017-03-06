@@ -1,7 +1,5 @@
 package presentation.view;
 
-import com.qt.datapicker.*;
-
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

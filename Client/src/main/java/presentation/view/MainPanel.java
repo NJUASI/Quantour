@@ -6,7 +6,9 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-
+import org.jb2011.lnf.beautyeye.*;
+import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
+import org.jb2011.lnf.beautyeye.utils.BEUtils.*;
 /**
  * Created by 61990 on 2017/3/5.
  */
@@ -25,6 +27,15 @@ class MainPanel extends JFrame {
      * @updateTime 2017/3/5
      */
     public MainPanel() {
+        try
+        {
+            BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.translucencyAppleLike;
+            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+        }
+        catch(Exception e)
+        {
+
+        }
         createWindow();
 
         cardPanel = new JPanel();

@@ -11,6 +11,7 @@ public class ThermometerPanel extends NavigationBar {
     //温度计面板
     private static ThermometerPanel thermometerPanel;
     DatePickerPanel date;
+    JButton search;
     /**
      * 温度计面板构造器
      *
@@ -23,6 +24,10 @@ public class ThermometerPanel extends NavigationBar {
         date = new DatePickerPanel();
         date.setLocation(400, 400);
         add(date);
+
+        search = new JButton("search");
+        search.setBounds(600,400,80,40);
+        add(search);
     }
 
     /**
