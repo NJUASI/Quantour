@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 public class ThermometerPanel extends NavigationBar {
     //温度计面板
     private static ThermometerPanel thermometerPanel;
-
+    DatePickerPanel date;
     /**
      * 温度计面板构造器
      *
@@ -20,16 +20,9 @@ public class ThermometerPanel extends NavigationBar {
      * @updateTime 2017/3/5
      */
     public ThermometerPanel() {
-        //the door of function 1
-        JButton kString = new JButton("test");
-        kString.setBounds(500, 400, 100, 50);
-        kString.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "loginPanel");
-            }
-        });
-        add(kString);
+        date = new DatePickerPanel();
+        date.setLocation(400, 400);
+        add(date);
     }
 
     /**

@@ -1,6 +1,5 @@
 package presentation.view;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import utilities.IDReserve;
 
 import javax.swing.*;
@@ -30,7 +29,6 @@ class LoginPanel extends JPanel {
         setLayout(null);
 
         WindowData windowData = WindowData.getInstance();
-        System.out.println(windowData.getHeight()+windowData.getWidth());
         //to write your message
         JTextField admin=new JTextField("Enter your admin");
         admin.setForeground(Color.GREEN);
