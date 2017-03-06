@@ -18,7 +18,7 @@ public class StockSituationServiceImpl extends UnicastRemoteObject implements St
 
     StockSituationDao stockSituationDao;
 
-    protected StockSituationServiceImpl() throws RemoteException {
+    public StockSituationServiceImpl() throws RemoteException {
         stockSituationDao = new StockSituationDaoImpl();
     }
 

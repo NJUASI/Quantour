@@ -1,7 +1,6 @@
 package dataHelper;
 
 import po.UserPO;
-import utilities.enums.ResultMessage;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -16,7 +15,7 @@ public interface UserDataHelper {
      * @param userPO 用户信息载体
      * @return ResultMessage 是否成功添加用户
      */
-    ResultMessage add(UserPO userPO);
+    boolean add(UserPO userPO);
 
     /**
      * 获取用户信息
@@ -36,6 +35,6 @@ public interface UserDataHelper {
      * @param userPO 用户信息载体
      * @return ResultMessage 是否修改添加用户
      */
-    ResultMessage modify(UserPO userPO);
+    boolean modify(UserPO userPO);
 
 }

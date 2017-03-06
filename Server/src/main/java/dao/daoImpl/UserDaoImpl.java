@@ -1,10 +1,11 @@
 package dao.daoImpl;
 
 import dao.UserDao;
+import dataHelper.LogDataHelper;
 import dataHelper.UserDataHelper;
+import dataHelper.dataHelperImpl.LogDataHelperImpl;
 import dataHelper.dataHelperImpl.UserDataHelperImpl;
 import po.UserPO;
-import utilities.enums.ResultMessage;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -13,6 +14,7 @@ public class UserDaoImpl implements UserDao {
 
     //用户信息获取的helper对象
     private UserDataHelper userHelper;
+    private LogDataHelper logDataHelper;
 
     /**
      * @author Byron Dong
@@ -20,6 +22,7 @@ public class UserDaoImpl implements UserDao {
      */
     public UserDaoImpl() {
         this.userHelper = new UserDataHelperImpl();
+        logDataHelper = new LogDataHelperImpl();
     }
 
     /**
@@ -31,7 +34,7 @@ public class UserDaoImpl implements UserDao {
      * @return ResultMessage 是否成功添加用户
      */
     @Override
-    public ResultMessage add(UserPO userPO) {
+    public boolean add(UserPO userPO) {
         return this.userHelper.add(userPO);
     }
 
@@ -57,7 +60,33 @@ public class UserDaoImpl implements UserDao {
      * @return ResultMessage 是否成功修改用户
      */
     @Override
-    public ResultMessage modify(UserPO userPO) {
+    public boolean modify(UserPO userPO) {
         return this.userHelper.modify(userPO);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param userName 用户名称
+     * @return boolean 是否登录
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public boolean login(String userName) {
+        return logDataHelper.login(userName);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param userName 用户名称
+     * @return boolean 是否成功登出
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public boolean logout(String userName) {
+        return logDataHelper.logout(userName);
     }
 }

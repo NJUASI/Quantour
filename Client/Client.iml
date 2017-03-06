@@ -17,5 +17,7 @@
     <orderEntry type="module" module-name="Common" />
     <orderEntry type="library" name="Maven: org.jfree:jfreechart:1.0.19" level="project" />
     <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.23" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-swing:2.11.0-M7" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.0-M7" level="project" />
   </component>
 </module>

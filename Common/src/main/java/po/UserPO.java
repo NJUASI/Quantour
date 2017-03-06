@@ -26,6 +26,10 @@ public class UserPO {
         this.password = userVO.password;
     }
 
+    public UserPO() {
+
+    }
+
     public String getUserName() {
         return userName;
     }

@@ -1,6 +1,5 @@
 package service;
 
-import utilities.enums.ResultMessage;
 import vo.UserVO;
 
 import java.rmi.Remote;
@@ -20,7 +19,7 @@ public interface UserService extends Remote{
      * @throws RemoteException the remote exception
      * @description 用户注册
      */
-    public ResultMessage registerUser(UserVO userVO) throws RemoteException;
+    public boolean registerUser(UserVO userVO) throws RemoteException;
 
     /**
      * 修改用户信息.
@@ -30,7 +29,7 @@ public interface UserService extends Remote{
      * @return the boolean 是否修改成功
      * @throws RemoteException the remote exception
      */
-    public ResultMessage modifyUser(UserVO userVO) throws RemoteException;
+    public boolean modifyUser(UserVO userVO) throws RemoteException;
 
     /**
      * 查看用户信息
@@ -46,11 +45,11 @@ public interface UserService extends Remote{
      * 用户登录.
      * @auther Harvey
      * @updateTime 2017/3/5
-     * @param userVo the user vo 用户登录信息
+     * @param userName 用户名称
      * @return ResultMessage 是否登录成功
      * @throws RemoteException the remote exception
      */
-    public ResultMessage login(UserVO userVo) throws RemoteException;
+    boolean login(String userName) throws RemoteException;
 
     /**
      * 用户注销
@@ -60,5 +59,5 @@ public interface UserService extends Remote{
      * @return ResultMessage  是否注销成功
      * @throws RemoteException the remote exception
      */
-    public ResultMessage logout(String userName) throws RemoteException;
+    public boolean logout(String userName) throws RemoteException;
 }

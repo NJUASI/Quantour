@@ -1,10 +1,11 @@
 package serviceImpl;
 
+import dao.StockDao;
 import dao.UserDao;
+import dao.daoImpl.StockDaoImpl;
 import dao.daoImpl.UserDaoImpl;
 import po.UserPO;
 import service.UserService;
-import utilities.enums.ResultMessage;
 import vo.UserVO;
 
 import java.rmi.RemoteException;
@@ -17,8 +18,11 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class UserServiceImpl extends UnicastRemoteObject implements UserService {
     UserDao userDao;
+    StockDao stockDao;
+
     public UserServiceImpl() throws RemoteException {
          userDao = new UserDaoImpl();
+         stockDao = new StockDaoImpl();
     }
 
     /**
@@ -31,8 +35,14 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @description 用户注册
      */
     @Override
-    public ResultMessage registerUser(UserVO userVO) throws RemoteException {
-        return userDao.add(new UserPO(userVO));
+    public boolean registerUser(UserVO userVO) throws RemoteException {
+
+        if(userDao.add(new UserPO(userVO))){
+            //给用户创建一个资源文件，存取用户的自选股代码
+            stockDao.createPrivateDir(userVO.userName);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -44,7 +54,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @throws RemoteException the remote exception
      */
     @Override
-    public ResultMessage modifyUser(UserVO userVO) throws RemoteException {
+    public boolean modifyUser(UserVO userVO) throws RemoteException {
         return userDao.modify(new UserPO(userVO));
     }
 
@@ -66,14 +76,14 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * 用户登录.
      * @auther Harvey
      * @updateTime 2017/3/5
-     * @param userVo the user vo
+     * @param userName 用户名称
      * @return the boolean
      * @throws RemoteException the remote exception
      */
     @Override
-    public ResultMessage login(UserVO userVo) throws RemoteException {
-        //TODO
-        return ResultMessage.SUCCESS;
+    public boolean login(String userName) throws RemoteException {
+
+        return userDao.login(userName);
     }
 
     /**
@@ -87,8 +97,8 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @updateTime 2017/3/5
      */
     @Override
-    public ResultMessage logout(String userName) throws RemoteException {
-        return null;
+    public boolean logout(String userName) throws RemoteException {
+        return userDao.logout(userName);
     }
 
 }

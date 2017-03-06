@@ -21,7 +21,7 @@ public interface StockService extends Remote{
      * @return the iterator 股票信息列表
      * @throws RemoteException the remote exception
      */
-    public Iterator<StockVO> showAllStocks(LocalDate date) throws RemoteException;
+    Iterator<StockVO> getAllStocks(LocalDate date) throws RemoteException;
 
     /**
      * 显示用户的自选股信息列表
@@ -32,7 +32,7 @@ public interface StockService extends Remote{
      * @return the iterator 自选股信息列表
      * @throws RemoteException the remote exception
      */
-    public Iterator<StockVO> showPrivateStocks(String userName,LocalDate date) throws RemoteException;
+    Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws RemoteException;
 
     /**
      * 用户添加自选股
