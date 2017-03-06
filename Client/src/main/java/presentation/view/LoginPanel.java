@@ -30,7 +30,7 @@ class LoginPanel extends JPanel {
         setLayout(null);
 
         WindowData windowData = WindowData.getInstance();
-        System.out.println();
+        System.out.println(windowData.getHeight()+windowData.getWidth());
         //to write your message
         JTextField admin=new JTextField("Enter your admin");
         admin.setForeground(Color.GREEN);
