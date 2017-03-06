@@ -12,6 +12,13 @@ class ComparePanel extends NavigationBar {
     //比较面板
     private static ComparePanel comparePanel;
 
+    DatePickerPanel startDate;
+    DatePickerPanel endDate;
+    JTextField name1;
+    JTextField num1;
+    JTextField name2;
+    JTextField num2;
+
     /**
      * 比较面板构造器
      *

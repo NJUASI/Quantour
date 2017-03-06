@@ -1,5 +1,7 @@
 package presentation.view;
 
+import utilities.IDReserve;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -26,6 +28,7 @@ class LoginPanel extends JPanel {
     public LoginPanel() {
         setLayout(null);
 
+        WindowData windowData = WindowData.getInstance();
         //to write your message
         JTextField admin=new JTextField("Enter your admin");
         admin.setForeground(Color.GREEN);
@@ -51,11 +54,14 @@ class LoginPanel extends JPanel {
         login.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-//                try {
-//
-//                }catch (Exception e){
-//
-//                }
+                try {
+        //TODO login
+//                    admin.getText();
+//                    password.getText();
+                    IDReserve.getInstance().setUserID(admin.getText());
+                }catch (Exception el){
+
+                }
                 admin.setText("");
                 password.setText("");
                 menuPanel=new MenuPanel();

@@ -3,6 +3,7 @@ package dataHelper;
 import po.StockPO;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -18,5 +19,17 @@ public interface StockDataHelper {
      * @param stockCode  指定股票代码
      * @return List<StockPO> 指定股票所有数据
      */
-    List<StockPO> getStock(String stockCode) throws IOException;
+    List<StockPO> getStockRecords(String stockCode) throws IOException;
+
+    /**
+     * 获取指定日期的所有股票数据
+     *
+     * @author cuihua
+     * @updateTime 2017/3/6
+     * @param date  指定日期
+     * @return List<StockPO> 指定日期的所有股票数据
+     *
+     * TODO 最终返回的VO中包括昨日的收盘价等系列信息
+     */
+    List<StockPO> getStockRecords(LocalDate date) throws IOException;
 }

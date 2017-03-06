@@ -19,8 +19,17 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     private BufferedReader br;
 
+
+    /**
+     * 获取指定股票所有数据
+     *
+     * @author cuihua
+     * @updateTime 2017/3/5
+     * @param stockCode  指定股票代码
+     * @return List<StockPO> 指定股票所有数据
+     */
     @Override
-    public List<StockPO> getStock(String stockCode) throws IOException {
+    public List<StockPO> getStockRecords(String stockCode) throws IOException {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(pathPre + stockCode + pathPost)));
 
         List<StockPO> result = new LinkedList<StockPO>();
@@ -39,4 +48,21 @@ public class StockDataHelperImpl implements StockDataHelper {
         }
         return result;
     }
+
+    /**
+     * 获取指定日期的所有股票数据
+     *
+     * @author cuihua
+     * @updateTime 2017/3/6
+     * @param date  指定日期
+     * @return List<StockPO> 指定日期的所有股票数据
+     *
+     * TODO cuihua 最好将日期与市场温度计结合
+     */
+    @Override
+    public List<StockPO> getStockRecords(LocalDate date) throws IOException {
+        return null;
+    }
+
+
 }
