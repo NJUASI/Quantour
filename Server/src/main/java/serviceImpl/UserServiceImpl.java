@@ -1,7 +1,11 @@
 package serviceImpl;
 
+import dao.StockDao;
 import dao.UserDao;
+import dao.daoImpl.StockDaoImpl;
 import dao.daoImpl.UserDaoImpl;
+import exceptions.DuplicateLoginException;
+import exceptions.DuplicatedNameException;
 import po.UserPO;
 import service.UserService;
 import vo.UserVO;
@@ -16,8 +20,11 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class UserServiceImpl extends UnicastRemoteObject implements UserService {
     UserDao userDao;
+    StockDao stockDao;
+
     public UserServiceImpl() throws RemoteException {
          userDao = new UserDaoImpl();
+         stockDao = new StockDaoImpl();
     }
 
     /**
@@ -30,8 +37,15 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @description 用户注册
      */
     @Override
-    public boolean registerUser(UserVO userVO) throws RemoteException {
-        return userDao.add(new UserPO(userVO));
+    public boolean registerUser(UserVO userVO) throws RemoteException, DuplicatedNameException {
+
+        if(userDao.getAllUserNames().contains(userVO.userName)){
+            throw new DuplicatedNameException();
+        }
+        userDao.add(new UserPO(userVO));
+        //为用户新建一个保存自选股的文件
+        stockDao.createPrivateDir(userVO.userName);
+        return true;
     }
 
     /**
@@ -65,14 +79,17 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * 用户登录.
      * @auther Harvey
      * @updateTime 2017/3/5
-     * @param userVo the user vo
+     * @param userName 用户名称
      * @return the boolean
      * @throws RemoteException the remote exception
      */
     @Override
-    public boolean login(UserVO userVo) throws RemoteException {
-        // TODO
-        return true;
+    public boolean login(String userName) throws RemoteException, DuplicateLoginException {
+
+        if(userDao.getLoginUserNames().contains(userName)){
+            throw new DuplicateLoginException();
+        }
+        return userDao.login(userName);
     }
 
     /**
@@ -80,15 +97,14 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @auther Harvey
      * @updateTime 2017/3/5
      * @param userName 用户姓名
-     * @return boolean  是否注销成功
+     * @return ResultMessage  是否注销成功
      * @throws RemoteException the remote exception
      * @auther Harvey
      * @updateTime 2017/3/5
      */
     @Override
     public boolean logout(String userName) throws RemoteException {
-        // TODO
-        return true;
+        return userDao.logout(userName);
     }
 
 }

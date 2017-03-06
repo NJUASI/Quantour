@@ -1,7 +1,8 @@
 package dao;
 
 import po.UserPO;
-import utilities.enums.ResultMessage;
+
+import java.util.Set;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -34,8 +35,45 @@ public interface UserDao {
      * @author Byron Dong
      * @updateTime 2017/3/5
      * @param userPO 用户信息载体
-     * @return ResultMessage 是否成功修改用户
+     * @return boolean 是否成功修改用户
      */
      boolean modify(UserPO userPO);
 
+    /**
+     * 记录用户登录信息
+     *
+     * @author Harvey
+     * @updateTime 2017/3/6
+     * @param userName 用户名称
+     * @return boolean 是否登录
+     */
+    boolean login(String userName);
+
+    /**
+     * 删除用户登录信息
+     *
+     * @author Harvey
+     * @updateTime 2017/3/6
+     * @param userName 用户名称
+     * @return boolean 是否成功登出
+     */
+    boolean logout(String userName);
+
+    /**
+     * 获取已存在的所有用户名称
+     *
+     * @author Harvey
+     * @updateTime 2017/3/6
+     * @return  Set<String> 用户名称集合
+     */
+    Set<Object> getAllUserNames();
+
+    /**
+     * 获取已存在的所有用户名称
+     *
+     * @author Harvey
+     * @updateTime 2017/3/6
+     * @return  Set<String> 已登陆用户名称集合
+     */
+    Set<Object> getLoginUserNames();
 }

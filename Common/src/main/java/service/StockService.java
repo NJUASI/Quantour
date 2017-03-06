@@ -13,7 +13,6 @@ import java.util.Iterator;
  * 股票信息查看、自选股操作
  */
 public interface StockService extends Remote{
-
     /**
      * 显示所有股票信息的列表
      * @auther Harvey
@@ -22,7 +21,7 @@ public interface StockService extends Remote{
      * @return the iterator 股票信息列表
      * @throws RemoteException the remote exception
      */
-    public Iterator<StockVO> showAllStocks(LocalDate date) throws RemoteException;
+    Iterator<StockVO> getAllStocks(LocalDate date) throws RemoteException;
 
     /**
      * 显示用户的自选股信息列表
@@ -33,7 +32,7 @@ public interface StockService extends Remote{
      * @return the iterator 自选股信息列表
      * @throws RemoteException the remote exception
      */
-    public Iterator<StockVO> showPrivateStocks(String userName, LocalDate date) throws RemoteException;
+    Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws RemoteException;
 
     /**
      * 用户添加自选股
@@ -44,7 +43,7 @@ public interface StockService extends Remote{
      * @return the boolean 是否添加成功
      * @throws RemoteException the remote exception
      */
-    public boolean addPrivateStock(String userName, String stockCode) throws RemoteException;
+    public boolean addPrivateStock(String userName,String stockCode) throws RemoteException;
 
     /**
      * 用户删除自选股
@@ -55,7 +54,7 @@ public interface StockService extends Remote{
      * @return the boolean 是否删除成功
      * @throws RemoteException the remote exception
      */
-    public boolean deletePrivateStock(String userName, String stockCode) throws RemoteException;
+    public boolean deletePrivateStock(String userName,String stockCode) throws RemoteException;
 
 
 }

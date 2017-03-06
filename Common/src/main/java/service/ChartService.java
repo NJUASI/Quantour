@@ -7,6 +7,7 @@ import vo.StockVO;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -33,5 +34,5 @@ public interface ChartService extends Remote{
      * @return the ave data 用户所选天数的均线图的平均值
      * @throws RemoteException the remote exception
      */
-    Iterator<Iterator<Double>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws RemoteException, DateShortException;
+    Map<Integer, Iterator<Double>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws RemoteException, DateShortException;
 }

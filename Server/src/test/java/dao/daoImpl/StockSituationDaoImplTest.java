@@ -1,6 +1,7 @@
 package dao.daoImpl;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import po.StockSituationPO;
 
@@ -20,6 +21,7 @@ public class StockSituationDaoImplTest {
         this.stockSituationDao = new StockSituationDaoImpl();
     }
 
+    @Ignore
     @Test
     public void getStockSituation() throws Exception {
         LocalDate date = LocalDate.of(2010, 3, 4); // TODO 由于数据尚未处理，此处日期不知道结果，待定

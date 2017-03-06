@@ -1,10 +1,13 @@
 package dao.daoImpl;
 
 import dao.UserDao;
+import dataHelper.LogDataHelper;
 import dataHelper.UserDataHelper;
+import dataHelper.dataHelperImpl.LogDataHelperImpl;
 import dataHelper.dataHelperImpl.UserDataHelperImpl;
 import po.UserPO;
-import utilities.enums.ResultMessage;
+
+import java.util.Set;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -13,6 +16,7 @@ public class UserDaoImpl implements UserDao {
 
     //用户信息获取的helper对象
     private UserDataHelper userHelper;
+    private LogDataHelper logDataHelper;
 
     /**
      * @author Byron Dong
@@ -20,6 +24,7 @@ public class UserDaoImpl implements UserDao {
      */
     public UserDaoImpl() {
         this.userHelper = new UserDataHelperImpl();
+        logDataHelper = new LogDataHelperImpl();
     }
 
     /**
@@ -59,5 +64,55 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean modify(UserPO userPO) {
         return this.userHelper.modify(userPO);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param userName 用户名称
+     * @return boolean 是否登录
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public boolean login(String userName) {
+        return logDataHelper.login(userName);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param userName 用户名称
+     * @return boolean 是否成功登出
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public boolean logout(String userName) {
+        return logDataHelper.logout(userName);
+    }
+
+    /**
+     * 获取已存在的所有用户名称
+     *
+     * @return boolean 是否成功登出
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public Set<Object> getAllUserNames() {
+        return userHelper.getAllUserNames();
+    }
+
+    /**
+     * 获取已存在的所有用户名称
+     *
+     * @return Set<String> 已登陆用户名称集合
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public Set<Object> getLoginUserNames() {
+        return logDataHelper.getLoginUserNames();
     }
 }

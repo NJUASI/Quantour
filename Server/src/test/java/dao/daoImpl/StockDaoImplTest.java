@@ -21,6 +21,7 @@ public class StockDaoImplTest {
         this.stockDao = new StockDaoImpl();
     }
 
+    @Ignore
     @Test
     public void getStockData() throws Exception {
         List<StockPO> result = stockDao.getStockData("1");
