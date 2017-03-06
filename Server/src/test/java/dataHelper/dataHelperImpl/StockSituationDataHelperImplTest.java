@@ -2,6 +2,7 @@ package dataHelper.dataHelperImpl;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import po.StockSituationPO;
 
@@ -21,6 +22,7 @@ public class StockSituationDataHelperImplTest {
         this.stock = new StockSituationDataHelperImpl();
     }
 
+    @Ignore
     @Test
     public void testGetStockSituation() {
         LocalDate date = LocalDate.of(2010, 3, 4); // TODO 由于数据尚未处理，此处日期不知道结果，待定
