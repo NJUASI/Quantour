@@ -32,4 +32,6 @@ public interface StockDataHelper {
      * TODO 最终返回的VO中包括昨日的收盘价等系列信息
      */
     List<StockPO> getStockRecords(LocalDate date) throws IOException;
+
+    List<StockPO> getStock(String code);
 }

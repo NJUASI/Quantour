@@ -1,5 +1,7 @@
 package dataHelper;
 
+import java.util.Set;
+
 /**
  * Created by Harvey on 2017/3/6.
  */
@@ -24,4 +26,7 @@ public interface LogDataHelper {
      * @return boolean 是否成功登出
      */
     boolean logout(String userName);
+
+
+    Set<Object> getLoginUserNames();
 }

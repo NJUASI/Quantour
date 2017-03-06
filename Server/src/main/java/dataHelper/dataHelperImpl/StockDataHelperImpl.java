@@ -64,5 +64,10 @@ public class StockDataHelperImpl implements StockDataHelper {
         return null;
     }
 
+    @Override
+    public List<StockPO> getStock(String code) {
+        return null;
+    }
+
 
 }

@@ -98,6 +98,11 @@ public class StockDaoImpl implements StockDao {
         return privateStockDataHelper.createPrivateDir(userName);
     }
 
+    @Override
+    public List<StockPO> getStockData(String s) {
+        return null;
+    }
+
     /**
      * 获取特定时间段内的指定股票的所有数据，没有返回null
      *
@@ -112,12 +117,7 @@ public class StockDaoImpl implements StockDao {
     public List<StockPO> getStockData(LocalDate start, LocalDate end, String code) {
         List<StockPO> resultStockList = new ArrayList<StockPO>();
         List<StockPO> tempStockList = null;
-        try {
-            tempStockList = this.stockHelper.getStock(code);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        tempStockList = this.stockHelper.getStock(code);
 
         for(StockPO stockPO : tempStockList){
             if(this.isTrueDate(start,end,stockPO.getDate())){

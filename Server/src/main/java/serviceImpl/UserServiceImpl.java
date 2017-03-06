@@ -4,6 +4,8 @@ import dao.StockDao;
 import dao.UserDao;
 import dao.daoImpl.StockDaoImpl;
 import dao.daoImpl.UserDaoImpl;
+import exceptions.DuplicateLoginException;
+import exceptions.DuplicatedNameException;
 import po.UserPO;
 import service.UserService;
 import vo.UserVO;
@@ -35,14 +37,15 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @description 用户注册
      */
     @Override
-    public boolean registerUser(UserVO userVO) throws RemoteException {
+    public boolean registerUser(UserVO userVO) throws RemoteException, DuplicatedNameException {
 
-        if(userDao.add(new UserPO(userVO))){
-            //给用户创建一个资源文件，存取用户的自选股代码
-            stockDao.createPrivateDir(userVO.userName);
-            return true;
+        if(userDao.getAllUserNames().contains(userVO.userName)){
+            throw new DuplicatedNameException();
         }
-        return false;
+        userDao.add(new UserPO(userVO));
+        //为用户新建一个保存自选股的文件
+        stockDao.createPrivateDir(userVO.userName);
+        return true;
     }
 
     /**
@@ -81,8 +84,11 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
      * @throws RemoteException the remote exception
      */
     @Override
-    public boolean login(String userName) throws RemoteException {
+    public boolean login(String userName) throws RemoteException, DuplicateLoginException {
 
+        if(userDao.getLoginUserNames().contains(userName)){
+            throw new DuplicateLoginException();
+        }
         return userDao.login(userName);
     }
 

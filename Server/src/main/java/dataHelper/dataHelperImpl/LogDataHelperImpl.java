@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Created by Harvey on 2017/3/6.
@@ -53,5 +54,17 @@ public class LogDataHelperImpl implements LogDataHelper{
     public boolean logout(String userName) {
         properties.remove(userName);
         return true;
+    }
+
+    /**
+     * 删除用户登录信息
+     *
+     * @return Set<Object> 已登录用户名称集合
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public Set<Object> getLoginUserNames() {
+        return properties.keySet();
     }
 }

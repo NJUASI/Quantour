@@ -2,6 +2,8 @@ package dataHelper;
 
 import po.UserPO;
 
+import java.util.Set;
+
 /**
  * Created by cuihua on 2017/3/4.
  */
@@ -37,4 +39,12 @@ public interface UserDataHelper {
      */
     boolean modify(UserPO userPO);
 
+    /**
+     * Gets all user names.
+     *
+     * @author Harvey
+     * @updateTime 2017/3/5
+     * @return the all user names 所有用户名称集合
+     */
+    Set<Object> getAllUserNames();
 }

@@ -5,6 +5,7 @@ import po.UserPO;
 
 import java.io.*;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Created by Byron Dong on 2017/3/5.
@@ -88,4 +89,18 @@ public class UserDataHelperImpl implements UserDataHelper {
         properties.put(userPO.getUserName(),userPO.getPassword());
         return true;
     }
+
+    /**
+     * Gets all user names.
+     *
+     * @return the all user names 用户名称集合
+     * @author Harvey
+     * @updateTime 2017/3/5
+     */
+    @Override
+    public Set<Object> getAllUserNames() {
+
+        return properties.keySet();
+    }
+
 }

@@ -78,4 +78,6 @@ public interface StockDao {
      * @updateTime 2017/3/6
      */
     boolean createPrivateDir(String userName);
+
+    List<StockPO> getStockData(String s);
 }

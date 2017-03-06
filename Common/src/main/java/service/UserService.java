@@ -1,5 +1,7 @@
 package service;
 
+import exceptions.DuplicateLoginException;
+import exceptions.DuplicatedNameException;
 import vo.UserVO;
 
 import java.rmi.Remote;
@@ -19,7 +21,7 @@ public interface UserService extends Remote{
      * @throws RemoteException the remote exception
      * @description 用户注册
      */
-    public boolean registerUser(UserVO userVO) throws RemoteException;
+    public boolean registerUser(UserVO userVO) throws RemoteException, DuplicatedNameException;
 
     /**
      * 修改用户信息.
@@ -49,7 +51,7 @@ public interface UserService extends Remote{
      * @return ResultMessage 是否登录成功
      * @throws RemoteException the remote exception
      */
-    boolean login(String userName) throws RemoteException;
+    boolean login(String userName) throws RemoteException, DuplicateLoginException;
 
     /**
      * 用户注销

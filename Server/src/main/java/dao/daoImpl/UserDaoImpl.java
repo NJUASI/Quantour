@@ -7,6 +7,8 @@ import dataHelper.dataHelperImpl.LogDataHelperImpl;
 import dataHelper.dataHelperImpl.UserDataHelperImpl;
 import po.UserPO;
 
+import java.util.Set;
+
 /**
  * Created by cuihua on 2017/3/4.
  */
@@ -88,5 +90,29 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean logout(String userName) {
         return logDataHelper.logout(userName);
+    }
+
+    /**
+     * 获取已存在的所有用户名称
+     *
+     * @return boolean 是否成功登出
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public Set<Object> getAllUserNames() {
+        return userHelper.getAllUserNames();
+    }
+
+    /**
+     * 获取已存在的所有用户名称
+     *
+     * @return Set<String> 已登陆用户名称集合
+     * @author Harvey
+     * @updateTime 2017/3/6
+     */
+    @Override
+    public Set<Object> getLoginUserNames() {
+        return logDataHelper.getLoginUserNames();
     }
 }

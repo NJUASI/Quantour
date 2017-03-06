@@ -1,9 +1,9 @@
 package exceptions;
 
 /**
- * Created by Administrator on 2017/3/5.
+ * Created by Harvey on 2017/3/6.
  */
-public class DateShortException extends Exception {
+public class DuplicatedNameException extends Exception {
     /**
      * Returns the detail message string of this throwable.
      *
@@ -12,6 +12,6 @@ public class DateShortException extends Exception {
      */
     @Override
     public String getMessage() {
-        return "所选日期期间与均线类型不匹配";
+        return "该用户名已存在";
     }
 }
