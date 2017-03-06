@@ -13,6 +13,7 @@ import java.util.Iterator;
  * 股票信息查看、自选股操作
  */
 public interface StockService extends Remote{
+
     /**
      * 显示所有股票信息的列表
      * @auther Harvey

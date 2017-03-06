@@ -12,6 +12,15 @@ import java.util.List;
  */
 public interface StockDao {
 
+    /**
+     * 获取指定股票所有数据
+     *
+     * @author Byron Dong
+     * @updateTime 2017/3/5
+     * @param code 指定股票代码
+     * @return List<StockPO> 特定时间段内的所有指定股票所有数据
+     */
+    List<StockPO> getStockData(String code);
 
     /**
      * 获取特定时间段内的所有指定股票所有数据
@@ -26,14 +35,12 @@ public interface StockDao {
     List<StockPO> getStockData(LocalDate start, LocalDate end, String code);
 
     /**
-     * 获取指定股票所有数据
+     * 获取某日的全部市场股票
      *
-     * @author Byron Dong
-     * @updateTime 2017/3/5
-     * @param code 指定股票代码
-     * @return List<StockPO> 特定时间段内的所有指定股票所有数据
+     * @author cuihua
+     * @updateTime 2017/3/6
+     * @param date 用户选择的日期
+     * @return List<StockPO> 特定日期的的所有股票数据
      */
-    List<StockPO> getStockData(String code);
-
-
+    List<StockPO> getParticularDay(LocalDate date);
 }

@@ -75,6 +75,28 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
+     * 获取某日的全部市场股票，没有返回null
+     *
+     * @author cuihua
+     * @updateTime 2017/3/6
+     * @param date 用户选择的日期
+     * @return List<StockPO> 特定日期的的所有股票数据
+     */
+    @Override
+    public List<StockPO> getParticularDay(LocalDate date) {
+        try {
+            return stockHelper.getStockRecords(date);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+
+    /**
      * 判断时间是否在指定区域内
      *
      * @author Byron Dong
@@ -84,7 +106,7 @@ public class StockDaoImpl implements StockDao {
      * @param now  指定时间
      * @return List<StockPO> 特定时间段内的所有指定股票所有数据
      */
-    private boolean isTrueDate(LocalDate start, LocalDate end,LocalDate now){
+    private boolean isTrueDate(LocalDate start, LocalDate end, LocalDate now){
 
         if(now.isEqual(start)||now.isEqual(end)){
             return true;
