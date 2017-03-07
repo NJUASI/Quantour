@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/5.
  */
-class NavigationBar extends JPanel {
+class NavigationBar extends TempletPanel {
     //K线面板
     private KStringPanel kStringPanel;
     //比较面板
@@ -29,17 +29,8 @@ class NavigationBar extends JPanel {
         setLayout(null);
 
         //the door of function 1
-        JLabel message = new JLabel("Mr.gao");
-        message.setForeground(Color.GREEN);
-        message.setFont(new Font("微软雅黑", Font.BOLD, 25));
-        message.setBounds(50, 50, 300, 50);
-
-
-        add(message);
-
-        //the door of function 1
         JButton kString = new JButton("kString");
-        kString.setBounds(50, 200, 100, 50);
+        kString.setBounds(adaptScreen(50, 200, 150, 50));
         kString.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -52,7 +43,7 @@ class NavigationBar extends JPanel {
 
         //the door of function 2
         JButton compare = new JButton("compare");
-        compare.setBounds(50, 300, 100, 50);
+        compare.setBounds(adaptScreen(50, 350, 150, 50));
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -65,7 +56,7 @@ class NavigationBar extends JPanel {
 
         //the door of function 3
         JButton thermometer = new JButton("thermometer");
-        thermometer.setBounds(50, 400, 100, 50);
+        thermometer.setBounds(adaptScreen(50, 500, 150, 50));
         thermometer.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -78,7 +69,7 @@ class NavigationBar extends JPanel {
 
         //the door of function 4
         JButton favorites = new JButton("favorites");
-        favorites.setBounds(50, 500, 100, 50);
+        favorites.setBounds(adaptScreen(50, 650, 150, 50));
         favorites.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -91,8 +82,8 @@ class NavigationBar extends JPanel {
         add(favorites);
 
         //log out
-        JButton logout = new JButton("logout");
-        logout.setBounds(50, 600, 70, 70);
+        JButton logout = new JButton("注销");
+        logout.setBounds(50, 820, 70, 35);
         logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -102,8 +93,8 @@ class NavigationBar extends JPanel {
         add(logout);
 
         //return to main panel
-        JButton homePanel = new JButton("homePanel");
-        homePanel.setBounds(150, 600, 70, 70);
+        JButton homePanel = new JButton("主页");
+        homePanel.setBounds(130, 820, 70, 35);
         homePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

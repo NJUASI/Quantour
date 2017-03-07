@@ -11,15 +11,15 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/5.
  */
-class LoginPanel extends JPanel {
+class LoginPanel extends TempletPanel{
     //注册面板
     RegisterPanel registerPanel;
     //功能菜单
     MenuPanel menuPanel;
     //屏幕大小
-    WindowData windowData;
-    int width;
-    int height;
+//    WindowData windowData;
+//    int width;
+//    int height;
     /**
      * 构造器
      *
@@ -29,16 +29,10 @@ class LoginPanel extends JPanel {
      * @updateTime 2017/3/5
      */
     public LoginPanel() {
-        WindowData windowData = WindowData.getInstance();
-
-        width = windowData.getWidth();
-        height =windowData.getHeight();
-        setLayout(null);
-
         //to write your message
         JTextField admin=new JTextField("Enter your admin");
         admin.setFont(new Font("微软雅黑",Font.BOLD,25));
-        admin.setBounds(width*300/1920,height*400/1080,width*300/1920,height*50/1080);
+        admin.setBounds(adaptScreen(300,400,300,50));
 //        admin.setOpaque(false);
 //        admin.setBorder(null);
 //        admin.setForeground(new Color(122,2,2));
@@ -47,7 +41,8 @@ class LoginPanel extends JPanel {
 
         JPasswordField password=new JPasswordField();
         password.setFont(new Font("微软雅黑",Font.BOLD,25));
-        password.setBounds(width*300/1920,height*500/1080,width*300/1920,height*50/1080);
+        password.setBounds(adaptScreen(300,500,300,50));
+
 //        password.setBorder(null);
 //        password.setOpaque(false);
         password.setVisible(true);
@@ -55,7 +50,7 @@ class LoginPanel extends JPanel {
 
         //the Button setting of login to mainPanel
         JButton login =new JButton("登录");
-        login.setBounds(width*360/1920,height*600/1080,width*80/1920,height*40/1080);
+        login.setBounds(adaptScreen(360,600,80,40));
         login.setFont(new Font("",Font.CENTER_BASELINE,20));
         login.addMouseListener(new MouseAdapter() {
             @Override
@@ -82,7 +77,7 @@ class LoginPanel extends JPanel {
         JButton openRegister =new JButton("注册");
         openRegister.setForeground(Color.BLACK);
         openRegister.setFont(new Font("",Font.CENTER_BASELINE,15));
-        openRegister.setBounds(width*470/1920,height*610/1080,width*60/1920,height*30/1080);
+        openRegister.setBounds(adaptScreen(470,610,60,30));
         openRegister.setContentAreaFilled(false);
         openRegister.addMouseListener(new MouseAdapter() {
             @Override
@@ -102,12 +97,6 @@ class LoginPanel extends JPanel {
             }
         });
         add(openRegister);
-
-        ImageIcon bgPicture =new ImageIcon(getClass().getClassLoader().getResource("bg.png"));
-        bgPicture.setImage(bgPicture.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
-        JLabel bg= new JLabel(bgPicture);
-
-        bg.setBounds(0,0,width,height);
         add(bg);
     }
 }

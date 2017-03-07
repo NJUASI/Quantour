@@ -17,7 +17,7 @@ import javax.swing.*;
 import com.qt.datapicker.DatePicker;
 
 
-public class DatePickerPanel extends JPanel {
+public class DatePickerPanel extends TempletPanel {
     ObservingTextField jtf;
     /**
      * 加载日期选择器组件
@@ -31,7 +31,7 @@ public class DatePickerPanel extends JPanel {
 
     public void launch() {
         setLayout(null);
-        this.setBounds(0, 0, 175, 23);
+        this.setBounds(adaptScreen(0,0,180,35));
         ObservingTextField jtf = new ObservingTextField();
         jtf.setEditable(false);
         JButton btn = new JButton("日历");
@@ -41,14 +41,13 @@ public class DatePickerPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 DatePicker dp = new DatePicker(jtf, Locale.CHINESE);
-
                 Date selectedDate = dp.parseDate(jtf.getText());
                 dp.setSelectedDate(selectedDate);
                 dp.start(jtf);
             }
         });
-        jtf.setBounds(0, 0, 110, 23);
-        btn.setBounds(115, 0, 60, 23);
+        jtf.setBounds(adaptScreen(0, 0, 110, 35));
+        btn.setBounds(adaptScreen(120, 0, 60, 35));
         this.add(jtf);
         this.add(btn);
         this.setVisible(true);

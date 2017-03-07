@@ -17,7 +17,7 @@ public class KStringPanel extends NavigationBar {
     JTextField num;
     JButton search;
     JButton compare;
-
+    JButton favorite;
     /**
      * k线面板构造器
      *
@@ -31,6 +31,7 @@ public class KStringPanel extends NavigationBar {
         name = new JTextField();
         num = new JTextField();
         search =new JButton("搜索");
+        favorite =new JButton("收藏");
         compare =new JButton("加入比较");
         init();
     }
@@ -45,18 +46,18 @@ public class KStringPanel extends NavigationBar {
      */
     private void init() {
         startDate = new DatePickerPanel();
-        startDate.setLocation(400, 400);
+        startDate.setLocation(width*400/1920, height*50/1030);
         add(startDate);
         endDate = new DatePickerPanel();
-        endDate.setLocation(600, 400);
+        endDate.setLocation(width*650/1920, height*50/1030);
         add(endDate);
-        name.setBounds(650, 450, 100, 50);
+        name.setBounds(adaptScreen(900, 50, 150, 35));
         add(name);
 
-        num.setBounds(750, 450, 100, 50);
+        num.setBounds(adaptScreen(1100, 50, 50, 35));
         add(num);
         //搜索按钮
-        search.setBounds(750, 550, 100, 50);
+        search.setBounds(adaptScreen(1300, 50, 70, 35));
         search.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -65,7 +66,7 @@ public class KStringPanel extends NavigationBar {
         });
         add(search);
         //加入比较按钮
-        compare.setBounds(750, 550, 100, 50);
+        compare.setBounds(adaptScreen(1400, 50, 100, 35));
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -74,6 +75,14 @@ public class KStringPanel extends NavigationBar {
         });
         add(compare);
 
+        favorite.setBounds(adaptScreen(1550, 50, 70, 35));
+        favorite.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+        });
+        add(favorite);
         // 获取日期的方法
         //getDate
     }

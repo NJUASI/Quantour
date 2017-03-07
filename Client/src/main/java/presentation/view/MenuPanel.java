@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/5.
  */
-class MenuPanel extends JPanel {
+class MenuPanel extends TempletPanel{
     //K线面板
     private KStringPanel kStringPanel;
     //比较面板
@@ -27,20 +27,10 @@ class MenuPanel extends JPanel {
      * @updateTime 2017/3/5
      */
     public MenuPanel() {
-        setLayout(null);
-
-        //the door of function 1
-        JLabel message =new JLabel("welcome Mr.gao");
-        message.setForeground(Color.GREEN);
-        message.setFont(new Font("微软雅黑",Font.BOLD,25));
-        message.setBounds(900,20,300,50);
-
-
-        add(message);
 
         //the door of function 1
         JButton kString =new JButton("kString");
-        kString.setBounds(400, 400, 200, 200);
+        kString.setBounds(adaptScreen(width/2-200, height/2-200, 200, 200));
         kString.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -53,7 +43,7 @@ class MenuPanel extends JPanel {
 
         //the door of function 2
         JButton compare =new JButton("compare");
-        compare.setBounds(600, 400, 200, 200);
+        compare.setBounds(adaptScreen(width/2, height/2-200, 200, 200));
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -66,7 +56,7 @@ class MenuPanel extends JPanel {
 
         //the door of function 3
         JButton thermometer =new JButton("thermometer");
-        thermometer.setBounds(400, 600, 200, 200);
+        thermometer.setBounds(adaptScreen(width/2-200, height/2, 200, 200));
         thermometer.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -79,7 +69,7 @@ class MenuPanel extends JPanel {
 
         //the door of function 4
         JButton favorites =new JButton("favorites");
-        favorites.setBounds(600, 600, 200, 200);
+        favorites.setBounds(adaptScreen(width/2, height/2, 200, 200));
         favorites.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -92,8 +82,8 @@ class MenuPanel extends JPanel {
         add(favorites);
 
         //log out
-        JButton logout =new JButton("logout");
-        logout.setBounds(100, 900, 20, 20);
+        JButton logout =new JButton("注销");
+        logout.setBounds(100, 900, 60, 30);
         logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -105,6 +95,6 @@ class MenuPanel extends JPanel {
             }
         });
         add(logout);
-
+        add(bg);
     }
 }

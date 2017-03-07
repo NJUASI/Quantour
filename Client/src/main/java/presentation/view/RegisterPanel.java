@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/5.
  */
-class RegisterPanel extends JPanel {
+class RegisterPanel extends TempletPanel {
     /**
      * 构造器
      *
@@ -18,22 +18,10 @@ class RegisterPanel extends JPanel {
      * @updateTime 2017/3/5
      */
     public RegisterPanel() {
-        setLayout(null);
-
         //the field to write your message to register
-        JTextField name=new JTextField("Enter your name");
-        name.setForeground(Color.GREEN);
-        name.setFont(new Font("微软雅黑",Font.BOLD,25));
-        name.setBounds(190,163,300,50);
-//        name.setOpaque(false);
-//        name.setBorder(null);
-        name.setVisible(true);
-        add(name);
-
-        JTextField admin=new JTextField("Enter your Phone/Admin");
-        admin.setForeground(Color.GREEN);
+        JTextField admin=new JTextField("your Phone/Admin");
         admin.setFont(new Font("微软雅黑",Font.BOLD,25));
-        admin.setBounds(190,203,300,50);
+        admin.setBounds(adaptScreen(300,340,300,50));
 //        admin.setOpaque(false);
 //        admin.setBorder(null);
         admin.setVisible(true);
@@ -41,26 +29,27 @@ class RegisterPanel extends JPanel {
 
 
         JPasswordField password=new JPasswordField();
-        password.setForeground(Color.GREEN);
         password.setFont(new Font("微软雅黑",Font.BOLD,25));
-        password.setBounds(190,282,300,50);
+        password.setBounds(adaptScreen(300,420,300,50));
 //        password.setBorder(null);
 //        password.setOpaque(false);
         password.setVisible(true);
         add(password);
 
         JPasswordField password2=new JPasswordField();
-        password2.setForeground(Color.GREEN);
         password2.setFont(new Font("微软雅黑",Font.BOLD,25));
-        password2.setBounds(190,362,300,50);
+        password2.setBounds(adaptScreen(300,500,300,50));
 //        password2.setBorder(null);
 //        password2.setOpaque(false);
         password2.setVisible(true);
         add(password2);
 
         //the Button setting of opening login panel
-        JButton openLogin =new JButton("login");
-        openLogin.setBounds(210, 420, 80, 40);
+        JButton openLogin =new JButton("登录");
+        openLogin.setBounds(adaptScreen(470,610,60,30));
+        openLogin.setForeground(Color.BLACK);
+        openLogin.setFont(new Font("",Font.CENTER_BASELINE,15));
+        openLogin.setContentAreaFilled(false);
         openLogin.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -71,8 +60,9 @@ class RegisterPanel extends JPanel {
         add(openLogin);
 
         //the Button setting of register
-        JButton register =new JButton("register");
-        register.setBounds(330, 420, 80, 40);
+        JButton register =new JButton("注册");
+        register.setBounds(adaptScreen(360,600,80,40));
+        register.setFont(new Font("",Font.CENTER_BASELINE,20));
         register.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -81,5 +71,6 @@ class RegisterPanel extends JPanel {
             }
         });
         add(register);
+        add(bg);
     }
 }
