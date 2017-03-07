@@ -65,7 +65,7 @@ public class KStringPanel extends NavigationBar {
         });
         add(search);
         //加入比较按钮
-        compare.setBounds(adaptScreen(1400, 50, 100, 35));
+        compare.setBounds(adaptScreen(1400, 50, 120, 35));
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -82,6 +82,7 @@ public class KStringPanel extends NavigationBar {
             }
         });
         add(favorite);
+        add(bg);
         // 获取日期的方法
         //getDate
     }

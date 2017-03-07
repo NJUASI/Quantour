@@ -30,7 +30,7 @@ class MenuPanel extends TempletPanel{
 
         //the door of function 1
         JButton kString =new JButton("kString");
-        kString.setBounds(adaptScreen(width/2-200, height/2-200, 200, 200));
+        kString.setBounds(width/2-200*width/1920, height/2-200*height/1030, 200*width/1920, 200*height/1030);
         kString.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

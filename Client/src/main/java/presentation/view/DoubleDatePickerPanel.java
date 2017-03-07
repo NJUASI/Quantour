@@ -27,8 +27,11 @@ public class DoubleDatePickerPanel  extends JFXPanel {
             @Override
             public void run() {
                 Group root = new Group();
-                Scene scene = new Scene(root, width*150/1920, 35*height/1030);
-                setScene(scene);
+                Scene scene = new Scene(root, width*370/1920, 35*height/1030);
+//                scene.setFill(null);
+//                root.setOpacity(0.1);
+//                setOpaque(false);
+//                setScene(scene);
                 initDatePicker();
                 root.getChildren().add(startDate);
                 root.getChildren().add(endDate);
@@ -48,32 +51,12 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 
         endDate = new DatePicker();
         endDate.setValue(LocalDate.now());
-        endDate.setLayoutX(220);
+        endDate.setLayoutX(width*220/1920);
         endDate.setLayoutY(0);
         endDate.setMinSize(width*150/1920,35*height/1030);
         endDate.setPrefSize(width*150/1920,35*height/1030);
         endDate.setMaxSize(width*150/1920,35*height/1030);
 
-        Callback<DatePicker, DateCell> dayCellFactory1 =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-
-                                if (item.isBefore(
-                                        LocalDate.now())
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #ffc0cb;");
-                                }
-                            }
-                        };
-                    }
-                };
-        startDate.setDayCellFactory(dayCellFactory1);
         Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
                     @Override

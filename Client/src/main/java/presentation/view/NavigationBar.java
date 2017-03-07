@@ -34,8 +34,8 @@ class NavigationBar extends TempletPanel {
         kString.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                kStringPanel = KStringPanel.getInstance();
-                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
+//                kStringPanel = KStringPanel.getInstance();
+//                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
             }
         });
@@ -83,7 +83,7 @@ class NavigationBar extends TempletPanel {
 
         //log out
         JButton logout = new JButton("注销");
-        logout.setBounds(50, 820, 70, 35);
+        logout.setBounds(adaptScreen(50, 820, 70, 35));
         logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -94,7 +94,7 @@ class NavigationBar extends TempletPanel {
 
         //return to main panel
         JButton homePanel = new JButton("主页");
-        homePanel.setBounds(130, 820, 70, 35);
+        homePanel.setBounds(adaptScreen(130, 820, 70, 35));
         homePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

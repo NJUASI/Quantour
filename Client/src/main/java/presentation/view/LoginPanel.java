@@ -31,7 +31,7 @@ class LoginPanel extends TempletPanel{
     public LoginPanel() {
         //to write your message
         JTextField admin=new JTextField("Enter your admin");
-        admin.setFont(new Font("微软雅黑",Font.BOLD,25));
+        admin.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
         admin.setBounds(adaptScreen(300,400,300,50));
 //        admin.setOpaque(false);
 //        admin.setBorder(null);
@@ -40,7 +40,7 @@ class LoginPanel extends TempletPanel{
         add(admin);
 
         JPasswordField password=new JPasswordField();
-        password.setFont(new Font("微软雅黑",Font.BOLD,25));
+        password.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
         password.setBounds(adaptScreen(300,500,300,50));
 
 //        password.setBorder(null);
@@ -51,7 +51,7 @@ class LoginPanel extends TempletPanel{
         //the Button setting of login to mainPanel
         JButton login =new JButton("登录");
         login.setBounds(adaptScreen(360,600,80,40));
-        login.setFont(new Font("",Font.CENTER_BASELINE,20));
+        login.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
         login.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -63,11 +63,14 @@ class LoginPanel extends TempletPanel{
                 }catch (Exception el){
 
                 }
-                admin.setText("");
+                admin.setText("Enter your admin");
                 password.setText("");
-                menuPanel=new MenuPanel();
-                MainPanel.getCardPanel().add(menuPanel, "menuPanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
+                KStringPanel kStringPanel=KStringPanel.getInstance();
+                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
+                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
+//                menuPanel=new MenuPanel();
+//                MainPanel.getCardPanel().add(menuPanel, "menuPanel");
+//                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
             }
         });
         add(login);
@@ -76,7 +79,7 @@ class LoginPanel extends TempletPanel{
         //the Button setting of opening register panel
         JButton openRegister =new JButton("注册");
         openRegister.setForeground(Color.BLACK);
-        openRegister.setFont(new Font("",Font.CENTER_BASELINE,15));
+        openRegister.setFont(new Font("",Font.CENTER_BASELINE,15*width/1920));
         openRegister.setBounds(adaptScreen(470,610,60,33));
         openRegister.setContentAreaFilled(false);
         openRegister.addMouseListener(new MouseAdapter() {

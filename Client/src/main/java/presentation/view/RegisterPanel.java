@@ -20,7 +20,7 @@ class RegisterPanel extends TempletPanel {
     public RegisterPanel() {
         //the field to write your message to register
         JTextField admin=new JTextField("your Phone/Admin");
-        admin.setFont(new Font("微软雅黑",Font.BOLD,25));
+        admin.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
         admin.setBounds(adaptScreen(300,340,300,50));
 //        admin.setOpaque(false);
 //        admin.setBorder(null);
@@ -29,7 +29,7 @@ class RegisterPanel extends TempletPanel {
 
 
         JPasswordField password=new JPasswordField();
-        password.setFont(new Font("微软雅黑",Font.BOLD,25));
+        password.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
         password.setBounds(adaptScreen(300,420,300,50));
 //        password.setBorder(null);
 //        password.setOpaque(false);
@@ -37,7 +37,7 @@ class RegisterPanel extends TempletPanel {
         add(password);
 
         JPasswordField password2=new JPasswordField();
-        password2.setFont(new Font("微软雅黑",Font.BOLD,25));
+        password2.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
         password2.setBounds(adaptScreen(300,500,300,50));
 //        password2.setBorder(null);
 //        password2.setOpaque(false);

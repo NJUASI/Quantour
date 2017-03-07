@@ -31,14 +31,7 @@ public class FavoritesPanel extends NavigationBar {
             }
         });
         add(kString);
-        JTextField admin=new JTextField("Enter your admin");
-        admin.setForeground(Color.GREEN);
-        admin.setFont(new Font("微软雅黑",Font.BOLD,25));
-        admin.setBounds(190,203,300,50);
-//        admin.setOpaque(false);
-//        admin.setBorder(null);
-        admin.setVisible(true);
-        add(admin);
+
     }
 
     /**
