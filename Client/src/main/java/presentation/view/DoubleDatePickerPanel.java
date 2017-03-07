@@ -31,7 +31,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 //                scene.setFill(null);
 //                root.setOpacity(0.1);
 //                setOpaque(false);
-//                setScene(scene);
+                setScene(scene);
                 initDatePicker();
                 root.getChildren().add(startDate);
                 root.getChildren().add(endDate);
