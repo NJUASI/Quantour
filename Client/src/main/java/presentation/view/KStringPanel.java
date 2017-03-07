@@ -1,5 +1,7 @@
 package presentation.view;
 
+import javafx.scene.control.DatePicker;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,8 +13,7 @@ import java.awt.event.MouseEvent;
 public class KStringPanel extends NavigationBar {
     //k线面板
     private static KStringPanel kStringPanel;
-    DatePickerPanel startDate;
-    DatePickerPanel endDate;
+    DoubleDatePickerPanel datePanel;
     JTextField name;
     JTextField num;
     JButton search;
@@ -45,12 +46,10 @@ public class KStringPanel extends NavigationBar {
      * @updateTime 2017/3/6
      */
     private void init() {
-        startDate = new DatePickerPanel();
-        startDate.setLocation(width*400/1920, height*50/1030);
-        add(startDate);
-        endDate = new DatePickerPanel();
-        endDate.setLocation(width*650/1920, height*50/1030);
-        add(endDate);
+        datePanel = new DoubleDatePickerPanel();
+        datePanel.setBounds(width*400/1920, height*50/1030,370*width/1920,35*height/1030);
+        add(datePanel);
+
         name.setBounds(adaptScreen(900, 50, 150, 35));
         add(name);
 

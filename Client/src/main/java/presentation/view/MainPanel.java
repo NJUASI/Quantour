@@ -29,7 +29,8 @@ class MainPanel extends JFrame {
     public MainPanel() {
         try
         {
-            BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.translucencyAppleLike;
+            BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
+            UIManager.put("RootPane.setupButtonVisible", false);
             BeautyEyeLNFHelper.launchBeautyEyeLNF();
         }
         catch(Exception e)

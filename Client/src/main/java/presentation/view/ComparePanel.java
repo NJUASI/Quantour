@@ -12,8 +12,7 @@ class ComparePanel extends NavigationBar {
     //比较面板
     private static ComparePanel comparePanel;
 
-    DatePickerPanel startDate;
-    DatePickerPanel endDate;
+    DoubleDatePickerPanel datePanel;
     JTextField name1;
     JTextField num1;
     JTextField name2;
@@ -56,31 +55,30 @@ class ComparePanel extends NavigationBar {
      * @updateTime 2017/3/6
      */
     private void init() {
-        startDate = new DatePickerPanel();
-        startDate.setLocation(400, 400);
-        add(startDate);
-        endDate = new DatePickerPanel();
-        endDate.setLocation(600, 400);
-        add(endDate);
+        datePanel = new DoubleDatePickerPanel();
+        datePanel.setBounds(width * 400 / 1920, height * 50 / 1030, 370 * width / 1920, 35 * height / 1030);
+        add(datePanel);
         name1 = new JTextField();
         num1 = new JTextField();
         name2 = new JTextField();
         num2 = new JTextField();
-        compare =new JButton("加入比较");
-        name1.setBounds(650, 450, 100, 50);
+
+        name1.setBounds(adaptScreen(900, 30, 150, 35));
         add(name1);
 
-        num1.setBounds(750, 450, 100, 50);
+        num1.setBounds(adaptScreen(1100, 30, 150, 35));
         add(num1);
 
-        name2.setBounds(650, 500, 100, 50);
+        name2.setBounds(adaptScreen(900, 90, 150, 35));
         add(name2);
 
-        num2.setBounds(750, 500, 100, 50);
+        num2.setBounds(adaptScreen(1100, 90, 150, 35));
         add(num2);
 
         //搜索按钮
-        compare.setBounds(750, 550, 100, 50);
+        compare = new JButton("比较");
+        compare.setBounds(adaptScreen(1300, 50, 70, 35));
+
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

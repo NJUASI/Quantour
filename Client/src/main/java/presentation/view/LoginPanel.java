@@ -77,7 +77,7 @@ class LoginPanel extends TempletPanel{
         JButton openRegister =new JButton("注册");
         openRegister.setForeground(Color.BLACK);
         openRegister.setFont(new Font("",Font.CENTER_BASELINE,15));
-        openRegister.setBounds(adaptScreen(470,610,60,30));
+        openRegister.setBounds(adaptScreen(470,610,60,33));
         openRegister.setContentAreaFilled(false);
         openRegister.addMouseListener(new MouseAdapter() {
             @Override
