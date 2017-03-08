@@ -95,12 +95,12 @@ class MainPanel extends JFrame {
 //     * @author 61990
 //     * @updateTime 2017/3/5
 //     */
-//    public static MainPanel getInstance() {
-//        if (mainPanel == null) {
-//            mainPanel = new MainPanel();
-//        }
-//        return mainPanel;
-//    }
+    public static MainPanel getInstance() {
+        if (mainPanel == null) {
+            mainPanel = new MainPanel();
+        }
+        return mainPanel;
+    }
 
     /**
      * @param

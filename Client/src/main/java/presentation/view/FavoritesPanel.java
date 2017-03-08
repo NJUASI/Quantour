@@ -31,7 +31,7 @@ public class FavoritesPanel extends NavigationBar {
             }
         });
         add(kString);
-
+        add(bg);
     }
 
     /**

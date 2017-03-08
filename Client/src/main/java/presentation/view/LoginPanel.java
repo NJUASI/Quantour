@@ -15,7 +15,8 @@ class LoginPanel extends TempletPanel{
     //注册面板
     RegisterPanel registerPanel;
     //功能菜单
-    MenuPanel menuPanel;
+//    MenuPanel menuPanel;
+    KStringPanel kStringPanel;
     //屏幕大小
 //    WindowData windowData;
 //    int width;
@@ -48,7 +49,7 @@ class LoginPanel extends TempletPanel{
         password.setVisible(true);
         add(password);
 
-        //the Button setting of login to mainPanel
+       //the Button setting of login to mainPanel
         JButton login =new JButton("登录");
         login.setBounds(adaptScreen(360,600,80,40));
         login.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
@@ -65,12 +66,13 @@ class LoginPanel extends TempletPanel{
                 }
                 admin.setText("Enter your admin");
                 password.setText("");
-//                KStringPanel kStringPanel=KStringPanel.getInstance();
-//                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
-//                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
-                menuPanel=new MenuPanel();
-                MainPanel.getCardPanel().add(menuPanel, "menuPanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
+                kStringPanel=KStringPanel.getInstance();
+                MainPanel.getInstance().getCardPanel().add(kStringPanel, "kStringPanel");
+                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
+
+//                menuPanel=new MenuPanel();
+//                MainPanel.getCardPanel().add(menuPanel, "menuPanel");
+//                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
             }
         });
         add(login);

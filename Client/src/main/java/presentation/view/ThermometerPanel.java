@@ -26,6 +26,7 @@ public class ThermometerPanel extends NavigationBar {
         search = new JButton("搜索");
         search.setBounds(adaptScreen(900, 50, 150, 35));
         add(search);
+        add(bg);
     }
 
     /**

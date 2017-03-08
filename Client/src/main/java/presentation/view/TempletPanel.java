@@ -21,8 +21,7 @@ public class TempletPanel extends JPanel {
      * @updateTime 2017/3/7
      */
     public TempletPanel(){
-        WindowData windowData = WindowData.getInstance();
-
+        windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height =windowData.getHeight();
         setLayout(null);

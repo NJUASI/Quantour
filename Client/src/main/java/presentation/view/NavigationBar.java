@@ -34,10 +34,9 @@ class NavigationBar extends TempletPanel {
         kString.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-
 //                kStringPanel = KStringPanel.getInstance();
 //                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
+                MainPanel.getInstance().getCard().show(MainPanel.getCardPanel(), "kStringPanel");
             }
         });
         add(kString);
@@ -84,29 +83,33 @@ class NavigationBar extends TempletPanel {
 
         //log out
         JButton logout = new JButton("注销");
-        logout.setBounds(adaptScreen(50, 820, 70, 35));
+        logout.setBounds(adaptScreen(90, 820, 70, 35));
         logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "loginPanel");
-            }
-        });
-        add(logout);
-
-        //return to main panel
-        JButton homePanel = new JButton("主页");
-        homePanel.setBounds(adaptScreen(130, 820, 70, 35));
-        homePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
                 KStringPanel.getInstance().refresh();
                 ComparePanel.getInstance().refresh();
                 ThermometerPanel.getInstance().refresh();
                 FavoritesPanel.getInstance().refresh();
             }
         });
-        add(homePanel);
+        add(logout);
+
+        //return to main panel
+//        JButton homePanel = new JButton("主页");
+//        homePanel.setBounds(adaptScreen(130, 820, 70, 35));
+//        homePanel.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
+//                KStringPanel.getInstance().refresh();
+//                ComparePanel.getInstance().refresh();
+//                ThermometerPanel.getInstance().refresh();
+//                FavoritesPanel.getInstance().refresh();
+//            }
+//        });
+//        add(homePanel);
     }
 }
 
