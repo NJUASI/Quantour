@@ -12,10 +12,10 @@ import java.time.LocalDate;
 public class StockSituationDataHelperImpl implements StockSituationDataHelper {
 
     //未添加日期的文件路径
-    private String path ;
+    private String path;
 
     //文件后缀名
-    private String suffix ;
+    private String suffix;
 
 
     /**
@@ -60,14 +60,12 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
      * @return StockSituationPO 指定市场温度计数据
      */
     private StockSituationPO reader(String path){
-        File file = new File(path);
         StockSituationPO result = null;
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             String line = reader.readLine();
             reader.close();
-            result = new StockSituationPO(line.split("   "));
-
+            result = new StockSituationPO(line.split("\t"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("File is not existed");

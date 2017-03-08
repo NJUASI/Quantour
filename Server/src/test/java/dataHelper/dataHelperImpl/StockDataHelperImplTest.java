@@ -6,6 +6,7 @@ import junit.framework.TestSuite;
 import junit.framework.TestCase;
 import po.StockPO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -37,6 +38,15 @@ public class StockDataHelperImplTest extends TestCase {
     public void testGetStock01() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("1");
         assertEquals(2383, result.size());
+
+        StockPO thisStock = result.get(0);
+        assertEquals(LocalDate.of(2014, 4, 29), thisStock.getDate());
+        assertEquals(11.25, thisStock.getHigh(), 0);
+        assertEquals(10.92, thisStock.getLow(), 0);
+        assertEquals(11.02, thisStock.getOpen(), 0);
+        assertEquals(11.16, thisStock.getClose(), 0);
+        assertEquals("41362100", thisStock.getVolume());
+
     }
 
     public void testGetStock02() throws Exception {

@@ -48,7 +48,7 @@ public interface UserService extends Remote{
      * @auther Harvey
      * @updateTime 2017/3/5
      * @param userName 用户名称
-     * @return ResultMessage 是否登录成功
+     * @return boolean 是否登录成功
      * @throws RemoteException the remote exception
      */
     boolean login(String userName) throws RemoteException, DuplicateLoginException;
@@ -58,7 +58,7 @@ public interface UserService extends Remote{
      * @auther Harvey
      * @updateTime 2017/3/5
      * @param userName 用户姓名
-     * @return ResultMessage  是否注销成功
+     * @return boolean  是否注销成功
      * @throws RemoteException the remote exception
      */
     public boolean logout(String userName) throws RemoteException;

@@ -15,7 +15,7 @@ public interface UserDao {
      * @author Byron Dong
      * @updateTime 2017/3/5
      * @param userPO 用户信息载体
-     * @return ResultMessage 是否成功添加用户
+     * @return boolean 是否成功添加用户
      */
      boolean add(UserPO userPO);
 
