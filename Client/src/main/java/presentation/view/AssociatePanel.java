@@ -15,7 +15,7 @@ public class AssociatePanel extends ScrollPane {
         WindowData windowData = WindowData.getInstance();
         int width = windowData.getWidth();
         int height =windowData.getHeight();
-        setSize(250,200);
+        setSize(250*width/1920,200*height/1030);
 
         list = new JList();
 

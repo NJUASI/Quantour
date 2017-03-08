@@ -155,9 +155,7 @@ public class KStringPanel extends NavigationBar {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(900, 86, 250, 200));
-                associatePanel.updateText(name.getText());
+                associatePanel.setVisible(false);
             }
 
             @Override
@@ -171,19 +169,19 @@ public class KStringPanel extends NavigationBar {
         dt1.addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                changedUpdate(e);
+                associatePanel.setVisible(true);
+                associatePanel.setBounds(adaptScreen(900, 86, 250, 200));
+                associatePanel.updateText(num.getText());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                changedUpdate(e);
+                associatePanel.setVisible(true);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(900, 86, 250, 200));
-               associatePanel.updateText(num.getText());
+
             }
         });
 
