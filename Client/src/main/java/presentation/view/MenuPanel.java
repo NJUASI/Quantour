@@ -36,6 +36,12 @@ class MenuPanel extends TempletPanel{
             public void mousePressed(MouseEvent e) {
                 kStringPanel=KStringPanel.getInstance();
                 MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
+                comparePanel=ComparePanel.getInstance();
+                MainPanel.getCardPanel().add(comparePanel, "comparePanel");
+                thermometerPanel=thermometerPanel.getInstance();
+                MainPanel.getCardPanel().add(thermometerPanel, "thermometerPanel");
+                favoritesPanel=FavoritesPanel.getInstance();
+                MainPanel.getCardPanel().add(favoritesPanel, "favoritesPanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
             }
         });

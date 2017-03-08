@@ -65,12 +65,12 @@ class LoginPanel extends TempletPanel{
                 }
                 admin.setText("Enter your admin");
                 password.setText("");
-                KStringPanel kStringPanel=KStringPanel.getInstance();
-                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
-//                menuPanel=new MenuPanel();
-//                MainPanel.getCardPanel().add(menuPanel, "menuPanel");
-//                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
+//                KStringPanel kStringPanel=KStringPanel.getInstance();
+//                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
+//                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
+                menuPanel=new MenuPanel();
+                MainPanel.getCardPanel().add(menuPanel, "menuPanel");
+                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
             }
         });
         add(login);

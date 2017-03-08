@@ -34,6 +34,7 @@ class NavigationBar extends TempletPanel {
         kString.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+
 //                kStringPanel = KStringPanel.getInstance();
 //                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
