@@ -100,12 +100,7 @@ class ComparePanel extends NavigationBar {
         num2.setBounds(adaptScreen(1100, 70, 50, 35));
         add(num2);
 
-        compare.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
 
-            }
-        });
         add(compare);
         add(bg);
         addFunction();

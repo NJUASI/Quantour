@@ -176,7 +176,7 @@ public class KStringPanel extends NavigationBar {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
+                associatePanel.setVisible(false);
             }
 
             @Override
@@ -184,6 +184,37 @@ public class KStringPanel extends NavigationBar {
 
             }
         });
-
+        compare.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
+        search.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
+        favorite.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
+    }
+    void refreshAssociate(){
+        name.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                associatePanel.setVisible(false);
+            }
+        });
+        num.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                associatePanel.setVisible(false);
+            }
+        });
     }
 }
