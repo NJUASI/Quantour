@@ -70,7 +70,7 @@ public class Chart {
         }catch(Exception e){
             e.printStackTrace();
         }
-        xAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
+        xAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期，使图形看上去连续
         xAxis.setAutoTickUnitSelection(false);//设置不采用自动选择刻度值
         xAxis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);//设置标记的位置
         xAxis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位

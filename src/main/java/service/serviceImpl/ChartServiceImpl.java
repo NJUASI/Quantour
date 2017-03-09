@@ -32,6 +32,16 @@ public class ChartServiceImpl implements ChartService {
         stockDao = new StockDaoImpl();
     }
 
+    @Override
+    public Iterator<StockVO> getSingleStockRecords(String code) {
+        List<StockVO> stockVOList = new ArrayList<StockVO>();
+        List<StockPO> tempList = this.stockDao.getStockData(code);
+        for (StockPO po : tempList) {
+            stockVOList.add(new StockVO(po));
+        }
+        return stockVOList.iterator();
+    }
+
     /**
      * 获取单支股票的一段日期内的信息
      * @auther Harvey

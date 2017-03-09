@@ -18,6 +18,15 @@ import java.util.Map;
 public interface ChartService extends Remote{
 
     /**
+     *  获取单支股票的所有数据
+     * @auther Byron Dong
+     * @updateTime 2017/3/9
+     * @param code 股票代码
+     * @return 特定股票的所有交易信息
+     */
+    Iterator<StockVO> getSingleStockRecords(String code);
+
+    /**
      *  获取单支股票的一段日期内的信息
      * @auther Harvey
      * @updateTime 2017/3/5

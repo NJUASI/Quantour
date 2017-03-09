@@ -7,6 +7,7 @@ import dataHelper.dataHelperImpl.PrivateStockDataHelperImpl;
 import dataHelper.dataHelperImpl.StockDataHelperImpl;
 import po.StockPO;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,9 +98,23 @@ public class StockDaoImpl implements StockDao {
         return privateStockDataHelper.createPrivateDir(userName);
     }
 
+    /**
+     * 获取特定时间段内的指定股票的所有数据，没有返回null
+     *
+     * @author Byron Dong
+     * @updateTime 2017/3/5
+     * @param s  指定股票代码
+     * @return List<StockPO> 特定时间段内的所有指定股票所有数据
+     */
     @Override
     public List<StockPO> getStockData(String s) {
-        return null;
+
+        try {
+            return this.stockHelper.getStockRecords(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -127,7 +142,11 @@ public class StockDaoImpl implements StockDao {
     public List<StockPO> getStockData(LocalDate start, LocalDate end, String code) {
         List<StockPO> resultStockList = new ArrayList<StockPO>();
         List<StockPO> tempStockList = null;
-        tempStockList = this.stockHelper.getStock(code);
+        try {
+            tempStockList = this.stockHelper.getStockRecords(code);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for(StockPO stockPO : tempStockList){
             if(this.isTrueDate(start,end,stockPO.getDate())){
