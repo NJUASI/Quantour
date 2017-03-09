@@ -36,7 +36,7 @@ class NavigationBar extends TempletPanel {
             public void mousePressed(MouseEvent e) {
 //                kStringPanel = KStringPanel.getInstance();
 //                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
-                MainPanel.getInstance().getCard().show(MainPanel.getCardPanel(), "kStringPanel");
+                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
             }
         });
         add(kString);

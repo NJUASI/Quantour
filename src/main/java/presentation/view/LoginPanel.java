@@ -108,7 +108,7 @@ public class LoginPanel extends TempletPanel{
             }
         });
         add(openRegister);
-        add(bg);
+//        add(bg);
     }
 
     public static LoginPanel getInstance(){

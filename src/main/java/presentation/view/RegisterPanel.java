@@ -70,6 +70,6 @@ class RegisterPanel extends TempletPanel {
             }
         });
         add(register);
-        add(bg);
+//        add(bg);
     }
 }

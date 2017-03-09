@@ -1,9 +1,12 @@
 package presentation.view;
 
+import utilities.IDReserve;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 
 /**
  * Created by 61990 on 2017/3/5.
@@ -11,7 +14,8 @@ import java.awt.event.MouseEvent;
 public class FavoritesPanel extends NavigationBar {
     //自选股面板
     private static FavoritesPanel favoritesPanel;
-
+        ListModel jListModel;
+        JList list;
     /**
      * 自选股票面板构造器
      *
@@ -21,20 +25,42 @@ public class FavoritesPanel extends NavigationBar {
      * @updateTime 2017/3/5
      */
     public FavoritesPanel(){
-        //the door of function 1
-        JButton kString =new JButton("test");
-        kString.setBounds(500, 500, 300, 50);
-        //TODO 跳转应该交给控制器去做
-        kString.addMouseListener(new MouseAdapter() {
+        updateText();
+        WindowData windowData = WindowData.getInstance();
+        int width = windowData.getWidth();
+        int height =windowData.getHeight();
+        list.setBounds(adaptScreen(400,200,700,700));
+
+        list.setForeground(Color.red);
+        list.setBackground(new Color(55,60,56));
+        add(list);
+
+        JButton search = new JButton("查看");
+        search.setBounds(adaptScreen(1150,400,80,40));
+        search.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "loginPanel");
+                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
             }
         });
-        add(kString);
-        add(bg);
+        add(search);
+//        add(bg);
     }
+    void updateText(){
+        list = new JList();
+        jListModel =  new DefaultComboBoxModel(getList());
+        list.setModel(jListModel);
+    }
+    public Vector<String> getList(){
+        //TODO 返回自选股列表
+        IDReserve.getInstance().getUserID();
 
+        Vector<String> vector=new Vector<>();
+            vector.add("2331");
+        vector.add("2332");
+        vector.add("2333");
+        return vector;
+    }
     /**
      * 单件模式
      *

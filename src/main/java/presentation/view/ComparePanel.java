@@ -102,7 +102,7 @@ class ComparePanel extends NavigationBar {
 
 
         add(compare);
-        add(bg);
+//        add(bg);
         addFunction();
     }
 
@@ -117,7 +117,10 @@ class ComparePanel extends NavigationBar {
     public void refresh() {
         comparePanel = null;
     }
-
+    public void setCompare(String name,String num) {
+        name1.setText(name);
+        num1.setText(num);
+    }
     /**
      * 增加提醒性的监听
      *

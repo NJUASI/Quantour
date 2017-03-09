@@ -101,6 +101,6 @@ class MenuPanel extends TempletPanel{
             }
         });
         add(logout);
-        add(bg);
+//        add(bg);
     }
 }

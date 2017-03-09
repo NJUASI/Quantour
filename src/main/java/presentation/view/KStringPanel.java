@@ -2,13 +2,18 @@ package presentation.view;
 
 import javafx.scene.control.DatePicker;
 import org.jfree.chart.ChartPanel;
+import service.StockService;
+import service.serviceImpl.StockServiceImpl;
+import utilities.IDReserve;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 
 
 /**
@@ -24,7 +29,7 @@ public class KStringPanel extends NavigationBar {
     JButton compare;
     JButton favorite;
     AssociatePanel associatePanel;
-
+    ChartPanel chartPanel;
     /**
      * k线面板构造器
      *
@@ -42,7 +47,40 @@ public class KStringPanel extends NavigationBar {
         compare = new JButton("加入比较");
         init();
     }
-
+    /**
+     * 通过code寻找股票的全部信息并绘图
+     *
+     * @param code 股票号
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/9
+     */
+    public void findOne(String code){
+        //TODO 在这儿get一个ChartPanel
+        // 创建图形
+        chartPanel = new KStringChart().createChart();
+        chartPanel.setBounds(adaptScreen(320,100,1500,850));
+        add(chartPanel);
+        chartPanel.repaint();
+    }
+    /**
+     * 通过code和前后日期寻找股票的特定时期 寻找股票的全部信息并绘图
+     *
+     * @param code 股票号
+     * @param startDate 开始时间
+     * @param endDate 结束时间
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/9
+     */
+    public void findSpecial(String code, LocalDate startDate,LocalDate endDate){
+        //TODO 在这儿get一个ChartPanel
+        // 创建图形
+        chartPanel = new KStringChart().createChart();
+        chartPanel.setBounds(adaptScreen(320,100,1500,850));
+        add(chartPanel);
+        chartPanel.repaint();
+    }
     /**
      * 添加日期选择器等各种原件
      *
@@ -68,19 +106,15 @@ public class KStringPanel extends NavigationBar {
         add(associatePanel);
 
 
-                // 创建图形
-
-                ChartPanel chartPanel = new KStringChart().createChart();
-                chartPanel.setBounds(adaptScreen(320,100,1500,850));
-
-        add(chartPanel);
 
 
         //搜索按钮
         search.setBounds(adaptScreen(1300, 50, 70, 35));
         search.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {
+
+                findSpecial(num.getText(),datePanel.getStartDate(),datePanel.getEndDate());
 
             }
         });
@@ -89,8 +123,9 @@ public class KStringPanel extends NavigationBar {
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
         compare.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-
+            public void mouseClicked(MouseEvent e) {
+                MainPanel.getCard().show(MainPanel.getCardPanel(), "comparePanel");
+                ComparePanel.getInstance().setCompare(name.getText(),num.getText());
             }
         });
         add(compare);
@@ -98,16 +133,16 @@ public class KStringPanel extends NavigationBar {
         favorite.setBounds(adaptScreen(1550, 50, 70, 35));
         favorite.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-
+            public void mouseClicked(MouseEvent e) {
+                StockService stockService =new StockServiceImpl();
+                stockService.addPrivateStock(IDReserve.getInstance().getUserID(), num.getText());
             }
         });
         add(favorite);
-        add(bg);
+
 
         addFunction();
-        // 获取日期的方法
-        //getDate
+
     }
 
     /**
