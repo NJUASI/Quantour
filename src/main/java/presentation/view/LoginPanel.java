@@ -1,5 +1,6 @@
 package presentation.view;
 
+import presentation.controller.LoginController;
 import utilities.IDReserve;
 
 import javax.swing.*;
@@ -63,6 +64,8 @@ public class LoginPanel extends TempletPanel{
         //TODO login
 //                    admin.getText();
 //                    password.getText();
+                    LoginController loginController = new LoginController( admin.getText(),password.getText());
+                    loginController.login();
                     IDReserve.getInstance().setUserID(admin.getText());
                 }catch (Exception el){
 
@@ -70,7 +73,7 @@ public class LoginPanel extends TempletPanel{
                 admin.setText("Enter your admin");
                 password.setText("");
                 kStringPanel=KStringPanel.getInstance();
-                MainPanel.getInstance().getCardPanel().add(kStringPanel, "kStringPanel");
+                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
 
 //                menuPanel=new MenuPanel();

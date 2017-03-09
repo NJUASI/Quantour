@@ -18,6 +18,7 @@ public class Main {
     public static void main(String []args){
 
         Chart chart = new Chart(new ChartShowCriteriaVO("1",LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)));
+
         chart.setRenderer(0.001);
         chart.setX(LocalDate.of(2014,1,1),LocalDate.of(2014,4,29),7);
         chart.setY(50);
