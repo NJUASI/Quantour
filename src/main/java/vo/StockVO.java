@@ -46,6 +46,8 @@ public class StockVO {
     // 市场名称
     public Market market;
 
+    public StockVO() {
+    }
 
     public StockVO(StockPO po) {
         this.adjClose = po.getAdjClose();
