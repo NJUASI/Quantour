@@ -11,7 +11,10 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/5.
  */
-class LoginPanel extends TempletPanel{
+public class LoginPanel extends TempletPanel{
+
+    private static LoginPanel loginPanel;
+
     //注册面板
     RegisterPanel registerPanel;
     //功能菜单
@@ -82,7 +85,7 @@ class LoginPanel extends TempletPanel{
         JButton openRegister =new JButton("注册");
         openRegister.setForeground(Color.BLACK);
         openRegister.setFont(new Font("",Font.CENTER_BASELINE,15*width/1920));
-        openRegister.setBounds(adaptScreen(470,610,60,33));
+        openRegister.setBounds(adaptScreen(470,610,80,40));
         openRegister.setContentAreaFilled(false);
         openRegister.addMouseListener(new MouseAdapter() {
             @Override
@@ -98,10 +101,14 @@ class LoginPanel extends TempletPanel{
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                openRegister.setFont(new Font("",Font.CENTER_BASELINE,15));
+//                openRegister.setFont(new Font("",Font.HANGING_BASELINE,15));
             }
         });
         add(openRegister);
         add(bg);
+    }
+
+    public static LoginPanel getInstance(){
+        return loginPanel;
     }
 }

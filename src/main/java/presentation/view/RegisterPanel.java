@@ -46,14 +46,14 @@ class RegisterPanel extends TempletPanel {
 
         //the Button setting of opening login panel
         JButton openLogin =new JButton("登录");
-        openLogin.setBounds(adaptScreen(470,610,60,30));
+        openLogin.setBounds(adaptScreen(470,610,80,40));
         openLogin.setForeground(Color.BLACK);
-        openLogin.setFont(new Font("",Font.CENTER_BASELINE,15));
+        openLogin.setFont(new Font("",Font.CENTER_BASELINE,15*width/1920));
         openLogin.setContentAreaFilled(false);
         openLogin.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                MainPanel.getCardPanel().remove(2);
+
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "loginPanel");
             }
         });
@@ -62,11 +62,10 @@ class RegisterPanel extends TempletPanel {
         //the Button setting of register
         JButton register =new JButton("注册");
         register.setBounds(adaptScreen(360,600,80,40));
-        register.setFont(new Font("",Font.CENTER_BASELINE,20));
+        register.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
         register.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                MainPanel.getCardPanel().remove(2);
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "loginPanel");
             }
         });

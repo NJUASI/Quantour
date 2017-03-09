@@ -2,6 +2,8 @@ package presentation.controller;
 
 
 import presentation.view.MainPanel;
+import presentation.view.LoginPanel;
+import sun.applet.Main;
 
 /**
  * Created by Harvey on 2017/3/9.
@@ -14,7 +16,10 @@ public class ViewController {
     }
 
     public void switchView(String panelName){
-        MainPanel.getCard().show(MainPanel.getCardPanel(), panelName);
+        switch (panelName){
+            case "loginPanel":
+                MainPanel.getInstance().add(LoginPanel.getInstance());
+        }
     }
 
 }

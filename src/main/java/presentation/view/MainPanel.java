@@ -9,10 +9,15 @@ import java.awt.CardLayout;
 import org.jb2011.lnf.beautyeye.*;
 import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 import org.jb2011.lnf.beautyeye.utils.BEUtils.*;
+import presentation.controller.ViewController;
+
 /**
  * Created by 61990 on 2017/3/5.
  */
 public class MainPanel extends JFrame {
+
+    ViewController controller;
+
     //一些主原件
     private static MainPanel mainPanel;
     private static JPanel cardPanel;
@@ -27,6 +32,7 @@ public class MainPanel extends JFrame {
      * @updateTime 2017/3/5
      */
     public MainPanel() {
+
         try
         {
             BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
@@ -47,6 +53,8 @@ public class MainPanel extends JFrame {
         JLayeredPane mainPane = new JLayeredPane();
         cardPanel.add(mainPane, "mainPane");
 
+
+//        controller.switchView("loginPanel");
 
 
         //TODO 可不可以放到控制器里面
