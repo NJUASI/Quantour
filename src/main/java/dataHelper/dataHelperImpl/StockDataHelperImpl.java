@@ -37,9 +37,9 @@ public class StockDataHelperImpl implements StockDataHelper {
         String line = null;
         while ((line = br.readLine()) != null) {
             String[] parts = line.split("\t");
-            int year = Integer.parseInt("20"+parts[1].split("/")[2]);
-            int month = Integer.parseInt(parts[1].split("/")[0]);
-            int day = Integer.parseInt(parts[1].split("/")[1]);
+            int year = Integer.parseInt(parts[1].split("-")[0]);
+            int month = Integer.parseInt(parts[1].split("-")[1]);
+            int day = Integer.parseInt(parts[1].split("-")[2]);
             LocalDate thisDate = LocalDate.of(year, month, day);
 
             result.add(new StockPO(Integer.parseInt(parts[0]), thisDate, Double.parseDouble(parts[2]),
