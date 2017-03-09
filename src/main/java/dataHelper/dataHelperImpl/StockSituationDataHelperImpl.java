@@ -8,6 +8,10 @@ import java.time.LocalDate;
 
 /**
  * Created by Byron Dong on 2017/3/5.
+ * Last updated by cuihua
+ * Update time 2017/3/9
+ *
+ * 具体实现其功能
  */
 public class StockSituationDataHelperImpl implements StockSituationDataHelper {
 
@@ -20,9 +24,10 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
      * 获取指定日期所有数据
      *
      * @author Byron Dong
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
      * @param date  指定日期
-     * @return StockSituationPO 指定市场温度计数据
+     * @return 指定日期的市场温度计数据
      */
     @Override
     public StockSituationPO getStockSituation(LocalDate date) throws IOException {

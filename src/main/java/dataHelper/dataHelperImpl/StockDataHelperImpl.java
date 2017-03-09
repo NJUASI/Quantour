@@ -32,7 +32,8 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
      * @param stockCode  指定股票代码
-     * @return List<StockPO> 指定股票所有数据
+     * @return 指定股票所有数据
+     * @throws IOException IO
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
@@ -46,7 +47,8 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
      * @param date  指定日期
-     * @return List<StockPO> 指定日期的所有股票数据
+     * @return 指定日期的所有股票数据
+     * @throws IOException IO
      */
     @Override
     public List<StockPO> getStockRecords(LocalDate date) throws IOException {
@@ -61,6 +63,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @updateTime 2017/3/9
      * @param code 股票代码
      * @return 数据库中股票存在记录的第一天
+     * @throws IOException IO
      */
     @Override
     public LocalDate getFirstDay(String code) {
@@ -91,7 +94,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @updateTime 2017/3/9
      * @param path 要读取的数据源
      * @return 根据俄参数路径读取到的所有股票数据
-     * @throws IOException
+     * @throws IOException IO
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().

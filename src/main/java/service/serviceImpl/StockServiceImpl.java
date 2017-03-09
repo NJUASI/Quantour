@@ -34,7 +34,7 @@ public class StockServiceImpl implements StockService {
     public Iterator<StockVO> getAllStocks(LocalDate date) {
 
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-        for (StockPO po:stockDao.getAllStock(date)) {
+        for (StockPO po:stockDao.getStockData(date)) {
             stockVOList.add(new StockVO(po));
         }
         return stockVOList.iterator();

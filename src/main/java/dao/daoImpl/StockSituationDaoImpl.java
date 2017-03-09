@@ -9,6 +9,8 @@ import java.time.LocalDate;
 
 /**
  * Created by cuihua on 2017/3/4.
+ * Last updated by cuihua
+ * Update time 2017/3/9
  */
 public class StockSituationDaoImpl implements dao.StockSituationDao {
 
@@ -17,7 +19,8 @@ public class StockSituationDaoImpl implements dao.StockSituationDao {
 
     /**
      * @author Byron Dong
-     * @updateTime 2017/3/5 构造函数，初始化成员变量stockSituationHelper
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/5
      */
     public StockSituationDaoImpl() {
         this.stockSituationHelper = new StockSituationDataHelperImpl();
@@ -27,9 +30,11 @@ public class StockSituationDaoImpl implements dao.StockSituationDao {
      * 获取指定日期市场温度计数据
      *
      * @author Byron Dong
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
      * @param date 指定日期
-     * @return StockSituationPO 指定日期市场温度计数据
+     * @return 指定日期市场温度计数据
+     * @throws IOException IO
      */
     @Override
     public StockSituationPO getStockSituation(LocalDate date) throws IOException {

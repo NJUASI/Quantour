@@ -11,6 +11,8 @@ import java.util.Set;
 
 /**
  * Created by cuihua on 2017/3/4.
+ * Last updated by Harvey
+ * Update time 2017/3/6
  */
 public class UserDaoImpl implements UserDao {
 
@@ -20,7 +22,8 @@ public class UserDaoImpl implements UserDao {
 
     /**
      * @author Byron Dong
-     * @updateTime 2017/3/5 构造函数，初始化成员变量userHelper
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/5
      */
     public UserDaoImpl() {
         this.userHelper = new UserDataHelperImpl();
@@ -31,9 +34,10 @@ public class UserDaoImpl implements UserDao {
      * 添加用户信息
      *
      * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
      * @param userPO 用户信息载体
-     * @return ResultMessage 是否成功添加用户
+     * @return 是否成功添加用户
      */
     @Override
     public boolean add(UserPO userPO) {
@@ -44,9 +48,10 @@ public class UserDaoImpl implements UserDao {
      * 获取指定用户信息
      *
      * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
      * @param username 用户账号
-     * @return UserPO 用户信息载体
+     * @return 用户信息载体
      */
     @Override
     public UserPO get(String username) {
@@ -57,9 +62,10 @@ public class UserDaoImpl implements UserDao {
      * 修改用户信息
      *
      * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
      * @param userPO 用户信息载体
-     * @return ResultMessage 是否成功修改用户
+     * @return 是否成功修改用户
      */
     @Override
     public boolean modify(UserPO userPO) {
@@ -67,12 +73,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     /**
-     * 修改用户信息
+     * 记录用户登录信息
      *
-     * @param userName 用户名称
-     * @return boolean 是否登录
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @param userName 用户名称
+     * @return 是否登录
      */
     @Override
     public boolean login(String userName) {
@@ -80,12 +87,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     /**
-     * 修改用户信息
+     * 删除用户登录信息
      *
-     * @param userName 用户名称
-     * @return boolean 是否成功登出
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @param userName 用户名称
+     * @return 是否成功登出
      */
     @Override
     public boolean logout(String userName) {
@@ -95,9 +103,10 @@ public class UserDaoImpl implements UserDao {
     /**
      * 获取已存在的所有用户名称
      *
-     * @return boolean 是否成功登出
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @return 用户名称集合
      */
     @Override
     public Set<Object> getAllUserNames() {
@@ -107,9 +116,10 @@ public class UserDaoImpl implements UserDao {
     /**
      * 获取已存在的所有用户名称
      *
-     * @return Set<String> 已登陆用户名称集合
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @return 已登陆用户名称集合
      */
     @Override
     public Set<Object> getLoginUserNames() {

@@ -7,6 +7,8 @@ import java.time.LocalDate;
 
 /**
  * Created by cuihua on 2017/3/4.
+ * Last updated by Byron Dong
+ * Update time 2017/3/5
  */
 public interface StockSituationDao {
 

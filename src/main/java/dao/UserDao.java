@@ -6,6 +6,8 @@ import java.util.Set;
 
 /**
  * Created by cuihua on 2017/3/4.
+ * Last updated by Harvey
+ * Update time 2017/3/6
  */
 public interface UserDao {
 
@@ -13,9 +15,10 @@ public interface UserDao {
      * 添加用户信息
      *
      * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
      * @param userPO 用户信息载体
-     * @return boolean 是否成功添加用户
+     * @return 是否成功添加用户
      */
      boolean add(UserPO userPO);
 
@@ -23,9 +26,10 @@ public interface UserDao {
      * 获取指定用户信息
      *
      * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
      * @param username 用户账号
-     * @return UserPO 用户信息载体
+     * @return 用户信息载体
      */
      UserPO get(String username);
 
@@ -33,9 +37,10 @@ public interface UserDao {
      * 修改用户信息
      *
      * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
      * @param userPO 用户信息载体
-     * @return boolean 是否成功修改用户
+     * @return 是否成功修改用户
      */
      boolean modify(UserPO userPO);
 
@@ -43,9 +48,10 @@ public interface UserDao {
      * 记录用户登录信息
      *
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
      * @param userName 用户名称
-     * @return boolean 是否登录
+     * @return 是否登录
      */
     boolean login(String userName);
 
@@ -53,9 +59,10 @@ public interface UserDao {
      * 删除用户登录信息
      *
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
      * @param userName 用户名称
-     * @return boolean 是否成功登出
+     * @return 是否成功登出
      */
     boolean logout(String userName);
 
@@ -63,8 +70,9 @@ public interface UserDao {
      * 获取已存在的所有用户名称
      *
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
-     * @return  Set<String> 用户名称集合
+     * @return 用户名称集合
      */
     Set<Object> getAllUserNames();
 
@@ -72,8 +80,9 @@ public interface UserDao {
      * 获取已存在的所有用户名称
      *
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
-     * @return  Set<String> 已登陆用户名称集合
+     * @return 已登陆用户名称集合
      */
     Set<Object> getLoginUserNames();
 }
