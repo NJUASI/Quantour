@@ -69,5 +69,6 @@ public class StockVO {
         this.serial = po.getSerial();
         this.preClose = po.getPreClose();
         this.preAdjClose = po.getPreAdjClose();
+        this.volume = po.getVolume();
     }
 }
