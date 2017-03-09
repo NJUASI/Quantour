@@ -19,7 +19,7 @@ import java.util.List;
 public class StockDataHelperImpl implements StockDataHelper {
 
     private final String stockRecordByCodePathPre = "stock_records_by_code/";
-    private final String stockRecordByDatePathPre = "stock_records_by_data/";
+    private final String stockRecordByDatePathPre = "stock_records_by_date/";
     private final String stockRecordPathPost = ".txt";
 
     private BufferedReader br;
