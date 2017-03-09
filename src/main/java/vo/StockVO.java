@@ -46,29 +46,26 @@ public class StockVO {
     // 市场名称
     public Market market;
 
-    //昨收
+    // 昨日收盘指数
     public double preClose;
 
-    //昨日复权收盘指数
+    // 昨日复权收盘指数
     public double preAdjClose;
 
-    public StockVO() {
-    }
 
     public StockVO(StockPO po) {
-        this.adjClose = po.getAdjClose();
-        this.close = po.getClose();
-        this.code = po.getCode();
+        this.serial = po.getSerial();
         this.date = po.getDate();
+        this.open = po.getOpen();
         this.high = po.getHigh();
         this.low = po.getLow();
-        this.market = po.getMarket();
-        this.name = po.getName();
-        this.open = po.getOpen();
         this.close = po.getClose();
-        this.serial = po.getSerial();
+        this.volume = po.getVolume();
+        this.adjClose = po.getAdjClose();
+        this.code = po.getCode();
+        this.name = po.getName();
+        this.market = po.getMarket();
         this.preClose = po.getPreClose();
         this.preAdjClose = po.getPreAdjClose();
-        this.volume = po.getVolume();
     }
 }
