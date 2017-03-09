@@ -24,6 +24,7 @@ public class FavoritesPanel extends NavigationBar {
         //the door of function 1
         JButton kString =new JButton("test");
         kString.setBounds(500, 500, 300, 50);
+        //TODO 跳转应该交给控制器去做
         kString.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

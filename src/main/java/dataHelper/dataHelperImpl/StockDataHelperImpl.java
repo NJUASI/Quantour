@@ -44,7 +44,8 @@ public class StockDataHelperImpl implements StockDataHelper {
 
             result.add(new StockPO(Integer.parseInt(parts[0]), thisDate, Double.parseDouble(parts[2]),
                     Double.parseDouble(parts[3]), Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), parts[6],
-                    Double.parseDouble(parts[7]), Integer.parseInt(parts[8]), parts[9], Market.getEnum(parts[10])));
+                    Double.parseDouble(parts[7]), Integer.parseInt(parts[8]), parts[9], Market.getEnum(parts[10]),
+                    Double.parseDouble(parts[11]),Double.parseDouble(parts[12])));
         }
         return result;
     }
@@ -67,6 +68,29 @@ public class StockDataHelperImpl implements StockDataHelper {
     @Override
     public List<StockPO> getStock(String code) {
         return null;
+    }
+
+    /**
+     * Gets first day.  获取数据库中股票存在记录的第一天
+     *
+     * @param code the code 股票代码
+     * @return the first day 数据库中股票存在记录的第一天
+     */
+    @Override
+    public LocalDate getFirstDay(String code) {
+        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(pathPre + code + pathPost)));
+        String line = null;
+        try {
+            line = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] parts = line.split("\t");
+        int year = Integer.parseInt("20"+parts[1].split("/")[2]);
+        int month = Integer.parseInt(parts[1].split("/")[0]);
+        int day = Integer.parseInt(parts[1].split("/")[1]);
+        LocalDate firstDay = LocalDate.of(year, month, day);
+        return firstDay;
     }
 
 

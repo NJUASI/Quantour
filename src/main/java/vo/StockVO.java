@@ -46,6 +46,12 @@ public class StockVO {
     // 市场名称
     public Market market;
 
+    //昨收
+    public double preClose;
+
+    //昨日复权收盘指数
+    public double preAdjClose;
+
     public StockVO() {
     }
 
@@ -61,5 +67,7 @@ public class StockVO {
         this.open = po.getOpen();
         this.close = po.getClose();
         this.serial = po.getSerial();
+        this.preClose = po.getPreClose();
+        this.preAdjClose = po.getPreAdjClose();
     }
 }

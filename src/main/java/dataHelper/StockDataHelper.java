@@ -34,4 +34,12 @@ public interface StockDataHelper {
     List<StockPO> getStockRecords(LocalDate date) throws IOException;
 
     List<StockPO> getStock(String code);
+
+    /**
+     * Gets first day.  获取数据库中股票存在记录的第一天
+     *
+     * @param code the code 股票代码
+     * @return the first day 数据库中股票存在记录的第一天
+     */
+    LocalDate getFirstDay(String code);
 }

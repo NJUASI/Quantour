@@ -103,6 +103,17 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
+     * Gets first day.  获取数据库中股票存在记录的第一天
+     *
+     * @param code the code 股票代码
+     * @return the first day 数据库中股票存在记录的第一天
+     */
+    @Override
+    public LocalDate getFirstDay(String code) {
+        return stockHelper.getFirstDay(code);
+    }
+
+    /**
      * 获取特定时间段内的指定股票的所有数据，没有返回null
      *
      * @author Byron Dong
