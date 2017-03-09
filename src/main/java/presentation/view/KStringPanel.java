@@ -1,6 +1,7 @@
 package presentation.view;
 
 import javafx.scene.control.DatePicker;
+import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -65,6 +66,14 @@ public class KStringPanel extends NavigationBar {
         associatePanel = new AssociatePanel();
         associatePanel.setVisible(false);
         add(associatePanel);
+
+
+                // 创建图形
+
+                ChartPanel chartPanel = new KStringChart().createChart();
+                chartPanel.setBounds(adaptScreen(320,100,1500,850));
+
+        add(chartPanel);
 
 
         //搜索按钮
