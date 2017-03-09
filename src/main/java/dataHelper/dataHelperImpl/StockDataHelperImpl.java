@@ -11,11 +11,16 @@ import java.util.List;
 
 /**
  * Created by Byron Dong on 2017/3/5.
+ * Last updated by cuihua
+ * Update time 2017/3/9
+ *
+ * 修改完善dataHelper实现
  */
 public class StockDataHelperImpl implements StockDataHelper {
 
-    private final String pathPre = "stock_records/";
-    private final String pathPost = ".txt";
+    private final String stockRecordByCodePathPre = "stock_records_by_code/";
+    private final String stockRecordByDatePathPre = "stock_records_by_data/";
+    private final String stockRecordPathPost = ".txt";
 
     private BufferedReader br;
 
@@ -24,13 +29,73 @@ public class StockDataHelperImpl implements StockDataHelper {
      * 获取指定股票所有数据
      *
      * @author cuihua
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
      * @param stockCode  指定股票代码
      * @return List<StockPO> 指定股票所有数据
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
-        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(pathPre + stockCode + pathPost)));
+        return getStockByPath(stockRecordByCodePathPre + stockCode + stockRecordPathPost);
+    }
+
+    /**
+     * 获取指定日期的所有股票数据
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
+     * @param date  指定日期
+     * @return List<StockPO> 指定日期的所有股票数据
+     */
+    @Override
+    public List<StockPO> getStockRecords(LocalDate date) throws IOException {
+        return getStockByPath(stockRecordByDatePathPre + date.getYear() + "/" + date.toString() + stockRecordPathPost);
+    }
+
+    /**
+     * 获取数据库中股票存在记录的第一天
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
+     * @param code 股票代码
+     * @return 数据库中股票存在记录的第一天
+     */
+    @Override
+    public LocalDate getFirstDay(String code) {
+        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(stockRecordByCodePathPre + code + stockRecordPathPost)));
+
+        String line = null;
+        try {
+            line = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String[] parts = line.split("\t");
+        int year = Integer.parseInt(parts[1].split("-")[0]);
+        int month = Integer.parseInt(parts[1].split("-")[1]);
+        int day = Integer.parseInt(parts[1].split("-")[2]);
+        LocalDate firstDay = LocalDate.of(year, month, day);
+        return firstDay;
+    }
+
+
+
+    /**
+     * 根据路径读取stock_records_by_code/date中的数据
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
+     * @param path 要读取的数据源
+     * @return 根据俄参数路径读取到的所有股票数据
+     * @throws IOException
+     */
+    private List<StockPO> getStockByPath(String path) throws IOException {
+        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
+                getResourceAsStream(path)));
 
         List<StockPO> result = new LinkedList<StockPO>();
 
@@ -49,49 +114,5 @@ public class StockDataHelperImpl implements StockDataHelper {
         }
         return result;
     }
-
-    /**
-     * 获取指定日期的所有股票数据
-     *
-     * @author cuihua
-     * @updateTime 2017/3/6
-     * @param date  指定日期
-     * @return List<StockPO> 指定日期的所有股票数据
-     *
-     * TODO cuihua 最好将日期与市场温度计结合
-     */
-    @Override
-    public List<StockPO> getStockRecords(LocalDate date) throws IOException {
-        return null;
-    }
-
-    @Override
-    public List<StockPO> getStock(String code) {
-        return null;
-    }
-
-    /**
-     * Gets first day.  获取数据库中股票存在记录的第一天
-     *
-     * @param code the code 股票代码
-     * @return the first day 数据库中股票存在记录的第一天
-     */
-    @Override
-    public LocalDate getFirstDay(String code) {
-        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(pathPre + code + pathPost)));
-        String line = null;
-        try {
-            line = br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String[] parts = line.split("\t");
-        int year = Integer.parseInt("20"+parts[1].split("/")[2]);
-        int month = Integer.parseInt(parts[1].split("/")[0]);
-        int day = Integer.parseInt(parts[1].split("/")[1]);
-        LocalDate firstDay = LocalDate.of(year, month, day);
-        return firstDay;
-    }
-
 
 }

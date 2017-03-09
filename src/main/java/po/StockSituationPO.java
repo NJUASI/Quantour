@@ -38,7 +38,7 @@ public class StockSituationPO {
         this.slipingNum = slipingNum;
     }
 
-    public StockSituationPO(String []info){
+    public StockSituationPO(String[] info){
         this.volume = info[0];
         this.limitUpNum = Integer.parseInt(info[1]);
         this.limitDownNum = Integer.parseInt(info[2]);

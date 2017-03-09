@@ -11,30 +11,10 @@ import java.time.LocalDate;
  */
 public class StockSituationDataHelperImpl implements StockSituationDataHelper {
 
-    //未添加日期的文件路径
-    private String path;
+    private final String pathPre = "stock_situation/";
+    private final String pathPost = ".txt";
 
-    //文件后缀名
-    private String suffix;
-
-
-    /**
-     * @author Byron Dong
-     * @updateTime 2017/3/5 构造函数，初始化成员变量path,suffix
-     */
-    public StockSituationDataHelperImpl(){
-        path = "";
-        suffix = ".txt";
-    }
-
-    /**
-     * @author Byron Dong
-     * @updateTime 2017/3/5 构造函数，初始化成员变量path,suffix(自定义)
-     */
-    public StockSituationDataHelperImpl(String path, String suffix) {
-        this.path = path;
-        this.suffix = suffix;
-    }
+    private BufferedReader br;
 
     /**
      * 获取指定日期所有数据
@@ -45,35 +25,14 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
      * @return StockSituationPO 指定市场温度计数据
      */
     @Override
-    public StockSituationPO getStockSituation(LocalDate date) {
-        String resultPath = this.path+date.toString()+this.suffix;
-
-        return this.reader(resultPath);
-    }
-
-    /**
-     * 从文件中获取指定日期市场温度计的数据
-     *
-     * @author Byron Dong
-     * @updateTime 2017/3/5
-     * @param path 文件路径
-     * @return StockSituationPO 指定市场温度计数据
-     */
-    private StockSituationPO reader(String path){
-        StockSituationPO result = null;
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
-            String line = reader.readLine();
-            reader.close();
-            result = new StockSituationPO(line.split("\t"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("File is not existed");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IO exception");
-        }
+    public StockSituationPO getStockSituation(LocalDate date) throws IOException {
+        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
+                getResourceAsStream(pathPre + date.getYear() + "/" + date.toString() + pathPost)));
+        String line = br.readLine();
+        br.close();
+        StockSituationPO result = new StockSituationPO(line.split("\t"));
 
         return result;
     }
+
 }

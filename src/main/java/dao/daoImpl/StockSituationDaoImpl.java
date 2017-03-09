@@ -4,6 +4,7 @@ import dataHelper.StockSituationDataHelper;
 import dataHelper.dataHelperImpl.StockSituationDataHelperImpl;
 import po.StockSituationPO;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -31,7 +32,7 @@ public class StockSituationDaoImpl implements dao.StockSituationDao {
      * @return StockSituationPO 指定日期市场温度计数据
      */
     @Override
-    public StockSituationPO getStockSituation(LocalDate date) {
+    public StockSituationPO getStockSituation(LocalDate date) throws IOException {
         return this.stockSituationHelper.getStockSituation(date);
     }
 }

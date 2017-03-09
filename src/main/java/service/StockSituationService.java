@@ -2,6 +2,7 @@ package service;
 
 import vo.StockSituationVO;
 
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -21,5 +22,5 @@ public interface StockSituationService extends Remote{
      * @return the stock situation vo  市场情况温度计的信息
      * @throws RemoteException the remote exception
      */
-    public StockSituationVO showStockSituation(LocalDate date);
+    public StockSituationVO showStockSituation(LocalDate date) throws IOException;
 }

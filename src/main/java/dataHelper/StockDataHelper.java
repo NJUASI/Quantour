@@ -28,12 +28,8 @@ public interface StockDataHelper {
      * @updateTime 2017/3/6
      * @param date  指定日期
      * @return List<StockPO> 指定日期的所有股票数据
-     *
-     * TODO 最终返回的VO中包括昨日的收盘价等系列信息
      */
     List<StockPO> getStockRecords(LocalDate date) throws IOException;
-
-    List<StockPO> getStock(String code);
 
     /**
      * Gets first day.  获取数据库中股票存在记录的第一天
