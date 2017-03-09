@@ -77,5 +77,20 @@ public interface StockDao {
      */
     boolean createPrivateDir(String userName);
 
+    /**
+     * Gets stock data.
+     *
+     * @param s the s
+     * @return the stock data
+     */
     List<StockPO> getStockData(String s);
+
+
+    /**
+     * Gets first day.  获取数据库中股票存在记录的第一天
+     *
+     * @param code the code 股票代码
+     * @return the first day 数据库中股票存在记录的第一天
+     */
+    LocalDate getFirstDay(String code);
 }

@@ -2,10 +2,12 @@ package service.serviceImpl;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
+import utilities.StockFilter;
 import utilities.exceptions.DateShortException;
 import po.StockPO;
 import service.ChartService;
 import vo.ChartShowCriteriaVO;
+import vo.MovingAverageVO;
 import vo.StockVO;
 
 import java.time.LocalDate;
@@ -57,15 +59,17 @@ public class ChartServiceImpl implements ChartService {
      * @ the remote exception
      */
     @Override
-    public Map<Integer, Iterator<Double>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws DateShortException {
-        Map<Integer,Iterator<Double>> aveDataMap = new HashMap<Integer,Iterator<Double>>();
+    public Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws DateShortException {
+        Map<Integer,Iterator<MovingAverageVO>> aveDataMap = new HashMap<Integer,Iterator<MovingAverageVO>>();
+
+        LocalDate firstDay = stockDao.getFirstDay(chartShowCriteriaVO.code);
 
         for(int i=0;i<days.length;i++){
             if(isDateTooShort(chartShowCriteriaVO,days[i])){
                 throw new DateShortException();
             }
 
-            aveDataMap.put(days[i], calculate(chartShowCriteriaVO,days[i]));
+            aveDataMap.put(days[i], calculate(chartShowCriteriaVO,days[i],firstDay));
         }
         return aveDataMap;
     }
@@ -88,21 +92,42 @@ public class ChartServiceImpl implements ChartService {
      * @updateTime 2017/3/5
      * @param chartShowCriteriaVO the chart show criteria vo 选择条件
      * @param day                 the day 天数指标
+     * @param firstDay            数据库中存放的数据的第一天
      * @return the iterator
      */
-    private Iterator<Double> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day) {
-        List<Double> dayAveDataList = new ArrayList<Double>();
+    private Iterator<MovingAverageVO> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day, LocalDate firstDay) {
+
+        List<MovingAverageVO> dayAveDataList = new ArrayList<MovingAverageVO>();
+
         LocalDate begin = chartShowCriteriaVO.start;
         LocalDate end = chartShowCriteriaVO.end;
-        int interval = begin.until(end).getDays();
-        while(!begin.plusDays(day-1).isAfter(end)){
-            List<StockPO> stockPOList = new ArrayList<StockPO>();
-            double sum = 0;
-            for (StockPO po: stockPOList) {
-                sum += po.getClose();
-            }
-            dayAveDataList.add(sum/interval);
+        String code = chartShowCriteriaVO.code;
+
+        //调用筛选器，筛选出上市第一天到开盘天的数据
+        List<StockPO> preList = stockDao.getStockData(firstDay,begin,code);
+        List<StockPO> allList = new ArrayList<StockPO>();
+
+        //数据长度小于day的长度，将数据加入到选择开始的结束日期数据之前，然后计算
+        if(preList.size() < day){
+            allList.addAll(preList);
         }
+        //否则，即以靠近选择开始日期的day长度的数据计算选择开始日期的均线
+        else{
+            allList.addAll(preList.subList(preList.size()-day,preList.size()));
+        }
+        allList.addAll(stockDao.getStockData(begin.plusDays(1),end,code));
+
+        for (int i = day-1;i <= allList.size();i++){
+            MovingAverageVO maVO = new MovingAverageVO();
+            int sum = 0;
+            maVO.date = allList.get(i).getDate();
+            for (int j = i-day-1;j <= i;j++){
+                sum += allList.get(j).getClose();
+            }
+            maVO.average = sum/day;
+            dayAveDataList.add(maVO);
+        }
+
         return dayAveDataList.iterator();
     }
 

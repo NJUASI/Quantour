@@ -45,7 +45,7 @@ public class StockDataHelperImplTest extends TestCase {
         TestCase.assertEquals(10.92, thisStock.getLow(), 0);
         TestCase.assertEquals(11.02, thisStock.getOpen(), 0);
         TestCase.assertEquals(11.16, thisStock.getClose(), 0);
-        TestCase.assertEquals("41362100", thisStock.getVolume());
+        TestCase.assertEquals("413621", thisStock.getVolume());
 
     }
 

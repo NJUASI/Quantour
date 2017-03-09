@@ -12,7 +12,7 @@ import org.jb2011.lnf.beautyeye.utils.BEUtils.*;
 /**
  * Created by 61990 on 2017/3/5.
  */
-class MainPanel extends JFrame {
+public class MainPanel extends JFrame {
     //一些主原件
     private static MainPanel mainPanel;
     private static JPanel cardPanel;
@@ -48,6 +48,8 @@ class MainPanel extends JFrame {
         cardPanel.add(mainPane, "mainPane");
 
 
+
+        //TODO 可不可以放到控制器里面
         //加载login界面
         LoginPanel loginPanel = new LoginPanel();
         cardPanel.add(loginPanel, "loginPanel");
