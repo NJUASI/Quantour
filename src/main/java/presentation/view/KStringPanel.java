@@ -5,6 +5,7 @@ import org.jfree.chart.ChartPanel;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
+import vo.ChartShowCriteriaVO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -75,6 +76,7 @@ public class KStringPanel extends NavigationBar {
      */
     public void findSpecial(String code, LocalDate startDate,LocalDate endDate){
         //TODO 在这儿get一个ChartPanel
+        ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(code,startDate,endDate);
         // 创建图形
         chartPanel = new KStringChart().createChart();
         chartPanel.setBounds(adaptScreen(320,100,1500,850));

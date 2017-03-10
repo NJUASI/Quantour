@@ -1,11 +1,15 @@
 package presentation.view;
 
+import org.jfree.chart.ChartPanel;
+import vo.ChartShowCriteriaVO;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 
 /**
  * Created by 61990 on 2017/3/5.
@@ -23,7 +27,7 @@ class ComparePanel extends NavigationBar {
     JButton compare;
     AssociatePanel associatePanel;
     AssociatePanel associatePanel2;
-
+    ChartPanel chartPanel;
     /**
      * 比较面板构造器
      *
@@ -68,14 +72,13 @@ class ComparePanel extends NavigationBar {
         name2 = new JTextField();
         num2 = new JTextField();
 
-
-
         //搜索按钮
         compare = new JButton("比较");
         compare.setBounds(adaptScreen(1300, 50, 70, 35));
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+
                 refreshAssociate();
             }
         });
@@ -120,6 +123,45 @@ class ComparePanel extends NavigationBar {
     public void setCompare(String name,String num) {
         name1.setText(name);
         num1.setText(num);
+    }
+    /**
+     * 通过code寻找股票的全部信息
+     *
+     * @param code1 股票号1
+     * @param code2 股票号2
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/10
+     */
+    public void setCompareAll(String code1,String code2){
+        //TODO DJY在这儿get一个ChartPanel
+        // 创建图形
+        chartPanel = new KStringChart().createChart();
+        chartPanel.setBounds(adaptScreen(320,100,1500,850));
+        add(chartPanel);
+        chartPanel.repaint();
+    }
+    /**
+     * 通过code和前后日期寻找股票的特定时期 寻找股票的全部信息并绘图
+     *
+     * @param code1 股票号1
+     * @param code2 股票号2
+     * @param startDate 开始时间
+     * @param endDate 结束时间
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/9
+     */
+    public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
+        //TODO 在这儿get一个ChartPanel
+
+        ChartShowCriteriaVO chartShowCriteriaVO1=new ChartShowCriteriaVO(code1,startDate,endDate);
+        ChartShowCriteriaVO chartShowCriteriaVO2=new ChartShowCriteriaVO(code2,startDate,endDate);
+        // 创建图形
+        chartPanel = new KStringChart().createChart();
+        chartPanel.setBounds(adaptScreen(320,100,1500,850));
+        add(chartPanel);
+        chartPanel.repaint();
     }
     /**
      * 增加提醒性的监听
