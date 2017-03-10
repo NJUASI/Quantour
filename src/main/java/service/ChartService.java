@@ -12,14 +12,20 @@ import java.util.Map;
 
 /**
  * Created by cuihua on 2017/3/4.
+ * Last updated by Byron Dong
+ * Update time 2017/3/10
  *
  * K线图、均线图
+ *
+ * TODO getAveData参数days的含义
  */
 public interface ChartService extends Remote{
 
     /**
-     *  获取单支股票的所有数据
+     * 获取单支股票的所有数据
+     *
      * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/9
      * @param code 股票代码
      * @return 特定股票的所有交易信息
@@ -27,32 +33,39 @@ public interface ChartService extends Remote{
     Iterator<StockVO> getSingleStockRecords(String code);
 
     /**
-     *  获取单支股票的一段日期内的信息
+     * 获取单支股票的一段日期内的信息
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param chartShowCriteriaVO 股票的选择标准
      * @return 特定股票的所有交易信息
-     * @throws RemoteException RMI
      */
     Iterator<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO);
 
     /**
      * 获取单支股票一段日期内，用户所选天数的均线图的平均值.
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param chartShowCriteriaVO the chart show criteria vo 用户所选股票的信息
-     * @return the ave data 用户所选天数的均线图的平均值
-     * @throws RemoteException the remote exception
+     * @param days
+     * @return 用户所选天数的均线图的平均值
+     * @throws DateShortException 类型不匹配
      */
     Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws DateShortException;
 
     /**
      * 获取单支股票所有数据均线图的平均值.
+     *
      * @auther Byron Dong
-     * @updateTime 2017/3/9
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/10
      * @param code  用户所选股票的代号
-     * @return the ave data 用户所选天数的均线图的平均值
-     * @throws RemoteException the remote exception
+     * @param days
+     * @return 用户所选天数的均线图的平均值
+     * @throws DateShortException 类型不匹配
      */
     Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, int[] days) throws DateShortException;
 }

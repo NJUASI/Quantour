@@ -9,57 +9,64 @@ import java.rmi.RemoteException;
 
 /**
  * Created by cuihua on 2017/3/4.
+ * Last updated by Harvey
+ * Update time 2017/3/5
  */
 public interface UserService extends Remote{
 
     /**
      * 用户注册.
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userVO the user vo 注册用户信息
-     * @return the boolean 是否注册成功
-     * @throws RemoteException the remote exception
-     * @description 用户注册
+     * @param userVO 注册用户信息
+     * @return 是否注册成功
+     * @throws DuplicatedNameException 用户名重复
      */
     public boolean registerUser(UserVO userVO) throws DuplicatedNameException;
 
     /**
-     * 修改用户信息.
+     * 修改用户信息
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userVO the user vo 修改后的用户信息
-     * @return the boolean 是否修改成功
-     * @throws RemoteException the remote exception
+     * @param userVO 修改后的用户信息
+     * @return 是否修改成功
      */
     public boolean modifyUser(UserVO userVO);
 
     /**
      * 查看用户信息
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param  userName 用户姓名
-     * @return UserVO   用户信息
-     * @throws RemoteException the remote exception
+     * @return 用户信息
      */
     public UserVO checkUserInfo(String userName);
 
     /**
-     * 用户登录.
+     * 用户登录
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param userName 用户名称
-     * @return boolean 是否登录成功
-     * @throws RemoteException the remote exception
+     * @return 是否登录成功
      */
-    boolean login(String userName) throws DuplicateLoginException;
+    boolean logIn(String userName) throws DuplicateLoginException;
 
     /**
-     * 用户注销
+     * 用户登出
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param userName 用户姓名
-     * @return boolean  是否注销成功
-     * @throws RemoteException the remote exception
+     * @return 是否注销成功
      */
-    public boolean logout(String userName);
+    public boolean logOut(String userName);
 }

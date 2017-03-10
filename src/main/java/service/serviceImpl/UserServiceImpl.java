@@ -12,10 +12,11 @@ import vo.UserVO;
 
 /**
  * Created by cuihua on 2017/3/4.
- *
- * 用户操作
+ * Last updated by Harvey
+ * Update time 2017/3/5
  */
 public class UserServiceImpl implements UserService {
+
     UserDao userDao;
     StockDao stockDao;
 
@@ -26,11 +27,13 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户注册.
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userVO the user vo
-     * @return the boolean
-     * @description 用户注册
+     * @param userVO 注册用户信息
+     * @return 是否注册成功
+     * @throws DuplicatedNameException 用户名重复
      */
     @Override
     public boolean registerUser(UserVO userVO) throws DuplicatedNameException {
@@ -45,11 +48,13 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 修改用户信息.
+     * 修改用户信息
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userVO the user vo
-     * @return the boolean
+     * @param userVO 修改后的用户信息
+     * @return 是否修改成功
      */
     @Override
     public boolean modifyUser(UserVO userVO) {
@@ -58,10 +63,12 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 查看用户信息
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userName 用户姓名
-     * @return
+     * @param  userName 用户姓名
+     * @return 用户信息
      */
     @Override
     public UserVO checkUserInfo(String userName) {
@@ -70,14 +77,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 用户登录.
+     * 用户登录
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param userName 用户名称
-     * @return the boolean
+     * @return 是否登录成功
      */
     @Override
-    public boolean login(String userName) throws DuplicateLoginException {
+    public boolean logIn(String userName) throws DuplicateLoginException {
 
         if(userDao.getLoginUserNames().contains(userName)){
             throw new DuplicateLoginException();
@@ -86,16 +95,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 用户注销
+     * 用户登出
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param userName 用户姓名
-     * @return ResultMessage  是否注销成功
-     * @auther Harvey
-     * @updateTime 2017/3/5
+     * @return 是否注销成功
      */
     @Override
-    public boolean logout(String userName) {
+    public boolean logOut(String userName) {
         return userDao.logout(userName);
     }
 
