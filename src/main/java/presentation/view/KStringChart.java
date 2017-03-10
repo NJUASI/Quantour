@@ -90,16 +90,13 @@ public class KStringChart implements ChartMouseListener{
         // 日期X坐标轴
         DateAxis domainAxis = (DateAxis) xyplot.getDomainAxis();
         domainAxis.setAutoTickUnitSelection(false);
+
+
         DateTickUnit dateTickUnit = null;
-
-
-
         if (dataset.getItemCount(0) < 6) {
             //刻度单位月,半年为间隔
             dateTickUnit = new DateTickUnit(DateTickUnitType.MONTH, 6, new SimpleDateFormat("yyyy-MM")); // 第二个参数是时间轴间距
         } else {// 数据过多,不显示数据
-            XYLineAndShapeRenderer xyRenderer = (XYLineAndShapeRenderer) xyplot.getRenderer();
-            xyRenderer.setBaseItemLabelsVisible(false);
             dateTickUnit = new DateTickUnit(DateTickUnitType.YEAR, 1, new SimpleDateFormat("yyyy")); // 第二个参数是时间轴间距
         }
 

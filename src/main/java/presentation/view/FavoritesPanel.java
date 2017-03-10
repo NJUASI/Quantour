@@ -1,11 +1,18 @@
 package presentation.view;
 
+import service.StockService;
+import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
+import utilities.enums.Market;
+import vo.StockVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -13,9 +20,11 @@ import java.util.Vector;
  */
 public class FavoritesPanel extends NavigationBar {
     //自选股面板
+    FavoritesTable favoritesTable;
     private static FavoritesPanel favoritesPanel;
-        ListModel jListModel;
-        JList list;
+    StockService stockService;
+
+    SingleDatePickerPanel datePickerPanel;
     /**
      * 自选股票面板构造器
      *
@@ -26,14 +35,14 @@ public class FavoritesPanel extends NavigationBar {
      */
     public FavoritesPanel(){
         updateText();
+        stockService=new StockServiceImpl();
         WindowData windowData = WindowData.getInstance();
         int width = windowData.getWidth();
         int height =windowData.getHeight();
-        list.setBounds(adaptScreen(400,200,700,700));
 
-        list.setForeground(Color.red);
-        list.setBackground(new Color(55,60,56));
-        add(list);
+        datePickerPanel = new SingleDatePickerPanel();
+        datePickerPanel.setBounds(adaptScreen(1150, 300,150,35));
+        add(datePickerPanel);
 
         JButton search = new JButton("查看");
         search.setBounds(adaptScreen(1150,400,80,40));
@@ -44,23 +53,26 @@ public class FavoritesPanel extends NavigationBar {
             }
         });
         add(search);
-//        add(bg);
+
+        JButton delete = new JButton("删除");
+        delete.setBounds(adaptScreen(1150,460,80,40));
+        delete.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+//                stockService.deletePrivateStock(IDReserve.getInstance().getUserID(),list.getSelectedValue().toString());
+            }
+        });
+        add(delete);
+
     }
     void updateText(){
-        list = new JList();
-        jListModel =  new DefaultComboBoxModel(getList());
-        list.setModel(jListModel);
-    }
-    public Vector<String> getList(){
-        //TODO 返回自选股列表
-        IDReserve.getInstance().getUserID();
 
-        Vector<String> vector=new Vector<>();
-            vector.add("2331");
-        vector.add("2332");
-        vector.add("2333");
-        return vector;
+        favoritesTable=new FavoritesTable();
+        favoritesTable.setLocation(400,400);
+        add(favoritesTable);
     }
+
     /**
      * 单件模式
      *
