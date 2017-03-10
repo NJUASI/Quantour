@@ -1,4 +1,4 @@
-package presentation.view;
+package presentation.view.panel;
 
 import presentation.controller.LoginController;
 import utilities.IDReserve;
@@ -12,19 +12,16 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/5.
  */
-public class LoginPanel extends TempletPanel{
+public class LoginPanel extends TempletPanel {
 
     private static LoginPanel loginPanel;
 
     //注册面板
     RegisterPanel registerPanel;
-    //功能菜单
-//    MenuPanel menuPanel;
+
     KStringPanel kStringPanel;
     //屏幕大小
-//    WindowData windowData;
-//    int width;
-//    int height;
+
     /**
      * 构造器
      *
@@ -76,9 +73,6 @@ public class LoginPanel extends TempletPanel{
                 MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
 
-//                menuPanel=new MenuPanel();
-//                MainPanel.getCardPanel().add(menuPanel, "menuPanel");
-//                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
             }
         });
         add(login);

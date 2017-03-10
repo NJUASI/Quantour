@@ -1,9 +1,9 @@
-package presentation.view;
+package presentation.view.panel;
+
+import presentation.view.toos.WindowData;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Created by 61990 on 2017/3/8.
@@ -22,7 +22,7 @@ public class AssociatePanel extends ScrollPane {
         list.setLocation(0,0);
         add(list);
     }
-    void updateText(String str){
+    public void updateText(String str){
         //TODO 通过str筛选对应的联想 得到可能的Vector str可能是 股票号或者名称
         String listName[] =new String[4];
         jListModel =  new DefaultComboBoxModel(new String[] { "张三", "李四" ,"王五","11","22"});

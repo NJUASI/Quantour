@@ -1,7 +1,8 @@
-package presentation.view;
+package presentation.view.panel;
 
-import javafx.scene.control.DatePicker;
 import org.jfree.chart.ChartPanel;
+import presentation.view.toos.DoubleDatePickerPanel;
+import presentation.view.chart.KStringChart;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
@@ -11,7 +12,6 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;

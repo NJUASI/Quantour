@@ -1,4 +1,4 @@
-package presentation.view;
+package presentation.view.chart;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;

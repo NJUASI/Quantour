@@ -1,9 +1,9 @@
-package presentation.view;
+package presentation.view.toos;
 
 /**
  * Created by 61990 on 2017/3/5.
  */
-class WindowData {
+public class WindowData {
     //屏幕公共信息
     private static WindowData windowData;
     //屏幕宽度和高度

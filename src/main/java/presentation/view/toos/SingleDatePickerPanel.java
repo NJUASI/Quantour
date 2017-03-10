@@ -1,4 +1,4 @@
-package presentation.view;
+package presentation.view.toos;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.DatePicker;
@@ -7,7 +7,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * Created by 61990 on 2017/3/7.

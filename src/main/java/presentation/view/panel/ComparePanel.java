@@ -1,6 +1,8 @@
-package presentation.view;
+package presentation.view.panel;
 
 import org.jfree.chart.ChartPanel;
+import presentation.view.toos.DoubleDatePickerPanel;
+import presentation.view.chart.KStringChart;
 import vo.ChartShowCriteriaVO;
 
 import javax.swing.*;
@@ -133,7 +135,7 @@ class ComparePanel extends NavigationBar {
      * @author 61990
      * @updateTime 2017/3/10
      */
-    public void setCompareAll(String code1,String code2){
+    public void CompareAll(String code1,String code2){
         //TODO DJY在这儿get一个ChartPanel
         // 创建图形
         chartPanel = new KStringChart().createChart();
@@ -159,7 +161,7 @@ class ComparePanel extends NavigationBar {
         ChartShowCriteriaVO chartShowCriteriaVO2=new ChartShowCriteriaVO(code2,startDate,endDate);
         // 创建图形
         chartPanel = new KStringChart().createChart();
-        chartPanel.setBounds(adaptScreen(320,100,1500,850));
+        chartPanel.setBounds(adaptScreen(320,130,1500,850));
         add(chartPanel);
         chartPanel.repaint();
     }

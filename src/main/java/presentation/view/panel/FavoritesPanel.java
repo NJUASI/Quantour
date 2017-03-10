@@ -1,19 +1,15 @@
-package presentation.view;
+package presentation.view.panel;
 
+import presentation.view.toos.FavoritesTable;
+import presentation.view.toos.SingleDatePickerPanel;
+import presentation.view.toos.WindowData;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
-import utilities.enums.Market;
-import vo.StockVO;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Vector;
 
 /**
  * Created by 61990 on 2017/3/5.
@@ -41,26 +37,31 @@ public class FavoritesPanel extends NavigationBar {
         int height =windowData.getHeight();
 
         datePickerPanel = new SingleDatePickerPanel();
-        datePickerPanel.setBounds(adaptScreen(1150, 300,150,35));
+        datePickerPanel.setBounds(adaptScreen(500, 50,150,35));
         add(datePickerPanel);
 
         JButton search = new JButton("查看");
-        search.setBounds(adaptScreen(1150,400,80,40));
+        search.setBounds(adaptScreen(1000,50,80,40));
         search.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                //TODO 打开均线k线面板 并初始化
+                favoritesTable.getCode();
+                datePickerPanel.getDate();
+
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
             }
         });
         add(search);
 
         JButton delete = new JButton("删除");
-        delete.setBounds(adaptScreen(1150,460,80,40));
+        delete.setBounds(adaptScreen(1150,50,80,40));
         delete.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-
-//                stockService.deletePrivateStock(IDReserve.getInstance().getUserID(),list.getSelectedValue().toString());
+//                System.out.println(favoritesTable.getCode());
+                //TODO
+                stockService.deletePrivateStock(IDReserve.getInstance().getUserID(),favoritesTable.getCode());
             }
         });
         add(delete);
@@ -69,7 +70,7 @@ public class FavoritesPanel extends NavigationBar {
     void updateText(){
 
         favoritesTable=new FavoritesTable();
-        favoritesTable.setLocation(400,400);
+        favoritesTable.setLocation(300*width/1920,130*height/1030);
         add(favoritesTable);
     }
 

@@ -2,7 +2,7 @@ package presentation.view;
 
 
 
-import javax.swing.*;
+import presentation.view.panel.MainPanel;
 
 /**
  * Created by 61990 on 2017/3/5.

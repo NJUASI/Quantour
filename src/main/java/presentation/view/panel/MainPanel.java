@@ -1,4 +1,4 @@
-package presentation.view;
+package presentation.view.panel;
 
 
 import java.awt.Dimension;
@@ -7,9 +7,8 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import org.jb2011.lnf.beautyeye.*;
-import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
-import org.jb2011.lnf.beautyeye.utils.BEUtils.*;
 import presentation.controller.ViewController;
+import presentation.view.toos.WindowData;
 
 /**
  * Created by 61990 on 2017/3/5.

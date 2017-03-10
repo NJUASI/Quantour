@@ -1,9 +1,8 @@
 package presentation.controller;
 
 
-import presentation.view.MainPanel;
-import presentation.view.LoginPanel;
-import sun.applet.Main;
+import presentation.view.panel.MainPanel;
+import presentation.view.panel.LoginPanel;
 
 /**
  * Created by Harvey on 2017/3/9.
