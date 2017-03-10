@@ -12,16 +12,17 @@ import java.util.List;
 /**
  * StockDataHelperImpl Tester.
  *
- * @author <Authors name>
+ * @author cuihua
  * @version 1.0
  * @since <pre>03/09/2017</pre>
  */
 public class StockDataHelperImplTest extends TestCase {
+
+    private StockDataHelper stockDataHelper = new StockDataHelperImpl();
+
     public StockDataHelperImplTest(String name) {
         super(name);
     }
-
-    private StockDataHelper stockDataHelper = new StockDataHelperImpl();
 
     public void setUp() throws Exception {
         super.setUp();

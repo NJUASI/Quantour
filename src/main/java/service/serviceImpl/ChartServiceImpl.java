@@ -10,6 +10,7 @@ import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
 import vo.StockVO;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.*;
@@ -46,9 +47,9 @@ public class ChartServiceImpl implements ChartService {
      * @return 特定股票的所有交易信息
      */
     @Override
-    public Iterator<StockVO> getSingleStockRecords(String code) {
+    public Iterator<StockVO> getSingleStockRecords(String code) throws IOException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-        List<StockPO> tempList = this.stockDao.getStockData(code);
+        List<StockPO> tempList = stockDao.getStockData(code);
         for (StockPO po : tempList) {
             stockVOList.add(new StockVO(po));
         }
@@ -65,7 +66,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 特定股票的所有交易信息
      */
     @Override
-    public Iterator<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO)  {
+    public Iterator<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po : getStockPOs(chartShowCriteriaVO)) {
             stockVOList.add(new StockVO(po));
@@ -85,7 +86,7 @@ public class ChartServiceImpl implements ChartService {
      * @throws DateShortException 类型不匹配
      */
     @Override
-    public Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws DateShortException {
+    public Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws DateShortException, IOException {
         Map<Integer,Iterator<MovingAverageVO>> aveDataMap = new HashMap<Integer,Iterator<MovingAverageVO>>();
 
         LocalDate firstDay = stockDao.getFirstDay(chartShowCriteriaVO.code);
@@ -128,25 +129,28 @@ public class ChartServiceImpl implements ChartService {
     /**
      * 获取StockPO的列表
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param vo the vo 选择条件
-     * @return the list StockPO的列表
+     * @param vo 选择条件
+     * @return StockPO的列表
      */
-    private List<StockPO> getStockPOs(ChartShowCriteriaVO vo){
+    private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException {
         return stockDao.getStockData(vo.start,vo.end,vo.code);
     }
 
 
     /**
-     * 计算以确定天数指标为标准的.
+     * 计算以确定天数指标为标准的
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param chartShowCriteriaVO the chart show criteria vo 选择条件
-     * @param day                 the day 天数指标
-     * @param firstDay            数据库中存放的数据的第一天
-     * @return the iterator
+     * @param chartShowCriteriaVO 选择条件
+     * @param day 天数指标
+     * @param firstDay 数据库中存放的数据的第一天
+     * @return 均线数据迭代器
      */
-    private Iterator<MovingAverageVO> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day, LocalDate firstDay) {
+    private Iterator<MovingAverageVO> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day, LocalDate firstDay) throws IOException {
 
         List<MovingAverageVO> dayAveDataList = new ArrayList<MovingAverageVO>();
 
@@ -184,17 +188,19 @@ public class ChartServiceImpl implements ChartService {
 
     /**
      * 判断所选日期是否小于等于均线图的时间.
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param chartShowCriteriaVO the chart show criteria vo 选择条件
-     * @param day                 the day  天数指标
-     * @return the boolean
+     * @param chartShowCriteriaVO 选择条件
+     * @param day 天数指标
+     * @return 天数与所选类型是否匹配
      */
-    private boolean isDateTooShort(ChartShowCriteriaVO chartShowCriteriaVO,int day) {
+    private boolean isDateTooShort(ChartShowCriteriaVO chartShowCriteriaVO, int day) {
         LocalDate begin = chartShowCriteriaVO.start;
         LocalDate end = chartShowCriteriaVO.end;
         int interval = begin.until(end).getDays();
-        if(interval<day){
+        if (interval < day) {
             return true;
         }
         return false;

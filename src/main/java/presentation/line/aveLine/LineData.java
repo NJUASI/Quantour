@@ -9,6 +9,7 @@ import utilities.exceptions.DateShortException;
 import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -81,7 +82,7 @@ public class LineData {
                 data.add(i,series);
             }
 
-        } catch (DateShortException e) {
+        } catch (DateShortException | IOException e){
             e.printStackTrace();
         }
 

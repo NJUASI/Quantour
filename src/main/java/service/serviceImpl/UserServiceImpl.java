@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         if(userDao.getLoginUserNames().contains(userName)){
             throw new DuplicateLoginException();
         }
-        return userDao.login(userName);
+        return userDao.logIn(userName);
     }
 
     /**
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean logOut(String userName) {
-        return userDao.logout(userName);
+        return userDao.logOut(userName);
     }
 
 }

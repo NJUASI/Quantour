@@ -11,7 +11,7 @@ import java.time.LocalDate;
 /**
  * StockSituationDataHelperImpl Tester.
  *
- * @author <Authors name>
+ * @author cuihua
  * @version 1.0
  * @since <pre>03/09/2017</pre>
  */

@@ -11,8 +11,7 @@ import java.util.Properties;
  * Last updated by Harvey
  * Update time 2017/3/6
  */
-public interface PrivateStockDataHelper
-{
+public interface PrivateStockDataHelper {
 
     /**
      * 获取用户对应的所有自选股的代码

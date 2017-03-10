@@ -53,7 +53,7 @@ public interface UserDao {
      * @param userName 用户名称
      * @return 是否登录
      */
-    boolean login(String userName);
+    boolean logIn(String userName);
 
     /**
      * 删除用户登录信息
@@ -64,7 +64,7 @@ public interface UserDao {
      * @param userName 用户名称
      * @return 是否成功登出
      */
-    boolean logout(String userName);
+    boolean logOut(String userName);
 
     /**
      * 获取已存在的所有用户名称

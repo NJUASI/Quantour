@@ -29,7 +29,7 @@ public interface StockDao {
      * @param stockCode 指定股票代码
      * @return 特定时间段内的指定股票所有数据
      */
-    List<StockPO> getStockData(LocalDate start, LocalDate end, String stockCode);
+    List<StockPO> getStockData(LocalDate start, LocalDate end, String stockCode) throws IOException;
 
     /**
      * 取指定股票的所有数据，没有返回null
@@ -40,7 +40,7 @@ public interface StockDao {
      * @param stockCode 指定的股票代码
      * @return 此股票的所有数据
      */
-    List<StockPO> getStockData(String stockCode);
+    List<StockPO> getStockData(String stockCode) throws IOException;
 
     /**
      * 获取特定日期的所有股票所有数据

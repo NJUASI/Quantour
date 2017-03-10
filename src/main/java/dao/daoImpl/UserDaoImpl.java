@@ -82,7 +82,7 @@ public class UserDaoImpl implements UserDao {
      * @return 是否登录
      */
     @Override
-    public boolean login(String userName) {
+    public boolean logIn(String userName) {
         return logDataHelper.login(userName);
     }
 
@@ -96,7 +96,7 @@ public class UserDaoImpl implements UserDao {
      * @return 是否成功登出
      */
     @Override
-    public boolean logout(String userName) {
+    public boolean logOut(String userName) {
         return logDataHelper.logout(userName);
     }
 

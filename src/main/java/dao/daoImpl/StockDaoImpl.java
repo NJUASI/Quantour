@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * Created by cuihua on 2017/3/4.
  * Last updated by cuihua
- * Update time 2017/3/9
+ * Update time 2017/3/10
  *
- * TODO 抛出的异常为什么在这里就处理了。。难道不应该直接抛到界面界面去处理并提示信息吗
+ * 将异常全部抛出，留至界面处理
  */
 public class StockDaoImpl implements StockDao {
 
@@ -43,25 +43,20 @@ public class StockDaoImpl implements StockDao {
      * 获取特定时间段内的指定股票所有数据
      *
      * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/10
      * @param start 时间区域的小值
      * @param end 时间区域的大值
      * @param stockCode 指定股票代码
      * @return 特定时间段内的指定股票所有数据
      */
     @Override
-    public List<StockPO> getStockData(LocalDate start, LocalDate end, String stockCode) {
+    public List<StockPO> getStockData(LocalDate start, LocalDate end, String stockCode) throws IOException {
         List<StockPO> resultStockList = new ArrayList<StockPO>();
-        List<StockPO> tempStockList = null;
-        try {
-            tempStockList = stockHelper.getStockRecords(stockCode);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<StockPO> tempStockList = stockHelper.getStockRecords(stockCode);
 
-        for(StockPO stockPO : tempStockList){
-            if(this.isTrueDate(start, end, stockPO.getDate())){
+        for (StockPO stockPO : tempStockList) {
+            if (this.isTrueDate(start, end, stockPO.getDate())) {
                 resultStockList.add(stockPO);
             }
         }
@@ -79,13 +74,9 @@ public class StockDaoImpl implements StockDao {
      * @return 此股票的所有数据
      */
     @Override
-    public List<StockPO> getStockData(String stockCode) {
-        try {
+    public List<StockPO> getStockData(String stockCode) throws IOException {
             return stockHelper.getStockRecords(stockCode);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+
     }
 
     /**

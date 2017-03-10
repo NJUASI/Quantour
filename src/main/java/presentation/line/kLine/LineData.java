@@ -10,6 +10,7 @@ import service.serviceImpl.ChartServiceImpl;
 import vo.ChartShowCriteriaVO;
 import vo.StockVO;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -131,14 +132,24 @@ public class LineData {
     }
 
     private void readData(String code) {
-        Iterator<StockVO> tempData = this.service.getSingleStockRecords(code);
+        Iterator<StockVO> tempData = null;
+        try {
+            tempData = this.service.getSingleStockRecords(code);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         while (tempData.hasNext()) {
             this.data.add(tempData.next());
         }
     }
 
     private void readData(ChartShowCriteriaVO chartShowCriteriaVO) {
-        Iterator<StockVO> tempData = this.service.getSingleStockRecords(chartShowCriteriaVO);
+        Iterator<StockVO> tempData = null;
+        try {
+            tempData = this.service.getSingleStockRecords(chartShowCriteriaVO);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         while (tempData.hasNext()) {
             this.data.add(tempData.next());
         }
