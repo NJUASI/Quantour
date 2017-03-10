@@ -10,6 +10,7 @@ import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.util.Callback;
 
+import java.awt.*;
 import java.time.LocalDate;
 
 /**
@@ -35,6 +36,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         setLayout(null);
         width= WindowData.getInstance().getWidth();
         height= WindowData.getInstance().getHeight();
+        setBackground(new Color(55,60,56));
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

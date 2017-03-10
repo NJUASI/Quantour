@@ -35,7 +35,8 @@ public class NavigationBar extends TempletPanel {
         kString.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-//                kStringPanel = KStringPanel.getInstance();
+                kStringPanel = KStringPanel.getInstance();
+                kStringPanel.getFocusListeners();
 //                MainPanel.getCardPanel().add(kStringPanel, "kStringPanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
             }
@@ -49,6 +50,7 @@ public class NavigationBar extends TempletPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 comparePanel = ComparePanel.getInstance();
+                comparePanel.getFocusListeners();
                 MainPanel.getCardPanel().add(comparePanel, "comparePanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "comparePanel");
             }
@@ -62,6 +64,7 @@ public class NavigationBar extends TempletPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 thermometerPanel = thermometerPanel.getInstance();
+                thermometerPanel.getFocusListeners();
                 MainPanel.getCardPanel().add(thermometerPanel, "thermometerPanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "thermometerPanel");
             }

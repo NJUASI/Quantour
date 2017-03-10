@@ -47,7 +47,8 @@ public class FavoritesTable extends JScrollPane {
                 {"ggg", "女", "江苏南京", "81513779", "xx/xx/1986", "宾馆服务员", "确定但未知", "未婚", "有"},
                 {"hhh", "男", "江苏南京", "13651545936", "xx/xx/1985", "学生", "流放中", "未婚", "无数次分手后没有"}
         };
-//        setLayout(null);
+
+
         setSize(1400*width/1920, 800*height/1030);
         //设置不可编辑
         DefaultTableModel model = new DefaultTableModel(rowData, columnNames) {
@@ -56,21 +57,20 @@ public class FavoritesTable extends JScrollPane {
             }
         };
         jTable = new JTable(model);
-        jTable.setBounds(0, 0, 1400*width/1920, 900*height/1030);
+        jTable.setBounds(0, 0, 1400*width/1920, 800*height/1030);
 
 //            jTable.setRowHeight (30);//设置每行的高度为30
 //            jTable.setRowMargin (5);//设置相邻两行单元格的距离
 //        table.removeColumn(table.getColumnModel().getColumn(columnIndex));// columnIndex是要删除的列序号
         jTable.setRowSelectionAllowed(true);//设置可否被选择
         jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jTable.setSelectionBackground(Color.white);//设置所选择行的背景色
-        jTable.setSelectionForeground(Color.red);//设置所选择行的前景色
+        jTable.setSelectionBackground(Color.lightGray);//设置所选择行的背景色
+        jTable.setSelectionForeground(Color.white);//设置所选择行的前景色
         jTable.setShowVerticalLines (true);//是否显示垂直的网格线
-
+        jTable.setBackground(new Color(55,60,56));
         jTable.setRowSelectionInterval(0,0);
-        jTable.setGridColor(Color.blue);
-        jTable.getSelectedColumn();
-        jTable.setBackground(Color.lightGray);
+        jTable.setGridColor(Color.GRAY);
+        jTable.setBackground(Color.white);
         setViewportView(jTable);
     }
     public String getCode(){

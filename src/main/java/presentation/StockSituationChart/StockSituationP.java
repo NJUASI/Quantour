@@ -18,11 +18,11 @@ import java.util.List;
 /**
  * Created by Harvey on 2017/3/9.
  */
-public class StockSituationPieChart {
+public class StockSituationP {
 
     Iterator<PriceRiseOrFallVO> priceItr;
 
-    public StockSituationPieChart(Iterator<PriceRiseOrFallVO> priceItr) {
+    public StockSituationP(Iterator<PriceRiseOrFallVO> priceItr) {
         this.priceItr = priceItr;
     }
 
@@ -65,7 +65,7 @@ public class StockSituationPieChart {
         list.add(new PriceRiseOrFallVO("剩余",600,date));
 
 
-        StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
+        StockSituationP pieChart = new StockSituationP(list.iterator());
 
         JFrame frame = new JFrame("Pie KChart");
         frame.add(pieChart.creatPanel());
