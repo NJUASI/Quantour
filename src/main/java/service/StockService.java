@@ -2,6 +2,7 @@ package service;
 
 import vo.StockVO;
 
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public interface StockService extends Remote{
      * @return the iterator 股票信息列表
      * @throws RemoteException the remote exception
      */
-    Iterator<StockVO> getAllStocks(LocalDate date);
+    Iterator<StockVO> getAllStocks(LocalDate date) throws IOException;
 
     /**
      * 显示用户的自选股信息列表

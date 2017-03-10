@@ -12,6 +12,8 @@ import java.util.Set;
 
 /**
  * Created by Administrator on 2017/3/5.
+ * Last updated by Harvey
+ * Update time 2017/3/6
  */
 public class PrivateStockDataHelperImpl implements PrivateStockDataHelper{
 
@@ -25,12 +27,12 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper{
 
 
     /**
+     * 加载资源文件
+     *
      * @author Harvey
-     * @time 2017/3/5 20:08
-     * @method propertiesload
-     * @param  username
-     * @return void
-     * @description 加载资源文件
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/6
+     * @param username 用户名称
      */
     private void propertiesload(String username) {
 
@@ -47,17 +49,18 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper{
 
     public static void main(String[] args) {
         PrivateStockDataHelper p = new PrivateStockDataHelperImpl();
-        p.createPrivateDir("123");
+//        p.createPrivateDir("123");
 
     }
 
     /**
      * 获取用户对应的所有自选股的代码
      *
-     * @param userName the user name 用户名称
-     * @return the private stock code 自选股代码列表
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @param userName 用户名称
+     * @return 自选股代码列表
      */
     @Override
     public List<String> getPrivateStockCode(String userName) {
@@ -73,27 +76,29 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper{
     /**
      * 添加用户自选股
      *
+     * @author Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/5
      * @param userName  用户名称
      * @param stockCode 股票代码
-     * @return boolean 添加是否成功
-     * @author Harvey
-     * @updateTime 2017/3/5
+     * @return 添加是否成功
      */
     @Override
     public boolean addPrivateStock(String userName, String stockCode) {
         propertiesload(userName);
-        properties.put(stockCode,userName);
+        properties.put(stockCode, userName);
         return true;
     }
 
     /**
      * 删除用户自选股
      *
+     * @author Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/5
      * @param userName  用户名称
      * @param stockCode 股票代码
-     * @return boolean 删除是否成功
-     * @author Harvey
-     * @updateTime 2017/3/5
+     * @return 删除是否成功
      */
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) {
@@ -105,10 +110,13 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper{
     /**
      * 用户注册时，给用户新建一个对应用户名的资源文件.
      *
-     * @param userName the user name 用户名称
-     * @return the boolean  是否创建成功
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @param userName 用户名称
+     * @return 是否创建成功
+     *
+     * TODO
      */
     @Override
     public boolean createPrivateDir(String userName) {

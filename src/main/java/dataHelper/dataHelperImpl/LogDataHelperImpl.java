@@ -10,6 +10,8 @@ import java.util.Set;
 
 /**
  * Created by Harvey on 2017/3/6.
+ * Last updated by Harvey
+ * Update time 2017/3/6
  */
 public class LogDataHelperImpl implements LogDataHelper{
 
@@ -31,10 +33,11 @@ public class LogDataHelperImpl implements LogDataHelper{
     /**
      * 记录用户登录信息
      *
-     * @param userName 用户名称
-     * @return boolean 是否登录
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @param userName 用户名称
+     * @return 是否登录
      */
     @Override
     public boolean login(String userName) {
@@ -45,10 +48,11 @@ public class LogDataHelperImpl implements LogDataHelper{
     /**
      * 删除用户登录信息
      *
-     * @param userName 用户名称
-     * @return boolean 是否成功登出
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @param userName 用户名称
+     * @return 是否成功登出
      */
     @Override
     public boolean logout(String userName) {
@@ -59,9 +63,10 @@ public class LogDataHelperImpl implements LogDataHelper{
     /**
      * 删除用户登录信息
      *
-     * @return Set<Object> 已登录用户名称集合
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
+     * @return 已登录用户名称集合
      */
     @Override
     public Set<Object> getLoginUserNames() {
