@@ -10,6 +10,7 @@ import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
 import vo.StockVO;
 
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -23,7 +24,7 @@ public class ChartServiceImpl implements ChartService {
     StockDao stockDao;
 
     /**
-     * Instantiates a new Chart service.
+     * Instantiates a new KChart service.
      * @auther Harvey
      * @updateTime 2017/3/5
      * @ the remote exception
@@ -79,9 +80,25 @@ public class ChartServiceImpl implements ChartService {
                 throw new DateShortException();
             }
 
+            System.out.println(firstDay.toString());
+
             aveDataMap.put(days[i], calculate(chartShowCriteriaVO,days[i],firstDay));
         }
         return aveDataMap;
+    }
+
+    /**
+     * 获取单支股票所有数据均线图的平均值.
+     * @auther Byron Dong
+     * @updateTime 2017/3/9
+     * @param code  用户所选股票的代号
+     * @return the ave data 用户所选天数的均线图的平均值
+     * @throws RemoteException the remote exception
+     */
+    @Override
+    public Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, int[] days) throws DateShortException {
+        return null;
+        // TODO 龚尘淼 实现该方法
     }
 
     /**
@@ -153,9 +170,9 @@ public class ChartServiceImpl implements ChartService {
         LocalDate begin = chartShowCriteriaVO.start;
         LocalDate end = chartShowCriteriaVO.end;
         int interval = begin.until(end).getDays();
-        if(interval<=day){
-            return false;
+        if(interval<day){
+            return true;
         }
-        return true;
+        return false;
     }
 }

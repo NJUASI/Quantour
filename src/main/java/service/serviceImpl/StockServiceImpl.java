@@ -35,8 +35,12 @@ public class StockServiceImpl implements StockService {
     public Iterator<StockVO> getAllStocks(LocalDate date) throws IOException {
 
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-        for (StockPO po:stockDao.getStockData(date)) {
-            stockVOList.add(new StockVO(po));
+        try {
+            for (StockPO po:stockDao.getStockData(date)) {
+                stockVOList.add(new StockVO(po));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return stockVOList.iterator();
     }

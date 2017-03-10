@@ -1,4 +1,4 @@
-package presentation.kLine;
+package presentation.line.kLine;
 
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.XYPlot;
@@ -6,6 +6,7 @@ import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import presentation.view.util.ChartUtils;
 import vo.ChartShowCriteriaVO;
 
 import java.awt.*;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 /**
  * Created by Byron Dong on 2017/3/8.
  */
-public class Chart {
+public class KChart {
 
     private  CandlestickRenderer render;
     private  DateAxis xAxis;
@@ -24,11 +25,11 @@ public class Chart {
     private XYBarRenderer xyBarRender;
     private LineData data;
 
-    public Chart(String code) {
+    public KChart(String code) {
        this.init(code);
     }
 
-    public Chart(ChartShowCriteriaVO chartShowCriteriaVO) {
+    public KChart(ChartShowCriteriaVO chartShowCriteriaVO) {
         this.init(chartShowCriteriaVO);
     }
 
@@ -36,9 +37,19 @@ public class Chart {
         return xAxis;
     }
 
+    public void setPlot(LocalDate start,LocalDate end,int gap){
+        this.setRenderer(0.001);//设置各个K线图之间的间隔
+        this.setY(50);
+        this.setYOfVol(10);
+        this.setX(start,end,gap);
+    }
+
     public XYPlot getKLinePlot(){
         OHLCSeriesCollection seriesCollection = data.seriesCollection;
-        XYPlot plot=new XYPlot(seriesCollection,xAxis,yAxis,render);//设置画图区域对象
+        XYPlot plot=new XYPlot(null,xAxis,yAxis,null);//设置画图区域对象
+        plot.setDomainGridlinesVisible(true);
+        plot.setDataset(0,seriesCollection);
+        plot.setRenderer(0,render);
 
         return plot;
     }

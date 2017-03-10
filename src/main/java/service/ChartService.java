@@ -45,4 +45,14 @@ public interface ChartService extends Remote{
      * @throws RemoteException the remote exception
      */
     Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws DateShortException;
+
+    /**
+     * 获取单支股票所有数据均线图的平均值.
+     * @auther Byron Dong
+     * @updateTime 2017/3/9
+     * @param code  用户所选股票的代号
+     * @return the ave data 用户所选天数的均线图的平均值
+     * @throws RemoteException the remote exception
+     */
+    Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, int[] days) throws DateShortException;
 }

@@ -62,7 +62,7 @@ public class StockSituationBarChart {
 
         StockSituationBarChart barChart = new StockSituationBarChart(list.iterator());
 
-        JFrame frame = new JFrame("Pie Chart");
+        JFrame frame = new JFrame("Pie KChart");
         frame.add(barChart.createPanel());
         frame.pack();
         frame.setVisible(true);

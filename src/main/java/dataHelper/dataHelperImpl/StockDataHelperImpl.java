@@ -72,6 +72,7 @@ public class StockDataHelperImpl implements StockDataHelper {
         String line = null;
         try {
             line = br.readLine();
+            System.out.println(line);
         } catch (IOException e) {
             e.printStackTrace();
         }
