@@ -39,7 +39,7 @@ public class StockSituationPieChart {
 
     //用数据集创建一个饼图
     private JFreeChart createChart(){
-        JFreeChart jFreeChart = ChartFactory.createPieChart("Pie Chart Demo",this.createDataSet(),true,true,false);
+        JFreeChart jFreeChart = ChartFactory.createPieChart("Pie KChart Demo",this.createDataSet(),true,true,false);
         PiePlot plot = (PiePlot)jFreeChart.getPlot();
         plot.setNoDataMessage("No data available");
         plot.setLabelFont(new Font("微软雅黑",Font.BOLD,12));
@@ -67,7 +67,7 @@ public class StockSituationPieChart {
 
         StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
 
-        JFrame frame = new JFrame("Pie Chart");
+        JFrame frame = new JFrame("Pie KChart");
         frame.add(pieChart.creatPanel());
         frame.pack();
         frame.setVisible(true);

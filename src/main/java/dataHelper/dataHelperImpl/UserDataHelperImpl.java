@@ -9,6 +9,8 @@ import java.util.Set;
 
 /**
  * Created by Byron Dong on 2017/3/5.
+ * Last updated by Harvey
+ * Update time 2017/3/5
  *
  * 对用户信息进行操作
  */
@@ -19,20 +21,16 @@ public class UserDataHelperImpl implements UserDataHelper {
      */
     private Properties properties = new Properties();
 
-    /**
-     * Instantiates a new User data helper.
-     */
     public UserDataHelperImpl(){
         propertiesload();
     }
 
     /**
+     * 加载资源文件
+     *
      * @author Harvey
-     * @time 2017/3/5 20:08
-     * @method propertiesload
-     * @param
-     * @return void
-     * @description 加载资源文件
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/5
      */
     private void propertiesload() {
 
@@ -45,12 +43,13 @@ public class UserDataHelperImpl implements UserDataHelper {
 
 
     /**
+     * 添加一个用户
+     *
      * @author Harvey
-     * @time 2017/3/5 20:09
-     * @method add
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/5
      * @param userPO 用户信息
-     * @return boolean 添加是否成功
-     * @description 添加一个用户
+     * @return 添加是否成功
      */
     @Override
     public boolean add(UserPO userPO) {
@@ -60,12 +59,13 @@ public class UserDataHelperImpl implements UserDataHelper {
     }
 
     /**
+     * 获取用户信息
+     *
      * @author Harvey
-     * @time 2017/3/5 20:10
-     * @method get
-     * @param username    用户姓名
-     * @return po.UserPO    用户信息
-     * @description     获取用户信息
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/5
+     * @param username 用户姓名
+     * @return 用户信息载体
      */
     @Override
     public UserPO get(String username) {
@@ -77,12 +77,13 @@ public class UserDataHelperImpl implements UserDataHelper {
     }
 
     /**
+     * 修改一条用户信息
+     *
      * @author Harvey
-     * @time 2017/3/5 20:11
-     * @method modify
-     * @param userPO  用户修改信息
-     * @return boolean  修改是否成功
-     * @description 修改一条用户信息
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/5
+     * @param userPO 用户修改信息
+     * @return 修改是否成功
      */
     @Override
     public boolean modify(UserPO userPO) {
@@ -91,11 +92,12 @@ public class UserDataHelperImpl implements UserDataHelper {
     }
 
     /**
-     * Gets all user names.
+     * 获取所有的注册过用户名称
      *
-     * @return the all user names 用户名称集合
      * @author Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
+     * @return 用户名称集合
      */
     @Override
     public Set<Object> getAllUserNames() {

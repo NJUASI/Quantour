@@ -133,7 +133,7 @@ public class KStringChart implements ChartMouseListener{
         RectangleEdge rectangleEdge2 = xyPlot.getRangeAxisEdge();
         double d = valueAxis1.java2DToValue(point2D.getX(), rectangle2D, rectangleEdge1);
         double d2 = valueAxis2.java2DToValue(point2D.getY(), rectangle2D, rectangleEdge2);
-        System.out.println("Chart: x = " + d + ", y = " +  d2);
+        System.out.println("KChart: x = " + d + ", y = " +  d2);
 
     }
 

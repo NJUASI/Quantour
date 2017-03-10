@@ -1,4 +1,4 @@
-package presentation.kLine;
+package presentation.line.kLine;
 
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
@@ -19,10 +19,10 @@ import java.util.List;
  */
 public class LineData {
 
-    private double high = 0;
-    private double low = 0;
-    private double highVolume = 0;
-    private double lowVolume = 0;
+    private double high = -1;
+    private double low = Double.MAX_VALUE;
+    private double highVolume = -1;
+    private double lowVolume = Double.MAX_VALUE;
     private List<StockVO> data;
     private ChartService service;
 
@@ -65,13 +65,13 @@ public class LineData {
         this.setHighAndLowVolume();
     }
 
-    private void initCollection(){
+    private void initCollection() {
         this.seriesCollection = new OHLCSeriesCollection();
         this.timeSeriesCollection = new TimeSeriesCollection();
     }
 
     //获取K线数据的最高值和最低值(历史)
-    private void setHighAndLow(){
+    private void setHighAndLow() {
         int seriesCount = seriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
         for (int i = 0; i < seriesCount; i++) {
             int itemCount = seriesCollection.getItemCount(i);//每一个序列有多少个数据项
@@ -80,6 +80,7 @@ public class LineData {
                     high = seriesCollection.getHighValue(i, j);
                 }
                 if (low > seriesCollection.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
+//                    System.out.println("ok");
                     low = seriesCollection.getLowValue(i, j);
                 }
             }
@@ -88,58 +89,57 @@ public class LineData {
     }
 
     //获取最高值和最低值(成交量)
-    private void setHighAndLowVolume(){
+    private void setHighAndLowVolume() {
         int seriesCount2 = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
         for (int i = 0; i < seriesCount2; i++) {
             int itemCount = timeSeriesCollection.getItemCount(i);//每一个序列有多少个数据项
             for (int j = 0; j < itemCount; j++) {
-                if (highVolume < timeSeriesCollection.getYValue(i,j)) {//取第i个序列中的第j个数据项的值
-                    highVolume = timeSeriesCollection.getYValue(i,j);
+                if (highVolume < timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
+                    highVolume = timeSeriesCollection.getYValue(i, j);
                 }
-                if (lowVolume> timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
+                if (lowVolume > timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
                     lowVolume = timeSeriesCollection.getYValue(i, j);
                 }
             }
 
         }
-        System.out.println("high: "+highVolume+" Low: "+lowVolume);
     }
 
-    private OHLCSeries getKData(){
+    private OHLCSeries getKData() {
         OHLCSeries series = new OHLCSeries("");//高开低收数据序列，股票K线图的四个数据，依次是开，高，低，收
         //series.add(new Day(28, 9, 2007), 9.2, 9.58, 9.16, 9.34);
 
-       for(StockVO stockVO :this.data){
+        for (StockVO stockVO : this.data) {
 //           System.out.println(stockVO.volume);
-            series.add(new Day(stockVO.date.getDayOfMonth(),stockVO.date.getMonth().getValue(),stockVO.date.getYear())
-                    ,stockVO.open,stockVO.high,stockVO.low,stockVO.close);
+            series.add(new Day(stockVO.date.getDayOfMonth(), stockVO.date.getMonth().getValue(), stockVO.date.getYear())
+                    , stockVO.open, stockVO.high, stockVO.low, stockVO.close);
         }
 
         return series;
     }
 
 
-    private TimeSeries getVolData(){
-        TimeSeries series=new TimeSeries("");//对应时间成交量数据
+    private TimeSeries getVolData() {
+        TimeSeries series = new TimeSeries("");//对应时间成交量数据
         //series.add(new Day(28, 9, 2007), 260659400/100);
 
-        for(StockVO stockVO :this.data){
-            series.add(new Day(stockVO.date.getDayOfMonth(),stockVO.date.getMonth().getValue(),stockVO.date.getYear())
-                    ,Double.parseDouble(stockVO.volume)/100);
+        for (StockVO stockVO : this.data) {
+            series.add(new Day(stockVO.date.getDayOfMonth(), stockVO.date.getMonth().getValue(), stockVO.date.getYear())
+                    , Double.parseDouble(stockVO.volume) / 100);
         }
         return series;
     }
 
-    private void readData(String code){
+    private void readData(String code) {
         Iterator<StockVO> tempData = this.service.getSingleStockRecords(code);
-        while(tempData.hasNext()){
+        while (tempData.hasNext()) {
             this.data.add(tempData.next());
         }
     }
 
-    private void readData(ChartShowCriteriaVO chartShowCriteriaVO){
+    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) {
         Iterator<StockVO> tempData = this.service.getSingleStockRecords(chartShowCriteriaVO);
-        while(tempData.hasNext()){
+        while (tempData.hasNext()) {
             this.data.add(tempData.next());
         }
     }

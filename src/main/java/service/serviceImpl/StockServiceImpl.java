@@ -6,6 +6,7 @@ import po.StockPO;
 import service.StockService;
 import vo.StockVO;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,11 +32,15 @@ public class StockServiceImpl implements StockService {
      * @return the iterator 股票在有效日期内所有的数据
      */
     @Override
-    public Iterator<StockVO> getAllStocks(LocalDate date) {
+    public Iterator<StockVO> getAllStocks(LocalDate date) throws IOException {
 
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-        for (StockPO po:stockDao.getStockData(date)) {
-            stockVOList.add(new StockVO(po));
+        try {
+            for (StockPO po:stockDao.getStockData(date)) {
+                stockVOList.add(new StockVO(po));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return stockVOList.iterator();
     }
