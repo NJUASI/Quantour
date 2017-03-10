@@ -16,23 +16,35 @@ import java.util.*;
 
 /**
  * Created by cuihua on 2017/3/4.
+ * Last updated by Byron Dong
+ * Update time 2017/3/10
  *
  * K线、均线数据获取
+ *
+ * TODO getAveData参数days的含义
  */
 public class ChartServiceImpl implements ChartService {
 
     StockDao stockDao;
 
     /**
-     * Instantiates a new KChart service.
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @ the remote exception
      */
     public ChartServiceImpl()  {
         stockDao = new StockDaoImpl();
     }
 
+    /**
+     * 获取单支股票的所有数据
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/9
+     * @param code 股票代码
+     * @return 特定股票的所有交易信息
+     */
     @Override
     public Iterator<StockVO> getSingleStockRecords(String code) {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
@@ -45,16 +57,17 @@ public class ChartServiceImpl implements ChartService {
 
     /**
      * 获取单支股票的一段日期内的信息
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param vo 股票的选择标准
+     * @param chartShowCriteriaVO 股票的选择标准
      * @return 特定股票的所有交易信息
-     * @ RMI
      */
     @Override
-    public Iterator<StockVO> getSingleStockRecords(ChartShowCriteriaVO vo)  {
+    public Iterator<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO)  {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-        for (StockPO po : getStockPOs(vo)) {
+        for (StockPO po : getStockPOs(chartShowCriteriaVO)) {
             stockVOList.add(new StockVO(po));
         }
         return stockVOList.iterator();
@@ -62,12 +75,14 @@ public class ChartServiceImpl implements ChartService {
 
     /**
      * 获取单支股票一段日期内，用户所选天数的均线图的平均值.
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param chartShowCriteriaVO the chart show criteria vo 股票的选择标准
-     * @param days 天数指标的数组
-     * @return aveDataMap 用户天数的及其对应日期内均线图的平均值的map
-     * @ the remote exception
+     * @param chartShowCriteriaVO the chart show criteria vo 用户所选股票的信息
+     * @param days
+     * @return 用户所选天数的均线图的平均值
+     * @throws DateShortException 类型不匹配
      */
     @Override
     public Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws DateShortException {
@@ -89,17 +104,26 @@ public class ChartServiceImpl implements ChartService {
 
     /**
      * 获取单支股票所有数据均线图的平均值.
+     *
      * @auther Byron Dong
-     * @updateTime 2017/3/9
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/10
      * @param code  用户所选股票的代号
-     * @return the ave data 用户所选天数的均线图的平均值
-     * @throws RemoteException the remote exception
+     * @param days
+     * @return 用户所选天数的均线图的平均值
+     * @throws DateShortException 类型不匹配
      */
     @Override
     public Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, int[] days) throws DateShortException {
         return null;
         // TODO 龚尘淼 实现该方法
     }
+
+
+
+
+
+
 
     /**
      * 获取StockPO的列表

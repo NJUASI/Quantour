@@ -44,7 +44,7 @@ class RegisterPanel extends TempletPanel {
         password2.setVisible(true);
         add(password2);
 
-        //the Button setting of opening login panel
+        //the Button setting of opening logIn panel
         JButton openLogin =new JButton("登录");
         openLogin.setBounds(adaptScreen(470,610,80,40));
         openLogin.setForeground(Color.BLACK);

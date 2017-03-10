@@ -24,6 +24,6 @@ public class LoginController extends ViewController{
      */
     public void login(){
         UserService userService=new UserServiceImpl();
-//        userService.login(ID);
+//        userService.logIn(ID);
     }
 }

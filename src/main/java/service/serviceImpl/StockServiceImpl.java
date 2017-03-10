@@ -14,8 +14,10 @@ import java.util.List;
 
 /**
  * Created by Harvey on 2017/3/5.
+ * Last updated by Harvey
+ * Update time 2017/3/5
  *
- * 股票、自选股信息获取
+ * 股票信息查看、自选股操作
  */
 public class StockServiceImpl implements StockService {
 
@@ -27,9 +29,13 @@ public class StockServiceImpl implements StockService {
 
     /**
      * 显示所有股票信息的列表
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @return the iterator 股票在有效日期内所有的数据
+     * @params date 用户选择日期
+     * @return 股票信息列表
+     * @throws IOException IO
      */
     @Override
     public Iterator<StockVO> getAllStocks(LocalDate date) throws IOException {
@@ -47,11 +53,13 @@ public class StockServiceImpl implements StockService {
 
     /**
      * 显示用户的自选股信息列表
+     *
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param userName the user name 用户名称
-     * @param date     用户选择日期
-     * @return the iterator 用户自选股列表
+     * @param date 用户选择日期
+     * @return the iterator 自选股信息列表
      */
     @Override
     public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) {
@@ -65,10 +73,11 @@ public class StockServiceImpl implements StockService {
     /**
      * 用户添加自选股
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userName  the user name   用户名称
-     * @param stockCode the stock code 股票代码
-     * @return the boolean 是否添加成功
+     * @param userName 用户名称
+     * @param stockCode 股票代码
+     * @return 是否添加成功
      */
     @Override
     public boolean addPrivateStock(String userName, String stockCode) {
@@ -78,10 +87,11 @@ public class StockServiceImpl implements StockService {
     /**
      * 用户删除自选股
      * @auther Harvey
+     * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userName  the user name   用户名称
-     * @param stockCode the stock code  股票代码
-     * @return the boolean  是否删除成功
+     * @param userName 用户名称
+     * @param stockCode 股票代码
+     * @return 是否删除成功
      */
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) {

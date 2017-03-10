@@ -50,7 +50,7 @@ public class LoginPanel extends TempletPanel {
         password.setVisible(true);
         add(password);
 
-       //the Button setting of login to mainPanel
+       //the Button setting of logIn to mainPanel
         JButton login =new JButton("登录");
         login.setBounds(adaptScreen(360,600,80,40));
         login.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
@@ -58,7 +58,7 @@ public class LoginPanel extends TempletPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 try {
-        //TODO login
+        //TODO logIn
 //                    admin.getText();
 //                    password.getText();
                     LoginController loginController = new LoginController( admin.getText(),password.getText());
