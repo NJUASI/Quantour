@@ -27,6 +27,7 @@ public class KStringPanel extends NavigationBar {
     JTextField name;
     JTextField num;
     JButton search;
+    JButton searchAll;
     JButton compare;
     JButton favorite;
     AssociatePanel associatePanel;
@@ -43,7 +44,8 @@ public class KStringPanel extends NavigationBar {
         //初始化datePicker
         name = new JTextField();
         num = new JTextField();
-        search = new JButton("搜索");
+        searchAll = new JButton("总体信息");
+        search = new JButton("局部信息");
         favorite = new JButton("收藏");
         compare = new JButton("加入比较");
         init();
@@ -97,10 +99,10 @@ public class KStringPanel extends NavigationBar {
         datePanel.setBounds(width * 400 / 1920, height * 50 / 1030, 370 * width / 1920, 35 * height / 1030);
         add(datePanel);
 
-        name.setBounds(adaptScreen(900, 50, 150, 35));
+        name.setBounds(adaptScreen(800, 50, 150, 35));
         add(name);
 
-        num.setBounds(adaptScreen(1100, 50, 50, 35));
+        num.setBounds(adaptScreen(1000, 50, 50, 35));
         add(num);
 
         //提示框面板
@@ -110,9 +112,20 @@ public class KStringPanel extends NavigationBar {
 
 
 
+        //搜索按钮
+        searchAll.setBounds(adaptScreen(1130, 50, 100, 35));
+        searchAll.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                findOne(num.getText());
+
+            }
+        });
+        add(searchAll);
 
         //搜索按钮
-        search.setBounds(adaptScreen(1300, 50, 70, 35));
+        search.setBounds(adaptScreen(1230, 50, 100, 35));
         search.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
