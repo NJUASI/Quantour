@@ -78,7 +78,7 @@ class ComparePanel extends NavigationBar {
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                compareSpecial(num1.getText(),num2.getText(),datePanel.getStartDate(),datePanel.getEndDate());
                 refreshAssociate();
             }
         });

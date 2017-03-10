@@ -75,6 +75,7 @@ public class KStringPanel extends NavigationBar {
      * @updateTime 2017/3/9
      */
     public void findSpecial(String code, LocalDate startDate,LocalDate endDate){
+
         //TODO 在这儿get一个ChartPanel
         ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(code,startDate,endDate);
         // 创建图形
