@@ -18,25 +18,25 @@ import java.util.*;
 public class LineData {
 
     private ChartService service;
-    private int []tag;
+    private List<Integer> days;
     private List<TimeSeries> data;
 
-    public LineData(String code,int []tag) {
+    public LineData(String code, List<Integer> days) {
         service = new ChartServiceImpl();
         data = new ArrayList<>();
-        this.tag = tag;
+        this.days = days;
         this.readData(code);
     }
 
-    public LineData(ChartShowCriteriaVO chartShowCriteriaVO,int []tag) {
+    public LineData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) {
         service = new ChartServiceImpl();
         data = new ArrayList<>();
-        this.tag = tag;
+        this.days = days;
         this.readData(chartShowCriteriaVO);
     }
 
-    public int[] getTag() {
-        return tag;
+    public List<Integer> getDays() {
+        return days;
     }
 
     public TimeSeriesCollection getTimeSeriesCollection(){
@@ -51,9 +51,9 @@ public class LineData {
 
     private void readData(String code){
         try {
-            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(code,this.tag);
+            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(code,this.days);
 
-            for(int i:tag){
+            for(int i: days){
                 TimeSeries series = new TimeSeries(String.valueOf(i)+"天均线");
                 Iterator<MovingAverageVO> tempIterator = tempMap.get(i);
                 while(tempIterator.hasNext()){
@@ -70,9 +70,9 @@ public class LineData {
 
     private void readData(ChartShowCriteriaVO chartShowCriteriaVO){
         try {
-            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO,this.tag);
+            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO,this.days);
 
-            for(int i:tag){
+            for(int i: days){
                 TimeSeries series = new TimeSeries(String.valueOf(i)+"天均线");
                 Iterator<MovingAverageVO> tempIterator = tempMap.get(i);
                 while(tempIterator.hasNext()){

@@ -5,10 +5,11 @@ import org.jfree.chart.plot.XYPlot;
 import presentation.line.aveLine.AveChart;
 import presentation.line.kLine.KChart;
 import presentation.view.util.ChartUtils;
-import presentation.view.util.TestAve;
 import vo.ChartShowCriteriaVO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 //
 import org.jfree.chart.JFreeChart;
@@ -28,7 +29,9 @@ public class Main {
        KChart.setPlot(LocalDate.of(2014,1,1),LocalDate.of(2014,4,29),1);
 
         XYPlot plot1 = KChart.getKLinePlot();
-        int []tag = {5};
+        List<Integer> tag = new ArrayList<Integer>();
+        tag.add(5);
+
         AveChart aveChart = new AveChart(new ChartShowCriteriaVO("1",LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
         plot1 = aveChart.set(plot1);
 //        XYPlot plot2 = KChart.getVolumePlot(0.1);

@@ -4,6 +4,8 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import vo.ChartShowCriteriaVO;
 
+import java.util.List;
+
 /**
  * Created by Byron Dong on 2017/3/9.
  */
@@ -12,12 +14,12 @@ public class AveChart {
     private LineData data;
     private ColorFactory factory;
 
-    public AveChart(String code, int []tag) {
+    public AveChart(String code, List<Integer> tag) {
         data = new LineData(code,tag);
         factory = new ColorFactory();
     }
 
-    public AveChart(ChartShowCriteriaVO chartShowCriteriaVO, int []tag) {
+    public AveChart(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> tag) {
         data = new LineData(chartShowCriteriaVO,tag);
         factory = new ColorFactory();
     }
@@ -32,11 +34,11 @@ public class AveChart {
     private XYLineAndShapeRenderer getRender(){
         XYLineAndShapeRenderer lineAndShapeRenderer = new XYLineAndShapeRenderer();
         lineAndShapeRenderer.setBaseItemLabelsVisible(true);
-        int []temp = data.getTag();
+        List<Integer> temp = data.getDays();
 
-        for(int i=0;i<temp.length;i++){
+        for(int i = 0; i< temp.size(); i++){
             lineAndShapeRenderer.setSeriesShapesVisible(i,false);
-            lineAndShapeRenderer.setSeriesPaint(i,factory.getColor(temp[i]));
+            lineAndShapeRenderer.setSeriesPaint(i,factory.getColor(temp.get(i)));
         }
 
         return lineAndShapeRenderer;

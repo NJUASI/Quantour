@@ -7,8 +7,8 @@ import vo.StockVO;
 
 import java.io.IOException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,7 +55,7 @@ public interface ChartService extends Remote{
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, int[] days) throws DateShortException, IOException;
+    Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws DateShortException, IOException;
 
     /**
      * 获取单支股票所有数据均线图的平均值.
@@ -68,5 +68,5 @@ public interface ChartService extends Remote{
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, int[] days) throws DateShortException;
+    Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException;
 }
