@@ -20,21 +20,20 @@ public class StockSituationDaoImplTest {
         this.stockSituationDao = new StockSituationDaoImpl();
     }
 
-    @Ignore
     @Test
     public void getStockSituation() throws Exception {
-        LocalDate date = LocalDate.of(2010, 3, 4); // TODO 由于数据尚未处理，此处日期不知道结果，待定
+        LocalDate date = LocalDate.of(2014, 1, 2);
 
         StockSituationPO stockSituationPO = this.stockSituationDao.getStockSituation(date);
 
         //数据都尚未确定
-        Assert.assertEquals("", stockSituationPO.getVolume());
-        Assert.assertEquals(0, stockSituationPO.getLimitUpNum());
+        Assert.assertEquals("42246375", stockSituationPO.getVolume());
+        Assert.assertEquals(10, stockSituationPO.getLimitUpNum());
         Assert.assertEquals(0, stockSituationPO.getLimitDownNum());
-        Assert.assertEquals(0, stockSituationPO.getSurgingNum());
-        Assert.assertEquals(0, stockSituationPO.getSlumpingNum());
-        Assert.assertEquals(0, stockSituationPO.getClimbingNum());
-        Assert.assertEquals(0, stockSituationPO.getSlipingNum());
+        Assert.assertEquals(47, stockSituationPO.getSurgingNum());
+        Assert.assertEquals(1, stockSituationPO.getSlumpingNum());
+        Assert.assertEquals(47, stockSituationPO.getClimbingNum());
+        Assert.assertEquals(1, stockSituationPO.getSlipingNum());
     }
 
 }
