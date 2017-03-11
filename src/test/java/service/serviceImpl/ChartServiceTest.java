@@ -1,17 +1,10 @@
 package service.serviceImpl;
 
-import dao.StockDao;
-import dao.UserDao;
-import dao.daoImpl.StockDaoImpl;
-import dao.daoImpl.UserDaoImpl;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import po.UserPO;
 import service.ChartService;
 import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
-import vo.StockVO;
 
 import java.time.LocalDate;
 import java.util.*;

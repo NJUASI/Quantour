@@ -150,11 +150,13 @@ public class ChartServiceImpl implements ChartService {
 
         for (int i = 0;i < dataList.size()-day+1;i++){
             MovingAverageVO maVO = new MovingAverageVO();
-            int sum = 0;
+            double sum = 0;
             maVO.date = dataList.get(i+day-1).getDate();
-            for (int j = 0;j <= i+day-1;j++){
+            for (int j = i;j <= i+day-1;j++){
                 sum += dataList.get(j).getClose();
+                System.out.print(sum+" ");
             }
+            System.out.println();
             maVO.average = sum/day;
             dayAveDataList.add(maVO);
         }
@@ -166,8 +168,8 @@ public class ChartServiceImpl implements ChartService {
     /**
      * Reverse list.    反转list
      *
-     * @param dataList the data list
-     * @return the list
+     * @param dataList the data list 需要反转的list,日期倒序
+     * @return the list 日期顺序的list
      */
     private List<StockPO> reverse(List<StockPO> dataList) {
         List<StockPO> reversedList = new ArrayList<StockPO>();
@@ -175,25 +177,5 @@ public class ChartServiceImpl implements ChartService {
             reversedList.add(0,dataList.get(i));
         }
         return  reversedList;
-    }
-
-    /**
-     * 判断所选日期是否小于等于均线图的时间.
-     *
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
-     * @param chartShowCriteriaVO 选择条件
-     * @param day 天数指标
-     * @return 天数与所选类型是否匹配
-     */
-    private boolean isDateTooShort(ChartShowCriteriaVO chartShowCriteriaVO, int day) {
-        LocalDate begin = chartShowCriteriaVO.start;
-        LocalDate end = chartShowCriteriaVO.end;
-        int interval = begin.until(end).getDays();
-        if (interval < day) {
-            return true;
-        }
-        return false;
     }
 }
