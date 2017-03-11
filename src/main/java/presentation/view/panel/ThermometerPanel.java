@@ -62,13 +62,13 @@ public class ThermometerPanel extends NavigationBar {
 
 //                piePanel=new StockSituationPieChart().createChart();
                 piePanel=pieChart.createChart();
-                piePanel.setBounds(adaptScreen(250,200,700,400));
+                piePanel.setBounds(adaptScreen(230,200,800,600));
                 piePanel.setBackground(new Color(55,60,56));
                 add(piePanel);
                 piePanel.repaint();
 
                 barPanel=barChart.createChart();
-                barPanel.setBounds(adaptScreen(1000,400,700,350));
+                barPanel.setBounds(adaptScreen(1040,230,870,550));
                 barPanel.setBackground(new Color(55,60,56));
                 add(barPanel);
                 barPanel.repaint();
