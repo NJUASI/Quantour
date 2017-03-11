@@ -7,6 +7,7 @@ import po.StockPO;
 import service.ChartService;
 import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
+import vo.StockComparisionVO;
 import vo.StockVO;
 
 import javax.xml.crypto.Data;
@@ -109,6 +110,11 @@ public class ChartServiceImpl implements ChartService {
     public Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException {
         return null;
         // TODO 龚尘淼 实现该方法
+    }
+
+    @Override
+    public StockComparisionVO getComparision(String stockCode1, String stockCode2) {
+        return null;
     }
 
 

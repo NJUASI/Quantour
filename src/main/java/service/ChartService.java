@@ -3,6 +3,7 @@ package service;
 import utilities.exceptions.DateShortException;
 import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
+import vo.StockComparisionVO;
 import vo.StockVO;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.Map;
  * Last updated by Byron Dong
  * Update time 2017/3/10
  *
- * K线图、均线图
+ * K线图、均线图、股票比较
  *
  * TODO getAveData参数days的含义
  */
@@ -69,4 +70,16 @@ public interface ChartService extends Remote{
      * @throws DateShortException 类型不匹配
      */
     Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException;
+
+    /**
+     * 获取两只股票的比较信息
+     *
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/11
+     * @param stockCode1 要比较的股票代码1
+     * @param stockCode2 要比较的股票代码2
+     * @return
+     */
+    StockComparisionVO getComparision(String stockCode1, String stockCode2);
 }
