@@ -7,7 +7,15 @@ import java.awt.*;
  */
 public class ColorFactory {
 
-    //一旦传入没有以下值的tag，则返回null
+    /**
+     * 根据均线类型获取改均线的颜色,一旦传入没有以下值的tag，则返回null
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     * @param  tag 均线类型
+     * @return  Color 颜色
+     */
     public Color getColor(int tag){
         if(tag==5){
             return Color.RED;

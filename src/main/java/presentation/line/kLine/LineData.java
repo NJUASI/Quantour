@@ -20,44 +20,64 @@ import java.util.List;
  */
 public class LineData {
 
+    //K线的数据最高价
     private double high = -1;
+
+    //K线的数据最低价
     private double low = Double.MAX_VALUE;
+
+    //数据的最高交易量
     private double highVolume = -1;
+
+    //数据的最低交易量
     private double lowVolume = Double.MAX_VALUE;
+
+    //根据要求取出的数据
     private List<StockVO> data;
+
+    //逻辑层对象
     private ChartService service;
 
+    //K线数据集合
     public OHLCSeriesCollection seriesCollection;
+
+    //交易量数据集合
     public TimeSeriesCollection timeSeriesCollection;
 
+    /**
+     * 根据股票代号进行初始化
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     public LineData(String code) {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         this.readData(code);
     }
 
+    /**
+     * 根据股票代号和起始日期进行初始化
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     public LineData(ChartShowCriteriaVO chartShowCriteriaVO) {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         this.readData(chartShowCriteriaVO);
     }
 
-    public double getHigh() {
-        return high;
-    }
-
-    public double getLow() {
-        return low;
-    }
-
-    public double getHighVolume() {
-        return highVolume;
-    }
-
-    public double getLowVolume() {
-        return lowVolume;
-    }
-
+    /**
+     * 从数据中筛选出K线最低价和最高价，并完成collection的初始化，添加数据
+     *
+     * @return K线最高价
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     public void setData() {
         this.initCollection();
         this.seriesCollection.addSeries(this.getKData());
@@ -66,12 +86,74 @@ public class LineData {
         this.setHighAndLowVolume();
     }
 
+    /**
+     * 获取K线最高价
+     *
+     * @return K线最高价
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
+    public double getHigh() {
+        return high;
+    }
+
+    /**
+     * 获取K线最低价
+     *
+     * @return K线最低价
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
+    public double getLow() {
+        return low;
+    }
+
+    /**
+     * 获取最高交易量
+     *
+     * @return 最高交易量
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
+    public double getHighVolume() {
+        return highVolume;
+    }
+
+    /**
+     * 获取最低交易量
+     *
+     * @return 最低交易量
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
+    public double getLowVolume() {
+        return lowVolume;
+    }
+
+
+    /**
+     * 完成collection初始化
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     private void initCollection() {
         this.seriesCollection = new OHLCSeriesCollection();
         this.timeSeriesCollection = new TimeSeriesCollection();
     }
 
-    //获取K线数据的最高值和最低值(历史)
+    /**
+     * 获取K线数据的最高值和最低值(历史)
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     private void setHighAndLow() {
         int seriesCount = seriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
         for (int i = 0; i < seriesCount; i++) {
@@ -89,7 +171,13 @@ public class LineData {
         }
     }
 
-    //获取最高值和最低值(成交量)
+    /**
+     * 获取最高值和最低值(成交量)
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     private void setHighAndLowVolume() {
         int seriesCount2 = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
         for (int i = 0; i < seriesCount2; i++) {
@@ -106,12 +194,19 @@ public class LineData {
         }
     }
 
+    /**
+     * 获取K线数据集合
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     * @Return OHLCSeries 数据集合
+     */
     private OHLCSeries getKData() {
         OHLCSeries series = new OHLCSeries("");//高开低收数据序列，股票K线图的四个数据，依次是开，高，低，收
         //series.add(new Day(28, 9, 2007), 9.2, 9.58, 9.16, 9.34);
 
         for (StockVO stockVO : this.data) {
-//           System.out.println(stockVO.volume);
             series.add(new Day(stockVO.date.getDayOfMonth(), stockVO.date.getMonth().getValue(), stockVO.date.getYear())
                     , stockVO.open, stockVO.high, stockVO.low, stockVO.close);
         }
@@ -119,7 +214,14 @@ public class LineData {
         return series;
     }
 
-
+    /**
+     * 获取成交量数据集合
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     * @Return TimeSeries 成交量数据集合
+     */
     private TimeSeries getVolData() {
         TimeSeries series = new TimeSeries("");//对应时间成交量数据
         //series.add(new Day(28, 9, 2007), 260659400/100);
@@ -131,6 +233,14 @@ public class LineData {
         return series;
     }
 
+    /**
+     * 根据股票代号获取股票数据
+     *
+     * @param code 股票代号
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     private void readData(String code) {
         Iterator<StockVO> tempData = null;
         try {
@@ -143,6 +253,14 @@ public class LineData {
         }
     }
 
+    /**
+     * 根据股票代号和日期获取股票数据
+     *
+     * @param chartShowCriteriaVO 股票信息载体
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     private void readData(ChartShowCriteriaVO chartShowCriteriaVO) {
         Iterator<StockVO> tempData = null;
         try {

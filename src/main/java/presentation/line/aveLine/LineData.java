@@ -17,10 +17,22 @@ import java.util.*;
  */
 public class LineData {
 
+    //逻辑层对象
     private ChartService service;
+
+    //需要显示均线列表
     private List<Integer> days;
+
+    //均线数据集合
     private List<TimeSeries> data;
 
+    /**
+     * 根据股票代号和均线类型进行初始化
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     public LineData(String code, List<Integer> days) {
         service = new ChartServiceImpl();
         data = new ArrayList<>();
@@ -28,6 +40,13 @@ public class LineData {
         this.readData(code);
     }
 
+    /**
+     * 根据股票代号，起始日期和均线类型进行初始化
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     public LineData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) {
         service = new ChartServiceImpl();
         data = new ArrayList<>();
@@ -35,11 +54,27 @@ public class LineData {
         this.readData(chartShowCriteriaVO);
     }
 
+    /**
+     * 获取均线类型
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     * @return  List<Integer> 均线类型集合
+     */
     public List<Integer> getDays() {
         return days;
     }
 
-    public TimeSeriesCollection getTimeSeriesCollection(){
+    /**
+     * 获取均线数据collection
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     * @return  TimeSeriesCollection 均线数据collection
+     */
+    public TimeSeriesCollection getTimeSeriesCollection() {
         TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
 
         for (TimeSeries series : data) {
@@ -49,16 +84,24 @@ public class LineData {
         return timeSeriesCollection;
     }
 
-    private void readData(String code){
+    /**
+     * 根据股票代号获取股票数据
+     *
+     * @param code 股票代号
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
+    private void readData(String code) {
         try {
-            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(code,this.days);
+            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(code, this.days);
 
-            for(int i: days){
-                TimeSeries series = new TimeSeries(String.valueOf(i)+"天均线");
+            for (int i : days) {
+                TimeSeries series = new TimeSeries(String.valueOf(i) + "天均线");
                 Iterator<MovingAverageVO> tempIterator = tempMap.get(i);
-                while(tempIterator.hasNext()){
+                while (tempIterator.hasNext()) {
                     MovingAverageVO vo = tempIterator.next();
-                    series.add(new Day(vo.date.getDayOfMonth(),vo.date.getMonth().getValue(),vo.date.getYear()),vo.average);
+                    series.add(new Day(vo.date.getDayOfMonth(), vo.date.getMonth().getValue(), vo.date.getYear()), vo.average);
                 }
                 data.add(series);
             }
@@ -68,21 +111,29 @@ public class LineData {
         }
     }
 
-    private void readData(ChartShowCriteriaVO chartShowCriteriaVO){
+    /**
+     * 根据股票代号和日期获取股票数据
+     *
+     * @param chartShowCriteriaVO 股票信息载体
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
+    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) {
         try {
-            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO,this.days);
+            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO, this.days);
 
-            for(int i: days){
-                TimeSeries series = new TimeSeries(String.valueOf(i)+"天均线");
+            for (int i : days) {
+                TimeSeries series = new TimeSeries(String.valueOf(i) + "天均线");
                 Iterator<MovingAverageVO> tempIterator = tempMap.get(i);
-                while(tempIterator.hasNext()){
+                while (tempIterator.hasNext()) {
                     MovingAverageVO vo = tempIterator.next();
-                    series.add(new Day(vo.date.getDayOfMonth(),vo.date.getMonth().getValue(),vo.date.getYear()),vo.average);
+                    series.add(new Day(vo.date.getDayOfMonth(), vo.date.getMonth().getValue(), vo.date.getYear()), vo.average);
                 }
-                data.add(i,series);
+                data.add(series);
             }
 
-        } catch (DateShortException | IOException e){
+        } catch (DateShortException | IOException e) {
             e.printStackTrace();
         }
 
