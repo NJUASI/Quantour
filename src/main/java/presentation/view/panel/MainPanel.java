@@ -7,15 +7,12 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import org.jb2011.lnf.beautyeye.*;
-import presentation.controller.ViewController;
 import presentation.view.toos.WindowData;
 
 /**
  * Created by 61990 on 2017/3/5.
  */
 public class MainPanel extends JFrame {
-
-    ViewController controller;
 
     //一些主原件
     private static MainPanel mainPanel;
@@ -53,12 +50,9 @@ public class MainPanel extends JFrame {
         cardPanel.add(mainPane, "mainPane");
 
 
-//        controller.switchView("loginPanel");
-
-
         //TODO 可不可以放到控制器里面
         //加载login界面
-        LoginPanel loginPanel = new LoginPanel();
+        LoginPanel loginPanel = LoginPanel.getInstance();
         cardPanel.add(loginPanel, "loginPanel");
         card.show(cardPanel, "loginPanel");
     }
@@ -96,14 +90,14 @@ public class MainPanel extends JFrame {
         setResizable(false);
     }
 
-//    /**
-//     * 单件模式
-//     *
-//     * @param
-//     * @return
-//     * @author 61990
-//     * @updateTime 2017/3/5
-//     */
+    /**
+     * 单件模式
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static MainPanel getInstance() {
         if (mainPanel == null) {
             mainPanel = new MainPanel();

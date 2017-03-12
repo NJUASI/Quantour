@@ -23,15 +23,34 @@ import java.time.LocalDate;
 public class KStringPanel extends NavigationBar {
     //k线面板
     private static KStringPanel kStringPanel;
+
+    //日期选择器面板
     DoubleDatePickerPanel datePanel;
+
+    //
     JTextField name;
+
+    //
     JTextField num;
+
+    //局部信息
     JButton search;
+
+    //总体信息
     JButton searchAll;
+
+    //比较按钮
     JButton compare;
+
+    //自选股按钮
     JButton favorite;
+
+    //提示框面板
     AssociatePanel associatePanel;
+
+
     ChartPanel chartPanel;
+
     /**
      * k线面板构造器
      *
@@ -50,6 +69,7 @@ public class KStringPanel extends NavigationBar {
         compare = new JButton("加入比较");
         init();
     }
+
     /**
      * 通过code寻找股票的全部信息并绘图
      *
@@ -59,13 +79,13 @@ public class KStringPanel extends NavigationBar {
      * @updateTime 2017/3/9
      */
     public void findOne(String code){
-        //TODO 在这儿get一个ChartPanel
         // 创建图形
         chartPanel = new KStringChart().createChart();
         chartPanel.setBounds(adaptScreen(320,100,1500,850));
         add(chartPanel);
         chartPanel.repaint();
     }
+
     /**
      * 通过code和前后日期寻找股票的特定时期 寻找股票的全部信息并绘图
      *
@@ -110,8 +130,6 @@ public class KStringPanel extends NavigationBar {
         associatePanel.setVisible(false);
         add(associatePanel);
 
-
-
         //搜索按钮
         searchAll.setBounds(adaptScreen(1130, 50, 100, 35));
         searchAll.addMouseListener(new MouseAdapter() {
@@ -135,6 +153,7 @@ public class KStringPanel extends NavigationBar {
             }
         });
         add(search);
+
         //加入比较按钮
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
         compare.addMouseListener(new MouseAdapter() {

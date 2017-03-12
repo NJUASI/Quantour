@@ -9,7 +9,9 @@ import java.awt.*;
  * Created by 61990 on 2017/3/8.
  */
 public class AssociatePanel extends ScrollPane {
+
     ListModel jListModel;
+
     JList list;
     public AssociatePanel(){
         WindowData windowData = WindowData.getInstance();

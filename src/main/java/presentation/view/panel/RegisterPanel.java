@@ -1,14 +1,33 @@
 package presentation.view.panel;
 
+import presentation.listener.registerPanelListener.OpenLoginListener;
+import presentation.listener.registerPanelListener.RegisterListener;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
- * Created by 61990 on 2017/3/5.
- */
-class RegisterPanel extends TempletPanel {
+* Created by Harvey on 2017/3/12.
+*/
+public class RegisterPanel extends TempletPanel{
+
+    private static presentation.view.panel.RegisterPanel registerPanel;
+
+    //用户名文本框
+    private JTextField admin;
+
+    //密码框
+    private JPasswordField password;
+
+    //确认密码框
+    private JPasswordField password2;
+
+    //登录按钮
+    private JButton openLogin;
+
+    //注册按钮
+    private JButton register;
+
     /**
      * 构造器
      *
@@ -18,8 +37,9 @@ class RegisterPanel extends TempletPanel {
      * @updateTime 2017/3/5
      */
     public RegisterPanel() {
+
         //the field to write your message to register
-        JTextField admin=new JTextField("your Phone/Admin");
+        admin=new JTextField("your Phone/Admin");
         admin.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
         admin.setBounds(adaptScreen(300,340,300,50));
 //        admin.setOpaque(false);
@@ -28,7 +48,7 @@ class RegisterPanel extends TempletPanel {
         add(admin);
 
 
-        JPasswordField password=new JPasswordField();
+        password = new JPasswordField();
         password.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
         password.setBounds(adaptScreen(300,420,300,50));
 //        password.setBorder(null);
@@ -36,7 +56,7 @@ class RegisterPanel extends TempletPanel {
         password.setVisible(true);
         add(password);
 
-        JPasswordField password2=new JPasswordField();
+        password2=new JPasswordField();
         password2.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
         password2.setBounds(adaptScreen(300,500,300,50));
 //        password2.setBorder(null);
@@ -45,31 +65,50 @@ class RegisterPanel extends TempletPanel {
         add(password2);
 
         //the Button setting of opening logIn panel
-        JButton openLogin =new JButton("登录");
+        openLogin = new JButton("登录");
         openLogin.setBounds(adaptScreen(470,610,80,40));
         openLogin.setForeground(Color.BLACK);
         openLogin.setFont(new Font("",Font.CENTER_BASELINE,15*width/1920));
         openLogin.setContentAreaFilled(false);
-        openLogin.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "loginPanel");
-            }
-        });
+        openLogin.addMouseListener(new OpenLoginListener());
         add(openLogin);
 
         //the Button setting of register
-        JButton register =new JButton("注册");
+        register =new JButton("注册");
         register.setBounds(adaptScreen(360,600,80,40));
         register.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
-        register.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "loginPanel");
-            }
-        });
+        register.addMouseListener(new RegisterListener());
         add(register);
-//        add(bg);
+    }
+
+    public static RegisterPanel getInstance(){
+        if(registerPanel == null){
+            registerPanel = new RegisterPanel();
+        }
+        return registerPanel;
+    }
+
+    public void setUserName(String userName) {
+        admin.setText(userName);
+    }
+
+    public void setPassword(String password) {
+        this.password.setText(password);
+    }
+
+    public void setPassword2(String password2) {
+        this.password2.setText(password2);
+    }
+
+    public String getUserName() {
+        return admin.getText();
+    }
+
+    public String getPassword() {
+        return password.getText();
+    }
+
+    public String getPassword2() {
+        return password2.getText();
     }
 }

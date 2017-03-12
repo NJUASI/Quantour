@@ -22,4 +22,9 @@ public class UserVO {
         this.userName = po.getUserName();
         this.password = po.getPassword();
     }
+
+    public UserVO(String name, String password) {
+        this.userName = name;
+        this.password = password;
+    }
 }

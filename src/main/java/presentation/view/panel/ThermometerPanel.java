@@ -20,9 +20,17 @@ import java.util.List;
 public class ThermometerPanel extends NavigationBar {
     //温度计面板
     private static ThermometerPanel thermometerPanel;
+
+    //日期选择面板
     SingleDatePickerPanel date;
+
+    //搜索按钮
     JButton search;
+
+    //饼图面板
     JPanel piePanel;
+
+    //柱状图面板
     JPanel barPanel;
     /**
      * 温度计面板构造器
@@ -39,8 +47,6 @@ public class ThermometerPanel extends NavigationBar {
 
         piePanel=new JPanel();
         barPanel=new JPanel();
-
-
 
         search = new JButton("搜索");
         search.setBounds(adaptScreen(900, 50, 150, 35));
@@ -60,7 +66,6 @@ public class ThermometerPanel extends NavigationBar {
                 StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
                 StockSituationBarChart barChart = new StockSituationBarChart(list.iterator());
 
-//                piePanel=new StockSituationPieChart().createChart();
                 piePanel=pieChart.createChart();
                 piePanel.setBounds(adaptScreen(230,200,800,600));
                 piePanel.setBackground(new Color(55,60,56));
@@ -72,15 +77,6 @@ public class ThermometerPanel extends NavigationBar {
                 barPanel.setBackground(new Color(55,60,56));
                 add(barPanel);
                 barPanel.repaint();
-//                StockSituationService stockSituationService = new StockSituationServiceImpl();
-//                try {
-//                    stockSituationService.showStockSituation(date.getDate());
-//
-//
-//
-//                } catch (Exception e1) {
-//
-//                }
             }
         });
         add(search);

@@ -41,7 +41,7 @@ public class LogDataHelperImpl implements LogDataHelper{
      */
     @Override
     public boolean login(String userName) {
-        properties.put(userName,null);
+        properties.put(userName,"");
         return true;
     }
 

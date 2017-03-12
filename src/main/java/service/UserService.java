@@ -1,18 +1,14 @@
 package service;
 
-import utilities.exceptions.DuplicateLoginException;
-import utilities.exceptions.DuplicatedNameException;
+import utilities.exceptions.*;
 import vo.UserVO;
-
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 
 /**
  * Created by cuihua on 2017/3/4.
  * Last updated by Harvey
  * Update time 2017/3/5
  */
-public interface UserService extends Remote{
+public interface UserService{
 
     /**
      * 用户注册.
@@ -21,10 +17,11 @@ public interface UserService extends Remote{
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param userVO 注册用户信息
+     * @param password2
      * @return 是否注册成功
      * @throws DuplicatedNameException 用户名重复
      */
-    public boolean registerUser(UserVO userVO) throws DuplicatedNameException;
+    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException;
 
     /**
      * 修改用户信息
@@ -57,7 +54,7 @@ public interface UserService extends Remote{
      * @param userName 用户名称
      * @return 是否登录成功
      */
-    boolean logIn(String userName) throws DuplicateLoginException;
+    boolean logIn(String userName,String password) throws DuplicateLoginException, UserNotExistException, PasswordWrongException;
 
     /**
      * 用户登出
