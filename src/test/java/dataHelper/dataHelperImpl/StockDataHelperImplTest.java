@@ -75,7 +75,7 @@ public class StockDataHelperImplTest extends TestCase {
         assertEquals(16.1, testPO.getClose(), 0);
         assertEquals("0", testPO.getVolume());
         assertEquals(15.65, testPO.getAdjClose(), 0);
-        assertEquals(155, testPO.getCode());
+        assertEquals("155", testPO.getCode());
         assertEquals("川化股份", testPO.getName());
         assertEquals(16.1, testPO.getPreClose(), 0);
         assertEquals(15.65, testPO.getPreAdjClose(), 0);
@@ -91,7 +91,7 @@ public class StockDataHelperImplTest extends TestCase {
         assertEquals(5.47, testPO.getClose(), 0);
         assertEquals("13956", testPO.getVolume());
         assertEquals(5.47, testPO.getAdjClose(), 0);
-        assertEquals(17, testPO.getCode());
+        assertEquals("17", testPO.getCode());
         assertEquals("*ST中华A", testPO.getName());
         assertEquals(5.39, testPO.getPreClose(), 0);
         assertEquals(5.39, testPO.getPreAdjClose(), 0);

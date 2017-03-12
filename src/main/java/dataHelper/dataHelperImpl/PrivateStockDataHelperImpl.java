@@ -33,16 +33,16 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @return 自选股代码列表
      */
     @Override
-    public List<Integer> getPrivateStockCode(String userName) {
-        List<Integer> result = new LinkedList<Integer>();
+    public List<String> getPrivateStockCode(String userName) {
+        List<String> result = new LinkedList<String>();
 
         try {
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(path)));
             String thisLine = null;
             while ((thisLine = br.readLine()) != null) {
                 String[] parts = thisLine.split(" ");
-                if (parts[0] == userName) {
-                    result.add(Integer.parseInt(parts[1]));
+                if (parts[0].equals(userName)) {
+                    result.add(parts[1]);
                 }
             }
             br.close();
@@ -64,7 +64,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @return 添加是否成功
      */
     @Override
-    public boolean addPrivateStock(String userName, int stockCode) {
+    public boolean addPrivateStock(String userName, String stockCode) {
         try {
             Thread.currentThread().getContextClassLoader().getResource(path);
             bw = new BufferedWriter(new FileWriter(path, true));
@@ -90,7 +90,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @return 删除是否成功
      */
     @Override
-    public boolean deletePrivateStock(String userName, int stockCode) {
+    public boolean deletePrivateStock(String userName, String stockCode) {
         try {
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(path)));
             StringBuffer nowData = new StringBuffer();

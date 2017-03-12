@@ -41,7 +41,29 @@ public class StockDaoImpl implements StockDao {
 
     /*
     股票数据
+    注意：取出来的所有股票链表数据中，年份小的在链表前端，年份大的在链表后端
      */
+    /**
+     * 获取特定日期指定股票的相关数据
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/12
+     * @param stockCode 指定股票代码
+     * @param date 指定日期
+     * @return 特定日期指定股票的相关数据
+     */
+    @Override
+    public StockPO getStockData(String stockCode, LocalDate date) throws IOException {
+        List<StockPO> result = stockHelper.getStockRecords(date);
+        for (StockPO stock : result) {
+            if (stock.getCode().equals(stockCode)) {
+                return stock;
+            }
+        }
+        return null;
+    }
+
     /**
      * 获取特定时间段内的指定股票所有数据
      *
@@ -54,7 +76,7 @@ public class StockDaoImpl implements StockDao {
      * @return 特定时间段内的指定股票所有数据
      */
     @Override
-    public List<StockPO> getStockData(int stockCode, LocalDate start, LocalDate end) throws IOException {
+    public List<StockPO> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException {
         List<StockPO> result = stockHelper.getStockRecords(stockCode);
 
         for (int i = 0; i < result.size(); ) {
@@ -69,27 +91,6 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
-     * 获取特定日期指定股票的相关数据
-     *
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/12
-     * @param stockCode 指定股票代码
-     * @param date 指定日期
-     * @return 特定日期指定股票的相关数据
-     */
-    @Override
-    public StockPO getStockData(int stockCode, LocalDate date) throws IOException {
-        List<StockPO> result = stockHelper.getStockRecords(date);
-        for (StockPO stock : result) {
-            if (stock.getCode() == stockCode) {
-                return stock;
-            }
-        }
-        return null;
-    }
-
-    /**
      * 取指定股票的所有数据，没有返回null
      *
      * @author Harvey
@@ -99,7 +100,7 @@ public class StockDaoImpl implements StockDao {
      * @return 此股票的所有数据
      */
     @Override
-    public List<StockPO> getStockData(int stockCode) throws IOException {
+    public List<StockPO> getStockData(String stockCode) throws IOException {
         return reverse(stockHelper.getStockRecords(stockCode));
 
     }
@@ -139,8 +140,8 @@ public class StockDaoImpl implements StockDao {
     public List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException {
         List<StockPO> result = new LinkedList<StockPO>();
 
-        PrivateStockPO myPrivateStockPO = getPrivateStock(userName);
-        for (int stockCode : myPrivateStockPO.getPrivateStocks()) {
+        PrivateStockPO myPrivateStockPO = getPrivateStocks(userName);
+        for (String stockCode : myPrivateStockPO.getPrivateStocks()) {
             result.add(getStockData(stockCode, date));
         }
 
@@ -157,7 +158,7 @@ public class StockDaoImpl implements StockDao {
      * @return 指定用户的自选股
      */
     @Override
-    public PrivateStockPO getPrivateStock(String userName) {
+    public PrivateStockPO getPrivateStocks(String userName) {
         return new PrivateStockPO(userName, privateStockDataHelper.getPrivateStockCode(userName));
     }
 
@@ -172,8 +173,8 @@ public class StockDaoImpl implements StockDao {
      * @return 添加是否成功
      */
     @Override
-    public boolean addPrivateStock(String userName, int stockCode) {
-        return privateStockDataHelper.addPrivateStock(userName,stockCode);
+    public boolean addPrivateStock(String userName, String stockCode) {
+        return privateStockDataHelper.addPrivateStock(userName, stockCode);
     }
 
     /**
@@ -187,8 +188,8 @@ public class StockDaoImpl implements StockDao {
      * @return 删除是否成功
      */
     @Override
-    public boolean deletePrivateStock(String userName, int stockCode) {
-        return privateStockDataHelper.deletePrivateStock(userName,stockCode);
+    public boolean deletePrivateStock(String userName, String stockCode) {
+        return privateStockDataHelper.deletePrivateStock(userName, stockCode);
     }
 
 
@@ -207,7 +208,7 @@ public class StockDaoImpl implements StockDao {
      * @return 数据库中股票存在记录的第一天
      */
     @Override
-    public LocalDate getFirstDay(int stockCode) {
+    public LocalDate getFirstDay(String stockCode) {
         return stockHelper.getFirstDay(stockCode);
     }
 

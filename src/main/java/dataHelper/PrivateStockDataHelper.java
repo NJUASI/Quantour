@@ -18,7 +18,7 @@ public interface PrivateStockDataHelper {
      * @param userName 用户名称
      * @return 自选股代码列表
      */
-    List<Integer> getPrivateStockCode(String userName);
+    List<String> getPrivateStockCode(String userName);
 
 
     /**
@@ -31,7 +31,7 @@ public interface PrivateStockDataHelper {
      * @param stockCode 股票代码
      * @return 添加是否成功
      */
-    boolean addPrivateStock(String userName, int stockCode);
+    boolean addPrivateStock(String userName, String stockCode);
 
     /**
      * 删除用户自选股
@@ -43,5 +43,5 @@ public interface PrivateStockDataHelper {
      * @param stockCode 股票代码
      * @return 删除是否成功
      */
-    boolean deletePrivateStock(String userName, int stockCode);
+    boolean deletePrivateStock(String userName, String stockCode);
 }

@@ -13,9 +13,9 @@ public class PrivateStockPO {
     private String userName;
 
     // 用户的自选股列表
-    private List<Integer> privateStocks;
+    private List<String> privateStocks;
 
-    public PrivateStockPO(String userName, List<Integer> privateStocks) {
+    public PrivateStockPO(String userName, List<String> privateStocks) {
         this.userName = userName;
         this.privateStocks = privateStocks;
     }
@@ -28,11 +28,11 @@ public class PrivateStockPO {
         this.userName = userName;
     }
 
-    public List<Integer> getPrivateStocks() {
+    public List<String> getPrivateStocks() {
         return privateStocks;
     }
 
-    public void setPrivateStocks(List<Integer> privateStocks) {
+    public void setPrivateStocks(List<String> privateStocks) {
         this.privateStocks = privateStocks;
     }
 }

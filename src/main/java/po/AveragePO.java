@@ -9,12 +9,12 @@ public class AveragePO {
     private double close;
 
     // 股票代码
-    private int code;
+    private String code;
 
     // 股票名称
     private String name;
 
-    public AveragePO(double close, int code, String name) {
+    public AveragePO(double close, String code, String name) {
         this.close = close;
         this.code = code;
         this.name = name;
@@ -28,11 +28,11 @@ public class AveragePO {
         this.close = close;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

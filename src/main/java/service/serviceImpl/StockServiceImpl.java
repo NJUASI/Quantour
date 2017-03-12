@@ -82,7 +82,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public boolean addPrivateStock(String userName, String stockCode) {
-        return stockDao.addPrivateStock(userName, Integer.parseInt(stockCode));
+        return stockDao.addPrivateStock(userName, stockCode);
     }
 
     /**
@@ -96,6 +96,6 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) {
-        return stockDao.deletePrivateStock(userName, Integer.parseInt(stockCode));
+        return stockDao.deletePrivateStock(userName, stockCode);
     }
 }

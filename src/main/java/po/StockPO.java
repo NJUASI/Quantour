@@ -37,7 +37,7 @@ public class StockPO {
     private double adjClose;
 
     // 股票代码
-    private int code;
+    private String code;
 
     // 股票名称
     private String name;
@@ -51,7 +51,7 @@ public class StockPO {
     //昨日复权收盘指数
     private double preAdjClose;
 
-    public StockPO(int serial, LocalDate date, double open, double high, double low, double close, String volume, double adjClose, int code, String name, Market market, double preClose, double preAdjClose) {
+    public StockPO(int serial, LocalDate date, double open, double high, double low, double close, String volume, double adjClose, String code, String name, Market market, double preClose, double preAdjClose) {
         this.serial = serial;
         this.date = date;
         this.open = open;
@@ -131,11 +131,11 @@ public class StockPO {
         this.adjClose = adjClose;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -25,7 +25,7 @@ public interface StockDataHelper {
      * @return List<StockPO> 指定日期的所有股票数据
      * @throws IOException IO
      */
-    List<StockPO> getStockRecords(int stockCode) throws IOException;
+    List<StockPO> getStockRecords(String stockCode) throws IOException;
 
     /**
      * 获取指定日期的所有股票数据
@@ -49,5 +49,5 @@ public interface StockDataHelper {
      * @return 数据库中股票存在记录的第一天
      * @throws IOException IO
      */
-    LocalDate getFirstDay(int stockCode);
+    LocalDate getFirstDay(String stockCode);
 }

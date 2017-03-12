@@ -36,7 +36,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @throws IOException IO
      */
     @Override
-    public List<StockPO> getStockRecords(int stockCode) throws IOException {
+    public List<StockPO> getStockRecords(String stockCode) throws IOException {
         return getStockByPath(stockRecordByCodePathPre + stockCode + stockRecordPathPost);
     }
 
@@ -66,7 +66,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @throws IOException IO
      */
     @Override
-    public LocalDate getFirstDay(int stockCode) {
+    public LocalDate getFirstDay(String stockCode) {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(stockRecordByCodePathPre + stockCode + stockRecordPathPost)));
 
         String line = null;
@@ -113,8 +113,8 @@ public class StockDataHelperImpl implements StockDataHelper {
 
             result.add(new StockPO(Integer.parseInt(parts[0]), thisDate, Double.parseDouble(parts[2]),
                     Double.parseDouble(parts[3]), Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), parts[6],
-                    Double.parseDouble(parts[7]), Integer.parseInt(parts[8]), parts[9], Market.getEnum(parts[10]),
-                    Double.parseDouble(parts[11]),Double.parseDouble(parts[12])));
+                    Double.parseDouble(parts[7]), parts[8], parts[9], Market.getEnum(parts[10]),
+                    Double.parseDouble(parts[11]), Double.parseDouble(parts[12])));
         }
         return result;
     }
