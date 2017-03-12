@@ -36,7 +36,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @throws IOException IO
      */
     @Override
-    public List<StockPO> getStockRecords(String stockCode) throws IOException {
+    public List<StockPO> getStockRecords(int stockCode) throws IOException {
         return getStockByPath(stockRecordByCodePathPre + stockCode + stockRecordPathPost);
     }
 
@@ -61,13 +61,13 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @author cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
-     * @param code 股票代码
+     * @param stockCode 股票代码
      * @return 数据库中股票存在记录的第一天
      * @throws IOException IO
      */
     @Override
-    public LocalDate getFirstDay(String code) {
-        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(stockRecordByCodePathPre + code + stockRecordPathPost)));
+    public LocalDate getFirstDay(int stockCode) {
+        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(stockRecordByCodePathPre + stockCode + stockRecordPathPost)));
 
         String line = null;
         try {

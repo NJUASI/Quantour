@@ -8,9 +8,14 @@ import java.util.List;
 
 /**
  * Created by cuihua on 2017/3/11.
+ * Last updated by cuihua
+ * Update time 2017/3/12
  */
 public class StockComparisionVO {
 
+    /**
+     * 股票A
+     */
     // 最低值
     public double min1;
 
@@ -26,9 +31,13 @@ public class StockComparisionVO {
     // 每天的对数收益率
     public Iterator<Double> logarithmicYield1;
 
-    // 每天的对数收益率方差
-    public Iterator<Double> logarithmicYieldVariance1;
+    // 对数收益率方差
+    public Double logarithmicYieldVariance1;
 
+
+    /**
+     * 股票B
+     */
     // 最低值
     public double min2;
 
@@ -44,17 +53,22 @@ public class StockComparisionVO {
     // 每天的对数收益率
     public Iterator<Double> logarithmicYield2;
 
-    // 每天的对数收益率方差
-    public Iterator<Double> logarithmicYieldVariance2;
+    // 对数收益率方差
+    public Double logarithmicYieldVariance2;
 
     public StockComparisionVO(List<StockPO> stock1, List<StockPO> stock2) {
         initDoubles(stock1, stock2);
+
         closes1 = initCloses(stock1);
         closes2 = initCloses(stock2);
-        logarithmicYield1 = initLogarithmicYield(stock1);
-        logarithmicYield2 = initLogarithmicYield(stock2);
-        logarithmicYieldVariance1 = initLogarithmicYieldVariance(stock1);
-        logarithmicYieldVariance2 = initLogarithmicYieldVariance(stock2);
+
+        List<Double> logarithmicYieldList1 = initLogarithmicYield(stock1);
+        List<Double> logarithmicYieldList2 = initLogarithmicYield(stock2);
+
+        logarithmicYield1 = logarithmicYieldList1.iterator();
+        logarithmicYield2 = logarithmicYieldList2.iterator();
+        logarithmicYieldVariance1 = initLogarithmicYieldVariance(logarithmicYieldList1);
+        logarithmicYieldVariance2 = initLogarithmicYieldVariance(logarithmicYieldList2);
     }
 
 
@@ -64,8 +78,8 @@ public class StockComparisionVO {
         min2 = getMin(stock2);
         max1 = getMax(stock1);
         max2 = getMax(stock2);
-        increaseMargin1 = initMargins(stock1);
-        increaseMargin2 = initMargins(stock2);
+        increaseMargin1 = getIncreaseMargin(stock1);
+        increaseMargin2 = getIncreaseMargin(stock2);
 
     }
 
@@ -79,30 +93,32 @@ public class StockComparisionVO {
     }
 
     // 初始化对数收益率
-    private Iterator<Double> initLogarithmicYield(List<StockPO> stock) {
+    private List<Double> initLogarithmicYield(List<StockPO> stock) {
         List<Double> logarithmicYieldLsit = new LinkedList<>();
         for (StockPO stockPO : stock) {
             logarithmicYieldLsit.add(Math.log(stockPO.getAdjClose() / stockPO.getPreAdjClose()));
         }
-        return logarithmicYieldLsit.iterator();
+        return logarithmicYieldLsit;
     }
 
     // 初始化对数收益率方差
-    // TODO
-    private Iterator<Double> initLogarithmicYieldVariance(List<StockPO> stock) {
-        List<Double> logarithmicYieldVarianceList = new LinkedList<>();
-        for (StockPO stockPO : stock) {
-            logarithmicYieldVarianceList.add(Math.log(Math.log(stockPO.getAdjClose() / stockPO.getPreAdjClose())));
+    private Double initLogarithmicYieldVariance(List<Double> logarithmicYields) {
+        if (logarithmicYields.size() == 1) {
+            return (double) 0;
+        } else {
+            double ave = getAve(logarithmicYields);
+            double temp = 0;
+            for (double data: logarithmicYields) {
+                temp += (data - ave) * (data - ave);
+            }
+            return temp / (logarithmicYields.size()-1);
         }
-        return logarithmicYieldVarianceList.iterator();
 
     }
 
-    // 个股对数收益率的方差
-    // TODO
-    private Double getVariance() {
-        return (double) 0;
-    }
+
+
+
 
 
     private Double getMin(List<StockPO> stockPOS) {
@@ -125,11 +141,18 @@ public class StockComparisionVO {
         return thisMax;
     }
 
-    // TODO 此处stock为顺序，即时间小的在前面
-    private Double initMargins(List<StockPO> stockPOS) {
+    // 注意：此处stock为顺序，即时间小的在前面
+    private Double getIncreaseMargin(List<StockPO> stockPOS) {
         int length = stockPOS.size();
         double differ = stockPOS.get(length - 1).getAdjClose() - stockPOS.get(0).getAdjClose();
         return differ / stockPOS.get(0).getAdjClose();
     }
 
+    private Double getAve(List<Double> datas) {
+        double sum = 0;
+        for (double data: datas) {
+            sum += data;
+        }
+        return sum/datas.size();
+    }
 }

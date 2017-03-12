@@ -1,10 +1,7 @@
 package service;
 
 import utilities.exceptions.DateShortException;
-import vo.ChartShowCriteriaVO;
-import vo.MovingAverageVO;
-import vo.StockComparisionVO;
-import vo.StockVO;
+import vo.*;
 
 import java.io.IOException;
 import java.rmi.Remote;
@@ -14,8 +11,9 @@ import java.util.Map;
 
 /**
  * Created by cuihua on 2017/3/4.
- * Last updated by Byron Dong
- * Update time 2017/3/10
+ * Last updated by cuihua
+ * Update time 2017/3/12
+ * 修改股票比较接口
  *
  * K线图、均线图、股票比较
  *
@@ -76,10 +74,9 @@ public interface ChartService extends Remote{
      *
      * @auther cuihua
      * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/11
-     * @param stockCode1 要比较的股票代码1
-     * @param stockCode2 要比较的股票代码2
-     * @return
+     * @updateTime 2017/3/12
+     * @param stockComparsionCriteriaVO 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
+     * @return 界面上需要的两只股票的比较信息
      */
-    StockComparisionVO getComparision(String stockCode1, String stockCode2);
+    StockComparisionVO getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException;
 }

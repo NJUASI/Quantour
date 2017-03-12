@@ -1,5 +1,6 @@
 package dao;
 
+import po.PrivateStockPO;
 import po.StockPO;
 
 import java.io.IOException;
@@ -7,11 +8,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
+ * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
+ *
  * Created by cuihua on 2017/3/4.
  * Last updated by cuihua
- * Update time 2017/3/9
- *
- * 整理接口，完善注释
+ * Update time 2017/3/12
+ * 去除为UserService的接口createDir，新增显示用户自选股股票的接口
  */
 public interface StockDao {
 
@@ -24,12 +26,24 @@ public interface StockDao {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
+     * @param stockCode 指定股票代码
      * @param start 时间区域的小值
      * @param end 时间区域的大值
-     * @param stockCode 指定股票代码
-     * @return 特定时间段内的指定股票所有数据
+     * @return （股票代码相同）特定时间段内的指定股票所有数据
      */
-    List<StockPO> getStockData(LocalDate start, LocalDate end, String stockCode) throws IOException;
+    List<StockPO> getStockData(int stockCode, LocalDate start, LocalDate end) throws IOException;
+
+    /**
+     * 获取特定日期指定股票的相关数据
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/12
+     * @param stockCode 指定股票代码
+     * @param date 指定日期
+     * @return 特定日期指定股票的相关数据
+     */
+    StockPO getStockData(int stockCode, LocalDate date) throws IOException;
 
     /**
      * 取指定股票的所有数据，没有返回null
@@ -38,9 +52,9 @@ public interface StockDao {
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6
      * @param stockCode 指定的股票代码
-     * @return 此股票的所有数据
+     * @return （股票代码相同）此股票的所有数据
      */
-    List<StockPO> getStockData(String stockCode) throws IOException;
+    List<StockPO> getStockData(int stockCode) throws IOException;
 
     /**
      * 获取特定日期的所有股票所有数据
@@ -49,7 +63,7 @@ public interface StockDao {
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
      * @param date 选定的日期
-     * @return 特定日期的保存的所有股票
+     * @return （时间相同）特定日期的保存的所有股票
      */
     List<StockPO> getStockData(LocalDate date) throws IOException;
 
@@ -57,19 +71,30 @@ public interface StockDao {
 
 
     /*
-    自选股
+    自选股操作
      */
     /**
      * 获取用户自选股票的数据
      *
      * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/12
      * @param userName 用户名称
      * @param date 股票代码
-     * @return 指定用户的自选股票
+     * @return （时间相同）指定用户指定日期的自选股票数据
      */
-    List<StockPO> getPrivateStocks(String userName, LocalDate date);
+    List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException;
+
+    /**
+     * 获取用户的自选股票
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/12
+     * @param userName 用户名称
+     * @return 指定用户的自选股
+     */
+    PrivateStockPO getPrivateStock(String userName);
 
     /**
      * 添加用户自选股
@@ -81,7 +106,7 @@ public interface StockDao {
      * @param stockCode 股票代码
      * @return 添加是否成功
      */
-    boolean addPrivateStock(String userName, String stockCode);
+    boolean addPrivateStock(String userName, int stockCode);
 
     /**
      * 删除用户自选股
@@ -93,24 +118,7 @@ public interface StockDao {
      * @param stockCode 股票代码
      * @return 删除是否成功
      */
-    boolean deletePrivateStock(String userName, String stockCode);
-
-
-
-
-    /*
-    提供给UserService
-     */
-    /**
-     * 用户注册时，给用户新建一个对应用户名的资源文件
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/6
-     * @param userName 用户名称
-     * @return 是否创建成功
-     */
-    boolean createPrivateDir(String userName);
+    boolean deletePrivateStock(String userName, int stockCode);
 
 
 
@@ -124,8 +132,8 @@ public interface StockDao {
      * @author cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
-     * @param code 股票代码
+     * @param stockCode 股票代码
      * @return 数据库中股票存在记录的第一天
      */
-    LocalDate getFirstDay(String code);
+    LocalDate getFirstDay(int stockCode);
 }

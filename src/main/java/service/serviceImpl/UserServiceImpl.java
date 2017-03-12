@@ -11,8 +11,10 @@ import vo.UserVO;
 
 /**
  * Created by cuihua on 2017/3/4.
- * Last updated by Harvey
- * Update time 2017/3/5
+ * Last updated by cuihua
+ * Update time 2017/3/12
+ *
+ * 去除在用户注册时为用户新建一个properties的实现
  */
 public class UserServiceImpl implements UserService {
 
@@ -45,8 +47,6 @@ public class UserServiceImpl implements UserService {
             throw new PasswordNotSameException();
         }
         userDao.add(new UserPO(userVO));
-        //为用户新建一个保存自选股的文件
-        stockDao.createPrivateDir(userVO.userName);
         return true;
     }
 

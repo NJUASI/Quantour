@@ -1,7 +1,6 @@
 package dao.daoImpl;
 
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -68,7 +67,7 @@ public class StockDaoImplTest {
      */
     @Test
     public void getStockData3() throws Exception {
-        List<StockPO> result = stock.getStockData(LocalDate.of(2014, 4, 25),LocalDate.of(2014,4,29),"1");
+        List<StockPO> result = stock.getStockData("1", LocalDate.of(2014, 4, 25),LocalDate.of(2014,4,29));
 
         //1	2014-04-28	11.25	11.28	10.96	11.03	526045	11.03	1	深发展Ａ	SZ	11.25	11.25
 
