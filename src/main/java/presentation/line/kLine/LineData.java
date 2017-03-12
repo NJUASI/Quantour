@@ -134,6 +134,10 @@ public class LineData {
         return lowVolume;
     }
 
+    public String getStockName(){
+        return this.data.get(0).name;
+    }
+
 
     /**
      * 完成collection初始化

@@ -1,20 +1,27 @@
 package presentation.view.panel;
 
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
+import presentation.line.LineChart;
 import presentation.view.toos.DoubleDatePickerPanel;
 import presentation.view.chart.KStringChart;
+import presentation.view.util.ChartUtils;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
+import utilities.exceptions.ColorNotExistException;
 import vo.ChartShowCriteriaVO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.*;
 
 
 /**
@@ -23,34 +30,17 @@ import java.time.LocalDate;
 public class KStringPanel extends NavigationBar {
     //k线面板
     private static KStringPanel kStringPanel;
-
-    //日期选择器面板
     DoubleDatePickerPanel datePanel;
-
-    //
     JTextField name;
-
-    //
     JTextField num;
-
-    //局部信息
     JButton search;
-
-    //总体信息
     JButton searchAll;
-
-    //比较按钮
     JButton compare;
-
-    //自选股按钮
     JButton favorite;
-
-    //提示框面板
     AssociatePanel associatePanel;
-
-
     ChartPanel chartPanel;
 
+    private LineChart lineChart;
     /**
      * k线面板构造器
      *
@@ -69,42 +59,75 @@ public class KStringPanel extends NavigationBar {
         compare = new JButton("加入比较");
         init();
     }
-
     /**
      * 通过code寻找股票的全部信息并绘图
      *
      * @param code 股票号
-     * @return
      * @author 61990
-     * @updateTime 2017/3/9
+     * @lastUpdated Byron Dong
+     * @updateTime 2017/3/12
      */
     public void findOne(String code){
         // 创建图形
-        chartPanel = new KStringChart().createChart();
-        chartPanel.setBounds(adaptScreen(320,100,1500,850));
-        add(chartPanel);
-        chartPanel.repaint();
-    }
+        ArrayList<Integer> tag = new ArrayList<Integer>();
+        tag.add(10);
+        tag.add(20);
+        tag.add(30);
+        tag.add(60);
 
+        try {
+            lineChart = new LineChart(code,tag, new Font("宋体",Font.BOLD,10));
+            JFreeChart chart = lineChart.getAll(0.1,10,2,1);
+            ChartUtils.setAntiAlias(chart);
+            XYPlot xyplot = (XYPlot) chart.getPlot();
+            ChartUtils.setXY_XAixs(xyplot);
+            chartPanel = new ChartPanel(chart);
+
+            chartPanel.setBounds(adaptScreen(320,100,1500,850));
+            add(chartPanel);
+            chartPanel.repaint();
+        } catch (ColorNotExistException e) {
+            e.printStackTrace();
+            System.out.println("该均线类型不存在"); //TODO 后期可能会更改
+        }
+    }
     /**
      * 通过code和前后日期寻找股票的特定时期 寻找股票的全部信息并绘图
      *
      * @param code 股票号
      * @param startDate 开始时间
      * @param endDate 结束时间
-     * @return
      * @author 61990
-     * @updateTime 2017/3/9
+     * @lastUpdated Byron Dong
+     * @updateTime 2017/3/12
      */
     public void findSpecial(String code, LocalDate startDate,LocalDate endDate){
 
         //TODO 在这儿get一个ChartPanel
         ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(code,startDate,endDate);
         // 创建图形
-        chartPanel = new KStringChart().createChart();
-        chartPanel.setBounds(adaptScreen(320,100,1500,850));
-        add(chartPanel);
-        chartPanel.repaint();
+
+        ArrayList<Integer> tag = new ArrayList<Integer>();
+        tag.add(10);
+        tag.add(20);
+        tag.add(30);
+        tag.add(60);
+
+        try {
+            lineChart = new LineChart(chartShowCriteriaVO,tag, new Font("宋体",Font.BOLD,10));
+            JFreeChart chart = lineChart.getAll(0.1,10,2,1);
+            ChartUtils.setAntiAlias(chart);
+            XYPlot xyplot = (XYPlot) chart.getPlot();
+            ChartUtils.setXY_XAixs(xyplot);
+            chartPanel = new ChartPanel(chart);
+
+            chartPanel.setBounds(adaptScreen(320,100,1500,850));
+            add(chartPanel);
+            chartPanel.repaint();
+        } catch (ColorNotExistException e) {
+            e.printStackTrace();
+            System.out.println("该均线类型不存在"); //TODO 后期可能会更改
+        }
     }
     /**
      * 添加日期选择器等各种原件
@@ -130,6 +153,8 @@ public class KStringPanel extends NavigationBar {
         associatePanel.setVisible(false);
         add(associatePanel);
 
+
+
         //搜索按钮
         searchAll.setBounds(adaptScreen(1130, 50, 100, 35));
         searchAll.addMouseListener(new MouseAdapter() {
@@ -153,7 +178,6 @@ public class KStringPanel extends NavigationBar {
             }
         });
         add(search);
-
         //加入比较按钮
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
         compare.addMouseListener(new MouseAdapter() {
