@@ -4,6 +4,7 @@ import dataHelper.PrivateStockDataHelper;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
+import org.junit.Ignore;
 
 import java.util.List;
 

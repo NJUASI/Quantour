@@ -72,6 +72,18 @@ public class KChart {
     }
 
     /**
+     * 获取图表title
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     * @return DateAxis x轴对象
+     */
+    public String getTitle(){
+        return this.data.getStockName();
+    }
+
+    /**
      * 设置画板，其中的参数后期商议后在提供接口
      *
      * @author Byron Dong
