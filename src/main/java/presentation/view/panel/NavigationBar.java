@@ -4,7 +4,6 @@ import presentation.listener.navigationBarListener.CompareListener;
 import presentation.listener.navigationBarListener.FavoritesListener;
 import presentation.listener.navigationBarListener.KStringListener;
 import presentation.listener.navigationBarListener.ThermometerListener;
-import presentation.view.panel.*;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -14,14 +13,7 @@ import java.awt.event.MouseEvent;
  * Created by 61990 on 2017/3/5.
  */
 public class NavigationBar extends TempletPanel {
-    //K线面板
-    private KStringPanel kStringPanel;
-    //比较面板
-    private ComparePanel comparePanel;
-    //温度计面板
-    private ThermometerPanel thermometerPanel;
-    //自选股面板
-    private FavoritesPanel favoritesPanel;
+
     /**
      * 构造器
      *

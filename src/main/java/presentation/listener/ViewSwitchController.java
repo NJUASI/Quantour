@@ -55,13 +55,14 @@ public class ViewSwitchController{
                 case "kStringPanel":
                     cardPanel.add(KStringPanel.getInstance(),"kStringPanel");
                     break;
-                case "ComparePanel":
+                case "comparePanel":
                     cardPanel.add(ComparePanel.getInstance(),"comparePanel");
                     break;
-                case "FavoritesPanel":
+                case "favoritesPanel":
                     cardPanel.add(FavoritesPanel.getInstance(),"favoritesPanel");
                     break;
-                case "ThermometerPanel":
+                case "thermometerPanel":
+                    System.out.println("enter");
                     cardPanel.add(ThermometerPanel.getInstance(),"thermometerPanel");
                     break;
             }
