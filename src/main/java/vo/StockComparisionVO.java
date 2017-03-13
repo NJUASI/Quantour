@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * Created by cuihua on 2017/3/11.
  * Last updated by cuihua
- * Update time 2017/3/12
+ * Update time 2017/3/13
+ * 修改实现getMax
  */
 public class StockComparisionVO {
 
@@ -94,11 +95,15 @@ public class StockComparisionVO {
 
     // 初始化对数收益率
     private List<Double> initLogarithmicYield(List<StockPO> stock) {
-        List<Double> logarithmicYieldLsit = new LinkedList<>();
+        List<Double> logarithmicYieldList = new LinkedList<>();
         for (StockPO stockPO : stock) {
-            logarithmicYieldLsit.add(Math.log(stockPO.getAdjClose() / stockPO.getPreAdjClose()));
+            if (stockPO.getPreAdjClose() == -1) {
+                // 此条数据为数据库中最早的一条，故不能得其对数收益率
+                continue;
+            }
+            logarithmicYieldList.add(Math.log(stockPO.getAdjClose() / stockPO.getPreAdjClose()));
         }
-        return logarithmicYieldLsit;
+        return logarithmicYieldList;
     }
 
     // 初始化对数收益率方差
@@ -108,17 +113,13 @@ public class StockComparisionVO {
         } else {
             double ave = getAve(logarithmicYields);
             double temp = 0;
-            for (double data: logarithmicYields) {
+            for (double data : logarithmicYields) {
                 temp += (data - ave) * (data - ave);
             }
-            return temp / (logarithmicYields.size()-1);
+            return temp / (logarithmicYields.size() - 1);
         }
 
     }
-
-
-
-
 
 
     private Double getMin(List<StockPO> stockPOS) {
@@ -132,27 +133,27 @@ public class StockComparisionVO {
     }
 
     private Double getMax(List<StockPO> stockPOS) {
-        double thisMax = stockPOS.get(0).getLow();
+        double thisMax = stockPOS.get(0).getHigh();
         for (StockPO stock : stockPOS) {
-            if (stock.getLow() > thisMax) {
-                thisMax = stock.getLow();
+            if (stock.getHigh() > thisMax) {
+                thisMax = stock.getHigh();
             }
         }
         return thisMax;
     }
 
-    // 注意：此处stock为顺序，即时间小的在前面
+    // 注意：此处stock为时间顺序，即时间小的在前面
     private Double getIncreaseMargin(List<StockPO> stockPOS) {
         int length = stockPOS.size();
         double differ = stockPOS.get(length - 1).getAdjClose() - stockPOS.get(0).getAdjClose();
         return differ / stockPOS.get(0).getAdjClose();
     }
 
-    private Double getAve(List<Double> datas) {
+    private Double getAve(List<Double> dataList) {
         double sum = 0;
-        for (double data: datas) {
+        for (double data : dataList) {
             sum += data;
         }
-        return sum/datas.size();
+        return sum / dataList.size();
     }
 }

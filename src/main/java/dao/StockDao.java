@@ -19,7 +19,6 @@ public interface StockDao {
 
     /*
     股票数据
-    注意：取出来的所有股票链表数据中，年份小的在链表前端，年份大的在链表后端
      */
     /**
      * 获取特定日期指定股票的相关数据
@@ -35,6 +34,7 @@ public interface StockDao {
 
     /**
      * 获取特定时间段内的指定股票所有数据
+     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
@@ -48,6 +48,7 @@ public interface StockDao {
 
     /**
      * 取指定股票的所有数据，没有返回null
+     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
      *
      * @author Harvey
      * @lastUpdatedBy Harvey
