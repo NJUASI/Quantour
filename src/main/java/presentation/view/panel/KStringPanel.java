@@ -40,6 +40,9 @@ public class KStringPanel extends NavigationBar {
     AssociatePanel associatePanel;
     ChartPanel chartPanel;
 
+    //由于重复添加chartPanel,故以此作为flag检测是否需要remove chartPanel
+    boolean first = true;
+
     private LineChart lineChart;
     /**
      * k线面板构造器
@@ -68,6 +71,7 @@ public class KStringPanel extends NavigationBar {
      * @updateTime 2017/3/12
      */
     public void findOne(String code){
+
         // 创建图形
         ArrayList<Integer> tag = new ArrayList<Integer>();
         tag.add(10);
@@ -81,8 +85,8 @@ public class KStringPanel extends NavigationBar {
             ChartUtils.setAntiAlias(chart);
             XYPlot xyplot = (XYPlot) chart.getPlot();
             ChartUtils.setXY_XAixs(xyplot);
-            chartPanel = new ChartPanel(chart);
 
+            chartPanel = new ChartPanel(chart);
             chartPanel.setBounds(adaptScreen(320,100,1500,850));
             add(chartPanel);
             chartPanel.repaint();
@@ -161,6 +165,13 @@ public class KStringPanel extends NavigationBar {
             @Override
             public void mouseClicked(MouseEvent e) {
 
+                if(first == true){
+                    first = false;
+                }
+                else {
+                    remove(chartPanel);
+                }
+
                 findOne(num.getText());
 
             }
@@ -172,6 +183,13 @@ public class KStringPanel extends NavigationBar {
         search.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+
+                if(first == true){
+                    first = false;
+                }
+                else {
+                    remove(chartPanel);
+                }
 
                 findSpecial(num.getText(),datePanel.getStartDate(),datePanel.getEndDate());
 

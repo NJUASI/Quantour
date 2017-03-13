@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0
  * @since <pre>03/10/2017</pre>
  */
-public class PrivateStockDataHelperImplTest extends TestCase {
+    public class PrivateStockDataHelperImplTest extends TestCase {
 
     PrivateStockDataHelper dataHelper = new PrivateStockDataHelperImpl();
 

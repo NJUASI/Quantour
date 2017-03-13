@@ -166,7 +166,7 @@ public class LineData {
                 if (high < seriesCollection.getHighValue(i, j)) {//取第i个序列中的第j个数据项的最大值
                     high = seriesCollection.getHighValue(i, j);
                 }
-                if (low > seriesCollection.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
+                if (low > seriesCollection.getLowValue(i, j)&&seriesCollection.getLowValue(i, j)>0) {//取第i个序列中的第j个数据项的最小值
 //                    System.out.println("ok");
                     low = seriesCollection.getLowValue(i, j);
                 }

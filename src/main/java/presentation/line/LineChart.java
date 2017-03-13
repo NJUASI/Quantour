@@ -155,6 +155,6 @@ public class LineChart {
      */
     private int getGap(){
         int years = end.getYear()-start.getYear();
-        return (years+1)*7;//以一周的时间作为基础（7）
+        return (years+1)*14;//以两周的时间作为基础（14）
     }
 }
