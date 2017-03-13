@@ -111,7 +111,7 @@ public class KChart {
     public XYPlot getKLinePlot(){
         OHLCSeriesCollection seriesCollection = data.seriesCollection;
         XYPlot plot=new XYPlot(null,xAxis,yAxis,null);//设置画图区域对象
-        plot.setDomainGridlinesVisible(true);
+        plot.setDomainGridlinesVisible(false);
         plot.setDataset(0,seriesCollection);
         plot.setRenderer(0,render);
 

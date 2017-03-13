@@ -113,7 +113,7 @@ public class LineChart {
         plot = this.aveChart.set(plot);
 
         CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(kChart.getXAxis());//建立一个恰当的联合图形区域对象，以x轴为共享轴
-        combineddomainxyplot.add(plot);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
+        combineddomainxyplot.add(plot);//添加图形区域对象
 
         return new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
     }
@@ -154,7 +154,29 @@ public class LineChart {
      * @return  int 间隔
      */
     private int getGap(){
-        int years = end.getYear()-start.getYear();
-        return (years+1)*14;//以两周的时间作为基础（14）
+        int days = this.getTimeDifference();
+        int gap = days/365;
+        return (gap+1)*7;//以两周的时间作为基础（7）
+    }
+
+    /**
+     * 获取指定日期的时间差
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/13
+     * @return  int 差值
+     */
+    private int getTimeDifference(){
+        int years= end.getYear()-start.getYear();
+        int startDay = start.getDayOfYear();
+        int endDay = end.getDayOfYear();
+        int result=0;
+        LocalDate startYear = this.start;
+
+        for(int i=0;i<years;i++){
+            result = result + startYear.plusYears(i).lengthOfYear();
+        }
+        return (result-startDay+endDay);
     }
 }

@@ -1,4 +1,4 @@
-package presentation.view.toos;
+package presentation.view.tools;
 
 import java.awt.*;
 

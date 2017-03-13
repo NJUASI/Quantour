@@ -1,6 +1,6 @@
 package presentation.view.panel;
 
-import presentation.view.toos.WindowData;
+import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import java.awt.*;
