@@ -17,7 +17,6 @@ import java.util.*;
  * Update time 2017/3/12
  * 新增接口getComparision实现
  *
- * TODO getAveData参数days的含义
  */
 public class ChartServiceImpl implements ChartService {
 
@@ -76,7 +75,7 @@ public class ChartServiceImpl implements ChartService {
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param chartShowCriteriaVO the chart show criteria vo 用户所选股票的信息
-     * @param days
+     * @param days  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      */
     @Override
@@ -97,14 +96,29 @@ public class ChartServiceImpl implements ChartService {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/10
      * @param code  用户所选股票的代号
-     * @param days
+     * @param days  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
     @Override
     public Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException {
+        List<StockPO> poList = null;
+        try {
+            poList = stockDao.getStockData(code);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        LocalDate firstDay = poList.get(0).getDate();
+        LocalDate lastDay = poList.get(poList.size()-1).getDate();
+        ChartShowCriteriaVO vo = new ChartShowCriteriaVO(code,firstDay,lastDay);
+
+        try {
+            return getAveData(vo,days);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("获取单支股票的均线图逻辑出错了");
         return null;
-        // TODO 龚尘淼 实现该方法
     }
 
     /**
@@ -122,18 +136,6 @@ public class ChartServiceImpl implements ChartService {
         List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
         return new StockComparisionVO(stockPOList1, stockPOList2);
     }
-
-    /**
-     * 获取市场温度计的信息列表.
-     *
-     * @param date the date  选择的时间
-     * @return the thermometer data 市场温度计所需数据列表
-     */
-    @Override
-    public List<PriceRiseOrFallVO> getThermometerData(LocalDate date) {
-        return null;
-    }
-
 
     /**
      * 获取StockPO的列表
@@ -160,17 +162,13 @@ public class ChartServiceImpl implements ChartService {
      */
     private Iterator<MovingAverageVO> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day) throws IOException {
 
-        List<MovingAverageVO> dayAveDataList = new ArrayList<MovingAverageVO>();
-
         String code = chartShowCriteriaVO.stockCode;
         LocalDate begin = chartShowCriteriaVO.start;
         LocalDate end = chartShowCriteriaVO.end;
 
         List<StockPO> dataList = stockDao.getStockData(code, begin,end);
-        if(dataList.get(0).getDate().isAfter(dataList.get(1).getDate())){
-            dataList = reverse(dataList);
-        }
 
+        List<MovingAverageVO> dayAveDataList = new ArrayList<MovingAverageVO>();
         for (int i = 0;i < dataList.size()-day+1;i++){
             MovingAverageVO maVO = new MovingAverageVO();
             double sum = 0;
@@ -185,20 +183,5 @@ public class ChartServiceImpl implements ChartService {
         }
 
         return dayAveDataList.iterator();
-    }
-
-
-    /**
-     * Reverse list.    反转list
-     *
-     * @param dataList the data list 需要反转的list,日期倒序
-     * @return the list 日期顺序的list
-     */
-    private List<StockPO> reverse(List<StockPO> dataList) {
-        List<StockPO> reversedList = new ArrayList<StockPO>();
-        for(int i = 0;i<dataList.size();i++){
-            reversedList.add(0,dataList.get(i));
-        }
-        return  reversedList;
     }
 }

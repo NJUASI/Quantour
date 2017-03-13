@@ -17,7 +17,6 @@ import java.util.Map;
  *
  * K线图、均线图、股票比较
  *
- * TODO getAveData参数days的含义
  */
 public interface ChartService{
 
@@ -63,7 +62,7 @@ public interface ChartService{
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/10
      * @param code  用户所选股票的代号
-     * @param days
+     * @param days  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
@@ -79,15 +78,4 @@ public interface ChartService{
      * @return 界面上需要的两只股票的比较信息
      */
     StockComparisionVO getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException;
-
-    /**
-     * 获取市场温度计的信息列表.
-     *
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/13
-     * @param date 选择的时间
-     * @return the thermometer data 市场温度计所需数据列表
-     */
-    List<PriceRiseOrFallVO> getThermometerData(LocalDate date);
 }

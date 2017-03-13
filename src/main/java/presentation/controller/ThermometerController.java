@@ -4,47 +4,62 @@ import presentation.view.chart.StockSituationBarChart;
 import presentation.view.chart.StockSituationPieChart;
 import presentation.view.panel.ThermometerPanel;
 import service.ChartService;
+import service.StockSituationService;
 import service.serviceImpl.ChartServiceImpl;
+import service.serviceImpl.StockSituationServiceImpl;
 import vo.PriceRiseOrFallVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by Harvey on 2017/3/13.
  */
 public class ThermometerController {
+    /**
+     * The constant thermometerController.
+     */
     private static ThermometerController thermometerController = new ThermometerController();
+    /**
+     * The Thermometer panel.
+     */
     private ThermometerPanel thermometerPanel;
-    private ChartService chartService;
+    /**
+     * The Stock situation service.
+     */
+    private StockSituationService stockSituationService;
 
+    /**
+     * Instantiates a new Thermometer controller.
+     */
     private ThermometerController(){
         thermometerPanel = ThermometerPanel.getInstance();
-        chartService = new ChartServiceImpl();
+        stockSituationService = new StockSituationServiceImpl();
     }
 
+    /**
+     * Get instance thermometer controller.
+     *
+     * @return the thermometer controller
+     */
     public static ThermometerController getInstance(){
         return thermometerController;
     }
 
+    /**
+     * 搜索操作,获取指定日期的市场温度计的数据
+     */
     public void search() {
 
-        //TODO 获取这一天的市场温度计
-        List<PriceRiseOrFallVO> list = new ArrayList<PriceRiseOrFallVO>();
         LocalDate date = thermometerPanel.getDate();
+        Iterator<PriceRiseOrFallVO> itr = stockSituationService.getStockStituationData(date);
 
-        list.add(new PriceRiseOrFallVO("涨停",45,date));
-        list.add(new PriceRiseOrFallVO("跌停",50,date));
-        list.add(new PriceRiseOrFallVO("涨幅超过5%",20,date));
-        list.add(new PriceRiseOrFallVO("跌幅超过5%",10,date));
-        list.add(new PriceRiseOrFallVO("开盘-收盘小于-5%*上一个交易日收盘价",40,date));
-        list.add(new PriceRiseOrFallVO("开盘-收盘大于+5%*上一个交易日收盘价",40,date));
-
-        StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
-        StockSituationBarChart barChart = new StockSituationBarChart(list.iterator());
+        StockSituationPieChart pieChart = new StockSituationPieChart(itr);
+        StockSituationBarChart barChart = new StockSituationBarChart(itr);
 
         JPanel piePanel=pieChart.createChart();
         piePanel.setBounds(thermometerPanel.adaptScreen(230,200,800,600));
