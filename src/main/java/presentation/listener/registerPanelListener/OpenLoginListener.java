@@ -1,6 +1,7 @@
 package presentation.listener.registerPanelListener;
 
 import presentation.controller.RegisterController;
+import presentation.listener.ViewSwitchController;
 import presentation.view.panel.RegisterPanel;
 
 import java.awt.event.MouseAdapter;
@@ -11,10 +12,10 @@ import java.awt.event.MouseEvent;
  */
 public class OpenLoginListener extends MouseAdapter{
 
-    RegisterController registerController;
+    ViewSwitchController viewSwitchController;
 
     public OpenLoginListener() {
-        this.registerController = RegisterController.getInstance();
+        this.viewSwitchController = ViewSwitchController.getInstance();
     }
 
     /**
@@ -24,6 +25,6 @@ public class OpenLoginListener extends MouseAdapter{
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        registerController.openLogin();
+        viewSwitchController.viewSwitch("loginPanel");
     }
 }

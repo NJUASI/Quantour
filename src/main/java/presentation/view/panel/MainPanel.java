@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import org.jb2011.lnf.beautyeye.*;
+import presentation.listener.ViewSwitchController;
 import presentation.view.toos.WindowData;
 
 /**
@@ -49,12 +50,8 @@ public class MainPanel extends JFrame {
         JLayeredPane mainPane = new JLayeredPane();
         cardPanel.add(mainPane, "mainPane");
 
-
-        //TODO 可不可以放到控制器里面
-        //加载login界面
-        LoginPanel loginPanel = LoginPanel.getInstance();
-        cardPanel.add(loginPanel, "loginPanel");
-        card.show(cardPanel, "loginPanel");
+        //进入登录界面
+        ViewSwitchController.getInstance().viewSwitch("loginPanel");
     }
 
     /**

@@ -112,7 +112,21 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPO> getPrivateStocks(String userName, LocalDate date) {
-        return null;
+        List<String> privateStockCodes = privateStockDataHelper.getPrivateStockCode(userName);
+        List<StockPO> stockPOList;
+        List<StockPO> privateStockPoList = new ArrayList<StockPO>();
+        try {
+            stockPOList = stockHelper.getStockRecords(date);
+            for (StockPO po:stockPOList) {
+                if(privateStockCodes.contains(String.valueOf(po.getCode()))){
+                    privateStockPoList.add(po);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return privateStockPoList;
     }
 
     /**

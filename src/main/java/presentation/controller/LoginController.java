@@ -1,5 +1,6 @@
 package presentation.controller;
 
+import presentation.listener.ViewSwitchController;
 import presentation.view.panel.KStringPanel;
 import presentation.view.panel.LoginPanel;
 import presentation.view.panel.MainPanel;
@@ -57,8 +58,7 @@ public class LoginController{
                 IDReserve.getInstance().setUserID(name);
                 loginPanel.setUsername("Enter your admin");
                 loginPanel.setPassword("");
-                MainPanel.getCardPanel().add(KStringPanel.getInstance(), "kStringPanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
+                ViewSwitchController.getInstance().viewSwitch("kStringPanel");
                 return true;
             }
 
@@ -70,13 +70,5 @@ public class LoginController{
             e.printStackTrace();
         }
         return false;
-    }
-
-    /**
-     * 跳转到注册面板
-     */
-    public void openRegister() {
-        MainPanel.getCardPanel().add(RegisterPanel.getInstance(),"registerPanel");
-        MainPanel.getCard().show(MainPanel.getCardPanel(),"registerPanel");
     }
 }

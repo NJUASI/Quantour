@@ -90,19 +90,20 @@ public class StockDaoImplTest {
     /**
      * Method: getPrivateStocks(String userName, LocalDate date)
      */
-    @Ignore
     @Test
     public void getPrivateStocks() throws Exception {
-        //TODO 龚尘淼
+        List<StockPO> stockPOList = stock.getPrivateStocks("Harvey",LocalDate.of(2014,4,29));
+        assertEquals(2,stockPOList.size(),0.1);
     }
 
     /**
      * Method: addPrivateStock(String userName, String stockCode)
      */
-    @Ignore
     @Test
     public void addPrivateStock() throws Exception {
-        //TODO 龚尘淼
+        stock.addPrivateStock("Harvey","10");
+        List<StockPO> stockPOList = stock.getPrivateStocks("Harvey",LocalDate.of(2014,4,29));
+        assertEquals(3,stockPOList.size(),0.1);
     }
 
     /**

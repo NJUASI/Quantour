@@ -16,7 +16,7 @@ import java.time.LocalDate;
 /**
  * Created by 61990 on 2017/3/5.
  */
-class ComparePanel extends NavigationBar {
+public class ComparePanel extends NavigationBar {
 
     //比较面板
     private static ComparePanel comparePanel;

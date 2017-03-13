@@ -1,5 +1,6 @@
 package presentation.controller;
 
+import presentation.listener.ViewSwitchController;
 import presentation.view.panel.LoginPanel;
 import presentation.view.panel.MainPanel;
 import presentation.view.panel.RegisterPanel;
@@ -33,7 +34,7 @@ public class RegisterController {
      *
      * @return the register controller
      */
-    public static RegisterController getInstance(){
+    public static RegisterController getInstance() {
         return registerController;
     }
 
@@ -41,7 +42,7 @@ public class RegisterController {
     /**
      * Register.
      */
-    public void register(){
+    public void register() {
         RegisterPanel registerPanel = RegisterPanel.getInstance();
 
         String userName = registerPanel.getUserName();
@@ -49,8 +50,8 @@ public class RegisterController {
         String password2 = registerPanel.getPassword2();
 
         try {
-            if(userService.registerUser(new UserVO(userName,password),password2)){
-                MainPanel.getCard().show(MainPanel.getCardPanel(),"loginPanel");
+            if (userService.registerUser(new UserVO(userName, password), password2)) {
+                ViewSwitchController.getInstance().viewSwitch("loginPanel");
             }
         } catch (DuplicatedNameException e) {
             e.printStackTrace();
@@ -64,11 +65,4 @@ public class RegisterController {
 
     }
 
-
-    /**
-     * 跳转到注册界面
-     */
-    public void openLogin() {
-        MainPanel.getCard().show(MainPanel.getCardPanel(),"loginPanel");
-    }
 }
