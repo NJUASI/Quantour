@@ -99,10 +99,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPO> getStockData(String stockCode) throws IOException {
-
-
         return reverse(stockHelper.getStockRecords(stockCode));
-
     }
 
     /**
@@ -117,9 +114,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPO> getStockData(LocalDate date) throws IOException {
-
         return reverse(stockHelper.getStockRecords(date));
-
     }
 
 
@@ -142,7 +137,7 @@ public class StockDaoImpl implements StockDao {
     public List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException {
         List<StockPO> result = new LinkedList<StockPO>();
 
-        PrivateStockPO myPrivateStockPO = getPrivateStocks(userName, LocalDate.of(2014, 4, 29));
+        PrivateStockPO myPrivateStockPO = getPrivateStocks(userName);
         for (String stockCode : myPrivateStockPO.getPrivateStocks()) {
             result.add(getStockData(stockCode, date));
         }
@@ -157,11 +152,10 @@ public class StockDaoImpl implements StockDao {
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/12
      * @param userName 用户名称
-     * @param of
      * @return 指定用户的自选股
      */
     @Override
-    public PrivateStockPO getPrivateStocks(String userName, LocalDate of) {
+    public PrivateStockPO getPrivateStocks(String userName) {
         return new PrivateStockPO(userName, privateStockDataHelper.getPrivateStockCode(userName));
     }
 
@@ -177,7 +171,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public boolean addPrivateStock(String userName, String stockCode) {
-        return privateStockDataHelper.addPrivateStock(userName,stockCode);
+        return privateStockDataHelper.addPrivateStock(userName, stockCode);
     }
 
     /**
@@ -192,7 +186,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) {
-        return privateStockDataHelper.deletePrivateStock(userName,stockCode);
+        return privateStockDataHelper.deletePrivateStock(userName, stockCode);
     }
 
 

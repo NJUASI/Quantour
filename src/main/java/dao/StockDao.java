@@ -93,10 +93,9 @@ public interface StockDao {
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/12
      * @param userName 用户名称
-     * @param of
      * @return 指定用户的自选股
      */
-    PrivateStockPO getPrivateStocks(String userName, LocalDate of);
+    PrivateStockPO getPrivateStocks(String userName);
 
     /**
      * 添加用户自选股

@@ -4,7 +4,6 @@ import utilities.exceptions.DateShortException;
 import vo.*;
 
 import java.io.IOException;
-import java.rmi.Remote;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
@@ -84,7 +83,10 @@ public interface ChartService{
     /**
      * 获取市场温度计的信息列表.
      *
-     * @param date the date  选择的时间
+     * @auther Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/13
+     * @param date 选择的时间
      * @return the thermometer data 市场温度计所需数据列表
      */
     List<PriceRiseOrFallVO> getThermometerData(LocalDate date);
