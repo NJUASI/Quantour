@@ -10,13 +10,6 @@ import java.awt.event.MouseEvent;
 */
 public class LoginListener extends MouseAdapter {
 
-    //登录界面控制器
-    LoginController loginController;
-
-    public LoginListener(String userName,String password) {
-        loginController = LoginController.getInstance();
-    }
-
     /**
      * 登录按钮监听鼠标点击
      *
@@ -24,6 +17,6 @@ public class LoginListener extends MouseAdapter {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        loginController.login();
+        LoginController.getInstance().login();
     }
 }

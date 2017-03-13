@@ -10,13 +10,6 @@ import java.awt.event.MouseEvent;
  */
 public class RegisterListener extends MouseAdapter {
 
-    //注册界面控制器
-    RegisterController registerController;
-
-    public RegisterListener() {
-        registerController = RegisterController.getInstance();
-    }
-
     /**
      * 注册按钮监听鼠标点击
      *
@@ -24,6 +17,6 @@ public class RegisterListener extends MouseAdapter {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        registerController.register();
+        RegisterController.getInstance().register();
     }
 }

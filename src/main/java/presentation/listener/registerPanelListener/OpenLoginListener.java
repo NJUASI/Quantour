@@ -12,19 +12,13 @@ import java.awt.event.MouseEvent;
  */
 public class OpenLoginListener extends MouseAdapter{
 
-    ViewSwitchController viewSwitchController;
-
-    public OpenLoginListener() {
-        this.viewSwitchController = ViewSwitchController.getInstance();
-    }
-
     /**
-     * {@inheritDoc}
+     * 由注册界面跳转到登录界面
      *
      * @param e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        viewSwitchController.viewSwitch("loginPanel");
+        ViewSwitchController.getInstance().viewSwitch("loginPanel");
     }
 }

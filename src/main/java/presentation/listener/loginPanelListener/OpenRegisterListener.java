@@ -10,19 +10,13 @@ import java.awt.event.MouseEvent;
  */
 public class OpenRegisterListener extends MouseAdapter{
 
-    private ViewSwitchController viewSwitchController;
-
-    public OpenRegisterListener() {
-        this.viewSwitchController = ViewSwitchController.getInstance();
-    }
-
     /**
-     * {@inheritDoc}
+     * 由登录界面跳转到注册界面
      *
      * @param e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        viewSwitchController.viewSwitch("registerPanel");
+        ViewSwitchController.getInstance().viewSwitch("registerPanel");
     }
 }

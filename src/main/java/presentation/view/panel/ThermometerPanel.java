@@ -1,6 +1,7 @@
 package presentation.view.panel;
 
 import presentation.StockSituationChart.StockSituationP;
+import presentation.listener.thermometerPanelListener.SearchListner;
 import presentation.view.chart.StockSituationBarChart;
 import presentation.view.chart.StockSituationPieChart;
 import presentation.view.toos.SingleDatePickerPanel;
@@ -45,40 +46,9 @@ public class ThermometerPanel extends NavigationBar {
         date.setBounds(width * 600 / 1920, height * 50 / 1030, width * 150 / 1920, 35 * height / 1030);
         add(date);
 
-        piePanel=new JPanel();
-        barPanel=new JPanel();
-
         search = new JButton("搜索");
         search.setBounds(adaptScreen(900, 50, 150, 35));
-        search.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //TODO 获取这一天的市场温度计
-                List<PriceRiseOrFallVO> list = new ArrayList<PriceRiseOrFallVO>();
-                LocalDate date = LocalDate.now();
-                list.add(new PriceRiseOrFallVO("涨停",45,date));
-                list.add(new PriceRiseOrFallVO("跌停",50,date));
-                list.add(new PriceRiseOrFallVO("涨幅超过5%",20,date));
-                list.add(new PriceRiseOrFallVO("跌幅超过5%",10,date));
-                list.add(new PriceRiseOrFallVO("开盘-收盘小于-5%*上一个交易日收盘价",40,date));
-                list.add(new PriceRiseOrFallVO("开盘-收盘大于+5%*上一个交易日收盘价",40,date));
-
-                StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
-                StockSituationBarChart barChart = new StockSituationBarChart(list.iterator());
-
-                piePanel=pieChart.createChart();
-                piePanel.setBounds(adaptScreen(230,200,800,600));
-                piePanel.setBackground(new Color(55,60,56));
-                add(piePanel);
-                piePanel.repaint();
-
-                barPanel=barChart.createChart();
-                barPanel.setBounds(adaptScreen(1040,230,870,550));
-                barPanel.setBackground(new Color(55,60,56));
-                add(barPanel);
-                barPanel.repaint();
-            }
-        });
+        search.addMouseListener(new SearchListner());
         add(search);
 //        add(bg);
     }

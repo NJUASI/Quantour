@@ -84,6 +84,7 @@ public class ComparePanel extends NavigationBar {
                 refreshAssociate();
             }
         });
+
         //提示框面板
         associatePanel = new AssociatePanel();
         associatePanel.setVisible(false);
