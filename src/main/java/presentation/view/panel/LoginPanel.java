@@ -6,6 +6,8 @@ import presentation.listener.loginPanelListener.OpenRegisterListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 /**
@@ -41,6 +43,12 @@ public class LoginPanel extends TempletPanel {
         admin = new JTextField("Enter your admin");
         admin.setFont(new Font("微软雅黑", Font.BOLD, 25 * width / 1920));
         admin.setBounds(adaptScreen(300, 400, 300, 50));
+        admin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                admin.setText("");
+            }
+        });
 //        admin.setOpaque(false);
 //        admin.setBorder(null);
 //        admin.setForeground(new Color(122,2,2));
@@ -82,8 +90,8 @@ public class LoginPanel extends TempletPanel {
     }
 
     public String getUsername() {
-        return admin.getText();
-    }
+    return admin.getText();
+}
 
     public String getPassword() {
         return password.getText();

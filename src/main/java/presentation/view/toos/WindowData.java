@@ -1,5 +1,7 @@
 package presentation.view.toos;
 
+import java.awt.*;
+
 /**
  * Created by 61990 on 2017/3/5.
  */
@@ -9,6 +11,7 @@ public class WindowData {
     //屏幕宽度和高度
     private static int width;
     private static int height;
+    private static Color bgColor;
 
     /**
      * 设置屏幕高和宽度
@@ -22,6 +25,7 @@ public class WindowData {
     public static void setWindowData(int width, int height) {
         windowData.height = height;
         windowData.width = width;
+        bgColor = Color.WHITE;
     }
 
     /**
@@ -49,6 +53,18 @@ public class WindowData {
 
     public int getHeight() {
         return height;
+    }
+
+    /**
+     * 获得背景颜色
+     *
+     * @param
+     * @return width 宽 height 高
+     * @author 61990
+     * @updateTime 2017/3/10
+     */
+    public Color getColor() {
+        return bgColor;
     }
 
     /**
