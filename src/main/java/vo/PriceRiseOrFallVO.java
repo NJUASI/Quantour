@@ -8,16 +8,16 @@ import java.time.LocalDate;
  */
 public class PriceRiseOrFallVO {
 
-    //涨跌的名称
+    // 涨跌的名称
     public String name;
 
-    //股票个数
+    // 股票个数
     public int num;
 
-    //当天时间
+    // 当天时间
     public LocalDate date;
 
-    public PriceRiseOrFallVO(String name, int num,LocalDate date) {
+    public PriceRiseOrFallVO(String name, int num, LocalDate date) {
         this.name = name;
         this.num = num;
     }

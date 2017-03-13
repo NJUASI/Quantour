@@ -9,7 +9,7 @@ public class AverageVO {
     public double close;
 
     // 股票代码
-    public int code;
+    public String code;
 
     // 股票名称
     public String name;

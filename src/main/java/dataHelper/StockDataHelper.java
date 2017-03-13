@@ -45,9 +45,9 @@ public interface StockDataHelper {
      * @author Byron Dong
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/8
-     * @param code 股票代码
+     * @param stockCode 股票代码
      * @return 数据库中股票存在记录的第一天
      * @throws IOException IO
      */
-    LocalDate getFirstDay(String code);
+    LocalDate getFirstDay(String stockCode);
 }

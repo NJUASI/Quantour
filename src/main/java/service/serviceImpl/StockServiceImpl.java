@@ -13,11 +13,12 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by Harvey on 2017/3/5.
- * Last updated by Harvey
- * Update time 2017/3/5
- *
  * 股票信息查看、自选股操作
+ *
+ * Created by Harvey on 2017/3/5.
+ * Last updated by cuihua
+ * Update time 2017/3/12
+ * 因修改下层接口而修改
  */
 public class StockServiceImpl implements StockService {
 
@@ -62,9 +63,9 @@ public class StockServiceImpl implements StockService {
      * @return the iterator 自选股信息列表
      */
     @Override
-    public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) {
+    public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-        for (StockPO po:stockDao.getPrivateStocks(userName,date)) {
+        for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
             stockVOList.add(new StockVO(po));
         }
         return stockVOList.iterator();
@@ -81,7 +82,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public boolean addPrivateStock(String userName, String stockCode) {
-        return stockDao.addPrivateStock(userName,stockCode);
+        return stockDao.addPrivateStock(userName, stockCode);
     }
 
     /**
@@ -95,6 +96,6 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) {
-        return stockDao.deletePrivateStock(userName,stockCode);
+        return stockDao.deletePrivateStock(userName, stockCode);
     }
 }

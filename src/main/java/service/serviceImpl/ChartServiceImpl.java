@@ -5,22 +5,17 @@ import dao.daoImpl.StockDaoImpl;
 import utilities.exceptions.DateShortException;
 import po.StockPO;
 import service.ChartService;
-import vo.ChartShowCriteriaVO;
-import vo.MovingAverageVO;
-import vo.StockComparisionVO;
-import vo.StockVO;
+import vo.*;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
 /**
  * Created by cuihua on 2017/3/4.
- * Last updated by Byron Dong
- * Update time 2017/3/10
- *
- * K线、均线数据获取
+ * Last updated by cuihua
+ * Update time 2017/3/12
+ * 新增接口getComparision实现
  *
  * TODO getAveData参数days的含义
  */
@@ -112,9 +107,20 @@ public class ChartServiceImpl implements ChartService {
         // TODO 龚尘淼 实现该方法
     }
 
+    /**
+     * 获取两只股票的比较信息
+     *
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/11
+     * @param stockComparsionCriteriaVO 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
+     * @return 界面上需要的两只股票的比较信息
+     */
     @Override
-    public StockComparisionVO getComparision(String stockCode1, String stockCode2) {
-        return null;
+    public StockComparisionVO getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException {
+        List<StockPO> stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+        List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+        return new StockComparisionVO(stockPOList1, stockPOList2);
     }
 
 
@@ -127,7 +133,7 @@ public class ChartServiceImpl implements ChartService {
      * @return StockPO的列表
      */
     private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException {
-        return stockDao.getStockData(vo.start,vo.end,vo.code);
+        return stockDao.getStockData(vo.stockCode, vo.start,vo.end);
     }
 
 
@@ -145,11 +151,11 @@ public class ChartServiceImpl implements ChartService {
 
         List<MovingAverageVO> dayAveDataList = new ArrayList<MovingAverageVO>();
 
+        String code = chartShowCriteriaVO.stockCode;
         LocalDate begin = chartShowCriteriaVO.start;
         LocalDate end = chartShowCriteriaVO.end;
-        String code = chartShowCriteriaVO.code;
 
-        List<StockPO> dataList = stockDao.getStockData(begin,end,code);
+        List<StockPO> dataList = stockDao.getStockData(code, begin,end);
         if(dataList.get(0).getDate().isAfter(dataList.get(1).getDate())){
             dataList = reverse(dataList);
         }

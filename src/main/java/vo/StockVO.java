@@ -38,7 +38,7 @@ public class StockVO {
     public double adjClose;
 
     // 股票代码
-    public int code;
+    public String code;
 
     // 股票名称
     public String name;

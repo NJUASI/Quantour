@@ -61,13 +61,13 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @author cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
-     * @param code 股票代码
+     * @param stockCode 股票代码
      * @return 数据库中股票存在记录的第一天
      * @throws IOException IO
      */
     @Override
-    public LocalDate getFirstDay(String code) {
-        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(stockRecordByCodePathPre + code + stockRecordPathPost)));
+    public LocalDate getFirstDay(String stockCode) {
+        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(stockRecordByCodePathPre + stockCode + stockRecordPathPost)));
 
         String line = null;
         try {
@@ -113,8 +113,8 @@ public class StockDataHelperImpl implements StockDataHelper {
 
             result.add(new StockPO(Integer.parseInt(parts[0]), thisDate, Double.parseDouble(parts[2]),
                     Double.parseDouble(parts[3]), Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), parts[6],
-                    Double.parseDouble(parts[7]), Integer.parseInt(parts[8]), parts[9], Market.getEnum(parts[10]),
-                    Double.parseDouble(parts[11]),Double.parseDouble(parts[12])));
+                    Double.parseDouble(parts[7]), parts[8], parts[9], Market.getEnum(parts[10]),
+                    Double.parseDouble(parts[11]), Double.parseDouble(parts[12])));
         }
         return result;
     }

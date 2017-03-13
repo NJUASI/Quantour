@@ -39,7 +39,7 @@ public interface StockService extends Remote{
      * @param date 用户选择日期
      * @return the iterator 自选股信息列表
      */
-    Iterator<StockVO> getPrivateStocks(String userName, LocalDate date);
+    Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException;
 
     /**
      * 用户添加自选股
@@ -50,7 +50,7 @@ public interface StockService extends Remote{
      * @param stockCode 股票代码
      * @return 是否添加成功
      */
-    public boolean addPrivateStock(String userName,String stockCode);
+    public boolean addPrivateStock(String userName, String stockCode);
 
     /**
      * 用户删除自选股
@@ -61,7 +61,7 @@ public interface StockService extends Remote{
      * @param stockCode 股票代码
      * @return 是否删除成功
      */
-    public boolean deletePrivateStock(String userName,String stockCode);
+    public boolean deletePrivateStock(String userName, String stockCode);
 
 
 }
