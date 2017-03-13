@@ -1,5 +1,9 @@
 package presentation.view.panel;
 
+import presentation.listener.navigationBarListener.CompareListener;
+import presentation.listener.navigationBarListener.FavoritesListener;
+import presentation.listener.navigationBarListener.KStringListener;
+import presentation.listener.navigationBarListener.ThermometerListener;
 import presentation.view.panel.*;
 
 import javax.swing.*;
@@ -32,56 +36,25 @@ public class NavigationBar extends TempletPanel {
         //the door of function 1
         JButton kString = new JButton("kString");
         kString.setBounds(adaptScreen(50, 200, 150, 50));
-        kString.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                kStringPanel = KStringPanel.getInstance();
-                kStringPanel.getFocusListeners();
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
-            }
-        });
+        kString.addMouseListener(new KStringListener());
         add(kString);
 
         //the door of function 2
         JButton compare = new JButton("compare");
         compare.setBounds(adaptScreen(50, 350, 150, 50));
-        compare.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                comparePanel = ComparePanel.getInstance();
-                comparePanel.getFocusListeners();
-                MainPanel.getCardPanel().add(comparePanel, "comparePanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "comparePanel");
-            }
-        });
+        compare.addMouseListener(new CompareListener());
         add(compare);
 
         //the door of function 3
         JButton thermometer = new JButton("thermometer");
         thermometer.setBounds(adaptScreen(50, 500, 150, 50));
-        thermometer.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                thermometerPanel = thermometerPanel.getInstance();
-                thermometerPanel.getFocusListeners();
-                MainPanel.getCardPanel().add(thermometerPanel, "thermometerPanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "thermometerPanel");
-            }
-        });
+        thermometer.addMouseListener(new ThermometerListener());
         add(thermometer);
 
         //the door of function 4
         JButton favorites = new JButton("favorites");
         favorites.setBounds(adaptScreen(50, 650, 150, 50));
-        favorites.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-                favoritesPanel = FavoritesPanel.getInstance();
-                MainPanel.getCardPanel().add(favoritesPanel, "favoritesPanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "favoritesPanel");
-            }
-        });
+        favorites.addMouseListener(new FavoritesListener());
         add(favorites);
 
         //log out

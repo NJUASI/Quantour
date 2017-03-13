@@ -61,7 +61,7 @@ public class LoginPanel extends TempletPanel {
         login.setBounds(adaptScreen(360, 600, 80, 40));
         login.setFont(new Font("", Font.CENTER_BASELINE, 20 * width / 1920));
         loginController = LoginController.getInstance();
-        login.addMouseListener(new LoginListener(admin.getText(),password.getText()));
+        login.addMouseListener(new LoginListener());
         add(login);
 
         //the Button setting of opening register panel

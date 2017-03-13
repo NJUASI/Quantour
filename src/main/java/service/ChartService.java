@@ -5,6 +5,7 @@ import vo.*;
 
 import java.io.IOException;
 import java.rmi.Remote;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Map;
  *
  * TODO getAveData参数days的含义
  */
-public interface ChartService extends Remote{
+public interface ChartService{
 
     /**
      * 获取单支股票的所有数据
@@ -79,4 +80,12 @@ public interface ChartService extends Remote{
      * @return 界面上需要的两只股票的比较信息
      */
     StockComparisionVO getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException;
+
+    /**
+     * 获取市场温度计的信息列表.
+     *
+     * @param date the date  选择的时间
+     * @return the thermometer data 市场温度计所需数据列表
+     */
+    List<PriceRiseOrFallVO> getThermometerData(LocalDate date);
 }

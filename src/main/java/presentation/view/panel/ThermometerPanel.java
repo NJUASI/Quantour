@@ -79,4 +79,8 @@ public class ThermometerPanel extends NavigationBar {
     public void refresh() {
         thermometerPanel = null;
     }
+
+    public LocalDate getDate() {
+        return date.getDate();
+    }
 }

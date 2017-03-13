@@ -123,6 +123,17 @@ public class ChartServiceImpl implements ChartService {
         return new StockComparisionVO(stockPOList1, stockPOList2);
     }
 
+    /**
+     * 获取市场温度计的信息列表.
+     *
+     * @param date the date  选择的时间
+     * @return the thermometer data 市场温度计所需数据列表
+     */
+    @Override
+    public List<PriceRiseOrFallVO> getThermometerData(LocalDate date) {
+        return null;
+    }
+
 
     /**
      * 获取StockPO的列表

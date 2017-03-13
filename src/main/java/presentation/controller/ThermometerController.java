@@ -3,6 +3,8 @@ package presentation.controller;
 import presentation.view.chart.StockSituationBarChart;
 import presentation.view.chart.StockSituationPieChart;
 import presentation.view.panel.ThermometerPanel;
+import service.ChartService;
+import service.serviceImpl.ChartServiceImpl;
 import vo.PriceRiseOrFallVO;
 
 import javax.swing.*;
@@ -17,9 +19,11 @@ import java.util.List;
 public class ThermometerController {
     private static ThermometerController thermometerController = new ThermometerController();
     private ThermometerPanel thermometerPanel;
+    private ChartService chartService;
 
     private ThermometerController(){
         thermometerPanel = ThermometerPanel.getInstance();
+        chartService = new ChartServiceImpl();
     }
 
     public static ThermometerController getInstance(){
@@ -30,7 +34,8 @@ public class ThermometerController {
 
         //TODO 获取这一天的市场温度计
         List<PriceRiseOrFallVO> list = new ArrayList<PriceRiseOrFallVO>();
-        LocalDate date = LocalDate.now();
+        LocalDate date = thermometerPanel.getDate();
+
         list.add(new PriceRiseOrFallVO("涨停",45,date));
         list.add(new PriceRiseOrFallVO("跌停",50,date));
         list.add(new PriceRiseOrFallVO("涨幅超过5%",20,date));

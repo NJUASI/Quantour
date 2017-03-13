@@ -78,7 +78,6 @@ public class StockDaoImpl implements StockDao {
     @Override
     public List<StockPO> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException {
         List<StockPO> result = stockHelper.getStockRecords(stockCode);
-
         for (int i = 0; i < result.size(); ) {
             if (!isDataWithin(start, end, result.get(i).getDate())) {
                 result.remove(i);
@@ -86,7 +85,6 @@ public class StockDaoImpl implements StockDao {
                 i++;
             }
         }
-
         return reverse(result);
     }
 
@@ -101,6 +99,8 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPO> getStockData(String stockCode) throws IOException {
+
+
         return reverse(stockHelper.getStockRecords(stockCode));
 
     }
@@ -117,7 +117,9 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPO> getStockData(LocalDate date) throws IOException {
+
         return reverse(stockHelper.getStockRecords(date));
+
     }
 
 
@@ -140,7 +142,7 @@ public class StockDaoImpl implements StockDao {
     public List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException {
         List<StockPO> result = new LinkedList<StockPO>();
 
-        PrivateStockPO myPrivateStockPO = getPrivateStocks(userName);
+        PrivateStockPO myPrivateStockPO = getPrivateStocks(userName, LocalDate.of(2014, 4, 29));
         for (String stockCode : myPrivateStockPO.getPrivateStocks()) {
             result.add(getStockData(stockCode, date));
         }
@@ -155,10 +157,11 @@ public class StockDaoImpl implements StockDao {
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/12
      * @param userName 用户名称
+     * @param of
      * @return 指定用户的自选股
      */
     @Override
-    public PrivateStockPO getPrivateStocks(String userName) {
+    public PrivateStockPO getPrivateStocks(String userName, LocalDate of) {
         return new PrivateStockPO(userName, privateStockDataHelper.getPrivateStockCode(userName));
     }
 
@@ -194,27 +197,6 @@ public class StockDaoImpl implements StockDao {
 
 
 
-
-    /*
-    提供给UserService
-     */
-    /**
-     * 用户注册时，给用户新建一个对应用户名的资源文件
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/6
-     * @param userName 用户名称
-     * @return 是否创建成功
-     */
-    @Override
-    public boolean createPrivateDir(String userName) {
-        return privateStockDataHelper.createPrivateDir(userName);
-    }
-
-
-
-
    /*
     暂定
      */
@@ -232,6 +214,43 @@ public class StockDaoImpl implements StockDao {
         return stockHelper.getFirstDay(code);
     }
 
+    /**
+     * 判断时间是否在指定区域内
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/5
+     * @param start 时间区域的小值
+     * @param end 时间区域的大值
+     * @param now 指定时间
+     * @return 特定时间段内的所有指定股票所有数据
+     */
+    private boolean isDataWithin(LocalDate start, LocalDate end, LocalDate now) {
+        if (now.isEqual(start) || now.isEqual(end)) {
+            return true;
+        }
+        if (now.isAfter(start) && now.isBefore(end)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 转置从dataHelper处来的数据库中的日期倒序数据
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
+     * @param dataList 需被倒置的股票数据
+     * @return 正常日期顺序的股票数据信息
+     */
+    private List<StockPO> reverse(List<StockPO> dataList) {
+        List<StockPO> reversedList = new ArrayList<StockPO>();
+        for (int i = 0; i < dataList.size(); i++) {
+            reversedList.add(0, dataList.get(i));
+        }
+        return reversedList;
+    }
 
 
 
