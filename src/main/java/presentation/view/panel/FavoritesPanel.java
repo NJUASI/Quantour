@@ -1,8 +1,8 @@
 package presentation.view.panel;
 
-import presentation.view.toos.FavoritesTable;
-import presentation.view.toos.SingleDatePickerPanel;
-import presentation.view.toos.WindowData;
+import presentation.view.tools.FavoritesTable;
+import presentation.view.tools.SingleDatePickerPanel;
+import presentation.view.tools.WindowData;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;

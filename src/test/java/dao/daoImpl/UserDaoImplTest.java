@@ -13,7 +13,7 @@ public class UserDaoImplTest {
     UserDao userDao;
     UserPO po;
     @Before
-    public void setUp() throws Exception {
+    public void before() throws Exception {
         userDao = new UserDaoImpl();
         po = new UserPO();
         po.setUserName("gong");

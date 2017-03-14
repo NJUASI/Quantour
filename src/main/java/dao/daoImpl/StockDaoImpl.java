@@ -15,8 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
- *
  * Created by cuihua on 2017/3/4.
  * Last updated by cuihua
  * Update time 2017/3/12
@@ -41,7 +39,6 @@ public class StockDaoImpl implements StockDao {
 
     /*
     股票数据
-    注意：取出来的所有股票链表数据中，年份小的在链表前端，年份大的在链表后端
      */
     /**
      * 获取特定日期指定股票的相关数据
@@ -66,6 +63,7 @@ public class StockDaoImpl implements StockDao {
 
     /**
      * 获取特定时间段内的指定股票所有数据
+     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
      *
      * @author Byron Dong
      * @lastUpdatedBy cuihua
@@ -90,6 +88,7 @@ public class StockDaoImpl implements StockDao {
 
     /**
      * 取指定股票的所有数据，没有返回null
+     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
      *
      * @author Harvey
      * @lastUpdatedBy Harvey
@@ -114,7 +113,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPO> getStockData(LocalDate date) throws IOException {
-        return reverse(stockHelper.getStockRecords(date));
+        return stockHelper.getStockRecords(date);
     }
 
 
@@ -244,28 +243,5 @@ public class StockDaoImpl implements StockDao {
             reversedList.add(0, dataList.get(i));
         }
         return reversedList;
-    }
-
-
-
-
-    /**
-     * 判断时间是否在指定区域内
-     *
-     * @author Byron Dong
-     * @updateTime 2017/3/5
-     * @param start 时间区域的小值
-     * @param end 时间区域的大值
-     * @param now 指定时间
-     * @return 特定时间段内的所有指定股票所有数据
-     */
-    private boolean isTrueDate(LocalDate start, LocalDate end,LocalDate now){
-        if(now.isEqual(start)||now.isEqual(end)){
-            return true;
-        }
-        if(now.isAfter(start)&&now.isBefore(end)){
-            return true;
-        }
-        return false;
     }
 }

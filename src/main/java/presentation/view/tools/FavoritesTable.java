@@ -1,4 +1,4 @@
-package presentation.view.toos;
+package presentation.view.tools;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

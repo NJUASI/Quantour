@@ -1,13 +1,15 @@
 package dataHelper.dataHelperImpl;
 
 import dataHelper.StockDataHelper;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
 import po.StockPO;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * StockDataHelperImpl Tester.
@@ -16,28 +18,27 @@ import java.util.List;
  * @version 1.0
  * @since <pre>03/09/2017</pre>
  */
-public class StockDataHelperImplTest extends TestCase {
+public class StockDataHelperImplTest {
 
-    private StockDataHelper stockDataHelper = new StockDataHelperImpl();
+    private StockDataHelper stockDataHelper;
 
-    public StockDataHelperImplTest(String name) {
-        super(name);
+
+    @Before
+    public void before() throws Exception {
+        stockDataHelper = new StockDataHelperImpl();
     }
 
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void after() throws Exception {
     }
 
     /**
      * Method: getStock(String stockCode)
      */
+    @Test
     public void testGetStockStockCode01() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("1");
-        TestCase.assertEquals(2383, result.size());
+        assertEquals(2383, result.size());
 
         StockPO thisStock = result.get(0);
         assertEquals(LocalDate.of(2014, 4, 29), thisStock.getDate());
@@ -48,14 +49,17 @@ public class StockDataHelperImplTest extends TestCase {
         assertEquals("413621", thisStock.getVolume());
 
     }
+    @Test
     public void testGetStockStockCode02() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("2044");
         assertEquals(2291, result.size());
     }
+    @Test
     public void testGetStockStockCode03() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("300010");
         assertEquals(1038, result.size());
     }
+    @Test
     public void testGetStockStockCode04() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("300187");
         assertEquals(756, result.size());
@@ -64,6 +68,7 @@ public class StockDataHelperImplTest extends TestCase {
     /**
      * Method: getStockRecords(LocalDate date)
      */
+    @Test
     public void testGetStockRecordsDate01() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords(LocalDate.of(2008, 4, 7));
 
@@ -80,6 +85,7 @@ public class StockDataHelperImplTest extends TestCase {
         assertEquals(16.1, testPO.getPreClose(), 0);
         assertEquals(15.65, testPO.getPreAdjClose(), 0);
     }
+    @Test
     public void testGetStockRecordsDate02() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords(LocalDate.of(2011, 2, 25));
 
@@ -100,13 +106,9 @@ public class StockDataHelperImplTest extends TestCase {
     /**
      * Method: getFirstDay(String code)
      */
+    @Test
     public void testGetFirstDay() throws Exception {
         assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstDay("17"));
     }
-
-
-    public static Test suite() {
-        return new TestSuite(StockDataHelperImplTest.class);
-    }
-} 
+}
 

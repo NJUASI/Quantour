@@ -1,4 +1,4 @@
-package presentation.view.toos;
+package presentation.view.tools;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

@@ -1,12 +1,9 @@
 package dataHelper.dataHelperImpl;
 
 import dataHelper.PrivateStockDataHelper;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.framework.TestCase;
-import org.junit.Ignore;
-
-import java.util.List;
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
 
 /**
  * PrivateStockDataHelperImpl Tester.
@@ -15,25 +12,23 @@ import java.util.List;
  * @version 1.0
  * @since <pre>03/10/2017</pre>
  */
-    public class PrivateStockDataHelperImplTest extends TestCase {
+public class PrivateStockDataHelperImplTest {
 
-    PrivateStockDataHelper dataHelper = new PrivateStockDataHelperImpl();
+    PrivateStockDataHelper dataHelper;
 
-    public PrivateStockDataHelperImplTest(String name) {
-        super(name);
+    @Before
+    public void before() throws Exception {
+        dataHelper = new PrivateStockDataHelperImpl();
     }
 
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void after() throws Exception {
     }
 
     /**
      * Method: getPrivateStockCode(String userName)
      */
+    @Test
     public void testGetPrivateStockCode() throws Exception {
 //        List<String> result = dataHelper.getPrivateStockCode("Harvey");
 //        assertEquals(2, result.size());
@@ -45,18 +40,15 @@ import java.util.List;
     /**
      * Method: addPrivateStock(String userName, String stockCode)
      */
+    @Test
     public void testAddPrivateStock() throws Exception {
     }
 
     /**
      * Method: deletePrivateStock(String userName, String stockCode)
      */
+    @Test
     public void testDeletePrivateStock() throws Exception {
     }
 
-
-
-    public static Test suite() {
-        return new TestSuite(PrivateStockDataHelperImplTest.class);
-    }
-} 
+}
