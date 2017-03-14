@@ -18,7 +18,7 @@ import java.util.Map;
  * K线图、均线图、股票比较
  *
  */
-public interface ChartService{
+public interface ChartService {
 
     /**
      * 获取单支股票的所有数据

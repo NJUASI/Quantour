@@ -111,7 +111,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<StockSearchVO> searchStock(String searchString) throws MatchNothingException {
-        List<StockSearchVO> stockSearchVOS = new ArrayList<StockSearchVO>();
+        List<StockSearchVO> stockSearchVOs = new ArrayList<StockSearchVO>();
 
         //通过匹配股票的拼音来查询
         if(searchString.matches("[0-9]+")){
@@ -120,11 +120,11 @@ public class StockServiceImpl implements StockService {
             for (String code:codes) {
                 if(code.startsWith(searchString)){
                     StockSearchVO vo = new StockSearchVO(code,codeAndNames.get(code));
-                    stockSearchVOS.add(vo);
+                    stockSearchVOs.add(vo);
                 }
             }
             //判断查询结果是否为0
-            if(stockSearchVOS.size() == 0){
+            if(stockSearchVOs.size() == 0){
                 throw new MatchNothingException();
             }
         }
@@ -139,7 +139,7 @@ public class StockServiceImpl implements StockService {
                }
             }
             //判断查询结果是否为0
-            if(stockSearchVOS.size() == 0){
+            if(stockSearchVOs.size() == 0){
                 throw new MatchNothingException();
             }
         }
@@ -147,6 +147,6 @@ public class StockServiceImpl implements StockService {
         else{
             throw new MatchNothingException();
         }
-        return  stockSearchVOS;
+        return  stockSearchVOs;
     }
 }

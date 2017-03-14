@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Harvey on 2017/3/5.
  * Last updated by Harvey
- * Update time 2017/3/5
+ * Update time 2017/3/14
  *
  * 股票信息查看、自选股操作
  */
@@ -70,7 +70,7 @@ public interface StockService{
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/14
      * @param searchString 代码或股票首字母
-     * @return List<StockSearchVO> 符合条件的股票简要信息
+     * @return 符合条件的股票简要信息
      */
     public List<StockSearchVO> searchStock(String searchString) throws MatchNothingException;
 

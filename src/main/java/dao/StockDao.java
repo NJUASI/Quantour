@@ -10,8 +10,8 @@ import java.util.Map;
 
 /**
  * Created by cuihua on 2017/3/4.
- * Last updated by cuihua
- * Update time 2017/3/12
+ * Last updated by Harvey
+ * Update time 2017/3/14
  *
  * 去除为UserService的接口createDir，新增显示用户自选股股票的接口
  * 修改接口getPrivateStocks为获取用户选择的自选股，新增接口getPrivateStockData获取用户自选股数据
@@ -141,15 +141,21 @@ public interface StockDao {
     LocalDate getFirstDay(String stockCode);
 
     /**
-     * Gets all stocks code. 获取所有股票的代码
+     * 获取所有股票的代码
      *
+     * @author Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/14
      * @return the all stocks code 返回所有股票的代码及其名称，代码作为键值
      */
     Map<String, String> getAllStocksCode();
 
     /**
-     * Gets all stocks first letters.获取所有股票的首字母
+     * 获取所有股票的首字母
      *
+     * @author Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/14
      * @return the all stocks first letters 返回所有股票的首字母及其名称，名称作为键值
      */
     Map<String, String> getAllStocksFirstLetters();
