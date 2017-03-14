@@ -48,7 +48,7 @@ public class StockSituationServiceImpl implements StockSituationService {
      * @return the stock stituation data
      */
     @Override
-    public Iterator<PriceRiseOrFallVO> getStockStituationData(LocalDate date) {
+    public List<PriceRiseOrFallVO> getStockStituationData(LocalDate date) {
         StockSituationVO vo = null;
         try {
             vo = getStockSituation(date);
@@ -66,6 +66,6 @@ public class StockSituationServiceImpl implements StockSituationService {
         list.add(new PriceRiseOrFallVO("开盘-收盘小于-5%*上一个交易日收盘价",vo.climbingNum,date));
         list.add(new PriceRiseOrFallVO("开盘-收盘大于+5%*上一个交易日收盘价",vo.slipingNum,date));
 
-        return list.iterator();
+        return list;
     }
 }

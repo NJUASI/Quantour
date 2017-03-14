@@ -8,6 +8,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -25,5 +26,5 @@ public interface StockSituationService{
      * @param date the date
      * @return the stock stituation data
      */
-    Iterator<PriceRiseOrFallVO> getStockStituationData(LocalDate date);
+    List<PriceRiseOrFallVO> getStockStituationData(LocalDate date);
 }

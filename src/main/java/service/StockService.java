@@ -1,12 +1,13 @@
 package service;
 
+import utilities.exceptions.MatchNothingException;
+import vo.StockSearchVO;
 import vo.StockVO;
 
 import java.io.IOException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Harvey on 2017/3/5.
@@ -15,7 +16,7 @@ import java.util.Iterator;
  *
  * 股票信息查看、自选股操作
  */
-public interface StockService extends Remote{
+public interface StockService{
 
     /**
      * 显示所有股票信息的列表
@@ -62,6 +63,16 @@ public interface StockService extends Remote{
      * @return 是否删除成功
      */
     public boolean deletePrivateStock(String userName, String stockCode);
+
+    /**
+     * 用户输入代码或者股票首字母，查找符合条件的股票
+     * @auther Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/14
+     * @param searchString 代码或股票首字母
+     * @return List<StockSearchVO> 符合条件的股票简要信息
+     */
+    public List<StockSearchVO> searchStock(String searchString) throws MatchNothingException;
 
 
 }

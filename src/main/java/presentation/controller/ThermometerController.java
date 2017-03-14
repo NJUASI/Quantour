@@ -56,10 +56,10 @@ public class ThermometerController {
     public void search() {
 
         LocalDate date = thermometerPanel.getDate();
-        Iterator<PriceRiseOrFallVO> itr = stockSituationService.getStockStituationData(date);
+        List<PriceRiseOrFallVO> list = stockSituationService.getStockStituationData(date);
 
-        StockSituationPieChart pieChart = new StockSituationPieChart(itr);
-        StockSituationBarChart barChart = new StockSituationBarChart(itr);
+        StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
+        StockSituationBarChart barChart = new StockSituationBarChart(list.iterator());
 
         JPanel piePanel=pieChart.createChart();
         piePanel.setBounds(thermometerPanel.adaptScreen(230,200,800,600));

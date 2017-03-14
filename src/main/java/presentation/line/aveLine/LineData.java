@@ -94,13 +94,13 @@ public class LineData {
      */
     private void readData(String code) {
         try {
-            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(code, this.days);
+            Map<Integer, List<MovingAverageVO>> tempMap = this.service.getAveData(code, this.days);
 
             for (int i : days) {
                 TimeSeries series = new TimeSeries(String.valueOf(i) + "天均线");
-                Iterator<MovingAverageVO> tempIterator = tempMap.get(i);
-                while (tempIterator.hasNext()) {
-                    MovingAverageVO vo = tempIterator.next();
+                List<MovingAverageVO> movingAverageVOS = tempMap.get(i);
+                for(int j = 0;j<movingAverageVOS.size();j++){
+                    MovingAverageVO vo = movingAverageVOS.get(j);
                     series.add(new Day(vo.date.getDayOfMonth(), vo.date.getMonth().getValue(), vo.date.getYear()), vo.average);
                 }
                 data.add(series);
@@ -121,13 +121,13 @@ public class LineData {
      */
     private void readData(ChartShowCriteriaVO chartShowCriteriaVO) {
         try {
-            Map<Integer, Iterator<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO, this.days);
+            Map<Integer, List<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO, this.days);
 
             for (int i : days) {
                 TimeSeries series = new TimeSeries(String.valueOf(i) + "天均线");
-                Iterator<MovingAverageVO> tempIterator = tempMap.get(i);
-                while (tempIterator.hasNext()) {
-                    MovingAverageVO vo = tempIterator.next();
+                List<MovingAverageVO> movingAverageVOS = tempMap.get(i);
+                for(int j = 0;j<movingAverageVOS.size();j++){
+                    MovingAverageVO vo = movingAverageVOS.get(j);
                     series.add(new Day(vo.date.getDayOfMonth(), vo.date.getMonth().getValue(), vo.date.getYear()), vo.average);
                 }
                 data.add(series);

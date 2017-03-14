@@ -1,16 +1,17 @@
 package service.serviceImpl;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
 import service.StockService;
+import utilities.exceptions.MatchNothingException;
+import vo.StockSearchVO;
 import vo.StockVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * 股票信息查看、自选股操作
@@ -97,5 +98,55 @@ public class StockServiceImpl implements StockService {
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) {
         return stockDao.deletePrivateStock(userName, stockCode);
+    }
+
+    /**
+     * 用户输入代码或者股票首字母，查找符合条件的股票
+     *
+     * @param searchString 代码或股票首字母
+     * @return List<StockSearchVO> 符合条件的股票简要信息
+     * @auther Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/14
+     */
+    @Override
+    public List<StockSearchVO> searchStock(String searchString) throws MatchNothingException {
+        List<StockSearchVO> stockSearchVOS = new ArrayList<StockSearchVO>();
+
+        //通过匹配股票的拼音来查询
+        if(searchString.matches("[0-9]+")){
+            Map<String,String> codeAndNames = stockDao.getAllStocksCode();
+            Set<String> codes = codeAndNames.keySet();
+            for (String code:codes) {
+                if(code.startsWith(searchString)){
+                    StockSearchVO vo = new StockSearchVO(code,codeAndNames.get(code));
+                    stockSearchVOS.add(vo);
+                }
+            }
+            //判断查询结果是否为0
+            if(stockSearchVOS.size() == 0){
+                throw new MatchNothingException();
+            }
+        }
+        //通过匹配股票的首字母来查询
+        else if(searchString.matches("[a-zA-Z]+")){
+            Map<String,String> firstLettersAndNames = stockDao.getAllStocksFirstLetters();
+            Set<String> firstLetters = firstLettersAndNames.keySet();
+            List<String> names = new ArrayList<String>();
+            for(String letters: firstLetters){
+               if(letters.startsWith(searchString)){
+                   names.add(firstLettersAndNames.get(letters));
+               }
+            }
+            //判断查询结果是否为0
+            if(stockSearchVOS.size() == 0){
+                throw new MatchNothingException();
+            }
+        }
+        //未查询到结果，抛出异常
+        else{
+            throw new MatchNothingException();
+        }
+        return  stockSearchVOS;
     }
 }

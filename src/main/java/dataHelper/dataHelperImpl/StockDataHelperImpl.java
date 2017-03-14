@@ -8,6 +8,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/3/5.
@@ -84,8 +85,6 @@ public class StockDataHelperImpl implements StockDataHelper {
         LocalDate firstDay = LocalDate.of(year, month, day);
         return firstDay;
     }
-
-
 
     /**
      * 根据路径读取stock_records_by_code/date中的数据
