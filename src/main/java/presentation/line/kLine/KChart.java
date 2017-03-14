@@ -164,7 +164,7 @@ public class KChart {
     private void setX(LocalDate start, LocalDate end,int gap){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
 
-        xAxis.setAutoRange(false);//设置不采用自动设置时间范围
+        xAxis.setAutoRange(true);//设置不采用自动设置时间范围
         try{
             xAxis.setRange(dateFormat.parse(start.toString()),dateFormat.parse(end.toString()));//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
         }catch(Exception e){
