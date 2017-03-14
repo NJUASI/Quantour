@@ -1,9 +1,13 @@
 package presentation.view.panel;
 
 import org.jfree.chart.ChartPanel;
+import presentation.view.chart.CompareChart1;
+import presentation.view.chart.CompareChartPanel;
 import presentation.view.tools.DoubleDatePickerPanel;
-import presentation.view.chart.KStringChart;
-import vo.ChartShowCriteriaVO;
+import service.ChartService;
+import service.serviceImpl.ChartServiceImpl;
+import vo.StockComparisionVO;
+import vo.StockComparsionCriteriaVO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -29,7 +33,8 @@ public class ComparePanel extends NavigationBar {
     JButton compare;
     AssociatePanel associatePanel;
     AssociatePanel associatePanel2;
-    ChartPanel chartPanel;
+    ChartService chartService;
+    CompareChartPanel compareChartPanel;
     /**
      * 比较面板构造器
      *
@@ -80,6 +85,7 @@ public class ComparePanel extends NavigationBar {
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                chartService =new ChartServiceImpl();
                 compareSpecial(num1.getText(),num2.getText(),datePanel.getStartDate(),datePanel.getEndDate());
                 refreshAssociate();
             }
@@ -108,6 +114,7 @@ public class ComparePanel extends NavigationBar {
 
 
         add(compare);
+
 //        add(bg);
         addFunction();
     }
@@ -137,12 +144,8 @@ public class ComparePanel extends NavigationBar {
      * @updateTime 2017/3/10
      */
     public void CompareAll(String code1,String code2){
-        //TODO DJY在这儿get一个ChartPanel
         // 创建图形
-        chartPanel = new KStringChart().createChart();
-        chartPanel.setBounds(adaptScreen(320,100,1500,850));
-        add(chartPanel);
-        chartPanel.repaint();
+//        chartPanel = new ().createChart();
     }
     /**
      * 通过code和前后日期寻找股票的特定时期 寻找股票的全部信息并绘图
@@ -157,14 +160,21 @@ public class ComparePanel extends NavigationBar {
      */
     public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
         //TODO 在这儿get一个ChartPanel
+        try {
+            StockComparisionVO vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
+//            compareChart=new CompareChart1(vo);
+//
+//            chartPanel = compareChart.createChart();
+//            chartPanel.setBounds(adaptScreen(320,135,400,500));
+//            add(chartPanel);
+            compareChartPanel=new CompareChartPanel(vo);
+            compareChartPanel.setBounds(400,250,1500,800);
+            add(compareChartPanel);
+            compareChartPanel.repaint();
+//            chartPanel.repaint();
+        }catch (Exception e){
 
-        ChartShowCriteriaVO chartShowCriteriaVO1=new ChartShowCriteriaVO(code1,startDate,endDate);
-        ChartShowCriteriaVO chartShowCriteriaVO2=new ChartShowCriteriaVO(code2,startDate,endDate);
-        // 创建图形
-        chartPanel = new KStringChart().createChart();
-        chartPanel.setBounds(adaptScreen(320,130,1500,850));
-        add(chartPanel);
-        chartPanel.repaint();
+        }
     }
     /**
      * 增加提醒性的监听

@@ -116,9 +116,9 @@ public class DoubleDatePickerPanel  extends JFXPanel {
     class DateChangedListener implements ChangeListener<LocalDate> {
         @Override
         public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-            if (!startDate.getValue().isBefore(endDate.getValue())){
+//            if (!startDate.getValue().isBefore(endDate.getValue())){
                 endDate.setValue(startDate.getValue());
-            }
+//            }
         }
     }
 

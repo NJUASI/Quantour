@@ -45,7 +45,7 @@ public class LoginPanel extends TempletPanel {
         admin.setBounds(adaptScreen(300, 400, 300, 50));
         admin.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 admin.setText("");
             }
         });
