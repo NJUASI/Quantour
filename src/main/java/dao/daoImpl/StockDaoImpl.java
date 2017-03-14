@@ -2,8 +2,10 @@ package dao.daoImpl;
 
 import dao.StockDao;
 import dataHelper.PrivateStockDataHelper;
+import dataHelper.SearchDataHelper;
 import dataHelper.StockDataHelper;
 import dataHelper.dataHelperImpl.PrivateStockDataHelperImpl;
+import dataHelper.dataHelperImpl.SearchDataHelperImpl;
 import dataHelper.dataHelperImpl.StockDataHelperImpl;
 import po.PrivateStockPO;
 import po.StockPO;
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -25,6 +28,7 @@ public class StockDaoImpl implements StockDao {
     //股票信息获取的helper对象
     private StockDataHelper stockHelper;
     private PrivateStockDataHelper privateStockDataHelper;
+    private SearchDataHelper searchDataHelper;
 
     /**
      * @author Byron Dong
@@ -34,6 +38,7 @@ public class StockDaoImpl implements StockDao {
     public StockDaoImpl() {
         stockHelper = new StockDataHelperImpl();
         privateStockDataHelper = new PrivateStockDataHelperImpl();
+        searchDataHelper = new SearchDataHelperImpl();
     }
 
 
@@ -205,6 +210,26 @@ public class StockDaoImpl implements StockDao {
     @Override
     public LocalDate getFirstDay(String code) {
         return stockHelper.getFirstDay(code);
+    }
+
+    /**
+     * Gets all stocks code. 获取所有股票的代码
+     *
+     * @return the all stocks code
+     */
+    @Override
+    public Map<String, String> getAllStocksCode() {
+        return searchDataHelper.getAllStocksCode();
+    }
+
+    /**
+     * Gets all stocks first letters.获取所有股票的首字母
+     *
+     * @return the all stocks first letters
+     */
+    @Override
+    public Map<String, String> getAllStocksFirstLetters() {
+        return searchDataHelper.getAllStocksFirstLetters();
     }
 
     /**

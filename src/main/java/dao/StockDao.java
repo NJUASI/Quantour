@@ -6,6 +6,7 @@ import po.StockPO;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -138,4 +139,18 @@ public interface StockDao {
      * @return 数据库中股票存在记录的第一天
      */
     LocalDate getFirstDay(String stockCode);
+
+    /**
+     * Gets all stocks code. 获取所有股票的代码
+     *
+     * @return the all stocks code 返回所有股票的代码及其名称，代码作为键值
+     */
+    Map<String, String> getAllStocksCode();
+
+    /**
+     * Gets all stocks first letters.获取所有股票的首字母
+     *
+     * @return the all stocks first letters 返回所有股票的首字母及其名称，名称作为键值
+     */
+    Map<String, String> getAllStocksFirstLetters();
 }

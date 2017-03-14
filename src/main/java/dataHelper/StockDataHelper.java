@@ -5,6 +5,7 @@ import po.StockPO;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/3/5.
@@ -50,4 +51,5 @@ public interface StockDataHelper {
      * @throws IOException IO
      */
     LocalDate getFirstDay(String stockCode);
+
 }
