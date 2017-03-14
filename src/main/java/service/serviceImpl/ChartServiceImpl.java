@@ -79,8 +79,8 @@ public class ChartServiceImpl implements ChartService {
      * @return 用户所选天数的均线图的平均值
      */
     @Override
-    public Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days)throws IOException {
-        Map<Integer,Iterator<MovingAverageVO>> aveDataMap = new HashMap<Integer,Iterator<MovingAverageVO>>();
+    public Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days)throws IOException {
+        Map<Integer, List<MovingAverageVO>> aveDataMap = new HashMap<Integer, List<MovingAverageVO>>();
 
         for(int i=0;i<days.size();i++){
             //放入天数和其所对应的均值点的数据
@@ -101,7 +101,7 @@ public class ChartServiceImpl implements ChartService {
      * @throws DateShortException 类型不匹配
      */
     @Override
-    public Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException {
+    public Map<Integer, List<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException {
         List<StockPO> poList = null;
         try {
             poList = stockDao.getStockData(code);
@@ -160,7 +160,7 @@ public class ChartServiceImpl implements ChartService {
      * @param day 天数指标
      * @return 均线数据迭代器
      */
-    private Iterator<MovingAverageVO> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day) throws IOException {
+    private List<MovingAverageVO> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day) throws IOException {
 
         String code = chartShowCriteriaVO.stockCode;
         LocalDate begin = chartShowCriteriaVO.start;
@@ -182,6 +182,6 @@ public class ChartServiceImpl implements ChartService {
             dayAveDataList.add(maVO);
         }
 
-        return dayAveDataList.iterator();
+        return dayAveDataList;
     }
 }

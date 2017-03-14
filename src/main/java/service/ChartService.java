@@ -49,11 +49,11 @@ public interface ChartService{
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param chartShowCriteriaVO the chart show criteria vo 用户所选股票的信息
-     * @param days
+     * @param days  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<Integer, Iterator<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws DateShortException, IOException;
+    Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws DateShortException, IOException;
 
     /**
      * 获取单支股票所有数据均线图的平均值.
@@ -66,7 +66,7 @@ public interface ChartService{
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<Integer, Iterator<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException;
+    Map<Integer, List<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException;
 
     /**
      * 获取两只股票的比较信息

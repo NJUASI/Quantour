@@ -24,8 +24,12 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksFirstLetters() {
-        //TODO 龚尘淼 首字母对应的股票名称的资源文件
-        return null;
+        propertiesload("shortPinyin");
+        Map<String,String> shortPinyinAndNames = new TreeMap<String,String>();
+        for(Map.Entry<Object,Object> entry:properties.entrySet()){
+            shortPinyinAndNames.put((String)entry.getValue(),(String)entry.getKey());
+        }
+        return shortPinyinAndNames;
     }
 
     /**
