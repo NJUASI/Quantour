@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         if(userDao.getAllUserNames().contains(userVO.userName)){
             throw new DuplicatedNameException();
         }
-        else if(userVO.password.equals(password2)){
+        else if(!userVO.password.equals(password2)){
             throw new PasswordNotSameException();
         }
         userDao.add(new UserPO(userVO));

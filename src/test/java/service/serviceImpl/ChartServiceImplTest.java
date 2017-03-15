@@ -1,6 +1,5 @@
 package service.serviceImpl;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -70,15 +69,6 @@ public class ChartServiceImplTest {
      */
     @Test
     public void testGetComparision() throws Exception {
-//TODO: Test goes here... 
-    }
-
-
-    /**
-     * Method: getStockPOs(ChartShowCriteriaVO vo)
-     */
-    @Test
-    public void testGetStockPOs() throws Exception {
         List<StockComparisionVO> result = service.getComparision(new StockComparsionCriteriaVO("1",
                 "10", LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 10)));
         StockComparisionVO vo1 = result.get(0);
@@ -88,8 +78,14 @@ public class ChartServiceImplTest {
         assertEquals(12.3, vo1.max, 0);
         assertEquals(6.95, vo2.min, 0);
         assertEquals(8.24, vo2.max, 0);
+    }
 
-
+    /**
+     * Method: getStockPOs(ChartShowCriteriaVO vo)
+     */
+    @Test
+    public void testGetStockPOs() throws Exception {
+//TODO: Test goes here...
     }
 
     /**

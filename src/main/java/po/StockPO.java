@@ -59,7 +59,7 @@ public class StockPO {
         this.close = close;
         this.volume = volume;
         this.adjClose = adjClose;
-        this.code = code;
+        this.code = formatStockCode(code);
         this.name = name;
         this.market = market;
         this.preClose = preClose;
@@ -170,4 +170,13 @@ public class StockPO {
         this.preAdjClose = preAdjClose;
     }
 
+
+    private static String formatStockCode(String previous) {
+        int length = previous.length();
+        StringBuffer result = new StringBuffer(previous);
+        for (int i = length; i < 6; i++) {
+            result.insert(0, "0");
+        }
+        return result.toString();
+    }
 }

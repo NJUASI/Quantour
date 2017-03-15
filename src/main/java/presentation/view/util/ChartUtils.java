@@ -193,8 +193,6 @@ public class ChartUtils {
 	 *            类别
 	 * @param dateValues
 	 *            日期-值 数组
-	 * @param xAxisTitle
-	 *            X坐标轴标题
 	 * @return
 	 */
 	public static TimeSeries createTimeseries(String category, Vector<Object[]> dateValues) {
@@ -290,7 +288,7 @@ public class ChartUtils {
 	/**
 	 * 设置类别图表(CategoryPlot) X坐标轴线条颜色和样式
 	 *
-	 * @param axis
+	 * @param plot
 	 */
 	public static void setXAixs(CategoryPlot plot) {
 		Color lineColor = new Color(31, 121, 170);
@@ -302,7 +300,7 @@ public class ChartUtils {
 	/**
 	 * 设置类别图表(CategoryPlot) Y坐标轴线条颜色和样式 同时防止数据无法显示
 	 *
-	 * @param axis
+	 * @param plot
 	 */
 	public static void setYAixs(CategoryPlot plot) {
 		Color lineColor = new Color(192, 208, 224);
@@ -324,7 +322,7 @@ public class ChartUtils {
 	/**
 	 * 设置XY图表(XYPlot) X坐标轴线条颜色和样式
 	 *
-	 * @param axis
+	 * @param plot
 	 */
 	public static void setXY_XAixs(XYPlot plot) {
 		Color lineColor = new Color(31, 121, 170);
@@ -336,7 +334,7 @@ public class ChartUtils {
 	/**
 	 * 设置XY图表(XYPlot) Y坐标轴线条颜色和样式 同时防止数据无法显示
 	 *
-	 * @param axis
+	 * @param plot
 	 */
 	public static void setXY_YAixs(XYPlot plot) {
 		Color lineColor = new Color(192, 208, 224);
