@@ -100,14 +100,14 @@ public class CompareChart4 {
             }
             TimeSeries timeSeries = ChartUtils.createTimeseries(categories[0], dateValues);
             dataset.addSeries(timeSeries);
-        Vector<Object[]> dateValues2 = new Vector<Object[]>();
+            dateValues = new Vector<Object[]>();
             for (Map.Entry<LocalDate, Double> m1 :num2.entrySet())  {
                 String date = m1.getKey().toString();
                     Object[] dateValue = {date, m1.getValue()};
-                    dateValues2.add(dateValue);
+                    dateValues.add(dateValue);
             }
-        TimeSeries timeSeries2 = ChartUtils.createTimeseries(categories[1], dateValues2);
-            dataset.addSeries(timeSeries2);
+        timeSeries = ChartUtils.createTimeseries(categories[1], dateValues);
+            dataset.addSeries(timeSeries);
 
         return dataset;
     }
@@ -129,13 +129,16 @@ public class CompareChart4 {
         domainAxis.setAutoTickUnitSelection(false);
         DateTickUnit dateTickUnit = null;
         domainAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
-        if (dataset.getItemCount(0) < 40) {
+        if (dataset.getItemCount(0) < 20) {
             //刻度单位月,半年为间隔
-            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 4, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 3, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
+        } else if (dataset.getItemCount(0) < 40) {
+            //刻度单位月,半年为间隔
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 6, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
         } else {// 数据过多,不显示数据
             XYLineAndShapeRenderer xyRenderer = (XYLineAndShapeRenderer) xyplot.getRenderer();
             xyRenderer.setBaseItemLabelsVisible(false);
-            dateTickUnit = new DateTickUnit(DateTickUnitType.YEAR, 1, new SimpleDateFormat("yyyy")); // 第二个参数是时间轴间距
+            dateTickUnit = new DateTickUnit(DateTickUnitType.MONTH, 1, new SimpleDateFormat("yyyy-MM")); // 第二个参数是时间轴间距
         }
 
 
@@ -147,25 +150,5 @@ public class CompareChart4 {
         chartPanel = new ChartPanel(chart);
         return chartPanel;
     }
-
-
-
-//    public static void main(String[] args) {
-//        final JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(1024, 420);
-//        frame.setLocationRelativeTo(null);
-//
-//
-//                ChartPanel chartPanel = new CompareChart4().createChart();
-//                frame.getContentPane().add(chartPanel);
-//                frame.setVisible(true);
-//
-//
-//    }
-
-
-
-
 
 }
