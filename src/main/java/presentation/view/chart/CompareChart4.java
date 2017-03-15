@@ -100,16 +100,14 @@ public class CompareChart4 {
             }
             TimeSeries timeSeries = ChartUtils.createTimeseries(categories[0], dateValues);
             dataset.addSeries(timeSeries);
-            dateValues = new Vector<Object[]>();
-            for (Map.Entry<LocalDate, Double> m :num2.entrySet())  {
-                String date = m.getKey().toString();
-                    Object[] dateValue = {date, m.getValue()};
-                    dateValues.add(dateValue);
-
-
+        Vector<Object[]> dateValues2 = new Vector<Object[]>();
+            for (Map.Entry<LocalDate, Double> m1 :num2.entrySet())  {
+                String date = m1.getKey().toString();
+                    Object[] dateValue = {date, m1.getValue()};
+                    dateValues2.add(dateValue);
             }
-           timeSeries = ChartUtils.createTimeseries(categories[1], dateValues);
-            dataset.addSeries(timeSeries);
+        TimeSeries timeSeries2 = ChartUtils.createTimeseries(categories[1], dateValues2);
+            dataset.addSeries(timeSeries2);
 
         return dataset;
     }
@@ -131,7 +129,7 @@ public class CompareChart4 {
         domainAxis.setAutoTickUnitSelection(false);
         DateTickUnit dateTickUnit = null;
         domainAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
-        if (dataset.getItemCount(0) < 20) {
+        if (dataset.getItemCount(0) < 40) {
             //刻度单位月,半年为间隔
             dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 4, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
         } else {// 数据过多,不显示数据

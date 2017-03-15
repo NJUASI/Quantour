@@ -32,19 +32,19 @@ public class CompareChartPanel extends TempletPanel {
 
         chart4 = new CompareChart4(vo.get(0).closes,vo.get(1).closes,"","","收盘价","收盘价");
         chartPanel4= chart4.createChart();
-        chartPanel4.setBounds(adaptScreen(630,0,870,260));
+        chartPanel4.setBounds(adaptScreen(630,0,870,255));
         add(chartPanel4);
         chartPanel4.repaint();
 
         chart5 = new CompareChart4(vo.get(0).increaseMargin,vo.get(1).increaseMargin,"","","对数收益率","对数收益率");
         chartPanel5 = chart5.createChart();
-        chartPanel5.setBounds(adaptScreen(630,260,870,260));
+        chartPanel5.setBounds(adaptScreen(630,259,870,255));
         add(chartPanel5);
         chartPanel5.repaint();
 
         chart6 = new CompareChart4(vo.get(0).logarithmicYield,vo.get(1).logarithmicYield,vo.get(0).name,vo.get(1).name,"涨幅/跌幅","涨幅跌幅");
         chartPanel6 = chart6.createChart();
-        chartPanel6.setBounds(adaptScreen(630,520,870,260));
+        chartPanel6.setBounds(adaptScreen(630,514,870,270));
         add(chartPanel6);
         chartPanel6.repaint();
 

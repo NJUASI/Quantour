@@ -220,41 +220,7 @@ public class ChartUtils {
 		return timeseries;
 	}
 
-	/**
-	 * 设置 折线图样式
-	 *
-	 * @param plot
-	 * @param isShowDataLabels
-	 *            是否显示数据标签 默认不显示节点形状
-	 */
-	public static void setLineRender(CategoryPlot plot, boolean isShowDataLabels) {
-		setLineRender(plot, isShowDataLabels, false);
-	}
 
-	/**
-	 * 设置折线图样式
-	 *
-	 * @param plot
-	 * @param isShowDataLabels
-	 *            是否显示数据标签
-	 */
-	public static void setLineRender(CategoryPlot plot, boolean isShowDataLabels, boolean isShapesVisible) {
-		plot.setNoDataMessage(NO_DATA_MSG);
-		plot.setInsets(new RectangleInsets(10, 10, 0, 10), false);
-		LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
-
-		renderer.setStroke(new BasicStroke(1.5F));
-		if (isShowDataLabels) {
-			renderer.setBaseItemLabelsVisible(true);
-			renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator(StandardCategoryItemLabelGenerator.DEFAULT_LABEL_FORMAT_STRING,
-					NumberFormat.getInstance()));
-			renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE1, TextAnchor.BOTTOM_CENTER));// weizhi
-		}
-		renderer.setBaseShapesVisible(isShapesVisible);// 数据点绘制形状
-		setXAixs(plot);
-		setYAixs(plot);
-
-	}
 
 	/**
 	 * 设置时间序列图样式
@@ -288,7 +254,7 @@ public class ChartUtils {
 		domainAxis.setTickUnit(dateTickUnit);
 
 		StandardXYToolTipGenerator xyTooltipGenerator = new StandardXYToolTipGenerator("时间：{1}"
-				+ "\n"+"股票：{2}", new SimpleDateFormat("yyyy-MM-dd"), new DecimalFormat("0"));
+				+ "   {2}", new SimpleDateFormat("yyyy-MM-dd"), new DecimalFormat("0"));
 		xyRenderer.setBaseToolTipGenerator(xyTooltipGenerator);
 
 		setXY_XAixs(xyplot);
@@ -296,44 +262,6 @@ public class ChartUtils {
 
 	}
 
-	/**
-	 * 设置时间序列图样式 -默认不显示数据节点形状
-	 *
-	 * @param plot
-	 * @param isShowData
-	 *            是否显示数据
-	 */
-
-	public static void setTimeSeriesRender(Plot plot, boolean isShowData) {
-		setTimeSeriesRender(plot, isShowData, false);
-	}
-
-	/**
-	 * 设置时间序列图渲染：但是存在一个问题：如果timeseries里面的日期是按照天组织， 那么柱子的宽度会非常小，和直线一样粗细
-	 *
-	 * @param plot
-	 * @param isShowDataLabels
-	 */
-
-	public static void setTimeSeriesBarRender(Plot plot, boolean isShowDataLabels) {
-
-		XYPlot xyplot = (XYPlot) plot;
-		xyplot.setNoDataMessage(NO_DATA_MSG);
-
-		XYBarRenderer xyRenderer = new XYBarRenderer(0.1D);
-		xyRenderer.setBaseItemLabelGenerator(new StandardXYItemLabelGenerator());
-
-		if (isShowDataLabels) {
-			xyRenderer.setBaseItemLabelsVisible(true);
-			xyRenderer.setBaseItemLabelGenerator(new StandardXYItemLabelGenerator());
-		}
-
-		StandardXYToolTipGenerator xyTooltipGenerator = new StandardXYToolTipGenerator("{1}:{2}", new SimpleDateFormat("yyyy-MM-dd"), new DecimalFormat("0"));
-		xyRenderer.setBaseToolTipGenerator(xyTooltipGenerator);
-		setXY_XAixs(xyplot);
-		setXY_YAixs(xyplot);
-
-	}
 
 	/**
 	 * 设置柱状图渲染
@@ -357,21 +285,7 @@ public class ChartUtils {
 		setYAixs(plot);
 	}
 
-	/**
-	 * 设置堆积柱状图渲染
-	 *
-	 * @param plot
-	 */
 
-	public static void setStackBarRender(CategoryPlot plot) {
-		plot.setNoDataMessage(NO_DATA_MSG);
-		plot.setInsets(new RectangleInsets(10, 10, 5, 10));
-		StackedBarRenderer renderer = (StackedBarRenderer) plot.getRenderer();
-		renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-		plot.setRenderer(renderer);
-		setXAixs(plot);
-		setYAixs(plot);
-	}
 
 	/**
 	 * 设置类别图表(CategoryPlot) X坐标轴线条颜色和样式
