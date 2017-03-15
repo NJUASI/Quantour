@@ -2,9 +2,8 @@ package vo;
 
 import po.StockPO;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Created by cuihua on 2017/3/11.
@@ -27,10 +26,10 @@ public class StockComparisionVO {
     public double increaseMargin1;
 
     // 每天的收盘价
-    public Iterator<Double> closes1;
+    public Map<LocalDate, Double> closes1;
 
     // 每天的对数收益率
-    public Iterator<Double> logarithmicYield1;
+    public Map<LocalDate, Double> logarithmicYield1;
 
     // 对数收益率方差
     public Double logarithmicYieldVariance1;
@@ -49,10 +48,10 @@ public class StockComparisionVO {
     public double increaseMargin2;
 
     // 每天的收盘价
-    public Iterator<Double> closes2;
+    public Map<LocalDate, Double> closes2;
 
     // 每天的对数收益率
-    public Iterator<Double> logarithmicYield2;
+    public Map<LocalDate, Double> logarithmicYield2;
 
     // 对数收益率方差
     public Double logarithmicYieldVariance2;
@@ -63,11 +62,11 @@ public class StockComparisionVO {
         closes1 = initCloses(stock1);
         closes2 = initCloses(stock2);
 
-        List<Double> logarithmicYieldList1 = initLogarithmicYield(stock1);
-        List<Double> logarithmicYieldList2 = initLogarithmicYield(stock2);
+        List<Double> logarithmicYieldList1 = initLogarithmicYieldNum(stock1);
+        List<Double> logarithmicYieldList2 = initLogarithmicYieldNum(stock2);
 
-        logarithmicYield1 = logarithmicYieldList1.iterator();
-        logarithmicYield2 = logarithmicYieldList2.iterator();
+        logarithmicYield1 = initLogarithmicYieldMap(stock1, logarithmicYieldList1);
+        logarithmicYield1 = initLogarithmicYieldMap(stock2, logarithmicYieldList2);
         logarithmicYieldVariance1 = initLogarithmicYieldVariance(logarithmicYieldList1);
         logarithmicYieldVariance2 = initLogarithmicYieldVariance(logarithmicYieldList2);
     }
@@ -85,16 +84,16 @@ public class StockComparisionVO {
     }
 
     // 初始化收盘价
-    private Iterator<Double> initCloses(List<StockPO> stock) {
-        List<Double> closeList = new LinkedList<>();
+    private Map<LocalDate, Double> initCloses(List<StockPO> stock) {
+        Map<LocalDate, Double> result = new HashMap<>();
         for (StockPO stockPO : stock) {
-            closeList.add(stockPO.getClose());
+            result.put(stockPO.getDate(), stockPO.getClose());
         }
-        return closeList.iterator();
+        return result;
     }
 
-    // 初始化对数收益率
-    private List<Double> initLogarithmicYield(List<StockPO> stock) {
+    // 初始化对数收益率列表List
+    private List<Double> initLogarithmicYieldNum(List<StockPO> stock) {
         List<Double> logarithmicYieldList = new LinkedList<>();
         for (StockPO stockPO : stock) {
             if (stockPO.getPreAdjClose() == -1) {
@@ -104,6 +103,15 @@ public class StockComparisionVO {
             logarithmicYieldList.add(Math.log(stockPO.getAdjClose() / stockPO.getPreAdjClose()));
         }
         return logarithmicYieldList;
+    }
+
+    // 初始化对数收益率列表Map
+    private Map<LocalDate, Double> initLogarithmicYieldMap(List<StockPO> stock, List<Double> logarithmicYieldNum) {
+        Map<LocalDate, Double> result = new HashMap<>();
+        for (int i = 0; i < logarithmicYieldNum.size(); i++) {
+            result.put(stock.get(i).getDate(), logarithmicYieldNum.get(i));
+        }
+        return result;
     }
 
     // 初始化对数收益率方差
