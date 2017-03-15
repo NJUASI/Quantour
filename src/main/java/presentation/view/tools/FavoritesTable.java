@@ -84,7 +84,6 @@ public class FavoritesTable extends JScrollPane {
             label.setVisible(false);
             jTable.repaint();
         } catch (Exception e) {
-            setViewportView(null);
             label.setVisible(true);
         }
 
@@ -93,11 +92,11 @@ public class FavoritesTable extends JScrollPane {
     }
 
     public String getCode() {
-        String cellValue = (String) jTable.getValueAt(jTable.getSelectedRow(), 1);// 取单元格数据,row是行号,column是列号
+        String cellValue = ""+jTable.getValueAt(jTable.getSelectedRow(), 0);// 取单元格数据,row是行号,column是列号
         return cellValue;
     }
     public String getName() {
-        String cellValue = (String) jTable.getValueAt(jTable.getSelectedRow(), 2);// 取单元格数据,row是行号,column是列号
+        String cellValue =  ""+jTable.getValueAt(jTable.getSelectedRow(), 1);// 取单元格数据,row是行号,column是列号
         return cellValue;
     }
 }

@@ -19,9 +19,12 @@ import java.util.*;
 public class CompareChart3 {
 
     double str1,str2;
+    String name1,name2;
     public CompareChart3(java.util.List<StockComparisionVO> vo) {
         str1=vo.get(0).logarithmicYieldVariance*10000;
         str2=vo.get(1).logarithmicYieldVariance*10000;
+        name1=vo.get(0).name;
+        name2=vo.get(1).name;
     }
 
     private CategoryDataset createSet(){
@@ -30,9 +33,9 @@ public class CompareChart3 {
         Object[] datas1 = new Object[]{str1};
         Object[] datas2 = new Object[]{str2};
 
-        //TODO 获得两股股票的名称
-        series.add(new Serie("1",datas1));
-        series.add(new Serie("2",datas2));
+
+        series.add(new Serie(name1,datas1));
+        series.add(new Serie(name2,datas2));
         DefaultCategoryDataset dataset = ChartUtils.createDefaultCategoryDataset(series, categories);
         return dataset;
     }

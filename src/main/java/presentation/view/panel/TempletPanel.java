@@ -13,7 +13,7 @@ public class TempletPanel extends JPanel {
     int width;
     int height;
     //背景图片
-//    JLabel bg;
+    JLabel bg1;
     /**
      * 父类构造器
      *
@@ -28,12 +28,14 @@ public class TempletPanel extends JPanel {
         height =windowData.getHeight();
         setLayout(null);
         setBackground(WindowData.getInstance().getColor());
-//        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("bg.png"));
-//        bgPicture.setImage(bgPicture.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
-//        bg= new JLabel("22");
-//        bg.setBounds(0,0,width,height);
-//        bg.setOpaque(true);
-//        bg.setBackground(new Color(55,60,56));
+
+        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("bg.png"));
+        bgPicture.setImage(bgPicture.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        bg1= new JLabel(bgPicture);
+        bg1.setBounds(0,0,width,height);
+//        add(bg1);
+//        bg1.setOpaque(true);
+//        bg1.setBackground(new Color(55,60,56));
     }
 
     /**

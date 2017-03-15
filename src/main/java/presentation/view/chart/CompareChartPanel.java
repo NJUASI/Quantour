@@ -12,28 +12,43 @@ import java.util.*;
  */
 public class CompareChartPanel extends TempletPanel {
     CompareChart1 chart1;
-    CompareChart2 chart2;
     CompareChart3 chart3;
-    CompareChart3 chart4;
-    ChartPanel chartPanel1,chartPanel2, chartPanel3,chartPanel4;
+    CompareChart4 chart4,chart5,chart6;
+    ChartPanel chartPanel1, chartPanel3,chartPanel4, chartPanel5,chartPanel6;
     public CompareChartPanel(List<StockComparisionVO> vo){
         setLayout(null);
         setBounds(adaptScreen(320,100,1500,850));
         chart1 = new CompareChart1(vo);
         chartPanel1 = chart1.createChart();
-        chartPanel1.setBounds(adaptScreen(0,0,400,400));
+        chartPanel1.setBounds(adaptScreen(0,0,350,780));
         add(chartPanel1);
         chartPanel1.repaint();
-        chart2 = new CompareChart2(vo);
-        chartPanel2 = chart2.createChart();
-        chartPanel2.setBounds(adaptScreen(400,0,300,400));
-        add(chartPanel2);
-        chartPanel2.repaint();
+
         chart3 = new CompareChart3(vo);
         chartPanel3 = chart3.createChart();
-        chartPanel3.setBounds(adaptScreen(700,0,300,400));
+        chartPanel3.setBounds(adaptScreen(350,0,280,780));
         add(chartPanel3);
         chartPanel3.repaint();
+
+        chart4 = new CompareChart4(vo.get(0).closes,vo.get(1).closes,"","","收盘价","收盘价");
+        chartPanel4= chart4.createChart();
+        chartPanel4.setBounds(adaptScreen(630,0,870,260));
+        add(chartPanel4);
+        chartPanel4.repaint();
+
+        chart5 = new CompareChart4(vo.get(0).increaseMargin,vo.get(1).increaseMargin,"","","对数收益率","对数收益率");
+        chartPanel5 = chart5.createChart();
+        chartPanel5.setBounds(adaptScreen(630,260,870,260));
+        add(chartPanel5);
+        chartPanel5.repaint();
+
+        chart6 = new CompareChart4(vo.get(0).logarithmicYield,vo.get(1).logarithmicYield,vo.get(0).name,vo.get(1).name,"涨幅/跌幅","涨幅跌幅");
+        chartPanel6 = chart6.createChart();
+        chartPanel6.setBounds(adaptScreen(630,520,870,260));
+        add(chartPanel6);
+        chartPanel6.repaint();
+
+
 //        chart4 = new CompareChart4(vo.l,vo.logarithmicYieldVariance2);
 //        chartPanel4 = chart4.createChart();
 //        chartPanel4.setBounds(adaptScreen(0,400,1000,500));

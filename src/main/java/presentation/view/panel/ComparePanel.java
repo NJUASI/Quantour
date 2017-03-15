@@ -188,18 +188,25 @@ public class ComparePanel extends NavigationBar {
      * @author 61990
      * @updateTime 2017/3/9
      */
+    boolean first=true;
     public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
         try {
-            List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
-//            compareChart=new CompareChart1(vo);
-//
-//            chartPanel = compareChart.createChart();
-//            chartPanel.setBounds(adaptScreen(320,135,400,500));
-//            add(chartPanel);
-            compareChartPanel=new CompareChartPanel(vo);
-            compareChartPanel.setBounds(400,250,1500,800);
-            add(compareChartPanel);
-            compareChartPanel.repaint();
+
+            if(first){
+                first=false;
+                List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
+                compareChartPanel=new CompareChartPanel(vo);
+                compareChartPanel.setBounds(250,150,1500,800);
+                add(compareChartPanel);
+                compareChartPanel.repaint();
+            }else {
+                remove(compareChartPanel);
+                List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
+                compareChartPanel=new CompareChartPanel(vo);
+                compareChartPanel.setBounds(250,150,1500,800);
+                add(compareChartPanel);
+                compareChartPanel.repaint();
+            }
 //            chartPanel.repaint();
         }catch (Exception e){
 

@@ -354,5 +354,6 @@ public class KStringPanel extends NavigationBar {
     void addMessage(String name,String num){
         this.name.setText(name);
         this.num.setText(num);
+        associatePanel.setVisible(false);
     }
 }
