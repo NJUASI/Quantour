@@ -26,6 +26,7 @@ public class AssociatePanel extends ScrollPane {
     }
     public void updateText(String str){
         //TODO 通过str筛选对应的联想 得到可能的Vector str可能是 股票号或者名称
+
         String listName[] =new String[4];
         jListModel =  new DefaultComboBoxModel(new String[] { "张三", "李四" ,"王五","11","22"});
         list.setModel(jListModel);

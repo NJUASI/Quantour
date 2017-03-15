@@ -36,7 +36,7 @@ public class KStringPanel extends NavigationBar {
     JButton searchAll;
     JButton compare;
     JButton favorite;
-    AssociatePanel associatePanel;
+    public AssociatePanel associatePanel;
     ChartPanel chartPanel;
 
     //由于重复添加chartPanel,故以此作为flag检测是否需要remove chartPanel
@@ -54,6 +54,7 @@ public class KStringPanel extends NavigationBar {
     public KStringPanel() {
         //初始化datePicker
         name = new JTextField();
+
         num = new JTextField();
         searchAll = new JButton("总体信息");
         search = new JButton("局部信息");
@@ -147,23 +148,38 @@ public class KStringPanel extends NavigationBar {
 
         name.setBounds(adaptScreen(800, 50, 150, 35));
         add(name);
-
+        name.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
         num.setBounds(adaptScreen(1000, 50, 50, 35));
         add(num);
-
+        num.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
         //提示框面板
         associatePanel = new AssociatePanel();
         associatePanel.setVisible(false);
         add(associatePanel);
 
-
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                associatePanel.setVisible(false);
+            }
+        });
 
         //搜索按钮
         searchAll.setBounds(adaptScreen(1130, 50, 100, 35));
         searchAll.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                refreshAssociate();
                 if(first == true){
                     first = false;
                 }
@@ -182,6 +198,9 @@ public class KStringPanel extends NavigationBar {
         search.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                associatePanel.setVisible(false);
+                associatePanel.setBounds(adaptScreen(900, 86, 250, 200));
+                associatePanel.updateText(name.getText());
 
                 if(first == true){
                     first = false;
@@ -200,8 +219,13 @@ public class KStringPanel extends NavigationBar {
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+
+                MainPanel.getCardPanel().add(ComparePanel.getInstance(),"comparePanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "comparePanel");
                 ComparePanel.getInstance().setCompare(name.getText(),num.getText());
+
+                ComparePanel.getInstance().associatePanel.setVisible(false);
+                ComparePanel.getInstance().associatePanel2.setVisible(false);
             }
         });
         add(compare);
@@ -270,19 +294,19 @@ public class KStringPanel extends NavigationBar {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                changedUpdate(e);
+                associatePanel.setVisible(true);
+                associatePanel.setBounds(adaptScreen(800, 86, 250, 200));
+                associatePanel.updateText(name.getText());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel.setVisible(false);
+                insertUpdate(e);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(900, 86, 250, 200));
-                associatePanel.updateText(name.getText());
+
             }
         });
         Document dt1 = num.getDocument();
@@ -290,13 +314,13 @@ public class KStringPanel extends NavigationBar {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(900, 86, 250, 200));
+                associatePanel.setBounds(adaptScreen(800, 86, 250, 200));
                 associatePanel.updateText(num.getText());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel.setVisible(false);
+                insertUpdate(e);
             }
 
             @Override
@@ -324,18 +348,7 @@ public class KStringPanel extends NavigationBar {
         });
     }
     void refreshAssociate(){
-        name.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                associatePanel.setVisible(false);
-            }
-        });
-        num.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                associatePanel.setVisible(false);
-            }
-        });
+        associatePanel.setVisible(false);
     }
 
 }

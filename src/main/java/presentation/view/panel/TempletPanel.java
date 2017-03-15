@@ -27,7 +27,7 @@ public class TempletPanel extends JPanel {
         width = windowData.getWidth();
         height =windowData.getHeight();
         setLayout(null);
-        setBackground(new Color(55,60,56));
+        setBackground(WindowData.getInstance().getColor());
 //        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("bg.png"));
 //        bgPicture.setImage(bgPicture.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
 //        bg= new JLabel("22");

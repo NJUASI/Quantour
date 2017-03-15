@@ -16,7 +16,7 @@ public class RegisterListener extends MouseAdapter {
      * @param e
      */
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         RegisterController.getInstance().register();
     }
 }

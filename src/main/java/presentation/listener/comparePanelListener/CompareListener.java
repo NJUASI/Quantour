@@ -1,6 +1,8 @@
 package presentation.listener.comparePanelListener;
 
 import presentation.controller.CompareController;
+import presentation.view.panel.ComparePanel;
+import presentation.view.panel.KStringPanel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,7 +19,9 @@ public class CompareListener extends MouseAdapter
      * @param e
      */
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         CompareController.getInstance().compare();
+        ComparePanel.getInstance().associatePanel.setVisible(false);
+        ComparePanel.getInstance().associatePanel2.setVisible(false);
     }
 }

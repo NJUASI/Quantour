@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
@@ -31,8 +32,8 @@ public class ComparePanel extends NavigationBar {
     JTextField name2;
     JTextField num2;
     JButton compare;
-    AssociatePanel associatePanel;
-    AssociatePanel associatePanel2;
+    public AssociatePanel associatePanel;
+    public AssociatePanel associatePanel2;
     ChartService chartService;
     CompareChartPanel compareChartPanel;
     /**
@@ -98,7 +99,7 @@ public class ComparePanel extends NavigationBar {
         associatePanel2 = new AssociatePanel();
         associatePanel2.setVisible(false);
         add(associatePanel2);
-
+        addRefreshListener();
         name1.setBounds(adaptScreen(900, 30, 150, 35));
         add(name1);
 
@@ -117,6 +118,33 @@ public class ComparePanel extends NavigationBar {
 
 //        add(bg);
         addFunction();
+    }
+
+    private void addRefreshListener() {
+        name1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
+        num1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
+        name2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
+        num2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+            }
+        });
     }
 
     /**
@@ -185,12 +213,19 @@ public class ComparePanel extends NavigationBar {
      * @updateTime 2017/3/8
      */
     void addFunction() {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
         associatePanel.list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 name1.setText(associatePanel.getMessage());
                 associatePanel.setVisible(false);
+                name1.requestFocus();
             }
         });
         associatePanel2.list.addMouseListener(new MouseAdapter() {
@@ -199,6 +234,7 @@ public class ComparePanel extends NavigationBar {
 
                 name2.setText(associatePanel2.getMessage());
                 associatePanel2.setVisible(false);
+                name2.requestFocus();
             }
         });
         Document dt1 = num1.getDocument();
@@ -217,7 +253,7 @@ public class ComparePanel extends NavigationBar {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel.setVisible(false);
+                insertUpdate(e);
             }
         });
         Document dt2 = name1.getDocument();
@@ -234,16 +270,14 @@ public class ComparePanel extends NavigationBar {
             }
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel.setVisible(false);
+                insertUpdate(e);
             }
         });
         Document dt3 = name2.getDocument();
         dt3.addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {
-                associatePanel2.setVisible(true);
-                associatePanel2.setBounds(adaptScreen(900, 105, 250, 200));
-                associatePanel2.updateText(name2.getText());
+
             }
 
             @Override
@@ -255,7 +289,7 @@ public class ComparePanel extends NavigationBar {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel2.setVisible(false);
+                insertUpdate(e);
             }
         });
         Document dt4 = num2.getDocument();
@@ -274,24 +308,16 @@ public class ComparePanel extends NavigationBar {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel2.setVisible(false);
+                associatePanel2.setVisible(true);
+                associatePanel2.setBounds(adaptScreen(900, 66, 250, 200));
+                associatePanel2.updateText(num2.getText());
             }
         });
         refreshAssociate();
     }
     void refreshAssociate(){
-        setMouseClick(name1);
-        setMouseClick(name2);
-        setMouseClick(num1);
-        setMouseClick(num2);
+        associatePanel.setVisible(false);
+        associatePanel2.setVisible(false);
     }
-    void setMouseClick(JTextField jTextField){
-        jTextField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                associatePanel.setVisible(false);
-                associatePanel2.setVisible(false);
-            }
-        });
-    }
+
 }
