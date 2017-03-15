@@ -131,10 +131,13 @@ public class ChartServiceImpl implements ChartService {
      * @return 界面上需要的两只股票的比较信息
      */
     @Override
-    public StockComparisionVO getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException {
+    public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException {
         List<StockPO> stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
         List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
-        return new StockComparisionVO(stockPOList1, stockPOList2);
+        List<StockComparisionVO> result = new LinkedList<>();
+        result.add(new StockComparisionVO(stockPOList1));
+        result.add(new StockComparisionVO(stockPOList2));
+        return result;
     }
 
     /**

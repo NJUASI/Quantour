@@ -1,6 +1,7 @@
 package vo;
 
 import po.StockPO;
+import utilities.enums.Market;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -8,79 +9,66 @@ import java.util.*;
 /**
  * Created by cuihua on 2017/3/11.
  * Last updated by cuihua
- * Update time 2017/3/13
+ * Update time 2017/3/15
  * 修改实现getMax
  */
 public class StockComparisionVO {
 
-    /**
-     * 股票A
-     */
+    // 股票名称
+    public String name;
+
+    // 股票代码
+    public String code;
+
     // 最低值
-    public double min1;
+    public double min;
 
     // 最高值
-    public double max1;
+    public double max;
 
     // 涨幅（正）／跌幅（负）
-    public double increaseMargin1;
+    public Map<LocalDate, Double> increaseMargin;
 
     // 每天的收盘价
-    public Map<LocalDate, Double> closes1;
+    public Map<LocalDate, Double> closes;
 
     // 每天的对数收益率
-    public Map<LocalDate, Double> logarithmicYield1;
+    public Map<LocalDate, Double> logarithmicYield;
 
     // 对数收益率方差
-    public Double logarithmicYieldVariance1;
+    public double logarithmicYieldVariance;
 
 
-    /**
-     * 股票B
-     */
-    // 最低值
-    public double min2;
+    public StockComparisionVO(List<StockPO> stock) {
+        initBasics(stock);
 
-    // 最高值
-    public double max2;
+        increaseMargin = getIncreaseMargin(stock);
+        closes = initCloses(stock);
 
-    // 涨幅（正）／跌幅（负）
-    public double increaseMargin2;
-
-    // 每天的收盘价
-    public Map<LocalDate, Double> closes2;
-
-    // 每天的对数收益率
-    public Map<LocalDate, Double> logarithmicYield2;
-
-    // 对数收益率方差
-    public Double logarithmicYieldVariance2;
-
-    public StockComparisionVO(List<StockPO> stock1, List<StockPO> stock2) {
-        initDoubles(stock1, stock2);
-
-        closes1 = initCloses(stock1);
-        closes2 = initCloses(stock2);
-
-        List<Double> logarithmicYieldList1 = initLogarithmicYieldNum(stock1);
-        List<Double> logarithmicYieldList2 = initLogarithmicYieldNum(stock2);
-
-        logarithmicYield1 = initLogarithmicYieldMap(stock1, logarithmicYieldList1);
-        logarithmicYield1 = initLogarithmicYieldMap(stock2, logarithmicYieldList2);
-        logarithmicYieldVariance1 = initLogarithmicYieldVariance(logarithmicYieldList1);
-        logarithmicYieldVariance2 = initLogarithmicYieldVariance(logarithmicYieldList2);
+        initLogarithmicYieldInfo(stock);
     }
 
 
     // 初始化基本信息中的数值
-    private void initDoubles(List<StockPO> stock1, List<StockPO> stock2) {
-        min1 = getMin(stock1);
-        min2 = getMin(stock2);
-        max1 = getMax(stock1);
-        max2 = getMax(stock2);
-        increaseMargin1 = getIncreaseMargin(stock1);
-        increaseMargin2 = getIncreaseMargin(stock2);
+    private void initBasics(List<StockPO> stock) {
+        name = stock.get(0).getName();
+        code = stock.get(0).getCode();
+        min = getMin(stock);
+        max = getMax(stock);
+    }
 
+    // 初始化涨幅／跌幅
+    // 注意：此处stock为时间顺序，即时间小的在前面
+    private Map<LocalDate, Double> getIncreaseMargin(List<StockPO> stocks) {
+        Map<LocalDate, Double> result = new HashMap<>();
+        for (StockPO stockPO : stocks) {
+            if (stockPO.getPreAdjClose() == -1) {
+                // 此条数据为数据库中最早的一条，故不能得其涨幅／跌幅
+                continue;
+            }
+            result.put(stockPO.getDate(), stockPO.getAdjClose() / stockPO.getPreAdjClose() - 1);
+        }
+        return result;
     }
 
     // 初始化收盘价
@@ -92,26 +80,21 @@ public class StockComparisionVO {
         return result;
     }
 
-    // 初始化对数收益率列表List
-    private List<Double> initLogarithmicYieldNum(List<StockPO> stock) {
+    // 初始化对数收益率和对数收益率方差
+    private void initLogarithmicYieldInfo(List<StockPO> stock) {
         List<Double> logarithmicYieldList = new LinkedList<>();
         for (StockPO stockPO : stock) {
             if (stockPO.getPreAdjClose() == -1) {
                 // 此条数据为数据库中最早的一条，故不能得其对数收益率
                 continue;
             }
-            logarithmicYieldList.add(Math.log(stockPO.getAdjClose() / stockPO.getPreAdjClose()));
+            double temp = Math.log(stockPO.getAdjClose() / stockPO.getPreAdjClose());
+            logarithmicYieldList.add(temp);
+            logarithmicYield.put(stockPO.getDate(), temp);
         }
-        return logarithmicYieldList;
-    }
 
-    // 初始化对数收益率列表Map
-    private Map<LocalDate, Double> initLogarithmicYieldMap(List<StockPO> stock, List<Double> logarithmicYieldNum) {
-        Map<LocalDate, Double> result = new HashMap<>();
-        for (int i = 0; i < logarithmicYieldNum.size(); i++) {
-            result.put(stock.get(i).getDate(), logarithmicYieldNum.get(i));
-        }
-        return result;
+        logarithmicYieldVariance = initLogarithmicYieldVariance(logarithmicYieldList);
+
     }
 
     // 初始化对数收益率方差
@@ -126,7 +109,6 @@ public class StockComparisionVO {
             }
             return temp / (logarithmicYields.size() - 1);
         }
-
     }
 
 
@@ -150,13 +132,6 @@ public class StockComparisionVO {
         return thisMax;
     }
 
-    // 注意：此处stock为时间顺序，即时间小的在前面
-    private Double getIncreaseMargin(List<StockPO> stockPOS) {
-        int length = stockPOS.size();
-        double differ = stockPOS.get(length - 1).getAdjClose() - stockPOS.get(0).getAdjClose();
-        return differ / stockPOS.get(0).getAdjClose();
-    }
-
     private Double getAve(List<Double> dataList) {
         double sum = 0;
         for (double data : dataList) {
@@ -164,4 +139,22 @@ public class StockComparisionVO {
         }
         return sum / dataList.size();
     }
+
+    public static void main(String[] args) {
+
+        List<StockPO> stockPOList01 = new LinkedList<>();
+
+//        75	2014-01-13	2.31	2.32	2.27	2.28	978087	2.23	100	TCL 集团	SZ	2.32	2.27
+//        74	2014-01-14	2.29	2.38	2.29	2.35	3249202	2.3	100	TCL 集团	SZ	2.28	2.23
+
+        stockPOList01.add(new StockPO(75, LocalDate.of(2014, 1, 13), 2.31, 2.32, 2.27, 2.28,
+                "978087", 2.23, "100 ", "TCL 集团", Market.SZ, 2.32, 2.27));
+//        stockPOList01.add(new StockPO(74, LocalDate.of(2014, 1, 14), 2.29, 2.38, 2.29, 2.35,
+//                "3249202", 2.3, "100 ", "TCL 集团", Market.SZ, 2.28, 2.23));
+
+
+        StockComparisionVO result = new StockComparisionVO(stockPOList01);
+    }
+
+
 }
