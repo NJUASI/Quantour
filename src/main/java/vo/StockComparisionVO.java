@@ -10,7 +10,7 @@ import java.util.*;
  * Created by cuihua on 2017/3/11.
  * Last updated by cuihua
  * Update time 2017/3/15
- * 修改实现getMax
+ * 修改此数据结构
  */
 public class StockComparisionVO {
 
@@ -60,7 +60,7 @@ public class StockComparisionVO {
     // 初始化涨幅／跌幅
     // 注意：此处stock为时间顺序，即时间小的在前面
     private Map<LocalDate, Double> getIncreaseMargin(List<StockPO> stocks) {
-        Map<LocalDate, Double> result = new HashMap<>();
+        Map<LocalDate, Double> result = new TreeMap<>();
         for (StockPO stockPO : stocks) {
             if (stockPO.getPreAdjClose() == -1) {
                 // 此条数据为数据库中最早的一条，故不能得其涨幅／跌幅
@@ -73,7 +73,7 @@ public class StockComparisionVO {
 
     // 初始化收盘价
     private Map<LocalDate, Double> initCloses(List<StockPO> stock) {
-        Map<LocalDate, Double> result = new HashMap<>();
+        Map<LocalDate, Double> result = new TreeMap<>();
         for (StockPO stockPO : stock) {
             result.put(stockPO.getDate(), stockPO.getClose());
         }
@@ -82,6 +82,8 @@ public class StockComparisionVO {
 
     // 初始化对数收益率和对数收益率方差
     private void initLogarithmicYieldInfo(List<StockPO> stock) {
+        logarithmicYield = new TreeMap<>();
+
         List<Double> logarithmicYieldList = new LinkedList<>();
         for (StockPO stockPO : stock) {
             if (stockPO.getPreAdjClose() == -1) {
@@ -139,22 +141,5 @@ public class StockComparisionVO {
         }
         return sum / dataList.size();
     }
-
-    public static void main(String[] args) {
-
-        List<StockPO> stockPOList01 = new LinkedList<>();
-
-//        75	2014-01-13	2.31	2.32	2.27	2.28	978087	2.23	100	TCL 集团	SZ	2.32	2.27
-//        74	2014-01-14	2.29	2.38	2.29	2.35	3249202	2.3	100	TCL 集团	SZ	2.28	2.23
-
-        stockPOList01.add(new StockPO(75, LocalDate.of(2014, 1, 13), 2.31, 2.32, 2.27, 2.28,
-                "978087", 2.23, "100 ", "TCL 集团", Market.SZ, 2.32, 2.27));
-//        stockPOList01.add(new StockPO(74, LocalDate.of(2014, 1, 14), 2.29, 2.38, 2.29, 2.35,
-//                "3249202", 2.3, "100 ", "TCL 集团", Market.SZ, 2.28, 2.23));
-
-
-        StockComparisionVO result = new StockComparisionVO(stockPOList01);
-    }
-
 
 }
