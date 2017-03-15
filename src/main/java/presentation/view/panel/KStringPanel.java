@@ -223,7 +223,8 @@ public class KStringPanel extends NavigationBar {
                 MainPanel.getCardPanel().add(ComparePanel.getInstance(),"comparePanel");
                 MainPanel.getCard().show(MainPanel.getCardPanel(), "comparePanel");
                 ComparePanel.getInstance().setCompare(name.getText(),num.getText());
-
+                ComparePanel.getInstance().datePanel.setDate(datePanel.getStartDate());
+                ComparePanel.getInstance().datePanel.setEndDate(datePanel.getEndDate());
                 ComparePanel.getInstance().associatePanel.setVisible(false);
                 ComparePanel.getInstance().associatePanel2.setVisible(false);
             }
@@ -350,5 +351,8 @@ public class KStringPanel extends NavigationBar {
     void refreshAssociate(){
         associatePanel.setVisible(false);
     }
-
+    void addMessage(String name,String num){
+        this.name.setText(name);
+        this.num.setText(num);
+    }
 }

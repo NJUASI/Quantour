@@ -106,13 +106,36 @@ public class DoubleDatePickerPanel  extends JFXPanel {
      * @author 61990
      * @updateTime 2017/3/5
      */
+
+    /**
+     * 获得或改变日期的方法
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     public LocalDate getStartDate() {
         return startDate.getValue();
     }
     public LocalDate getEndDate() {
         return endDate.getValue();
     }
-
+    public void setDate(LocalDate date) {
+        startDate.setValue(date);
+        endDate.setValue(date);
+    }
+    public void setEndDate(LocalDate date) {
+        endDate.setValue(date);
+    }
+    /**
+     * 初始日期的改变使得结束日期改变
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     class DateChangedListener implements ChangeListener<LocalDate> {
         @Override
         public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {

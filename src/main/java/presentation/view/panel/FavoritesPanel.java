@@ -10,6 +10,7 @@ import utilities.IDReserve;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 
 /**
  * Created by 61990 on 2017/3/5.
@@ -19,7 +20,7 @@ public class FavoritesPanel extends NavigationBar {
     FavoritesTable favoritesTable;
     private static FavoritesPanel favoritesPanel;
     StockService stockService;
-
+    boolean first=true;
     SingleDatePickerPanel datePickerPanel;
     /**
      * 自选股票面板构造器
@@ -30,8 +31,7 @@ public class FavoritesPanel extends NavigationBar {
      * @updateTime 2017/3/5
      */
     public FavoritesPanel(){
-        updateText();
-        stockService=new StockServiceImpl();
+//        updateText();
         WindowData windowData = WindowData.getInstance();
         int width = windowData.getWidth();
         int height =windowData.getHeight();
@@ -40,38 +40,48 @@ public class FavoritesPanel extends NavigationBar {
         datePickerPanel.setBounds(adaptScreen(500, 50,150,35));
         add(datePickerPanel);
 
-        JButton search = new JButton("查看");
+        JButton search = new JButton("搜索");
         search.setBounds(adaptScreen(1000,50,80,40));
         search.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                //TODO 打开均线k线面板 并初始化
-                favoritesTable.getCode();
-                datePickerPanel.getDate();
-
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
+                 updateText();
             }
         });
         add(search);
 
-        JButton delete = new JButton("删除");
-        delete.setBounds(adaptScreen(1150,50,80,40));
-        delete.addMouseListener(new MouseAdapter() {
+        JButton detailOfCode = new JButton("查看详情");
+        detailOfCode.setBounds(adaptScreen(1150,50,80,40));
+        detailOfCode.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-//                System.out.println(favoritesTable.getCode());
-                //TODO
-                stockService.deletePrivateStock(IDReserve.getInstance().getUserID(),favoritesTable.getCode());
+                MainPanel.getCardPanel().add(KStringPanel.getInstance(),"kStringPanel");
+                MainPanel.getCard().show(MainPanel.getCardPanel(), "kStringPanel");
+                KStringPanel.getInstance().datePanel.setDate(datePickerPanel.getDate());
+                KStringPanel.getInstance().addMessage(favoritesTable.getName(),favoritesTable.getCode());
+
             }
         });
-        add(delete);
+        add(detailOfCode);
+
 
     }
     void updateText(){
+        if(first == true){
+            first = false;
+            favoritesTable = new FavoritesTable(datePickerPanel.getDate());
+            favoritesTable.setLocation(300*width/1920,130*height/1030);
+            add(favoritesTable);
+            favoritesTable.repaint();
+        }
+        else {
+            remove(favoritesTable);
+            favoritesTable = new FavoritesTable(datePickerPanel.getDate());
+            favoritesTable.setLocation(300*width/1920,130*height/1030);
+            add(favoritesTable);
+            favoritesTable.repaint();
+        }
 
-        favoritesTable=new FavoritesTable();
-        favoritesTable.setLocation(300*width/1920,130*height/1030);
-        add(favoritesTable);
     }
 
     /**

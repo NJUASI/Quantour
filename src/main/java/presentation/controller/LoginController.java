@@ -58,7 +58,7 @@ public class LoginController{
                 IDReserve.getInstance().setUserID(name);
                 loginPanel.setUsername("Enter your admin");
                 loginPanel.setPassword("");
-                ViewSwitchController.getInstance().viewSwitch("kStringPanel");
+                ViewSwitchController.getInstance().viewSwitch("favoritesPanel");
                 return true;
             }
 

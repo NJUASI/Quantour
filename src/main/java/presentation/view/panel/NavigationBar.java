@@ -27,31 +27,31 @@ public class NavigationBar extends TempletPanel {
 
         //the door of function 1
         JButton kString = new JButton("kString");
-        kString.setBounds(adaptScreen(50, 200, 150, 50));
+        kString.setBounds(adaptScreen(50, 350, 120, 50));
         kString.addMouseListener(new KStringListener());
         add(kString);
 
         //the door of function 2
         JButton compare = new JButton("compare");
-        compare.setBounds(adaptScreen(50, 350, 150, 50));
+        compare.setBounds(adaptScreen(50, 500, 120, 50));
         compare.addMouseListener(new CompareListener());
         add(compare);
 
         //the door of function 3
         JButton thermometer = new JButton("thermometer");
-        thermometer.setBounds(adaptScreen(50, 500, 150, 50));
+        thermometer.setBounds(adaptScreen(50, 650, 120, 50));
         thermometer.addMouseListener(new ThermometerListener());
         add(thermometer);
 
         //the door of function 4
-        JButton favorites = new JButton("favorites");
-        favorites.setBounds(adaptScreen(50, 650, 150, 50));
+        JButton favorites = new JButton("stocks");
+        favorites.setBounds(adaptScreen(50, 200, 120, 50));
         favorites.addMouseListener(new FavoritesListener());
         add(favorites);
 
         //log out
         JButton logout = new JButton("注销");
-        logout.setBounds(adaptScreen(90, 820, 70, 35));
+        logout.setBounds(adaptScreen(90, 820, 55, 35));
         logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
