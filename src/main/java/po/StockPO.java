@@ -44,10 +44,10 @@ public class StockPO {
     // 市场名称
     private Market market;
 
-    //昨收
+    // 昨收
     private double preClose;
 
-    //昨日复权收盘指数
+    // 昨日复权收盘指数
     private double preAdjClose;
 
     public StockPO(int serial, LocalDate date, double open, double high, double low, double close, String volume, double adjClose, String code, String name, Market market, double preClose, double preAdjClose) {

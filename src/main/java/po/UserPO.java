@@ -9,10 +9,10 @@ import java.util.Iterator;
  */
 public class UserPO {
 
-    //用户姓名
+    // 用户姓名
     private String userName;
 
-    //用户密码
+    // 用户密码
     private String password;
 
     public UserPO(String userName, String password) {
