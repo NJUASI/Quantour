@@ -17,6 +17,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by 61990 on 2017/3/5.
@@ -187,9 +189,8 @@ public class ComparePanel extends NavigationBar {
      * @updateTime 2017/3/9
      */
     public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
-        //TODO 在这儿get一个ChartPanel
         try {
-            StockComparisionVO vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
+            List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
 //            compareChart=new CompareChart1(vo);
 //
 //            chartPanel = compareChart.createChart();

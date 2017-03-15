@@ -8,9 +8,10 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.view.util.ChartUtils;
 import presentation.view.util.Serie;
+import vo.StockComparisionVO;
 
 import java.awt.*;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Created by 61990 on 2017/3/15.
@@ -18,9 +19,9 @@ import java.util.Vector;
 public class CompareChart3 {
 
     double str1,str2;
-    public CompareChart3(double num1,double num2) {
-        str1=num1*10000;
-        str2=num2*10000;
+    public CompareChart3(java.util.List<StockComparisionVO> vo) {
+        str1=vo.get(0).logarithmicYieldVariance*10000;
+        str2=vo.get(1).logarithmicYieldVariance*10000;
     }
 
     private CategoryDataset createSet(){
@@ -39,7 +40,7 @@ public class CompareChart3 {
 
     public ChartPanel createChart() {
         // 2：创建Chart
-        JFreeChart chart = ChartFactory.createBarChart("", "", "成交价", createSet());
+        JFreeChart chart = ChartFactory.createBarChart("", "", "对数收益率方差 *10000", createSet());
         // 3:设置抗锯齿，防止字体显示不清楚
         ChartUtils.setAntiAlias(chart);// 抗锯齿
         // 4:对柱子进行渲染

@@ -11,6 +11,7 @@ import presentation.view.util.Serie;
 import vo.StockComparisionVO;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -18,17 +19,16 @@ import java.util.Vector;
  */
 public class CompareChart2{
 
-    double str1,str2;
-    public CompareChart2(double num1,double num2) {
-        str1=num1;
-        str2=num2;
+    List<StockComparisionVO> vo;
+    public CompareChart2(List<StockComparisionVO> vo) {
+       this.vo=vo;
     }
 
     private CategoryDataset createSet(){
         String[] categories = new String[]{"涨幅/跌幅"};
         Vector<Serie> series = new Vector<Serie>();
-        Object[] datas1 = new Object[]{str1};
-        Object[] datas2 = new Object[]{str2};
+        Object[] datas1 = new Object[]{};
+        Object[] datas2 = new Object[]{};
 
         //TODO 获得两股股票的名称
         series.add(new Serie("1",datas1));

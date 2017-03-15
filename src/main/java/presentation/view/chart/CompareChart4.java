@@ -11,23 +11,24 @@ import presentation.view.util.Serie;
 import vo.StockComparisionVO;
 
 import java.awt.*;
-import java.util.Vector;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by 61990 on 2017/3/15.
  */
 public class CompareChart4 {
-    StockComparisionVO vo;
+    List<StockComparisionVO> vo;
 
-    public CompareChart4(StockComparisionVO vo) {
+    public CompareChart4(List<StockComparisionVO> vo) {
         this.vo = vo;
     }
 
     private CategoryDataset createDataset(){
         String[] categories = new String[]{"最低值","最高值"};
         Vector<Serie> series = new Vector<Serie>();
-        Object[] datas1 = new Object[]{vo.min1,vo.max1};
-        Object[] datas2 = new Object[]{vo.min2,vo.max2};
+        Object[] datas1 = new Object[]{};
+        Object[] datas2 = new Object[]{};
         //TODO 获得两股股票的名称
         series.add(new Serie("1",datas1));
         series.add(new Serie("2",datas2));
