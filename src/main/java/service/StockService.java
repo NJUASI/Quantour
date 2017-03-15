@@ -28,7 +28,7 @@ public interface StockService{
      * @return 股票信息列表
      * @throws IOException IO
      */
-    Iterator<StockVO> getAllStocks(LocalDate date) throws IOException;
+    List<StockVO> getAllStocks(LocalDate date) throws IOException;
 
     /**
      * 显示用户的自选股信息列表

@@ -1,8 +1,5 @@
 package presentation.controller;
 
-import presentation.listener.ViewSwitchController;
-import presentation.view.panel.LoginPanel;
-import presentation.view.panel.MainPanel;
 import presentation.view.panel.RegisterPanel;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;

@@ -10,6 +10,8 @@ import java.awt.*;
  */
 public class AssociatePanel extends ScrollPane {
 
+    private static AssociatePanel associatePanel;
+
     ListModel jListModel;
 
     JList list;
@@ -36,4 +38,15 @@ public class AssociatePanel extends ScrollPane {
         int index=list.getSelectedIndex();
         return list.getModel().getElementAt(index).toString();
     }
+
+
+    public static AssociatePanel getInstance(){
+        if(associatePanel == null){
+            associatePanel = new AssociatePanel();
+        }
+
+        return associatePanel;
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package presentation.listener;
+package presentation.controller;
 
 import presentation.view.panel.*;
 
@@ -58,12 +58,11 @@ public class ViewSwitchController{
                 case "comparePanel":
                     cardPanel.add(ComparePanel.getInstance(),"comparePanel");
                     break;
-                case "favoritesPanel":
-                    cardPanel.add(FavoritesPanel.getInstance(),"favoritesPanel");
-                    break;
                 case "thermometerPanel":
-                    System.out.println("enter");
                     cardPanel.add(ThermometerPanel.getInstance(),"thermometerPanel");
+                    break;
+                case "stocksTablePanel":
+                    cardPanel.add(StocksTablePanel.getInstance(),"stocksTablePanel");
                     break;
             }
             panelNames.add(panelName);

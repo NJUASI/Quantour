@@ -74,7 +74,7 @@ public class ComparePanel extends NavigationBar {
      * @updateTime 2017/3/6
      */
     private void init() {
-        datePanel = new DoubleDatePickerPanel();
+        datePanel = DoubleDatePickerPanel.getInstance();
         datePanel.setBounds(width * 400 / 1920, height * 50 / 1030, 370 * width / 1920, 35 * height / 1030);
         add(datePanel);
         name1 = new JTextField();
@@ -328,4 +328,19 @@ public class ComparePanel extends NavigationBar {
         associatePanel2.setVisible(false);
     }
 
+    public String getNum1() {
+        return num1.getText();
+    }
+
+    public String getNum2() {
+        return num2.getText();
+    }
+
+    public LocalDate getStartDate(){
+        return datePanel.getStartDate();
+    }
+
+    public LocalDate getEndDate(){
+        return datePanel.getEndDate();
+    }
 }

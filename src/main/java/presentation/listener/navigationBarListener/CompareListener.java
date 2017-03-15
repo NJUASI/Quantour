@@ -1,6 +1,6 @@
 package presentation.listener.navigationBarListener;
 
-import presentation.listener.ViewSwitchController;
+import presentation.controller.ViewSwitchController;
 import presentation.view.panel.ComparePanel;
 import presentation.view.panel.KStringPanel;
 

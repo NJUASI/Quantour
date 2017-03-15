@@ -1,6 +1,6 @@
 package presentation.listener.loginPanelListener;
 
-import presentation.listener.ViewSwitchController;
+import presentation.controller.ViewSwitchController;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

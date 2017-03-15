@@ -1,14 +1,13 @@
 package presentation.view.tools;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.util.Callback;
+import presentation.listener.doubleDatePickerPanelListener.StartDateChangeListener;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -17,12 +16,21 @@ import java.time.LocalDate;
  * Created by 61990 on 2017/3/7.
  */
 public class DoubleDatePickerPanel  extends JFXPanel {
+
     //开始时间
-    DatePicker startDate;
+    private DatePicker startDate;
     //结束时间
-    DatePicker endDate;
+    private DatePicker endDate;
+
+    //
+    private static DoubleDatePickerPanel doubleDatePickerPanel;
+
+    //
     int width;
+
+    //
     int height;
+
     /**
      * 构造器
      *
@@ -31,7 +39,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
      * @author 61990
      * @updateTime 2017/3/8
      */
-    public DoubleDatePickerPanel(){
+    private DoubleDatePickerPanel(){
 
         setLayout(null);
         width= WindowData.getInstance().getWidth();
@@ -52,6 +60,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
             }
         });
     }
+
     /**
      * 初始化相关部件
      *
@@ -60,6 +69,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
      * @author 61990
      * @updateTime 2017/3/5
      */
+
     void initDatePicker(){
 
         startDate = new DatePicker();
@@ -78,6 +88,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         endDate.setPrefSize(width*150/1920,35*height/1030);
         endDate.setMaxSize(width*150/1920,35*height/1030);
         endDate.setEditable(false);
+
         Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -86,7 +97,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                             @Override
                             public void updateItem(LocalDate item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if (item.isBefore(startDate.getValue())
+                                if (item.isBefore(startDate.getValue().plusDays(1))
                                         ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");
@@ -95,55 +106,34 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                         };
                     }
                 };
-        endDate.setDayCellFactory(dayCellFactory);
-        startDate.valueProperty().addListener(new DateChangedListener());
-    }
-    /**
-     * 获得日期信息
-     *
-     * @param
-     * @return LocalDate
-     * @author 61990
-     * @updateTime 2017/3/5
-     */
 
-    /**
-     * 获得或改变日期的方法
-     *
-     * @param
-     * @return
-     * @author 61990
-     * @updateTime 2017/3/15
-     */
+        endDate.setDayCellFactory(dayCellFactory);
+
+        startDate.valueProperty().addListener(new StartDateChangeListener());
+    }
+
     public LocalDate getStartDate() {
         return startDate.getValue();
     }
+
     public LocalDate getEndDate() {
         return endDate.getValue();
     }
+
+    public void setEndDate(LocalDate date) {
+        endDate.setValue(date);
+    }
+
+    public static DoubleDatePickerPanel getInstance() {
+        if(doubleDatePickerPanel == null){
+            doubleDatePickerPanel = new DoubleDatePickerPanel();
+        }
+
+        return  doubleDatePickerPanel;
+    }
+
     public void setDate(LocalDate date) {
         startDate.setValue(date);
         endDate.setValue(date);
     }
-    public void setEndDate(LocalDate date) {
-        endDate.setValue(date);
-    }
-    /**
-     * 初始日期的改变使得结束日期改变
-     *
-     * @param
-     * @return
-     * @author 61990
-     * @updateTime 2017/3/15
-     */
-    class DateChangedListener implements ChangeListener<LocalDate> {
-        @Override
-        public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-//            if (!startDate.getValue().isBefore(endDate.getValue())){
-                endDate.setValue(startDate.getValue());
-//            }
-        }
-    }
-
-
 }

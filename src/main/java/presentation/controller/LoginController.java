@@ -1,10 +1,6 @@
 package presentation.controller;
 
-import presentation.listener.ViewSwitchController;
-import presentation.view.panel.KStringPanel;
 import presentation.view.panel.LoginPanel;
-import presentation.view.panel.MainPanel;
-import presentation.view.panel.RegisterPanel;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
 import utilities.IDReserve;
@@ -58,7 +54,7 @@ public class LoginController{
                 IDReserve.getInstance().setUserID(name);
                 loginPanel.setUsername("Enter your admin");
                 loginPanel.setPassword("");
-                ViewSwitchController.getInstance().viewSwitch("favoritesPanel");
+                ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
                 return true;
             }
 

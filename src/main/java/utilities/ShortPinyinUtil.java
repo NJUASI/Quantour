@@ -13,18 +13,16 @@ import java.util.Properties;
  */
 public class ShortPinyinUtil {
 
-
-
     /**
      * Convert to short pinyin. 获取股票名称的拼音首字母,并以首字母——股票名键值对的形式存入文件
      *
      * @param stockNames the stock names 全部的股票名称
      */
-    public static void convertToShortPinyin(List<String> stockNames){
+    public void convertToShortPinyin(List<String> stockNames){
 
         Properties properties = new Properties();
         try {
-            properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("shortPinyin.properties"));
+            properties.load(new BufferedInputStream(Thread.currentThread().getContextClassLoader().getResourceAsStream("shortPinyin.properties")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,7 +48,18 @@ public class ShortPinyinUtil {
                 //将首字母全部转换为小写
                 sb.append(Character.toLowerCase(letter));
             }
-            properties.put(sb.toString(),name);
+
+            System.out.println();
+            properties.setProperty(sb.toString(),name);
+        }
+
+        try {
+            Writer fw = new BufferedWriter(new FileWriter("D:\\Quantour\\Quantour\\src\\main\\resources\\shortPinyin.properties")) ;
+            properties.store(fw,"");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

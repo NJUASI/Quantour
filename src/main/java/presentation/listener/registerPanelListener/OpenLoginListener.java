@@ -1,8 +1,6 @@
 package presentation.listener.registerPanelListener;
 
-import presentation.controller.RegisterController;
-import presentation.listener.ViewSwitchController;
-import presentation.view.panel.RegisterPanel;
+import presentation.controller.ViewSwitchController;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

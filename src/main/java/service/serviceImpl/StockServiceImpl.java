@@ -1,6 +1,5 @@
 package service.serviceImpl;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
@@ -40,7 +39,7 @@ public class StockServiceImpl implements StockService {
      * @throws IOException IO
      */
     @Override
-    public Iterator<StockVO> getAllStocks(LocalDate date) throws IOException {
+    public List<StockVO> getAllStocks(LocalDate date) throws IOException {
 
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         try {
@@ -50,7 +49,7 @@ public class StockServiceImpl implements StockService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return stockVOList.iterator();
+        return stockVOList;
     }
 
     /**

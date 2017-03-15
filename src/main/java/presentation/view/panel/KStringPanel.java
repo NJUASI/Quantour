@@ -29,7 +29,7 @@ import java.util.*;
 public class KStringPanel extends NavigationBar {
     //k线面板
     private static KStringPanel kStringPanel;
-    DoubleDatePickerPanel datePanel;
+    public DoubleDatePickerPanel datePanel;
     JTextField name;
     JTextField num;
     JButton search;
@@ -142,7 +142,7 @@ public class KStringPanel extends NavigationBar {
      * @updateTime 2017/3/6
      */
     private void init() {
-        datePanel = new DoubleDatePickerPanel();
+        datePanel = DoubleDatePickerPanel.getInstance();
         datePanel.setBounds(width * 400 / 1920, height * 50 / 1030, 370 * width / 1920, 35 * height / 1030);
         add(datePanel);
 
@@ -351,7 +351,7 @@ public class KStringPanel extends NavigationBar {
     void refreshAssociate(){
         associatePanel.setVisible(false);
     }
-    void addMessage(String name,String num){
+    public void addMessage(String name, String num){
         this.name.setText(name);
         this.num.setText(num);
         associatePanel.setVisible(false);

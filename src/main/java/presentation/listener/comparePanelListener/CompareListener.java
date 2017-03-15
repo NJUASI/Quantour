@@ -21,7 +21,5 @@ public class CompareListener extends MouseAdapter
     @Override
     public void mousePressed(MouseEvent e) {
         CompareController.getInstance().compare();
-        ComparePanel.getInstance().associatePanel.setVisible(false);
-        ComparePanel.getInstance().associatePanel2.setVisible(false);
     }
 }

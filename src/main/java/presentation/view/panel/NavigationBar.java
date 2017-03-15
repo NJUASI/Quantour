@@ -59,7 +59,7 @@ public class NavigationBar extends TempletPanel {
                 KStringPanel.getInstance().refresh();
                 ComparePanel.getInstance().refresh();
                 ThermometerPanel.getInstance().refresh();
-                FavoritesPanel.getInstance().refresh();
+                StocksTablePanel.getInstance().refresh();
             }
         });
         add(logout);
@@ -74,7 +74,7 @@ public class NavigationBar extends TempletPanel {
 //                KStringPanel.getInstance().refresh();
 //                ComparePanel.getInstance().refresh();
 //                ThermometerPanel.getInstance().refresh();
-//                FavoritesPanel.getInstance().refresh();
+//                StocksTablePanel.getInstance().refresh();
 //            }
 //        });
 //        add(homePanel);

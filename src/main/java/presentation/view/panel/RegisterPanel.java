@@ -11,7 +11,7 @@ import java.awt.*;
 */
 public class RegisterPanel extends TempletPanel{
 
-    private static presentation.view.panel.RegisterPanel registerPanel;
+    private static RegisterPanel registerPanel;
 
     //用户名文本框
     private JTextField admin;

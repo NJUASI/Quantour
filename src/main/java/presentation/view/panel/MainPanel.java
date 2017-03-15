@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import org.jb2011.lnf.beautyeye.*;
-import presentation.listener.ViewSwitchController;
+import presentation.controller.ViewSwitchController;
 import presentation.view.tools.WindowData;
 
 /**

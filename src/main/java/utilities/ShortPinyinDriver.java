@@ -1,5 +1,7 @@
 package utilities;
 
+import service.StockService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +13,8 @@ public class ShortPinyinDriver {
     public static void main(String[] args) {
 
         List<String> names = new ArrayList<String>();
-        names.add("高铁Y");
-        names.add("飞机Z");
 
-        ShortPinyinUtil.convertToShortPinyin(names);
+        new ShortPinyinUtil().convertToShortPinyin(names);
 
     }
 }
