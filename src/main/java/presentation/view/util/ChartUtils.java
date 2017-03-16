@@ -48,16 +48,9 @@ package presentation.view.util;
 
 /**
  * Jfreechart工具类
- * <p>
- * 解决中午乱码问题<br>
- * 用来创建类别图表数据集、创建饼图数据集、时间序列图数据集<br>
- * 用来对柱状图、折线图、饼图、堆积柱状图、时间序列图的样式进行渲染<br>
- * 设置X-Y坐标轴样式
- * <p>
  *
- *
- * @author chenchangwen
- * @since:2014-2-18
+ * @author 61990
+ * @since:2017-3-8
  *
  */
 public class ChartUtils {

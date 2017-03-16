@@ -100,15 +100,16 @@ public class CompareChart4 {
             }
             TimeSeries timeSeries = ChartUtils.createTimeseries(categories[0], dateValues);
             dataset.addSeries(timeSeries);
-            dateValues = new Vector<Object[]>();
-            for (Map.Entry<LocalDate, Double> m1 :num2.entrySet())  {
-                String date = m1.getKey().toString();
+            if(num2!=null) {
+                dateValues = new Vector<Object[]>();
+                for (Map.Entry<LocalDate, Double> m1 : num2.entrySet()) {
+                    String date = m1.getKey().toString();
                     Object[] dateValue = {date, m1.getValue()};
                     dateValues.add(dateValue);
+                }
+                timeSeries = ChartUtils.createTimeseries(categories[1], dateValues);
+                dataset.addSeries(timeSeries);
             }
-        timeSeries = ChartUtils.createTimeseries(categories[1], dateValues);
-            dataset.addSeries(timeSeries);
-
         return dataset;
     }
 
@@ -134,7 +135,7 @@ public class CompareChart4 {
             dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 3, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
         } else if (dataset.getItemCount(0) < 40) {
             //刻度单位月,半年为间隔
-            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 6, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 5, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
         } else {// 数据过多,不显示数据
             XYLineAndShapeRenderer xyRenderer = (XYLineAndShapeRenderer) xyplot.getRenderer();
             xyRenderer.setBaseItemLabelsVisible(false);
