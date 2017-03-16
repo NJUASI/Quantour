@@ -27,7 +27,7 @@ public class StockComparisionVO {
     public double max;
 
     // 涨幅（正）／跌幅（负）
-    public Map<LocalDate, Double> increaseMargin;
+    public double increaseMargin;
 
     // 每天的收盘价
     public Map<LocalDate, Double> closes;
@@ -42,7 +42,6 @@ public class StockComparisionVO {
     public StockComparisionVO(List<StockPO> stock) {
         initBasics(stock);
 
-        increaseMargin = getIncreaseMargin(stock);
         closes = initCloses(stock);
 
         initLogarithmicYieldInfo(stock);
@@ -55,20 +54,25 @@ public class StockComparisionVO {
         code = stock.get(0).getCode();
         min = getMin(stock);
         max = getMax(stock);
+        increaseMargin = getIncreaseMargin(stock);
     }
 
     // 初始化涨幅／跌幅
     // 注意：此处stock为时间顺序，即时间小的在前面
-    private Map<LocalDate, Double> getIncreaseMargin(List<StockPO> stocks) {
-        Map<LocalDate, Double> result = new TreeMap<>();
-        for (StockPO stockPO : stocks) {
-            if (stockPO.getPreAdjClose() == -1) {
-                // 此条数据为数据库中最早的一条，故不能得其涨幅／跌幅
-                continue;
-            }
-            result.put(stockPO.getDate(), stockPO.getAdjClose() / stockPO.getPreAdjClose() - 1);
-        }
-        return result;
+    private double getIncreaseMargin(List<StockPO> stocks) {
+//        Map<LocalDate, Double> result = new TreeMap<>();
+//        for (StockPO stockPO : stocks) {
+//            if (stockPO.getPreAdjClose() == -1) {
+//                // 此条数据为数据库中最早的一条，故不能得其涨幅／跌幅
+//                continue;
+//            }
+//            result.put(stockPO.getDate(), stockPO.getAdjClose() / stockPO.getPreAdjClose() - 1);
+//        }
+//        return result;
+
+        // TODO 未处理起始日期情况
+        double temp = stocks.get(stocks.size()-1).getAdjClose() / stocks.get(0).getAdjClose() - 1;
+        return temp;
     }
 
     // 初始化收盘价
