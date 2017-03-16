@@ -9,6 +9,7 @@ import dataHelper.dataHelperImpl.SearchDataHelperImpl;
 import dataHelper.dataHelperImpl.StockDataHelperImpl;
 import po.PrivateStockPO;
 import po.StockPO;
+import utilities.exceptions.DateNotWithinException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -20,8 +21,8 @@ import java.util.Map;
 /**
  * Created by cuihua on 2017/3/4.
  * Last updated by cuihua
- * Update time 2017/3/12
- * 去除为UserService的接口createDir，新增显示用户自选股股票的接口
+ * Update time 2017/3/15
+ * 新增异常
  */
 public class StockDaoImpl implements StockDao {
 
@@ -79,10 +80,14 @@ public class StockDaoImpl implements StockDao {
      * @return 特定时间段内的指定股票所有数据
      */
     @Override
-    public List<StockPO> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException {
+    public List<StockPO> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException, DateNotWithinException {
+        if (!isDateWithinSource(start, end)) {
+            // 用户要查找的时间区间超出数据源时间区间
+            throw new DateNotWithinException();
+        }
         List<StockPO> result = stockHelper.getStockRecords(stockCode);
         for (int i = 0; i < result.size(); ) {
-            if (!isDataWithin(start, end, result.get(i).getDate())) {
+            if (!isDateWithinWanted(start, end, result.get(i).getDate())) {
                 result.remove(i);
             }else {
                 i++;
@@ -233,7 +238,7 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
-     * 判断时间是否在指定区域内
+     * 判断目标时间是否在指定区域内
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
@@ -241,9 +246,9 @@ public class StockDaoImpl implements StockDao {
      * @param start 时间区域的小值
      * @param end 时间区域的大值
      * @param now 指定时间
-     * @return 特定时间段内的所有指定股票所有数据
+     * @return 目标时间在指定区域内
      */
-    private boolean isDataWithin(LocalDate start, LocalDate end, LocalDate now) {
+    private boolean isDateWithinWanted(LocalDate start, LocalDate end, LocalDate now) {
         if (now.isEqual(start) || now.isEqual(end)) {
             return true;
         }
@@ -251,6 +256,25 @@ public class StockDaoImpl implements StockDao {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 判断要查找的时间是否在数据源时间区间内
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/15
+     * @param start 时间区域的小值
+     * @param end 时间区域的大值
+     * @return 要查找的时间区域在数据源内
+     */
+    private static boolean isDateWithinSource(LocalDate start, LocalDate end) {
+        // 硬编码实现
+        LocalDate sourceStart = LocalDate.of(2005, 2, 1);
+        LocalDate sourceEnd = LocalDate.of(2014, 4, 29);
+
+        if (start.isBefore(sourceStart) || end.isAfter(sourceEnd)) return false;
+        else return true;
     }
 
     /**

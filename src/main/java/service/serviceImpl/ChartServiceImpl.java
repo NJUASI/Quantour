@@ -2,6 +2,8 @@ package service.serviceImpl;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
+import utilities.exceptions.DataSourceFirstDayException;
+import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
 import po.StockPO;
 import service.ChartService;
@@ -60,7 +62,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 特定股票的所有交易信息
      */
     @Override
-    public Iterator<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException {
+    public Iterator<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po : getStockPOs(chartShowCriteriaVO)) {
             stockVOList.add(new StockVO(po));
@@ -79,7 +81,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 用户所选天数的均线图的平均值
      */
     @Override
-    public Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days)throws IOException {
+    public Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws IOException, DateNotWithinException {
         Map<Integer, List<MovingAverageVO>> aveDataMap = new HashMap<Integer, List<MovingAverageVO>>();
 
         for(int i=0;i<days.size();i++){
@@ -101,7 +103,7 @@ public class ChartServiceImpl implements ChartService {
      * @throws DateShortException 类型不匹配
      */
     @Override
-    public Map<Integer, List<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException {
+    public Map<Integer, List<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException, DateNotWithinException {
         List<StockPO> poList = null;
         try {
             poList = stockDao.getStockData(code);
@@ -131,7 +133,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 界面上需要的两只股票的比较信息
      */
     @Override
-    public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException {
+    public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, DataSourceFirstDayException, DateNotWithinException {
         List<StockPO> stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
         List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
         List<StockComparisionVO> result = new LinkedList<>();
@@ -148,7 +150,7 @@ public class ChartServiceImpl implements ChartService {
      * @param vo 选择条件
      * @return StockPO的列表
      */
-    private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException {
+    private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException, DateNotWithinException {
         return stockDao.getStockData(vo.stockCode, vo.start,vo.end);
     }
 
@@ -163,7 +165,7 @@ public class ChartServiceImpl implements ChartService {
      * @param day 天数指标
      * @return 均线数据迭代器
      */
-    private List<MovingAverageVO> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day) throws IOException {
+    private List<MovingAverageVO> calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day) throws IOException, DateNotWithinException {
 
         String code = chartShowCriteriaVO.stockCode;
         LocalDate begin = chartShowCriteriaVO.start;

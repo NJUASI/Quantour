@@ -4,6 +4,7 @@ import presentation.view.chart.CompareChartPanel;
 import presentation.view.panel.ComparePanel;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
+import utilities.exceptions.DataSourceFirstDayException;
 import vo.StockComparisionVO;
 import vo.StockComparsionCriteriaVO;
 
@@ -86,7 +87,9 @@ public class CompareController {
                 compareChartPanel.repaint();
             }
 //            chartPanel.repaint();
-        }catch (Exception e){
+        }catch (DataSourceFirstDayException e ) {
+            // TODO 高源：首日无法计算涨跌幅
+        } catch (Exception e){
 
         }
     }
