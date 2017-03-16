@@ -147,8 +147,8 @@ public class KChart {
         render.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         render.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
         render.setAutoWidthGap(gap);//设置各个K线图之间的间隔
-        render.setUpPaint(Color.RED);//设置股票上涨的K线图颜色
-        render.setDownPaint(Color.GREEN);//设置股票下跌的K线图颜色
+        render.setUpPaint(new Color(252,47,77));//设置股票上涨的K线图颜色
+        render.setDownPaint(new Color(57,199,125));//设置股票下跌的K线图颜色
     }
 
     /**
