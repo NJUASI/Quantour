@@ -22,6 +22,7 @@ public class CompareChartPanel extends JPanel {
     ChartPanel chartPanel1, chartPanel3,chartPanel4,chartPanel2, chartPanel5,chartPanel6;
     JScrollPane scrollPane;
     WindowData windowData;
+    JPanel panel;
     int width;
     int height;
     public JTextField s;
@@ -30,10 +31,7 @@ public class CompareChartPanel extends JPanel {
         width = windowData.getWidth();
         height =windowData.getHeight();
 
-        setBounds(adaptScreen(250,100,1500,850));
-        setVisible(true);
-
-        JPanel panel=new JPanel(null);
+        panel=new JPanel(null);
 
         chart1 = new CompareChart1(vo);
         chartPanel1 = chart1.createChart();
@@ -69,19 +67,19 @@ public class CompareChartPanel extends JPanel {
         chartPanel6.setBounds(adaptScreen(250,1650,1000,500));
         panel.add(chartPanel6);
 
-        s =new JTextField();
-        s.setBounds(1,1000,50,50);
-        panel.add(s);
+        setBounds(adaptScreen(250,100,1500,850));
+        setVisible(true);
+        setPreferredSize(new Dimension(1500,850));
 
         panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1080));
         scrollPane=new JScrollPane();
-        scrollPane.setBounds(adaptScreen(0,0,1500,850));
         scrollPane.setPreferredSize(new Dimension(1500*width/1920,850*height/1080));
+        scrollPane.setBounds(adaptScreen(0,0,1500,850));
 
         scrollPane.setViewportView(panel);
         scrollPane.setVisible(true);
-
         panel.setVisible(true);
+        scrollPane.repaint();
         panel.repaint();
         panel.requestFocus();
         add(scrollPane);
