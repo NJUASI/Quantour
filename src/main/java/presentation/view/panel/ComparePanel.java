@@ -38,6 +38,7 @@ public class ComparePanel extends NavigationBar {
     public AssociatePanel associatePanel2;
     ChartService chartService;
     CompareChartPanel compareChartPanel;
+
     /**
      * 比较面板构造器
      *
@@ -191,27 +192,21 @@ public class ComparePanel extends NavigationBar {
     boolean first=true;
     public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
         try {
-
             if(first){
                 first=false;
-                List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
-                compareChartPanel=new CompareChartPanel(vo);
-                compareChartPanel.setBounds(adaptScreen(230,150,1500,800));
-                add(compareChartPanel);
-                compareChartPanel.repaint();
-                this.repaint();
-                compareChartPanel.requestFocus();
             }else {
                 remove(compareChartPanel);
-                List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
-                compareChartPanel=new CompareChartPanel(vo);
-                compareChartPanel.setBounds(adaptScreen(230,150,1500,800));
-                add(compareChartPanel);
-                compareChartPanel.repaint();
-                this.repaint();
-                compareChartPanel.requestFocus();
             }
-//            chartPanel.repaint();
+            List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
+            compareChartPanel=new CompareChartPanel(vo);
+            compareChartPanel.setBounds(adaptScreen(230,150,1500,800));
+            add(compareChartPanel);
+            compareChartPanel.setVisible(true);
+            compareChartPanel.repaint();
+            repaint();
+
+            compareChartPanel.requestFocus();
+            compareChartPanel.s.requestFocus();
         }catch (Exception e){
 
         }
