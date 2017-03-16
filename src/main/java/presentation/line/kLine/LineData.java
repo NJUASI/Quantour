@@ -248,16 +248,11 @@ public class LineData {
      * @updateTime 2017/3/11
      */
     private void readData(String code) {
-        Iterator<StockVO> tempData = null;
         try {
-            tempData = this.service.getSingleStockRecords(code);
+            data = this.service.getSingleStockRecords(code);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        while (tempData.hasNext()) {
-            this.data.add(tempData.next());
-        }
-
     }
 
     /**
@@ -269,17 +264,13 @@ public class LineData {
      * @updateTime 2017/3/11
      */
     private void readData(ChartShowCriteriaVO chartShowCriteriaVO) {
-        Iterator<StockVO> tempData = null;
         try {
-            tempData = this.service.getSingleStockRecords(chartShowCriteriaVO);
+            data = this.service.getSingleStockRecords(chartShowCriteriaVO);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (DateNotWithinException e) {
             // TODO 高源：超出数据库内时间区间范围
             e.printStackTrace();
-        }
-        while (tempData.hasNext()) {
-            this.data.add(tempData.next());
         }
     }
 }

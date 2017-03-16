@@ -230,7 +230,7 @@ public class ComparePanel extends NavigationBar {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                name1.setText(associatePanel.getMessage());
+                name1.setText(associatePanel.getMessage().name);
                 associatePanel.setVisible(false);
                 name1.requestFocus();
             }
@@ -239,7 +239,7 @@ public class ComparePanel extends NavigationBar {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                name2.setText(associatePanel2.getMessage());
+                name2.setText(associatePanel2.getMessage().name);
                 associatePanel2.setVisible(false);
                 name2.requestFocus();
             }

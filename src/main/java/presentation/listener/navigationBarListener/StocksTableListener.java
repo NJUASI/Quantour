@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by Harvey on 2017/3/13.
  */
-public class FavoritesListener extends MouseAdapter {
+public class StocksTableListener extends MouseAdapter {
     /**
      * {@inheritDoc}
      *
@@ -18,7 +18,7 @@ public class FavoritesListener extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        ViewSwitchController.getInstance().viewSwitch("favoritesPanel");
+        ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
         KStringPanel.getInstance().associatePanel.setVisible(false);
         ComparePanel.getInstance().associatePanel.setVisible(false);
         ComparePanel.getInstance().associatePanel2.setVisible(false);

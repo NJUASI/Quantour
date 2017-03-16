@@ -17,7 +17,14 @@ public interface SearchDataHelper {
     /**
      * Gets all stocks first letters.获取所有股票的首字母
      *
-     * @return the all stocks first letters 返回所有股票的首字母及其名称，名称作为键值
+     * @return the all stocks first letters 返回所有股票的首字母及其名称，首字母作为键值
      */
     Map<String,String> getAllStocksCode();
+
+    /**
+     * Gets all stocks first letters.获取所有股票的名称
+     *
+     * @return the all stocks first letters 返回所有股票的名称及其代码，名称作为键值
+     */
+    Map<String,String> getAllStocksName();
 }

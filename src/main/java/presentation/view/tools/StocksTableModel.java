@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class StocksTableModel extends AbstractTableModel {
 
-    private final static int columns = 11;
+    private final static int columns = 10;
 
     private String[] columnNames;
     private Object[][] data;
@@ -33,7 +33,7 @@ public class StocksTableModel extends AbstractTableModel {
 
     //初始化列表名称和数据
     private void init() throws IOException {
-        columnNames = new String[]{"股票代码", "股票名称", "记录编号", "开盘指数", "最高指数",
+        columnNames = new String[]{"股票代码", "股票名称", "开盘指数", "最高指数",
                 "最低指数", "收盘指数", "成交量", "复权后的收盘指数", "昨日收盘指数", "昨日复权收盘指数"};
         List<StockVO> stockList = stockService.getAllStocks(date);
 
@@ -46,15 +46,14 @@ public class StocksTableModel extends AbstractTableModel {
 
             data[i][0] = stockVO.code;
             data[i][1] = stockVO.name;
-            data[i][2] = stockVO.serial;
-            data[i][3] = stockVO.open;
-            data[i][4] = stockVO.high;
-            data[i][5] = stockVO.low;
-            data[i][6] = stockVO.close;
-            data[i][7] = stockVO.volume;
-            data[i][8] = stockVO.adjClose;
-            data[i][9] = stockVO.preClose;
-            data[i][10] = stockVO.preAdjClose;
+            data[i][2] = stockVO.open;
+            data[i][3] = stockVO.high;
+            data[i][4] = stockVO.low;
+            data[i][5] = stockVO.close;
+            data[i][6] = stockVO.volume;
+            data[i][7] = stockVO.adjClose;
+            data[i][8] = stockVO.preClose;
+            data[i][9] = stockVO.preAdjClose;
         }
     }
 
@@ -108,7 +107,7 @@ public class StocksTableModel extends AbstractTableModel {
      */
     @Override
     public String getColumnName(int column) {
-        return super.getColumnName(column);
+        return columnNames[column];
     }
 
     /**
