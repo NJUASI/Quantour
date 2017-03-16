@@ -47,7 +47,7 @@ public class StocksTablePanel extends NavigationBar {
         add(search);
 
         JButton detailOfCode = new JButton("查看详情");
-        detailOfCode.setBounds(adaptScreen(1150,50,80,40));
+        detailOfCode.setBounds(adaptScreen(1150,50,100,40));
         detailOfCode.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

@@ -196,16 +196,20 @@ public class ComparePanel extends NavigationBar {
                 first=false;
                 List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
                 compareChartPanel=new CompareChartPanel(vo);
-                compareChartPanel.setBounds(250,150,1500,800);
+                compareChartPanel.setBounds(adaptScreen(230,150,1500,800));
                 add(compareChartPanel);
                 compareChartPanel.repaint();
+                this.repaint();
+                compareChartPanel.requestFocus();
             }else {
                 remove(compareChartPanel);
                 List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
                 compareChartPanel=new CompareChartPanel(vo);
-                compareChartPanel.setBounds(250,150,1500,800);
+                compareChartPanel.setBounds(adaptScreen(230,150,1500,800));
                 add(compareChartPanel);
                 compareChartPanel.repaint();
+                this.repaint();
+                compareChartPanel.requestFocus();
             }
 //            chartPanel.repaint();
         }catch (Exception e){
