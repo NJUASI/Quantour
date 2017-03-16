@@ -2,6 +2,7 @@ package dao;
 
 import po.PrivateStockPO;
 import po.StockPO;
+import utilities.exceptions.DateNotWithinException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -45,7 +46,7 @@ public interface StockDao {
      * @param end 时间区域的大值
      * @return （股票代码相同）特定时间段内的指定股票所有数据
      */
-    List<StockPO> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException;
+    List<StockPO> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException, DateNotWithinException;
 
     /**
      * 取指定股票的所有数据，没有返回null

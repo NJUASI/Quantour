@@ -7,6 +7,7 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
+import utilities.exceptions.DateNotWithinException;
 import vo.ChartShowCriteriaVO;
 import vo.StockVO;
 
@@ -272,6 +273,9 @@ public class LineData {
         try {
             tempData = this.service.getSingleStockRecords(chartShowCriteriaVO);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DateNotWithinException e) {
+            // TODO 高源：超出数据库内时间区间范围
             e.printStackTrace();
         }
         while (tempData.hasNext()) {

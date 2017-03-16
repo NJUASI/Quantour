@@ -2,6 +2,7 @@ package vo;
 
 import po.StockPO;
 import utilities.enums.Market;
+import utilities.exceptions.DataSourceFirstDayException;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -39,7 +40,7 @@ public class StockComparisionVO {
     public double logarithmicYieldVariance;
 
 
-    public StockComparisionVO(List<StockPO> stock) {
+    public StockComparisionVO(List<StockPO> stock) throws DataSourceFirstDayException {
         initBasics(stock);
 
         closes = initCloses(stock);
@@ -49,7 +50,7 @@ public class StockComparisionVO {
 
 
     // 初始化基本信息中的数值
-    private void initBasics(List<StockPO> stock) {
+    private void initBasics(List<StockPO> stock) throws DataSourceFirstDayException {
         name = stock.get(0).getName();
         code = stock.get(0).getCode();
         min = getMin(stock);
@@ -59,7 +60,7 @@ public class StockComparisionVO {
 
     // 初始化涨幅／跌幅
     // 注意：此处stock为时间顺序，即时间小的在前面
-    private double getIncreaseMargin(List<StockPO> stocks) {
+    private double getIncreaseMargin(List<StockPO> stocks) throws DataSourceFirstDayException {
 //        Map<LocalDate, Double> result = new TreeMap<>();
 //        for (StockPO stockPO : stocks) {
 //            if (stockPO.getPreAdjClose() == -1) {
@@ -70,8 +71,12 @@ public class StockComparisionVO {
 //        }
 //        return result;
 
-        // TODO 未处理起始日期情况
-        double temp = stocks.get(stocks.size()-1).getAdjClose() / stocks.get(0).getAdjClose() - 1;
+
+        double denominator = stocks.get(0).getPreAdjClose();
+        if (denominator == -1) {
+            throw new DataSourceFirstDayException();
+        }
+        double temp = stocks.get(stocks.size() - 1).getAdjClose() / denominator - 1;
         return temp;
     }
 

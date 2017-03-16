@@ -5,6 +5,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
+import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
 import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
@@ -108,6 +109,9 @@ public class LineData {
 
         } catch (DateShortException e) {
             e.printStackTrace();
+        } catch (DateNotWithinException e) {
+            // TODO 高源：超出数据库内时间区间范围
+            e.printStackTrace();
         }
     }
 
@@ -134,6 +138,9 @@ public class LineData {
             }
 
         } catch (DateShortException | IOException e) {
+            e.printStackTrace();
+        } catch (DateNotWithinException e) {
+            // TODO 高源：超出数据库内时间区间范围
             e.printStackTrace();
         }
 
