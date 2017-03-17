@@ -25,6 +25,7 @@ public class CompareChartPanel extends JPanel {
     int width;
     int height;
     public JTextField s;
+
     public CompareChartPanel(List<StockComparisionVO> vo){
         windowData =WindowData.getInstance();
         width = windowData.getWidth();
@@ -74,11 +75,12 @@ public class CompareChartPanel extends JPanel {
         scrollPane.setPreferredSize(new Dimension(1500*width/1920,800*height/1030));
         scrollPane.setBounds(adaptScreen(0,0,1500,800));
         scrollPane.getVerticalScrollBar().setUI(new MyScrollBarUI());
+        scrollPane.add(panel);
 
         scrollPane.setViewportView(panel);
         scrollPane.setVisible(true);
-        setVisible(true);
         panel.setVisible(true);
+        setVisible(true);
         scrollPane.repaint();
         panel.repaint();
         panel.requestFocus();

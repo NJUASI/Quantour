@@ -76,6 +76,7 @@ public class KStringPanel extends TemplatePanel {
 
         // 创建图形
         ArrayList<Integer> tag = new ArrayList<Integer>();
+        tag.add(5);
         tag.add(10);
         tag.add(20);
         tag.add(30);
@@ -115,6 +116,7 @@ public class KStringPanel extends TemplatePanel {
         // 创建图形
 
         ArrayList<Integer> tag = new ArrayList<Integer>();
+        tag.add(5);
         tag.add(10);
         tag.add(20);
         tag.add(30);
