@@ -1,13 +1,14 @@
 package presentation.view.tools;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.util.Callback;
-import presentation.listener.doubleDatePickerPanelListener.StartDateChangeListener;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -23,9 +24,6 @@ public class DoubleDatePickerPanel  extends JFXPanel {
     private DatePicker endDate;
 
     //
-    private static DoubleDatePickerPanel doubleDatePickerPanel;
-
-    //
     int width;
 
     //
@@ -39,7 +37,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
      * @author 61990
      * @updateTime 2017/3/8
      */
-    private DoubleDatePickerPanel(){
+    public DoubleDatePickerPanel(){
 
         setLayout(null);
         width= WindowData.getInstance().getWidth();
@@ -109,7 +107,12 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 
         endDate.setDayCellFactory(dayCellFactory);
 
-        startDate.valueProperty().addListener(new StartDateChangeListener());
+        startDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                setEndDate(newValue.plusDays(1));
+            }
+        });
     }
 
     public LocalDate getStartDate() {
@@ -122,14 +125,6 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 
     public void setEndDate(LocalDate date) {
         endDate.setValue(date);
-    }
-
-    public static DoubleDatePickerPanel getInstance() {
-        if(doubleDatePickerPanel == null){
-            doubleDatePickerPanel = new DoubleDatePickerPanel();
-        }
-
-        return  doubleDatePickerPanel;
     }
 
     public void setDate(LocalDate date) {

@@ -75,7 +75,7 @@ public class ComparePanel extends TemplatePanel {
      * @updateTime 2017/3/6
      */
     private void init() {
-        datePanel = DoubleDatePickerPanel.getInstance();
+        datePanel = new DoubleDatePickerPanel();
         datePanel.setBounds(width * 400 / 1920, height * 50 / 1030, 370 * width / 1920, 35 * height / 1030);
         add(datePanel);
         name1 = new JTextField();

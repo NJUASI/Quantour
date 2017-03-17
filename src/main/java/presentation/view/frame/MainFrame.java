@@ -32,7 +32,6 @@ public class MainFrame extends JFrame {
      * @updateTime 2017/3/5
      */
     public MainFrame() {
-        setUndecorated(true);
         try
         {
             BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
@@ -83,7 +82,7 @@ public class MainFrame extends JFrame {
         height=WindowData.getInstance().getHeight();
         setSize(width,height);
 
-        setUndecorated(true);
+//        setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setVisible(true);
