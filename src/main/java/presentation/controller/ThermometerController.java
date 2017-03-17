@@ -57,16 +57,17 @@ public class ThermometerController {
         StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
         StockSituationBarChart barChart = new StockSituationBarChart(list.iterator());
 
-        JPanel piePanel=pieChart.createChart();
-        piePanel.setBounds(thermometerPanel.adaptScreen(230,200,800,600));
-        piePanel.setBackground(new Color(55,60,56));
-        thermometerPanel.add(piePanel);
-        piePanel.repaint();
+//        JPanel piePanel=pieChart.createChart();
+//        piePanel.setBounds(thermometerPanel.adaptScreen(230,200,800,600));
+//        piePanel.setBackground(new Color(55,60,56));
+//        thermometerPanel.add(piePanel);
+//        piePanel.repaint();
 
         JPanel barPanel=barChart.createChart();
-        barPanel.setBounds(thermometerPanel.adaptScreen(1040,230,870,550));
-        barPanel.setBackground(new Color(55,60,56));
+        barPanel.setBounds(thermometerPanel.adaptScreen(230,200,800,600));
+        barPanel.setBackground(new Color(32, 36, 39));
         thermometerPanel.add(barPanel);
+        thermometerPanel.setBackground(new Color(32, 36, 39));
         barPanel.repaint();
     }
 }

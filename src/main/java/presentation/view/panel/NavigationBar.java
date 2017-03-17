@@ -6,6 +6,8 @@ import presentation.listener.navigationBarListener.KStringListener;
 import presentation.listener.navigationBarListener.StocksTableListener;
 import presentation.listener.navigationBarListener.ThermometerListener;
 import presentation.view.frame.MainFrame;
+import presentation.view.tools.MyButton;
+import presentation.view.tools.MyLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +18,8 @@ import java.awt.event.MouseEvent;
  * Created by 61990 on 2017/3/5.
  */
 public class NavigationBar extends TemplatePanel {
-
+    int numOfChoosed;
+    MyButton kString,compare,thermometer,favorites;
     /**
      * 构造器
      *
@@ -26,62 +29,186 @@ public class NavigationBar extends TemplatePanel {
      * @updateTime 2017/3/5
      */
     public NavigationBar() {
+        numOfChoosed=1;
         setLayout(null);
         setBackground(new Color(19,22,24));
         setBounds(adaptScreen(0,0,70,1030));
-        //the door of function 1
-        JButton kString = new JButton("kString");
-        kString.setBounds(adaptScreen(0, 150, 70, 70));
-        kString.addMouseListener(new KStringListener());
-        add(kString);
-
-        //the door of function 2
-        JButton compare = new JButton("compare");
-        compare.setBounds(adaptScreen(0, 220, 70, 70));
-        compare.addMouseListener(new CompareListener());
-        add(compare);
-
-        //the door of function 3
-        JButton thermometer = new JButton("thermometer");
-        thermometer.setBounds(adaptScreen(0, 290, 70, 70));
-        thermometer.addMouseListener(new ThermometerListener());
-        add(thermometer);
 
         //the door of function 4
-        JButton favorites = new JButton("stocks");
-        favorites.setBounds(adaptScreen(0, 70, 70, 70));
+        favorites = new MyButton("stock",1);
+        favorites.setBounds(adaptScreen(3, 70, 64, 86));
         favorites.addMouseListener(new StocksTableListener());
         add(favorites);
 
-        //log out
-        JButton logout = new JButton("注销");
-        logout.setBounds(adaptScreen(90, 820, 70, 70));
-        logout.addMouseListener(new MouseAdapter() {
+        favorites.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                MainFrame.getCard().show(MainFrame.getCardPanel(), "loginPanel");
-                KStringPanel.getInstance().refresh();
-                ComparePanel.getInstance().refresh();
-                ThermometerPanel.getInstance().refresh();
-                StocksTablePanel.getInstance().refresh();
+                if(numOfChoosed!=1){
+                    favorites.click2();
+                    numOfChoosed=1;
+                    whileClicked(numOfChoosed);
+                    TitlePanel.getInstance().setTitle("行情");
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(numOfChoosed!=1){
+                    favorites.moveIn();
+
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if(numOfChoosed!=1){
+                    favorites.moveOut();
+                }
             }
         });
-        add(logout);
 
-        //return to main panel
-//        JButton homePanel = new JButton("主页");
-//        homePanel.setBounds(adaptScreen(130, 820, 70, 35));
-//        homePanel.addMouseListener(new MouseAdapter() {
+        //the door of function 1
+        kString = new MyButton("kString",1);
+        kString.setBounds(adaptScreen(3, 156, 64, 86));
+        kString.addMouseListener(new KStringListener());
+        add(kString);
+        kString.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(numOfChoosed!=2){
+                    kString.click2();
+                    numOfChoosed=2;
+                    whileClicked(numOfChoosed);
+                    TitlePanel.getInstance().setTitle("个股");
+                }
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(numOfChoosed!=2){
+                    kString.moveIn();
+
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if(numOfChoosed!=2){
+                    kString.moveOut();
+                }
+            }
+        });
+
+        //the door of function 2
+        compare = new MyButton("compare",1);
+        compare.setBounds(adaptScreen(3, 242, 64, 86));
+        compare.addMouseListener(new CompareListener());
+        add(compare);
+        compare.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(numOfChoosed!=3){
+                    compare.click2();
+                    numOfChoosed=3;
+                    whileClicked(numOfChoosed);
+                    TitlePanel.getInstance().setTitle("对比");
+                }
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(numOfChoosed!=3){
+                    compare.moveIn();
+
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if(numOfChoosed!=3){
+                    compare.moveOut();
+                }
+            }
+        });
+        //the door of function 3
+        thermometer = new MyButton("market",1);
+        thermometer.setBounds(adaptScreen(3, 328, 64, 86));
+        thermometer.addMouseListener(new ThermometerListener());
+        add(thermometer);
+        thermometer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(numOfChoosed!=4){
+                    thermometer.click2();
+                    numOfChoosed=4;
+                    whileClicked(numOfChoosed);
+                    TitlePanel.getInstance().setTitle("市场");
+                }
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(numOfChoosed!=4){
+                    thermometer.moveIn();
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if(numOfChoosed!=4){
+                    thermometer.moveOut();
+                }
+            }
+        });
+
+
+
+        //log out
+//        JButton logout = new JButton("注销");
+//        logout.setBounds(adaptScreen(90, 820, 70, 70));
+//        logout.addMouseListener(new MouseAdapter() {
 //            @Override
 //            public void mousePressed(MouseEvent e) {
-//                MainFrame.getCard().show(MainFrame.getCardPanel(), "menuPanel");
+//                MainFrame.getCard().show(MainFrame.getCardPanel(), "loginPanel");
 //                KStringPanel.getInstance().refresh();
 //                ComparePanel.getInstance().refresh();
 //                ThermometerPanel.getInstance().refresh();
 //                StocksTablePanel.getInstance().refresh();
 //            }
 //        });
-//        add(homePanel);
+//        add(logout);
+    }
+    void whileClicked(int i){
+        switch (i){
+            case 1:
+
+                kString.moveOut();
+                compare.moveOut();
+                thermometer.moveOut();
+                break;
+            case 2:
+                favorites.moveOut();
+
+                compare.moveOut();
+                thermometer.moveOut();
+                break;
+            case 3:
+                favorites.moveOut();
+                kString.moveOut();
+
+                thermometer.moveOut();
+                break;
+            case 4:
+                favorites.moveOut();
+                kString.moveOut();
+                compare.moveOut();
+
+                break;
+            default:
+                break;
+        }
     }
 }
 

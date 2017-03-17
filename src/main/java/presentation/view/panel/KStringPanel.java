@@ -61,6 +61,7 @@ public class KStringPanel extends TemplatePanel {
         search = new JButton("局部信息");
         favorite = new JButton("收藏");
         compare = new JButton("加入比较");
+
         init();
     }
     /**
@@ -89,6 +90,7 @@ public class KStringPanel extends TemplatePanel {
 
             chartPanel = new ChartPanel(chart);
             chartPanel.setBounds(adaptScreen(320,100,1500,850));
+            chartPanel.setBackground(new Color(32, 36, 39));
             add(chartPanel);
             chartPanel.repaint();
         } catch (ColorNotExistException e) {
@@ -127,6 +129,7 @@ public class KStringPanel extends TemplatePanel {
             chartPanel = new ChartPanel(chart);
 
             chartPanel.setBounds(adaptScreen(320,100,1500,850));
+            chartPanel.setBackground(new Color(32, 36, 39));
             add(chartPanel);
             chartPanel.repaint();
         } catch (ColorNotExistException e) {
