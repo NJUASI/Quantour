@@ -155,7 +155,7 @@ public class LineChart {
      */
     private int getGap(){
         int days = this.getTimeDifference();
-        int gap = days/365;
+        int gap = days/120;
         return (gap+1)*7;//以两周的时间作为基础（7）
     }
 
