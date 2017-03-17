@@ -17,9 +17,8 @@ public class OpenRegisterListener extends MouseAdapter{
      */
     @Override
     public void mousePressed(MouseEvent e) {
-//        ViewSwitchController.getInstance().viewSwitch("registerPanel");
-          RegisterFrame.getInstance();
-            RegisterFrame.getInstance().setVisible(true);
+        RegisterFrame.getInstance();
+        RegisterFrame.getInstance().setVisible(true);
 
     }
 }

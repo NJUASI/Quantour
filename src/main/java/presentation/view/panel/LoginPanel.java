@@ -21,9 +21,6 @@ public class LoginPanel extends TemplatePanel {
 
     private static LoginPanel loginPanel;
 
-    //登录控制器
-    LoginController loginController;
-
     //用户名文本框
     private JTextField admin;
 
@@ -32,6 +29,7 @@ public class LoginPanel extends TemplatePanel {
 
     //注册按钮
     JButton openRegister;
+
     MyButton close,min;
     /**
      * 构造器
@@ -83,7 +81,6 @@ public class LoginPanel extends TemplatePanel {
 
         login.setForeground(new Color(255,255,255));
         login.setFont(new Font("", Font.CENTER_BASELINE, 20 * width / 1920));
-        loginController = LoginController.getInstance();
         login.setUI(new BEButtonUI().setNormalColor(BEButtonUI.NormalColor.blue));
         login.addMouseListener(new LoginListener());
         add(login);

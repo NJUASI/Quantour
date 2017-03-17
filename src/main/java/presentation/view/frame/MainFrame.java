@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
         JLayeredPane mainPane = new JLayeredPane();
         cardPanel.add(mainPane, "mainPane");
 
-        //进入登录界面
+        //进入股票信息界面
         ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
 
 

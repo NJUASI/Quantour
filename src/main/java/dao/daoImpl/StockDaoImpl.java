@@ -247,7 +247,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public Map<String, String> getAllStocksName() {
-        return null;
+        return searchDataHelper.getAllStocksName();
     }
 
     /**

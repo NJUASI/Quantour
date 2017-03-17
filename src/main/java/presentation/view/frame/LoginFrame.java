@@ -11,8 +11,11 @@ import java.awt.*;
  * Created by 61990 on 2017/3/16.
  */
 public class LoginFrame extends JFrame {
+
     LoginPanel loginPanel;
+
     private static LoginFrame loginFrame;
+
     public LoginFrame() {
         try {
             BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
@@ -27,7 +30,6 @@ public class LoginFrame extends JFrame {
 
         setTitle("注册");
 
-        setLayout(null);
         setLayout(new BorderLayout(0, 0));
         setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -49,7 +51,6 @@ public class LoginFrame extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         setVisible(true);
 
         setResizable(false);
@@ -62,8 +63,8 @@ public class LoginFrame extends JFrame {
         }
         return loginFrame;
     }
+
     public void refresh(){
         setVisible(false);
-        loginFrame=null;
     }
 }

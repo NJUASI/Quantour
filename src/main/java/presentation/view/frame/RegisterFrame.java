@@ -60,6 +60,5 @@ public class RegisterFrame extends JFrame {
     }
     public void refresh(){
         setVisible(false);
-        registerFrame=null;
     }
 }

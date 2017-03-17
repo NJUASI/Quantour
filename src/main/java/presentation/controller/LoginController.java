@@ -58,7 +58,6 @@ public class LoginController{
                 loginPanel.setUsername("Enter your admin");
                 loginPanel.setPassword("");
                 MainFrame.getInstance();
-//                ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
                 LoginFrame.getInstance().refresh();
                 RegisterFrame.getInstance().refresh();
                 return true;
