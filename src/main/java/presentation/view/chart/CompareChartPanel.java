@@ -71,8 +71,8 @@ public class CompareChartPanel extends JPanel {
 
         panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1030));
         scrollPane=new JScrollPane();
-        scrollPane.setPreferredSize(new Dimension(1500*width/1920,850*height/1030));
-        scrollPane.setBounds(adaptScreen(0,0,1500,850));
+        scrollPane.setPreferredSize(new Dimension(1500*width/1920,800*height/1030));
+        scrollPane.setBounds(adaptScreen(0,0,1500,800));
 
         scrollPane.setViewportView(panel);
         scrollPane.setVisible(true);

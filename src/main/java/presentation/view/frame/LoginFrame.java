@@ -28,7 +28,7 @@ public class LoginFrame extends JFrame {
 
     void createWindow() {
 
-        setTitle("注册");
+        setTitle("登录");
 
         setLayout(new BorderLayout(0, 0));
 //        setUndecorated(true);

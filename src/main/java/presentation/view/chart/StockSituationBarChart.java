@@ -46,7 +46,7 @@ public class StockSituationBarChart {
 
     public ChartPanel createChart() {
         // 2：创建Chart
-        JFreeChart chart = ChartFactory.createBarChart("Bar Chart", "", "Rainfall (mm)", createDataset());
+        JFreeChart chart = ChartFactory.createBarChart("市场温度计", "", "股票数", createDataset());
         // 3:设置抗锯齿，防止字体显示不清楚
         ChartUtils.setAntiAlias(chart);// 抗锯齿
         // 4:对柱子进行渲染

@@ -199,7 +199,7 @@ public class ComparePanel extends TemplatePanel {
             }
             List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
             compareChartPanel=new CompareChartPanel(vo);
-            compareChartPanel.setBounds(adaptScreen(230,150,1500,800));
+            compareChartPanel.setBounds(adaptScreen(200,130,1500,800));
             add(compareChartPanel);
             compareChartPanel.setVisible(true);
             compareChartPanel.repaint();

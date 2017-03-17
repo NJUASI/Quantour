@@ -1,6 +1,7 @@
 package presentation.view.panel;
 
 import presentation.view.frame.LoginFrame;
+import presentation.view.frame.MainFrame;
 import presentation.view.tools.MyButton;
 
 import javax.swing.*;
@@ -32,7 +33,7 @@ public class TitlePanel extends TemplatePanel {
         close.setBounds(adaptScreen(1790,0,40,35));
         close.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 System.exit(0);
             }
 
@@ -52,8 +53,8 @@ public class TitlePanel extends TemplatePanel {
         min.setBounds(adaptScreen(1730,0,40,35));
         min.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                LoginFrame.getInstance().setExtendedState(JFrame.ICONIFIED);
+            public void mouseClicked(MouseEvent e) {
+                MainFrame.getInstance().setExtendedState(JFrame.ICONIFIED);
             }
 
             @Override
