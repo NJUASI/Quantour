@@ -30,7 +30,7 @@ public class CompareChartPanel extends JPanel {
         height =windowData.getHeight();
 
         panel=new JPanel(null);
-
+        panel.setBackground(new Color(32, 36, 39));
         chart1 = new CompareChart1(vo);
         chartPanel1 = chart1.createChart();
         chartPanel1.setBounds(adaptScreen(0,0,500,480));
@@ -69,9 +69,9 @@ public class CompareChartPanel extends JPanel {
         setVisible(true);
         setPreferredSize(new Dimension(1500,850));
 
-        panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1080));
+        panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1030));
         scrollPane=new JScrollPane();
-        scrollPane.setPreferredSize(new Dimension(1500*width/1920,850*height/1080));
+        scrollPane.setPreferredSize(new Dimension(1500*width/1920,850*height/1030));
         scrollPane.setBounds(adaptScreen(0,0,1500,850));
 
         scrollPane.setViewportView(panel);

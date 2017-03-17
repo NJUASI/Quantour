@@ -47,16 +47,16 @@ public class LoginPanel extends TemplatePanel {
         setBackground(new Color(47,51,55));
         //to write your message
 //        admin = new JTextField("Enter your admin");
-        admin = new JTextField("Gaoyuan");
+        admin = new JTextField("Guest");
 
         admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         admin.setBounds(adaptScreen(90, 200, 260, 38));
-        admin.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                admin.setText("");
-            }
-        });
+//        admin.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                admin.setText("");
+//            }
+//        });
         admin.setVisible(true);
         add(admin);
         MyLabel label = new MyLabel("账户");
@@ -66,19 +66,21 @@ public class LoginPanel extends TemplatePanel {
         label2.setLocation(35*width/1920,255*height/1030);
         add(label2);
         password = new JPasswordField("123456");
-        password.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                password.setText("");
-            }
-        });
+//        password.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                password.setText("");
+//            }
+//        });
         password.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         password.setBounds(adaptScreen(90, 255, 260, 38));
         password.setVisible(true);
         add(password);
 
+        password.setEnabled(false);
+        admin.setEnabled(false);
         //the Button setting of logIn to mainPanel
-        JButton login = new JButton("登录");
+        JButton login = new JButton("游客登录");
         login.setBounds(adaptScreen(90, 340, 260, 40));
 
         login.setForeground(new Color(255,255,255));
@@ -89,13 +91,14 @@ public class LoginPanel extends TemplatePanel {
         add(login);
 
         //the Button setting of opening register panel
-        openRegister = new JButton("注册");
-        openRegister.setFont(new Font("", Font.CENTER_BASELINE, 15 * width / 1920));
-        openRegister.setBounds(adaptScreen(350, 350, 60, 35));
-        openRegister.setContentAreaFilled(false);
-        openRegister.setForeground(new Color(254, 104, 4));
-        openRegister.addMouseListener(new OpenRegisterListener());
-        add(openRegister);
+
+//        openRegister = new JButton("注册");
+//        openRegister.setFont(new Font("", Font.CENTER_BASELINE, 15 * width / 1920));
+//        openRegister.setBounds(adaptScreen(350, 350, 60, 35));
+//        openRegister.setContentAreaFilled(false);
+//        openRegister.setForeground(new Color(254, 104, 4));
+//        openRegister.addMouseListener(new OpenRegisterListener());
+//        add(openRegister);
 
         //关闭按钮
         close=new MyButton("close",0);
