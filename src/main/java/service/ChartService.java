@@ -31,7 +31,7 @@ public interface ChartService {
      * @param code 股票代码
      * @return 特定股票的所有交易信息
      */
-    Iterator<StockVO> getSingleStockRecords(String code) throws IOException;
+    List<StockVO> getSingleStockRecords(String code) throws IOException;
 
     /**
      * 获取单支股票的一段日期内的信息
@@ -42,7 +42,7 @@ public interface ChartService {
      * @param chartShowCriteriaVO 股票的选择标准
      * @return 特定股票的所有交易信息
      */
-    Iterator<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException;
+    List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException;
 
     /**
      * 获取单支股票一段日期内，用户所选天数的均线图的平均值.

@@ -1,8 +1,8 @@
 package presentation.view.panel;
 
 import presentation.listener.navigationBarListener.CompareListener;
-import presentation.listener.navigationBarListener.FavoritesListener;
 import presentation.listener.navigationBarListener.KStringListener;
+import presentation.listener.navigationBarListener.StocksTableListener;
 import presentation.listener.navigationBarListener.ThermometerListener;
 import presentation.view.frame.MainFrame;
 
@@ -47,7 +47,7 @@ public class NavigationBar extends TempletPanel {
         //the door of function 4
         JButton favorites = new JButton("stocks");
         favorites.setBounds(adaptScreen(50, 200, 120, 50));
-        favorites.addMouseListener(new FavoritesListener());
+        favorites.addMouseListener(new StocksTableListener());
         add(favorites);
 
         //log out

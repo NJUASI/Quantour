@@ -2,6 +2,8 @@ package service.serviceImpl;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
+import utilities.exceptions.DataSourceFirstDayException;
+import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
 import po.StockPO;
 import service.ChartService;
@@ -92,6 +94,8 @@ public class ChartServiceImpl implements ChartService {
             //TODO 需要将前面几日的数据加到里面去
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (DateNotWithinException e) {
+            e.printStackTrace();
         }
 
         for(int i=0;i<days.size();i++){
@@ -147,12 +151,21 @@ public class ChartServiceImpl implements ChartService {
      */
     @Override
     public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException {
-        List<StockPO> stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
-        List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
-        List<StockComparisionVO> result = new LinkedList<>();
-        result.add(new StockComparisionVO(stockPOList1));
-        result.add(new StockComparisionVO(stockPOList2));
-        return result;
+        List<StockPO> stockPOList1 = null;
+        try {
+            stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+            List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+            List<StockComparisionVO> result = new LinkedList<>();
+            result.add(new StockComparisionVO(stockPOList1));
+            result.add(new StockComparisionVO(stockPOList2));
+            return result;
+        } catch (DateNotWithinException e) {
+            e.printStackTrace();
+        } catch (DataSourceFirstDayException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -164,7 +177,12 @@ public class ChartServiceImpl implements ChartService {
      * @return StockPO的列表
      */
     private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException {
-        return stockDao.getStockData(vo.stockCode, vo.start,vo.end);
+        try {
+            return stockDao.getStockData(vo.stockCode, vo.start,vo.end);
+        } catch (DateNotWithinException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

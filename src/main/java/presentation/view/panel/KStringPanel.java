@@ -4,6 +4,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import presentation.line.LineChart;
+import presentation.listener.navigationBarListener.CompareListener;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.util.ChartUtils;
 import service.StockService;
@@ -216,19 +217,7 @@ public class KStringPanel extends NavigationBar {
         add(search);
         //加入比较按钮
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
-        compare.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-                MainPanel.getCardPanel().add(ComparePanel.getInstance(),"comparePanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "comparePanel");
-                ComparePanel.getInstance().setCompare(searchTextField.getText(),num.getText());
-                ComparePanel.getInstance().datePanel.setDate(datePanel.getStartDate());
-                ComparePanel.getInstance().datePanel.setEndDate(datePanel.getEndDate());
-                ComparePanel.getInstance().associatePanel.setVisible(false);
-                ComparePanel.getInstance().associatePanel2.setVisible(false);
-            }
-        });
+        compare.addMouseListener(new CompareListener());
         add(compare);
 
         favorite.setBounds(adaptScreen(1550, 50, 70, 35));

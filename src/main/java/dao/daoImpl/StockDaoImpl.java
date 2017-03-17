@@ -238,6 +238,19 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
+     * 获取所有股票的名称
+     *
+     * @return the all stocks first letters 返回所有股票的名称及其，名称作为键值
+     * @author Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/14
+     */
+    @Override
+    public Map<String, String> getAllStocksName() {
+        return null;
+    }
+
+    /**
      * 判断目标时间是否在指定区域内
      *
      * @author Byron Dong
