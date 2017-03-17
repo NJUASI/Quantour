@@ -25,8 +25,8 @@ public class MyButton extends JLabel {
            bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/button/"+str+"1.png"));
 
         }else if(i==1){
-            x=64;
-            y=86;
+            x=94;
+            y=120;
             if(str=="stock") {
                 bgPicture = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/button2/" + str + "3.png"));
             }else{

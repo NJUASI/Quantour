@@ -32,11 +32,11 @@ public class NavigationBar extends TemplatePanel {
         numOfChoosed=1;
         setLayout(null);
         setBackground(new Color(19,22,24));
-        setBounds(adaptScreen(0,0,70,1030));
+        setBounds(adaptScreen(0,0,100,1030));
 
         //the door of function 4
         favorites = new MyButton("stock",1);
-        favorites.setBounds(adaptScreen(3, 70, 64, 86));
+        favorites.setBounds(adaptScreen(3, 100, 94, 120));
         favorites.addMouseListener(new StocksTableListener());
         add(favorites);
 
@@ -69,7 +69,7 @@ public class NavigationBar extends TemplatePanel {
 
         //the door of function 1
         kString = new MyButton("kString",1);
-        kString.setBounds(adaptScreen(3, 156, 64, 86));
+        kString.setBounds(adaptScreen(3, 220, 94, 120));
         kString.addMouseListener(new KStringListener());
         add(kString);
         kString.addMouseListener(new MouseAdapter() {
@@ -102,7 +102,7 @@ public class NavigationBar extends TemplatePanel {
 
         //the door of function 2
         compare = new MyButton("compare",1);
-        compare.setBounds(adaptScreen(3, 242, 64, 86));
+        compare.setBounds(adaptScreen(3, 340, 94, 120));
         compare.addMouseListener(new CompareListener());
         add(compare);
         compare.addMouseListener(new MouseAdapter() {
@@ -134,7 +134,7 @@ public class NavigationBar extends TemplatePanel {
         });
         //the door of function 3
         thermometer = new MyButton("market",1);
-        thermometer.setBounds(adaptScreen(3, 328, 64, 86));
+        thermometer.setBounds(adaptScreen(3, 460, 94, 120));
         thermometer.addMouseListener(new ThermometerListener());
         add(thermometer);
         thermometer.addMouseListener(new MouseAdapter() {

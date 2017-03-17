@@ -6,11 +6,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.*;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
 
-import java.awt.*;
+
+
+import java.awt.Color;
 import java.time.LocalDate;
 
 /**
@@ -22,7 +28,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
     private DatePicker startDate;
     //结束时间
     private DatePicker endDate;
-
+    ImageView image;
     //
     int width;
 
@@ -51,10 +57,13 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 //                scene.setFill(null);
 //                root.setOpacity(0.1);
 //                setOpaque(false);
+
                 setScene(scene);
                 initDatePicker();
+                root.getChildren().add(image);
                 root.getChildren().add(startDate);
                 root.getChildren().add(endDate);
+
             }
         });
     }
@@ -87,7 +96,11 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         endDate.setMaxSize(width*150/1920,35*height/1030);
         endDate.setEditable(false);
 
-        Callback<DatePicker, DateCell> dayCellFactory =
+
+        image=new ImageView();
+        image.setImage(new Image(getClass().getClassLoader().getResourceAsStream("picture/bgColor.png")));
+
+            Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
                     @Override
                     public DateCell call(final DatePicker datePicker) {
