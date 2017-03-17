@@ -1,7 +1,6 @@
 package presentation.controller;
 
 import presentation.view.panel.KStringPanel;
-import presentation.view.panel.MainPanel;
 import presentation.view.panel.StocksTablePanel;
 import presentation.view.tools.StocksTable;
 import presentation.view.tools.WindowData;

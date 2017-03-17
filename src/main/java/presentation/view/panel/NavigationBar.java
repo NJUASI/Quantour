@@ -4,6 +4,7 @@ import presentation.listener.navigationBarListener.CompareListener;
 import presentation.listener.navigationBarListener.FavoritesListener;
 import presentation.listener.navigationBarListener.KStringListener;
 import presentation.listener.navigationBarListener.ThermometerListener;
+import presentation.view.frame.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -55,7 +56,7 @@ public class NavigationBar extends TempletPanel {
         logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "loginPanel");
+                MainFrame.getCard().show(MainFrame.getCardPanel(), "loginPanel");
                 KStringPanel.getInstance().refresh();
                 ComparePanel.getInstance().refresh();
                 ThermometerPanel.getInstance().refresh();
@@ -70,7 +71,7 @@ public class NavigationBar extends TempletPanel {
 //        homePanel.addMouseListener(new MouseAdapter() {
 //            @Override
 //            public void mousePressed(MouseEvent e) {
-//                MainPanel.getCard().show(MainPanel.getCardPanel(), "menuPanel");
+//                MainFrame.getCard().show(MainFrame.getCardPanel(), "menuPanel");
 //                KStringPanel.getInstance().refresh();
 //                ComparePanel.getInstance().refresh();
 //                ThermometerPanel.getInstance().refresh();

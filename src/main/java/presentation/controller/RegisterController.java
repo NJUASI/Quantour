@@ -1,5 +1,6 @@
 package presentation.controller;
 
+import presentation.view.frame.RegisterFrame;
 import presentation.view.panel.RegisterPanel;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
@@ -41,14 +42,15 @@ public class RegisterController {
      */
     public void register() {
         RegisterPanel registerPanel = RegisterPanel.getInstance();
-
         String userName = registerPanel.getUserName();
         String password = registerPanel.getPassword();
         String password2 = registerPanel.getPassword2();
 
         try {
             if (userService.registerUser(new UserVO(userName, password), password2)) {
-                ViewSwitchController.getInstance().viewSwitch("loginPanel");
+//                ViewSwitchController.getInstance().viewSwitch("loginPanel");
+//                RegisterFrame.getInstance().setVisible(false);
+                RegisterFrame.getInstance().refresh();
             }
         } catch (DuplicatedNameException e) {
             e.printStackTrace();

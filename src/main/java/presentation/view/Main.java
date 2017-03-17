@@ -2,7 +2,8 @@ package presentation.view;
 
 
 
-import presentation.view.panel.MainPanel;
+import presentation.view.frame.LoginFrame;
+
 
 /**
  * Created by 61990 on 2017/3/5.
@@ -18,7 +19,10 @@ class Main {
      * @updateTime 2017/3/5
      */
     public static void main(String[] args) {
-        new MainPanel();
+
+        LoginFrame.getInstance();
+//        RegisterFrame.getInstance();
+//
     }
 
 }

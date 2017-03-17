@@ -1,4 +1,4 @@
-package presentation.view.panel;
+package presentation.view.frame;
 
 
 import java.awt.Dimension;
@@ -13,10 +13,10 @@ import presentation.view.tools.WindowData;
 /**
  * Created by 61990 on 2017/3/5.
  */
-public class MainPanel extends JFrame {
+public class MainFrame extends JFrame {
 
     //一些主原件
-    private static MainPanel mainPanel;
+    private static MainFrame mainPanel;
     private static JPanel cardPanel;
     private static CardLayout card;
 
@@ -28,7 +28,7 @@ public class MainPanel extends JFrame {
      * @author 61990
      * @updateTime 2017/3/5
      */
-    public MainPanel() {
+    public MainFrame() {
 
         try
         {
@@ -51,7 +51,7 @@ public class MainPanel extends JFrame {
         cardPanel.add(mainPane, "mainPane");
 
         //进入登录界面
-        ViewSwitchController.getInstance().viewSwitch("loginPanel");
+        ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
     }
 
     /**
@@ -95,9 +95,9 @@ public class MainPanel extends JFrame {
      * @author 61990
      * @updateTime 2017/3/5
      */
-    public static MainPanel getInstance() {
+    public static MainFrame getInstance() {
         if (mainPanel == null) {
-            mainPanel = new MainPanel();
+            mainPanel = new MainFrame();
         }
         return mainPanel;
     }

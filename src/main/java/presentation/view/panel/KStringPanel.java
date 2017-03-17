@@ -4,6 +4,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import presentation.line.LineChart;
+import presentation.view.frame.MainFrame;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.util.ChartUtils;
 import service.StockService;
@@ -220,8 +221,8 @@ public class KStringPanel extends NavigationBar {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                MainPanel.getCardPanel().add(ComparePanel.getInstance(),"comparePanel");
-                MainPanel.getCard().show(MainPanel.getCardPanel(), "comparePanel");
+                MainFrame.getCardPanel().add(ComparePanel.getInstance(),"comparePanel");
+                MainFrame.getCard().show(MainFrame.getCardPanel(), "comparePanel");
                 ComparePanel.getInstance().setCompare(name.getText(),num.getText());
                 ComparePanel.getInstance().datePanel.setDate(datePanel.getStartDate());
                 ComparePanel.getInstance().datePanel.setEndDate(datePanel.getEndDate());

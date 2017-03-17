@@ -23,7 +23,7 @@ public class RegisterPanel extends TempletPanel{
     private JPasswordField password2;
 
     //登录按钮
-    private JButton openLogin;
+//    private JButton openLogin;
 
     //注册按钮
     private JButton register;
@@ -40,8 +40,8 @@ public class RegisterPanel extends TempletPanel{
 
         //the field to write your message to register
         admin=new JTextField("your Phone/Admin");
-        admin.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
-        admin.setBounds(adaptScreen(300,340,300,50));
+        admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
+        admin.setBounds(adaptScreen(90, 100, 260, 38));
 //        admin.setOpaque(false);
 //        admin.setBorder(null);
         admin.setVisible(true);
@@ -49,33 +49,33 @@ public class RegisterPanel extends TempletPanel{
 
 
         password = new JPasswordField();
-        password.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
-        password.setBounds(adaptScreen(300,420,300,50));
+        password.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
+        password.setBounds(adaptScreen(90, 155, 260, 38));
 //        password.setBorder(null);
 //        password.setOpaque(false);
         password.setVisible(true);
         add(password);
 
         password2=new JPasswordField();
-        password2.setFont(new Font("微软雅黑",Font.BOLD,25*width/1920));
-        password2.setBounds(adaptScreen(300,500,300,50));
+        password2.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
+        password2.setBounds(adaptScreen(90, 210, 260, 38));
 //        password2.setBorder(null);
 //        password2.setOpaque(false);
         password2.setVisible(true);
         add(password2);
 
         //the Button setting of opening logIn panel
-        openLogin = new JButton("登录");
-        openLogin.setBounds(adaptScreen(470,610,80,40));
-        openLogin.setForeground(Color.BLACK);
-        openLogin.setFont(new Font("",Font.CENTER_BASELINE,15*width/1920));
-        openLogin.setContentAreaFilled(false);
-        openLogin.addMouseListener(new OpenLoginListener());
-        add(openLogin);
+//        openLogin = new JButton("登录");
+//        openLogin.setBounds(adaptScreen(470,610,80,40));
+//        openLogin.setForeground(Color.BLACK);
+//        openLogin.setFont(new Font("",Font.CENTER_BASELINE,15*width/1920));
+//        openLogin.setContentAreaFilled(false);
+//        openLogin.addMouseListener(new OpenLoginListener());
+//        add(openLogin);
 
         //the Button setting of register
         register =new JButton("注册");
-        register.setBounds(adaptScreen(360,600,80,40));
+        register.setBounds(adaptScreen(90, 280, 260, 40));
         register.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
         register.addMouseListener(new RegisterListener());
         add(register);

@@ -1,6 +1,6 @@
 package presentation.listener.registerPanelListener;
 
-import presentation.controller.ViewSwitchController;
+import presentation.view.frame.RegisterFrame;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,6 +17,6 @@ public class OpenLoginListener extends MouseAdapter{
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        ViewSwitchController.getInstance().viewSwitch("loginPanel");
+        RegisterFrame.getInstance().setVisible(false);
     }
 }

@@ -37,12 +37,14 @@ public class LoginPanel extends TempletPanel {
      * @author 61990
      * @updateTime 2017/3/5
      */
-    private LoginPanel() {
+    public LoginPanel() {
+        setVisible(true);
+        setBounds(adaptScreen(0,0,450,500));
 
         //to write your message
         admin = new JTextField("Enter your admin");
-        admin.setFont(new Font("微软雅黑", Font.BOLD, 25 * width / 1920));
-        admin.setBounds(adaptScreen(300, 400, 300, 50));
+        admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
+        admin.setBounds(adaptScreen(90, 200, 260, 38));
         admin.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -55,18 +57,22 @@ public class LoginPanel extends TempletPanel {
         admin.setVisible(true);
         add(admin);
 
-        password = new JPasswordField();
-        password.setFont(new Font("微软雅黑", Font.BOLD, 25 * width / 1920));
-        password.setBounds(adaptScreen(300, 500, 300, 50));
+        password = new JPasswordField("");
+        password.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                password.setText("");
+            }
+        });
+        password.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
+        password.setBounds(adaptScreen(90, 255, 260, 38));
 
-//        password.setBorder(null);
-//        password.setOpaque(false);
         password.setVisible(true);
         add(password);
 
         //the Button setting of logIn to mainPanel
         JButton login = new JButton("登录");
-        login.setBounds(adaptScreen(360, 600, 80, 40));
+        login.setBounds(adaptScreen(90, 340, 260, 40));
         login.setFont(new Font("", Font.CENTER_BASELINE, 20 * width / 1920));
         loginController = LoginController.getInstance();
         login.addMouseListener(new LoginListener());
@@ -74,9 +80,8 @@ public class LoginPanel extends TempletPanel {
 
         //the Button setting of opening register panel
         openRegister = new JButton("注册");
-        openRegister.setForeground(Color.BLACK);
         openRegister.setFont(new Font("", Font.CENTER_BASELINE, 15 * width / 1920));
-        openRegister.setBounds(adaptScreen(470, 610, 80, 40));
+        openRegister.setBounds(adaptScreen(350, 350, 60, 35));
         openRegister.setContentAreaFilled(false);
         openRegister.addMouseListener(new OpenRegisterListener());
         add(openRegister);

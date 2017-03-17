@@ -1,5 +1,6 @@
 package presentation.controller;
 
+import presentation.view.frame.MainFrame;
 import presentation.view.panel.*;
 
 import javax.swing.*;
@@ -12,8 +13,8 @@ import java.util.List;
  */
 public class ViewSwitchController{
 
-    private JPanel cardPanel = MainPanel.getCardPanel();
-    private CardLayout cardLayout = MainPanel.getCard();
+    private JPanel cardPanel = MainFrame.getCardPanel();
+    private CardLayout cardLayout = MainFrame.getCard();
 
     List<String> panelNames;
 

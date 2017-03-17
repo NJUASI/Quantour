@@ -1,5 +1,7 @@
 package presentation.controller;
 
+import presentation.view.frame.LoginFrame;
+import presentation.view.frame.MainFrame;
 import presentation.view.panel.LoginPanel;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
@@ -54,7 +56,9 @@ public class LoginController{
                 IDReserve.getInstance().setUserID(name);
                 loginPanel.setUsername("Enter your admin");
                 loginPanel.setPassword("");
-                ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
+                MainFrame.getInstance();
+//                ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
+                LoginFrame.getInstance().refresh();
                 return true;
             }
 
