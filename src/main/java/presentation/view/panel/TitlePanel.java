@@ -30,7 +30,7 @@ public class TitlePanel extends TemplatePanel {
 
         //关闭按钮
         close=new MyButton("close",0);
-        close.setBounds(adaptScreen(1790,0,40,35));
+        close.setBounds(adaptScreen(1760,0,40,35));
         close.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -50,7 +50,7 @@ public class TitlePanel extends TemplatePanel {
         add(close);
         //最小化按钮
         min=new MyButton("min",0);
-        min.setBounds(adaptScreen(1730,0,40,35));
+        min.setBounds(adaptScreen(1700,0,40,35));
         min.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

@@ -45,7 +45,7 @@ public class StocksTablePanel extends TemplatePanel {
         add(search);
 
         JButton detailOfCode = new JButton("查看详情");
-        detailOfCode.setBounds(adaptScreen(1150,50,80,40));
+        detailOfCode.setBounds(adaptScreen(1150,50,110,40));
         detailOfCode.addMouseListener(new DetailOfCodeListener());
         add(detailOfCode);
 
