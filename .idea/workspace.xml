@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f31edef5-d333-484c-bd91-867a094640b7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/文档/word/迭代一/项目一-项目计划文档.docx" afterPath="$PROJECT_DIR$/文档/word/迭代一/项目一-项目计划文档.docx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/presentation/line/LineChart.java" afterPath="$PROJECT_DIR$/src/main/java/presentation/line/LineChart.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/presentation/view/panel/KStringPanel.java" afterPath="$PROJECT_DIR$/src/main/java/presentation/view/panel/KStringPanel.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -863,7 +860,7 @@
       <workItem from="1489121387091" duration="211000" />
       <workItem from="1489121623632" duration="70688000" />
       <workItem from="1489677946803" duration="227000" />
-      <workItem from="1489719029519" duration="55000" />
+      <workItem from="1489719029519" duration="156000" />
     </task>
     <task id="LOCAL-00001" summary="maven project&#10;">
       <created>1488454382791</created>
@@ -1180,7 +1177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489668187013</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="添加项目计划文档初版，并添加部分数据（K线）">
+      <created>1489719156123</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1489719156123</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1216,7 +1220,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140509000" />
+    <option name="totallyTimeSpent" value="140610000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1290,7 +1294,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修改StockSituation属性含义" />
     <MESSAGE value="更新txt数据内部日期的存储形式，成交量/100" />
     <MESSAGE value="基于txt数据修改dataHelper实现" />
     <MESSAGE value="新增situation数据" />
@@ -1315,7 +1318,8 @@
     <MESSAGE value="更新股票比较的接口" />
     <MESSAGE value="更新gitignore和readme" />
     <MESSAGE value="去除脏数据&#10;新增时间超出数据源时间区间的异常&#10;增加对时间在数据源第一天的处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="去除脏数据&#10;新增时间超出数据源时间区间的异常&#10;增加对时间在数据源第一天的处理" />
+    <MESSAGE value="添加项目计划文档初版，并添加部分数据（K线）" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加项目计划文档初版，并添加部分数据（K线）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1682,6 +1686,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="176" column="55" lean-forward="false" selection-start-line="176" selection-start-column="55" selection-end-line="176" selection-end-column="55" />
+          <folding />
         </state>
       </provider>
     </entry>
