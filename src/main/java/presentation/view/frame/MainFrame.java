@@ -35,16 +35,15 @@ public class MainFrame extends JFrame {
         setUndecorated(true);
         try
         {
-            BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.generalNoTranslucencyShadow;
+            BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
             BeautyEyeLNFHelper.launchBeautyEyeLNF();
         }
         catch(Exception e)
         {
 
         }
-        setLayout(new BorderLayout(0, 0));
-        setUndecorated(true);
         createWindow();
+        setLayout(null);
 
         barPanel = new NavigationBar();
         add(barPanel);
@@ -77,11 +76,14 @@ public class MainFrame extends JFrame {
      */
     private void createWindow() {
 
+        setTitle("ASI");
         getContentPane().setLayout(new BorderLayout(0, 0));
+
         width=WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
         setBounds(0,0,width,height);
 
+        setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setVisible(true);

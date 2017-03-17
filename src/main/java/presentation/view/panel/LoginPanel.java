@@ -61,10 +61,10 @@ public class LoginPanel extends TempletPanel {
         admin.setVisible(true);
         add(admin);
         MyLabel label = new MyLabel("账户");
-        label.setLocation(35,200);
+        label.setLocation(35*width/1920,200*height/1030);
         add(label);
         MyLabel label2 = new MyLabel("密码");
-        label2.setLocation(35,255);
+        label2.setLocation(35*width/1920,255*height/1030);
         add(label2);
         password = new JPasswordField("123456");
         password.addMouseListener(new MouseAdapter() {
