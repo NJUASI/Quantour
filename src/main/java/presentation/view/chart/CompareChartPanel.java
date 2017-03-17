@@ -1,14 +1,11 @@
 package presentation.view.chart;
 
 import org.jfree.chart.ChartPanel;
-import presentation.view.panel.TempletPanel;
 import presentation.view.tools.WindowData;
 import vo.StockComparisionVO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDate;
-import java.util.*;
 import java.util.List;
 
 /**

@@ -3,12 +3,6 @@ package presentation.controller;
 import presentation.view.panel.AssociatePanel;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
-import utilities.exceptions.MatchNothingException;
-import vo.StockSearchVO;
-
-import javax.swing.*;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by Harvey on 2017/3/15.

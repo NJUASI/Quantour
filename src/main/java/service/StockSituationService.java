@@ -1,13 +1,8 @@
 package service;
 
 import vo.PriceRiseOrFallVO;
-import vo.StockSituationVO;
 
-import java.io.IOException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 
 /**

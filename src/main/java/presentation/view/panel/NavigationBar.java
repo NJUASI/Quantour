@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/5.
  */
-public class NavigationBar extends TempletPanel {
+public class NavigationBar extends TemplatePanel {
 
     /**
      * 构造器

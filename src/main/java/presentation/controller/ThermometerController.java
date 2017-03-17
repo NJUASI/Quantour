@@ -3,17 +3,13 @@ package presentation.controller;
 import presentation.view.chart.StockSituationBarChart;
 import presentation.view.chart.StockSituationPieChart;
 import presentation.view.panel.ThermometerPanel;
-import service.ChartService;
 import service.StockSituationService;
-import service.serviceImpl.ChartServiceImpl;
 import service.serviceImpl.StockSituationServiceImpl;
 import vo.PriceRiseOrFallVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

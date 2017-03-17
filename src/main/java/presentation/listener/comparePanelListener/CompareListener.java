@@ -1,8 +1,6 @@
 package presentation.listener.comparePanelListener;
 
 import presentation.controller.CompareController;
-import presentation.view.panel.ComparePanel;
-import presentation.view.panel.KStringPanel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

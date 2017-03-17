@@ -1,7 +1,6 @@
 package presentation.view.panel;
 
 import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
-import org.jb2011.lnf.beautyeye.ch6_textcoms.BETextFieldUI;
 import presentation.controller.LoginController;
 import presentation.listener.loginPanelListener.LoginListener;
 import presentation.listener.loginPanelListener.OpenRegisterListener;
@@ -18,7 +17,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/5.
  */
-public class LoginPanel extends TempletPanel {
+public class LoginPanel extends TemplatePanel {
 
     private static LoginPanel loginPanel;
 

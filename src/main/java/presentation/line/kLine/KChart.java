@@ -6,7 +6,6 @@ import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
-import presentation.view.util.ChartUtils;
 import vo.ChartShowCriteriaVO;
 
 import java.awt.*;
