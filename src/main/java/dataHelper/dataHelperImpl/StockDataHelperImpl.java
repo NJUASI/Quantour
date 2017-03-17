@@ -37,7 +37,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
-        return getStockByPath(stockRecordByCodePathPre + stockCode + stockRecordPathPost);
+        return getStockByPath(stockRecordByCodePathPre + backToSimplifiedStockCode(stockCode) + stockRecordPathPost);
     }
 
     /**
@@ -117,4 +117,12 @@ public class StockDataHelperImpl implements StockDataHelper {
         return result;
     }
 
+    private static String backToSimplifiedStockCode(String stockCode) {
+        char[] parts = stockCode.toCharArray();
+        int i = 0;
+        for (; i < 6; i++) {
+            if (parts[i] != '0') break;
+        }
+        return stockCode.substring(i);
+    }
 }
