@@ -53,7 +53,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
             @Override
             public void run() {
                 Group root = new Group();
-                Scene scene = new Scene(root, width*370/1920, 35*height/1030);
+                Scene scene = new Scene(root, width*385/1920, 37*height/1030);
 //                scene.setFill(null);
 //                root.setOpacity(0.1);
 //                setOpaque(false);
@@ -83,17 +83,17 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         startDate.setValue(LocalDate.now());
         startDate.setLayoutX(0);
         startDate.setLayoutY(0);
-        startDate.setMinSize(width*160/1920,35*height/1030);
-        startDate.setPrefSize(width*160/1920,35*height/1030);
-        startDate.setMaxSize(width*160/1920,35*height/1030);
+        startDate.setMinSize(width*175/1920,37*height/1030);
+        startDate.setPrefSize(width*175/1920,37*height/1030);
+        startDate.setMaxSize(width*175/1920,37*height/1030);
         startDate.setEditable(false);
         endDate = new DatePicker();
         endDate.setValue(LocalDate.now());
         endDate.setLayoutX(width*210/1920);
         endDate.setLayoutY(0);
-        endDate.setMinSize(width*160/1920,35*height/1030);
-        endDate.setPrefSize(width*160/1920,35*height/1030);
-        endDate.setMaxSize(width*160/1920,35*height/1030);
+        endDate.setMinSize(width*175/1920,37*height/1030);
+        endDate.setPrefSize(width*175/1920,37*height/1030);
+        endDate.setMaxSize(width*175/1920,37*height/1030);
         endDate.setEditable(false);
 
 
