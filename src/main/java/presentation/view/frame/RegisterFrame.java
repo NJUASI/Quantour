@@ -30,7 +30,7 @@ public class RegisterFrame extends JFrame {
         setTitle("注册");
 
 
-        setLayout(new BorderLayout(0, 0));
+        setLayout(null);
         setUndecorated(true);
         int width=WindowData.getInstance().getWidth();
         int height=WindowData.getInstance().getHeight();

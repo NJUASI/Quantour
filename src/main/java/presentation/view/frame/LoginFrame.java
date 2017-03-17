@@ -27,7 +27,7 @@ public class LoginFrame extends JFrame {
 
         setTitle("注册");
 
-
+        setLayout(null);
         setLayout(new BorderLayout(0, 0));
         setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
