@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by 61990 on 2017/3/17.
  */
-public class TitlePanel extends TempletPanel{
+public class TitlePanel extends TemplatePanel {
     private static TitlePanel titlePanel;
     JLabel label;
     MyButton close,min;

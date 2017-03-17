@@ -1,11 +1,9 @@
 package presentation.view.panel;
 
-import presentation.listener.registerPanelListener.OpenLoginListener;
 import presentation.listener.registerPanelListener.RegisterListener;
 import presentation.view.frame.LoginFrame;
 import presentation.view.frame.RegisterFrame;
 import presentation.view.tools.MyButton;
-import presentation.view.tools.MyLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +13,7 @@ import java.awt.event.MouseEvent;
 /**
 * Created by Harvey on 2017/3/12.
 */
-public class RegisterPanel extends TempletPanel{
+public class RegisterPanel extends TemplatePanel {
 
     private static RegisterPanel registerPanel;
 

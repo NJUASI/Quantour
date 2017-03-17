@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
         add(titlePanel);
 
         cardPanel = new JPanel();
-        cardPanel.setBounds(70*width/1920,40,1920*width/1920,1030*height/1030);
+        cardPanel.setBounds(70*width/1920,40*height/1030,1920*width/1920,1030*height/1030);
         add(cardPanel);
         card = new CardLayout();
         cardPanel.setLayout(card);
@@ -81,7 +81,7 @@ public class MainFrame extends JFrame {
 
         width=WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
-        setBounds(0,0,width,height);
+        setSize(width,height);
 
         setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

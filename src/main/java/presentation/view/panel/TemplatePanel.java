@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Created by 61990 on 2017/3/7.
  */
-public class TempletPanel extends JPanel {
+public class TemplatePanel extends JPanel {
     WindowData windowData;
     int width;
     int height;
@@ -22,7 +22,7 @@ public class TempletPanel extends JPanel {
      * @author 61990
      * @updateTime 2017/3/7
      */
-    public TempletPanel(){
+    public TemplatePanel(){
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height =windowData.getHeight();

@@ -1,8 +1,6 @@
 package service.serviceImpl;
 
-import dao.StockDao;
 import dao.UserDao;
-import dao.daoImpl.StockDaoImpl;
 import dao.daoImpl.UserDaoImpl;
 import utilities.exceptions.*;
 import po.UserPO;
@@ -19,11 +17,9 @@ import vo.UserVO;
 public class UserServiceImpl implements UserService {
 
     UserDao userDao;
-    StockDao stockDao;
 
     public UserServiceImpl() {
          userDao = new UserDaoImpl();
-         stockDao = new StockDaoImpl();
     }
 
     /**
