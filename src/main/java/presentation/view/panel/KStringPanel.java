@@ -27,7 +27,7 @@ import java.util.*;
 /**
  * Created by 61990 on 2017/3/5.
  */
-public class KStringPanel extends NavigationBar {
+public class KStringPanel extends TemplatePanel {
     //k线面板
     private static KStringPanel kStringPanel;
     public DoubleDatePickerPanel datePanel;

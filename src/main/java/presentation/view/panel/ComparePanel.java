@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by 61990 on 2017/3/5.
  */
-public class ComparePanel extends NavigationBar {
+public class ComparePanel extends TemplatePanel {
 
     //比较面板
     private static ComparePanel comparePanel;
