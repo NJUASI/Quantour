@@ -150,8 +150,8 @@ public class LoginPanel extends TemplatePanel {
     }
 
     public String getUsername() {
-    return admin.getText();
-}
+        return admin.getText();
+    }
 
     public String getPassword() {
         return password.getText();
