@@ -1,5 +1,6 @@
 package presentation.view.panel;
 
+import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
 import presentation.view.tools.SingleDatePickerPanel;
 import presentation.view.tools.WindowData;
@@ -48,14 +49,8 @@ public class StocksTablePanel extends TempletPanel {
         add(search);
 
         JButton detailOfCode = new JButton("查看详情");
-        detailOfCode.setBounds(adaptScreen(1150,50,100,40));
-        detailOfCode.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-
-            }
-        });
+        detailOfCode.setBounds(adaptScreen(1150,50,80,40));
+        detailOfCode.addMouseListener(new DetailOfCodeListener());
         add(detailOfCode);
 
 

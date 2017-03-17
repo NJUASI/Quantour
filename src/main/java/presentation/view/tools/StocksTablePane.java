@@ -10,7 +10,7 @@ import java.time.LocalDate;
 /**
  * Created by 61990 on 2017/3/10.
  */
-public class StocksTable extends JScrollPane {
+public class StocksTablePane extends JScrollPane {
 
     private JTable jTable;
 
@@ -20,13 +20,9 @@ public class StocksTable extends JScrollPane {
 
     int height;
 
-    StockService stockService;
-
     JLabel label;
 
-    public StocksTable(LocalDate date) {
-
-        stockService = new StockServiceImpl();
+    public StocksTablePane(LocalDate date) {
 
         windowData = WindowData.getInstance();
         width = windowData.getWidth();

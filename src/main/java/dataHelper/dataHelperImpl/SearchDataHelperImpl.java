@@ -48,6 +48,21 @@ public class SearchDataHelperImpl implements SearchDataHelper {
     }
 
     /**
+     * Gets all stocks first letters.获取所有股票的名称
+     *
+     * @return the all stocks first letters 返回所有股票的名称及其代码，名称作为键值
+     */
+    @Override
+    public Map<String, String> getAllStocksName() {
+        propertiesload("stockName-code");
+        Map<String,String> namesAndCode = new TreeMap<String,String>();
+        for(Map.Entry<Object,Object> entry:properties.entrySet()){
+            namesAndCode.put((String)entry.getKey(),(String)entry.getValue());
+        }
+        return namesAndCode;
+    }
+
+    /**
      * 加载资源文件
      *
      * @author Harvey

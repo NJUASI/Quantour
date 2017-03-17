@@ -2,7 +2,7 @@ package presentation.controller;
 
 import presentation.view.panel.KStringPanel;
 import presentation.view.panel.StocksTablePanel;
-import presentation.view.tools.StocksTable;
+import presentation.view.tools.StocksTablePane;
 import presentation.view.tools.WindowData;
 
 /**
@@ -33,7 +33,7 @@ public class StocksTableController {
     /**
      * The Stocks table.
      */
-    StocksTable stocksTable;
+    StocksTablePane stocksTablePane;
 
     /**
      * Instantiates a new Stocks table controller.
@@ -62,17 +62,17 @@ public class StocksTableController {
 
         if(first == true){
             first = false;
-            stocksTable = new StocksTable(stocksTablePanel.getChooseDate());
-            stocksTable.setLocation(300*width/1920,130*height/1030);
-            stocksTablePanel.add(stocksTable);
-            stocksTable.repaint();
+            stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
+            stocksTablePane.setLocation(300*width/1920,130*height/1030);
+            stocksTablePanel.add(stocksTablePane);
+            stocksTablePane.repaint();
         }
         else {
-            stocksTablePanel.remove(stocksTable);
-            stocksTable = new StocksTable(stocksTablePanel.getChooseDate());
-            stocksTable.setLocation(300*width/1920,130*height/1030);
-            stocksTablePanel.add(stocksTable);
-            stocksTable.repaint();
+            stocksTablePanel.remove(stocksTablePane);
+            stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
+            stocksTablePane.setLocation(300*width/1920,130*height/1030);
+            stocksTablePanel.add(stocksTablePane);
+            stocksTablePane.repaint();
         }
     }
 
@@ -82,6 +82,6 @@ public class StocksTableController {
     public void checkDetail() {
         kStringPanel = KStringPanel.getInstance();
         kStringPanel.datePanel.setDate(stocksTablePanel.getChooseDate());
-        kStringPanel.addMessage(stocksTable.getName(), stocksTable.getCode());
+        kStringPanel.addMessage(stocksTablePane.getName(), stocksTablePane.getCode());
     }
 }

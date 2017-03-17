@@ -1,6 +1,8 @@
 package presentation.view.panel;
 
+import presentation.view.panel.associatePanel.SearchComboBoxModel;
 import presentation.view.tools.WindowData;
+import vo.StockSearchVO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +17,9 @@ public class AssociatePanel extends ScrollPane {
     ListModel jListModel;
 
     JList list;
+
     public AssociatePanel(){
+
         WindowData windowData = WindowData.getInstance();
         int width = windowData.getWidth();
         int height =windowData.getHeight();
@@ -26,19 +30,16 @@ public class AssociatePanel extends ScrollPane {
         list.setLocation(0,0);
         add(list);
     }
+
     public void updateText(String str){
-        //TODO 通过str筛选对应的联想 得到可能的Vector str可能是 股票号或者名称
-
-        String listName[] =new String[4];
-        jListModel =  new DefaultComboBoxModel(new String[] { "张三", "李四" ,"王五","11","22"});
+        jListModel =  new SearchComboBoxModel(str);
         list.setModel(jListModel);
-
     }
-    public String getMessage(){
+
+    public StockSearchVO getMessage(){
         int index=list.getSelectedIndex();
-        return list.getModel().getElementAt(index).toString();
+        return (StockSearchVO) jListModel.getElementAt(index);
     }
-
 
     public static AssociatePanel getInstance(){
         if(associatePanel == null){
@@ -48,5 +49,9 @@ public class AssociatePanel extends ScrollPane {
         return associatePanel;
     }
 
-
+    //获取选择的股票的代码
+    public String getCode() {
+        int index=list.getSelectedIndex();
+        return ((StockSearchVO)jListModel.getElementAt(index)).code;
+    }
 }

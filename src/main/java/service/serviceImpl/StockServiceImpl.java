@@ -1,5 +1,9 @@
 package service.serviceImpl;
 
+import com.github.stuxuhai.jpinyin.ChineseHelper;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
+import com.github.stuxuhai.jpinyin.PinyinResource;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
@@ -110,15 +114,16 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<StockSearchVO> searchStock(String searchString) throws MatchNothingException {
+
         List<StockSearchVO> stockSearchVOs = new ArrayList<StockSearchVO>();
 
         //通过匹配股票的拼音来查询
         if(searchString.matches("[0-9]+")){
-            Map<String,String> codeAndNames = stockDao.getAllStocksCode();
-            Set<String> codes = codeAndNames.keySet();
+            Map<String,String> codeAndName = stockDao.getAllStocksCode();
+            Set<String> codes = codeAndName.keySet();
             for (String code:codes) {
                 if(code.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(code,codeAndNames.get(code));
+                    StockSearchVO vo = new StockSearchVO(code,codeAndName.get(code));
                     stockSearchVOs.add(vo);
                 }
             }
@@ -127,25 +132,38 @@ public class StockServiceImpl implements StockService {
                 throw new MatchNothingException();
             }
         }
-        //通过匹配股票的首字母来查询
-        else if(searchString.matches("[a-zA-Z]+")){
-            Map<String,String> firstLettersAndNames = stockDao.getAllStocksFirstLetters();
-            Set<String> firstLetters = firstLettersAndNames.keySet();
-            List<String> names = new ArrayList<String>();
-            for(String letters: firstLetters){
-               if(letters.startsWith(searchString)){
-                   names.add(firstLettersAndNames.get(letters));
-               }
-            }
-            //判断查询结果是否为0
-            if(stockSearchVOs.size() == 0){
-                throw new MatchNothingException();
-            }
-        }
-        //未查询到结果，抛出异常
+
+        //通过名称匹配股票
         else{
-            throw new MatchNothingException();
+            Map<String,String> namesAndCode = stockDao.getAllStocksName();
+            Set<String> names = namesAndCode.keySet();
+            for(String name:names){
+                if(name.startsWith(searchString)){
+                    StockSearchVO vo = new StockSearchVO(namesAndCode.get(name),name);
+                    stockSearchVOs.add(vo);
+                }
+            }
         }
+
+        //通过匹配股票的首字母来查询
+//        else if(searchString.matches("[a-zA-Z]+")){
+//            Map<String,String> firstLettersAndNames = stockDao.getAllStocksFirstLetters();
+//            Set<String> firstLetters = firstLettersAndNames.keySet();
+//            List<String> names = new ArrayList<String>();
+//            for(String letters: firstLetters){
+//               if(letters.startsWith(searchString)){
+//                   names.add(firstLettersAndNames.get(letters));
+//               }
+//            }
+//            //判断查询结果是否为0
+//            if(stockSearchVOs.size() == 0){
+//                throw new MatchNothingException();
+//            }
+//        }
+//        //未查询到结果，抛出异常
+//        else{
+//            throw new MatchNothingException();
+//        }
         return  stockSearchVOs;
     }
 }

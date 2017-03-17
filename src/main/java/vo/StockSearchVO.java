@@ -36,4 +36,9 @@ public class StockSearchVO {
         this.code = code;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return code+"  "+name;
+    }
 }

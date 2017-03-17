@@ -4,7 +4,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import presentation.line.LineChart;
-import presentation.view.frame.MainFrame;
+import presentation.listener.navigationBarListener.CompareListener;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.util.ChartUtils;
 import service.StockService;
@@ -31,7 +31,7 @@ public class KStringPanel extends NavigationBar {
     //k线面板
     private static KStringPanel kStringPanel;
     public DoubleDatePickerPanel datePanel;
-    JTextField name;
+    JTextField searchTextField;
     JTextField num;
     JButton search;
     JButton searchAll;
@@ -54,7 +54,7 @@ public class KStringPanel extends NavigationBar {
      */
     public KStringPanel() {
         //初始化datePicker
-        name = new JTextField();
+        searchTextField = new JTextField();
 
         num = new JTextField();
         searchAll = new JButton("总体信息");
@@ -147,9 +147,9 @@ public class KStringPanel extends NavigationBar {
         datePanel.setBounds(width * 400 / 1920, height * 50 / 1030, 370 * width / 1920, 35 * height / 1030);
         add(datePanel);
 
-        name.setBounds(adaptScreen(800, 50, 150, 35));
-        add(name);
-        name.addMouseListener(new MouseAdapter() {
+        searchTextField.setBounds(adaptScreen(800, 50, 150, 35));
+        add(searchTextField);
+        searchTextField.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 refreshAssociate();
@@ -201,7 +201,7 @@ public class KStringPanel extends NavigationBar {
             public void mouseClicked(MouseEvent e) {
                 associatePanel.setVisible(false);
                 associatePanel.setBounds(adaptScreen(900, 86, 250, 200));
-                associatePanel.updateText(name.getText());
+                associatePanel.updateText(searchTextField.getText());
 
                 if(first == true){
                     first = false;
@@ -217,19 +217,7 @@ public class KStringPanel extends NavigationBar {
         add(search);
         //加入比较按钮
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
-        compare.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-                MainFrame.getCardPanel().add(ComparePanel.getInstance(),"comparePanel");
-                MainFrame.getCard().show(MainFrame.getCardPanel(), "comparePanel");
-                ComparePanel.getInstance().setCompare(name.getText(),num.getText());
-                ComparePanel.getInstance().datePanel.setDate(datePanel.getStartDate());
-                ComparePanel.getInstance().datePanel.setEndDate(datePanel.getEndDate());
-                ComparePanel.getInstance().associatePanel.setVisible(false);
-                ComparePanel.getInstance().associatePanel2.setVisible(false);
-            }
-        });
+        compare.addMouseListener(new CompareListener());
         add(compare);
 
         favorite.setBounds(adaptScreen(1550, 50, 70, 35));
@@ -287,18 +275,18 @@ public class KStringPanel extends NavigationBar {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                name.setText(associatePanel.getMessage());
+                searchTextField.setText(associatePanel.getMessage().name);
                 associatePanel.setVisible(false);
             }
         });
-        Document dt = name.getDocument();
+        Document dt = searchTextField.getDocument();
         dt.addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
                 associatePanel.setVisible(true);
                 associatePanel.setBounds(adaptScreen(800, 86, 250, 200));
-                associatePanel.updateText(name.getText());
+                associatePanel.updateText(searchTextField.getText());
             }
 
             @Override
@@ -353,7 +341,7 @@ public class KStringPanel extends NavigationBar {
         associatePanel.setVisible(false);
     }
     public void addMessage(String name, String num){
-        this.name.setText(name);
+        this.searchTextField.setText(name);
         this.num.setText(num);
         associatePanel.setVisible(false);
     }
