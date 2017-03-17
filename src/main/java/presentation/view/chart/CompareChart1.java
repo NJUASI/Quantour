@@ -57,6 +57,7 @@ public class CompareChart1 {
 
         // 6:使用chartPanel接收
         ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setBackground(new Color(32,36,39));
         return chartPanel;
     }
 

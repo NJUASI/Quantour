@@ -152,6 +152,7 @@ public class CompareChart4 {
         // 设置图例位置
         // 6:使用chartPanel接收
         chartPanel = new ChartPanel(chart);
+        chartPanel.setBackground(new Color(32,36,39));
         return chartPanel;
     }
 

@@ -70,7 +70,7 @@ public class MyScrollBarUI extends BasicScrollBarUI {
     // 重绘当鼠标点击滑动到向上或向左按钮之间的区域
     protected void paintDecreaseHighlight(Graphics g)
     {
-        g.setColor(Color.green);
+        g.setColor(new Color(19, 22, 24));
         int x = this.getTrackBounds().x;
         int y = this.getTrackBounds().y;
         int w = 0, h = 0;
@@ -92,7 +92,7 @@ public class MyScrollBarUI extends BasicScrollBarUI {
     protected void paintIncreaseHighlight(Graphics g)
     {
         Insets insets = scrollbar.getInsets();
-        g.setColor(Color.blue);
+        g.setColor(new Color(19, 22, 24));
         int x = this.getThumbBounds().x;
         int y = this.getThumbBounds().y;
         int w = this.getTrackBounds().width;

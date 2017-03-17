@@ -57,7 +57,7 @@ public class ChartUtils {
 	private static String NO_DATA_MSG = "数据加载失败";
 	private static Font FONT = new Font("宋体", Font.PLAIN, 12);
 	public static Color[] CHART_COLORS = {
-			new Color(31,129,188), new Color(92,92,97), new Color(144,237,125), new Color(255,188,117),
+			new Color(76,162,235), new Color(250,157,0), new Color(144,237,125), new Color(255,188,117),
 			new Color(153,158,255), new Color(255,117,153), new Color(253,236,109), new Color(128,133,232),
 			new Color(158,90,102),new Color(255, 204, 102) };// 颜色
 
@@ -81,24 +81,24 @@ public class ChartUtils {
 		// 设置轴向的字体
 		chartTheme.setLargeFont(FONT);
 		chartTheme.setSmallFont(FONT);
-		chartTheme.setTitlePaint(new Color(51, 51, 51));
-		chartTheme.setSubtitlePaint(new Color(85, 85, 85));
+		chartTheme.setTitlePaint(new Color(201, 208, 214));
+		chartTheme.setSubtitlePaint(new Color(201, 208, 214));
 
-		chartTheme.setLegendBackgroundPaint(Color.WHITE);// 设置标注
-		chartTheme.setLegendItemPaint(Color.BLACK);//
-		chartTheme.setChartBackgroundPaint(Color.WHITE);
+		chartTheme.setLegendBackgroundPaint(new Color(32,36,39));// 设置标注
+		chartTheme.setLegendItemPaint(new Color(201, 208, 214));//
+		chartTheme.setChartBackgroundPaint(new Color(32,36,39));
 		// 绘制颜色绘制颜色.轮廓供应商
 		// paintSequence,outlinePaintSequence,strokeSequence,outlineStrokeSequence,shapeSequence
 
-		Paint[] OUTLINE_PAINT_SEQUENCE = new Paint[] { Color.WHITE };
+		Paint[] OUTLINE_PAINT_SEQUENCE = new Paint[] { new Color(32,36,39) };
 		// 绘制器颜色源
 		DefaultDrawingSupplier drawingSupplier = new DefaultDrawingSupplier(CHART_COLORS, CHART_COLORS, OUTLINE_PAINT_SEQUENCE,
 				DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE, DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
 				DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE);
 		chartTheme.setDrawingSupplier(drawingSupplier);
 
-		chartTheme.setPlotBackgroundPaint(Color.WHITE);// 绘制区域
-		chartTheme.setPlotOutlinePaint(Color.WHITE);// 绘制区域外边框
+		chartTheme.setPlotBackgroundPaint(new Color(32,36,39));// 绘制区域
+		chartTheme.setPlotOutlinePaint(new Color(32,36,39));// 绘制区域外边框
 		chartTheme.setLabelLinkPaint(new Color(8, 55, 114));// 链接标签颜色
 		chartTheme.setLabelLinkStyle(PieLabelLinkStyle.CUBIC_CURVE);
 
@@ -108,8 +108,8 @@ public class ChartUtils {
 
 		chartTheme.setBaselinePaint(Color.WHITE);
 		chartTheme.setCrosshairPaint(Color.BLUE);// 不确定含义
-		chartTheme.setAxisLabelPaint(new Color(51, 51, 51));// 坐标轴标题文字颜色
-		chartTheme.setTickLabelPaint(new Color(67, 67, 72));// 刻度数字
+		chartTheme.setAxisLabelPaint(new Color(201, 208, 214));// 坐标轴标题文字颜色
+		chartTheme.setTickLabelPaint(new Color(201, 208, 214));// 刻度数字
 		chartTheme.setBarPainter(new StandardBarPainter());// 设置柱状图渲染
 		chartTheme.setXYBarPainter(new StandardXYBarPainter());// XYBar 渲染
 
@@ -131,7 +131,7 @@ public class ChartUtils {
 	 * 设置图例无边框，默认黑色边框
 	 */
 	public static void setLegendEmptyBorder(JFreeChart chart) {
-		chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
+		chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
 
 	}
 

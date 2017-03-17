@@ -1,6 +1,7 @@
 package presentation.view.chart;
 
 import org.jfree.chart.ChartPanel;
+import presentation.view.tools.MyScrollBarUI;
 import presentation.view.tools.WindowData;
 import vo.StockComparisionVO;
 
@@ -72,6 +73,7 @@ public class CompareChartPanel extends JPanel {
         scrollPane=new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(1500*width/1920,800*height/1030));
         scrollPane.setBounds(adaptScreen(0,0,1500,800));
+        scrollPane.getVerticalScrollBar().setUI(new MyScrollBarUI());
 
         scrollPane.setViewportView(panel);
         scrollPane.setVisible(true);
