@@ -66,7 +66,6 @@ public class CompareChartPanel extends JPanel {
         panel.add(chartPanel6);
 
         setBounds(adaptScreen(250,100,1500,850));
-        setVisible(true);
         setPreferredSize(new Dimension(1500,850));
 
         panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1030));
@@ -76,6 +75,7 @@ public class CompareChartPanel extends JPanel {
 
         scrollPane.setViewportView(panel);
         scrollPane.setVisible(true);
+        setVisible(true);
         panel.setVisible(true);
         scrollPane.repaint();
         panel.repaint();
