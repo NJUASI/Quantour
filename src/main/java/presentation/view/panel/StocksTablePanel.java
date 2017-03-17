@@ -36,7 +36,7 @@ public class StocksTablePanel extends TemplatePanel {
     public StocksTablePanel(){
 
         datePickerPanel = new SingleDatePickerPanel();
-        datePickerPanel.setBounds(adaptScreen(500, 50,150,35));
+        datePickerPanel.setBounds(adaptScreen(500, 50,175,35));
         add(datePickerPanel);
 
         JButton search = new JButton("搜索");

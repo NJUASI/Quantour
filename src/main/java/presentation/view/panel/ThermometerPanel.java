@@ -34,7 +34,7 @@ public class ThermometerPanel extends TemplatePanel {
      */
     public ThermometerPanel() {
         date = new SingleDatePickerPanel();
-        date.setBounds(width * 600 / 1920, height * 50 / 1030, width * 150 / 1920, 35 * height / 1030);
+        date.setBounds(width * 600 / 1920, height * 50 / 1030, width * 175 / 1920, 35 * height / 1030);
         add(date);
 
         search = new JButton("搜索");
