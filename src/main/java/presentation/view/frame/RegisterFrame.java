@@ -31,7 +31,7 @@ public class RegisterFrame extends JFrame {
 
 
         setLayout(new BorderLayout(0, 0));
-
+        setUndecorated(true);
         int width=WindowData.getInstance().getWidth();
         int height=WindowData.getInstance().getHeight();
 

@@ -2,9 +2,15 @@ package presentation.view.panel;
 
 import presentation.listener.registerPanelListener.OpenLoginListener;
 import presentation.listener.registerPanelListener.RegisterListener;
+import presentation.view.frame.LoginFrame;
+import presentation.view.frame.RegisterFrame;
+import presentation.view.tools.MyButton;
+import presentation.view.tools.MyLabel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
 * Created by Harvey on 2017/3/12.
@@ -28,6 +34,7 @@ public class RegisterPanel extends TempletPanel{
     //注册按钮
     private JButton register;
 
+    MyButton close,min;
     /**
      * 构造器
      *
@@ -79,6 +86,47 @@ public class RegisterPanel extends TempletPanel{
         register.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
         register.addMouseListener(new RegisterListener());
         add(register);
+
+        //关闭按钮
+        close=new MyButton("close",0);
+        close.setBounds(adaptScreen(405,0,40,35));
+        close.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                RegisterFrame.getInstance().refresh();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                close.moveIn();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                close.moveOut();
+            }
+        });
+        add(close);
+        //最小化按钮
+        min=new MyButton("min",0);
+        min.setBounds(adaptScreen(350,0,40,35));
+        min.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                LoginFrame.getInstance().setExtendedState(JFrame.ICONIFIED);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                min.moveIn();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                min.moveOut();
+            }
+        });
+        add(min);
     }
 
     public static RegisterPanel getInstance(){

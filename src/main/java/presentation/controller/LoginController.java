@@ -2,6 +2,7 @@ package presentation.controller;
 
 import presentation.view.frame.LoginFrame;
 import presentation.view.frame.MainFrame;
+import presentation.view.frame.RegisterFrame;
 import presentation.view.panel.LoginPanel;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
@@ -59,6 +60,7 @@ public class LoginController{
                 MainFrame.getInstance();
 //                ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
                 LoginFrame.getInstance().refresh();
+                RegisterFrame.getInstance().refresh();
                 return true;
             }
 

@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import org.jb2011.lnf.beautyeye.*;
 import presentation.controller.ViewSwitchController;
+import presentation.view.panel.NavigationBar;
+import presentation.view.panel.TitlePanel;
 import presentation.view.tools.WindowData;
 
 /**
@@ -17,8 +19,9 @@ public class MainFrame extends JFrame {
 
     //一些主原件
     private static MainFrame mainPanel;
-    private static JPanel cardPanel;
+    private static JPanel cardPanel,barPanel,titlePanel;
     private static CardLayout card;
+    int width,height;
 
     /**
      * 构造器
@@ -29,21 +32,29 @@ public class MainFrame extends JFrame {
      * @updateTime 2017/3/5
      */
     public MainFrame() {
-
+        setUndecorated(true);
         try
         {
-            BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
-            UIManager.put("RootPane.setupButtonVisible", false);
+            BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.generalNoTranslucencyShadow;
             BeautyEyeLNFHelper.launchBeautyEyeLNF();
         }
         catch(Exception e)
         {
 
         }
+        setLayout(new BorderLayout(0, 0));
+        setUndecorated(true);
         createWindow();
 
+        barPanel = new NavigationBar();
+        add(barPanel);
+
+        titlePanel= TitlePanel.getInstance();
+        add(titlePanel);
+
         cardPanel = new JPanel();
-        getContentPane().add(cardPanel, BorderLayout.CENTER);
+        cardPanel.setBounds(70*width/1920,40,1920*width/1920,1030*height/1030);
+        add(cardPanel);
         card = new CardLayout();
         cardPanel.setLayout(card);
 
@@ -52,6 +63,8 @@ public class MainFrame extends JFrame {
 
         //进入登录界面
         ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
+
+
     }
 
     /**
@@ -64,23 +77,11 @@ public class MainFrame extends JFrame {
      */
     private void createWindow() {
 
-        setTitle("ASI");
         getContentPane().setLayout(new BorderLayout(0, 0));
+        width=WindowData.getInstance().getWidth();
+        height=WindowData.getInstance().getHeight();
+        setBounds(0,0,width,height);
 
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
-        Rectangle bounds = new Rectangle(dim);
-
-        //set the windows large
-        bounds.x += insets.left;
-        bounds.y += insets.top;
-        bounds.width -= insets.left + insets.right;
-        bounds.height -= insets.top + insets.bottom;
-
-        WindowData.setWindowData(bounds.width, bounds.height);//save the window's data
-        setBounds(bounds);
-
-        setUndecorated(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setVisible(true);

@@ -28,11 +28,12 @@ public class TempletPanel extends JPanel {
         height =windowData.getHeight();
         setLayout(null);
         setBackground(WindowData.getInstance().getColor());
+        setBackground(new Color(32,36,39));
 
-        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("bg.png"));
-        bgPicture.setImage(bgPicture.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
-        bg1= new JLabel(bgPicture);
-        bg1.setBounds(0,0,width,height);
+//        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("bg.png"));
+//        bgPicture.setImage(bgPicture.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+//        bg1= new JLabel(bgPicture);
+//        bg1.setBounds(0,0,width,height);
 //        add(bg1);
 //        bg1.setOpaque(true);
 //        bg1.setBackground(new Color(55,60,56));

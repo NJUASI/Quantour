@@ -5,6 +5,7 @@ import presentation.view.tools.SingleDatePickerPanel;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
  *
  * 股票列表显示面板
  */
-public class StocksTablePanel extends NavigationBar {
+public class StocksTablePanel extends TempletPanel {
 
     /**
      * The constant stocksTablePanel.

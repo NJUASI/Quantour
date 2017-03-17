@@ -16,7 +16,6 @@ public class LoginFrame extends JFrame {
     public LoginFrame() {
         try {
             BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
-            UIManager.put("RootPane.setupButtonVisible", false);
             BeautyEyeLNFHelper.launchBeautyEyeLNF();
         } catch (Exception e) {
 
@@ -30,7 +29,7 @@ public class LoginFrame extends JFrame {
 
 
         setLayout(new BorderLayout(0, 0));
-
+        setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
         Rectangle bounds = new Rectangle(dim);

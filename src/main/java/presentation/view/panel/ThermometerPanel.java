@@ -9,7 +9,7 @@ import java.time.LocalDate;
 /**
  * Created by 61990 on 2017/3/5.
  */
-public class ThermometerPanel extends NavigationBar {
+public class ThermometerPanel extends TempletPanel {
     //温度计面板
     private static ThermometerPanel thermometerPanel;
 

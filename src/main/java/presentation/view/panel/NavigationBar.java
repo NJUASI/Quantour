@@ -7,6 +7,7 @@ import presentation.listener.navigationBarListener.ThermometerListener;
 import presentation.view.frame.MainFrame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -25,34 +26,35 @@ public class NavigationBar extends TempletPanel {
      */
     public NavigationBar() {
         setLayout(null);
-
+        setBackground(new Color(19,22,24));
+        setBounds(adaptScreen(0,0,70,1030));
         //the door of function 1
         JButton kString = new JButton("kString");
-        kString.setBounds(adaptScreen(50, 350, 120, 50));
+        kString.setBounds(adaptScreen(0, 150, 70, 70));
         kString.addMouseListener(new KStringListener());
         add(kString);
 
         //the door of function 2
         JButton compare = new JButton("compare");
-        compare.setBounds(adaptScreen(50, 500, 120, 50));
+        compare.setBounds(adaptScreen(0, 220, 70, 70));
         compare.addMouseListener(new CompareListener());
         add(compare);
 
         //the door of function 3
         JButton thermometer = new JButton("thermometer");
-        thermometer.setBounds(adaptScreen(50, 650, 120, 50));
+        thermometer.setBounds(adaptScreen(0, 290, 70, 70));
         thermometer.addMouseListener(new ThermometerListener());
         add(thermometer);
 
         //the door of function 4
         JButton favorites = new JButton("stocks");
-        favorites.setBounds(adaptScreen(50, 200, 120, 50));
+        favorites.setBounds(adaptScreen(0, 70, 70, 70));
         favorites.addMouseListener(new FavoritesListener());
         add(favorites);
 
         //log out
         JButton logout = new JButton("注销");
-        logout.setBounds(adaptScreen(90, 820, 55, 35));
+        logout.setBounds(adaptScreen(90, 820, 70, 70));
         logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

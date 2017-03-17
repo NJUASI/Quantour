@@ -1,8 +1,13 @@
 package presentation.view.panel;
 
+import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
+import org.jb2011.lnf.beautyeye.ch6_textcoms.BETextFieldUI;
 import presentation.controller.LoginController;
 import presentation.listener.loginPanelListener.LoginListener;
 import presentation.listener.loginPanelListener.OpenRegisterListener;
+import presentation.view.frame.LoginFrame;
+import presentation.view.tools.MyButton;
+import presentation.view.tools.MyLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +33,7 @@ public class LoginPanel extends TempletPanel {
 
     //注册按钮
     JButton openRegister;
-
+    MyButton close,min;
     /**
      * 构造器
      *
@@ -40,9 +45,11 @@ public class LoginPanel extends TempletPanel {
     public LoginPanel() {
         setVisible(true);
         setBounds(adaptScreen(0,0,450,500));
-
+        setBackground(new Color(47,51,55));
         //to write your message
-        admin = new JTextField("Enter your admin");
+//        admin = new JTextField("Enter your admin");
+        admin = new JTextField("Gaoyuan");
+
         admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         admin.setBounds(adaptScreen(90, 200, 260, 38));
         admin.addMouseListener(new MouseAdapter() {
@@ -51,13 +58,15 @@ public class LoginPanel extends TempletPanel {
                 admin.setText("");
             }
         });
-//        admin.setOpaque(false);
-//        admin.setBorder(null);
-//        admin.setForeground(new Color(122,2,2));
         admin.setVisible(true);
         add(admin);
-
-        password = new JPasswordField("");
+        MyLabel label = new MyLabel("账户");
+        label.setLocation(35,200);
+        add(label);
+        MyLabel label2 = new MyLabel("密码");
+        label2.setLocation(35,255);
+        add(label2);
+        password = new JPasswordField("123456");
         password.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -66,15 +75,17 @@ public class LoginPanel extends TempletPanel {
         });
         password.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         password.setBounds(adaptScreen(90, 255, 260, 38));
-
         password.setVisible(true);
         add(password);
 
         //the Button setting of logIn to mainPanel
         JButton login = new JButton("登录");
         login.setBounds(adaptScreen(90, 340, 260, 40));
+
+        login.setForeground(new Color(255,255,255));
         login.setFont(new Font("", Font.CENTER_BASELINE, 20 * width / 1920));
         loginController = LoginController.getInstance();
+        login.setUI(new BEButtonUI().setNormalColor(BEButtonUI.NormalColor.blue));
         login.addMouseListener(new LoginListener());
         add(login);
 
@@ -83,8 +94,50 @@ public class LoginPanel extends TempletPanel {
         openRegister.setFont(new Font("", Font.CENTER_BASELINE, 15 * width / 1920));
         openRegister.setBounds(adaptScreen(350, 350, 60, 35));
         openRegister.setContentAreaFilled(false);
+        openRegister.setForeground(new Color(254, 104, 4));
         openRegister.addMouseListener(new OpenRegisterListener());
         add(openRegister);
+
+        //关闭按钮
+        close=new MyButton("close",0);
+        close.setBounds(adaptScreen(405,0,40,35));
+        close.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                System.exit(0);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                close.moveIn();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                close.moveOut();
+            }
+        });
+        add(close);
+        //最小化按钮
+        min=new MyButton("min",0);
+        min.setBounds(adaptScreen(350,0,40,35));
+        min.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                LoginFrame.getInstance().setExtendedState(JFrame.ICONIFIED);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                min.moveIn();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                min.moveOut();
+            }
+        });
+        add(min);
     }
 
     public static LoginPanel getInstance() {
