@@ -94,7 +94,7 @@ public class KChart {
      */
     public void setPlot(LocalDate start,LocalDate end,int gap){
         this.setRenderer(0.001);//设置各个K线图之间的间隔
-        this.setY(50);
+        this.setY(20);
         this.setYOfVol(10);
         this.setX(start,end,gap);
     }
@@ -113,6 +113,7 @@ public class KChart {
         plot.setDomainGridlinesVisible(false);
         plot.setDataset(0,seriesCollection);
         plot.setRenderer(0,render);
+        plot.setBackgroundPaint(new Color(32,36,39));
 
         return plot;
     }
@@ -130,6 +131,7 @@ public class KChart {
         this.setXYBarRender(data.seriesCollection,this.render,gap);
         XYPlot plot=new XYPlot(timeSeriesCollection,null,yAxisOfVol,xyBarRender);//建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
 
+        plot.setBackgroundPaint(new Color(32,36,39));
         return plot;
 
     }
@@ -146,8 +148,8 @@ public class KChart {
         render.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         render.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
         render.setAutoWidthGap(gap);//设置各个K线图之间的间隔
-        render.setUpPaint(new Color(252,47,77));//设置股票上涨的K线图颜色
-        render.setDownPaint(new Color(57,199,125));//设置股票下跌的K线图颜色
+        render.setUpPaint(new Color(255,61,61));//设置股票上涨的K线图颜色
+        render.setDownPaint(new Color(15,195,81));//设置股票下跌的K线图颜色
     }
 
     /**

@@ -1,6 +1,6 @@
 package presentation.view.chart;
 
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
@@ -125,6 +125,9 @@ public class CompareChart4 {
         XYPlot xyplot = (XYPlot) chart.getPlot();
         ChartUtils.setXY_XAixs(xyplot);
         ChartUtils.setXY_YAixs(xyplot);
+
+        xyplot.setBackgroundPaint(new Color(32,36,39));
+
         // 日期X坐标轴
         DateAxis domainAxis = (DateAxis) xyplot.getDomainAxis();
         domainAxis.setAutoTickUnitSelection(false);

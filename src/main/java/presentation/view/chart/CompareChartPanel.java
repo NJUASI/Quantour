@@ -5,6 +5,7 @@ import presentation.view.tools.WindowData;
 import vo.StockComparisionVO;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.util.List;
 

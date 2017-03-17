@@ -18,19 +18,19 @@ public class ColorFactory {
      */
     public Color getColor(int tag){
         if(tag==5){
-            return Color.RED;
+            return new Color(255,96,96);
         }
         if(tag == 10){
-            return Color.YELLOW;
+            return new Color(255,141,30);
         }
         if(tag == 20){
-            return Color.MAGENTA;
+            return new Color(233,112,220);
         }
         if(tag == 30){
-            return Color.GREEN;
+            return new Color(0,255,96);
         }
         if(tag == 60){
-            return Color.BLUE;
+            return new Color(0,128,255);
         }
         return null;
     }

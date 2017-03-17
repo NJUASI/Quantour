@@ -4,6 +4,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.view.util.ChartUtils;
@@ -52,6 +53,10 @@ public class CompareChart2 {
         ChartUtils.setYAixs(chart.getCategoryPlot());// Y坐标轴渲染
         // 设置标注无边框
         chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
+
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(new Color(32,36,39));
+
         // 6:使用chartPanel接收
         ChartPanel chartPanel = new ChartPanel(chart);
         return chartPanel;
