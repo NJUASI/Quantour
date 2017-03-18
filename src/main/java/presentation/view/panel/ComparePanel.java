@@ -162,6 +162,9 @@ public class ComparePanel extends TemplatePanel {
         name1.setText(name);
         num1.setText(num);
     }
+    public void setDate(LocalDate start,LocalDate end) {
+        datePanel.setDate(start,end);
+    }
     /**
      * 通过code寻找股票的全部信息
      *

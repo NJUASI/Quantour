@@ -235,6 +235,7 @@ public class KStringPanel extends TemplatePanel {
                 ViewSwitchController.getInstance().viewSwitch("comparePanel");
                 NavigationBar.getInstance().whileClicked(3);
                 ComparePanel.getInstance().setCompare(searchTextField.getText(),num.getText());
+                ComparePanel.getInstance().setDate(datePanel.getStartDate(),datePanel.getEndDate());
                 ComparePanel.getInstance().count=0;
             }
         });

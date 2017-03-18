@@ -140,6 +140,10 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         endDate.setValue(date);
     }
 
+    public void setDate(LocalDate date,LocalDate date2) {
+        startDate.setValue(date);
+        endDate.setValue(date2);
+    }
     public void setDate(LocalDate date) {
         startDate.setValue(date);
         endDate.setValue(date);
