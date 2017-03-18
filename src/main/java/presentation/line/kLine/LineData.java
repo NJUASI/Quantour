@@ -23,13 +23,13 @@ import java.util.List;
 public class LineData {
 
     //K线的数据最高价
-    private double high = -1;
+    private double high = Double.MIN_VALUE;
 
     //K线的数据最低价
     private double low = Double.MAX_VALUE;
 
     //数据的最高交易量
-    private double highVolume = -1;
+    private double highVolume = Double.MIN_VALUE;
 
     //数据的最低交易量
     private double lowVolume = Double.MAX_VALUE;
@@ -169,7 +169,6 @@ public class LineData {
                     high = seriesCollection.getHighValue(i, j);
                 }
                 if (low > seriesCollection.getLowValue(i, j)&&seriesCollection.getLowValue(i, j)>0) {//取第i个序列中的第j个数据项的最小值
-//                    System.out.println("ok");
                     low = seriesCollection.getLowValue(i, j);
                 }
             }
