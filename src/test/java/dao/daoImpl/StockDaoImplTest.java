@@ -49,7 +49,7 @@ public class StockDaoImplTest {
         assertEquals(7.29, testPO.getClose(), 0);
         assertEquals("117079", testPO.getVolume());
         assertEquals(7.29, testPO.getAdjClose(), 0);
-        assertEquals("26", testPO.getCode());
+        assertEquals("000026", testPO.getCode());
         assertEquals("飞亚达Ａ", testPO.getName());
         assertEquals(7.55, testPO.getPreClose(), 0);
         assertEquals(7.55, testPO.getPreAdjClose(), 0);
@@ -70,7 +70,7 @@ public class StockDaoImplTest {
         assertEquals(18.62, testPO.getClose(), 0);
         assertEquals("8408", testPO.getVolume());
         assertEquals(18.15, testPO.getAdjClose(), 0);
-        assertEquals("2001", testPO.getCode());
+        assertEquals("002001", testPO.getCode());
         assertEquals("新 和 成", testPO.getName());
         assertEquals(Market.SZ, testPO.getMarket());
         assertEquals(18.72, testPO.getPreClose(), 0);
@@ -97,7 +97,7 @@ public class StockDaoImplTest {
         assertEquals(11.03, testPO.getClose(), 0);
         assertEquals("526045", testPO.getVolume());
         assertEquals(11.03, testPO.getAdjClose(), 0);
-        assertEquals("1", testPO.getCode());
+        assertEquals("000001", testPO.getCode());
         assertEquals("深发展Ａ", testPO.getName());
         assertEquals(Market.SZ, testPO.getMarket());
         assertEquals(11.25, testPO.getPreClose(), 0);
@@ -129,7 +129,7 @@ public class StockDaoImplTest {
         assertEquals(3.25, testPO.getClose(), 0);
         assertEquals("108437", testPO.getVolume());
         assertEquals(1.58, testPO.getAdjClose(), 0);
-        assertEquals("2067", testPO.getCode());
+        assertEquals("002067", testPO.getCode());
         assertEquals("景兴纸业", testPO.getName());
         assertEquals(Market.SZ, testPO.getMarket());
         assertEquals(3.42, testPO.getPreClose(), 0);
@@ -143,26 +143,26 @@ public class StockDaoImplTest {
     @Test
     public void getStockData3_1() throws Exception {
         List<StockPO> result = stockDao.getStockData("1");
-        assertEquals(2383, result.size());
+        assertEquals(2100, result.size());
 
         StockPO testPO = result.get(10);
 
         // expected:
-        // 2372	2005-02-15	3.17	3.17	3.17	3.17	0	1.48	1	深发展Ａ	SZ	3.17	1.48
+        // 2365	2005-02-24	3.21	3.21	3.16	3.19	103734	1.49	1	深发展Ａ	SZ	3.21	1.5
 
-        assertEquals(2372, testPO.getSerial());
-        assertEquals(LocalDate.of(2005, 2, 15), testPO.getDate());
-        assertEquals(3.17, testPO.getOpen(), 0);
-        assertEquals(3.17, testPO.getHigh(), 0);
-        assertEquals(3.17, testPO.getLow(), 0);
-        assertEquals(3.17, testPO.getClose(), 0);
-        assertEquals("0", testPO.getVolume());
-        assertEquals(1.48, testPO.getAdjClose(), 0);
-        assertEquals("1", testPO.getCode());
+        assertEquals(2365, testPO.getSerial());
+        assertEquals(LocalDate.of(2005, 2, 24), testPO.getDate());
+        assertEquals(3.21, testPO.getOpen(), 0);
+        assertEquals(3.21, testPO.getHigh(), 0);
+        assertEquals(3.16, testPO.getLow(), 0);
+        assertEquals(3.19, testPO.getClose(), 0);
+        assertEquals("103734", testPO.getVolume());
+        assertEquals(1.49, testPO.getAdjClose(), 0);
+        assertEquals("000001", testPO.getCode());
         assertEquals("深发展Ａ", testPO.getName());
         assertEquals(Market.SZ, testPO.getMarket());
-        assertEquals(3.17, testPO.getPreClose(), 0);
-        assertEquals(1.48, testPO.getPreAdjClose(), 0);
+        assertEquals(3.21, testPO.getPreClose(), 0);
+        assertEquals(1.5, testPO.getPreAdjClose(), 0);
 
 
     }
@@ -170,9 +170,9 @@ public class StockDaoImplTest {
     @Test
     public void getStockData3_2() throws Exception {
         List<StockPO> result = stockDao.getStockData("2077");
-        assertEquals(1882, result.size());
+        assertEquals(1768, result.size());
 
-        StockPO testPO = result.get(1881);
+        StockPO testPO = result.get(1767);
 
         // expected:
         // 0	2014-04-29	6.09	6.19	6.02	6.19	11719	6.19	2077	大港股份	SZ	6.09	6.09
@@ -185,7 +185,7 @@ public class StockDaoImplTest {
         assertEquals(6.19, testPO.getClose(), 0);
         assertEquals("11719", testPO.getVolume());
         assertEquals(6.19, testPO.getAdjClose(), 0);
-        assertEquals("2077", testPO.getCode());
+        assertEquals("002077", testPO.getCode());
         assertEquals("大港股份", testPO.getName());
         assertEquals(Market.SZ, testPO.getMarket());
         assertEquals(6.09, testPO.getPreClose(), 0);
@@ -200,51 +200,51 @@ public class StockDaoImplTest {
     @Test
     public void getStockData4_1() throws Exception {
         List<StockPO> result = stockDao.getStockData(LocalDate.of(2009, 4, 7));
-        assertEquals(316, result.size());
+        assertEquals(311, result.size());
 
         StockPO testPO = result.get(46);
 
         // expected:
-        // 1265	2009-04-07	3.76	3.89	3.73	3.88	41541	2.18	2026	山东威达	SZ	3.75	2.1
+        // 1284	2009-04-07	18.78	18.88	18.46	18.62	59933	10.88	2028	思源电气	SZ	18.81	10.99
 
-        assertEquals(1265, testPO.getSerial());
+        assertEquals(1284, testPO.getSerial());
         assertEquals(LocalDate.of(2009, 4, 7), testPO.getDate());
-        assertEquals(3.76, testPO.getOpen(), 0);
-        assertEquals(3.89, testPO.getHigh(), 0);
-        assertEquals(3.73, testPO.getLow(), 0);
-        assertEquals(3.88, testPO.getClose(), 0);
-        assertEquals("41541", testPO.getVolume());
-        assertEquals(2.18, testPO.getAdjClose(), 0);
-        assertEquals("2026", testPO.getCode());
-        assertEquals("山东威达", testPO.getName());
+        assertEquals(18.78, testPO.getOpen(), 0);
+        assertEquals(18.88, testPO.getHigh(), 0);
+        assertEquals(18.46, testPO.getLow(), 0);
+        assertEquals(18.62, testPO.getClose(), 0);
+        assertEquals("59933", testPO.getVolume());
+        assertEquals(10.88, testPO.getAdjClose(), 0);
+        assertEquals("002028", testPO.getCode());
+        assertEquals("思源电气", testPO.getName());
         assertEquals(Market.SZ, testPO.getMarket());
-        assertEquals(3.75, testPO.getPreClose(), 0);
-        assertEquals(2.1, testPO.getPreAdjClose(), 0);
+        assertEquals(18.81, testPO.getPreClose(), 0);
+        assertEquals(10.99, testPO.getPreAdjClose(), 0);
     }
 
     @Test
     public void getStockData4_2() throws Exception {
         List<StockPO> result = stockDao.getStockData(LocalDate.of(2008, 8, 8));
-        assertEquals(308, result.size());
+        assertEquals(299, result.size());
 
         StockPO testPO = result.get(211);
 
         // expected:
-        // 1445	2008-08-08	5.78	5.82	5.39	5.4	5521	2.69	2192	路翔股份	SZ	5.82	2.9
+        // 1446	2008-08-08	2.3	2.31	2.16	2.16	24555	0.43	2198	嘉应制药	SZ	2.36	0.46
 
-        assertEquals(1445, testPO.getSerial());
+        assertEquals(1446, testPO.getSerial());
         assertEquals(LocalDate.of(2008, 8, 8), testPO.getDate());
-        assertEquals(5.78, testPO.getOpen(), 0);
-        assertEquals(5.82, testPO.getHigh(), 0);
-        assertEquals(5.39, testPO.getLow(), 0);
-        assertEquals(5.4, testPO.getClose(), 0);
-        assertEquals("5521", testPO.getVolume());
-        assertEquals(2.69, testPO.getAdjClose(), 0);
-        assertEquals("2192", testPO.getCode());
-        assertEquals("路翔股份", testPO.getName());
+        assertEquals(2.3, testPO.getOpen(), 0);
+        assertEquals(2.31, testPO.getHigh(), 0);
+        assertEquals(2.16, testPO.getLow(), 0);
+        assertEquals(2.16, testPO.getClose(), 0);
+        assertEquals("24555", testPO.getVolume());
+        assertEquals(0.43, testPO.getAdjClose(), 0);
+        assertEquals("002198", testPO.getCode());
+        assertEquals("嘉应制药", testPO.getName());
         assertEquals(Market.SZ, testPO.getMarket());
-        assertEquals(5.82, testPO.getPreClose(), 0);
-        assertEquals(2.9, testPO.getPreAdjClose(), 0);
+        assertEquals(2.36, testPO.getPreClose(), 0);
+        assertEquals(0.46, testPO.getPreAdjClose(), 0);
     }
 
     /**
