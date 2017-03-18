@@ -8,6 +8,7 @@ import utilities.exceptions.DataSourceFirstDayException;
 import vo.StockComparisionVO;
 import vo.StockComparsionCriteriaVO;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -88,7 +89,7 @@ public class CompareController {
             }
 //            chartPanel.repaint();
         }catch (DataSourceFirstDayException e ) {
-            // TODO 高源：首日无法计算涨跌幅
+            JOptionPane.showMessageDialog(compareChartPanel,"首日无法计算涨跌幅");
         } catch (Exception e){
 
         }

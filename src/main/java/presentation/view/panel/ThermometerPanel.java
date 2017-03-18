@@ -60,10 +60,10 @@ public class ThermometerPanel extends TemplatePanel {
      */
     public static ThermometerPanel getInstance() {
         if (thermometerPanel == null) {
-            thermometerPanel = new ThermometerPanel();
-        }
-        return thermometerPanel;
+        thermometerPanel = new ThermometerPanel();
     }
+        return thermometerPanel;
+}
 
     /**
      * 清除单件

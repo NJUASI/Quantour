@@ -13,6 +13,7 @@ import presentation.view.util.ChartUtils;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.ColorNotExistException;
 import utilities.exceptions.DateNotWithinException;
 import vo.ChartShowCriteriaVO;
@@ -119,7 +120,7 @@ public class KStringPanel extends TemplatePanel {
     public void findSpecial(String code, LocalDate startDate,LocalDate endDate) throws DateNotWithinException, IOException {
 
         //TODO 在这儿get一个ChartPanel
-        ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(code,startDate,endDate);
+        ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(String.valueOf(Integer.parseInt(code)),startDate,endDate);
         // 创建图形
 
         ArrayList<Integer> tag = new ArrayList<Integer>();
@@ -144,6 +145,8 @@ public class KStringPanel extends TemplatePanel {
         } catch (ColorNotExistException e) {
             e.printStackTrace();
             System.out.println("该均线类型不存在"); //TODO 后期可能会更改
+        } catch (CodeNotFoundException e) {
+            e.printStackTrace();
         }
     }
     /**

@@ -7,6 +7,7 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import vo.ChartShowCriteriaVO;
 import vo.StockVO;
@@ -64,7 +65,7 @@ public class LineData {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public LineData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException {
+    public LineData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         this.readData(chartShowCriteriaVO);
@@ -250,6 +251,8 @@ public class LineData {
             data = this.service.getSingleStockRecords(code);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (CodeNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -261,8 +264,7 @@ public class LineData {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException {
-
-            data = this.service.getSingleStockRecords(chartShowCriteriaVO);
+    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException {
+        data = this.service.getSingleStockRecords(chartShowCriteriaVO);
     }
 }

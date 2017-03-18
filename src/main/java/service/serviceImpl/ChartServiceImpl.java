@@ -1,7 +1,9 @@
 package service.serviceImpl;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DataSourceFirstDayException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
@@ -23,6 +25,7 @@ import java.util.*;
 public class ChartServiceImpl implements ChartService {
 
     StockDao stockDao;
+    Set<String> allCodes;
 
     /**
      * @auther Harvey
@@ -31,6 +34,7 @@ public class ChartServiceImpl implements ChartService {
      */
     public ChartServiceImpl()  {
         stockDao = new StockDaoImpl();
+        allCodes = stockDao.getAllStocksCode().keySet();
     }
 
     /**
@@ -43,13 +47,28 @@ public class ChartServiceImpl implements ChartService {
      * @return 特定股票的所有交易信息
      */
     @Override
-    public List<StockVO> getSingleStockRecords(String code) throws IOException {
+    public List<StockVO> getSingleStockRecords(String code) throws IOException, CodeNotFoundException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-        List<StockPO> tempList = stockDao.getStockData(code);
+        List<StockPO> tempList = null;
+
+        if(codeExist(code)){
+            tempList = stockDao.getStockData(code);
+        }
+
+
         for (StockPO po : tempList) {
             stockVOList.add(new StockVO(po));
         }
         return stockVOList;
+    }
+
+    private boolean codeExist(String code) throws CodeNotFoundException {
+        if(allCodes.contains(code)){
+            return true;
+        }
+        else {
+            throw new CodeNotFoundException();
+        }
     }
 
     /**
@@ -62,9 +81,15 @@ public class ChartServiceImpl implements ChartService {
      * @return 特定股票的所有交易信息
      */
     @Override
-    public List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException {
+    public List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException, CodeNotFoundException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-        for (StockPO po : getStockPOs(chartShowCriteriaVO)) {
+        List<StockPO> stockPOList = null;
+
+        if(codeExist(chartShowCriteriaVO.stockCode)){
+            stockPOList = getStockPOs(chartShowCriteriaVO);
+        }
+
+        for (StockPO po : stockPOList) {
             stockVOList.add(new StockVO(po));
         }
         return stockVOList;
@@ -81,7 +106,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 用户所选天数的均线图的平均值
      */
     @Override
-    public Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days)throws IOException {
+    public Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws IOException, DateNotWithinException, CodeNotFoundException {
         Map<Integer, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
 
         String code = chartShowCriteriaVO.stockCode;
@@ -89,16 +114,28 @@ public class ChartServiceImpl implements ChartService {
         LocalDate end = chartShowCriteriaVO.end;
 
         List<StockPO> poList = null;
-        try {
+        if(codeExist(code)){
             poList = stockDao.getStockData(code,begin,end);
-            //TODO 需要将前面几日的数据加到里面去
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DateNotWithinException e) {
-            e.printStackTrace();
         }
 
         for(int i=0;i<days.size();i++){
+
+            List<StockPO> preList = null;
+            LocalDate firstDay = stockDao.getFirstDay(code);
+            preList = stockDao.getStockData(code,firstDay,begin);
+
+            //之前的数据够用
+            if(preList.size()>=days.get(i)){
+                preList = preList.subList(preList.size()-days.get(i),preList.size()-1);
+            }
+
+            System.out.println(firstDay);
+
+            for(int j = 0;j<preList.size();j++){
+                System.out.println(preList.get(i).getDate());
+            }
+
+            poList.addAll(0,preList);
             //放入天数和其所对应的均值点的数据
             aveDataMap.put(days.get(i), calculate(poList,days.get(i)));
         }
