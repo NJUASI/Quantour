@@ -236,6 +236,7 @@ public class ChartUtils {
 			xyRenderer.setBaseItemLabelsVisible(true);
 			xyRenderer.setBaseItemLabelGenerator(new StandardXYItemLabelGenerator());
 			xyRenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE1, TextAnchor.BOTTOM_CENTER));// weizhi
+			xyRenderer.setBaseItemLabelPaint(Color.WHITE);
 		}
 		xyRenderer.setBaseShapesVisible(isShapesVisible);// 数据点绘制形状
 
