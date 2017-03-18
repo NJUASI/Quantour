@@ -249,7 +249,7 @@ public class LineData {
      */
     private void readData(String code) {
         try {
-            data = this.service.getSingleStockRecords(code);
+            data = this.service.getSingleStockRecords(String.valueOf(Integer.parseInt(code)));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (CodeNotFoundException e) {
