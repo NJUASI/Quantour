@@ -79,7 +79,7 @@ public class CompareChartPanel extends JPanel {
         scrollPane.setBounds(adaptScreen(0,0,1500,800));
         scrollPane.getVerticalScrollBar().setUI(new MyScrollBarUI());
         scrollPane.getVerticalScrollBar().setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(19,22,24)));
         scrollPane.add(panel);
 
         panel.setVisible(true);
