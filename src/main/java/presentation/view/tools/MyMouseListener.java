@@ -26,8 +26,6 @@ public class MyMouseListener extends MouseAdapter {
             ViewSwitchController.getInstance().viewSwitch("kStringPanel");
             StocksTableController.getInstance().checkDetail();
             KStringPanel.getInstance().count=0;
-            NavigationBar.getInstance().whileClicked(2);
-
             MyMouseListener.clickNum = 0;
             MyMouseListener.flag = true;
             return;

@@ -43,7 +43,7 @@ public class NavigationBar extends TemplatePanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(numOfChoosed!=1){
-                    favorites.click2();
+//                    favorites.click2();
                     numOfChoosed=1;
                     whileClicked(numOfChoosed);
                     TitlePanel.getInstance().setTitle("行情");
@@ -75,7 +75,7 @@ public class NavigationBar extends TemplatePanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(numOfChoosed!=2){
-                    kString.click2();
+//                    kString.click2();
                     numOfChoosed=2;
                     whileClicked(numOfChoosed);
                     TitlePanel.getInstance().setTitle("个股");
@@ -108,7 +108,7 @@ public class NavigationBar extends TemplatePanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(numOfChoosed!=3){
-                    compare.click2();
+//                    compare.click2();
                     numOfChoosed=3;
                     whileClicked(numOfChoosed);
                     TitlePanel.getInstance().setTitle("对比");
@@ -140,7 +140,7 @@ public class NavigationBar extends TemplatePanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(numOfChoosed!=4){
-                    thermometer.click2();
+//                    thermometer.click2();
                     numOfChoosed=4;
                     whileClicked(numOfChoosed);
                     TitlePanel.getInstance().setTitle("市场");
@@ -185,26 +185,32 @@ public class NavigationBar extends TemplatePanel {
     public void whileClicked(int i){
         switch (i){
             case 1:
-
+                favorites.click2();
                 kString.moveOut();
                 compare.moveOut();
                 thermometer.moveOut();
+                TitlePanel.getInstance().setTitle("行情");
                 break;
             case 2:
+                kString.click2();
                 favorites.moveOut();
                 compare.moveOut();
                 thermometer.moveOut();
+                TitlePanel.getInstance().setTitle("个股");
                 break;
             case 3:
                 favorites.moveOut();
                 kString.moveOut();
-
+                compare.click2();
                 thermometer.moveOut();
+                TitlePanel.getInstance().setTitle("对比");
                 break;
             case 4:
+                thermometer.click2();
                 favorites.moveOut();
                 kString.moveOut();
                 compare.moveOut();
+                TitlePanel.getInstance().setTitle("市场");
 
                 break;
             default:

@@ -1,6 +1,7 @@
 package presentation.controller;
 
 import presentation.view.panel.KStringPanel;
+import presentation.view.panel.NavigationBar;
 import presentation.view.panel.StocksTablePanel;
 import presentation.view.tools.StocksTablePane;
 import presentation.view.tools.WindowData;
@@ -81,8 +82,15 @@ public class StocksTableController {
      * Check detail.选择单支股票，查看详情
      */
     public void checkDetail() {
-        kStringPanel = KStringPanel.getInstance();
-        kStringPanel.datePanel.setDate(stocksTablePanel.getChooseDate());
-        kStringPanel.addMessage(stocksTablePane.getName(), stocksTablePane.getCode());
+
+        try {
+            kStringPanel = KStringPanel.getInstance();
+            kStringPanel.datePanel.setDate(stocksTablePanel.getChooseDate());
+            NavigationBar.getInstance().whileClicked(2);
+            kStringPanel.addMessage(stocksTablePane.getName(), stocksTablePane.getCode());
+        }catch (Exception e){
+
+        }
+
     }
 }

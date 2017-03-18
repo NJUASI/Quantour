@@ -86,7 +86,7 @@ public class StockDaoImplTest {
 
         StockPO testPO = result.get(1);
 
-        // expected: 
+        // expected:
         // 1	2014-04-28	11.25	11.28	10.96	11.03	526045	11.03	1	深发展Ａ	SZ	11.25	11.25
 
         assertEquals(1, testPO.getSerial());
@@ -284,7 +284,22 @@ public class StockDaoImplTest {
      */
     @Test
     public void getFirstDay() throws Exception {
-        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstDay("17"));
+        assertEquals(LocalDate.of(2005, 2, 1), stockDao.getFirstDay("17"));
+        assertEquals(LocalDate.of(2009, 8, 28), stockDao.getFirstDay("2286"));
+        assertEquals(LocalDate.of(2009, 12, 18), stockDao.getFirstDay("2324"));
+        assertEquals(LocalDate.of(2010, 8, 12), stockDao.getFirstDay("300103"));
     }
 
+    // 将接口改为public测试的，测完之后恢复为private
+//    @Test
+//    public void isDateWithinSource() throws Exception {
+//        assertEquals(true, stockDao.isDateWithinSource("17", LocalDate.of(2005, 2, 1), LocalDate.of(2014,2,1)));
+//        assertEquals(false, stockDao.isDateWithinSource("17", LocalDate.of(2004, 2, 1), LocalDate.of(2014,2,1)));
+//        assertEquals(false, stockDao.isDateWithinSource("17", LocalDate.of(2005, 1, 31), LocalDate.of(2014,2,1)));
+//        assertEquals(true, stockDao.isDateWithinSource("2286", LocalDate.of(2009, 8, 28), LocalDate.of(2014,2,1)));
+//        assertEquals(false, stockDao.isDateWithinSource("2286", LocalDate.of(2009, 8, 27), LocalDate.of(2014,2,1)));
+//        assertEquals(true, stockDao.isDateWithinSource("2286", LocalDate.of(2009, 8, 28), LocalDate.of(2014,4,29)));
+//        assertEquals(false, stockDao.isDateWithinSource("2286", LocalDate.of(2009, 2, 28), LocalDate.of(2014,4,29)));
+//        assertEquals(false, stockDao.isDateWithinSource("2286", LocalDate.of(2005, 2, 1), LocalDate.of(2014,2,1)));
+//    }
 }

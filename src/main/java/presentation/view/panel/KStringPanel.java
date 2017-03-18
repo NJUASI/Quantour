@@ -3,6 +3,8 @@ package presentation.view.panel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import presentation.controller.StocksTableController;
+import presentation.controller.ViewSwitchController;
 import presentation.line.LineChart;
 import presentation.listener.navigationBarListener.CompareListener;
 import presentation.view.tools.DoubleDatePickerPanel;
@@ -38,7 +40,7 @@ public class KStringPanel extends TemplatePanel {
     JButton search;
     JButton searchAll;
     JButton compare;
-    JButton favorite;
+
     public AssociatePanel associatePanel;
     ChartPanel chartPanel;
     //用于更新联想面板
@@ -63,7 +65,7 @@ public class KStringPanel extends TemplatePanel {
         num = new JTextField();
         searchAll = new JButton("总体信息");
         search = new JButton("局部信息");
-        favorite = new JButton("收藏");
+//        favorite = new JButton("收藏");
         compare = new JButton("加入比较");
 
         init();
@@ -233,18 +235,29 @@ public class KStringPanel extends TemplatePanel {
         add(search);
         //加入比较按钮
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
-        compare.addMouseListener(new CompareListener());
-        add(compare);
-
-        favorite.setBounds(adaptScreen(1550, 50, 70, 35));
-        favorite.addMouseListener(new MouseAdapter() {
+        compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                StockService stockService =new StockServiceImpl();
-                stockService.addPrivateStock(IDReserve.getInstance().getUserID(), num.getText());
+                ComparePanel.getInstance().count=1;
+                refreshAssociate();
+                ViewSwitchController.getInstance().viewSwitch("comparePanel");
+                NavigationBar.getInstance().whileClicked(3);
+                ComparePanel.getInstance().setCompare(searchTextField.getText(),num.getText());
+                ComparePanel.getInstance().setDate(datePanel.getStartDate(),datePanel.getEndDate());
+                ComparePanel.getInstance().count=0;
             }
         });
-        add(favorite);
+        add(compare);
+
+//        favorite.setBounds(adaptScreen(1550, 50, 70, 35));
+//        favorite.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                StockService stockService =new StockServiceImpl();
+//                stockService.addPrivateStock(IDReserve.getInstance().getUserID(), num.getText());
+//            }
+//        });
+//        add(favorite);
 
 
         addFunction();
@@ -341,21 +354,16 @@ public class KStringPanel extends TemplatePanel {
 
             }
         });
-        compare.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                refreshAssociate();
-            }
-        });
+
         search.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 refreshAssociate();
             }
         });
-        favorite.addMouseListener(new MouseAdapter() {
+        datePanel.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 refreshAssociate();
             }
         });
