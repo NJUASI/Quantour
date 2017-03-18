@@ -217,12 +217,11 @@ public class ComparePanel extends TemplatePanel {
             }
 
             compareChartPanel=new CompareChartPanel(vo);
-            compareChartPanel.setBounds(adaptScreen(200,130,1500,800));
-            add(compareChartPanel);
             compareChartPanel.setVisible(true);
+            add(compareChartPanel);
             compareChartPanel.repaint();
             repaint();
-            compareChartPanel.requestFocus();
+
         } catch (DateNotWithinException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(compareChartPanel,"请重新选择时间范围");
@@ -326,7 +325,7 @@ public class ComparePanel extends TemplatePanel {
             public void insertUpdate(DocumentEvent e) {
                 if(count==0) {
                     associatePanel2.setVisible(true);
-                    associatePanel2.setBounds(adaptScreen(750, 115, 300, 200));
+                    associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
                     associatePanel2.updateText(name2.getText());
                 }
             }
@@ -347,7 +346,7 @@ public class ComparePanel extends TemplatePanel {
             public void insertUpdate(DocumentEvent e) {
                 if (count==0){
                     associatePanel2.setVisible(true);
-                    associatePanel2.setBounds(adaptScreen(750, 115, 300, 200));
+                    associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
                     associatePanel2.updateText(num2.getText());
                 }
         }

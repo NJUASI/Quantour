@@ -32,68 +32,77 @@ public class CompareChartPanel extends JPanel {
         windowData =WindowData.getInstance();
         width = windowData.getWidth();
         height =windowData.getHeight();
+        setBounds(adaptScreen(0,130,1900,1000));
+        setLayout(null);
+//        panel=new JPanel(null);
+//        scrollPane=new JScrollPane();
+//        scrollPane.add(panel);
+//        panel.setBounds(0,0,1500,800);
+//        panel.setVisible(true);
 
-        panel=new JPanel(null);
-        scrollPane=new JScrollPane();
-
-        chart1 = new CompareChart1(vo);
-        chartPanel1 = chart1.createChart();
-        chartPanel1.setBounds(adaptScreen(0,0,500,480));
-        panel.add(chartPanel1);
+//        chart1 = new CompareChart1(vo);
+//        chartPanel1 = chart1.createChart();
+//        chartPanel1.setBounds(adaptScreen(0,0,500,480));
+//        chartPanel1.setVisible(true);
+//        add(chartPanel1);
 
         chart2 = new CompareChart2(vo);
         chartPanel2 = chart2.createChart();
-        chartPanel2.setBounds(adaptScreen(500,0,500,480));
-        panel.add(chartPanel2);
+        chartPanel2.setBounds(adaptScreen(0,0,420,410));
+        chartPanel2.setVisible(true);
+        add(chartPanel2);
 
 
         chart3 = new CompareChart3(vo);
         chartPanel3 = chart3.createChart();
-        chartPanel3.setBounds(adaptScreen(1000,0,500,480));
-        panel.add(chartPanel3);
+        chartPanel3.setBounds(adaptScreen(420,0,420,410));
+        chartPanel3.setVisible(true);
+        add(chartPanel3);
 
 
         chart4 = new CompareChart4(vo.get(0).closes,null,vo.get(0).name,"","收盘价","收盘价");
         chartPanel4= chart4.createChart();
-        chartPanel4.setBounds(adaptScreen(250,550,1000,500));
-        panel.add(chartPanel4);
+        chartPanel4.setBounds(adaptScreen(840,0,860,410));
+        chartPanel4.setVisible(true);
+        add(chartPanel4);
 
 
         chart5 = new CompareChart4(vo.get(1).closes,null,vo.get(1).name,"","收盘价","");
         chartPanel5= chart5.createChart();
-        chartPanel5.setBounds(adaptScreen(250,1100,1000,500));
-        panel.add(chartPanel5);
+        chartPanel5.setBounds(adaptScreen(840,410,860,410));
+        chartPanel5.setVisible(true);
+        add(chartPanel5);
 
 
         chart6 = new CompareChart4(vo.get(0).logarithmicYield,vo.get(1).logarithmicYield,vo.get(0).name,vo.get(1).name,"对数收益率","对数收益率");
         chartPanel6 = chart6.createChart();
-        chartPanel6.setBounds(adaptScreen(250,1650,1000,500));
-        panel.add(chartPanel6);
+        chartPanel6.setBounds(adaptScreen(0,410,840,420));
+        chartPanel6.setVisible(true);
+        add(chartPanel6);
 
-        setBounds(adaptScreen(250,100,1500,850));
+//        setBounds(adaptScreen(250,100,1500,850));
         setBorder(BorderFactory.createEmptyBorder());
 
-        setPreferredSize(new Dimension(1500,850));
+//        setPreferredSize(new Dimension(1500,850));
+//
+//        panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1030));
+//        panel.setBackground(new Color(32, 36, 39));
+//        panel.setVisible(true);
+//
+//        scrollPane.setPreferredSize(new Dimension(1500*width/1920,800*height/1030));
+//        scrollPane.setBounds(adaptScreen(0,0,1500,800));
+//        scrollPane.getVerticalScrollBar().setUI(new MyScrollBarUI());
+//        scrollPane.getVerticalScrollBar().setBorder(BorderFactory.createEmptyBorder());
+//        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(19,22,24)));
+//        add(scrollPane);
+//
+//        scrollPane.setViewportView(panel);
+//        scrollPane.setVisible(true);
+//        setVisible(true);
+//
+//        panel.repaint();
+//        scrollPane.repaint();
 
-        panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1030));
-        panel.setBackground(new Color(32, 36, 39));
-
-
-        scrollPane.setPreferredSize(new Dimension(1500*width/1920,800*height/1030));
-        scrollPane.setBounds(adaptScreen(0,0,1500,800));
-        scrollPane.getVerticalScrollBar().setUI(new MyScrollBarUI());
-        scrollPane.getVerticalScrollBar().setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(19,22,24)));
-        scrollPane.add(panel);
-        add(scrollPane);
-        panel.setVisible(true);
-        scrollPane.setViewportView(panel);
-        scrollPane.setVisible(true);
-        setVisible(true);
-
-        panel.repaint();
-        scrollPane.repaint();
-        panel.requestFocus();
 
 
 
