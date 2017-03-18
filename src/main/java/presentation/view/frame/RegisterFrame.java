@@ -30,6 +30,9 @@ public class RegisterFrame extends JFrame {
         setTitle("注册");
 
 
+        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo1.png"));
+        setIconImage(bgPicture.getImage());
+
         setLayout(null);
         setUndecorated(true);
         int width=WindowData.getInstance().getWidth();

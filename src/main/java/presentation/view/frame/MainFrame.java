@@ -45,6 +45,9 @@ public class MainFrame extends JFrame {
         createWindow();
         setLayout(null);
 
+        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo1.png"));
+        setIconImage(bgPicture.getImage());
+
         barPanel =  NavigationBar.getInstance();
         add(barPanel);
 

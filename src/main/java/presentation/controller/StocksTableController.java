@@ -64,14 +64,14 @@ public class StocksTableController {
         if(first == true){
             first = false;
             stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
-            stocksTablePane.setLocation(300*width/1920,130*height/1030);
+            stocksTablePane.setLocation(150*width/1920,100*height/1030);
             stocksTablePanel.add(stocksTablePane);
             stocksTablePane.repaint();
         }
         else {
             stocksTablePanel.remove(stocksTablePane);
             stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
-            stocksTablePane.setLocation(300*width/1920,130*height/1030);
+            stocksTablePane.setLocation(150*width/1920,100*height/1030);
             stocksTablePanel.add(stocksTablePane);
             stocksTablePane.repaint();
         }
