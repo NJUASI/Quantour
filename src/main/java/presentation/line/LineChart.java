@@ -1,6 +1,7 @@
 package presentation.line;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
 import presentation.line.aveLine.AveChart;
@@ -70,7 +71,9 @@ public class LineChart {
      */
     public JFreeChart getKLineChart(){
         this.kChart.setPlot(this.start,this.end,this.getGap());
-        return new JFreeChart( this.kChart.getTitle(),font,this.kChart.getKLinePlot(),true);
+        JFreeChart chart = new JFreeChart( this.kChart.getTitle(),font,this.kChart.getKLinePlot(),true);
+       chart = this.setChart(chart);
+        return chart;
     }
 
     /**
@@ -95,7 +98,10 @@ public class LineChart {
         combineddomainxyplot.add(plot2, v);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
         combineddomainxyplot.setGap(space);//设置两个图形区域对象之间的间隔空间
 
-        return new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
+        JFreeChart chart = new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
+
+        chart = this.setChart(chart);
+       return chart;
     }
 
     /**
@@ -115,7 +121,9 @@ public class LineChart {
         CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(kChart.getXAxis());//建立一个恰当的联合图形区域对象，以x轴为共享轴
         combineddomainxyplot.add(plot);//添加图形区域对象
 
-        return new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
+        JFreeChart chart = new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
+        chart = this.setChart(chart);
+        return chart;
     }
 
     /**
@@ -142,7 +150,9 @@ public class LineChart {
         combineddomainxyplot.add(plot2, v);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
         combineddomainxyplot.setGap(space);//设置两个图形区域对象之间的间隔空间
 
-        return new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
+        JFreeChart chart = new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
+        chart = this.setChart(chart);
+        return chart;
     }
 
     /**
@@ -178,5 +188,16 @@ public class LineChart {
             result = result + startYear.plusYears(i).lengthOfYear();
         }
         return (result-startDay+endDay);
+    }
+
+    private JFreeChart setChart(JFreeChart chart){
+        chart.setBackgroundPaint(new Color(32,36,39));
+        chart.getLegend().setItemPaint(new Color(201, 208, 214));
+        chart.getLegend().setBackgroundPaint(new Color(32,36,39));
+        chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
+        chart.getTitle().setPaint(new Color(201, 208, 214));
+        chart.setTextAntiAlias(false);
+
+        return chart;
     }
 }

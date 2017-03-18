@@ -111,9 +111,20 @@ public class KChart {
         OHLCSeriesCollection seriesCollection = data.seriesCollection;
         XYPlot plot=new XYPlot(null,xAxis,yAxis,null);//设置画图区域对象
         plot.setDomainGridlinesVisible(false);
+        plot.setDomainGridlinePaint(new Color(192, 208, 224));
+        plot.setRangeGridlinePaint(new Color(192, 208, 224));
         plot.setDataset(0,seriesCollection);
         plot.setRenderer(0,render);
         plot.setBackgroundPaint(new Color(32,36,39));
+
+        //设置十字线
+        plot.setDomainCrosshairPaint(new Color(192, 208, 224));
+        plot.setRangeCrosshairPaint(new Color(192, 208, 224));
+        plot.setDomainCrosshairVisible(true);
+        plot.setRangeCrosshairVisible(true);
+        plot.setDomainCrosshairLockedOnData(true);
+        plot.setRangeCrosshairLockedOnData(true);
+
 
         return plot;
     }
@@ -131,6 +142,8 @@ public class KChart {
         this.setXYBarRender(data.seriesCollection,this.render,gap);
         XYPlot plot=new XYPlot(timeSeriesCollection,null,yAxisOfVol,xyBarRender);//建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
 
+        plot.setDomainGridlinePaint(new Color(192, 208, 224));
+        plot.setRangeGridlinePaint(new Color(192, 208, 224));
         plot.setBackgroundPaint(new Color(32,36,39));
         return plot;
 
@@ -177,6 +190,8 @@ public class KChart {
         xAxis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
         xAxis.setTickUnit(new DateTickUnit(DateTickUnit.DAY,gap));//设置时间刻度的间隔，一般以周为单位
         xAxis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
+        xAxis.setLabelPaint(new Color(201, 208, 214));
+        xAxis.setTickLabelPaint(new Color(201, 208, 214));
     }
 
     /**
@@ -192,6 +207,8 @@ public class KChart {
         yAxis.setAutoRange(false);//不使用自动设定范围
         yAxis.setRange(data.getLow()*0.9, data.getHigh()*1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
         yAxis.setTickUnit(new NumberTickUnit((data.getHigh()*1.1-data.getLow()*0.9)/num));//设置刻度显示的密度
+        yAxis.setLabelPaint(new Color(201, 208, 214));
+        yAxis.setTickLabelPaint(new Color(201, 208, 214));
 
     }
 
@@ -209,6 +226,8 @@ public class KChart {
         yAxisOfVol.setAutoRange(false);//不使用自动设定范围
         yAxisOfVol.setRange(data.getLowVolume()*0.9, data.getHighVolume()*1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
         yAxisOfVol.setTickUnit(new NumberTickUnit((data.getHighVolume()*1.1-data.getLowVolume()*0.9)/num));//设置刻度显示的密度
+        yAxisOfVol.setLabelPaint(new Color(201, 208, 214));
+        yAxisOfVol.setTickLabelPaint(new Color(201, 208, 214));
 
     }
 
