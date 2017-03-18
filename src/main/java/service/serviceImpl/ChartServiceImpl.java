@@ -52,8 +52,8 @@ public class ChartServiceImpl implements ChartService {
             tempList = stockDao.getStockData(code);
         }
 
-
         for (StockPO po : tempList) {
+            System.out.println(po.getDate());
             stockVOList.add(new StockVO(po));
         }
         return stockVOList;
@@ -180,25 +180,15 @@ public class ChartServiceImpl implements ChartService {
      * @return 界面上需要的两只股票的比较信息
      */
     @Override
-    public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, NoDataWithinException {
+    public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DataSourceFirstDayException {
         List<StockPO> stockPOList1 = null;
         List<StockPO> stockPOList2 = null;
-
-        try {
-
-            stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
-            stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
-            List<StockComparisionVO> result = new LinkedList<>();
-            result.add(new StockComparisionVO(stockPOList1));
-            result.add(new StockComparisionVO(stockPOList2));
-            return result;
-        } catch (DateNotWithinException e) {
-            e.printStackTrace();
-        } catch (DataSourceFirstDayException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+        stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+        List<StockComparisionVO> result = new LinkedList<>();
+        result.add(new StockComparisionVO(stockPOList1));
+        result.add(new StockComparisionVO(stockPOList2));
+        return result;
     }
 
     /**
@@ -227,25 +217,17 @@ public class ChartServiceImpl implements ChartService {
      */
     private List<MovingAverageVO> calculate(List<StockPO> dataList, int day) throws IOException {
 
-        for(int j = 0;j<dataList.size();j++){
-            System.out.println(dataList.get(j).getDate());
-        }
-        System.out.println();
-
-
         List<MovingAverageVO> dayAveDataList = new ArrayList<MovingAverageVO>();
         for (int i = 0;i < dataList.size()-day+1;i++){
             MovingAverageVO maVO = new MovingAverageVO();
             double sum = 0;
             maVO.date = dataList.get(i+day-1).getDate();
-            System.out.println(maVO.date);
             for (int j = i;j <= i+day-1;j++){
                 sum += dataList.get(j).getClose();
             }
             maVO.average = sum/day;
             dayAveDataList.add(maVO);
         }
-        System.out.println();
 
         return dayAveDataList;
     }

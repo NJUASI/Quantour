@@ -2,6 +2,8 @@ package dataHelper.dataHelperImpl;
 
 import dataHelper.StockSituationDataHelper;
 import po.StockSituationPO;
+import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.NoSituationDataException;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -30,11 +32,24 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
      * @return 指定日期的市场温度计数据
      */
     @Override
-    public StockSituationPO getStockSituation(LocalDate date) throws IOException {
-        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                getResourceAsStream(pathPre + date.getYear() + "/" + date.toString() + pathPost)));
-        String line = br.readLine();
-        br.close();
+    public StockSituationPO getStockSituation(LocalDate date) throws NoSituationDataException {
+
+        String line = null;
+        try {
+            File file = new File(pathPre + date.getYear() + "/" + date.toString() + pathPost);
+            if(file.exists()){
+                br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
+                        getResourceAsStream(pathPre + date.getYear() + "/" + date.toString() + pathPost)));
+                line = br.readLine();
+                br.close();
+            }
+            else {
+                throw new NoSituationDataException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         StockSituationPO result = new StockSituationPO(line.split("\t"));
 
         return result;

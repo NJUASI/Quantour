@@ -1,11 +1,10 @@
 package presentation.controller;
 
 import presentation.view.chart.StockSituationBarChart;
-import presentation.view.chart.StockSituationBarLimitChart;
-import presentation.view.chart.StockSituationBarOpenCloseChart;
 import presentation.view.panel.ThermometerPanel;
 import service.StockSituationService;
 import service.serviceImpl.StockSituationServiceImpl;
+import utilities.exceptions.NoSituationDataException;
 import vo.PriceRiseOrFallVO;
 
 import javax.swing.*;
@@ -54,7 +53,13 @@ public class ThermometerController {
     public void search() {
 
         LocalDate date = thermometerPanel.getDate();
-        List<PriceRiseOrFallVO> list = stockSituationService.getStockStituationData(date);
+        List<PriceRiseOrFallVO> list = null;
+        try {
+            list = stockSituationService.getStockStituationData(date);
+        } catch (NoSituationDataException e) {
+            JOptionPane.showMessageDialog(thermometerPanel,e.getMessage());
+            e.printStackTrace();
+        }
 
 //        StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
 //        JPanel piePanel=pieChart.createChart();

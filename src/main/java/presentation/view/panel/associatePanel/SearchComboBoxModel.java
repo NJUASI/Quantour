@@ -14,16 +14,13 @@ import java.util.List;
  */
 public class SearchComboBoxModel extends DefaultComboBoxModel<StockSearchVO>{
 
-    public SearchComboBoxModel(String searchString){
+    public SearchComboBoxModel(String searchString) throws MatchNothingException {
 
         StockService stockService = new StockServiceImpl();
 
         List<StockSearchVO> stockSearchVOList = null;
-        try {
-            stockSearchVOList = stockService.searchStock(searchString);
-        } catch (MatchNothingException e) {
-            e.printStackTrace();
-        }
+        stockSearchVOList = stockService.searchStock(searchString);
+
 
         for(int i = 0; i < stockSearchVOList.size();i++) {
             this.addElement(stockSearchVOList.get(i));

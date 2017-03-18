@@ -2,6 +2,7 @@ package presentation.view.panel;
 
 import presentation.view.panel.associatePanel.SearchComboBoxModel;
 import presentation.view.tools.WindowData;
+import utilities.exceptions.MatchNothingException;
 import vo.StockSearchVO;
 
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class AssociatePanel extends ScrollPane {
         add(list);
     }
 
-    public void updateText(String str){
+    public void updateText(String str) throws MatchNothingException {
         jListModel =  new SearchComboBoxModel(str);
         list.setModel(jListModel);
     }

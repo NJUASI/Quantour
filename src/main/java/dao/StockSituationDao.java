@@ -1,6 +1,7 @@
 package dao;
 
 import po.StockSituationPO;
+import utilities.exceptions.NoSituationDataException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -21,6 +22,6 @@ public interface StockSituationDao {
      * @return StockSituationPO 指定日期市场温度计数据
      * @throws IOException IO
      */
-    StockSituationPO getStockSituation(LocalDate date) throws IOException;
+    StockSituationPO getStockSituation(LocalDate date) throws IOException, NoSituationDataException;
 
 }

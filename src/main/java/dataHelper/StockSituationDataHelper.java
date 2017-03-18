@@ -1,6 +1,7 @@
 package dataHelper;
 
 import po.StockSituationPO;
+import utilities.exceptions.NoSituationDataException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,5 +25,5 @@ public interface StockSituationDataHelper {
      * @return 指定股票所有数据
      * @throws IOException IO
      */
-    StockSituationPO getStockSituation(LocalDate date) throws IOException;
+    StockSituationPO getStockSituation(LocalDate date) throws IOException, NoSituationDataException;
 }

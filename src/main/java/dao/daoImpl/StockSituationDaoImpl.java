@@ -3,6 +3,7 @@ package dao.daoImpl;
 import dataHelper.StockSituationDataHelper;
 import dataHelper.dataHelperImpl.StockSituationDataHelperImpl;
 import po.StockSituationPO;
+import utilities.exceptions.NoSituationDataException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -37,7 +38,7 @@ public class StockSituationDaoImpl implements dao.StockSituationDao {
      * @throws IOException IO
      */
     @Override
-    public StockSituationPO getStockSituation(LocalDate date) throws IOException {
+    public StockSituationPO getStockSituation(LocalDate date) throws NoSituationDataException, IOException {
         return this.stockSituationHelper.getStockSituation(date);
     }
 }
