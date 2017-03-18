@@ -129,15 +129,11 @@ public class ChartServiceImpl implements ChartService {
                 preList = preList.subList(preList.size()-days.get(i),preList.size()-1);
             }
 
-            System.out.println(firstDay);
+            List<StockPO> tempList = preList;
+            tempList.addAll(poList);
 
-            for(int j = 0;j<preList.size();j++){
-                System.out.println(preList.get(i).getDate());
-            }
-
-            poList.addAll(0,preList);
             //放入天数和其所对应的均值点的数据
-            aveDataMap.put(days.get(i), calculate(poList,days.get(i)));
+            aveDataMap.put(days.get(i), calculate(tempList,days.get(i)));
         }
         return aveDataMap;
     }
@@ -234,18 +230,25 @@ public class ChartServiceImpl implements ChartService {
      */
     private List<MovingAverageVO> calculate(List<StockPO> dataList, int day) throws IOException {
 
+        for(int j = 0;j<dataList.size();j++){
+            System.out.println(dataList.get(j).getDate());
+        }
+        System.out.println();
+
+
         List<MovingAverageVO> dayAveDataList = new ArrayList<MovingAverageVO>();
         for (int i = 0;i < dataList.size()-day+1;i++){
             MovingAverageVO maVO = new MovingAverageVO();
             double sum = 0;
             maVO.date = dataList.get(i+day-1).getDate();
+            System.out.println(maVO.date);
             for (int j = i;j <= i+day-1;j++){
                 sum += dataList.get(j).getClose();
             }
-            System.out.println();
             maVO.average = sum/day;
             dayAveDataList.add(maVO);
         }
+        System.out.println();
 
         return dayAveDataList;
     }
