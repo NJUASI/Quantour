@@ -153,7 +153,6 @@ public class ChartServiceImpl implements ChartService {
     public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException {
         List<StockPO> stockPOList1 = null;
         List<StockPO> stockPOList2 = null;
-        System.out.println("--------start service----------");
 
         try {
 
@@ -162,9 +161,6 @@ public class ChartServiceImpl implements ChartService {
             List<StockComparisionVO> result = new LinkedList<>();
             result.add(new StockComparisionVO(stockPOList1));
             result.add(new StockComparisionVO(stockPOList2));
-
-            System.out.println("--------end service----------");
-
             return result;
         } catch (DateNotWithinException e) {
             e.printStackTrace();
