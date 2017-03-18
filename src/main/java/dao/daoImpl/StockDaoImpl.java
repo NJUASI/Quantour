@@ -81,12 +81,12 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPO> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException, DateNotWithinException {
+        System.out.println("--------start dao----------");
+
         if (!isDateWithinSource(stockCode, start, end)) {
             // 用户要查找的时间区间超出数据源时间区间
             throw new DateNotWithinException();
         }
-
-        System.out.println("--------start dao----------");
 
 
         List<StockPO> result = stockHelper.getStockRecords(stockCode);
@@ -293,6 +293,7 @@ public class StockDaoImpl implements StockDao {
         LocalDate sourceStart = getFirstDay(stockCode);
         LocalDate sourceEnd = LocalDate.of(2014, 4, 29);
 
+        System.out.println("-----------------------");
         System.out.println(start.isBefore(sourceStart));
         System.out.println(end.isAfter(sourceEnd));
         System.out.println("-----------------------");

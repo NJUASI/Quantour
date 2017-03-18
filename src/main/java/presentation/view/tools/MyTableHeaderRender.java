@@ -23,6 +23,7 @@ public class MyTableHeaderRender implements TableCellRenderer {
             label.setBackground(new Color(41,46,51));
             label.setForeground(new Color(201,208,214));
             label.setFont(labelFont);
+            label.setBorder(null);
             label.setHorizontalAlignment(SwingConstants.CENTER);
             label.setBorder(BorderFactory.createEmptyBorder());
         }

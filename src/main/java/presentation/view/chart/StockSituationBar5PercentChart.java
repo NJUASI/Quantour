@@ -54,6 +54,7 @@ public class StockSituationBar5PercentChart {
         ChartUtils.setYAixs(chart.getCategoryPlot());// Y坐标轴渲染
         // 设置标注无边框
         chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
+        chart.getLegend().setVisible(false);
         // 6:使用chartPanel接收
         ChartPanel chartPanel = new ChartPanel(chart);
         return chartPanel;

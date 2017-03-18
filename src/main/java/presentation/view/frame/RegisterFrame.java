@@ -17,7 +17,7 @@ public class RegisterFrame extends JFrame {
     RegisterPanel registerPanel;
     public RegisterFrame(){
         try {
-            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.translucencySmallShadow;
+            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
             UIManager.put("RootPane.setupButtonVisible", false);
             BeautyEyeLNFHelper.launchBeautyEyeLNF();
         } catch (Exception e) {

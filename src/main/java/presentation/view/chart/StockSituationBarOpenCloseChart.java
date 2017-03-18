@@ -45,7 +45,7 @@ public class StockSituationBarOpenCloseChart {
 
     public ChartPanel createChart() {
         // 2：创建Chart
-        JFreeChart chart = ChartFactory.createBarChart("开盘‐收盘大于5% * 上一个交易日收盘价 VS 开盘‐收盘小于‐5% * 上一个交易日收盘价", "", "股票数", createDataset());
+        JFreeChart chart = ChartFactory.createBarChart("开盘‐收盘大于5% * 上一个交易日收盘价 \nVS 开盘‐收盘小于‐5% * 上一个交易日收盘价", "", "股票数", createDataset());
         // 3:设置抗锯齿，防止字体显示不清楚
         ChartUtils.setAntiAlias(chart);// 抗锯齿
         // 4:对柱子进行渲染
@@ -55,6 +55,7 @@ public class StockSituationBarOpenCloseChart {
         ChartUtils.setYAixs(chart.getCategoryPlot());// Y坐标轴渲染
         // 设置标注无边框
         chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
+        chart.getLegend().setVisible(false);
         // 6:使用chartPanel接收
         ChartPanel chartPanel = new ChartPanel(chart);
         return chartPanel;
