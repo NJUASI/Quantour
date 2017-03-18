@@ -1,5 +1,6 @@
 package presentation.view.panel;
 
+import javafx.scene.input.MouseButton;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
@@ -101,6 +102,7 @@ public class KStringPanel extends TemplatePanel {
             chartPanel = new ChartPanel(chart);
             chartPanel.setBounds(adaptScreen(200,100,1500,850));
             chartPanel.setBackground(new Color(32, 36, 39));
+            chartPanel.setMouseZoomable(false);
             add(chartPanel);
             chartPanel.repaint();
         } catch (ColorNotExistException e) {
@@ -141,6 +143,7 @@ public class KStringPanel extends TemplatePanel {
 
             chartPanel.setBounds(adaptScreen(200,100,1500,850));
             chartPanel.setBackground(new Color(32, 36, 39));
+            chartPanel.setMouseZoomable(false);
             add(chartPanel);
             chartPanel.repaint();
         } catch (ColorNotExistException e) {
