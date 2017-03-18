@@ -79,7 +79,7 @@ public class MainFrame extends JFrame {
      */
     private void createWindow() {
 
-        setTitle("ASI");
+        setTitle("Quantourist");
         getContentPane().setLayout(new BorderLayout(0, 0));
 
         width=WindowData.getInstance().getWidth();

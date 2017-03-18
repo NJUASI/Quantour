@@ -28,8 +28,6 @@ public class RegisterFrame extends JFrame {
     void createWindow() {
 
         setTitle("注册");
-
-
         ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo1.png"));
         setIconImage(bgPicture.getImage());
 

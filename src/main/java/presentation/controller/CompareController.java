@@ -63,7 +63,7 @@ public class CompareController {
      * @author 61990
      * @updateTime 2017/3/9
      */
-    boolean first=true;
+
     private void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
 
         ChartService chartService = new ChartServiceImpl();
@@ -72,21 +72,15 @@ public class CompareController {
 
         try {
 
-            if(first){
-                first=false;
-                List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
-                compareChartPanel=new CompareChartPanel(vo);
-                compareChartPanel.setBounds(250,150,1500,800);
-                comparePanel.add(compareChartPanel);
-                compareChartPanel.repaint();
-            }else {
+            if(compareChartPanel!=null) {
                 comparePanel.remove(compareChartPanel);
+            }
                 List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
                 compareChartPanel=new CompareChartPanel(vo);
                 compareChartPanel.setBounds(250,150,1500,800);
                 comparePanel.add(compareChartPanel);
                 compareChartPanel.repaint();
-            }
+
 //            chartPanel.repaint();
         }catch (DataSourceFirstDayException e ) {
             JOptionPane.showMessageDialog(compareChartPanel,"首日无法计算涨跌幅");
