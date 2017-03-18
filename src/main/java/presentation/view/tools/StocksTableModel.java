@@ -42,8 +42,6 @@ public class StocksTableModel extends AbstractTableModel {
         for (int i = 0; i < stockList.size(); i++) {
             StockVO stockVO = stockList.get(i);
 
-            System.out.println(stockVO.code);
-
             data[i][0] = stockVO.code;
             data[i][1] = stockVO.name;
             data[i][2] = stockVO.open;

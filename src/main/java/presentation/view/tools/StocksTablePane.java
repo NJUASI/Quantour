@@ -1,10 +1,14 @@
 package presentation.view.tools;
 
+import presentation.controller.StocksTableController;
+import presentation.controller.ViewSwitchController;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 
 /**
@@ -21,7 +25,7 @@ public class StocksTablePane extends JScrollPane {
     int height;
 
     JLabel label;
-
+    int count=0;
     public StocksTablePane(LocalDate date) {
 
         windowData = WindowData.getInstance();
@@ -53,6 +57,24 @@ public class StocksTablePane extends JScrollPane {
             jTable.setGridColor(Color.GRAY);
             jTable.setBackground(Color.white);
             setViewportView(jTable);
+            count=0;
+            jTable.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    if(count==0){
+                        count++;
+                    }else if(count==1){
+                        ViewSwitchController.getInstance().viewSwitch("kStringPanel");
+                        StocksTableController.getInstance().checkDetail();
+                        count=0;
+                    }
+                }
+
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                   count=0;
+                }
+            });
             jTable.repaint();
         } catch (Exception e) {
             label.setVisible(true);

@@ -74,6 +74,7 @@ public class StocksTableController {
             stocksTablePanel.add(stocksTablePane);
             stocksTablePane.repaint();
         }
+
     }
 
     /**

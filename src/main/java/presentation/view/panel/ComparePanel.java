@@ -82,14 +82,13 @@ public class ComparePanel extends TemplatePanel {
         num1 = new JTextField();
         name2 = new JTextField();
         num2 = new JTextField();
-
+        chartService =new ChartServiceImpl();
         //搜索按钮
         compare = new JButton("比较");
         compare.setBounds(adaptScreen(1300, 50, 70, 35));
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                chartService =new ChartServiceImpl();
                 compareSpecial(num1.getText(),num2.getText(),datePanel.getStartDate(),datePanel.getEndDate());
                 refreshAssociate();
             }
@@ -192,12 +191,15 @@ public class ComparePanel extends TemplatePanel {
     boolean first=true;
     public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
         try {
+            chartService=new ChartServiceImpl();
+            System.out.println("22");
+            List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
+            System.out.println("33");
             if(first){
                 first=false;
             }else {
                 remove(compareChartPanel);
             }
-            List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
             compareChartPanel=new CompareChartPanel(vo);
             compareChartPanel.setBounds(adaptScreen(200,130,1500,800));
             add(compareChartPanel);
@@ -208,7 +210,7 @@ public class ComparePanel extends TemplatePanel {
             compareChartPanel.requestFocus();
             compareChartPanel.s.requestFocus();
         }catch (Exception e){
-
+            System.out.println("1234");
         }
     }
     /**
