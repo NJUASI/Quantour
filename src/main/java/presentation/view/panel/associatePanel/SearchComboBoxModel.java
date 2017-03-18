@@ -18,15 +18,12 @@ public class SearchComboBoxModel extends DefaultComboBoxModel<StockSearchVO>{
 
         StockService stockService = new StockServiceImpl();
 
-        List<StockSearchVO> stockSearchVOList = new ArrayList<StockSearchVO>();
-        stockSearchVOList.add(new StockSearchVO("1","深圳"));
-        stockSearchVOList.add(new StockSearchVO("2","上海"));
-        stockSearchVOList.add(new StockSearchVO("3","南京"));
-//        try {
-//            stockSearchVOList = stockService.searchStock(searchString);
-//        } catch (MatchNothingException e) {
-//            e.printStackTrace();
-//        }
+        List<StockSearchVO> stockSearchVOList = null;
+        try {
+            stockSearchVOList = stockService.searchStock(searchString);
+        } catch (MatchNothingException e) {
+            e.printStackTrace();
+        }
 
         for(int i = 0; i < stockSearchVOList.size();i++){
             this.addElement(stockSearchVOList.get(i));
