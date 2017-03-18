@@ -209,9 +209,7 @@ public class ComparePanel extends TemplatePanel {
         try {
             chartService=new ChartServiceImpl();
             List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
-            if(first){
-                first=false;
-            }else {
+            if(compareChartPanel!=null){
                 remove(compareChartPanel);
             }
 
