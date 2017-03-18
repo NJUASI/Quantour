@@ -7,6 +7,9 @@ import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
+import utilities.exceptions.DataSourceFirstDayException;
+import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.StockComparisionVO;
 import vo.StockComparsionCriteriaVO;
 import vo.StockSearchVO;
@@ -18,6 +21,7 @@ import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
@@ -220,8 +224,17 @@ public class ComparePanel extends TemplatePanel {
             compareChartPanel.repaint();
             repaint();
             compareChartPanel.requestFocus();
-        }catch (Exception e){
-            first=true;
+        } catch (DateNotWithinException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(compareChartPanel,"请重新选择时间范围");
+        } catch (DataSourceFirstDayException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(compareChartPanel,"所选日期数据缺失，无法计算涨幅，请重新选择");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoDataWithinException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(compareChartPanel,"请重新选择时间范围");
         }
     }
     /**
