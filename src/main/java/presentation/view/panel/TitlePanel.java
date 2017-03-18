@@ -92,7 +92,7 @@ public class TitlePanel extends TemplatePanel {
         //搜索文本框
         searchTextField = new SearchTextField();
         searchTextField.setBounds(40,5,140,20);
-        add(searchTextField);
+//        add(searchTextField);
         searchTextField.setVisible(false);
         searchTextField.setEnabled(false);
         searchTextField.getDocument().addDocumentListener(new DocumentListener() {
@@ -116,7 +116,7 @@ public class TitlePanel extends TemplatePanel {
         //搜索按钮
         searchBt = new JButton();
         searchBt.setBounds(40,5,20,20);
-        add(searchBt);
+//        add(searchBt);
         searchBt.addMouseListener(new MouseAdapter() {
             /**
              * 鼠标点击,显示文本搜索框,隐藏搜索按钮
