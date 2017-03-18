@@ -2,6 +2,7 @@ package presentation.listener.stocksTablePanelListener;
 
 import presentation.controller.StocksTableController;
 import presentation.controller.ViewSwitchController;
+import presentation.view.panel.NavigationBar;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
