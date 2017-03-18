@@ -6,6 +6,7 @@ import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import utilities.exceptions.DateNotWithinException;
 import vo.ChartShowCriteriaVO;
 
 import java.awt.*;
@@ -54,7 +55,7 @@ public class KChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public KChart(ChartShowCriteriaVO chartShowCriteriaVO) {
+    public KChart(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException {
         this.init(chartShowCriteriaVO);
     }
 
@@ -281,7 +282,7 @@ public class KChart {
      * @updateTime 2017/3/11
      * @param  chartShowCriteriaVO 股票代号和日期
      */
-    private void init(ChartShowCriteriaVO chartShowCriteriaVO){
+    private void init(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException {
         render = new CandlestickRenderer();
         xAxis = new DateAxis();
         yAxis = new NumberAxis();

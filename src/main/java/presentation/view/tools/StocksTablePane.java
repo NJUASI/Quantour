@@ -44,6 +44,8 @@ public class StocksTablePane extends JScrollPane {
             jTable = new JTable(new StocksTableModel(date));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
 
+
+
 //            jTable.setRowHeight (30);//设置每行的高度为30
 //            jTable.setRowMargin (5);//设置相邻两行单元格的距离
 //        table.removeColumn(table.getColumnModel().getColumn(columnIndex));// columnIndex是要删除的列序号
@@ -56,6 +58,7 @@ public class StocksTablePane extends JScrollPane {
 
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
             jTable.setBackground(new Color(32, 36, 39));
+            jTable.setForeground(new Color(201,208,214));
             jTable.setRowSelectionInterval(0, 0);
             jTable.setGridColor(new Color(19, 22, 24));
 
