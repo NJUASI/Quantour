@@ -1,7 +1,8 @@
 package presentation.controller;
 
-import presentation.view.chart.StockSituationBarChart;
-import presentation.view.chart.StockSituationPieChart;
+import presentation.view.chart.StockSituationBar5PercentChart;
+import presentation.view.chart.StockSituationBarLimitChart;
+import presentation.view.chart.StockSituationBarOpenCloseChart;
 import presentation.view.panel.ThermometerPanel;
 import service.StockSituationService;
 import service.serviceImpl.StockSituationServiceImpl;
@@ -54,20 +55,39 @@ public class ThermometerController {
         LocalDate date = thermometerPanel.getDate();
         List<PriceRiseOrFallVO> list = stockSituationService.getStockStituationData(date);
 
-        StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
-        StockSituationBarChart barChart = new StockSituationBarChart(list.iterator());
-
+//        StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
 //        JPanel piePanel=pieChart.createChart();
 //        piePanel.setBounds(thermometerPanel.adaptScreen(230,200,800,600));
 //        piePanel.setBackground(new Color(55,60,56));
 //        thermometerPanel.add(piePanel);
 //        piePanel.repaint();
 
-        JPanel barPanel=barChart.createChart();
-        barPanel.setBounds(thermometerPanel.adaptScreen(230,200,800,600));
-        barPanel.setBackground(new Color(32, 36, 39));
-        thermometerPanel.add(barPanel);
+        for (PriceRiseOrFallVO vo : list) {
+            System.out.print(vo.num + " ");
+        }
+
+        StockSituationBarLimitChart barChart1 = new StockSituationBarLimitChart(list);
+        StockSituationBar5PercentChart barChart2 = new StockSituationBar5PercentChart(list);
+        StockSituationBarOpenCloseChart barChart3 = new StockSituationBarOpenCloseChart(list);
+
+        JPanel barPanel1 = barChart1.createChart();
+        JPanel barPanel2 = barChart2.createChart();
+        JPanel barPanel3 = barChart3.createChart();
+
+        barPanel1.setBounds(thermometerPanel.adaptScreen(30,150,540,720));
+        barPanel2.setBounds(thermometerPanel.adaptScreen(650,150,540,720));
+        barPanel3.setBounds(thermometerPanel.adaptScreen(1270,150,540,720));
+
+        barPanel1.setBackground(new Color(32, 36, 39));
+        barPanel2.setBackground(new Color(32, 36, 39));
+        barPanel3.setBackground(new Color(32, 36, 39));
+
+        thermometerPanel.add(barPanel1);
+        thermometerPanel.add(barPanel2);
+        thermometerPanel.add(barPanel3);
         thermometerPanel.setBackground(new Color(32, 36, 39));
-        barPanel.repaint();
+        barPanel1.repaint();
+        barPanel2.repaint();
+        barPanel3.repaint();
     }
 }

@@ -49,6 +49,6 @@ public interface StockDataHelper {
      * @return 数据库中股票存在记录的第一天
      * @throws IOException IO
      */
-    LocalDate getFirstDay(String stockCode);
+    LocalDate getFirstDay(String stockCode) throws IOException;
 
 }

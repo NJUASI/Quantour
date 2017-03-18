@@ -47,7 +47,6 @@ public class ThermometerPanel extends TemplatePanel {
     /**
      * 单件模式
      *
-     * @param
      * @return thermometerPanel 温度计面板
      * @author 61990
      * @updateTime 2017/3/5

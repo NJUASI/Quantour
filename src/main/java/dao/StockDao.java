@@ -139,7 +139,7 @@ public interface StockDao {
      * @param stockCode 股票代码
      * @return 数据库中股票存在记录的第一天
      */
-    LocalDate getFirstDay(String stockCode);
+    LocalDate getFirstDay(String stockCode) throws IOException;
 
     /**
      * 获取所有股票的代码

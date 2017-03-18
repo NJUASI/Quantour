@@ -85,6 +85,10 @@ public class StockDaoImpl implements StockDao {
             // 用户要查找的时间区间超出数据源时间区间
             throw new DateNotWithinException();
         }
+
+        System.out.println("--------start dao----------");
+
+
         List<StockPO> result = stockHelper.getStockRecords(stockCode);
         for (int i = 0; i < result.size(); ) {
             if (!isDateWithinWanted(start, end, result.get(i).getDate())) {
@@ -93,6 +97,9 @@ public class StockDaoImpl implements StockDao {
                 i++;
             }
         }
+
+        System.out.println("--------end dao----------");
+
         return reverse(result);
     }
 
@@ -213,7 +220,7 @@ public class StockDaoImpl implements StockDao {
      * @return 数据库中股票存在记录的第一天
      */
     @Override
-    public LocalDate getFirstDay(String code) {
+    public LocalDate getFirstDay(String code) throws IOException {
         return stockHelper.getFirstDay(code);
     }
 
@@ -285,6 +292,10 @@ public class StockDaoImpl implements StockDao {
         // 硬编码实现
         LocalDate sourceStart = LocalDate.of(2005, 2, 1);
         LocalDate sourceEnd = LocalDate.of(2014, 4, 29);
+
+        System.out.println(start.isBefore(sourceStart));
+        System.out.println(end.isAfter(sourceEnd));
+        System.out.println("-----------------------");
 
         if (start.isBefore(sourceStart) || end.isAfter(sourceEnd)) return false;
         else return true;
