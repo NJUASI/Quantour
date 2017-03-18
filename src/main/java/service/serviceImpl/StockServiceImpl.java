@@ -117,13 +117,15 @@ public class StockServiceImpl implements StockService {
 
         List<StockSearchVO> stockSearchVOs = new ArrayList<StockSearchVO>();
 
+
+
         //通过匹配股票的拼音来查询
         if(searchString.matches("[0-9]+")){
             Map<String,String> codeAndName = stockDao.getAllStocksCode();
             Set<String> codes = codeAndName.keySet();
             for (String code:codes) {
                 if(code.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(code,codeAndName.get(code));
+                    StockSearchVO vo = new StockSearchVO(autoGenericCode(code),codeAndName.get(code));
                     stockSearchVOs.add(vo);
                 }
             }
@@ -139,7 +141,7 @@ public class StockServiceImpl implements StockService {
             Set<String> names = namesAndCode.keySet();
             for(String name:names){
                 if(name.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(namesAndCode.get(name),name);
+                    StockSearchVO vo = new StockSearchVO(autoGenericCode(namesAndCode.get(name)),name);
                     stockSearchVOs.add(vo);
                 }
             }
@@ -165,5 +167,19 @@ public class StockServiceImpl implements StockService {
 //            throw new MatchNothingException();
 //        }
         return  stockSearchVOs;
+    }
+
+
+    /**
+     * 不够位数的在前面补0，保留num的长度位数字
+     * @param code
+     * @return
+     */
+    private String autoGenericCode(String code) {
+
+        String result = "";
+        result = String.format("%0" + 6 + "d", Integer.parseInt(code));
+
+        return result;
     }
 }

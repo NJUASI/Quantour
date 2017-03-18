@@ -1,11 +1,9 @@
 package presentation.view.panel;
 
 import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
-import presentation.controller.LoginController;
 import presentation.listener.loginPanelListener.LoginListener;
-import presentation.listener.loginPanelListener.OpenRegisterListener;
 import presentation.view.frame.LoginFrame;
-import presentation.view.tools.MyButton;
+import presentation.view.tools.customizedButton.MyButton;
 import presentation.view.tools.MyLabel;
 
 import javax.swing.*;

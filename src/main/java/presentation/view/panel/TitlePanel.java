@@ -1,8 +1,7 @@
 package presentation.view.panel;
 
-import presentation.view.frame.LoginFrame;
 import presentation.view.frame.MainFrame;
-import presentation.view.tools.MyButton;
+import presentation.view.tools.customizedButton.MyButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +12,13 @@ import java.awt.event.MouseEvent;
  * Created by 61990 on 2017/3/17.
  */
 public class TitlePanel extends TemplatePanel {
+
     private static TitlePanel titlePanel;
+
     JLabel label;
+
     MyButton close,min;
+
     TitlePanel(){
         setLayout(null);
         setBounds(adaptScreen(100,0,1900,40));

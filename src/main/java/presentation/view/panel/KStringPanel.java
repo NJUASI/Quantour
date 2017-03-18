@@ -90,7 +90,7 @@ public class KStringPanel extends TemplatePanel {
             ChartUtils.setXY_XAixs(xyplot);
 
             chartPanel = new ChartPanel(chart);
-            chartPanel.setBounds(adaptScreen(320,100,1500,850));
+            chartPanel.setBounds(adaptScreen(200,100,1500,850));
             chartPanel.setBackground(new Color(32, 36, 39));
             add(chartPanel);
             chartPanel.repaint();
@@ -130,7 +130,7 @@ public class KStringPanel extends TemplatePanel {
             ChartUtils.setXY_XAixs(xyplot);
             chartPanel = new ChartPanel(chart);
 
-            chartPanel.setBounds(adaptScreen(320,100,1500,850));
+            chartPanel.setBounds(adaptScreen(200,100,1500,850));
             chartPanel.setBackground(new Color(32, 36, 39));
             add(chartPanel);
             chartPanel.repaint();

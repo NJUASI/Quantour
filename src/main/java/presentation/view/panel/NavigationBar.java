@@ -5,11 +5,8 @@ import presentation.listener.navigationBarListener.CompareListener;
 import presentation.listener.navigationBarListener.KStringListener;
 import presentation.listener.navigationBarListener.StocksTableListener;
 import presentation.listener.navigationBarListener.ThermometerListener;
-import presentation.view.frame.MainFrame;
-import presentation.view.tools.MyButton;
-import presentation.view.tools.MyLabel;
+import presentation.view.tools.customizedButton.MyButton;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -20,6 +17,8 @@ import java.awt.event.MouseEvent;
 public class NavigationBar extends TemplatePanel {
     int numOfChoosed;
     MyButton kString,compare,thermometer,favorites;
+
+
     /**
      * 构造器
      *
