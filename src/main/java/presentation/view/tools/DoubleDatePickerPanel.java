@@ -115,9 +115,11 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 
 
         image=new ImageView();
+
+
         image.setImage(new Image(getClass().getClassLoader().getResourceAsStream("picture/bgColor.png")));
 
-            Callback<DatePicker, DateCell> dayCellFactory =
+        Callback<DatePicker, DateCell> dayCellFactory2 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
                     public DateCell call(final DatePicker datePicker) {
@@ -125,7 +127,27 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                             @Override
                             public void updateItem(LocalDate item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if (item.isBefore(startDate.getValue().plusDays(1))
+                                if (item.isBefore(LocalDate.of(2005,1,31))||item.isAfter(LocalDate.of(2014,4,29))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
+                            }
+                        };
+                    }
+                };
+
+        startDate.setDayCellFactory(dayCellFactory2);
+
+        Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isBefore(startDate.getValue().plusDays(1))||item.isAfter(LocalDate.of(2014,4,29))
                                         ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");

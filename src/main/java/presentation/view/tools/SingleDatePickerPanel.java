@@ -1,10 +1,12 @@
 package presentation.view.tools;
 
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.util.Callback;
 
 import java.time.LocalDate;
 
@@ -38,6 +40,25 @@ public class SingleDatePickerPanel extends JFXPanel {
                 date.setMaxSize(width*175/1920,37*height/1030);
                 date.setValue(LocalDate.of(2014, 4, 29));
                 date.setEditable(false);
+                Callback<DatePicker, DateCell> dayCellFactory2 =
+                        new Callback<DatePicker, DateCell>() {
+                            @Override
+                            public DateCell call(final DatePicker datePicker) {
+                                return new DateCell() {
+                                    @Override
+                                    public void updateItem(LocalDate item, boolean empty) {
+                                        super.updateItem(item, empty);
+                                        if (item.isBefore(LocalDate.of(2005,1,31))||item.isAfter(LocalDate.of(2014,4,29))
+                                                ) {
+                                            setDisable(true);
+                                            setStyle("-fx-background-color: #ffc0cb;");
+                                        }
+                                    }
+                                };
+                            }
+                        };
+
+                date.setDayCellFactory(dayCellFactory2);
                 root.getChildren().add(date);
             }
         });
