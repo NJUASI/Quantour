@@ -133,8 +133,10 @@ public class LineData {
                 List<MovingAverageVO> movingAverageVOS = tempMap.get(i);
                 for(int j = 0;j<movingAverageVOS.size();j++){
                     MovingAverageVO vo = movingAverageVOS.get(j);
+                    System.out.println(vo.date);
                     series.add(new Day(vo.date.getDayOfMonth(), vo.date.getMonth().getValue(), vo.date.getYear()), vo.average);
                 }
+                System.out.println();
                 data.add(series);
             }
 
