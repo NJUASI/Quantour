@@ -16,6 +16,7 @@ import utilities.IDReserve;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.ColorNotExistException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 import vo.StockSearchVO;
 
@@ -147,6 +148,10 @@ public class KStringPanel extends TemplatePanel {
             System.out.println("该均线类型不存在"); //TODO 后期可能会更改
         } catch (CodeNotFoundException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(chartPanel,"请输入股票代号");
+        } catch (NoDataWithinException e) {
+            JOptionPane.showMessageDialog(chartPanel,e.getMessage());
+            e.printStackTrace();
         }
     }
     /**
@@ -206,11 +211,16 @@ public class KStringPanel extends TemplatePanel {
             public void mouseClicked(MouseEvent e) {
                 refreshAssociate();
 
-                if(chartPanel!=null){
-                    remove(chartPanel);
+                if(num.getText().equals("")){
+                    JOptionPane.showMessageDialog(chartPanel,"请输入股票代号");
                 }
+                else {
+                    if (chartPanel != null) {
+                        remove(chartPanel);
+                    }
 
-                findOne(num.getText());
+                    findOne(num.getText());
+                }
 
             }
         });
@@ -225,19 +235,24 @@ public class KStringPanel extends TemplatePanel {
                 associatePanel.setBounds(adaptScreen(750, 86, 300, 200));
                 associatePanel.updateText(searchTextField.getText());
 
-                if(chartPanel!=null){
-                    remove(chartPanel);
+                if(num.getText().equals("")){
+                    JOptionPane.showMessageDialog(chartPanel,"请输入股票代号");
                 }
+                else {
 
-                try {
-                    findSpecial(num.getText(), datePanel.getStartDate(), datePanel.getEndDate());
-                } catch (DateNotWithinException e1) {
-                    e1.printStackTrace();
-                    //TODO 需要提示数据不对
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                    System.out.print("reero");
+                    if (chartPanel != null) {
+                        remove(chartPanel);
+                    }
 
+                    try {
+                        findSpecial(num.getText(), datePanel.getStartDate(), datePanel.getEndDate());
+                    } catch (DateNotWithinException e1) {
+                        e1.printStackTrace();
+                        JOptionPane.showMessageDialog(chartPanel,"请重新选择时间范围");
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+
+                    }
                 }
 
             }

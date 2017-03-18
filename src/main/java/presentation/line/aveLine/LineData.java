@@ -8,6 +8,7 @@ import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
+import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
 
@@ -49,7 +50,7 @@ public class LineData {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public LineData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) {
+    public LineData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws NoDataWithinException {
         service = new ChartServiceImpl();
         data = new ArrayList<>();
         this.days = days;
@@ -124,7 +125,7 @@ public class LineData {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) {
+    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws NoDataWithinException {
         try {
             Map<Integer, List<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO, this.days);
 

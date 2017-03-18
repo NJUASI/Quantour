@@ -9,6 +9,7 @@ import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 import vo.StockVO;
 
@@ -65,7 +66,7 @@ public class LineData {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public LineData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException {
+    public LineData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         this.readData(chartShowCriteriaVO);
@@ -264,7 +265,7 @@ public class LineData {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException {
+    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException {
         data = this.service.getSingleStockRecords(chartShowCriteriaVO);
     }
 }

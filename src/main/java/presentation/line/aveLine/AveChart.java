@@ -3,6 +3,7 @@ package presentation.line.aveLine;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import utilities.exceptions.ColorNotExistException;
+import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class AveChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public AveChart(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> tag) {
+    public AveChart(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> tag) throws NoDataWithinException {
         data = new LineData(chartShowCriteriaVO,tag);
         factory = new ColorFactory();
     }

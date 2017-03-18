@@ -3,10 +3,7 @@ package service.serviceImpl;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DataSourceFirstDayException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
+import utilities.exceptions.*;
 import po.StockPO;
 import service.ChartService;
 import vo.*;
@@ -81,7 +78,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 特定股票的所有交易信息
      */
     @Override
-    public List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException, CodeNotFoundException {
+    public List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         List<StockPO> stockPOList = null;
 
@@ -106,7 +103,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 用户所选天数的均线图的平均值
      */
     @Override
-    public Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws IOException, DateNotWithinException, CodeNotFoundException {
+    public Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException {
         Map<Integer, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
 
         String code = chartShowCriteriaVO.stockCode;
@@ -187,7 +184,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 界面上需要的两只股票的比较信息
      */
     @Override
-    public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException {
+    public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, NoDataWithinException {
         List<StockPO> stockPOList1 = null;
         List<StockPO> stockPOList2 = null;
 
@@ -216,7 +213,7 @@ public class ChartServiceImpl implements ChartService {
      * @param vo 选择条件
      * @return StockPO的列表
      */
-    private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException, DateNotWithinException {
+    private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException, DateNotWithinException, NoDataWithinException {
 
             return stockDao.getStockData(vo.stockCode, vo.start,vo.end);
     }
