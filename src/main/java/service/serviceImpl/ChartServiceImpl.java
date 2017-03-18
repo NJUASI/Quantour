@@ -62,7 +62,7 @@ public class ChartServiceImpl implements ChartService {
      * @return 特定股票的所有交易信息
      */
     @Override
-    public List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException {
+    public List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po : getStockPOs(chartShowCriteriaVO)) {
             stockVOList.add(new StockVO(po));
@@ -183,13 +183,9 @@ public class ChartServiceImpl implements ChartService {
      * @param vo 选择条件
      * @return StockPO的列表
      */
-    private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException {
-        try {
+    private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException, DateNotWithinException {
+
             return stockDao.getStockData(vo.stockCode, vo.start,vo.end);
-        } catch (DateNotWithinException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 
