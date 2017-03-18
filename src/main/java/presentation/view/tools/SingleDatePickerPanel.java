@@ -36,7 +36,7 @@ public class SingleDatePickerPanel extends JFXPanel {
                 date.setMinSize(width*175/1920,37*height/1030);
                 date.setPrefSize(width*175/1920,37*height/1030);
                 date.setMaxSize(width*175/1920,37*height/1030);
-                date.setValue(LocalDate.now());
+                date.setValue(LocalDate.of(2014, 4, 29));
                 date.setEditable(false);
                 root.getChildren().add(date);
             }

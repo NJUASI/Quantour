@@ -84,7 +84,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
     void initDatePicker(){
 
         startDate = new DatePicker();
-        startDate.setValue(LocalDate.now());
+        startDate.setValue(LocalDate.of(2014, 4, 29));
         startDate.setLayoutX(80);
         startDate.setLayoutY(0);
         startDate.setMinSize(width*170/1920,37*height/1030);
@@ -92,7 +92,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         startDate.setMaxSize(width*170/1920,37*height/1030);
         startDate.setEditable(false);
         endDate = new DatePicker();
-        endDate.setValue(LocalDate.now());
+        endDate.setValue(LocalDate.of(2014, 4, 29));
         endDate.setLayoutX(width*350/1920);
         endDate.setLayoutY(0);
         endDate.setMinSize(width*170/1920,37*height/1030);
