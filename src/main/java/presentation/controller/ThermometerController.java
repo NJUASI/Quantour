@@ -17,17 +17,18 @@ import java.util.List;
  * Created by Harvey on 2017/3/13.
  */
 public class ThermometerController {
+
     /**
      * The constant thermometerController.
      */
     private static ThermometerController thermometerController = new ThermometerController();
-    /**
-     * The Thermometer panel.
-     */
+
     private ThermometerPanel thermometerPanel;
-    /**
-     * The Stock situation service.
-     */
+
+    private JPanel barPanel1;
+    private JPanel barPanel2;
+    private JPanel barPanel3;
+
     private StockSituationService stockSituationService;
 
     /**
@@ -70,9 +71,14 @@ public class ThermometerController {
         StockSituationBar5PercentChart barChart2 = new StockSituationBar5PercentChart(list);
         StockSituationBarOpenCloseChart barChart3 = new StockSituationBarOpenCloseChart(list);
 
-        JPanel barPanel1 = barChart1.createChart();
-        JPanel barPanel2 = barChart2.createChart();
-        JPanel barPanel3 = barChart3.createChart();
+        if (barPanel1 != null) {
+            thermometerPanel.remove(barPanel1);
+            thermometerPanel.remove(barPanel2);
+            thermometerPanel.remove(barPanel3);
+        }
+        barPanel1 = barChart1.createChart();
+        barPanel2 = barChart2.createChart();
+        barPanel3 = barChart3.createChart();
 
         barPanel1.setBounds(thermometerPanel.adaptScreen(30,150,540,720));
         barPanel2.setBounds(thermometerPanel.adaptScreen(650,150,540,720));
