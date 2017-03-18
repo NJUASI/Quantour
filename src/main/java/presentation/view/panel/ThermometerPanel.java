@@ -3,6 +3,7 @@ package presentation.view.panel;
 import presentation.listener.thermometerPanelListener.SearchListner;
 import presentation.view.tools.MyLabel;
 import presentation.view.tools.SingleDatePickerPanel;
+import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,11 +22,7 @@ public class ThermometerPanel extends TemplatePanel {
     //搜索按钮
     JButton search;
 
-    //饼图面板
-    JPanel piePanel;
 
-    //柱状图面板
-    JPanel barPanel;
     /**
      * 温度计面板构造器
      *
@@ -48,6 +45,8 @@ public class ThermometerPanel extends TemplatePanel {
         search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListner());
         add(search);
+
+
 //        add(bg);
     }
 

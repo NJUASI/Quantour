@@ -65,6 +65,7 @@ public class StockSituationServiceImpl implements StockSituationService {
         list.add(new PriceRiseOrFallVO("跌幅超过5%",vo.slumpingNum,date));
         list.add(new PriceRiseOrFallVO("开盘-收盘小于-5%*上一个交易日收盘价",vo.climbingNum,date));
         list.add(new PriceRiseOrFallVO("开盘-收盘大于+5%*上一个交易日收盘价",vo.slipingNum,date));
+        list.add(new PriceRiseOrFallVO("总交易量",Integer.parseInt(vo.volume), date));
 
         return list;
     }
