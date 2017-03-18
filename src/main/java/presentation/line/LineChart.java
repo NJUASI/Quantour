@@ -77,6 +77,8 @@ public class LineChart {
         this.kChart.setPlot(this.start,this.end,this.getGap());
         JFreeChart chart = new JFreeChart( this.kChart.getTitle(),font,this.kChart.getKLinePlot(),true);
        chart = this.setChart(chart);
+
+       chart.setAntiAlias(false);
         return chart;
     }
 
@@ -105,6 +107,7 @@ public class LineChart {
         JFreeChart chart = new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
 
         chart = this.setChart(chart);
+        chart.setAntiAlias(false);
        return chart;
     }
 
@@ -127,6 +130,7 @@ public class LineChart {
 
         JFreeChart chart = new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
         chart = this.setChart(chart);
+        chart.setAntiAlias(false);
         return chart;
     }
 
@@ -156,6 +160,7 @@ public class LineChart {
 
         JFreeChart chart = new JFreeChart( this.kChart.getTitle(),font,combineddomainxyplot,true);
         chart = this.setChart(chart);
+        chart.setAntiAlias(false);
         return chart;
     }
 

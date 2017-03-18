@@ -47,12 +47,7 @@ public class ViewSwitchController{
     public void viewSwitch(String panelName){
         if (!panelNames.contains(panelName)){
             switch (panelName){
-                case "loginPanel":
-                    cardPanel.add(LoginPanel.getInstance(),"loginPanel");
-                    break;
-                case "registerPanel":
-                    cardPanel.add(RegisterPanel.getInstance(),"registerPanel");
-                    break;
+
                 case "kStringPanel":
                     cardPanel.add(KStringPanel.getInstance(),"kStringPanel");
                     break;
