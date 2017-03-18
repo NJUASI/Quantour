@@ -84,10 +84,12 @@ public class StocksTableController {
     public void checkDetail() {
 
         try {
+            KStringPanel.getInstance().count=1;
             kStringPanel = KStringPanel.getInstance();
             kStringPanel.datePanel.setDate(stocksTablePanel.getChooseDate());
             NavigationBar.getInstance().whileClicked(2);
             kStringPanel.addMessage(stocksTablePane.getName(), stocksTablePane.getCode());
+            KStringPanel.getInstance().count=0;
         }catch (Exception e){
 
         }

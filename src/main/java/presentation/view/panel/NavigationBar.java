@@ -190,6 +190,7 @@ public class NavigationBar extends TemplatePanel {
                 compare.moveOut();
                 thermometer.moveOut();
                 TitlePanel.getInstance().setTitle("行情");
+                numOfChoosed=1;
                 break;
             case 2:
                 kString.click2();
@@ -197,6 +198,7 @@ public class NavigationBar extends TemplatePanel {
                 compare.moveOut();
                 thermometer.moveOut();
                 TitlePanel.getInstance().setTitle("个股");
+                numOfChoosed=2;
                 break;
             case 3:
                 favorites.moveOut();
@@ -204,6 +206,7 @@ public class NavigationBar extends TemplatePanel {
                 compare.click2();
                 thermometer.moveOut();
                 TitlePanel.getInstance().setTitle("对比");
+                numOfChoosed=3;
                 break;
             case 4:
                 thermometer.click2();
@@ -211,6 +214,7 @@ public class NavigationBar extends TemplatePanel {
                 kString.moveOut();
                 compare.moveOut();
                 TitlePanel.getInstance().setTitle("市场");
+                numOfChoosed=4;
 
                 break;
             default:
