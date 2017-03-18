@@ -12,9 +12,9 @@ import java.util.List;
 /**
  * Created by Byron Dong on 2017/3/5.
  * Last updated by cuihua
- * Update time 2017/3/9
+ * Update time 2017/3/18
  *
- * 修改完善dataHelper实现
+ * 对getFirstDay接口理解错误，重新实现
  */
 public class StockDataHelperImpl implements StockDataHelper {
 
@@ -66,23 +66,11 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @throws IOException IO
      */
     @Override
-    public LocalDate getFirstDay(String stockCode) {
+    public LocalDate getFirstDay(String stockCode) throws IOException {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(stockRecordByCodePathPre + stockCode + stockRecordPathPost)));
 
-        String line = null;
-        try {
-            line = br.readLine();
-//            System.out.println(line);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String[] parts = line.split("\t");
-        int year = Integer.parseInt(parts[1].split("-")[0]);
-        int month = Integer.parseInt(parts[1].split("-")[1]);
-        int day = Integer.parseInt(parts[1].split("-")[2]);
-        LocalDate firstDay = LocalDate.of(year, month, day);
-        return firstDay;
+        List<StockPO> allResult = getStockRecords(stockCode);
+        return allResult.get(allResult.size()-1).getDate();
     }
 
     /**

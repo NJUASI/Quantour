@@ -43,8 +43,6 @@ public class ComparePanel extends TemplatePanel {
     /**
      * 比较面板构造器
      *
-     * @param
-     * @return
      * @author 61990
      * @updateTime 2017/3/5
      */
@@ -55,7 +53,6 @@ public class ComparePanel extends TemplatePanel {
     /**
      * 单件模式
      *
-     * @param
      * @return comparePanel 比较面板
      * @author 61990
      * @updateTime 2017/3/5
@@ -70,7 +67,6 @@ public class ComparePanel extends TemplatePanel {
     /**
      * 添加日期选择器等各种原件
      *
-     * @param
      * @return
      * @author 61990
      * @updateTime 2017/3/6

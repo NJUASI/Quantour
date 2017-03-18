@@ -152,12 +152,19 @@ public class ChartServiceImpl implements ChartService {
     @Override
     public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException {
         List<StockPO> stockPOList1 = null;
+        List<StockPO> stockPOList2 = null;
+        System.out.println("--------start service----------");
+
         try {
+
             stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
-            List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+            stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
             List<StockComparisionVO> result = new LinkedList<>();
             result.add(new StockComparisionVO(stockPOList1));
             result.add(new StockComparisionVO(stockPOList2));
+
+            System.out.println("--------end service----------");
+
             return result;
         } catch (DateNotWithinException e) {
             e.printStackTrace();
