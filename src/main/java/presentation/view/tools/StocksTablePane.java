@@ -61,6 +61,7 @@ public class StocksTablePane extends JScrollPane {
             jTable.setForeground(new Color(201,208,214));
             jTable.setRowSelectionInterval(0, 0);
             jTable.setGridColor(new Color(19, 22, 24));
+            jTable.setBorder(null);
 
             JTableHeader header = jTable.getTableHeader();
             header.setDefaultRenderer(new MyTableHeaderRender(header.getDefaultRenderer()));
@@ -73,6 +74,7 @@ public class StocksTablePane extends JScrollPane {
 
             getVerticalScrollBar().setUI(new MyScrollBarUI());
             setBackground(new Color(32,36,39));
+            setBorder(null);
             setViewportView(jTable);
             count=0;
             jTable.addMouseListener(new MyMouseListener());

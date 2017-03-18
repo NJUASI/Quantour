@@ -10,6 +10,7 @@ public class MyLabel extends JLabel {
     int width,height;
     public MyLabel(String str){
         setText(str);
+        setBorder(null);
         width=WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
         setForeground(new Color(255,255,255));
