@@ -25,9 +25,14 @@ public class SearchComboBoxModel extends DefaultComboBoxModel<StockSearchVO>{
             e.printStackTrace();
         }
 
-        for(int i = 0; i < stockSearchVOList.size();i++){
+        for(int i = 0; i < stockSearchVOList.size();i++) {
             this.addElement(stockSearchVOList.get(i));
         }
+
     }
 
+    @Override
+    public StockSearchVO getElementAt(int index) {
+        return super.getElementAt(index);
+    }
 }

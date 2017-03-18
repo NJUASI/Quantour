@@ -1,42 +1,41 @@
 package presentation.view.chart;
-import java.awt.Color;
-import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.Vector;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
 import presentation.view.util.ChartUtils;
 import presentation.view.util.Serie;
 import vo.PriceRiseOrFallVO;
 
+import java.awt.*;
+import java.util.List;
+import java.util.Vector;
 
 /**
- * Created by 61990 on 2017/3/10.
+ * Created by cuihua on 2017/3/18.
+ *
+ * 开盘‐收盘大于5% * 上一个交易日收盘价
+ * 开盘‐收盘小于‐5% * 上一个交易日收盘价
  */
-public class StockSituationBarChart {
-    Iterator<PriceRiseOrFallVO> priceItr;
+public class StockSituationBarOpenCloseChart {
 
-    public StockSituationBarChart(Iterator<PriceRiseOrFallVO> priceItr) {
-        this.priceItr = priceItr;
+    List<PriceRiseOrFallVO> priceList;
+
+    public StockSituationBarOpenCloseChart(List<PriceRiseOrFallVO> priceList) {
+        this.priceList = priceList;
     }
 
     private CategoryDataset createDataset(){
-        String[] categories = new String[6];
+        String[] categories = new String[2];
         Vector<Serie> series = new Vector<Serie>();
-        Object[] datas = new Object[6];
-        int index = 0;
-        while (priceItr.hasNext()) {
-            PriceRiseOrFallVO vo = priceItr.next();
-            categories[index] = vo.name;
-            datas[index] = vo.num;
-            index++;
+        Object[] datas = new Object[2];
+        for (int i = 4; i < 6; i++) {
+            PriceRiseOrFallVO vo = priceList.get(i);
+            categories[i-4] = vo.name;
+            datas[i-4] = vo.num;
         }
         series.add(new Serie("",datas));
         DefaultCategoryDataset dataset = ChartUtils.createDefaultCategoryDataset(series, categories);
@@ -46,7 +45,7 @@ public class StockSituationBarChart {
 
     public ChartPanel createChart() {
         // 2：创建Chart
-        JFreeChart chart = ChartFactory.createBarChart("市场温度计", "", "股票数", createDataset());
+        JFreeChart chart = ChartFactory.createBarChart("开盘‐收盘大于5% * 上一个交易日收盘价 VS 开盘‐收盘小于‐5% * 上一个交易日收盘价", "", "股票数", createDataset());
         // 3:设置抗锯齿，防止字体显示不清楚
         ChartUtils.setAntiAlias(chart);// 抗锯齿
         // 4:对柱子进行渲染
@@ -60,5 +59,6 @@ public class StockSituationBarChart {
         ChartPanel chartPanel = new ChartPanel(chart);
         return chartPanel;
     }
+
 
 }

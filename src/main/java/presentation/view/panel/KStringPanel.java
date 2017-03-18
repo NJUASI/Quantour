@@ -12,6 +12,7 @@ import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
 import utilities.exceptions.ColorNotExistException;
 import vo.ChartShowCriteriaVO;
+import vo.StockSearchVO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -39,7 +40,8 @@ public class KStringPanel extends TemplatePanel {
     JButton favorite;
     public AssociatePanel associatePanel;
     ChartPanel chartPanel;
-
+    //用于更新联想面板
+    int count=0;
     //由于重复添加chartPanel,故以此作为flag检测是否需要remove chartPanel
     boolean first = true;
 
@@ -152,15 +154,8 @@ public class KStringPanel extends TemplatePanel {
         datePanel.setBounds(width * 350 / 1920, height * 50 / 1030, 385 * width / 1920, 35 * height / 1030);
         add(datePanel);
 
-        searchTextField.setBounds(adaptScreen(800, 50, 150, 35));
-        add(searchTextField);
-        searchTextField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                refreshAssociate();
-            }
-        });
-        num.setBounds(adaptScreen(1000, 50, 50, 35));
+
+        num.setBounds(adaptScreen(800, 50, 150, 35));
         add(num);
         num.addMouseListener(new MouseAdapter() {
             @Override
@@ -169,6 +164,14 @@ public class KStringPanel extends TemplatePanel {
             }
         });
         //提示框面板
+        searchTextField.setBounds(adaptScreen(950, 50, 150, 35));
+        add(searchTextField);
+        searchTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
         associatePanel = new AssociatePanel();
         associatePanel.setVisible(false);
         add(associatePanel);
@@ -280,8 +283,11 @@ public class KStringPanel extends TemplatePanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                searchTextField.setText(associatePanel.getMessage().name);
+                StockSearchVO temp = associatePanel.getMessage();
+                searchTextField.setText(temp.name);
+                num.setText(temp.code);
                 associatePanel.setVisible(false);
+
             }
         });
         Document dt = searchTextField.getDocument();
@@ -290,7 +296,7 @@ public class KStringPanel extends TemplatePanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(800, 86, 250, 200));
+                associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
                 associatePanel.updateText(searchTextField.getText());
             }
 
@@ -308,9 +314,14 @@ public class KStringPanel extends TemplatePanel {
         dt1.addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(800, 86, 250, 200));
-                associatePanel.updateText(num.getText());
+//                if(count==0) {
+                    associatePanel.setVisible(true);
+//                }else{
+//                    count=0;
+//                }
+                    associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
+                    associatePanel.updateText(num.getText());
+
             }
 
             @Override

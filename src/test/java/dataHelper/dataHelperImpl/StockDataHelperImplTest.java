@@ -108,7 +108,9 @@ public class StockDataHelperImplTest {
      */
     @Test
     public void testGetFirstDay() throws Exception {
-        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstDay("17"));
+        assertEquals(LocalDate.of(2005, 2, 1), stockDataHelper.getFirstDay("17"));
+        assertEquals(LocalDate.of(2007, 12, 19), stockDataHelper.getFirstDay("2198"));
+        assertEquals(LocalDate.of(2007, 12, 3), stockDataHelper.getFirstDay("2189"));
     }
 }
 

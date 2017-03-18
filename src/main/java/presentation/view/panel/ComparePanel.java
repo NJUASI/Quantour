@@ -8,6 +8,7 @@ import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import vo.StockComparisionVO;
 import vo.StockComparsionCriteriaVO;
+import vo.StockSearchVO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -42,8 +43,6 @@ public class ComparePanel extends TemplatePanel {
     /**
      * 比较面板构造器
      *
-     * @param
-     * @return
      * @author 61990
      * @updateTime 2017/3/5
      */
@@ -54,7 +53,6 @@ public class ComparePanel extends TemplatePanel {
     /**
      * 单件模式
      *
-     * @param
      * @return comparePanel 比较面板
      * @author 61990
      * @updateTime 2017/3/5
@@ -69,7 +67,6 @@ public class ComparePanel extends TemplatePanel {
     /**
      * 添加日期选择器等各种原件
      *
-     * @param
      * @return
      * @author 61990
      * @updateTime 2017/3/6
@@ -102,17 +99,17 @@ public class ComparePanel extends TemplatePanel {
         associatePanel2.setVisible(false);
         add(associatePanel2);
         addRefreshListener();
-        name1.setBounds(adaptScreen(900, 30, 150, 35));
+        name1.setBounds(adaptScreen(1050, 30, 150, 35));
         add(name1);
 
-        num1.setBounds(adaptScreen(1100, 30, 50, 35));
+        num1.setBounds(adaptScreen(900, 30, 150, 35));
         add(num1);
 
 
-        name2.setBounds(adaptScreen(900, 70, 150, 35));
+        name2.setBounds(adaptScreen(1050, 70, 150, 35));
         add(name2);
 
-        num2.setBounds(adaptScreen(1100, 70, 50, 35));
+        num2.setBounds(adaptScreen(900, 70, 150, 35));
         add(num2);
 
         setBackground(new Color(32,36,39));
@@ -193,25 +190,22 @@ public class ComparePanel extends TemplatePanel {
     public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
         try {
             chartService=new ChartServiceImpl();
-            System.out.println("22");
             List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
-            System.out.println("33");
             if(first){
                 first=false;
             }else {
                 remove(compareChartPanel);
             }
+
             compareChartPanel=new CompareChartPanel(vo);
             compareChartPanel.setBounds(adaptScreen(200,130,1500,800));
             add(compareChartPanel);
             compareChartPanel.setVisible(true);
             compareChartPanel.repaint();
             repaint();
-
             compareChartPanel.requestFocus();
-            compareChartPanel.s.requestFocus();
         }catch (Exception e){
-            System.out.println("1234");
+            first=true;
         }
     }
     /**
@@ -233,18 +227,22 @@ public class ComparePanel extends TemplatePanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                name1.setText(associatePanel.getMessage().name);
+                StockSearchVO temp = associatePanel.getMessage();
+                name1.setText(temp.name);
+                num1.setText(temp.code);
                 associatePanel.setVisible(false);
-                name1.requestFocus();
+                num1.requestFocus();
+
             }
         });
         associatePanel2.list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                name2.setText(associatePanel2.getMessage().name);
+                StockSearchVO temp = associatePanel.getMessage();
+                name2.setText(temp.name);
+                num2.setText(temp.code);
                 associatePanel2.setVisible(false);
-                name2.requestFocus();
+                num2.requestFocus();
             }
         });
         Document dt1 = num1.getDocument();
@@ -252,7 +250,7 @@ public class ComparePanel extends TemplatePanel {
             @Override
             public void changedUpdate(DocumentEvent e) {
                 associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(900, 66, 250, 200));
+                associatePanel.setBounds(adaptScreen(900, 66, 300, 200));
                 associatePanel.updateText(num1.getText());
             }
 
@@ -275,7 +273,7 @@ public class ComparePanel extends TemplatePanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(900, 66, 250, 200));
+                associatePanel.setBounds(adaptScreen(900, 66, 300, 200));
                 associatePanel.updateText(num1.getText());
             }
             @Override
@@ -293,7 +291,7 @@ public class ComparePanel extends TemplatePanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 associatePanel2.setVisible(true);
-                associatePanel2.setBounds(adaptScreen(900, 105, 250, 200));
+                associatePanel2.setBounds(adaptScreen(900, 105, 300, 200));
                 associatePanel2.updateText(name2.getText());
             }
 
@@ -312,15 +310,13 @@ public class ComparePanel extends TemplatePanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 associatePanel2.setVisible(true);
-                associatePanel2.setBounds(adaptScreen(900, 105, 250, 200));
+                associatePanel2.setBounds(adaptScreen(900, 105, 300, 200));
                 associatePanel2.updateText(num2.getText());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                associatePanel2.setVisible(true);
-                associatePanel2.setBounds(adaptScreen(900, 66, 250, 200));
-                associatePanel2.updateText(num2.getText());
+                insertUpdate(e);
             }
         });
         refreshAssociate();
