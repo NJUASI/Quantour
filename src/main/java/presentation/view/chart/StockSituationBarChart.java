@@ -19,24 +19,30 @@ import java.util.Vector;
  *
  * 涨跌幅超过5%
  */
-public class StockSituationBar5PercentChart {
+public class StockSituationBarChart {
 
     List<PriceRiseOrFallVO> priceList;
-
-    public StockSituationBar5PercentChart(List<PriceRiseOrFallVO> priceList) {
+    int i;
+    String title,name;
+    public StockSituationBarChart(List<PriceRiseOrFallVO> priceList, int i, String title, String name) {
         this.priceList = priceList;
+        this.i=i;
+        this.name=name;
+        this.title=title;
     }
 
     private CategoryDataset createDataset(){
-        String[] categories = new String[2];
+        String[] categories = new String[1];
         Vector<Serie> series = new Vector<Serie>();
-        Object[] datas = new Object[2];
-        for (int i = 2; i < 4; i++) {
-            PriceRiseOrFallVO vo = priceList.get(i);
-            categories[i-2] = vo.name;
-            datas[i-2] = vo.num;
-        }
-        series.add(new Serie("",datas));
+
+        Object[] datas = new Object[1];
+        datas[0]= priceList.get(i).num;
+
+        series.add(new Serie("1",datas));
+        Object[] datas1 = new Object[1];
+        datas1[0]= priceList.get(i+1).num;
+        categories[0]=name;
+        series.add(new Serie("2",datas1));
         DefaultCategoryDataset dataset = ChartUtils.createDefaultCategoryDataset(series, categories);
         return dataset;
     }
@@ -44,7 +50,7 @@ public class StockSituationBar5PercentChart {
 
     public ChartPanel createChart() {
         // 2：创建Chart
-        JFreeChart chart = ChartFactory.createBarChart("涨幅超过5% VS 跌幅超过5%", "", "股票数", createDataset());
+        JFreeChart chart = ChartFactory.createBarChart(title, "", "股票数", createDataset());
         // 3:设置抗锯齿，防止字体显示不清楚
         ChartUtils.setAntiAlias(chart);// 抗锯齿
         // 4:对柱子进行渲染

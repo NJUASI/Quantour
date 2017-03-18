@@ -276,7 +276,7 @@ public class ComparePanel extends TemplatePanel {
             public void insertUpdate(DocumentEvent e) {
                 if(count==0) {
                     associatePanel.setVisible(true);
-                    associatePanel.setBounds(adaptScreen(900, 66, 300, 200));
+                    associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
                     associatePanel.updateText(num1.getText());
                 }
             }
@@ -296,7 +296,7 @@ public class ComparePanel extends TemplatePanel {
             public void insertUpdate(DocumentEvent e) {
                 if(count==0) {
                     associatePanel.setVisible(true);
-                    associatePanel.setBounds(adaptScreen(900, 66, 300, 200));
+                    associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
                      associatePanel.updateText(name1.getText());
                 }
             }
@@ -316,7 +316,7 @@ public class ComparePanel extends TemplatePanel {
             public void insertUpdate(DocumentEvent e) {
                 if(count==0) {
                     associatePanel2.setVisible(true);
-                    associatePanel2.setBounds(adaptScreen(900, 105, 300, 200));
+                    associatePanel2.setBounds(adaptScreen(750, 115, 300, 200));
                     associatePanel2.updateText(name2.getText());
                 }
             }
@@ -337,7 +337,7 @@ public class ComparePanel extends TemplatePanel {
             public void insertUpdate(DocumentEvent e) {
                 if (count==0){
                     associatePanel2.setVisible(true);
-                    associatePanel2.setBounds(adaptScreen(900, 105, 300, 200));
+                    associatePanel2.setBounds(adaptScreen(750, 115, 300, 200));
                     associatePanel2.updateText(num2.getText());
                 }
         }
