@@ -8,6 +8,7 @@ import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import vo.StockComparisionVO;
 import vo.StockComparsionCriteriaVO;
+import vo.StockSearchVO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -230,8 +231,9 @@ public class ComparePanel extends TemplatePanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                name1.setText(associatePanel.getMessage().name);
-                num1.setText(associatePanel.getMessage().code);
+                StockSearchVO temp = associatePanel.getMessage();
+                name1.setText(temp.name);
+                num1.setText(temp.code);
                 associatePanel.setVisible(false);
                 num1.requestFocus();
 
@@ -240,9 +242,9 @@ public class ComparePanel extends TemplatePanel {
         associatePanel2.list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                name2.setText(associatePanel2.getMessage().name);
-                num2.setText(associatePanel2.getMessage().code);
+                StockSearchVO temp = associatePanel.getMessage();
+                name2.setText(temp.name);
+                num2.setText(temp.code);
                 associatePanel2.setVisible(false);
                 num2.requestFocus();
             }

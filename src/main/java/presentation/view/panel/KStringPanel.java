@@ -12,6 +12,7 @@ import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
 import utilities.exceptions.ColorNotExistException;
 import vo.ChartShowCriteriaVO;
+import vo.StockSearchVO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -39,7 +40,8 @@ public class KStringPanel extends TemplatePanel {
     JButton favorite;
     public AssociatePanel associatePanel;
     ChartPanel chartPanel;
-
+    //用于更新联想面板
+    int count=0;
     //由于重复添加chartPanel,故以此作为flag检测是否需要remove chartPanel
     boolean first = true;
 
@@ -281,9 +283,11 @@ public class KStringPanel extends TemplatePanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                searchTextField.setText(associatePanel.getMessage().name);
-                num.setText(associatePanel.getMessage().code);
+                StockSearchVO temp = associatePanel.getMessage();
+                searchTextField.setText(temp.name);
+                num.setText(temp.code);
                 associatePanel.setVisible(false);
+
             }
         });
         Document dt = searchTextField.getDocument();
@@ -310,9 +314,14 @@ public class KStringPanel extends TemplatePanel {
         dt1.addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
-                associatePanel.updateText(num.getText());
+//                if(count==0) {
+                    associatePanel.setVisible(true);
+//                }else{
+//                    count=0;
+//                }
+                    associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
+                    associatePanel.updateText(num.getText());
+
             }
 
             @Override
