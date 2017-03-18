@@ -39,7 +39,7 @@ public class ComparePanel extends TemplatePanel {
     public AssociatePanel associatePanel2;
     ChartService chartService;
     CompareChartPanel compareChartPanel;
-
+    int count=0;
     /**
      * 比较面板构造器
      *
@@ -230,42 +230,46 @@ public class ComparePanel extends TemplatePanel {
         associatePanel.list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                count=1;
                 StockSearchVO temp = associatePanel.getMessage();
                 name1.setText(temp.name);
                 num1.setText(temp.code);
                 associatePanel.setVisible(false);
                 num1.requestFocus();
-
+                count=0;
             }
         });
         associatePanel2.list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                StockSearchVO temp = associatePanel.getMessage();
+                count=1;
+                StockSearchVO temp = associatePanel2.getMessage();
                 name2.setText(temp.name);
                 num2.setText(temp.code);
                 associatePanel2.setVisible(false);
                 num2.requestFocus();
+                count=0;
             }
         });
         Document dt1 = num1.getDocument();
         dt1.addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(900, 66, 300, 200));
-                associatePanel.updateText(num1.getText());
+
             }
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                changedUpdate(e);
+                if(count==0) {
+                    associatePanel.setVisible(true);
+                    associatePanel.setBounds(adaptScreen(900, 66, 300, 200));
+                    associatePanel.updateText(num1.getText());
+                }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                insertUpdate(e);
+
             }
         });
         Document dt2 = name1.getDocument();
@@ -276,9 +280,11 @@ public class ComparePanel extends TemplatePanel {
             }
             @Override
             public void insertUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(900, 66, 300, 200));
-                associatePanel.updateText(num1.getText());
+                if(count==0) {
+                    associatePanel.setVisible(true);
+                    associatePanel.setBounds(adaptScreen(900, 66, 300, 200));
+                     associatePanel.updateText(name1.getText());
+                }
             }
             @Override
             public void removeUpdate(DocumentEvent e) {
@@ -294,9 +300,11 @@ public class ComparePanel extends TemplatePanel {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                associatePanel2.setVisible(true);
-                associatePanel2.setBounds(adaptScreen(900, 105, 300, 200));
-                associatePanel2.updateText(name2.getText());
+                if(count==0) {
+                    associatePanel2.setVisible(true);
+                    associatePanel2.setBounds(adaptScreen(900, 105, 300, 200));
+                    associatePanel2.updateText(name2.getText());
+                }
             }
 
             @Override
@@ -313,14 +321,16 @@ public class ComparePanel extends TemplatePanel {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                associatePanel2.setVisible(true);
-                associatePanel2.setBounds(adaptScreen(900, 105, 300, 200));
-                associatePanel2.updateText(num2.getText());
-            }
+                if (count==0){
+                    associatePanel2.setVisible(true);
+                    associatePanel2.setBounds(adaptScreen(900, 105, 300, 200));
+                    associatePanel2.updateText(num2.getText());
+                }
+        }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                insertUpdate(e);
+
             }
         });
         refreshAssociate();

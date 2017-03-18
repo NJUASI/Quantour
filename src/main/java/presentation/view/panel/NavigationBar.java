@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
 public class NavigationBar extends TemplatePanel {
     int numOfChoosed;
     MyButton kString,compare,thermometer,favorites;
-
+    private static NavigationBar navigationBar;
 
     /**
      * 构造器
@@ -161,9 +161,6 @@ public class NavigationBar extends TemplatePanel {
                 }
             }
         });
-
-
-
         //log out
 //        JButton logout = new JButton("注销");
 //        logout.setBounds(adaptScreen(90, 820, 70, 70));
@@ -179,7 +176,13 @@ public class NavigationBar extends TemplatePanel {
 //        });
 //        add(logout);
     }
-    void whileClicked(int i){
+    public static NavigationBar getInstance(){
+        if(navigationBar==null){
+            navigationBar=new NavigationBar();
+        }
+        return navigationBar;
+    }
+    public void whileClicked(int i){
         switch (i){
             case 1:
 
@@ -189,7 +192,6 @@ public class NavigationBar extends TemplatePanel {
                 break;
             case 2:
                 favorites.moveOut();
-
                 compare.moveOut();
                 thermometer.moveOut();
                 break;

@@ -41,7 +41,7 @@ public class KStringPanel extends TemplatePanel {
     public AssociatePanel associatePanel;
     ChartPanel chartPanel;
     //用于更新联想面板
-    int count=0;
+    public int count=0;
     //由于重复添加chartPanel,故以此作为flag检测是否需要remove chartPanel
     boolean first = true;
 
@@ -282,12 +282,12 @@ public class KStringPanel extends TemplatePanel {
         associatePanel.list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                count=1;
                 StockSearchVO temp = associatePanel.getMessage();
                 searchTextField.setText(temp.name);
                 num.setText(temp.code);
                 associatePanel.setVisible(false);
-
+                count=0;
             }
         });
         Document dt = searchTextField.getDocument();
@@ -295,14 +295,16 @@ public class KStringPanel extends TemplatePanel {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
-                associatePanel.updateText(searchTextField.getText());
+                if(count==0) {
+                    associatePanel.setVisible(true);
+                    associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
+                    associatePanel.updateText(searchTextField.getText());
+                }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                insertUpdate(e);
+
             }
 
             @Override
@@ -314,19 +316,16 @@ public class KStringPanel extends TemplatePanel {
         dt1.addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-//                if(count==0) {
+                if(count==0) {
                     associatePanel.setVisible(true);
-//                }else{
-//                    count=0;
-//                }
                     associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
                     associatePanel.updateText(num.getText());
-
+                }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                insertUpdate(e);
+
             }
 
             @Override

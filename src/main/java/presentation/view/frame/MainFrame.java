@@ -19,7 +19,8 @@ public class MainFrame extends JFrame {
 
     //一些主原件
     private static MainFrame mainPanel;
-    private static JPanel cardPanel,barPanel,titlePanel;
+    private static JPanel cardPanel;
+    public static JPanel barPanel,titlePanel;
     private static CardLayout card;
     int width,height;
 
@@ -44,7 +45,7 @@ public class MainFrame extends JFrame {
         createWindow();
         setLayout(null);
 
-        barPanel = new NavigationBar();
+        barPanel =  NavigationBar.getInstance();
         add(barPanel);
 
         titlePanel= TitlePanel.getInstance();

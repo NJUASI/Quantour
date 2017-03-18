@@ -58,23 +58,8 @@ public class StocksTablePane extends JScrollPane {
             jTable.setBackground(Color.white);
             setViewportView(jTable);
             count=0;
-            jTable.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    if(count==0){
-                        count++;
-                    }else if(count==1){
-                        ViewSwitchController.getInstance().viewSwitch("kStringPanel");
-                        StocksTableController.getInstance().checkDetail();
-                        count=0;
-                    }
-                }
+            jTable.addMouseListener(new MyMouseListener());
 
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                   count=0;
-                }
-            });
             jTable.repaint();
         } catch (Exception e) {
             label.setVisible(true);
