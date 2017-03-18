@@ -54,7 +54,8 @@ public class LoginPanel extends TemplatePanel {
 //        });
         admin.setVisible(true);
         add(admin);
-        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
+
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo2.png"));
         JLabel logo1 =new JLabel();
         bgPicture.setImage(bgPicture.getImage().getScaledInstance(120*width/1920, 120*height/1030, Image.SCALE_DEFAULT ));
         logo1.setIcon(bgPicture);
