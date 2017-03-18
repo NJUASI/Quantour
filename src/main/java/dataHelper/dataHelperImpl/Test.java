@@ -8,7 +8,7 @@ import java.io.File;
 public class Test {
 
     public String getPath(){
-        String path = this.getClass().getResource("/test.txt").getFile();
+        String path = this.getClass().getResource("/test.txt").getPath();
         return  path;
     }
 

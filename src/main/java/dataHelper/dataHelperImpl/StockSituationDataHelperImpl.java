@@ -36,15 +36,15 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
 
         String line = null;
         try {
-            File file = new File(pathPre + date.getYear() + "/" + date.toString() + pathPost);
-            if(file.exists()){
-                br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                        getResourceAsStream(pathPre + date.getYear() + "/" + date.toString() + pathPost)));
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().
+                    getResourceAsStream(pathPre + date.getYear() + "/" + date.toString() + pathPost);
+            if(inputStream == null){
+                throw new NoSituationDataException();
+            }
+            else{
+                br = new BufferedReader(new InputStreamReader(inputStream));
                 line = br.readLine();
                 br.close();
-            }
-            else {
-                throw new NoSituationDataException();
             }
         } catch (IOException e) {
             e.printStackTrace();
