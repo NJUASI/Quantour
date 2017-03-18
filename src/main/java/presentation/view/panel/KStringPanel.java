@@ -152,15 +152,8 @@ public class KStringPanel extends TemplatePanel {
         datePanel.setBounds(width * 350 / 1920, height * 50 / 1030, 385 * width / 1920, 35 * height / 1030);
         add(datePanel);
 
-        searchTextField.setBounds(adaptScreen(800, 50, 150, 35));
-        add(searchTextField);
-        searchTextField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                refreshAssociate();
-            }
-        });
-        num.setBounds(adaptScreen(1000, 50, 50, 35));
+
+        num.setBounds(adaptScreen(800, 50, 150, 35));
         add(num);
         num.addMouseListener(new MouseAdapter() {
             @Override
@@ -169,6 +162,14 @@ public class KStringPanel extends TemplatePanel {
             }
         });
         //提示框面板
+        searchTextField.setBounds(adaptScreen(950, 50, 150, 35));
+        add(searchTextField);
+        searchTextField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
+            }
+        });
         associatePanel = new AssociatePanel();
         associatePanel.setVisible(false);
         add(associatePanel);
@@ -281,6 +282,7 @@ public class KStringPanel extends TemplatePanel {
             public void mouseClicked(MouseEvent e) {
 
                 searchTextField.setText(associatePanel.getMessage().name);
+                num.setText(associatePanel.getMessage().code);
                 associatePanel.setVisible(false);
             }
         });
@@ -290,7 +292,7 @@ public class KStringPanel extends TemplatePanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(800, 86, 250, 200));
+                associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
                 associatePanel.updateText(searchTextField.getText());
             }
 
@@ -309,7 +311,7 @@ public class KStringPanel extends TemplatePanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(800, 86, 250, 200));
+                associatePanel.setBounds(adaptScreen(800, 86, 300, 200));
                 associatePanel.updateText(num.getText());
             }
 

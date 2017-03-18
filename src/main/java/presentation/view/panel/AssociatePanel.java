@@ -48,7 +48,7 @@ public class AssociatePanel extends ScrollPane {
 
         return associatePanel;
     }
-
+    
     //获取选择的股票的代码
     public String getCode() {
         int index=list.getSelectedIndex();
