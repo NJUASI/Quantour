@@ -2,9 +2,12 @@ package presentation.view.panel;
 
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
+import presentation.view.tools.MyLabel;
 import presentation.view.tools.SingleDatePickerPanel;
+import presentation.view.tools.customizedButton.MyButton;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 
 /**
@@ -35,17 +38,23 @@ public class StocksTablePanel extends TemplatePanel {
 
     public StocksTablePanel(){
 
+        MyLabel label1=new MyLabel("日期") ;
+        label1.setLocation(300*width/1920,50*height/1030);
+        add(label1);
+
         datePickerPanel = new SingleDatePickerPanel();
-        datePickerPanel.setBounds(adaptScreen(500, 50,175,35));
+        datePickerPanel.setBounds(adaptScreen(350, 50,175,35));
         add(datePickerPanel);
 
         JButton search = new JButton("搜索");
-        search.setBounds(adaptScreen(1000,50,80,40));
+        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
+        search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListener());
         add(search);
 
         JButton detailOfCode = new JButton("查看详情");
-        detailOfCode.setBounds(adaptScreen(1150,50,110,40));
+        detailOfCode.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
+        detailOfCode.setBounds(adaptScreen(1150,50,110,35));
         detailOfCode.addMouseListener(new DetailOfCodeListener());
         add(detailOfCode);
 

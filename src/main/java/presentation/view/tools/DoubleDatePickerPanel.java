@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 
 
@@ -29,6 +30,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
     //结束时间
     private DatePicker endDate;
     ImageView image;
+    Label label1,label2;
     //
     int width;
 
@@ -61,6 +63,8 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                 setScene(scene);
                 initDatePicker();
                 root.getChildren().add(image);
+                root.getChildren().add(label1);
+                root.getChildren().add(label2);
                 root.getChildren().add(startDate);
                 root.getChildren().add(endDate);
 
@@ -81,20 +85,33 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 
         startDate = new DatePicker();
         startDate.setValue(LocalDate.now());
-        startDate.setLayoutX(0);
+        startDate.setLayoutX(80);
         startDate.setLayoutY(0);
-        startDate.setMinSize(width*175/1920,37*height/1030);
-        startDate.setPrefSize(width*175/1920,37*height/1030);
-        startDate.setMaxSize(width*175/1920,37*height/1030);
+        startDate.setMinSize(width*170/1920,37*height/1030);
+        startDate.setPrefSize(width*170/1920,37*height/1030);
+        startDate.setMaxSize(width*170/1920,37*height/1030);
         startDate.setEditable(false);
         endDate = new DatePicker();
         endDate.setValue(LocalDate.now());
-        endDate.setLayoutX(width*210/1920);
+        endDate.setLayoutX(width*350/1920);
         endDate.setLayoutY(0);
-        endDate.setMinSize(width*175/1920,37*height/1030);
-        endDate.setPrefSize(width*175/1920,37*height/1030);
-        endDate.setMaxSize(width*175/1920,37*height/1030);
+        endDate.setMinSize(width*170/1920,37*height/1030);
+        endDate.setPrefSize(width*170/1920,37*height/1030);
+        endDate.setMaxSize(width*170/1920,37*height/1030);
         endDate.setEditable(false);
+
+        label1 =new Label("开始日期");
+        label1.setFont(new Font("微软雅黑",16*width/1920));
+        label1.setTextFill(javafx.scene.paint.Color.WHITE);
+        label1.setPrefSize(80*width/1920,35*height/1030);
+        label2 =new Label("结束日期");
+        label2.setFont(new Font("微软雅黑",16*width/1920));
+        label2.setTextFill(javafx.scene.paint.Color.WHITE);
+        label2.setPrefSize(80*width/1920,35*height/1030);
+        label1.setLayoutX(0);
+        label1.setLayoutY(0);
+        label2.setLayoutX(270);
+        label2.setLayoutY(0);
 
 
         image=new ImageView();

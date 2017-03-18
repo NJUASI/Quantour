@@ -69,7 +69,8 @@ public class StocksTablePane extends JScrollPane {
             Dimension size = header.getPreferredSize();
             size.height = 30;
             header.setPreferredSize(size);
-
+            setBackground(new Color(32,36,39));
+            setForeground(new Color(201,208,214));
 
             getVerticalScrollBar().setUI(new MyScrollBarUI());
             setBackground(new Color(32,36,39));
@@ -79,8 +80,6 @@ public class StocksTablePane extends JScrollPane {
 
             jTable.repaint();
         } catch (Exception e) {
-            setBackground(new Color(32,36,39));
-            setForeground(new Color(201,208,214));
             label.setBackground(new Color(32,36,39));
             label.setForeground(new Color(201,208,214));
             label.setVisible(true);

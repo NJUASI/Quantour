@@ -19,6 +19,8 @@ public class MyLabel extends JLabel {
         }
         else if(str.length()==4){
             setSize(100,35);
+        }else{
+
         }
     }
 }

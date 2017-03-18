@@ -4,6 +4,7 @@ import org.jfree.chart.ChartPanel;
 import presentation.view.chart.CompareChart1;
 import presentation.view.chart.CompareChartPanel;
 import presentation.view.tools.DoubleDatePickerPanel;
+import presentation.view.tools.MyLabel;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import vo.StockComparisionVO;
@@ -73,7 +74,7 @@ public class ComparePanel extends TemplatePanel {
      */
     private void init() {
         datePanel = new DoubleDatePickerPanel();
-        datePanel.setBounds(width * 350 / 1920, height * 50 / 1030, 385 * width / 1920, 35 * height / 1030);
+        datePanel.setBounds(width * 100 / 1920, height * 50 / 1030, 520 * width / 1920, 35 * height / 1030);
         add(datePanel);
         name1 = new JTextField();
         num1 = new JTextField();
@@ -99,17 +100,31 @@ public class ComparePanel extends TemplatePanel {
         associatePanel2.setVisible(false);
         add(associatePanel2);
         addRefreshListener();
-        name1.setBounds(adaptScreen(1050, 30, 150, 35));
+
+        MyLabel label=new MyLabel("股票1") ;
+        label.setBounds(adaptScreen(700,40,65,35));
+        add(label);
+        MyLabel label1=new MyLabel("股票2") ;
+        label1.setBounds(adaptScreen(700,80,65,35));
+        add(label1);
+        MyLabel label2=new MyLabel("代码") ;
+        label2.setLocation(810*width/1920,5*height/1030);
+        add(label2);
+        MyLabel label3=new MyLabel("名称") ;
+        label3.setLocation(960*width/1920,5*height/1030);
+        add(label3);
+
+        name1.setBounds(adaptScreen(900, 40, 150, 35));
         add(name1);
 
-        num1.setBounds(adaptScreen(900, 30, 150, 35));
+        num1.setBounds(adaptScreen(750, 40, 150, 35));
         add(num1);
 
 
-        name2.setBounds(adaptScreen(1050, 70, 150, 35));
+        name2.setBounds(adaptScreen(750, 80, 150, 35));
         add(name2);
 
-        num2.setBounds(adaptScreen(900, 70, 150, 35));
+        num2.setBounds(adaptScreen(900, 80, 150, 35));
         add(num2);
 
         setBackground(new Color(32,36,39));

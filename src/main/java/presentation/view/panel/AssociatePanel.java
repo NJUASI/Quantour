@@ -24,7 +24,6 @@ public class AssociatePanel extends ScrollPane {
         int width = windowData.getWidth();
         int height =windowData.getHeight();
         setSize(250*width/1920,200*height/1030);
-
         list = new JList();
 
         list.setLocation(0,0);
@@ -48,7 +47,7 @@ public class AssociatePanel extends ScrollPane {
 
         return associatePanel;
     }
-    
+
     //获取选择的股票的代码
     public String getCode() {
         int index=list.getSelectedIndex();

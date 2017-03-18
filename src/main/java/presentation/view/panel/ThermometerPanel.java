@@ -1,9 +1,11 @@
 package presentation.view.panel;
 
 import presentation.listener.thermometerPanelListener.SearchListner;
+import presentation.view.tools.MyLabel;
 import presentation.view.tools.SingleDatePickerPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 
 /**
@@ -33,12 +35,17 @@ public class ThermometerPanel extends TemplatePanel {
      * @updateTime 2017/3/5
      */
     public ThermometerPanel() {
+
+        MyLabel label1=new MyLabel("日期") ;
+        label1.setLocation(300*width/1920,50*height/1030);
+        add(label1);
         date = new SingleDatePickerPanel();
-        date.setBounds(width * 600 / 1920, height * 50 / 1030, width * 175 / 1920, 35 * height / 1030);
+        date.setBounds(adaptScreen(350, 50,175,35));
         add(date);
 
         search = new JButton("搜索");
-        search.setBounds(adaptScreen(900, 50, 150, 35));
+        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
+        search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListner());
         add(search);
 //        add(bg);

@@ -8,6 +8,7 @@ import presentation.controller.ViewSwitchController;
 import presentation.line.LineChart;
 import presentation.listener.navigationBarListener.CompareListener;
 import presentation.view.tools.DoubleDatePickerPanel;
+import presentation.view.tools.MyLabel;
 import presentation.view.util.ChartUtils;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
@@ -64,8 +65,9 @@ public class KStringPanel extends TemplatePanel {
 
         num = new JTextField();
         searchAll = new JButton("总体信息");
+        searchAll.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
         search = new JButton("局部信息");
-//        favorite = new JButton("收藏");
+        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
         compare = new JButton("加入比较");
 
         init();
@@ -155,11 +157,19 @@ public class KStringPanel extends TemplatePanel {
      */
     private void init() {
         datePanel = new DoubleDatePickerPanel();
-        datePanel.setBounds(width * 350 / 1920, height * 50 / 1030, 385 * width / 1920, 35 * height / 1030);
+        datePanel.setBounds(width * 100 / 1920, height * 50 / 1030, 520 * width / 1920, 35 * height / 1030);
         add(datePanel);
 
-
-        num.setBounds(adaptScreen(800, 50, 150, 35));
+        MyLabel label1=new MyLabel("股票") ;
+        label1.setLocation(700*width/1920,50*height/1030);
+        add(label1);
+        MyLabel label2=new MyLabel("代码") ;
+        label2.setLocation(810*width/1920,15*height/1030);
+        add(label2);
+        MyLabel label3=new MyLabel("名称") ;
+        label3.setLocation(960*width/1920,15*height/1030);
+        add(label3);
+        num.setBounds(adaptScreen(750, 50, 150, 35));
         add(num);
         num.addMouseListener(new MouseAdapter() {
             @Override
@@ -168,7 +178,7 @@ public class KStringPanel extends TemplatePanel {
             }
         });
         //提示框面板
-        searchTextField.setBounds(adaptScreen(950, 50, 150, 35));
+        searchTextField.setBounds(adaptScreen(900, 50, 150, 35));
         add(searchTextField);
         searchTextField.addMouseListener(new MouseAdapter() {
             @Override
