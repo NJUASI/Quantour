@@ -36,7 +36,7 @@ public class NavigationBar extends TemplatePanel {
 
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo2.png"));
         JLabel logo1 =new JLabel();
-        bgPicture.setImage(bgPicture.getImage().getScaledInstance(90*width/1920, 90*height/1030, Image.SCALE_DEFAULT ));
+        bgPicture.setImage(bgPicture.getImage().getScaledInstance(90*width/1920, 90*height/1130, Image.SCALE_DEFAULT ));
         logo1.setIcon(bgPicture);
         logo1.setBounds(adaptScreen(5,5,90,90));
         add(logo1);
