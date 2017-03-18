@@ -27,6 +27,7 @@ public class StocksTablePane extends JScrollPane {
 
     JLabel label;
     int count=0;
+
     public StocksTablePane(LocalDate date) {
 
         windowData = WindowData.getInstance();
@@ -37,7 +38,7 @@ public class StocksTablePane extends JScrollPane {
         //加提示语言
         label = new JLabel("当日无股票信息",JLabel.CENTER);
         label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
-        label.setBounds(0 * width / 1920, 0 * height / 1030, 1400 * width / 1920 , 800* height / 1030);
+        label.setBounds(0 * width / 1920, 0 * height / 1030, 1500 * width / 1920 , 800* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         add(label);
         label.setVisible(false);
@@ -70,7 +71,6 @@ public class StocksTablePane extends JScrollPane {
             Dimension size = header.getPreferredSize();
             size.height = 30;
             header.setPreferredSize(size);
-            setBackground(new Color(32,36,39));
             setForeground(new Color(201,208,214));
 
             getVerticalScrollBar().setUI(new MyScrollBarUI());

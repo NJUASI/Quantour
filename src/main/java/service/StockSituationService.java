@@ -1,5 +1,6 @@
 package service;
 
+import utilities.exceptions.NoSituationDataException;
 import vo.PriceRiseOrFallVO;
 
 import java.time.LocalDate;
@@ -21,5 +22,5 @@ public interface StockSituationService{
      * @param date the date
      * @return the stock stituation data
      */
-    List<PriceRiseOrFallVO> getStockStituationData(LocalDate date);
+    List<PriceRiseOrFallVO> getStockStituationData(LocalDate date) throws NoSituationDataException;
 }

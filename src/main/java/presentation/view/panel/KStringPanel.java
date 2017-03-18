@@ -13,10 +13,7 @@ import presentation.view.util.ChartUtils;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.ColorNotExistException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.ChartShowCriteriaVO;
 import vo.StockSearchVO;
 
@@ -233,7 +230,12 @@ public class KStringPanel extends TemplatePanel {
             public void mouseClicked(MouseEvent e) {
                 associatePanel.setVisible(false);
                 associatePanel.setBounds(adaptScreen(750, 86, 300, 200));
-                associatePanel.updateText(searchTextField.getText());
+                try {
+                    associatePanel.updateText(searchTextField.getText());
+                } catch (MatchNothingException e1) {
+                    JOptionPane.showMessageDialog(kStringPanel,"没有任何股票匹配");
+                    e1.printStackTrace();
+                }
 
                 if(num.getText().equals("")){
                     JOptionPane.showMessageDialog(chartPanel,"请输入股票代号");
@@ -344,7 +346,12 @@ public class KStringPanel extends TemplatePanel {
                 if(count==0) {
                     associatePanel.setVisible(true);
                     associatePanel.setBounds(adaptScreen(750, 86, 300, 200));
-                    associatePanel.updateText(searchTextField.getText());
+                    try {
+                        associatePanel.updateText(searchTextField.getText());
+                    } catch (MatchNothingException e1) {
+                        JOptionPane.showMessageDialog(kStringPanel,"没有任何股票匹配");
+                        e1.printStackTrace();
+                    }
                 }
             }
 
@@ -365,7 +372,12 @@ public class KStringPanel extends TemplatePanel {
                 if(count==0) {
                     associatePanel.setVisible(true);
                     associatePanel.setBounds(adaptScreen(750, 86, 300, 200));
-                    associatePanel.updateText(num.getText());
+                    try {
+                        associatePanel.updateText(num.getText());
+                    } catch (MatchNothingException e1) {
+                        JOptionPane.showMessageDialog(kStringPanel,"没有任何股票匹配");
+                        e1.printStackTrace();
+                    }
                 }
             }
 

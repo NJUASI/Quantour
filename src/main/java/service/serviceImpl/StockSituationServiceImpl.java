@@ -3,6 +3,7 @@ package service.serviceImpl;
 import dao.StockSituationDao;
 import dao.daoImpl.StockSituationDaoImpl;
 import service.StockSituationService;
+import utilities.exceptions.NoSituationDataException;
 import vo.PriceRiseOrFallVO;
 import vo.StockSituationVO;
 
@@ -36,7 +37,7 @@ public class StockSituationServiceImpl implements StockSituationService {
      * @return 所选当日的市场情况温度计的信息
      * @throws IOException IO
      */
-    private StockSituationVO getStockSituation(LocalDate date) throws IOException {
+    private StockSituationVO getStockSituation(LocalDate date) throws IOException, NoSituationDataException {
        return new StockSituationVO(stockSituationDao.getStockSituation(date));
     }
 
@@ -47,7 +48,7 @@ public class StockSituationServiceImpl implements StockSituationService {
      * @return the stock stituation data
      */
     @Override
-    public List<PriceRiseOrFallVO> getStockStituationData(LocalDate date) {
+    public List<PriceRiseOrFallVO> getStockStituationData(LocalDate date) throws NoSituationDataException {
         StockSituationVO vo = null;
         try {
             vo = getStockSituation(date);

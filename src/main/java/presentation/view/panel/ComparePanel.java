@@ -9,6 +9,7 @@ import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.DataSourceFirstDayException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.MatchNothingException;
 import utilities.exceptions.NoDataWithinException;
 import vo.StockComparisionVO;
 import vo.StockComparsionCriteriaVO;
@@ -286,7 +287,12 @@ public class ComparePanel extends TemplatePanel {
                 if(count==0) {
                     associatePanel.setVisible(true);
                     associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
-                    associatePanel.updateText(num1.getText());
+                    try {
+                        associatePanel.updateText(num1.getText());
+                    } catch (MatchNothingException e1) {
+                        JOptionPane.showMessageDialog(comparePanel,"没有任何股票匹配");
+                        e1.printStackTrace();
+                    }
                 }
             }
 
@@ -306,7 +312,12 @@ public class ComparePanel extends TemplatePanel {
                 if(count==0) {
                     associatePanel.setVisible(true);
                     associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
-                     associatePanel.updateText(name1.getText());
+                    try {
+                        associatePanel.updateText(name1.getText());
+                    } catch (MatchNothingException e1) {
+                        JOptionPane.showMessageDialog(comparePanel,"没有任何股票匹配");
+                        e1.printStackTrace();
+                    }
                 }
             }
             @Override
@@ -326,7 +337,12 @@ public class ComparePanel extends TemplatePanel {
                 if(count==0) {
                     associatePanel2.setVisible(true);
                     associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
-                    associatePanel2.updateText(name2.getText());
+                    try {
+                        associatePanel2.updateText(name2.getText());
+                    } catch (MatchNothingException e1) {
+                        JOptionPane.showMessageDialog(comparePanel,"没有任何股票匹配");
+                        e1.printStackTrace();
+                    }
                 }
             }
 
@@ -347,7 +363,12 @@ public class ComparePanel extends TemplatePanel {
                 if (count==0){
                     associatePanel2.setVisible(true);
                     associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
-                    associatePanel2.updateText(num2.getText());
+                    try {
+                        associatePanel2.updateText(num2.getText());
+                    } catch (MatchNothingException e1) {
+                        JOptionPane.showMessageDialog(comparePanel,"没有任何股票匹配");
+                        e1.printStackTrace();
+                    }
                 }
         }
 
