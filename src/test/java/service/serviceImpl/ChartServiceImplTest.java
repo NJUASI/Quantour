@@ -4,11 +4,15 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import service.ChartService;
+import vo.ChartShowCriteriaVO;
+import vo.MovingAverageVO;
 import vo.StockComparisionVO;
 import vo.StockComparsionCriteriaVO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -53,7 +57,15 @@ public class ChartServiceImplTest {
      */
     @Test
     public void testGetAveDataForChartShowCriteriaVODays() throws Exception {
-//TODO: Test goes here... 
+        ChartShowCriteriaVO vo = new ChartShowCriteriaVO("1",LocalDate.of(2012,2,1),LocalDate.of(2012,3,20));
+        List<Integer> days = new ArrayList<Integer>();
+        days.add(10);
+
+        Map<Integer,List<MovingAverageVO>> map = service.getAveData(vo,days);
+        List<MovingAverageVO> list = map.get(10);
+        for(int i = 0;i<list.size();i++){
+            System.out.println(list.get(i).date);
+        }
     }
 
     /**

@@ -6,11 +6,13 @@ import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
 import presentation.line.aveLine.AveChart;
 import presentation.line.kLine.KChart;
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.ColorNotExistException;
 import utilities.exceptions.DateNotWithinException;
 import vo.ChartShowCriteriaVO;
 
 import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class LineChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public LineChart(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> tag,Font font) throws DateNotWithinException {
+    public LineChart(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> tag,Font font) throws DateNotWithinException, IOException, CodeNotFoundException {
         kChart = new KChart(chartShowCriteriaVO);
         aveChart = new AveChart(chartShowCriteriaVO,tag);
         this.start = chartShowCriteriaVO.start;

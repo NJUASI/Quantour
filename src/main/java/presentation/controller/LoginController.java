@@ -11,6 +11,8 @@ import utilities.exceptions.DuplicateLoginException;
 import utilities.exceptions.PasswordWrongException;
 import utilities.exceptions.UserNotExistException;
 
+import javax.swing.*;
+
 /**
  * Created by 61990 on 2017/3/5.
  */
@@ -64,11 +66,11 @@ public class LoginController{
             }
 
         } catch (DuplicateLoginException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(loginPanel,"重复登录");
         } catch (UserNotExistException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(loginPanel,"用户名不存在");
         } catch (PasswordWrongException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(loginPanel,"密码错误");
         }
         return false;
     }
