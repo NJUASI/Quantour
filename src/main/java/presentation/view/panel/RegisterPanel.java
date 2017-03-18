@@ -3,7 +3,7 @@ package presentation.view.panel;
 import presentation.listener.registerPanelListener.RegisterListener;
 import presentation.view.frame.LoginFrame;
 import presentation.view.frame.RegisterFrame;
-import presentation.view.tools.MyButton;
+import presentation.view.tools.customizedButton.MyButton;
 
 import javax.swing.*;
 import java.awt.*;

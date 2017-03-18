@@ -1,4 +1,6 @@
-package presentation.view.tools;
+package presentation.view.tools.customizedButton;
+
+import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +19,7 @@ public class MyButton extends JLabel {
     public MyButton(String str,int i){
         type=i;
         path=str;
-        width=WindowData.getInstance().getWidth();
+        width= WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
         if(i==0){
             x=40;
