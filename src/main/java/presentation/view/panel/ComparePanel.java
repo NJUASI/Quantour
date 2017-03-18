@@ -208,7 +208,6 @@ public class ComparePanel extends TemplatePanel {
      * @author 61990
      * @updateTime 2017/3/9
      */
-    boolean first=true;
     public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
         try {
             chartService=new ChartServiceImpl();
