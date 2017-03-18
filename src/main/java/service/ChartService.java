@@ -1,9 +1,6 @@
 package service;
 
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DataSourceFirstDayException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
+import utilities.exceptions.*;
 import vo.*;
 
 import java.io.IOException;
@@ -41,7 +38,7 @@ public interface ChartService {
      * @param chartShowCriteriaVO 股票的选择标准
      * @return 特定股票的所有交易信息
      */
-    List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException, CodeNotFoundException;
+    List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException;
 
     /**
      * 获取单支股票一段日期内，用户所选天数的均线图的平均值.
@@ -54,7 +51,7 @@ public interface ChartService {
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException;
+    Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException;
 
     /**
      * 获取单支股票所有数据均线图的平均值.
@@ -78,5 +75,5 @@ public interface ChartService {
      * @param stockComparsionCriteriaVO 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
      * @return 界面上需要的两只股票的比较信息
      */
-    List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, DataSourceFirstDayException, DateNotWithinException;
+    List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException;
 }

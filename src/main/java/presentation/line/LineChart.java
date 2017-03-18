@@ -9,6 +9,7 @@ import presentation.line.kLine.KChart;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.ColorNotExistException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 
 import java.awt.*;
@@ -56,7 +57,7 @@ public class LineChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public LineChart(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> tag,Font font) throws DateNotWithinException, IOException, CodeNotFoundException {
+    public LineChart(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> tag,Font font) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException {
         kChart = new KChart(chartShowCriteriaVO);
         aveChart = new AveChart(chartShowCriteriaVO,tag);
         this.start = chartShowCriteriaVO.start;

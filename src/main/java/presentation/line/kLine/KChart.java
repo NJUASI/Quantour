@@ -8,6 +8,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 
 import java.awt.*;
@@ -57,7 +58,7 @@ public class KChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public KChart(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException {
+    public KChart(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException {
         this.init(chartShowCriteriaVO);
     }
 
@@ -284,7 +285,7 @@ public class KChart {
      * @updateTime 2017/3/11
      * @param  chartShowCriteriaVO 股票代号和日期
      */
-    private void init(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException {
+    private void init(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException {
         render = new CandlestickRenderer();
         xAxis = new DateAxis();
         yAxis = new NumberAxis();
