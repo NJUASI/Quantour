@@ -121,10 +121,10 @@ public class ComparePanel extends TemplatePanel {
         add(num1);
 
 
-        name2.setBounds(adaptScreen(750, 80, 150, 35));
+        name2.setBounds(adaptScreen(900, 80, 150, 35));
         add(name2);
 
-        num2.setBounds(adaptScreen(900, 80, 150, 35));
+        num2.setBounds(adaptScreen(750, 80, 150, 35));
         add(num2);
 
         setBackground(new Color(32,36,39));

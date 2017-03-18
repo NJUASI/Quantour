@@ -59,13 +59,20 @@ public class ChartServiceImplTest {
     public void testGetAveDataForChartShowCriteriaVODays() throws Exception {
         ChartShowCriteriaVO vo = new ChartShowCriteriaVO("1",LocalDate.of(2012,2,1),LocalDate.of(2012,3,20));
         List<Integer> days = new ArrayList<Integer>();
+        days.add(5);
         days.add(10);
+        days.add(20);
 
         Map<Integer,List<MovingAverageVO>> map = service.getAveData(vo,days);
-        List<MovingAverageVO> list = map.get(10);
-        for(int i = 0;i<list.size();i++){
-            System.out.println(list.get(i).date);
-        }
+
+//        for(int i:days){
+//            List<MovingAverageVO> list = map.get(i);
+//            for(int j = 0;j<list.size();j++){
+//                System.out.println(list.get(j).date);
+//            }
+//            System.out.println();
+//        }
+
     }
 
     /**

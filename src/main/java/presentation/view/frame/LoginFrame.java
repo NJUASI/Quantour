@@ -32,6 +32,9 @@ public class LoginFrame extends JFrame {
 
         setTitle("登录");
 
+        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo1.png"));
+        setIconImage(bgPicture.getImage());
+
         setLayout(new BorderLayout(0, 0));
 //        setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

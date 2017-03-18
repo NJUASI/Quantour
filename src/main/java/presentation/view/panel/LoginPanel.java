@@ -44,7 +44,6 @@ public class LoginPanel extends TemplatePanel {
         //to write your message
 //        admin = new JTextField("Enter your admin");
         admin = new JTextField("Guest");
-
         admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         admin.setBounds(adaptScreen(90, 200, 260, 38));
 //        admin.addMouseListener(new MouseAdapter() {
@@ -55,6 +54,13 @@ public class LoginPanel extends TemplatePanel {
 //        });
         admin.setVisible(true);
         add(admin);
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
+        JLabel logo1 =new JLabel();
+        bgPicture.setImage(bgPicture.getImage().getScaledInstance(120*width/1920, 120*height/1030, Image.SCALE_DEFAULT ));
+        logo1.setIcon(bgPicture);
+        logo1.setBounds(adaptScreen(170,50,120,120));
+        add(logo1);
+
         MyLabel label = new MyLabel("账户");
         label.setLocation(35*width/1920,200*height/1030);
         add(label);

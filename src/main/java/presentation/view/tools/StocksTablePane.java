@@ -32,22 +32,19 @@ public class StocksTablePane extends JScrollPane {
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
-        setSize(1400 * width / 1920, 800 * height / 1030);
+        setSize(1500 * width / 1920, 800 * height / 1030);
 
         //加提示语言
-        label = new JLabel("当日无股票信息",JLabel.NORTH_EAST);
-        label.setFont(new Font("宋体",Font.CENTER_BASELINE,20));
-        label.setBounds(0 * width / 1920, 0 * height / 1030, 1700 * width / 1920 , 1000* height / 1030);
+        label = new JLabel("当日无股票信息",JLabel.CENTER);
+        label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
+        label.setBounds(0 * width / 1920, 0 * height / 1030, 1400 * width / 1920 , 800* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         add(label);
         label.setVisible(false);
 
         try {
-
             jTable = new JTable(new StocksTableModel(date));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
-
-
 
 //            jTable.setRowHeight (30);//设置每行的高度为30
 //            jTable.setRowMargin (5);//设置相邻两行单元格的距离
