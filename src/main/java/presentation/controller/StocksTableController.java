@@ -61,20 +61,14 @@ public class StocksTableController {
         int width = windowData.getWidth();
         int height =windowData.getHeight();
 
-        if(first == true){
-            first = false;
-            stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
-            stocksTablePane.setLocation(150*width/1920,100*height/1030);
-            stocksTablePanel.add(stocksTablePane);
-            stocksTablePane.repaint();
-        }
-        else {
+        if(stocksTablePane != null) {
             stocksTablePanel.remove(stocksTablePane);
+        }
+
             stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
             stocksTablePane.setLocation(150*width/1920,100*height/1030);
             stocksTablePanel.add(stocksTablePane);
             stocksTablePane.repaint();
-        }
 
     }
 

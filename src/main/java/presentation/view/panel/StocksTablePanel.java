@@ -4,6 +4,7 @@ import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
 import presentation.view.tools.MyLabel;
 import presentation.view.tools.SingleDatePickerPanel;
+import presentation.view.tools.StocksTablePane;
 import presentation.view.tools.customizedButton.MyButton;
 
 import javax.swing.*;
@@ -26,6 +27,8 @@ public class StocksTablePanel extends TemplatePanel {
      * The Date picker panel.
      */
     SingleDatePickerPanel datePickerPanel;
+
+    public StocksTablePane stocksTablePane;
 
     /**
      * 股票列表面板构造器
