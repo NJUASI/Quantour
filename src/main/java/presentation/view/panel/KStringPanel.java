@@ -25,6 +25,7 @@ import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -43,11 +44,9 @@ public class KStringPanel extends TemplatePanel {
     JButton compare;
 
     public AssociatePanel associatePanel;
-    ChartPanel chartPanel;
+    ChartPanel chartPanel = null;
     //用于更新联想面板
     public int count=0;
-    //由于重复添加chartPanel,故以此作为flag检测是否需要remove chartPanel
-    boolean wasRemove = false;
 
     private LineChart lineChart;
 
@@ -117,7 +116,7 @@ public class KStringPanel extends TemplatePanel {
      * @lastUpdated Byron Dong
      * @updateTime 2017/3/12
      */
-    public void findSpecial(String code, LocalDate startDate,LocalDate endDate) throws DateNotWithinException {
+    public void findSpecial(String code, LocalDate startDate,LocalDate endDate) throws DateNotWithinException, IOException {
 
         //TODO 在这儿get一个ChartPanel
         ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(code,startDate,endDate);
@@ -203,10 +202,8 @@ public class KStringPanel extends TemplatePanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 refreshAssociate();
-                if(wasRemove == false){
-                    wasRemove = true;
-                }
-                else {
+
+                if(chartPanel!=null){
                     remove(chartPanel);
                 }
 
@@ -225,19 +222,19 @@ public class KStringPanel extends TemplatePanel {
                 associatePanel.setBounds(adaptScreen(900, 86, 250, 200));
                 associatePanel.updateText(searchTextField.getText());
 
-                if(wasRemove == false){
-                    wasRemove = true;
-                }
-                else {
+                if(chartPanel!=null){
                     remove(chartPanel);
                 }
 
                 try {
-                    findSpecial(num.getText(),datePanel.getStartDate(),datePanel.getEndDate());
+                    findSpecial(num.getText(), datePanel.getStartDate(), datePanel.getEndDate());
                 } catch (DateNotWithinException e1) {
                     e1.printStackTrace();
-                    wasRemove = false;
                     //TODO 需要提示数据不对
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                    System.out.print("reero");
+
                 }
 
             }

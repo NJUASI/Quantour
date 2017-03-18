@@ -64,7 +64,7 @@ public class LineData {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public LineData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException {
+    public LineData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         this.readData(chartShowCriteriaVO);
@@ -261,11 +261,8 @@ public class LineData {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException {
-        try {
+    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException {
+
             data = this.service.getSingleStockRecords(chartShowCriteriaVO);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

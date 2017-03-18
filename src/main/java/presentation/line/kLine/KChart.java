@@ -10,6 +10,7 @@ import utilities.exceptions.DateNotWithinException;
 import vo.ChartShowCriteriaVO;
 
 import java.awt.*;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
@@ -55,7 +56,7 @@ public class KChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public KChart(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException {
+    public KChart(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException {
         this.init(chartShowCriteriaVO);
     }
 
@@ -282,7 +283,7 @@ public class KChart {
      * @updateTime 2017/3/11
      * @param  chartShowCriteriaVO 股票代号和日期
      */
-    private void init(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException {
+    private void init(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException {
         render = new CandlestickRenderer();
         xAxis = new DateAxis();
         yAxis = new NumberAxis();
