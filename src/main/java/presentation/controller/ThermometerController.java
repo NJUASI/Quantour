@@ -1,6 +1,6 @@
 package presentation.controller;
 
-import presentation.view.chart.StockSituationBar5PercentChart;
+import presentation.view.chart.StockSituationBarChart;
 import presentation.view.chart.StockSituationBarLimitChart;
 import presentation.view.chart.StockSituationBarOpenCloseChart;
 import presentation.view.panel.ThermometerPanel;
@@ -67,9 +67,9 @@ public class ThermometerController {
             System.out.print(vo.num + " ");
         }
 
-        StockSituationBarLimitChart barChart1 = new StockSituationBarLimitChart(list);
-        StockSituationBar5PercentChart barChart2 = new StockSituationBar5PercentChart(list);
-        StockSituationBarOpenCloseChart barChart3 = new StockSituationBarOpenCloseChart(list);
+        StockSituationBarChart barChart1 = new StockSituationBarChart(list,0," 涨停 VS 跌停","涨停/跌停");
+        StockSituationBarChart barChart2 = new StockSituationBarChart(list,2,"涨幅超过5% VS 跌幅超过5%","涨幅/跌幅");
+        StockSituationBarChart barChart3 = new StockSituationBarChart(list,4,"开盘‐收盘大于5% * 上一个交易日收盘价 \nVS 开盘‐收盘小于‐5% * 上一个交易日收盘价","大于5%/小于5%");
 
         if (barPanel1 != null) {
             thermometerPanel.remove(barPanel1);

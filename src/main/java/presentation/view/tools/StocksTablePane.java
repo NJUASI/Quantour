@@ -4,11 +4,13 @@ import presentation.controller.StocksTableController;
 import presentation.controller.ViewSwitchController;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.Locale;
 
 /**
  * Created by 61990 on 2017/3/10.
@@ -33,9 +35,10 @@ public class StocksTablePane extends JScrollPane {
         setSize(1400 * width / 1920, 800 * height / 1030);
 
         //加提示语言
-        label = new JLabel("当日无股票信息");
-        label.setBounds(600 * width / 1920, 370 * height / 1030, 200 * width / 1920 * height / 1030, 60);
-        label.setBackground(new Color(32,36,39));
+        label = new JLabel("当日无股票信息",JLabel.NORTH_EAST);
+        label.setFont(new Font("宋体",Font.CENTER_BASELINE,20));
+        label.setBounds(0 * width / 1920, 0 * height / 1030, 1700 * width / 1920 , 1000* height / 1030);
+        label.setBorder(BorderFactory.createEmptyBorder());
         add(label);
         label.setVisible(false);
 
@@ -61,7 +64,7 @@ public class StocksTablePane extends JScrollPane {
             jTable.setForeground(new Color(201,208,214));
             jTable.setRowSelectionInterval(0, 0);
             jTable.setGridColor(new Color(19, 22, 24));
-            jTable.setBorder(null);
+            jTable.setBorder(BorderFactory.createEmptyBorder());
 
             JTableHeader header = jTable.getTableHeader();
             header.setDefaultRenderer(new MyTableHeaderRender(header.getDefaultRenderer()));
@@ -75,15 +78,17 @@ public class StocksTablePane extends JScrollPane {
 
             getVerticalScrollBar().setUI(new MyScrollBarUI());
             setBackground(new Color(32,36,39));
-            setBorder(null);
+            setBorder(BorderFactory.createEmptyBorder());
             setViewportView(jTable);
             count=0;
             jTable.addMouseListener(new MyMouseListener());
 
             jTable.repaint();
         } catch (Exception e) {
+            setBackground(Color.BLACK);
             label.setBackground(new Color(32,36,39));
             label.setForeground(new Color(201,208,214));
+            label.setOpaque(true);
             label.setVisible(true);
         }
 

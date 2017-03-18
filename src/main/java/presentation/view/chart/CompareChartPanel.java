@@ -68,6 +68,7 @@ public class CompareChartPanel extends JPanel {
         panel.add(chartPanel6);
 
         setBounds(adaptScreen(250,100,1500,850));
+        setBorder(BorderFactory.createEmptyBorder());
         setPreferredSize(new Dimension(1500,850));
 
         panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1030));
@@ -75,6 +76,8 @@ public class CompareChartPanel extends JPanel {
         scrollPane.setPreferredSize(new Dimension(1500*width/1920,800*height/1030));
         scrollPane.setBounds(adaptScreen(0,0,1500,800));
         scrollPane.getVerticalScrollBar().setUI(new MyScrollBarUI());
+        scrollPane.getVerticalScrollBar().setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.add(panel);
 
         scrollPane.setViewportView(panel);

@@ -88,7 +88,6 @@ public class StockDaoImpl implements StockDao {
             throw new DateNotWithinException();
         }
 
-
         List<StockPO> result = stockHelper.getStockRecords(stockCode);
         for (int i = 0; i < result.size(); ) {
             if (!isDateWithinWanted(start, end, result.get(i).getDate())) {
