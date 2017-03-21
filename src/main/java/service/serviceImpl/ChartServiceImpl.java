@@ -192,6 +192,36 @@ public class ChartServiceImpl implements ChartService {
     }
 
     /**
+     * 获取单支股票被剔除的日期
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/21
+     * @param code 股票代码
+     * @return  List<LocalDate> 被剔除的日期
+     */
+    @Override
+    public List<LocalDate> getDateException(String code) {
+        //TODO 冯俊杰实现
+        return null;
+    }
+
+    /**
+     * 获取指定时间段单支股票被剔除的日期
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/21
+     * @param chartShowCriteriaVO 股票的选择标准
+     * @return List<LocalDate> 被剔除的日期
+     */
+    @Override
+    public List<LocalDate> getDateException(ChartShowCriteriaVO chartShowCriteriaVO) {
+        //TODO 冯俊杰实现
+        return null;
+    }
+
+    /**
      * 获取StockPO的列表
      * @auther Harvey
      * @lastUpdatedBy Harvey

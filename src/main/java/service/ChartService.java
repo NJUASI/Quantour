@@ -4,6 +4,7 @@ import utilities.exceptions.*;
 import vo.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -76,4 +77,27 @@ public interface ChartService {
      * @return 界面上需要的两只股票的比较信息
      */
     List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException;
+
+    /**
+     * 获取单支股票被剔除的日期
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/21
+     * @param code 股票代码
+     * @return  List<LocalDate> 被剔除的日期
+     */
+    List<LocalDate> getDateException(String code) ;
+
+    /**
+     * 获取指定时间段单支股票被剔除的日期
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/21
+     * @param chartShowCriteriaVO 股票的选择标准
+     * @return List<LocalDate> 被剔除的日期
+     */
+    List<LocalDate> getDateException(ChartShowCriteriaVO chartShowCriteriaVO) ;
+
 }
