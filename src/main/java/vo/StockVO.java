@@ -52,8 +52,11 @@ public class StockVO {
     // 昨日复权收盘指数
     public double preAdjClose;
 
+    //表示涨跌,为close - preClose的差值; 大于0，表示上涨
+    public int isRise;
 
-    public StockVO(StockPO po) {
+
+    public StockVO(StockPO po,int isRise) {
         this.serial = po.getSerial();
         this.date = po.getDate();
         this.open = po.getOpen();
@@ -67,5 +70,8 @@ public class StockVO {
         this.market = po.getMarket();
         this.preClose = po.getPreClose();
         this.preAdjClose = po.getPreAdjClose();
+        this.isRise = isRise;
     }
+
+
 }
