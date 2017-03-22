@@ -1,9 +1,5 @@
 package service.serviceImpl;
 
-import com.github.stuxuhai.jpinyin.ChineseHelper;
-import com.github.stuxuhai.jpinyin.PinyinFormat;
-import com.github.stuxuhai.jpinyin.PinyinHelper;
-import com.github.stuxuhai.jpinyin.PinyinResource;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
@@ -48,7 +44,7 @@ public class StockServiceImpl implements StockService {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         try {
             for (StockPO po:stockDao.getStockData(date)) {
-                stockVOList.add(new StockVO(po));
+                stockVOList.add(new StockVO(po,Double.compare(po.getClose(),po.getPreClose())));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +66,7 @@ public class StockServiceImpl implements StockService {
     public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
-            stockVOList.add(new StockVO(po));
+            stockVOList.add(new StockVO(po,Double.compare(po.getClose(),po.getPreClose())));
         }
         return stockVOList.iterator();
     }
