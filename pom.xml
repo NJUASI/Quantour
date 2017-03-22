@@ -25,38 +25,17 @@
             <version>1.0.19</version>
         </dependency>
 
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.github.stuxuhai/jpinyin &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>com.github.stuxuhai</groupId>-->
-            <!--<artifactId>jpinyin</artifactId>-->
-            <!--<version>1.1.8</version>-->
-        <!--</dependency>-->
-
-
         <!-- https://mvnrepository.com/artifact/com.github.stuxuhai/jpinyin -->
         <dependency>
             <groupId>com.github.stuxuhai</groupId>
             <artifactId>jpinyin</artifactId>
             <version>1.1.8</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/jpinyin-1.1.8.jar</systemPath>
         </dependency>
 
-
         <dependency>
-            <groupId>beautyeye</groupId>
+            <groupId>org.jb2011</groupId>
             <artifactId>beautyeye_lnf</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/beautyeye_lnf.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>DatePicker</groupId>
-            <artifactId>DatePicker</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/DatePicker-V0.99-2006.09.01.jar</systemPath>
+            <version>4.0</version>
         </dependency>
     </dependencies>
 

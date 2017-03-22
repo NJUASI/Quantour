@@ -4,6 +4,7 @@ package presentation.chart;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import presentation.listener.chartMouseListener.CandlestickListener;
 import presentation.view.util.ChartUtils;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.ColorNotExistException;
@@ -34,7 +35,7 @@ public class Main {
 
         try {
             CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
-            chartF = candlestickChart.createAllPlot(3,1,5);
+            chartF = candlestickChart.createCandlestickChart();
 
         } catch (DateNotWithinException e) {
             e.printStackTrace();
@@ -55,6 +56,7 @@ public class Main {
         ChartUtils.setXY_XAixs(xyplot);
 
         ChartPanel ss=new ChartPanel(chartF);
+        ss.addChartMouseListener(new CandlestickListener(ss));
         JFrame ee=new JFrame();
         ee.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ee.setSize(750*2,400*2);
