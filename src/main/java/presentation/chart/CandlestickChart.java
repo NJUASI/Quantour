@@ -106,8 +106,6 @@ public class CandlestickChart {
         plot.setDomainAxis(ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         plot.setRangeAxis(ChartTool.getY(this.low,this.high,30));//y轴的密度
 
-        plot = this.setPlot(plot);
-
         candlestickChart = this.setChart(candlestickChart);
 
         return candlestickChart;
@@ -130,24 +128,6 @@ public class CandlestickChart {
         chartAll = this.setChart(chartAll);
 
         return chartAll;
-    }
-
-    private XYPlot setPlot(XYPlot plot){
-
-        plot.setDomainGridlinesVisible(false);
-        plot.setDomainGridlinePaint(new Color(192, 208, 224));
-        plot.setRangeGridlinePaint(new Color(192, 208, 224));
-        plot.setBackgroundPaint(new Color(32,36,39));
-
-        //设置十字线
-        plot.setDomainCrosshairPaint(new Color(192, 208, 224));
-        plot.setRangeCrosshairPaint(new Color(192, 208, 224));
-        plot.setDomainCrosshairVisible(true);
-        plot.setRangeCrosshairVisible(true);
-        plot.setDomainCrosshairLockedOnData(true);
-        plot.setRangeCrosshairLockedOnData(true);
-
-        return plot;
     }
 
     private JFreeChart setChart(JFreeChart chart){

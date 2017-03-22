@@ -1,6 +1,7 @@
 package presentation.chart;
 
 
+import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
@@ -13,6 +14,7 @@ import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class Main {
 
         try {
             CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
-            chartF = candlestickChart.createAllPlot(2,1,5);
+            chartF = candlestickChart.createCandlestickChart();
 
         } catch (DateNotWithinException e) {
             e.printStackTrace();
@@ -56,7 +58,11 @@ public class Main {
         ChartUtils.setXY_XAixs(xyplot);
 
         ChartPanel ss=new ChartPanel(chartF);
+//        ss.setLayout(new BorderLayout());
+//
+//        ss.add(new ChartPanel(null),BorderLayout.NORTH);
         ss.addChartMouseListener(new CandlestickListener(ss));
+        ss.setPopupMenu(null);
         JFrame ee=new JFrame();
         ee.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ee.setSize(750*2,400*2);
