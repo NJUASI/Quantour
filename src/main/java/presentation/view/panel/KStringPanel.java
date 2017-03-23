@@ -90,14 +90,14 @@ public class KStringPanel extends TemplatePanel {
         tag.add(60);
 
         try {
-            lineChart = new LineChart(code,tag, new Font("宋体",Font.BOLD,10));
+            lineChart = new LineChart(code,tag, new Font("微软雅黑",Font.BOLD,10));
             JFreeChart chart = lineChart.getAll(0.1,10,2,1);
             ChartUtils.setAntiAlias(chart);
             XYPlot xyplot = (XYPlot) chart.getPlot();
             ChartUtils.setXY_XAixs(xyplot);
 
             chartPanel = new ChartPanel(chart);
-            chartPanel.setBounds(adaptScreen(200,100,1500,850));
+            chartPanel.setBounds(adaptScreen(130,100,1500,850));
             chartPanel.setBackground(new Color(32, 36, 39));
             chartPanel.setMouseZoomable(false);
             add(chartPanel);
@@ -138,7 +138,7 @@ public class KStringPanel extends TemplatePanel {
             ChartUtils.setXY_XAixs(xyplot);
             chartPanel = new ChartPanel(chart);
 
-            chartPanel.setBounds(adaptScreen(200,100,1500,850));
+            chartPanel.setBounds(adaptScreen(130,100,1500,850));
             chartPanel.setBackground(new Color(32, 36, 39));
             chartPanel.setMouseZoomable(false);
             add(chartPanel);
