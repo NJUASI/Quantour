@@ -10,6 +10,7 @@ import java.time.LocalTime;
  * Created by cuihua on 2017/3/4.
  *
  * 股票
+ * TODO 数据源中第一日特殊情况待交流
  */
 public class StockVO {
 
@@ -52,11 +53,14 @@ public class StockVO {
     // 昨日复权收盘指数
     public double preAdjClose;
 
-    //表示涨跌,为close - preClose的差值; 大于0，表示上涨
-    public int isRise;
+    // 涨额（正）／跌额（负），若为数据源中第一日，则为特殊数据-10000
+    public double increase;
+
+    // 涨幅（正）／跌幅（负），若为数据源中第一日，则为特殊数据-10000
+    public double increaseMargin;
 
 
-    public StockVO(StockPO po,int isRise) {
+    public StockVO(StockPO po) {
         this.serial = po.getSerial();
         this.date = po.getDate();
         this.open = po.getOpen();
@@ -70,7 +74,14 @@ public class StockVO {
         this.market = po.getMarket();
         this.preClose = po.getPreClose();
         this.preAdjClose = po.getPreAdjClose();
-        this.isRise = isRise;
+
+        if (this.preAdjClose == -1) {
+            this.increase = -1;
+            this.increaseMargin = -1;
+        } else {
+            this.increase = po.getAdjClose() - po.getPreAdjClose();
+            this.increaseMargin = increase / po.getPreAdjClose();
+        }
     }
 
 
