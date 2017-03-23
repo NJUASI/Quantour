@@ -62,7 +62,12 @@ public class ThermometerController {
             list = stockSituationService.getStockStituationData(date);
         } catch (NoSituationDataException e) {
             JOptionPane.showMessageDialog(thermometerPanel,e.getMessage());
-            e.printStackTrace();
+            thermometerPanel.remove(barPanel1);
+            thermometerPanel.remove(barPanel2);
+            thermometerPanel.remove(barPanel3);
+            thermometerPanel.remove(volumeName);
+            thermometerPanel.remove(volume);
+//            e.printStackTrace();
         }
 
 //        StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
