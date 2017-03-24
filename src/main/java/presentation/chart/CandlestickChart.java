@@ -5,16 +5,13 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
-import presentation.listener.chartMouseListener.AllChartListener;
+import org.jfree.ui.RectangleEdge;
 import presentation.listener.chartMouseListener.CandlestickListener;
+import presentation.view.tools.WindowData;
 import presentation.view.util.ChartUtils;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
@@ -27,11 +24,8 @@ import vo.StockVO;
 
 import java.awt.*;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -108,25 +102,21 @@ public class CandlestickChart {
         return chartPanel;
     }
 
-    public ChartPanel createAllPlot(int candlestick ,int volume,int gap) throws ColorNotExistException {
+    public ChartPanel createAllPanel() throws ColorNotExistException {
 
-        XYPlot plot = this.createCandlestickChart().getXYPlot();
-        VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(),ChartTool.getRenderer());
-        XYPlot volumePlot = chart.getVolumePlot();
+        ChartPanel chartPanel =  new ChartPanel(null);
+        VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(),ChartTool.getRenderer(),
+                ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
+//        chartPanel.setLayout(null);
+        ChartPanel volumePanel =  chart.createVolumePanel();
+        ChartPanel candlestickPanel = this.createCandlestickChartPanel();
+        candlestickPanel.setBounds(0,0,1600* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
+        volumePanel.setBounds(0,600*WindowData.getInstance().getHeight()/1030,1462* WindowData.getInstance().getWidth()/1920,250* WindowData.getInstance().getHeight()/1030);
+        candlestickPanel.setVisible(true);
+        volumePanel.setVisible(true);
 
-        CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(ChartTool.
-                getX(this.start,this.end,this.getTimeLine(),this.getGap()));//建立一个恰当的联合图形区域对象，以x轴为共享轴
-        combineddomainxyplot.add(plot,candlestick);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
-        combineddomainxyplot.add(volumePlot, volume);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
-        combineddomainxyplot.setGap(gap);//设置两个图形区域对象之间的间隔空间
-
-        JFreeChart chartAll = new JFreeChart("",new Font("宋体", Font.PLAIN, 12),combineddomainxyplot,true);
-
-        chartAll = this.setChart(chartAll);
-
-        ChartUtils.setAntiAlias(chartAll);
-        ChartPanel chartPanel = new ChartPanel(chartAll);
-        chartPanel.addChartMouseListener(new AllChartListener(chartPanel));
+        chartPanel.add(candlestickPanel);
+        chartPanel.add(volumePanel);
         chartPanel.setPopupMenu(null);
         chartPanel.setVisible(true);
 
@@ -165,6 +155,8 @@ public class CandlestickChart {
         chart.getLegend().setItemPaint(new Color(201, 208, 214));
         chart.getLegend().setBackgroundPaint(new Color(32,36,39));
         chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
+        chart.getLegend().setPosition(RectangleEdge.RIGHT);
+        chart.getXYPlot().getDomainAxis().setVisible(false);
         chart.getTitle().setPaint(new Color(201, 208, 214));
         chart.setTextAntiAlias(false);
 

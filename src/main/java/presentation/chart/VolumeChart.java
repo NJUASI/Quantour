@@ -2,18 +2,23 @@ package presentation.chart;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import org.jfree.ui.RectangleEdge;
 import vo.StockVO;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -34,11 +39,15 @@ public class VolumeChart {
 
     private CandlestickRenderer candlestickRenderer;
 
-    public VolumeChart(List<StockVO> data, OHLCSeriesCollection ohlcSeriesCollection, CandlestickRenderer candlestickRenderer) {
+    private DateAxis xAxis;
+
+    public VolumeChart(List<StockVO> data, OHLCSeriesCollection ohlcSeriesCollection, CandlestickRenderer candlestickRenderer, DateAxis xAxis) {
         this.data = data;
         this.ohlcSeriesCollection = ohlcSeriesCollection;
         this.candlestickRenderer = candlestickRenderer;
+        this.xAxis = xAxis;
     }
+
 
     /**
      * 获取成交量的画板
@@ -48,9 +57,9 @@ public class VolumeChart {
      * @updateTime 2017/3/21
      * @return XYPlot 成交量画板
      */
-    public XYPlot getVolumePlot(){
+    public ChartPanel createVolumePanel(){
 
-        XYPlot plot=new XYPlot(this.getVolumeData(),null,ChartTool.getY(this.lowVolume,this.highVolume,15),
+        XYPlot plot=new XYPlot(this.getVolumeData(),this.xAxis,ChartTool.getY(this.lowVolume,this.highVolume,15),
                 ChartTool.getXYBarRender(ohlcSeriesCollection,candlestickRenderer));
         //建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
 
@@ -60,7 +69,16 @@ public class VolumeChart {
         plot.setDomainGridlineStroke(new BasicStroke());
         plot.setRangeGridlineStroke(new BasicStroke());
 
-        return plot;
+        JFreeChart chart = new JFreeChart(plot);
+        chart.setBackgroundPaint(new Color(32,36,39));
+        chart.getLegend().setVisible(false);
+        chart.setTextAntiAlias(false);
+
+        ChartPanel volumePanel = new ChartPanel(chart);
+        volumePanel.setPopupMenu(null);
+        volumePanel.setVisible(true);
+
+        return volumePanel;
     }
 
     /**
@@ -100,7 +118,7 @@ public class VolumeChart {
 
         for (StockVO stockVO : this.data) {
             series.add(new Day(stockVO.date.getDayOfMonth(), stockVO.date.getMonth().getValue(), stockVO.date.getYear())
-                    , Double.parseDouble(stockVO.volume) / 100);
+                    , (int)(Double.parseDouble(stockVO.volume) / 1000));
         }
         timeSeriesCollection.addSeries(series);
         this.setHighAndLowVolume(timeSeriesCollection);

@@ -50,13 +50,13 @@ public class StocksTablePanel extends TemplatePanel {
         add(datePickerPanel);
 
         JButton search = new JButton("搜索");
-        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
+        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListener());
         add(search);
 
         JButton detailOfCode = new JButton("查看详情");
-        detailOfCode.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
+        detailOfCode.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         detailOfCode.setBounds(adaptScreen(1150,50,110,35));
         detailOfCode.addMouseListener(new DetailOfCodeListener());
         add(detailOfCode);

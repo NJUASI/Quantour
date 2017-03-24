@@ -4,6 +4,7 @@ import javafx.scene.input.MouseButton;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import presentation.chart.CandlestickChart;
 import presentation.controller.StocksTableController;
 import presentation.controller.ViewSwitchController;
 import presentation.line.LineChart;
@@ -48,7 +49,7 @@ public class KStringPanel extends TemplatePanel {
     //用于更新联想面板
     public int count=0;
 
-    private LineChart lineChart;
+    private CandlestickChart candlestickChart;
 
     /**
      * k线面板构造器
@@ -64,11 +65,11 @@ public class KStringPanel extends TemplatePanel {
 
         num = new JTextField();
         searchAll = new JButton("总体信息");
-        searchAll.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
+        searchAll.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         search = new JButton("局部信息");
-        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
+        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         compare = new JButton("加入比较");
-
+        compare.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         init();
     }
     /**
@@ -90,14 +91,10 @@ public class KStringPanel extends TemplatePanel {
         tag.add(60);
 
         try {
-            lineChart = new LineChart(code,tag, new Font("微软雅黑",Font.BOLD,10));
-            JFreeChart chart = lineChart.getAll(0.1,10,2,1);
-            ChartUtils.setAntiAlias(chart);
-            XYPlot xyplot = (XYPlot) chart.getPlot();
-            ChartUtils.setXY_XAixs(xyplot);
+            candlestickChart = new CandlestickChart(code,tag);
 
-            chartPanel = new ChartPanel(chart);
-            chartPanel.setBounds(adaptScreen(130,100,1500,850));
+            chartPanel = candlestickChart.createAllPanel();
+            chartPanel.setBounds(adaptScreen(130,100,1600,850));
             chartPanel.setBackground(new Color(32, 36, 39));
             chartPanel.setMouseZoomable(false);
             add(chartPanel);
@@ -105,6 +102,10 @@ public class KStringPanel extends TemplatePanel {
         } catch (ColorNotExistException e) {
             e.printStackTrace();
             System.out.println("该均线类型不存在"); //TODO 后期可能会更改
+        } catch (CodeNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     /**
@@ -131,14 +132,10 @@ public class KStringPanel extends TemplatePanel {
         tag.add(60);
 
         try {
-            lineChart = new LineChart(chartShowCriteriaVO,tag, new Font("宋体",Font.BOLD,10));
-            JFreeChart chart = lineChart.getAll(0.1,10,2,1);
-            ChartUtils.setAntiAlias(chart);
-            XYPlot xyplot = (XYPlot) chart.getPlot();
-            ChartUtils.setXY_XAixs(xyplot);
-            chartPanel = new ChartPanel(chart);
+            candlestickChart = new CandlestickChart(chartShowCriteriaVO,tag);
+            chartPanel = candlestickChart.createAllPanel();
 
-            chartPanel.setBounds(adaptScreen(130,100,1500,850));
+            chartPanel.setBounds(adaptScreen(130,100,1600,850));
             chartPanel.setBackground(new Color(32, 36, 39));
             chartPanel.setMouseZoomable(false);
             add(chartPanel);

@@ -37,7 +37,7 @@ public class Main {
 
         try {
             CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
-            ss = candlestickChart.createAllPlot(2,1,5);
+            ss = candlestickChart.createAllPanel();
 
         } catch (DateNotWithinException e) {
             e.printStackTrace();

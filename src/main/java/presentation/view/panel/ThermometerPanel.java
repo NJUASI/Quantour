@@ -41,7 +41,7 @@ public class ThermometerPanel extends TemplatePanel {
         add(date);
 
         search = new JButton("搜索");
-        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,15*width/1920));
+        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListner());
         add(search);
