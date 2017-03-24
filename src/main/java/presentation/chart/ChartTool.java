@@ -3,7 +3,6 @@ package presentation.chart;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.*;
-import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PieLabelLinkStyle;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
@@ -90,7 +89,10 @@ public class ChartTool {
                     return candlestickRenderer.getDownPaint();
                 }
             }};
+        xyBarRender.setBarPainter(new StandardXYBarPainter());
+        xyBarRender.setDrawBarOutline(false);
         xyBarRender.setMargin(0.1);//设置柱形图之间的间隔
+        xyBarRender.setShadowVisible(false);
 
         return xyBarRender;
     }
@@ -176,11 +178,11 @@ public class ChartTool {
         chartTheme.setLabelLinkStyle(PieLabelLinkStyle.CUBIC_CURVE);
 
         chartTheme.setAxisOffset(new RectangleInsets(5, 12, 5, 12));
-        chartTheme.setDomainGridlinePaint(new Color(192, 208, 224));// X坐标轴垂直网格颜色
-        chartTheme.setRangeGridlinePaint(new Color(192, 192, 192));// Y坐标轴水平网格颜色
+        chartTheme.setDomainGridlinePaint(new Color(44, 50, 54));// X坐标轴垂直网格颜色
+        chartTheme.setRangeGridlinePaint(new Color(44, 50, 54));// Y坐标轴水平网格颜色
 
-        chartTheme.setBaselinePaint(Color.WHITE);
-        chartTheme.setCrosshairPaint(Color.BLUE);// 不确定含义
+        chartTheme.setBaselinePaint(new Color(44, 50, 54));
+        chartTheme.setCrosshairPaint(new Color(44, 50, 54));// 不确定含义
         chartTheme.setAxisLabelPaint(new Color(201, 208, 214));// 坐标轴标题文字颜色
         chartTheme.setTickLabelPaint(new Color(201, 208, 214));// 刻度数字
         chartTheme.setBarPainter(new StandardBarPainter());// 设置柱状图渲染

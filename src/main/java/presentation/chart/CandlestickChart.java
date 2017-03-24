@@ -1,6 +1,7 @@
 package presentation.chart;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.block.BlockBorder;
@@ -12,6 +13,9 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import presentation.listener.chartMouseListener.AllChartListener;
+import presentation.listener.chartMouseListener.CandlestickListener;
+import presentation.view.util.ChartUtils;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.CodeNotFoundException;
@@ -92,26 +96,19 @@ public class CandlestickChart {
         this.readData(chartShowCriteriaVO);
     }
 
-    public JFreeChart createCandlestickChart() throws ColorNotExistException {
-        ChartTool.setChartTheme();
+    public ChartPanel createCandlestickChartPanel() throws ColorNotExistException {
+        JFreeChart candlestickChart = this.createCandlestickChart();
+        ChartUtils.setAntiAlias(candlestickChart);
 
-        JFreeChart candlestickChart = ChartFactory.createCandlestickChart(this.data.get(0).name, "", "",
-                null, true);
-        candlestickChart.setAntiAlias(false);
-        candlestickChart.setTextAntiAlias(false);
-        XYPlot plot = candlestickChart.getXYPlot();
-        plot.setDataset(0, this.getCandlestickData());
-        plot.setRenderer(0, ChartTool.getRenderer());
-        plot = averageChart.set(plot);
-        plot.setDomainAxis(ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
-        plot.setRangeAxis(ChartTool.getY(this.low,this.high,30));//y轴的密度
+        ChartPanel chartPanel = new ChartPanel(candlestickChart);
+        chartPanel.addChartMouseListener(new CandlestickListener(chartPanel));
+        chartPanel.setPopupMenu(null);
+        chartPanel.setVisible(true);
 
-        candlestickChart = this.setChart(candlestickChart);
-
-        return candlestickChart;
+        return chartPanel;
     }
 
-    public JFreeChart createAllPlot(int candlestick ,int volume,int gap) throws ColorNotExistException {
+    public ChartPanel createAllPlot(int candlestick ,int volume,int gap) throws ColorNotExistException {
 
         XYPlot plot = this.createCandlestickChart().getXYPlot();
         VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(),ChartTool.getRenderer());
@@ -127,7 +124,40 @@ public class CandlestickChart {
 
         chartAll = this.setChart(chartAll);
 
-        return chartAll;
+        ChartUtils.setAntiAlias(chartAll);
+        ChartPanel chartPanel = new ChartPanel(chartAll);
+        chartPanel.addChartMouseListener(new AllChartListener(chartPanel));
+        chartPanel.setPopupMenu(null);
+        chartPanel.setVisible(true);
+
+        return chartPanel;
+    }
+
+    private JFreeChart createCandlestickChart() throws ColorNotExistException {
+        ChartTool.setChartTheme();
+
+        JFreeChart candlestickChart = ChartFactory.createCandlestickChart(this.data.get(0).name, "", "",
+                null, true);
+        candlestickChart.setAntiAlias(false);
+        candlestickChart.setTextAntiAlias(false);
+        XYPlot plot = candlestickChart.getXYPlot();
+        plot.setDataset(0, this.getCandlestickData());
+        plot.setRenderer(0, ChartTool.getRenderer());
+        plot = averageChart.set(plot);
+
+        plot.setDomainGridlinesVisible(true);
+        plot.setRangeGridlinesVisible(true);
+        plot.setDomainGridlinePaint(new Color(44, 50, 54));
+        plot.setRangeGridlinePaint(new Color(44, 50, 54));
+        plot.setDomainGridlineStroke(new BasicStroke());
+        plot.setRangeGridlineStroke(new BasicStroke());
+
+        plot.setDomainAxis(ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
+        plot.setRangeAxis(ChartTool.getY(this.low,this.high,30));//y轴的密度
+
+        candlestickChart = this.setChart(candlestickChart);
+
+        return candlestickChart;
     }
 
     private JFreeChart setChart(JFreeChart chart){

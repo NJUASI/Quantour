@@ -1,6 +1,7 @@
 package presentation.listener.chartMouseListener;
 
 import org.jfree.chart.*;
+import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.RectangleEdge;
@@ -10,16 +11,16 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Created by Byron Dong on 2017/3/22.
+ * Created by Byron Dong on 2017/3/23.
  */
-public class CandlestickListener implements ChartMouseListener{
+public class AllChartListener implements ChartMouseListener {
 
     ChartPanel chartPanel;
     Rectangle2D rectangle2D;
     ValueMarker markerX =null;
     ValueMarker markerY = null;
 
-    public CandlestickListener(ChartPanel chartPanel) {
+    public AllChartListener(ChartPanel chartPanel) {
         this.chartPanel = chartPanel;
     }
 
@@ -30,7 +31,8 @@ public class CandlestickListener implements ChartMouseListener{
     @Override
     public void chartMouseMoved(ChartMouseEvent event) {
         JFreeChart chart = event.getChart();
-        XYPlot xyplot = chart.getXYPlot();
+        CombinedDomainXYPlot plot = (CombinedDomainXYPlot)chart.getPlot();
+        XYPlot xyplot = (XYPlot) plot.getSubplots().get(0);
 
 
         if(markerX!=null&&markerY!=null){

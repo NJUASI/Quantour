@@ -103,11 +103,11 @@ public class ChartUtils {
 		chartTheme.setLabelLinkStyle(PieLabelLinkStyle.CUBIC_CURVE);
 
 		chartTheme.setAxisOffset(new RectangleInsets(5, 12, 5, 12));
-		chartTheme.setDomainGridlinePaint(new Color(192, 208, 224));// X坐标轴垂直网格颜色
-		chartTheme.setRangeGridlinePaint(new Color(192, 192, 192));// Y坐标轴水平网格颜色
+		chartTheme.setDomainGridlinePaint(new Color(44, 50, 54));// X坐标轴垂直网格颜色
+		chartTheme.setRangeGridlinePaint(new Color(44, 50, 54));// Y坐标轴水平网格颜色
 
-		chartTheme.setBaselinePaint(Color.WHITE);
-		chartTheme.setCrosshairPaint(Color.BLUE);// 不确定含义
+		chartTheme.setBaselinePaint(new Color(44, 50, 54));
+		chartTheme.setCrosshairPaint(new Color(44, 50, 54));// 不确定含义
 		chartTheme.setAxisLabelPaint(new Color(201, 208, 214));// 坐标轴标题文字颜色
 		chartTheme.setTickLabelPaint(new Color(201, 208, 214));// 刻度数字
 		chartTheme.setBarPainter(new StandardBarPainter());// 设置柱状图渲染

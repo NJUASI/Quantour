@@ -33,11 +33,11 @@ public class Main {
         tag.add(60);
 
 
-        JFreeChart chartF = null;
+            ChartPanel ss = null;
 
         try {
             CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
-            chartF = candlestickChart.createCandlestickChart();
+            ss = candlestickChart.createAllPlot(2,1,5);
 
         } catch (DateNotWithinException e) {
             e.printStackTrace();
@@ -51,18 +51,9 @@ public class Main {
             e.printStackTrace();
         }
 
-
-
-        ChartUtils.setAntiAlias(chartF);// 抗锯齿
-        XYPlot xyplot = (XYPlot) chartF.getPlot();
-        ChartUtils.setXY_XAixs(xyplot);
-
-        ChartPanel ss=new ChartPanel(chartF);
 //        ss.setLayout(new BorderLayout());
 //
 //        ss.add(new ChartPanel(null),BorderLayout.NORTH);
-        ss.addChartMouseListener(new CandlestickListener(ss));
-        ss.setPopupMenu(null);
         JFrame ee=new JFrame();
         ee.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ee.setSize(750*2,400*2);

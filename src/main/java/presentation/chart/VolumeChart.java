@@ -1,5 +1,7 @@
 package presentation.chart;
 
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
@@ -47,13 +49,16 @@ public class VolumeChart {
      * @return XYPlot 成交量画板
      */
     public XYPlot getVolumePlot(){
-        XYPlot plot=new XYPlot(this.getVolumeData(),null,ChartTool.getY(this.lowVolume,this.highVolume,20),
+
+        XYPlot plot=new XYPlot(this.getVolumeData(),null,ChartTool.getY(this.lowVolume,this.highVolume,15),
                 ChartTool.getXYBarRender(ohlcSeriesCollection,candlestickRenderer));
         //建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
 
-        plot.setDomainGridlinePaint(new Color(192, 208, 224));
-        plot.setRangeGridlinePaint(new Color(192, 208, 224));
+        plot.setDomainGridlinePaint(new Color(44, 50, 54));
+        plot.setRangeGridlinePaint(new Color(44, 50, 54));
         plot.setBackgroundPaint(new Color(32,36,39));
+        plot.setDomainGridlineStroke(new BasicStroke());
+        plot.setRangeGridlineStroke(new BasicStroke());
 
         return plot;
     }
