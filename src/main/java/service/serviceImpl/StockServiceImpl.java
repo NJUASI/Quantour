@@ -44,7 +44,7 @@ public class StockServiceImpl implements StockService {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         try {
             for (StockPO po:stockDao.getStockData(date)) {
-                stockVOList.add(new StockVO(po,Double.compare(po.getClose(),po.getPreClose())));
+                stockVOList.add(new StockVO(po));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class StockServiceImpl implements StockService {
     public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
-            stockVOList.add(new StockVO(po,Double.compare(po.getClose(),po.getPreClose())));
+            stockVOList.add(new StockVO(po));
         }
         return stockVOList.iterator();
     }

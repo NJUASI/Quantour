@@ -2,6 +2,7 @@ package presentation.view.tools;
 
 import presentation.controller.StocksTableController;
 import presentation.controller.ViewSwitchController;
+import presentation.view.panel.StocksTablePanel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -36,13 +37,17 @@ public class StocksTablePane extends JScrollPane {
         setSize(1500 * width / 1920, 800 * height / 1030);
 
         //加提示语言
-        label = new JLabel("当日无股票信息",JLabel.CENTER);
-        label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
-        label.setBounds(0 * width / 1920, 0 * height / 1030, 1500 * width / 1920 , 800* height / 1030);
-        label.setBorder(BorderFactory.createEmptyBorder());
-        add(label);
-        label.setVisible(false);
-
+//        label = new JLabel("当日无股票信息",JLabel.CENTER);
+//        label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
+//        label.setBounds(0 * width / 1920, 0 * height / 1030, 1500 * width / 1920 , 800* height / 1030);
+//        label.setBorder(BorderFactory.createEmptyBorder());
+//        add(label);
+//        label.setVisible(false);
+//
+//        label.setBackground(new Color(32,36,39));
+//        label.setForeground(new Color(201,208,214));
+//        label.setOpaque(true);
+//        label.setVisible(true);
         try {
             jTable = new JTable(new StocksTableModel(date));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
@@ -79,14 +84,10 @@ public class StocksTablePane extends JScrollPane {
             setViewportView(jTable);
             count=0;
             jTable.addMouseListener(new MyMouseListener());
-
+            StocksTablePanel.getInstance().label.setVisible(false);
             jTable.repaint();
         } catch (Exception e) {
-            setBackground(Color.BLACK);
-            label.setBackground(new Color(32,36,39));
-            label.setForeground(new Color(201,208,214));
-            label.setOpaque(true);
-            label.setVisible(true);
+            StocksTablePanel.getInstance().label.setVisible(true);
         }
 
     }

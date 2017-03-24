@@ -62,7 +62,12 @@ public class ThermometerController {
             list = stockSituationService.getStockStituationData(date);
         } catch (NoSituationDataException e) {
             JOptionPane.showMessageDialog(thermometerPanel,e.getMessage());
-            e.printStackTrace();
+            thermometerPanel.remove(barPanel1);
+            thermometerPanel.remove(barPanel2);
+            thermometerPanel.remove(barPanel3);
+            thermometerPanel.remove(volumeName);
+            thermometerPanel.remove(volume);
+//            e.printStackTrace();
         }
 
 //        StockSituationPieChart pieChart = new StockSituationPieChart(list.iterator());
@@ -89,12 +94,12 @@ public class ThermometerController {
         barPanel3 = barChart3.createChart();
         volumeName=new MyLabel(list.get(6).name);
 
-        volumeName.setLocation(1000* WindowData.getInstance().getWidth()/1920,67*WindowData.getInstance().getHeight()/1030);
+        volumeName.setLocation(900* WindowData.getInstance().getWidth()/1920,69*WindowData.getInstance().getHeight()/1030);
         volumeName.setVisible(true);
 
         volume=new JLabel(list.get(6).num+"");
 
-        volume.setBounds(thermometerPanel.adaptScreen(1110,65,180,40));
+        volume.setBounds(thermometerPanel.adaptScreen(1000,65,180,40));
         volume.setVisible(true);
 
         barPanel1.setBounds(thermometerPanel.adaptScreen(30,150,540,720));

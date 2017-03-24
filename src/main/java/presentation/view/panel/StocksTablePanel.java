@@ -28,7 +28,7 @@ public class StocksTablePanel extends TemplatePanel {
      */
     SingleDatePickerPanel datePickerPanel;
 
-    public StocksTablePane stocksTablePane;
+    public JLabel label;
 
     /**
      * 股票列表面板构造器
@@ -61,6 +61,15 @@ public class StocksTablePanel extends TemplatePanel {
         detailOfCode.addMouseListener(new DetailOfCodeListener());
         add(detailOfCode);
 
+        label = new JLabel("当日无股票信息",JLabel.CENTER);
+        label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
+        label.setBounds(150 * width / 1920, 120 * height / 1030, 1500 * width / 1920 , 800* height / 1030);
+        label.setBorder(BorderFactory.createEmptyBorder());
+        label.setVisible(false);
+        label.setBackground(new Color(32,36,39));
+        label.setForeground(new Color(201,208,214));
+        label.setOpaque(true);
+        add(label);
 
     }
 

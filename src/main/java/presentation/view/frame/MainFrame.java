@@ -86,7 +86,7 @@ public class MainFrame extends JFrame {
         height=WindowData.getInstance().getHeight();
         setSize(width,height);
 
-//        setUndecorated(true);
+        setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setVisible(true);

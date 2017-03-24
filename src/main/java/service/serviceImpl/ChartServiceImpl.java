@@ -54,7 +54,7 @@ public class ChartServiceImpl implements ChartService {
 
         for (StockPO po : tempList) {
             System.out.println(po.getDate());
-            stockVOList.add(new StockVO(po,Double.compare(po.getClose(),po.getPreClose())));
+            stockVOList.add(new StockVO(po));
         }
         return stockVOList;
     }
@@ -87,7 +87,7 @@ public class ChartServiceImpl implements ChartService {
         }
 
         for (StockPO po : stockPOList) {
-            stockVOList.add(new StockVO(po,Double.compare(po.getClose(),po.getPreClose())));
+            stockVOList.add(new StockVO(po));
         }
         return stockVOList;
     }

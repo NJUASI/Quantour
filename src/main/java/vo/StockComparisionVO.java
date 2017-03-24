@@ -27,7 +27,7 @@ public class StockComparisionVO {
     // 最高值
     public double max;
 
-    // 涨幅（正）／跌幅（负）
+    // 涨幅（正）／跌幅（负），若为数据源中第一日则不显示
     public double increaseMargin;
 
     // 每天的收盘价
