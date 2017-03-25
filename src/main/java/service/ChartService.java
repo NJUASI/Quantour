@@ -100,4 +100,13 @@ public interface ChartService {
      */
     List<LocalDate> getDateWithoutData(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException;
 
+    /**
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/25
+     * @param stockCode 股票代码
+     * @return 股票在数据源中的起讫时间
+     */
+    FirstLastDayVO getFirstAndLastDay(String stockCode) throws IOException;
+
 }
