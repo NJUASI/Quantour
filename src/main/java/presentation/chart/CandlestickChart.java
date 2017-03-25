@@ -68,7 +68,7 @@ public class CandlestickChart {
     public CandlestickChart(String code,List<Integer> days) throws IOException, CodeNotFoundException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
-        dateException = this.service.getDateException(code);
+        dateException = this.service.getDateWithoutData(code);
         averageChart = new AverageChart(code,days);
         this.readData(code);
     }
@@ -83,7 +83,7 @@ public class CandlestickChart {
     public CandlestickChart(ChartShowCriteriaVO chartShowCriteriaVO,List<Integer> days) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
-        dateException = this.service.getDateException(chartShowCriteriaVO);
+        dateException = this.service.getDateWithoutData(chartShowCriteriaVO);
         averageChart = new AverageChart(chartShowCriteriaVO,days);
         start = chartShowCriteriaVO.start;
         end = chartShowCriteriaVO.end;

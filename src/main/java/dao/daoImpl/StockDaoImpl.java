@@ -138,6 +138,40 @@ public class StockDaoImpl implements StockDao {
         return stockHelper.getStockRecords(date);
     }
 
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @param stockCode 股票代码
+     * @return 此股票需要被剔除的所有日期
+     */
+    @Override
+    public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
+        return stockHelper.getDateWithoutData(stockCode);
+    }
+
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @param stockCode 股票代码
+     * @return 在指定时间区段此股票需要被剔除的所有日期
+     */
+    @Override
+    public List<LocalDate> getDateWithoutData(String stockCode, LocalDate start, LocalDate end) throws IOException {
+        List<LocalDate> temp = getDateWithoutData(stockCode);
+
+        for (int i = 0; i < temp.size(); ) {
+            if (!isDateWithinWanted(start, end, temp.get(i))) {
+                temp.remove(i);
+            } else {
+                i++;
+            }
+        }
+
+        return temp;
+    }
+
 
 
 
@@ -220,17 +254,31 @@ public class StockDaoImpl implements StockDao {
      *
      * @author cuihua
      * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/9
-     * @param code 股票代码
+     * @updateTime 2017/3/23
+     * @param stockCode 股票代码
      * @return 数据库中股票存在记录的第一天
      */
     @Override
-    public LocalDate getFirstDay(String code) throws IOException {
-        return stockHelper.getFirstDay(code);
+    public LocalDate getFirstDay(String stockCode) throws IOException {
+        return stockHelper.getFirstAndLastDay(stockCode).get(0);
     }
 
     /**
-     * Gets all stocks code. 获取所有股票的代码
+     * 获取数据库中股票存在记录的最后一天
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @param stockCode 股票代码
+     * @return 数据库中股票存在记录的最后一天
+     */
+    @Override
+    public LocalDate getLastDay(String stockCode) throws IOException {
+        return stockHelper.getFirstAndLastDay(stockCode).get(1);
+    }
+
+    /**
+     * 获取所有股票的代码
      *
      * @return the all stocks code
      */
@@ -240,7 +288,7 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
-     * Gets all stocks first letters.获取所有股票的首字母
+     * 获取所有股票的首字母
      *
      * @return the all stocks first letters
      */
@@ -296,7 +344,7 @@ public class StockDaoImpl implements StockDao {
     private boolean isDateWithinSource(String stockCode, LocalDate start, LocalDate end) throws IOException {
         // 硬编码实现
         LocalDate sourceStart = getFirstDay(stockCode);
-        LocalDate sourceEnd = LocalDate.of(2014, 4, 29);
+        LocalDate sourceEnd = getLastDay(stockCode);
 
         System.out.println("-----------------------");
         System.out.println(start.isBefore(sourceStart));

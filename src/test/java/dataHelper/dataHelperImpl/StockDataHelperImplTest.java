@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.After;
 import po.StockPO;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -113,10 +114,22 @@ public class StockDataHelperImplTest {
      * Method: getFirstDay(String code)
      */
     @Test
-    public void testGetFirstDay() throws Exception {
-        assertEquals(LocalDate.of(2005, 2, 1), stockDataHelper.getFirstDay("17"));
-        assertEquals(LocalDate.of(2007, 12, 19), stockDataHelper.getFirstDay("2198"));
-        assertEquals(LocalDate.of(2007, 12, 3), stockDataHelper.getFirstDay("2189"));
+    public void testGetFirstAndLastDay() throws Exception {
+        assertEquals(LocalDate.of(2005, 2, 1), stockDataHelper.getFirstAndLastDay("17").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("17").get(1));
+        assertEquals(LocalDate.of(2007, 12, 19), stockDataHelper.getFirstAndLastDay("2198").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("2198").get(1));
+        assertEquals(LocalDate.of(2007, 12, 3), stockDataHelper.getFirstAndLastDay("2189").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("2189").get(1));
+    }
+
+    /**
+     * Method: getDateWithoutData(String stockCode)
+     */
+    @Test
+    public void testGetDateWithoutData() throws IOException {
+        List<LocalDate> result = stockDataHelper.getDateWithoutData("17");
+        assertEquals(2207, result.size());
     }
 }
 

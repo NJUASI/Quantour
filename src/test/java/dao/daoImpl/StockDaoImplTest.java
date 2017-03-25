@@ -248,6 +248,37 @@ public class StockDaoImplTest {
     }
 
     /**
+     * Method: getDateWithoutData(String stockCode)
+     */
+    @Test
+    public void testGetDateWithoutData_11() throws Exception {
+        List<LocalDate> result = stockDao.getDateWithoutData("17");
+        assertEquals(2207, result.size());
+    }
+
+    /**
+     * Method: getDateWithoutData(String stockCode, LocalDate start, LocalDate end)
+     */
+    @Test
+    public void testGetDateWithoutData_21() throws Exception {
+        List<LocalDate> result = stockDao.getDateWithoutData("17", LocalDate.of(2014, 4, 10), LocalDate.of(2014, 4, 29));
+        assertEquals(6, result.size());
+    }
+
+    @Test
+    public void testGetDateWithoutData_22() throws Exception {
+        List<LocalDate> result = stockDao.getDateWithoutData("2037", LocalDate.of(2010, 6, 1), LocalDate.of(2010, 6, 30));
+        assertEquals(11, result.size());
+    }
+
+    @Test
+    public void testGetDateWithoutData_23() throws Exception {
+        List<LocalDate> result = stockDao.getDateWithoutData("300122", LocalDate.of(2010, 9, 28), LocalDate.of(2010, 11, 6));
+        assertEquals(16, result.size());
+    }
+
+
+    /**
      * Method: getPrivateStocks(String userName, LocalDate date)
      */
     @Ignore

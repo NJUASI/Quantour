@@ -56,22 +56,52 @@ public class StockDataHelperImpl implements StockDataHelper {
     }
 
     /**
-     * 获取数据库中股票存在记录的第一天
-     *
      * @author cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
      * @param stockCode 股票代码
-     * @return 数据库中股票存在记录的第一天
+     * @return 数据库中股票存在记录的起讫时间，List.get(0)为第一天，List.get(1)为最后一天
      * @throws IOException IO
      */
     @Override
-    public LocalDate getFirstDay(String stockCode) throws IOException {
+    public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                 getResourceAsStream(stockRecordByCodePathPre + backToSimplifiedStockCode(stockCode) + stockRecordPathPost)));
 
         List<StockPO> allResult = getStockRecords(stockCode);
-        return allResult.get(allResult.size()-1).getDate();
+
+        List<LocalDate> result = new LinkedList<>();
+        result.add(allResult.get(allResult.size()-1).getDate());
+        result.add(allResult.get(0).getDate());
+        return result;
+    }
+
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @param stockCode 股票代码
+     * @return 此年份此股票需要被剔除的所有日期
+     */
+    @Override
+    public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
+        List<LocalDate> dates = new LinkedList<>();
+        LocalDate temp = getFirstAndLastDay(stockCode).get(0);
+        LocalDate end = getFirstAndLastDay(stockCode).get(1);
+
+        // 先加入所有目标可能的日期
+        while (!dateEquals(temp, end)) {
+            dates.add(temp);
+            temp = temp.plusDays(1);
+        }
+
+        // 再剔除有数据的日期
+        List<StockPO> result = getStockRecords(stockCode);
+        for (StockPO stock : result) {
+            dates.remove(stock.getDate());
+        }
+
+        return dates;
     }
 
     /**
@@ -106,12 +136,18 @@ public class StockDataHelperImpl implements StockDataHelper {
         return result;
     }
 
-    private static String backToSimplifiedStockCode(String stockCode) {
+    private String backToSimplifiedStockCode(String stockCode) {
         char[] parts = stockCode.toCharArray();
         int i = 0;
         for (; i < 6; i++) {
             if (parts[i] != '0') break;
         }
         return stockCode.substring(i);
+    }
+
+
+    private boolean dateEquals(LocalDate date1, LocalDate date2) {
+        if (date1.getYear() == date2.getYear() && date1.getDayOfYear() == date2.getDayOfYear()) return true;
+        else return false;
     }
 }
