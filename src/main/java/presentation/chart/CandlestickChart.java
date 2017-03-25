@@ -27,6 +27,8 @@ import vo.StockVO;
 
 import java.awt.*;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -211,15 +213,15 @@ public class CandlestickChart {
      */
     private SegmentedTimeline getTimeLine() {
         SegmentedTimeline timeline = SegmentedTimeline.newMondayThroughFridayTimeline();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-//
-//        try {
-//            for (LocalDate date : dateException) {
-//                timeline.addException(dateFormat.parse(date.toString()));
-//            }
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+
+        try {
+            for (LocalDate date : dateException) {
+                timeline.addException(dateFormat.parse(date.toString()));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return timeline;
     }
 
