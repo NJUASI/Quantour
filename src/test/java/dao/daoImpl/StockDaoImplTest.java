@@ -314,11 +314,16 @@ public class StockDaoImplTest {
      * Method: getFirstDay(String code)
      */
     @Test
-    public void getFirstDay() throws Exception {
-        assertEquals(LocalDate.of(2005, 2, 1), stockDao.getFirstDay("17"));
-        assertEquals(LocalDate.of(2009, 8, 28), stockDao.getFirstDay("2286"));
-        assertEquals(LocalDate.of(2009, 12, 18), stockDao.getFirstDay("2324"));
-        assertEquals(LocalDate.of(2010, 8, 12), stockDao.getFirstDay("300103"));
+    public void getFirstAndLastDay() throws Exception {
+        assertEquals(LocalDate.of(2005, 2, 1), stockDao.getFirstAndLastDay("17").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("17").get(1));
+        assertEquals(LocalDate.of(2009, 8, 28), stockDao.getFirstAndLastDay("2286").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("2286").get(1));
+        assertEquals(LocalDate.of(2009, 12, 18), stockDao.getFirstAndLastDay("2324").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("2324").get(1));
+        assertEquals(LocalDate.of(2010, 8, 12), stockDao.getFirstAndLastDay("300103").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("300103").get(1));
+
     }
 
     // 将接口改为public测试的，测完之后恢复为private

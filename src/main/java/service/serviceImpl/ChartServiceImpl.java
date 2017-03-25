@@ -1,6 +1,5 @@
 package service.serviceImpl;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import utilities.exceptions.*;
@@ -109,7 +108,7 @@ public class ChartServiceImpl implements ChartService {
         for(int i=0;i<days.size();i++){
 
             List<StockPO> preList = null;
-            LocalDate firstDay = stockDao.getFirstDay(code);
+            LocalDate firstDay = stockDao.getFirstAndLastDay(code).get(0);
             preList = stockDao.getStockData(code,firstDay,begin);
 
             //之前的数据够用
@@ -208,6 +207,18 @@ public class ChartServiceImpl implements ChartService {
     @Override
     public List<LocalDate> getDateWithoutData(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException {
         return stockDao.getDateWithoutData(chartShowCriteriaVO.stockCode, chartShowCriteriaVO.start, chartShowCriteriaVO.end);
+    }
+
+    /**
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/25
+     * @param stockCode 股票代码
+     * @return 股票在数据源中的起讫时间
+     */
+    @Override
+    public FirstLastDayVO getFirstAndLastDay(String stockCode) {
+        return null;
     }
 
     /**

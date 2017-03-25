@@ -148,26 +148,13 @@ public interface StockDao {
     暂定
      */
     /**
-     * 获取数据库中股票存在记录的第一天
-     *
      * @author cuihua
      * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/9
+     * @updateTime 2017/3/25
      * @param stockCode 股票代码
-     * @return 数据库中股票存在记录的第一天
+     * @return 数据库中股票存在记录的起讫时间
      */
-    LocalDate getFirstDay(String stockCode) throws IOException;
-
-    /**
-     * 获取数据库中股票存在记录的最后一天
-     *
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/9
-     * @param stockCode 股票代码
-     * @return 数据库中股票存在记录的最后一天
-     */
-    LocalDate getLastDay(String stockCode) throws IOException;
+    List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException;
 
     /**
      * 获取所有股票的代码

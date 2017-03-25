@@ -259,22 +259,8 @@ public class StockDaoImpl implements StockDao {
      * @return 数据库中股票存在记录的第一天
      */
     @Override
-    public LocalDate getFirstDay(String stockCode) throws IOException {
-        return stockHelper.getFirstAndLastDay(stockCode).get(0);
-    }
-
-    /**
-     * 获取数据库中股票存在记录的最后一天
-     *
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/23
-     * @param stockCode 股票代码
-     * @return 数据库中股票存在记录的最后一天
-     */
-    @Override
-    public LocalDate getLastDay(String stockCode) throws IOException {
-        return stockHelper.getFirstAndLastDay(stockCode).get(1);
+    public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
+        return stockHelper.getFirstAndLastDay(stockCode);
     }
 
     /**
@@ -342,9 +328,9 @@ public class StockDaoImpl implements StockDao {
      * @return 要查找的时间区域在数据源内
      */
     private boolean isDateWithinSource(String stockCode, LocalDate start, LocalDate end) throws IOException {
-        // 硬编码实现
-        LocalDate sourceStart = getFirstDay(stockCode);
-        LocalDate sourceEnd = getLastDay(stockCode);
+        List<LocalDate> firstAndLast = getFirstAndLastDay(stockCode);
+        LocalDate sourceStart = firstAndLast.get(0);
+        LocalDate sourceEnd = firstAndLast.get(1);
 
         System.out.println("-----------------------");
         System.out.println(start.isBefore(sourceStart));
