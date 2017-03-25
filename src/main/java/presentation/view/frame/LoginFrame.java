@@ -2,6 +2,7 @@ package presentation.view.frame;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import presentation.view.panel.LoginPanel;
+import presentation.view.tools.BeautyEyeUtil;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.SingleDatePickerPanel;
 import presentation.view.tools.WindowData;
@@ -19,12 +20,10 @@ public class LoginFrame extends JFrame {
     private static LoginFrame loginFrame;
 
     public LoginFrame() {
-        try {
-            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
-            BeautyEyeLNFHelper.launchBeautyEyeLNF();
-        } catch (Exception e) {
 
-        }
+        //osLookAndDecorated
+        BeautyEyeUtil.beautyEye();
+
         createWindow();
     }
 

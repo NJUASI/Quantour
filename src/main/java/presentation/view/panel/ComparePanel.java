@@ -1,7 +1,5 @@
 package presentation.view.panel;
 
-import org.jfree.chart.ChartPanel;
-import presentation.view.chart.CompareChart1;
 import presentation.view.chart.CompareChartPanel;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
@@ -9,7 +7,6 @@ import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.DataSourceFirstDayException;
 import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.MatchNothingException;
 import utilities.exceptions.NoDataWithinException;
 import vo.StockComparisionVO;
 import vo.StockComparsionCriteriaVO;
@@ -24,7 +21,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
 import java.util.List;
 
 /**
@@ -288,12 +284,7 @@ public class ComparePanel extends TemplatePanel {
                 if(count==0) {
                     associatePanel.setVisible(true);
                     associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
-                    try {
-                        associatePanel.updateText(num1.getText());
-                    } catch (MatchNothingException e1) {
-                        JOptionPane.showMessageDialog(comparePanel,"没有任何股票匹配");
-                        e1.printStackTrace();
-                    }
+                    associatePanel.updateJList(num1.getText());
                 }
             }
 
@@ -313,12 +304,7 @@ public class ComparePanel extends TemplatePanel {
                 if(count==0) {
                     associatePanel.setVisible(true);
                     associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
-                    try {
-                        associatePanel.updateText(name1.getText());
-                    } catch (MatchNothingException e1) {
-                        JOptionPane.showMessageDialog(comparePanel,"没有任何股票匹配");
-                        e1.printStackTrace();
-                    }
+                    associatePanel.updateJList(name1.getText());
                 }
             }
             @Override
@@ -338,12 +324,7 @@ public class ComparePanel extends TemplatePanel {
                 if(count==0) {
                     associatePanel2.setVisible(true);
                     associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
-                    try {
-                        associatePanel2.updateText(name2.getText());
-                    } catch (MatchNothingException e1) {
-                        JOptionPane.showMessageDialog(comparePanel,"没有任何股票匹配");
-                        e1.printStackTrace();
-                    }
+                    associatePanel2.updateJList(name2.getText());
                 }
             }
 
@@ -364,12 +345,7 @@ public class ComparePanel extends TemplatePanel {
                 if (count==0){
                     associatePanel2.setVisible(true);
                     associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
-                    try {
-                        associatePanel2.updateText(num2.getText());
-                    } catch (MatchNothingException e1) {
-                        JOptionPane.showMessageDialog(comparePanel,"没有任何股票匹配");
-                        e1.printStackTrace();
-                    }
+                    associatePanel2.updateJList(num2.getText());
                 }
         }
 

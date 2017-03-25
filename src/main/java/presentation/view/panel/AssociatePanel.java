@@ -1,8 +1,9 @@
 package presentation.view.panel;
 
+import presentation.listener.associatePanelListener.KStringChooseListener;
+import presentation.listener.associatePanelListener.KeyControlListener;
 import presentation.view.panel.associatePanel.SearchComboBoxModel;
 import presentation.view.tools.WindowData;
-import utilities.exceptions.MatchNothingException;
 import vo.StockSearchVO;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class AssociatePanel extends ScrollPane {
 
     private static AssociatePanel associatePanel;
 
-    ListModel jListModel;
+    ListModel<StockSearchVO> jListModel;
 
     JList list;
 
@@ -27,31 +28,44 @@ public class AssociatePanel extends ScrollPane {
         setSize(250*width/1920,200*height/1030);
         list = new JList();
 
+        list.addKeyListener(new KeyControlListener());
         list.setLocation(0,0);
         add(list);
     }
 
-    public void updateText(String str) throws MatchNothingException {
+    public void updateJList(String str){
         jListModel =  new SearchComboBoxModel(str);
         list.setModel(jListModel);
     }
 
     public StockSearchVO getMessage(){
         int index=list.getSelectedIndex();
-        return (StockSearchVO) jListModel.getElementAt(index);
+        return jListModel.getElementAt(index);
     }
 
     public static AssociatePanel getInstance(){
         if(associatePanel == null){
             associatePanel = new AssociatePanel();
         }
-
         return associatePanel;
     }
 
-    //获取选择的股票的代码
-    public String getCode() {
-        int index=list.getSelectedIndex();
-        return ((StockSearchVO)jListModel.getElementAt(index)).code;
+    //为KStringPanel增加监听
+    public void kStringPanelChoose() {
+        list.addMouseListener(new KStringChooseListener());
+    }
+
+    //jlist焦点上移
+    public void moveUp() {
+        if(list.getSelectedIndex()!=0){
+            list.setSelectedIndex(list.getSelectedIndex()-1);
+        }
+    }
+
+    //jlist焦点上移
+    public void moveDown() {
+        if(list.getSelectedIndex()!=list.getMaxSelectionIndex()){
+            list.setSelectedIndex(list.getSelectedIndex()+1);
+        }
     }
 }

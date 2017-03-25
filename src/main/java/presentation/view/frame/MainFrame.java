@@ -10,6 +10,7 @@ import org.jb2011.lnf.beautyeye.*;
 import presentation.controller.ViewSwitchController;
 import presentation.view.panel.NavigationBar;
 import presentation.view.panel.TitlePanel;
+import presentation.view.tools.BeautyEyeUtil;
 import presentation.view.tools.WindowData;
 
 /**
@@ -33,15 +34,10 @@ public class MainFrame extends JFrame {
      * @updateTime 2017/3/5
      */
     public MainFrame() {
-        try
-        {
-            BeautyEyeLNFHelper.frameBorderStyle= BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
-            BeautyEyeLNFHelper.launchBeautyEyeLNF();
-        }
-        catch(Exception e)
-        {
 
-        }
+        //osLookAndDecorated
+        BeautyEyeUtil.beautyEye();
+
         createWindow();
         setLayout(null);
 
@@ -86,7 +82,7 @@ public class MainFrame extends JFrame {
         height=WindowData.getInstance().getHeight();
         setSize(width,height);
 
-        setUndecorated(true);
+//        setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setVisible(true);

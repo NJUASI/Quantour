@@ -6,9 +6,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by Harvey on 2017/3/15.
+ * Created by Harvey on 2017/3/25.
  */
-public class InputListener extends KeyAdapter {
+public class KeyControlListener extends KeyAdapter {
     /**
      * Invoked when a key has been typed.
      * This event occurs when a key press is followed by a key release.
@@ -17,6 +17,6 @@ public class InputListener extends KeyAdapter {
      */
     @Override
     public void keyTyped(KeyEvent e) {
-        AssociateController.getInstance().search();
+        AssociateController.getInstance().MoveByKey(e);
     }
 }

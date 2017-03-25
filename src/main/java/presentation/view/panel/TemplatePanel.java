@@ -1,5 +1,6 @@
 package presentation.view.panel;
 
+import presentation.view.tools.BeautyEyeUtil;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
@@ -12,8 +13,7 @@ public class TemplatePanel extends JPanel {
     WindowData windowData;
     int width;
     int height;
-    //背景图片
-    JLabel bg1;
+
     /**
      * 父类构造器
      *
@@ -23,6 +23,7 @@ public class TemplatePanel extends JPanel {
      * @updateTime 2017/3/7
      */
     public TemplatePanel(){
+
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height =windowData.getHeight();
@@ -30,13 +31,9 @@ public class TemplatePanel extends JPanel {
         setBackground(WindowData.getInstance().getColor());
         setBackground(new Color(32,36,39));
 
-//        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("bg.png"));
-//        bgPicture.setImage(bgPicture.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
-//        bg1= new JLabel(bgPicture);
-//        bg1.setBounds(0,0,width,height);
-//        add(bg1);
-//        bg1.setOpaque(true);
-//        bg1.setBackground(new Color(55,60,56));
+        //osLookAndDecorated
+        BeautyEyeUtil.beautyEye();
+
     }
 
     /**

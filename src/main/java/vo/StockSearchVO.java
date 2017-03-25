@@ -28,10 +28,6 @@ public class StockSearchVO {
         this.firstLetters = firstLetters;
     }
 
-    public StockSearchVO() {
-
-    }
-
     public StockSearchVO(String code, String name) {
         this.code = code;
         this.name = name;

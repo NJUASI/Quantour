@@ -72,7 +72,7 @@ public interface StockService{
      * @param searchString 代码或股票首字母或股票名称
      * @return 符合条件的股票简要信息
      */
-    public List<StockSearchVO> searchStock(String searchString) throws MatchNothingException;
+    public List<StockSearchVO> searchStock(String searchString);
 
 
 }

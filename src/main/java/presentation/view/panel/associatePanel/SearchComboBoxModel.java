@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SearchComboBoxModel extends DefaultComboBoxModel<StockSearchVO>{
 
-    public SearchComboBoxModel(String searchString) throws MatchNothingException {
+    public SearchComboBoxModel(String searchString) {
 
         StockService stockService = new StockServiceImpl();
 
