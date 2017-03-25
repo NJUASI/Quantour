@@ -107,12 +107,12 @@ public class CandlestickChart {
         return chartPanel;
     }
 
-    public ChartPanel createAllPanel() throws ColorNotExistException {
+    public Panel createAllPanel() throws ColorNotExistException {
 
-        ChartPanel chartPanel =  new ChartPanel(null);
+        Panel chartPanel =  new Panel(null);
         VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(),ChartTool.getRenderer(),
                 ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
-//        chartPanel.setLayout(null);
+//        chartPanel.setLayout();
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
         candlestickPanel.setBounds(0,0,1600* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
@@ -122,7 +122,7 @@ public class CandlestickChart {
 
         chartPanel.add(candlestickPanel);
         chartPanel.add(volumePanel);
-        chartPanel.setPopupMenu(null);
+//        chartPanel.setPopupMenu(null);
         chartPanel.setVisible(true);
 
         return chartPanel;

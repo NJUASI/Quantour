@@ -32,22 +32,22 @@ public class Main {
 
 
             ChartPanel ss = null;
-
-        try {
-            CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
-            ss = candlestickChart.createAllPanel();
-
-        } catch (DateNotWithinException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CodeNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoDataWithinException e) {
-            e.printStackTrace();
-        } catch (ColorNotExistException e) {
-            e.printStackTrace();
-        }
+//
+//        try {
+//            CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
+////            ss = candlestickChart.createAllPanel();
+//
+//        } catch (DateNotWithinException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (CodeNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (NoDataWithinException e) {
+//            e.printStackTrace();
+//        } catch (ColorNotExistException e) {
+//            e.printStackTrace();
+//        }
 
 //        ss.setLayout(new BorderLayout());
 //

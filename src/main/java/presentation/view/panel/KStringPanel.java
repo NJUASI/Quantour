@@ -43,7 +43,7 @@ public class KStringPanel extends TemplatePanel {
     JButton compare;
 
     public AssociatePanel associatePanel;
-    ChartPanel chartPanel = null;
+    Panel chartPanel = null;
     //用于更新联想面板
     public int count=0;
 
@@ -94,7 +94,7 @@ public class KStringPanel extends TemplatePanel {
             chartPanel = candlestickChart.createAllPanel();
             chartPanel.setBounds(adaptScreen(130,100,1600,850));
             chartPanel.setBackground(new Color(32, 36, 39));
-            chartPanel.setMouseZoomable(false);
+//            chartPanel.setMouseZoomable(false);
             add(chartPanel);
             chartPanel.repaint();
         } catch (ColorNotExistException e) {
@@ -135,7 +135,7 @@ public class KStringPanel extends TemplatePanel {
 
             chartPanel.setBounds(adaptScreen(130,100,1600,850));
             chartPanel.setBackground(new Color(32, 36, 39));
-            chartPanel.setMouseZoomable(false);
+//            chartPanel.setMouseZoomable(false);
             add(chartPanel);
             chartPanel.repaint();
         } catch (ColorNotExistException e) {
