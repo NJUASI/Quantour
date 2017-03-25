@@ -13,6 +13,7 @@ import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,23 +32,23 @@ public class Main {
         tag.add(60);
 
 
-            ChartPanel ss = null;
-//
-//        try {
-//            CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
-////            ss = candlestickChart.createAllPanel();
-//
-//        } catch (DateNotWithinException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (CodeNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (NoDataWithinException e) {
-//            e.printStackTrace();
-//        } catch (ColorNotExistException e) {
-//            e.printStackTrace();
-//        }
+            Panel ss = null;
+
+        try {
+            CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
+            ss = candlestickChart.createAllPanel();
+
+        } catch (DateNotWithinException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CodeNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoDataWithinException e) {
+            e.printStackTrace();
+        } catch (ColorNotExistException e) {
+            e.printStackTrace();
+        }
 
 //        ss.setLayout(new BorderLayout());
 //
