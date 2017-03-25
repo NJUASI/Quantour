@@ -5,6 +5,9 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.labels.StandardXYItemLabelGenerator;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.SymbolicXYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.ohlc.OHLCSeries;
@@ -156,7 +159,7 @@ public class CandlestickChart {
         chart.getLegend().setBackgroundPaint(new Color(32,36,39));
         chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
         chart.getLegend().setPosition(RectangleEdge.RIGHT);
-        chart.getXYPlot().getDomainAxis().setVisible(false);
+        chart.getXYPlot().getDomainAxis().setVisible(true);
         chart.getTitle().setPaint(new Color(201, 208, 214));
         chart.setTextAntiAlias(false);
 

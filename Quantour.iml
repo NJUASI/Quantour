@@ -60,5 +60,6 @@
     <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.23" level="project" />
     <orderEntry type="library" name="Maven: com.github.stuxuhai:jpinyin:1.1.8" level="project" />
     <orderEntry type="library" name="Maven: org.jb2011:beautyeye_lnf:4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.bitagentur:jchartlib:1.1" level="project" />
   </component>
 </module>
