@@ -217,8 +217,9 @@ public class ChartServiceImpl implements ChartService {
      * @return 股票在数据源中的起讫时间
      */
     @Override
-    public FirstLastDayVO getFirstAndLastDay(String stockCode) {
-        return null;
+    public FirstLastDayVO getFirstAndLastDay(String stockCode) throws IOException {
+        List<LocalDate> result = stockDao.getFirstAndLastDay(stockCode);
+        return new FirstLastDayVO(result.get(0), result.get(1));
     }
 
     /**

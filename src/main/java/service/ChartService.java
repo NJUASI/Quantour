@@ -107,6 +107,6 @@ public interface ChartService {
      * @param stockCode 股票代码
      * @return 股票在数据源中的起讫时间
      */
-    FirstLastDayVO getFirstAndLastDay(String stockCode);
+    FirstLastDayVO getFirstAndLastDay(String stockCode) throws IOException;
 
 }
