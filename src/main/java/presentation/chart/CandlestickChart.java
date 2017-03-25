@@ -12,7 +12,7 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleEdge;
 import presentation.listener.chartMouseListener.CandlestickListener;
 import presentation.view.tools.WindowData;
-import presentation.view.util.ChartUtils;
+import presentation.view.tools.ChartUtils;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.CodeNotFoundException;

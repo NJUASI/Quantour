@@ -55,7 +55,7 @@ public class MainFrame extends JFrame {
         add(titlePanel);
 
         cardPanel = new JPanel();
-        cardPanel.setBounds(100*width/1920,40*height/1030,1920*width/1920,1030*height/1030);
+        cardPanel.setBounds(90*width/1920,40*height/1030,1920*width/1920,1030*height/1030);
         add(cardPanel);
         card = new CardLayout();
         cardPanel.setLayout(card);

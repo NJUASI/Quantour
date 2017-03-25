@@ -32,18 +32,18 @@ public class NavigationBar extends TemplatePanel {
         numOfChoosed=1;
         setLayout(null);
         setBackground(new Color(19,22,24));
-        setBounds(adaptScreen(0,0,100,1030));
+        setBounds(adaptScreen(0,0,90,1030));
 
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
         JLabel logo1 =new JLabel();
-        bgPicture.setImage(bgPicture.getImage().getScaledInstance(90*width/1920, 90*height/1130, Image.SCALE_DEFAULT ));
+        bgPicture.setImage(bgPicture.getImage().getScaledInstance(80*width/1920, 80*height/1130, Image.SCALE_DEFAULT ));
         logo1.setIcon(bgPicture);
-        logo1.setBounds(adaptScreen(5,5,90,90));
+        logo1.setBounds(adaptScreen(5,5,80,80));
         add(logo1);
 
         //the door of function 4
         favorites = new MyButton("stock",1);
-        favorites.setBounds(adaptScreen(3, 100, 94, 120));
+        favorites.setBounds(adaptScreen(3, 100, 84, 110));
         favorites.addMouseListener(new StocksTableListener());
         add(favorites);
 
@@ -76,7 +76,7 @@ public class NavigationBar extends TemplatePanel {
 
         //the door of function 1
         kString = new MyButton("kString",1);
-        kString.setBounds(adaptScreen(3, 220, 94, 120));
+        kString.setBounds(adaptScreen(3, 210, 84, 110));
         kString.addMouseListener(new KStringListener());
         add(kString);
         kString.addMouseListener(new MouseAdapter() {
@@ -109,7 +109,7 @@ public class NavigationBar extends TemplatePanel {
 
         //the door of function 2
         compare = new MyButton("compare",1);
-        compare.setBounds(adaptScreen(3, 340, 94, 120));
+        compare.setBounds(adaptScreen(3, 320, 84, 110));
         compare.addMouseListener(new CompareListener());
         add(compare);
         compare.addMouseListener(new MouseAdapter() {
@@ -141,7 +141,7 @@ public class NavigationBar extends TemplatePanel {
         });
         //the door of function 3
         thermometer = new MyButton("market",1);
-        thermometer.setBounds(adaptScreen(3, 460, 94, 120));
+        thermometer.setBounds(adaptScreen(3, 430, 84, 110));
         thermometer.addMouseListener(new ThermometerListener());
         add(thermometer);
         thermometer.addMouseListener(new MouseAdapter() {

@@ -1,4 +1,4 @@
-package presentation.view.util;
+package presentation.view.tools;
 
 		import java.io.Serializable;
 		import java.util.Vector;

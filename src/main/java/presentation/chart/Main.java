@@ -1,12 +1,11 @@
 package presentation.chart;
 
 
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import presentation.listener.chartMouseListener.CandlestickListener;
-import presentation.view.util.ChartUtils;
+import presentation.view.tools.ChartUtils;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.ColorNotExistException;
 import utilities.exceptions.DateNotWithinException;
@@ -14,7 +13,6 @@ import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;

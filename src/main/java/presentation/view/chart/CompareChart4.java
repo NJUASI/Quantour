@@ -1,38 +1,21 @@
 package presentation.view.chart;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartMouseEvent;
-import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.ui.RectangleEdge;
 
-import javafx.scene.text.Font;
-import presentation.view.util.ChartUtils;
+import presentation.view.tools.ChartUtils;
 import service.ChartService;
-import service.serviceImpl.ChartServiceImpl;
-import vo.StockComparisionVO;
-import vo.StockComparsionCriteriaVO;
 
 
 /**

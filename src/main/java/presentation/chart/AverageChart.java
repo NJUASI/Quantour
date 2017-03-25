@@ -5,7 +5,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import presentation.line.aveLine.*;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.*;

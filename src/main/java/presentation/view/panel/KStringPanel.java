@@ -2,16 +2,14 @@ package presentation.view.panel;
 
 import javafx.scene.input.MouseButton;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.XYPlot;
 import presentation.chart.CandlestickChart;
 import presentation.controller.StocksTableController;
 import presentation.controller.ViewSwitchController;
-import presentation.line.LineChart;
+
 import presentation.listener.navigationBarListener.CompareListener;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
-import presentation.view.util.ChartUtils;
+
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 import utilities.IDReserve;

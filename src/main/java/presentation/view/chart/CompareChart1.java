@@ -7,9 +7,8 @@ import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import presentation.view.util.ChartUtils;
-import presentation.view.util.Serie;
-import vo.PriceRiseOrFallVO;
+import presentation.view.tools.ChartUtils;
+import presentation.view.tools.Serie;
 import vo.StockComparisionVO;
 
 import java.awt.*;

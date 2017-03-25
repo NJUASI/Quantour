@@ -35,7 +35,7 @@ public class TitlePanel extends TemplatePanel {
 
     TitlePanel() {
         setLayout(null);
-        setBounds(adaptScreen(100, 0, 1900, 40));
+        setBounds(adaptScreen(90, 0, 1900, 40));
         setBackground(new Color(44, 50, 55));
         setVisible(true);
 

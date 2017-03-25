@@ -1,12 +1,10 @@
-package presentation.view.util;
+package presentation.view.tools;
 
 		import java.awt.BasicStroke;
 		import java.awt.Color;
 		import java.awt.Font;
 		import java.awt.Paint;
-		import java.awt.Rectangle;
 		import java.text.DecimalFormat;
-		import java.text.NumberFormat;
 		import java.text.ParseException;
 		import java.text.SimpleDateFormat;
 		import java.util.Date;
@@ -23,21 +21,16 @@ package presentation.view.util;
 		import org.jfree.chart.labels.ItemLabelAnchor;
 		import org.jfree.chart.labels.ItemLabelPosition;
 		import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
-		import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 		import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 		import org.jfree.chart.labels.StandardXYToolTipGenerator;
 		import org.jfree.chart.plot.CategoryPlot;
 		import org.jfree.chart.plot.DefaultDrawingSupplier;
 		import org.jfree.chart.plot.PieLabelLinkStyle;
-		import org.jfree.chart.plot.PiePlot;
 		import org.jfree.chart.plot.Plot;
 		import org.jfree.chart.plot.XYPlot;
 		import org.jfree.chart.renderer.category.BarRenderer;
-		import org.jfree.chart.renderer.category.LineAndShapeRenderer;
-		import org.jfree.chart.renderer.category.StackedBarRenderer;
 		import org.jfree.chart.renderer.category.StandardBarPainter;
 		import org.jfree.chart.renderer.xy.StandardXYBarPainter;
-		import org.jfree.chart.renderer.xy.XYBarRenderer;
 		import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 		import org.jfree.data.category.DefaultCategoryDataset;
 		import org.jfree.data.general.DefaultPieDataset;
@@ -348,29 +341,6 @@ public class ChartUtils {
 
 	}
 
-	/**
-	 * 设置饼状图渲染
-	 */
-	public static void setPieRender(Plot plot) {
-
-		plot.setNoDataMessage(NO_DATA_MSG);
-		plot.setInsets(new RectangleInsets(10, 10, 5, 10));
-		PiePlot piePlot = (PiePlot) plot;
-		piePlot.setInsets(new RectangleInsets(0, 0, 0, 0));
-		piePlot.setCircular(true);// 圆形
-
-		// piePlot.setSimpleLabels(true);// 简单标签
-		piePlot.setLabelGap(0.01);
-		piePlot.setInteriorGap(0.05D);
-		piePlot.setLegendItemShape(new Rectangle(10, 10));// 图例形状
-		piePlot.setIgnoreNullValues(true);
-		piePlot.setLabelBackgroundPaint(null);// 去掉背景色
-		piePlot.setLabelShadowPaint(null);// 去掉阴影
-		piePlot.setLabelOutlinePaint(null);// 去掉边框
-		piePlot.setShadowPaint(null);
-		// 0:category 1:value:2 :percentage
-		piePlot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}:{2}"));// 显示标签数据
-	}
 
 	/**
 	 * 是不是一个%形式的百分比
