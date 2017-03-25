@@ -72,7 +72,23 @@ public interface StockDao {
      */
     List<StockPO> getStockData(LocalDate date) throws IOException;
 
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @param stockCode 股票代码
+     * @return 此股票需要被剔除的所有日期
+     */
+    List<LocalDate> getDateWithoutData(String stockCode) throws IOException;
 
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @param stockCode 股票代码
+     * @return 在指定时间区段此股票需要被剔除的所有日期
+     */
+    List<LocalDate> getDateWithoutData(String stockCode, LocalDate start, LocalDate end) throws IOException;
 
 
     /*
@@ -141,6 +157,17 @@ public interface StockDao {
      * @return 数据库中股票存在记录的第一天
      */
     LocalDate getFirstDay(String stockCode) throws IOException;
+
+    /**
+     * 获取数据库中股票存在记录的最后一天
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
+     * @param stockCode 股票代码
+     * @return 数据库中股票存在记录的最后一天
+     */
+    LocalDate getLastDay(String stockCode) throws IOException;
 
     /**
      * 获取所有股票的代码

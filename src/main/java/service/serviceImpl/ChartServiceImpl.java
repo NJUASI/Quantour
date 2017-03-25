@@ -59,15 +59,6 @@ public class ChartServiceImpl implements ChartService {
         return stockVOList;
     }
 
-    private boolean codeExist(String code) throws CodeNotFoundException {
-        if(allCodes.contains(code)){
-            return true;
-        }
-        else {
-            throw new CodeNotFoundException();
-        }
-    }
-
     /**
      * 获取单支股票的一段日期内的信息
      *
@@ -197,13 +188,12 @@ public class ChartServiceImpl implements ChartService {
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
-     * @param code 股票代码
+     * @param stockCode 股票代码
      * @return  List<LocalDate> 被剔除的日期
      */
     @Override
-    public List<LocalDate> getDateException(String code) {
-        //TODO 冯俊杰实现
-        return null;
+    public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
+        return stockDao.getDateWithoutData(stockCode);
     }
 
     /**
@@ -216,9 +206,8 @@ public class ChartServiceImpl implements ChartService {
      * @return List<LocalDate> 被剔除的日期
      */
     @Override
-    public List<LocalDate> getDateException(ChartShowCriteriaVO chartShowCriteriaVO) {
-        //TODO 冯俊杰实现
-        return null;
+    public List<LocalDate> getDateWithoutData(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException {
+        return stockDao.getDateWithoutData(chartShowCriteriaVO.stockCode, chartShowCriteriaVO.start, chartShowCriteriaVO.end);
     }
 
     /**
@@ -230,7 +219,6 @@ public class ChartServiceImpl implements ChartService {
      * @return StockPO的列表
      */
     private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException, DateNotWithinException, NoDataWithinException {
-
             return stockDao.getStockData(vo.stockCode, vo.start,vo.end);
     }
 
@@ -246,7 +234,6 @@ public class ChartServiceImpl implements ChartService {
      * @return 均线数据迭代器
      */
     private List<MovingAverageVO> calculate(List<StockPO> dataList, int day) throws IOException {
-
         List<MovingAverageVO> dayAveDataList = new ArrayList<MovingAverageVO>();
         for (int i = 0;i < dataList.size()-day+1;i++){
             MovingAverageVO maVO = new MovingAverageVO();
@@ -260,5 +247,16 @@ public class ChartServiceImpl implements ChartService {
         }
 
         return dayAveDataList;
+    }
+
+    /**
+     *
+     * @param code 股票代码
+     * @return 股票存在
+     * @throws CodeNotFoundException 数据源中未找到此股票
+     */
+    private boolean codeExist(String code) throws CodeNotFoundException {
+        if(allCodes.contains(code)) return true;
+        else throw new CodeNotFoundException();
     }
 }

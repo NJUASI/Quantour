@@ -84,10 +84,10 @@ public interface ChartService {
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
-     * @param code 股票代码
-     * @return  List<LocalDate> 被剔除的日期
+     * @param stockCode 股票代码
+     * @return 被剔除的日期
      */
-    List<LocalDate> getDateException(String code) ;
+    List<LocalDate> getDateWithoutData(String stockCode) throws IOException;
 
     /**
      * 获取指定时间段单支股票被剔除的日期
@@ -96,8 +96,8 @@ public interface ChartService {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
      * @param chartShowCriteriaVO 股票的选择标准
-     * @return List<LocalDate> 被剔除的日期
+     * @return 被剔除的日期
      */
-    List<LocalDate> getDateException(ChartShowCriteriaVO chartShowCriteriaVO) ;
+    List<LocalDate> getDateWithoutData(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException;
 
 }

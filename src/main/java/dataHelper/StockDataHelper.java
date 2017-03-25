@@ -40,15 +40,22 @@ public interface StockDataHelper {
     List<StockPO> getStockRecords(LocalDate date) throws IOException;
 
     /**
-     * 获取数据库中股票存在记录的第一天
-     *
-     * @author Byron Dong
+     * @author cuihua
      * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/8
+     * @updateTime 2017/3/9
      * @param stockCode 股票代码
-     * @return 数据库中股票存在记录的第一天
+     * @return 数据库中股票存在记录的起讫时间，List.get(0)为第一天，List.get(1)为最后一天
      * @throws IOException IO
      */
-    LocalDate getFirstDay(String stockCode) throws IOException;
+    List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException;
+
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @param stockCode 股票代码
+     * @return 此年份此股票需要被剔除的所有日期
+     */
+    List<LocalDate> getDateWithoutData(String stockCode) throws IOException;
 
 }
