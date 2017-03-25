@@ -61,8 +61,6 @@ public class CandlestickChart {
 
     private AverageChart averageChart;
 
-    private VolumeChart volumeChart;
-
     /**
      * 根据股票代号进行初始化
      *
@@ -102,6 +100,9 @@ public class CandlestickChart {
         ChartPanel chartPanel = new ChartPanel(candlestickChart);
         chartPanel.addChartMouseListener(new CandlestickListener(chartPanel));
         chartPanel.setPopupMenu(null);
+        chartPanel.setMouseZoomable(true,false);
+        chartPanel.setMouseWheelEnabled(true);
+        chartPanel.setZoomAroundAnchor(true);
         chartPanel.setVisible(true);
 
         return chartPanel;
@@ -112,7 +113,6 @@ public class CandlestickChart {
         Panel chartPanel =  new Panel(null);
         VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(),ChartTool.getRenderer(),
                 ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
-//        chartPanel.setLayout();
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
         candlestickPanel.setBounds(0,0,1600* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
@@ -122,7 +122,6 @@ public class CandlestickChart {
 
         chartPanel.add(candlestickPanel);
         chartPanel.add(volumePanel);
-//        chartPanel.setPopupMenu(null);
         chartPanel.setVisible(true);
 
         return chartPanel;

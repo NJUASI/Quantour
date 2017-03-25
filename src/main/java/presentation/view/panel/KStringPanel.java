@@ -94,7 +94,6 @@ public class KStringPanel extends TemplatePanel {
             chartPanel = candlestickChart.createAllPanel();
             chartPanel.setBounds(adaptScreen(130,100,1600,850));
             chartPanel.setBackground(new Color(32, 36, 39));
-//            chartPanel.setMouseZoomable(false);
             add(chartPanel);
             chartPanel.repaint();
         } catch (ColorNotExistException e) {

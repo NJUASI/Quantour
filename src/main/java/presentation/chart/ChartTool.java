@@ -143,6 +143,7 @@ public class ChartTool {
         yAxis.setTickUnit(new NumberTickUnit((high*1.1-low*0.9)/num));//设置刻度显示的密度
         yAxis.setLabelPaint(new Color(201, 208, 214));
         yAxis.setTickLabelPaint(new Color(201, 208, 214));
+        yAxis.setAutoRangeIncludesZero(false);
 
         return yAxis;
 

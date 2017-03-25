@@ -1,10 +1,9 @@
 package presentation.chart;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.ColorModel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,6 +23,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.SegmentedTimeline;
+import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.time.Day;
@@ -73,14 +73,20 @@ public class MainTest {
         JFreeChart chart = ChartFactory.createCandlestickChart("MSFT", "Time", "Price", dataset, false);
 
         // 3. Set chart background
-        chart.setBackgroundPaint(Color.white);
+        chart.setBackgroundPaint(new Color(32,36,39));
+        chart.getTitle().setPaint(new Color(201, 208, 214));
+        chart.setTextAntiAlias(false);
 
         // 4. Set a few custom plot features
         XYPlot plot = (XYPlot) chart.getPlot();
-        plot.setBackgroundPaint(Color.WHITE); // light yellow = new Color(0xffffe0)
+        plot.setRenderer(ChartTool.getRenderer());
+        plot.setBackgroundPaint(new Color(32,36,39));
         plot.setDomainGridlinesVisible(true);
-        plot.setDomainGridlinePaint(Color.lightGray);
-        plot.setRangeGridlinePaint(Color.lightGray);
+        plot.setRangeGridlinesVisible(true);
+        plot.setDomainGridlinePaint(new Color(44, 50, 54));
+        plot.setRangeGridlinePaint(new Color(44, 50, 54));
+        plot.setDomainGridlineStroke(new BasicStroke());
+        plot.setRangeGridlineStroke(new BasicStroke());
         ((NumberAxis) plot.getRangeAxis()).setAutoRangeIncludesZero(false);
 
         // 5. Skip week-ends on the date axis
@@ -89,7 +95,17 @@ public class MainTest {
         // 6. No volume drawn
         ((CandlestickRenderer) plot.getRenderer()).setDrawVolume(true);
 
-        ((CandlestickRenderer) plot.getRenderer()).setVolumePaint(Color.blue);
+        ((CandlestickRenderer) plot.getRenderer()).setVolumePaint(new Paint() {
+            @Override
+            public PaintContext createContext(ColorModel cm, Rectangle deviceBounds, Rectangle2D userBounds, AffineTransform xform, RenderingHints hints) {
+                return null;
+            }
+
+            @Override
+            public int getTransparency() {
+                return 0;
+            }
+        });
 
         // 7. Create and display full-screen JFrame
         JFrame myFrame = new JFrame();

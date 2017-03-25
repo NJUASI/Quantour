@@ -75,6 +75,7 @@ public class VolumeChart {
         chart.setTextAntiAlias(false);
 
         ChartPanel volumePanel = new ChartPanel(chart);
+        volumePanel.setMouseZoomable(true,false);
         volumePanel.setPopupMenu(null);
         volumePanel.setVisible(true);
 
