@@ -46,8 +46,6 @@ public class ThermometerPanel extends TemplatePanel {
         search.addMouseListener(new SearchListner());
         add(search);
 
-
-//        add(bg);
     }
 
     /**
@@ -60,9 +58,9 @@ public class ThermometerPanel extends TemplatePanel {
     public static ThermometerPanel getInstance() {
         if (thermometerPanel == null) {
         thermometerPanel = new ThermometerPanel();
-    }
+        }
         return thermometerPanel;
-}
+    }
 
     /**
      * 清除单件

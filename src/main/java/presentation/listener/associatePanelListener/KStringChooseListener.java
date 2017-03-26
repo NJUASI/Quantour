@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 
 /**
  * Created by Harvey on 2017/3/25.
+ *
+ * 用于监听KStringPanel里面的associatePanel2中JList的选择
  */
 public class KStringChooseListener extends MouseAdapter {
 

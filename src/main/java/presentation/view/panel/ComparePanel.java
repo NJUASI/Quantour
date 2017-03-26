@@ -1,5 +1,6 @@
 package presentation.view.panel;
 
+import presentation.listener.comparePanelListener.*;
 import presentation.view.chart.CompareChartPanel;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
@@ -32,15 +33,25 @@ public class ComparePanel extends TemplatePanel {
     private static ComparePanel comparePanel;
 
     DoubleDatePickerPanel datePanel;
+
     JTextField name1;
+
     JTextField num1;
+
     JTextField name2;
+
     JTextField num2;
+
     JButton compare;
+
     public AssociatePanel associatePanel;
+
     public AssociatePanel associatePanel2;
+
     ChartService chartService;
-    CompareChartPanel compareChartPanel;
+
+    public CompareChartPanel compareChartPanel;
+
     int count=0;
     /**
      * 比较面板构造器
@@ -86,13 +97,7 @@ public class ComparePanel extends TemplatePanel {
         compare = new JButton("比较");
         compare.setBounds(adaptScreen(1300, 50, 70, 35));
         compare.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        compare.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                compareSpecial(num1.getText(),num2.getText(),datePanel.getStartDate(),datePanel.getEndDate());
-                refreshAssociate();
-            }
-        });
+        compare.addMouseListener(new CompareListener());
 
         //提示框面板
         associatePanel = new AssociatePanel();
@@ -133,7 +138,6 @@ public class ComparePanel extends TemplatePanel {
 
         add(compare);
 
-//        add(bg);
         addFunction();
     }
 
@@ -159,80 +163,26 @@ public class ComparePanel extends TemplatePanel {
         num2.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
+                refreshAssociate();
+            }
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                refreshAssociate();
             }
         });
     }
 
-    /**
-     * 清除单件
-     *
-     * @param
-     * @return
-     * @author 61990
-     * @updateTime 2017/3/5
-     */
-    public void refresh() {
-        comparePanel = null;
-    }
     public void setCompare(String name,String num) {
         name1.setText(name);
         num1.setText(num);
     }
+
     public void setDate(LocalDate start,LocalDate end) {
         datePanel.setDate(start,end);
     }
-    /**
-     * 通过code寻找股票的全部信息
-     *
-     * @param code1 股票号1
-     * @param code2 股票号2
-     * @return
-     * @author 61990
-     * @updateTime 2017/3/10
-     */
-    public void CompareAll(String code1,String code2){
-        // 创建图形
-//        chartPanel = new ().createChart();
-    }
-    /**
-     * 通过code和前后日期寻找股票的特定时期 寻找股票的全部信息并绘图
-     *
-     * @param code1 股票号1
-     * @param code2 股票号2
-     * @param startDate 开始时间
-     * @param endDate 结束时间
-     * @return
-     * @author 61990
-     * @updateTime 2017/3/9
-     */
-    public void compareSpecial(String code1,String code2, LocalDate startDate, LocalDate endDate){
-        try {
-            chartService=new ChartServiceImpl();
-            List<StockComparisionVO> vo=chartService.getComparision(new StockComparsionCriteriaVO(code1, code2, startDate, endDate));
-            if(compareChartPanel!=null){
-                remove(compareChartPanel);
-            }
 
-            compareChartPanel=new CompareChartPanel(vo);
-            compareChartPanel.setVisible(true);
-            add(compareChartPanel);
-            compareChartPanel.repaint();
-            repaint();
-
-        } catch (DateNotWithinException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(compareChartPanel,"请重新选择时间范围");
-        } catch (DataSourceFirstDayException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(compareChartPanel,"所选日期数据缺失，无法计算涨幅，请重新选择");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoDataWithinException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(compareChartPanel,"请重新选择时间范围");
-        }
-    }
     /**
      * 增加提醒性的监听
      *
@@ -242,125 +192,63 @@ public class ComparePanel extends TemplatePanel {
      * @updateTime 2017/3/8
      */
     void addFunction() {
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                refreshAssociate();
-            }
-        });
-        associatePanel.list.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                count=1;
-                StockSearchVO temp = associatePanel.getMessage();
-                name1.setText(temp.name);
-                num1.setText(temp.code);
-                associatePanel.setVisible(false);
-                num1.requestFocus();
-                count=0;
-            }
-        });
-        associatePanel2.list.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                count=1;
-                StockSearchVO temp = associatePanel2.getMessage();
-                name2.setText(temp.name);
-                num2.setText(temp.code);
-                associatePanel2.setVisible(false);
-                num2.requestFocus();
-                count=0;
-            }
-        });
-        Document dt1 = num1.getDocument();
-        dt1.addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
 
-            }
+        //给两个associatePanel的JList添加监听
+        associatePanel.comparePanelChoose1();
+        associatePanel2.comparePanelChooose2();
 
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if(count==0) {
-                    associatePanel.setVisible(true);
-                    associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
-                    associatePanel.updateJList(num1.getText());
-                }
-            }
+        num1.getDocument().addDocumentListener(new Num1ChangeListener());
+        name1.getDocument().addDocumentListener(new Name1ChangeListener());
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
+        num2.getDocument().addDocumentListener(new Num2ChangeListener());
+        name2.getDocument().addDocumentListener(new Name2ChangeListener());
 
-            }
-        });
-        Document dt2 = name1.getDocument();
-        dt2.addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if(count==0) {
-                    associatePanel.setVisible(true);
-                    associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
-                    associatePanel.updateJList(name1.getText());
-                }
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                insertUpdate(e);
-            }
-        });
-        Document dt3 = name2.getDocument();
-        dt3.addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if(count==0) {
-                    associatePanel2.setVisible(true);
-                    associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
-                    associatePanel2.updateJList(name2.getText());
-                }
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                insertUpdate(e);
-            }
-        });
-        Document dt4 = num2.getDocument();
-        dt4.addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if (count==0){
-                    associatePanel2.setVisible(true);
-                    associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
-                    associatePanel2.updateJList(num2.getText());
-                }
-        }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-
-            }
-        });
         refreshAssociate();
     }
-    void refreshAssociate(){
+
+    public void refreshAssociate(){
         associatePanel.setVisible(false);
         associatePanel2.setVisible(false);
     }
 
+
+    //获取比较的起始日期和结束日期
+    public LocalDate getStartDate(){
+        return datePanel.getStartDate();
+    }
+
+    public LocalDate getEndDate(){
+        return datePanel.getEndDate();
+    }
+
+
+    //获取associatePanel的选择信息
+    public StockSearchVO getMessageByAssociatePanel1() {
+        return associatePanel.getMessage();
+    }
+
+    public StockSearchVO getMessageByAssociatePanel2() {
+        return associatePanel2.getMessage();
+    }
+
+
+    //向num、name中设置信息
+    public void addMessageToGroup1(String name, String code) {
+        name1.setText(name);
+        num1.setText(code);
+        associatePanel.setVisible(false);
+        num1.requestFocus();
+    }
+
+    public void addMessageToGroup2(String name, String code) {
+        name2.setText(name);
+        num2.setText(code);
+        associatePanel2.setVisible(false);
+        num2.requestFocus();
+    }
+
+
+    //获取num、name的值
     public String getNum1() {
         return num1.getText();
     }
@@ -369,11 +257,50 @@ public class ComparePanel extends TemplatePanel {
         return num2.getText();
     }
 
-    public LocalDate getStartDate(){
-        return datePanel.getStartDate();
+    public String getStockName1(){
+        return name1.getText();
     }
 
-    public LocalDate getEndDate(){
-        return datePanel.getEndDate();
+    public String getStockName2(){
+        return name2.getText();
+    }
+
+
+    public void updateJList1(String searchString) {
+        associatePanel.updateJList(searchString);
+    }
+
+    public void updateJList2(String searchString){
+        associatePanel2.updateJList(searchString);
+    }
+
+    public void setAssociatePanel(){
+        associatePanel.setVisible(true);
+        associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
+    }
+
+    public void setAssociatePanel2(){
+        associatePanel2.setVisible(true);
+        associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
+    }
+
+    public CompareChartPanel getCompareChartPanel() {
+        return compareChartPanel;
+    }
+
+    public void removesCompareChartPanel() {
+        remove(compareChartPanel);
+    }
+
+    public void setCompareCharetPanel(List<StockComparisionVO> vo) {
+        compareChartPanel=new CompareChartPanel(vo);
+        compareChartPanel.setVisible(true);
+        add(compareChartPanel);
+        compareChartPanel.repaint();
+        repaint();
+    }
+
+    public void setWarnMessageOnCompareChartPanel(String message) {
+        JOptionPane.showMessageDialog(compareChartPanel,message);
     }
 }

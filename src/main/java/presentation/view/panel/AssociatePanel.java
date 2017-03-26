@@ -1,5 +1,7 @@
 package presentation.view.panel;
 
+import presentation.listener.associatePanelListener.ComparePanelChooseListener1;
+import presentation.listener.associatePanelListener.ComparePanelChooseListener2;
 import presentation.listener.associatePanelListener.KStringChooseListener;
 import presentation.listener.associatePanelListener.KeyControlListener;
 import presentation.view.panel.associatePanel.SearchComboBoxModel;
@@ -50,7 +52,7 @@ public class AssociatePanel extends ScrollPane {
         return associatePanel;
     }
 
-    //为KStringPanel增加监听
+    //为KStringPanel的associatePanel增加监听
     public void kStringPanelChoose() {
         list.addMouseListener(new KStringChooseListener());
     }
@@ -67,5 +69,15 @@ public class AssociatePanel extends ScrollPane {
         if(list.getSelectedIndex()!=list.getMaxSelectionIndex()){
             list.setSelectedIndex(list.getSelectedIndex()+1);
         }
+    }
+
+    //为ComparePanel的associatePanel1增加监听
+    public void comparePanelChoose1() {
+        list.addMouseListener(new ComparePanelChooseListener1());
+    }
+
+    //为ComparePanel的associatePanel2增加监听
+    public void comparePanelChooose2() {
+        list.addMouseListener(new ComparePanelChooseListener2());
     }
 }

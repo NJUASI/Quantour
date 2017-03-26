@@ -1,12 +1,14 @@
 package presentation.listener.kStringPanelListener;
 
+import presentation.controller.KStringPanelController;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
  * Created by Harvey on 2017/3/25.
  */
-public class StockDocListener implements DocumentListener{
+public class StockNameDocListener implements DocumentListener{
 
     /**
      * Gives notification that there was an insert into the document.  The
@@ -16,7 +18,7 @@ public class StockDocListener implements DocumentListener{
      */
     @Override
     public void insertUpdate(DocumentEvent e) {
-
+        callController();
     }
 
     /**
@@ -28,7 +30,7 @@ public class StockDocListener implements DocumentListener{
      */
     @Override
     public void removeUpdate(DocumentEvent e) {
-
+        callController();
     }
 
     /**
@@ -39,5 +41,9 @@ public class StockDocListener implements DocumentListener{
     @Override
     public void changedUpdate(DocumentEvent e) {
 
+    }
+
+    private void callController(){
+        KStringPanelController.getInstance().stockNameChange();
     }
 }

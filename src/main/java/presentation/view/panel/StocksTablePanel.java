@@ -89,18 +89,6 @@ public class StocksTablePanel extends TemplatePanel {
     }
 
     /**
-     * 清除单件
-     *
-     * @param
-     * @return
-     * @author 61990
-     * @updateTime 2017/3/5
-     */
-    public void refresh() {
-        stocksTablePanel =null;
-    }
-
-    /**
      * 获取选择的日期
      *
      * @return the local date 选择的日期

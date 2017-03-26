@@ -1,11 +1,17 @@
 package presentation.controller;
 
+import presentation.chart.CandlestickChart;
 import presentation.view.panel.KStringPanel;
+import utilities.exceptions.CodeNotFoundException;
+import utilities.exceptions.ColorNotExistException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
+import vo.ChartShowCriteriaVO;
 import vo.StockSearchVO;
 
-import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Harvey on 2017/3/25.
@@ -39,49 +45,17 @@ public class KStringPanelController {
     }
 
     /**
-     * Search all. 总体信息
+     * Search all. 查找总体信息
      */
     public void searchAll() {
-        kStringPanel.setAssociatePanelUnvisible();
-
-        if(kStringPanel.getStockCode().equals("")){
-            kStringPanel.warnMessage("请输入股票代码");
-        }
-        else {
-            if (kStringPanel.getChartPanel()!= null) {
-                kStringPanel.removeChartPanel();
-            }
-
-            kStringPanel.findOne(kStringPanel.getStockCode());
-        }
+        searchFunction(true);
     }
 
     /**
-     * Search. 局部信息
+     * Search. 查找局部信息
      */
     public void search() {
-
-        kStringPanel.setAssociatePanelUnvisible();
-
-        if(kStringPanel.getStockCode().equals("")){
-            JOptionPane.showMessageDialog(kStringPanel.getChartPanel(),"请输入股票代号");
-        }
-        else {
-
-            if (kStringPanel.getChartPanel()!= null) {
-                kStringPanel.removeChartPanel();
-            }
-
-            try {
-                kStringPanel.findSpecial(kStringPanel.getStockCode(), kStringPanel.getStartDate(), kStringPanel.getEndDate());
-            } catch (DateNotWithinException e1) {
-                e1.printStackTrace();
-                kStringPanel.warnMessage("请重新选择时间范围");
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-
+        searchFunction(false);
     }
 
     /**
@@ -92,4 +66,73 @@ public class KStringPanelController {
         StockSearchVO temp = kStringPanel.getMessage();
         kStringPanel.addMessage(temp.name,temp.code);
     }
+
+    /**
+     * Stock name change. 实时根据股票名称框的信息联想股票
+     */
+    public void stockNameChange() {
+        kStringPanel.associatePanelSetting();
+        kStringPanel.updateAssociateJList(kStringPanel.getStockName());
+    }
+
+    /**
+     * Stock code change. 实时根据股票代码框的信息联想股票
+     */
+    public void stockCodeChange() {
+        kStringPanel.associatePanelSetting();
+        kStringPanel.updateAssociateJList(kStringPanel.getStockCode());
+    }
+
+    /**
+     * Search function. 减少search和searchAll的重复代码
+     */
+    private void searchFunction(boolean isAll){
+
+        kStringPanel.setAssociatePanelUnvisible();
+
+        String stockCode = kStringPanel.getStockCode();
+
+        if(stockCode.equals("")){
+            kStringPanel.warnMessageOnKStringPanel("请输入股票代码");
+        }
+        else {
+            if (kStringPanel.getChartPanel()!= null) {
+                kStringPanel.removeChartPanel();
+            }
+
+            // 创建图形
+            ArrayList<Integer> tag = new ArrayList<Integer>();
+            tag.add(5);
+            tag.add(10);
+            tag.add(20);
+            tag.add(30);
+            tag.add(60);
+
+            try {
+                CandlestickChart candlestickChart = null;
+                if(isAll){
+                    candlestickChart = new CandlestickChart(stockCode,tag);
+                }
+                else{
+                    ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(String.valueOf(Integer.parseInt(stockCode)),kStringPanel.getStartDate(),kStringPanel.getEndDate());
+                    try{
+                        candlestickChart = new CandlestickChart(chartShowCriteriaVO,tag);
+                    } catch (NoDataWithinException e) {
+                        e.printStackTrace();
+                    } catch (DateNotWithinException e) {
+                        kStringPanel.warnMessageOnKStringPanel("请重新选择时间范围");
+                        e.printStackTrace();
+                    }
+                }
+
+                kStringPanel.setChartPanel(candlestickChart);
+
+            } catch (CodeNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

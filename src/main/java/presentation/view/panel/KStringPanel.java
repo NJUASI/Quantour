@@ -5,23 +5,19 @@ import presentation.controller.ViewSwitchController;
 
 import presentation.listener.kStringPanelListener.SearchAllListener;
 import presentation.listener.kStringPanelListener.SearchListener;
+import presentation.listener.kStringPanelListener.StockCodeDocListener;
+import presentation.listener.kStringPanelListener.StockNameDocListener;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
 
-import utilities.exceptions.*;
-import vo.ChartShowCriteriaVO;
+import utilities.exceptions.ColorNotExistException;
 import vo.StockSearchVO;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
 
 
 /**
@@ -51,11 +47,9 @@ public class KStringPanel extends TemplatePanel {
     JButton compare;
 
     public AssociatePanel associatePanel;
-    Panel chartPanel = null;
+    public Panel chartPanel = null;
     //用于更新联想面板
     public int count=0;
-
-    private CandlestickChart candlestickChart;
 
     /**
      * k线面板构造器
@@ -79,84 +73,6 @@ public class KStringPanel extends TemplatePanel {
         init();
     }
 
-
-    /**
-     * 通过code寻找股票的全部信息并绘图
-     *
-     * @param code 股票号
-     * @author 61990
-     * @lastUpdated Byron Dong
-     * @updateTime 2017/3/12
-     */
-    public void findOne(String code){
-
-        // 创建图形
-        ArrayList<Integer> tag = new ArrayList<Integer>();
-        tag.add(5);
-        tag.add(10);
-        tag.add(20);
-        tag.add(30);
-        tag.add(60);
-
-        try {
-            candlestickChart = new CandlestickChart(code,tag);
-
-            chartPanel = candlestickChart.createAllPanel();
-            chartPanel.setBounds(adaptScreen(130,100,1600,850));
-            chartPanel.setBackground(new Color(32, 36, 39));
-            add(chartPanel);
-            chartPanel.repaint();
-        } catch (ColorNotExistException e) {
-            e.printStackTrace();
-            System.out.println("该均线类型不存在"); //TODO 后期可能会更改
-        } catch (CodeNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    /**
-     * 通过code和前后日期寻找股票的特定时期 寻找股票的全部信息并绘图
-     *
-     * @param code 股票号
-     * @param startDate 开始时间
-     * @param endDate 结束时间
-     * @author 61990
-     * @lastUpdated Byron Dong
-     * @updateTime 2017/3/12
-     */
-    public void findSpecial(String code, LocalDate startDate,LocalDate endDate) throws DateNotWithinException, IOException {
-
-        //TODO 在这儿get一个ChartPanel
-        ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(String.valueOf(Integer.parseInt(code)),startDate,endDate);
-        // 创建图形
-
-        ArrayList<Integer> tag = new ArrayList<Integer>();
-        tag.add(5);
-        tag.add(10);
-        tag.add(20);
-        tag.add(30);
-        tag.add(60);
-
-        try {
-            candlestickChart = new CandlestickChart(chartShowCriteriaVO,tag);
-            chartPanel = candlestickChart.createAllPanel();
-
-            chartPanel.setBounds(adaptScreen(130,100,1600,850));
-            chartPanel.setBackground(new Color(32, 36, 39));
-            add(chartPanel);
-            chartPanel.repaint();
-        } catch (ColorNotExistException e) {
-            e.printStackTrace();
-            System.out.println("该均线类型不存在"); //TODO 后期可能会更改
-        } catch (CodeNotFoundException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(chartPanel,"请输入股票代号");
-        } catch (NoDataWithinException e) {
-            JOptionPane.showMessageDialog(chartPanel,e.getMessage());
-            e.printStackTrace();
-        }
-    }
     /**
      * 添加日期选择器等各种原件
      *
@@ -226,7 +142,7 @@ public class KStringPanel extends TemplatePanel {
         //加入比较按钮
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
 
-        //TODO gcm
+        //TODO gcm 这里我想加一个比较列表，而不是直接跳转到比较界面，比较列表在旁边显示出来，以便后面添加多只股票比较
         compare.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -246,7 +162,7 @@ public class KStringPanel extends TemplatePanel {
     }
 
     /**
-     * 单间模式
+     * 单件模式
      *
      * @param
      * @return KStringPanel K线面板
@@ -258,18 +174,6 @@ public class KStringPanel extends TemplatePanel {
             kStringPanel = new KStringPanel();
         }
         return kStringPanel;
-    }
-
-    /**
-     * 清除单件
-     *
-     * @param
-     * @return
-     * @author 61990
-     * @updateTime 2017/3/5
-     */
-    public void refresh() {
-        kStringPanel = null;
     }
 
     /**
@@ -285,48 +189,9 @@ public class KStringPanel extends TemplatePanel {
         //在联想面板上添加KStringPanel的监听
         associatePanel.kStringPanelChoose();
 
-        Document dt = searchTextField.getDocument();
-        dt.addDocumentListener(new DocumentListener() {
+        searchTextField.getDocument().addDocumentListener(new StockNameDocListener());
 
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                associatePanel.setVisible(true);
-                associatePanel.setBounds(adaptScreen(750, 86, 300, 200));
-                associatePanel.updateJList(getStockName());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-        });
-        Document dt1 = num.getDocument();
-        dt1.addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if(count==0) {
-                    associatePanel.setVisible(true);
-                    associatePanel.setBounds(adaptScreen(750, 86, 300, 200));
-
-                    associatePanel.updateJList(num.getText());
-                }
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-        });
+        num.getDocument().addDocumentListener(new StockCodeDocListener());
 
         search.addMouseListener(new MouseAdapter() {
             @Override
@@ -341,7 +206,6 @@ public class KStringPanel extends TemplatePanel {
             }
         });
     }
-
 
     //更新股票名称框和代码框
     public void addMessage(String name, String num){
@@ -377,7 +241,7 @@ public class KStringPanel extends TemplatePanel {
         remove(chartPanel);
     }
 
-    public void warnMessage(String str) {
+    public void warnMessageOnKStringPanel(String str) {
         JOptionPane.showMessageDialog(kStringPanel.getChartPanel(),str);
     }
 
@@ -395,5 +259,31 @@ public class KStringPanel extends TemplatePanel {
 
     public StockSearchVO getMessage() {
         return associatePanel.getMessage();
+    }
+
+    public void setAssociatePanelBounds(){
+        associatePanel.setBounds(adaptScreen(750, 86, 300, 200));
+    }
+
+    public void associatePanelSetting() {
+        setAssociatePanelVisible();
+        setAssociatePanelBounds();
+    }
+
+    public void updateAssociateJList(String searchString) {
+        associatePanel.updateJList(searchString);
+    }
+
+    public void setChartPanel(CandlestickChart candlestickChart) {
+        try {
+            chartPanel = candlestickChart.createAllPanel();
+        } catch (ColorNotExistException e) {
+            System.out.println("该均线类型不存在"); //TODO 后期可能会更改
+            e.printStackTrace();
+        }
+        chartPanel.setBounds(adaptScreen(130,100,1600,850));
+        chartPanel.setBackground(new Color(32, 36, 39));
+        add(chartPanel);
+        chartPanel.repaint();
     }
 }
