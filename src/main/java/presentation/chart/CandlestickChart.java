@@ -23,6 +23,7 @@ import utilities.exceptions.ColorNotExistException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
+import vo.FirstLastDayVO;
 import vo.StockVO;
 
 import java.awt.*;
@@ -53,11 +54,11 @@ public class CandlestickChart {
     //逻辑层对象
     private ChartService service;
 
-    //默认的X轴起始日期（可修改）
-    private LocalDate start = LocalDate.of(2005,2,1);
+    //X轴起始日期
+    private LocalDate start ;
 
-    //默认的X轴的结束日期（可修改）
-    private LocalDate end = LocalDate.of(2014,4,29);
+    //Y轴的结束日期
+    private LocalDate end ;
 
     private AverageChart averageChart;
 
@@ -281,6 +282,9 @@ public class CandlestickChart {
      * @updateTime 2017/3/11
      */
     private void readData(String code) throws IOException, CodeNotFoundException {
+        FirstLastDayVO firstLastDayVO = this.service.getFirstAndLastDay(code);
+        start = firstLastDayVO.first;
+        end = firstLastDayVO.last;
         data = this.service.getSingleStockRecords(String.valueOf(Integer.parseInt(code)));
     }
 

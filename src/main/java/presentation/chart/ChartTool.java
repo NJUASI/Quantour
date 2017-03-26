@@ -39,6 +39,7 @@ public class ChartTool {
         render.setUpPaint(new Color(255, 61, 61));//设置股票上涨的K线图颜色
         render.setDownPaint(new Color(15, 195, 81));//设置股票下跌的K线图颜色
 
+
         return render;
     }
 
