@@ -42,7 +42,7 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
                 throw new NoSituationDataException();
             }
             else{
-                br = new BufferedReader(new InputStreamReader(inputStream));
+                br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
                 line = br.readLine();
                 br.close();
             }

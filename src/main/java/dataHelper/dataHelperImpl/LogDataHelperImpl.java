@@ -61,8 +61,6 @@ public class LogDataHelperImpl implements LogDataHelper{
     }
 
     /**
-     * 删除用户登录信息
-     *
      * @author Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/6

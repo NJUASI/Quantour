@@ -1,7 +1,5 @@
 package presentation.view.tools;
 
-import com.sun.deploy.ui.ImageLoader;
-
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;

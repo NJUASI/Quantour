@@ -24,6 +24,7 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     private BufferedReader br;
 
+    static int count = 0;
 
     /**
      * 获取指定股票所有数据
@@ -116,7 +117,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                getResourceAsStream(path)));
+                getResourceAsStream(path), "UTF-8"));
 
         List<StockPO> result = new LinkedList<StockPO>();
 
@@ -133,6 +134,21 @@ public class StockDataHelperImpl implements StockDataHelper {
                     Double.parseDouble(parts[7]), parts[8], parts[9], Market.getEnum(parts[10]),
                     Double.parseDouble(parts[11]), Double.parseDouble(parts[12])));
         }
+
+        // 测试在项目jar包外部署路径
+//        String kkk = System.getProperty("user.dir");
+//        count++;
+//        String k = kkk + "/test/" + count + ".txt";
+//        File file = new File(k);
+//        String parentPath = kkk + "/test";
+//        File parent = new File(parentPath);
+//        if (!parent.exists()) {
+//            parent.mkdirs();
+//        }
+//
+//        file.createNewFile();
+
+
         return result;
     }
 
