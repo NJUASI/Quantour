@@ -9,29 +9,33 @@ import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.labels.SymbolicXYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import org.jfree.data.xy.DefaultOHLCDataset;
+import org.jfree.data.xy.OHLCDataItem;
+import org.jfree.data.xy.OHLCDataset;
 import org.jfree.ui.RectangleEdge;
 import presentation.listener.chartMouseListener.CandlestickListener;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ChartUtils;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.ColorNotExistException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.ChartShowCriteriaVO;
 import vo.FirstLastDayVO;
 import vo.StockVO;
 
 import java.awt.*;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -84,7 +88,7 @@ public class CandlestickChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public CandlestickChart(ChartShowCriteriaVO chartShowCriteriaVO,List<Integer> days) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException {
+    public CandlestickChart(ChartShowCriteriaVO chartShowCriteriaVO,List<Integer> days) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException, DateShortException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         dateException = this.service.getDateWithoutData(chartShowCriteriaVO);
@@ -236,7 +240,6 @@ public class CandlestickChart {
     private OHLCSeriesCollection getCandlestickData() {
         OHLCSeriesCollection ohlcSeriesCollection = new OHLCSeriesCollection();
         OHLCSeries series = new OHLCSeries("");//高开低收数据序列，股票K线图的四个数据，依次是开，高，低，收
-        //series.add(new Day(28, 9, 2007), 9.2, 9.58, 9.16, 9.34);
 
         for (StockVO stockVO : this.data) {
             series.add(new Day(stockVO.date.getDayOfMonth(), stockVO.date.getMonth().getValue(), stockVO.date.getYear())
@@ -248,6 +251,49 @@ public class CandlestickChart {
         this.setHighAndLow(ohlcSeriesCollection);
 
         return ohlcSeriesCollection;
+    }
+
+    /**
+     * 获取K线数据集合
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     * @Return OHLCSeriesCollection 数据集合
+     */
+    private OHLCDataset getCandlestickDataset() {
+        List<OHLCDataItem> dataItems = new ArrayList<OHLCDataItem>();
+        DateFormat df = new SimpleDateFormat("y-M-d");
+
+        for (StockVO stockVO : this.data) {
+            Date date = null;
+            try {
+                date = df.parse(stockVO.date.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            double open = stockVO.open;
+            double high = stockVO.high;
+            double low = stockVO.low;
+            double close = stockVO.close;
+            double volume = Double.parseDouble(stockVO.volume);
+            double adjClose = stockVO.adjClose;
+
+            // adjust data:
+            open = open * adjClose / close;
+            high = high * adjClose / close;
+            low = low * adjClose / close;
+
+            OHLCDataItem item = new OHLCDataItem(date, open, high, low, adjClose, volume);
+            dataItems.add(item);
+        }
+        Collections.reverse(dataItems);
+        OHLCDataItem[] dataSet = dataItems.toArray(new OHLCDataItem[dataItems.size()]);
+        OHLCDataset dataset = new DefaultOHLCDataset("", dataSet);
+
+       this.getCandlestickData();
+
+        return dataset;
     }
 
     /**

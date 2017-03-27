@@ -2,10 +2,7 @@ package presentation.controller;
 
 import presentation.chart.CandlestickChart;
 import presentation.view.panel.KStringPanel;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.ColorNotExistException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.ChartShowCriteriaVO;
 import vo.StockSearchVO;
 
@@ -121,6 +118,8 @@ public class KStringPanelController {
                         e.printStackTrace();
                     } catch (DateNotWithinException e) {
                         kStringPanel.warnMessageOnKStringPanel("请重新选择时间范围");
+                        e.printStackTrace();
+                    } catch (DateShortException e) {
                         e.printStackTrace();
                     }
                 }
