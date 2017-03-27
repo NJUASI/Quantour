@@ -6,10 +6,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import presentation.listener.chartMouseListener.CandlestickListener;
 import presentation.view.tools.ChartUtils;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.ColorNotExistException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.ChartShowCriteriaVO;
 
 import javax.swing.*;
@@ -47,6 +44,8 @@ public class Main {
         } catch (NoDataWithinException e) {
             e.printStackTrace();
         } catch (ColorNotExistException e) {
+            e.printStackTrace();
+        } catch (DateShortException e) {
             e.printStackTrace();
         }
 
