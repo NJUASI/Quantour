@@ -12,20 +12,20 @@ public class CsvFileUtil {
 //        final String sourceFilePath = "/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv";
 
 //         第一次遍历：建立by_code, by_date, situation目录，写入by_code
-//        try {
-//            Task1 task1 = new Task1(source);
-//            task1.handle();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        // 第二次遍历：处理数据，增加冗余信息（昨日昨日收盘价、昨日复权收盘价），写入by_date，重新写入by_code
         try {
-            Task2 task2 = new Task2();
-            task2.handle();
+            Task1 task1 = new Task1(source);
+            task1.handle();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // 第二次遍历：处理数据，增加冗余信息（昨日昨日收盘价、昨日复权收盘价），写入by_date，重新写入by_code
+//        try {
+//            Task2 task2 = new Task2();
+//            task2.handle();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         // 第三次遍历：形成股票市场温度计
 
@@ -96,7 +96,7 @@ class Task1 {
         parts[6] = String.valueOf((int)Double.parseDouble(parts[6]) / 100);
 
 
-        final String parent = System.getProperty("user.dir") + "/attachments/";
+        final String parent = System.getProperty("user.dir") + "\\attachments\\";
         final String post = ".txt";
         final String codeDesFileParent = parent + "stock_records_by_code";
         final String codeDesFileParent2 = parent + "stock_records_by_code2";
@@ -105,8 +105,8 @@ class Task1 {
 
         if (!parts[8].equals(desCode)) {
             desCode = parts[8];
-            codeDesFile = codeDesFileParent + "/" + desCode + post;
-            codeDesFile2 = codeDesFileParent2 + "/" + desCode + post;
+            codeDesFile = codeDesFileParent + "\\" + desCode + post;
+            codeDesFile2 = codeDesFileParent2 + "\\" + desCode + post;
         }
 
         // 建立by_code, by_code2目录
@@ -124,11 +124,11 @@ class Task1 {
         }
 
         // 建立situation目录，同时建立by_date目录
-        File fileName1 = new File(situationDesFileParent + "/" + year + "/" + parts[1] + post);
-        File fileName2 = new File(dateDesFileParent + "/" + year + "/" + parts[1] + post);
+        File fileName1 = new File(situationDesFileParent + "\\" + year + "\\" + parts[1] + post);
+        File fileName2 = new File(dateDesFileParent + "\\" + year + "\\" + parts[1] + post);
         if (!fileName1.exists()) {
-            File filePath1 = new File(situationDesFileParent + "/" + year);
-            File filePath2 = new File(dateDesFileParent + "/" + year);
+            File filePath1 = new File(situationDesFileParent + "\\" + year);
+            File filePath2 = new File(dateDesFileParent + "\\" + year);
             if (!filePath1.exists()) {
                 filePath1.mkdirs();
                 filePath2.mkdirs();
