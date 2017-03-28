@@ -15,13 +15,13 @@ public class CsvFileUtil {
 
     public boolean handle() {
 
-        DirCreator creator = null;
-        try {
-            creator = new DirCreator(sourceFile);
-            creator.createDir();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        DirCreator creator = null;
+//        try {
+//            creator = new DirCreator(sourceFile);
+//            creator.createDir();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
         try {
@@ -182,18 +182,18 @@ class DirCreator2 {
         }
 
         // 建立situation目录，同时建立by_date目录
-//        File fileName1 = new File(situationDesFileParentPath + separator + year + separator + parts[1] + post);
-//        File fileName2 = new File(dateDesFileParentPath + separator + year + separator + parts[1] + post);
-//        if (!fileName1.exists()) {
-//            File filePath1 = new File(situationDesFileParentPath + separator + year);
-//            File filePath2 = new File(dateDesFileParentPath + separator + year);
-//            if (!filePath1.exists()) {
-//                filePath1.mkdirs();
-//                filePath2.mkdirs();
-//            }
-//            fileName1.createNewFile();
-//            fileName2.createNewFile();
-//        }
+        File fileName1 = new File(situationDesFileParentPath + separator + year + separator + parts[1] + post);
+        File fileName2 = new File(dateDesFileParentPath + separator + year + separator + parts[1] + post);
+        if (!fileName1.exists()) {
+            File filePath1 = new File(situationDesFileParentPath + separator + year);
+            File filePath2 = new File(dateDesFileParentPath + separator + year);
+            if (!filePath1.exists()) {
+                filePath1.mkdirs();
+                filePath2.mkdirs();
+            }
+            fileName1.createNewFile();
+            fileName2.createNewFile();
+        }
 
     }
 

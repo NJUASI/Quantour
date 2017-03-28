@@ -12,7 +12,7 @@ public class MainTest {
         test.MainTest obj = new test.MainTest();
         Date before = new Date();
 
-        CsvFileUtil util = new CsvFileUtil("/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv");
+        CsvFileUtil util = new CsvFileUtil("C:\\Users\\61990\\Desktop\\股票历史数据ALL.csv");
         util.handle();
 
         Date after = new Date();
