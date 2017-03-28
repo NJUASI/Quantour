@@ -25,7 +25,7 @@ public class WindowData {
     public static void setWindowData(int width, int height) {
         windowData.height = height;
         windowData.width = width;
-        bgColor = Color.WHITE;
+        bgColor = new Color(32,36,39);
     }
 
     /**
