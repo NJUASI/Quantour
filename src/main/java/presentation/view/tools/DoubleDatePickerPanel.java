@@ -159,12 +159,12 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 
         endDate.setDayCellFactory(dayCellFactory);
 
-        startDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                setEndDate(newValue.plusDays(1));
-            }
-        });
+//        startDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+//            @Override
+//            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+//                setEndDate(newValue.plusDays(1));
+//            }
+//        });
     }
 
     public LocalDate getStartDate() {

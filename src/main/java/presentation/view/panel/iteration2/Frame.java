@@ -17,10 +17,22 @@ public class Frame extends JFrame {
     Frame(){
         setTitle("Quantourist");
         setLayout(null);
-        int width= 1920;
-        int height=1030;
-        WindowData.setWindowData(1920,1030);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
+        Rectangle bounds = new Rectangle(dim);
+
+        //set the windows large
+        bounds.x += insets.left;
+        bounds.y += insets.top;
+        bounds.width -= insets.left + insets.right;
+        bounds.height -= insets.top + insets.bottom;
+
+        WindowData.setWindowData(bounds.width, bounds.height);//save the window's data
+
+        int width=WindowData.getInstance().getWidth();
+        int height=WindowData.getInstance().getHeight();
         setSize(width,height);
+
 
 //        setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +41,7 @@ public class Frame extends JFrame {
 //        setResizable(false);
 
         cardPanel = new JPanel();
-        cardPanel.setBounds(90*width/1920,40*height/1030,1500*width/1920,800*height/1030);
+        cardPanel.setBounds(90*width/1920,40*height/1030,1830*width/1920,990*height/1030);
         add(cardPanel);
         card = new CardLayout();
         cardPanel.setLayout(card);
