@@ -1,4 +1,4 @@
-package presentation.chart;
+package presentation.chart.Candlestick;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.StandardChartTheme;
@@ -145,6 +145,7 @@ public class ChartTool {
         yAxis.setLabelPaint(new Color(201, 208, 214));
         yAxis.setTickLabelPaint(new Color(201, 208, 214));
         yAxis.setAutoRangeIncludesZero(false);
+
 
         return yAxis;
 

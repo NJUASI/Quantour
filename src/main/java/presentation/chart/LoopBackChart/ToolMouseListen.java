@@ -1,11 +1,9 @@
-package presentation.listener.chartMouseListener;
+package presentation.chart.LoopBackChart;
 
 import org.jfree.chart.*;
-import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleEdge;
 
 import java.awt.*;
@@ -13,27 +11,29 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Created by Byron Dong on 2017/3/22.
+ * Created by Byron Dong on 2017/3/28.
  */
-public class CandlestickListener implements ChartMouseListener{
+public class ToolMouseListen implements ChartMouseListener {
 
     ChartPanel chartPanel;
     Rectangle2D rectangle2D;
     ValueMarker markerX =null;
     ValueMarker markerY = null;
 
-    public CandlestickListener(ChartPanel chartPanel) {
+    public ToolMouseListen(ChartPanel chartPanel) {
         this.chartPanel = chartPanel;
     }
 
     @Override
     public void chartMouseClicked(ChartMouseEvent event) {
+
     }
 
     @Override
     public void chartMouseMoved(ChartMouseEvent event) {
         JFreeChart chart = event.getChart();
         XYPlot xyplot = chart.getXYPlot();
+        System.out.println(((XYItemEntity)event.getEntity()));
 
 
         if(markerX!=null&&markerY!=null){
@@ -54,7 +54,6 @@ public class CandlestickListener implements ChartMouseListener{
 
         this.setMyStoke();
         xyplot.addDomainMarker(markerX);
-        xyplot.addRangeMarker(markerY);
 
     }
 

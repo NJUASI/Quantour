@@ -1,12 +1,11 @@
 package presentation.controller;
 
-import presentation.chart.CandlestickChart;
+import presentation.chart.Candlestick.CandlestickChart;
 import presentation.view.panel.KStringPanel;
 import utilities.exceptions.*;
 import vo.ChartShowCriteriaVO;
 import vo.StockSearchVO;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 

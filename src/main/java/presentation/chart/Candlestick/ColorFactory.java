@@ -1,4 +1,4 @@
-package presentation.chart;
+package presentation.chart.Candlestick;
 
 import java.awt.*;
 

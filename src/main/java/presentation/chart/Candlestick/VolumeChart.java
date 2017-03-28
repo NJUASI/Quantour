@@ -1,24 +1,17 @@
-package presentation.chart;
+package presentation.chart.Candlestick;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
-import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
-import org.jfree.ui.RectangleEdge;
 import vo.StockVO;
 
 import java.awt.*;
-import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -59,7 +52,7 @@ public class VolumeChart {
      */
     public ChartPanel createVolumePanel(){
 
-        XYPlot plot=new XYPlot(this.getVolumeData(),this.xAxis,ChartTool.getY(this.lowVolume,this.highVolume,15),
+        XYPlot plot=new XYPlot(this.getVolumeData(),this.xAxis, ChartTool.getY(this.lowVolume,this.highVolume,15),
                 ChartTool.getXYBarRender(ohlcSeriesCollection,candlestickRenderer));
         //建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
 
