@@ -1,15 +1,12 @@
 package presentation.view.chart;
 
 import org.jfree.chart.ChartPanel;
-import presentation.view.panel.ComparePanel;
-import presentation.view.tools.MyScrollBarUI;
+import presentation.view.tools.MyTabUI;
 import presentation.view.tools.WindowData;
 import vo.StockComparisionVO;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -99,33 +96,14 @@ public class CompareChartPanel extends JPanel {
         chartPanel6.setBounds(adaptScreen(100,30,1500,600));
         chartPanel6.setVisible(true);
         p3.add(chartPanel6);
+
         tab.setBackground(WindowData.getInstance().getColor());
+        tab.setForeground(new Color(201, 208, 214));
+        tab.setOpaque(true);
+        tab.setUI(new MyTabUI());
         add(tab);
-//        setBounds(adaptScreen(250,100,1500,850));
+
         setBorder(BorderFactory.createEmptyBorder());
-
-//        setPreferredSize(new Dimension(1500,850));
-//
-//        panel.setPreferredSize(new Dimension(1500*getWidth()/1920,2800*getHeight()/1030));
-//        panel.setBackground(new Color(32, 36, 39));
-//        panel.setVisible(true);
-//
-//        scrollPane.setPreferredSize(new Dimension(1500*width/1920,800*height/1030));
-//        scrollPane.setBounds(adaptScreen(0,0,1500,800));
-//        scrollPane.getVerticalScrollBar().setUI(new MyScrollBarUI());
-//        scrollPane.getVerticalScrollBar().setBorder(BorderFactory.createEmptyBorder());
-//        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(19,22,24)));
-//        add(scrollPane);
-//
-//        scrollPane.setViewportView(panel);
-//        scrollPane.setVisible(true);
-//        setVisible(true);
-//
-//        panel.repaint();
-//        scrollPane.repaint();
-
-
-
 
     }
 
