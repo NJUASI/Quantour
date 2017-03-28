@@ -1,15 +1,12 @@
-package presentation.chart;
+package presentation.chart.Candlestick;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.*;
+import org.jfree.chart.axis.SegmentedTimeline;
 import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.labels.SymbolicXYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.CandlestickRenderer;
+import org.jfree.chart.util.DefaultShadowGenerator;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
@@ -18,8 +15,8 @@ import org.jfree.data.xy.OHLCDataItem;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.ui.RectangleEdge;
 import presentation.listener.chartMouseListener.CandlestickListener;
-import presentation.view.tools.WindowData;
 import presentation.view.tools.ChartUtils;
+import presentation.view.tools.WindowData;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.*;
@@ -116,7 +113,7 @@ public class CandlestickChart {
     public Panel createAllPanel() throws ColorNotExistException {
 
         Panel chartPanel =  new Panel(null);
-        VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(),ChartTool.getRenderer(),
+        VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(), ChartTool.getRenderer(),
                 ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
@@ -143,6 +140,7 @@ public class CandlestickChart {
         plot.setDataset(0, this.getCandlestickData());
         plot.setRenderer(0, ChartTool.getRenderer());
         plot = averageChart.set(plot);
+
 
         plot.setDomainGridlinesVisible(true);
         plot.setRangeGridlinesVisible(true);

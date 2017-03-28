@@ -4,6 +4,8 @@ package presentation.chart;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import presentation.chart.LoopBackChart.Tool;
+import presentation.chart.LoopBackChart.ToolMouseListen;
 import presentation.listener.chartMouseListener.CandlestickListener;
 import presentation.view.tools.ChartUtils;
 import utilities.exceptions.*;
@@ -22,32 +24,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String []args){
-        List<Integer> tag = new ArrayList<Integer>();
-        tag.add(10);
-        tag.add(20);
-        tag.add(30);
-        tag.add(60);
-
-
-            Panel ss = null;
-
-        try {
-            CandlestickChart candlestickChart = new CandlestickChart(new ChartShowCriteriaVO("1", LocalDate.of(2014,1,1),LocalDate.of(2014,4,29)),tag);
-            ss = candlestickChart.createAllPanel();
-
-        } catch (DateNotWithinException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CodeNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoDataWithinException e) {
-            e.printStackTrace();
-        } catch (ColorNotExistException e) {
-            e.printStackTrace();
-        } catch (DateShortException e) {
-            e.printStackTrace();
-        }
+        JFreeChart chart = Tool.createLoopBackChart();
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.addChartMouseListener(new ToolMouseListen(chartPanel));
 
 //        ss.setLayout(new BorderLayout());
 //
@@ -55,7 +34,7 @@ public class Main {
         JFrame ee=new JFrame();
         ee.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ee.setSize(750*2,400*2);
-        ee.getContentPane().add(ss);
+        ee.getContentPane().add(chartPanel);
         ee.setVisible(true);
 
     }

@@ -1,12 +1,13 @@
 package presentation.view.panel;
 
-import presentation.chart.CandlestickChart;
+import presentation.chart.Candlestick.CandlestickChart;
 import presentation.controller.ViewSwitchController;
 
 import presentation.listener.kStringPanelListener.SearchAllListener;
 import presentation.listener.kStringPanelListener.SearchListener;
 import presentation.listener.kStringPanelListener.StockCodeDocListener;
 import presentation.listener.kStringPanelListener.StockNameDocListener;
+import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
 

@@ -1,7 +1,6 @@
-package presentation.chart;
+package presentation.chart.Candlestick;
 
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -70,7 +69,7 @@ public class AverageChart {
      */
     public XYPlot set(XYPlot plot) throws ColorNotExistException {
         plot.setDataset(1,this.getTimeSeriesCollection());
-        plot.setRenderer(1,ChartTool.getAveragerRender(this.days));
+        plot.setRenderer(1, ChartTool.getAveragerRender(this.days));
 
         return plot;
     }

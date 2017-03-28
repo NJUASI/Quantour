@@ -1,7 +1,6 @@
 package presentation.view;
 
 
-
 import presentation.view.frame.LoginFrame;
 
 
