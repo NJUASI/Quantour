@@ -105,8 +105,8 @@ class Task1 {
 
         if (!parts[8].equals(desCode)) {
             desCode = parts[8];
-            codeDesFile = codeDesFileParent + "/" + desCode + post;
-            codeDesFile2 = codeDesFileParent2 + "/" + desCode + post;
+            codeDesFile = codeDesFileParent + "\\" + desCode + post;
+            codeDesFile2 = codeDesFileParent2 + "\\" + desCode + post;
         }
 
         // 建立by_code, by_code2目录

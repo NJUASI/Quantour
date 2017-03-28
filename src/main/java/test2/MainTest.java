@@ -1,27 +1,25 @@
-package test;
+package test2;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by cuihua on 2017/3/26.
+ * Created by cuihua on 2017/3/28.
  */
 public class MainTest {
 
     public static void main(String[] args) {
-        MainTest obj = new MainTest();
 
+        test.MainTest obj = new test.MainTest();
         Date before = new Date();
 
-        CsvFileUtil util = new CsvFileUtil();
-        util.handle("C:\\Users\\61990\\Desktop\\股票历史数据ALL.csv");
-
+        CsvFileUtil util = new CsvFileUtil("/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv");
+        util.handle();
 
         Date after = new Date();
-
         obj.printDifference(before, after);
-    }
 
+
+    }
 
     public void printDifference(Date startDate, Date endDate){
 
@@ -54,4 +52,5 @@ public class MainTest {
                 elapsedHours, elapsedMinutes, elapsedSeconds);
 
     }
+
 }

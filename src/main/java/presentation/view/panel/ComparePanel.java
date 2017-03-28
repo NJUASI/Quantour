@@ -2,25 +2,18 @@ package presentation.view.panel;
 
 import presentation.listener.comparePanelListener.*;
 import presentation.view.chart.CompareChartPanel;
+import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
-import utilities.exceptions.DataSourceFirstDayException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.NoDataWithinException;
 import vo.StockComparisionVO;
-import vo.StockComparsionCriteriaVO;
 import vo.StockSearchVO;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 

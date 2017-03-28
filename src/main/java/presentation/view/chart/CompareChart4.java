@@ -123,10 +123,11 @@ public class CompareChart4 {
             //刻度单位月,半年为间隔
             dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 5, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
         } else {// 数据过多,不显示数据
-            XYLineAndShapeRenderer xyRenderer = (XYLineAndShapeRenderer) xyplot.getRenderer();
-            xyRenderer.setBaseItemLabelsVisible(false);
+
             dateTickUnit = new DateTickUnit(DateTickUnitType.MONTH, 1, new SimpleDateFormat("yyyy-MM")); // 第二个参数是时间轴间距
         }
+        XYLineAndShapeRenderer xyRenderer = (XYLineAndShapeRenderer) xyplot.getRenderer();
+        xyRenderer.setBaseItemLabelsVisible(false);
 
 
         // 设置时间单位
