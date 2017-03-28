@@ -96,7 +96,7 @@ class Task1 {
         parts[6] = String.valueOf((int)Double.parseDouble(parts[6]) / 100);
 
 
-        final String parent = System.getProperty("user.dir") + "/attachments/";
+        final String parent = System.getProperty("user.dir") + "\\attachments\\";
         final String post = ".txt";
         final String codeDesFileParent = parent + "stock_records_by_code";
         final String codeDesFileParent2 = parent + "stock_records_by_code2";
@@ -105,8 +105,8 @@ class Task1 {
 
         if (!parts[8].equals(desCode)) {
             desCode = parts[8];
-            codeDesFile = codeDesFileParent + "/" + desCode + post;
-            codeDesFile2 = codeDesFileParent2 + "/" + desCode + post;
+            codeDesFile = codeDesFileParent + "\\" + desCode + post;
+            codeDesFile2 = codeDesFileParent2 + "\\" + desCode + post;
         }
 
         // 建立by_code, by_code2目录
@@ -124,11 +124,11 @@ class Task1 {
         }
 
         // 建立situation目录，同时建立by_date目录
-        File fileName1 = new File(situationDesFileParent + "/" + year + "/" + parts[1] + post);
-        File fileName2 = new File(dateDesFileParent + "/" + year + "/" + parts[1] + post);
+        File fileName1 = new File(situationDesFileParent + "\\" + year + "\\" + parts[1] + post);
+        File fileName2 = new File(dateDesFileParent + "\\" + year + "\\" + parts[1] + post);
         if (!fileName1.exists()) {
-            File filePath1 = new File(situationDesFileParent + "/" + year);
-            File filePath2 = new File(dateDesFileParent + "/" + year);
+            File filePath1 = new File(situationDesFileParent + "\\" + year);
+            File filePath2 = new File(dateDesFileParent + "\\" + year);
             if (!filePath1.exists()) {
                 filePath1.mkdirs();
                 filePath2.mkdirs();

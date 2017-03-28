@@ -14,7 +14,7 @@ public class MainTest {
         Date before = new Date();
 
         CsvFileUtil util = new CsvFileUtil();
-        util.handle("/Users/day/Desktop/股票历史数据ALL.csv");
+        util.handle("C:\\Users\\61990\\Desktop\\股票历史数据ALL.csv");
 
 
         Date after = new Date();
