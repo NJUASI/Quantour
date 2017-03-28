@@ -124,9 +124,12 @@ class DirCreator2 {
     final String separator = System.getProperty("file.separator");
     final String parent = System.getProperty("user.dir") + separator + "attachments" + separator;
     final String post = ".txt";
+    final String codeDesFileParentPath = parent + "stock_records_by_code";
     final String dateDesFileParentPath = parent + "stock_records_by_date";
     final String situationDesFileParentPath = parent + "stock_situation";
 
+    private String desCode = "";
+    private String codeDesFilePath = null;
 
     public DirCreator2(String sourceFile) throws FileNotFoundException, UnsupportedEncodingException {
         this.sourceFile = sourceFile;
@@ -163,20 +166,34 @@ class DirCreator2 {
         String day = formalMonthDay(originalDay);
         parts[1] = year + "-" + month + "-" + day;
 
+        if (!parts[8].equals(desCode)) {
+            desCode = parts[8];
+            codeDesFilePath = codeDesFileParentPath + separator + desCode + post;
+        }
+
+        // 建立by_code目录
+        File codeParent = new File(codeDesFileParentPath);
+        if (!codeParent.exists()) {
+            codeParent.mkdirs();
+        }
+        File file = new File(codeDesFilePath);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
 
         // 建立situation目录，同时建立by_date目录
-        File fileName1 = new File(situationDesFileParentPath + separator + year + separator + parts[1] + post);
-        File fileName2 = new File(dateDesFileParentPath + separator + year + separator + parts[1] + post);
-        if (!fileName1.exists()) {
-            File filePath1 = new File(situationDesFileParentPath + separator + year);
-            File filePath2 = new File(dateDesFileParentPath + separator + year);
-            if (!filePath1.exists()) {
-                filePath1.mkdirs();
-                filePath2.mkdirs();
-            }
-            fileName1.createNewFile();
-            fileName2.createNewFile();
-        }
+//        File fileName1 = new File(situationDesFileParentPath + separator + year + separator + parts[1] + post);
+//        File fileName2 = new File(dateDesFileParentPath + separator + year + separator + parts[1] + post);
+//        if (!fileName1.exists()) {
+//            File filePath1 = new File(situationDesFileParentPath + separator + year);
+//            File filePath2 = new File(dateDesFileParentPath + separator + year);
+//            if (!filePath1.exists()) {
+//                filePath1.mkdirs();
+//                filePath2.mkdirs();
+//            }
+//            fileName1.createNewFile();
+//            fileName2.createNewFile();
+//        }
 
     }
 
