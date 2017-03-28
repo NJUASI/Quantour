@@ -16,8 +16,7 @@ public class Frame extends JFrame {
     private static CardLayout card;
     Frame(){
         setTitle("Quantourist");
-        getContentPane().setLayout(new BorderLayout(0, 0));
-
+        setLayout(null);
         int width= 1920;
         int height=1030;
         WindowData.setWindowData(1920,1030);
@@ -27,10 +26,10 @@ public class Frame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setVisible(true);
-        setResizable(false);
+//        setResizable(false);
 
         cardPanel = new JPanel();
-        cardPanel.setBounds(90*width/1920,40*height/1030,1920*width/1920,1030*height/1030);
+        cardPanel.setBounds(90*width/1920,40*height/1030,1500*width/1920,800*height/1030);
         add(cardPanel);
         card = new CardLayout();
         cardPanel.setLayout(card);
@@ -39,7 +38,7 @@ public class Frame extends JFrame {
         cardPanel.add(mainPane, "mainPane");
 
         StrategyPanel strategyPanel= StrategyPanel.getInstance();
-        cardPanel.add(mainPane,"strategyPanel");
+        cardPanel.add(strategyPanel,"strategyPanel");
         card.show(cardPanel,"strategyPanel");
     }
 }

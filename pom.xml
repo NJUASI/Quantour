@@ -40,7 +40,7 @@
        $ mvn install:install-file -DgroupId=org.jb2011 -DartifactId=beautyeye_lnf -Dversion=4.0 -Dpackaging=jar -Dfile=beautyeye_lnf-4.0.jar
        -->
 
-        <!-- https://mvnrepository.com/artifact/com.github.stuxuhai/jpinyin -->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.github.stuxuhai/jpinyin &ndash;&gt;-->
         <dependency>
             <groupId>com.github.stuxuhai</groupId>
             <artifactId>jpinyin</artifactId>
