@@ -1,6 +1,7 @@
 package presentation.view.panel.iteration2;
 
 import presentation.view.frame.MainFrame;
+import presentation.view.tools.BeautyEyeUtil;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class Frame extends JFrame {
     public static JPanel barPanel,titlePanel;
     private static CardLayout card;
     Frame(){
+        BeautyEyeUtil.beautyEye();
         setTitle("Quantourist");
         setLayout(null);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -38,7 +40,7 @@ public class Frame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setVisible(true);
-//        setResizable(false);
+        setResizable(false);
 
         cardPanel = new JPanel();
         cardPanel.setBounds(90*width/1920,40*height/1030,1830*width/1920,990*height/1030);

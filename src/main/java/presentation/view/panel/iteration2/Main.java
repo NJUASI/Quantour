@@ -1,9 +1,6 @@
 package presentation.view.panel.iteration2;
 
-import presentation.view.tools.WindowData;
 
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by 61990 on 2017/3/25.
@@ -11,5 +8,6 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args){
        new Frame();
+
     }
 }
