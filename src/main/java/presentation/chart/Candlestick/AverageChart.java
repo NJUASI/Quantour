@@ -105,7 +105,7 @@ public class AverageChart {
             Map<Integer, List<MovingAverageVO>> tempMap = this.service.getAveData(code, this.days);
 
             for (int i : days) {
-                TimeSeries series = new TimeSeries(String.valueOf(i) + "天均线");
+                TimeSeries series = new TimeSeries(String.valueOf(i) + "日");
                 List<MovingAverageVO> movingAverageVOS = tempMap.get(i);
                 for(int j = 0;j<movingAverageVOS.size();j++){
                     MovingAverageVO vo = movingAverageVOS.get(j);

@@ -3,6 +3,7 @@ package presentation.chart.Candlestick;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.SegmentedTimeline;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.XYPlot;
@@ -27,6 +28,7 @@ import vo.StockVO;
 import java.awt.*;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -115,12 +117,11 @@ public class CandlestickChart {
         Panel chartPanel =  new Panel(null);
         OHLCSeriesCollection ohlcSeriesCollection = this.getCandlestickData();
 
-        VolumeChart chart = new VolumeChart(this.data,ohlcSeriesCollection, CandlestickChartTool.getRenderer(ohlcSeriesCollection),
-                CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
+        VolumeChart chart = new VolumeChart(this.data,ohlcSeriesCollection,CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
-        candlestickPanel.setBounds(0,0,1600* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
-        volumePanel.setBounds(0,600*WindowData.getInstance().getHeight()/1030,1462* WindowData.getInstance().getWidth()/1920,250* WindowData.getInstance().getHeight()/1030);
+        candlestickPanel.setBounds(0,0,1620* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
+        volumePanel.setBounds(48,600*WindowData.getInstance().getHeight()/1030,1600* WindowData.getInstance().getWidth()/1920,250* WindowData.getInstance().getHeight()/1030);
         candlestickPanel.setVisible(true);
         volumePanel.setVisible(true);
 
@@ -144,14 +145,7 @@ public class CandlestickChart {
         plot.setRenderer(0, CandlestickChartTool.getRenderer(ohlcSeriesCollection));
         plot = averageChart.set(plot);
 
-
-        plot.setDomainGridlinesVisible(true);
-        plot.setRangeGridlinesVisible(true);
-        plot.setDomainGridlinePaint(new Color(44, 50, 54));
-        plot.setRangeGridlinePaint(new Color(44, 50, 54));
-        plot.setDomainGridlineStroke(new BasicStroke());
-        plot.setRangeGridlineStroke(new BasicStroke());
-
+        plot = this.setPlot(plot);
         plot.setDomainAxis(CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         plot.setRangeAxis(CandlestickChartTool.getY(this.low,this.high,30));//y轴的密度
 
@@ -165,13 +159,22 @@ public class CandlestickChart {
         chart.getLegend().setItemPaint(new Color(201, 208, 214));
         chart.getLegend().setBackgroundPaint(new Color(32,36,39));
         chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
-        chart.getLegend().setPosition(RectangleEdge.RIGHT);
-        chart.getXYPlot().getDomainAxis().setVisible(true);
+        chart.getLegend().setPosition(RectangleEdge.LEFT);
         chart.getTitle().setPaint(new Color(201, 208, 214));
         chart.setTextAntiAlias(false);
-
-
+        chart.getXYPlot().getDomainAxis().setVisible(false);
         return chart;
+    }
+
+    private XYPlot setPlot(XYPlot plot){
+        plot.setDomainGridlinesVisible(true);
+        plot.setRangeGridlinesVisible(true);
+        plot.setDomainGridlinePaint(new Color(44, 50, 54));
+        plot.setRangeGridlinePaint(new Color(44, 50, 54));
+        plot.setDomainGridlineStroke(new BasicStroke());
+        plot.setRangeGridlineStroke(new BasicStroke());
+
+        return plot;
     }
 
     /**

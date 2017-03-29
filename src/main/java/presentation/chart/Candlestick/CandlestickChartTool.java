@@ -75,19 +75,18 @@ public class CandlestickChartTool {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      * @param  seriesCollection 数据集合
-     * @param  candlestickRenderer K线的画笔
      * @return XYBarRenderer 成交量画笔
      */
-    public static XYBarRenderer getXYBarRender(OHLCSeriesCollection seriesCollection, CandlestickRenderer candlestickRenderer){
+    public static XYBarRenderer getXYBarRender(OHLCSeriesCollection seriesCollection){
         XYBarRenderer xyBarRender=new XYBarRenderer(){
 
             private static final long serialVersionUID = 1L;
 
             public Paint getItemPaint(int i, int j){//匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
                 if(seriesCollection.getCloseValue(i,j)>seriesCollection.getOpenValue(i,j)){//收盘价高于开盘价，股票上涨，选用股票上涨的颜色
-                    return candlestickRenderer.getUpPaint();
+                    return new Color(255, 61, 61);
                 }else{
-                    return candlestickRenderer.getDownPaint();
+                    return new Color(15, 195, 81);
                 }
             }};
         xyBarRender.setBarPainter(new StandardXYBarPainter());
@@ -124,6 +123,8 @@ public class CandlestickChartTool {
         xAxis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
         xAxis.setLabelPaint(new Color(201, 208, 214));
         xAxis.setTickLabelPaint(new Color(201, 208, 214));
+        xAxis.setAxisLineVisible(true);
+        xAxis.setPositiveArrowVisible(true);
 
         return xAxis;
     }
@@ -145,7 +146,7 @@ public class CandlestickChartTool {
         yAxis.setLabelPaint(new Color(201, 208, 214));
         yAxis.setTickLabelPaint(new Color(201, 208, 214));
         yAxis.setAutoRangeIncludesZero(false);
-
+        yAxis.setAxisLineVisible(true);
 
         return yAxis;
 

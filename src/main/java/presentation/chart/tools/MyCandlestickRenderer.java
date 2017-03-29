@@ -49,7 +49,6 @@ public class MyCandlestickRenderer extends CandlestickRenderer {
         this.ohlcSeriesCollection = ohlcSeriesCollection;
     }
 
-
     public Paint getItemOutlinePaint(int row, int column) {
         Color color = new Color(255, 61, 61);
         if(ohlcSeriesCollection.getCloseValue(row,column)>ohlcSeriesCollection.getOpenValue(row,column)){
@@ -59,5 +58,4 @@ public class MyCandlestickRenderer extends CandlestickRenderer {
             return color;
         }
     }
-
 }
