@@ -17,8 +17,6 @@ public class MainTest {
 
         Date after = new Date();
         obj.printDifference(before, after);
-
-
     }
 
     public void printDifference(Date startDate, Date endDate){
