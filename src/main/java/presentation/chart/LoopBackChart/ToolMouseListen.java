@@ -1,7 +1,7 @@
 package presentation.chart.LoopBackChart;
 
-import org.jfree.chart.*;
-import org.jfree.chart.entity.XYItemEntity;
+
+;import org.jfree.chart.*;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.RectangleEdge;
@@ -17,8 +17,9 @@ public class ToolMouseListen implements ChartMouseListener {
 
     ChartPanel chartPanel;
     Rectangle2D rectangle2D;
-    ValueMarker markerX =null;
+    ValueMarker markerX = null;
     ValueMarker markerY = null;
+
 
     public ToolMouseListen(ChartPanel chartPanel) {
         this.chartPanel = chartPanel;
@@ -35,14 +36,14 @@ public class ToolMouseListen implements ChartMouseListener {
         XYPlot xyplot = chart.getXYPlot();
 
 
-        if(markerX!=null&&markerY!=null){
+        if (markerX != null && markerY != null) {
             xyplot.clearDomainMarkers();
             xyplot.clearRangeMarkers();
         }
 
-        int mouseX =event.getTrigger().getX();
-        int mouseY =event.getTrigger().getY();
-        Point2D point2D = this.chartPanel.translateScreenToJava2D(new Point(mouseX, mouseY));
+        int mouseX = event.getTrigger().getX();
+        int mouseY = event.getTrigger().getY();
+        Point2D point2D = this.chartPanel.translateScreenToJava2D(new java.awt.Point(mouseX, mouseY));
         ChartRenderingInfo info = this.chartPanel.getChartRenderingInfo();
         rectangle2D = chartPanel.getScreenDataArea();
         double yValue = xyplot.getRangeAxis().java2DToValue(point2D.getY(), info.getPlotInfo().getDataArea(), RectangleEdge.RIGHT);
@@ -53,15 +54,16 @@ public class ToolMouseListen implements ChartMouseListener {
 
         this.setMyStoke();
         xyplot.addDomainMarker(markerX);
+        xyplot.addRangeMarker(markerY);
 
     }
 
-    private void setMyStoke(){
+    private void setMyStoke() {
         float dashes[] = {4.5f};
-        markerX.setPaint(new Color(82,98,113));
-        markerX.setStroke(new BasicStroke(0.9f,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,8.f,dashes,0.0f));
-        markerY.setPaint(new Color(82,98,113));
-        markerY.setStroke(new BasicStroke(0.001f,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,8.f,dashes,0.0f));
+        markerX.setPaint(new Color(82, 98, 113));
+        markerX.setStroke(new BasicStroke(0.9f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 8.f, dashes, 0.0f));
+        markerY.setPaint(new Color(82, 98, 113));
+        markerY.setStroke(new BasicStroke(0.001f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 8.f, dashes, 0.0f));
 
     }
 }
