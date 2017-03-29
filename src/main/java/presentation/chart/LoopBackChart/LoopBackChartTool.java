@@ -12,6 +12,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.TextAnchor;
 import presentation.chart.Candlestick.CandlestickChartTool;
+import presentation.chart.tools.LoopBackXYLineRender;
 
 import java.awt.*;
 import java.text.NumberFormat;

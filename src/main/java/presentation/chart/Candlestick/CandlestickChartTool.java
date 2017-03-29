@@ -11,6 +11,7 @@ import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleInsets;
+import presentation.chart.tools.MyCandlestickRenderer;
 import utilities.exceptions.ColorNotExistException;
 
 import java.awt.*;
@@ -31,14 +32,13 @@ public class CandlestickChartTool {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
      */
-    public static CandlestickRenderer getRenderer() {
-        CandlestickRenderer render = new CandlestickRenderer();
+    public static MyCandlestickRenderer getRenderer(OHLCSeriesCollection ohlcSeriesCollection) {
+        MyCandlestickRenderer render = new MyCandlestickRenderer(ohlcSeriesCollection);
         render.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         render.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
         render.setAutoWidthGap(0.001);//设置各个K线图之间的间隔
         render.setUpPaint(new Color(255, 61, 61));//设置股票上涨的K线图颜色
         render.setDownPaint(new Color(15, 195, 81));//设置股票下跌的K线图颜色
-
 
         return render;
     }

@@ -6,6 +6,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.SegmentedTimeline;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
@@ -112,7 +113,9 @@ public class CandlestickChart {
     public Panel createAllPanel() throws ColorNotExistException {
 
         Panel chartPanel =  new Panel(null);
-        VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(), CandlestickChartTool.getRenderer(),
+        OHLCSeriesCollection ohlcSeriesCollection = this.getCandlestickData();
+
+        VolumeChart chart = new VolumeChart(this.data,ohlcSeriesCollection, CandlestickChartTool.getRenderer(ohlcSeriesCollection),
                 CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
@@ -136,8 +139,9 @@ public class CandlestickChart {
         candlestickChart.setAntiAlias(false);
         candlestickChart.setTextAntiAlias(false);
         XYPlot plot = candlestickChart.getXYPlot();
-        plot.setDataset(0, this.getCandlestickData());
-        plot.setRenderer(0, CandlestickChartTool.getRenderer());
+        OHLCSeriesCollection ohlcSeriesCollection = this.getCandlestickData();
+        plot.setDataset(0, ohlcSeriesCollection);
+        plot.setRenderer(0, CandlestickChartTool.getRenderer(ohlcSeriesCollection));
         plot = averageChart.set(plot);
 
 
@@ -165,6 +169,7 @@ public class CandlestickChart {
         chart.getXYPlot().getDomainAxis().setVisible(true);
         chart.getTitle().setPaint(new Color(201, 208, 214));
         chart.setTextAntiAlias(false);
+
 
         return chart;
     }
