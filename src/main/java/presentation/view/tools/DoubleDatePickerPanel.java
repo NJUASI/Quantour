@@ -26,9 +26,9 @@ import java.time.LocalDate;
 public class DoubleDatePickerPanel  extends JFXPanel {
 
     //开始时间
-    private DatePicker startDate;
+    public DatePicker startDate;
     //结束时间
-    private DatePicker endDate;
+    public DatePicker endDate;
     ImageView image;
     Label label1,label2;
     //

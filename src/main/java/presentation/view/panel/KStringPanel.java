@@ -1,6 +1,9 @@
 package presentation.view.panel;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import presentation.chart.Candlestick.CandlestickChart;
+import presentation.controller.KStringPanelController;
 import presentation.controller.ViewSwitchController;
 
 import presentation.listener.kStringPanelListener.SearchAllListener;
@@ -86,7 +89,7 @@ public class KStringPanel extends TemplatePanel {
         datePanel = new DoubleDatePickerPanel();
         datePanel.setBounds(width * 100 / 1920, height * 50 / 1030, 520 * width / 1920, 35 * height / 1030);
         add(datePanel);
-        //TODO gcm 给日期选择器加上监听，当选择日期选择完毕的时候，直接调出数据，而不需要用户再去按一下局部信息
+
 
         MyLabel label1=new MyLabel("股票") ;
         label1.setLocation(700*width/1920,50*height/1030);
@@ -142,6 +145,20 @@ public class KStringPanel extends TemplatePanel {
 
         //加入比较按钮
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
+
+        datePanel.startDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                KStringPanelController.getInstance().search();
+            }
+        });
+        datePanel.endDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                KStringPanelController.getInstance().search();
+            }
+        });
+
 
         //TODO gcm 这里我想加一个比较列表，而不是直接跳转到比较界面，比较列表在旁边显示出来，以便后面添加多只股票比较
         compare.addMouseListener(new MouseAdapter() {

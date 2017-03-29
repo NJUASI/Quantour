@@ -44,7 +44,7 @@ public class CompareChart3 {
 
     public ChartPanel createChart() {
         // 2：创建Chart
-        JFreeChart chart = ChartFactory.createBarChart("", "", "对数收益率方差 *10000", createSet());
+        JFreeChart chart = ChartFactory.createBarChart("", "", "对数收益率方差 *10^-4", createSet());
         // 3:设置抗锯齿，防止字体显示不清楚
         ChartUtils.setAntiAlias(chart);// 抗锯齿
         // 4:对柱子进行渲染

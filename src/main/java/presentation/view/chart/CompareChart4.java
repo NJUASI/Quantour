@@ -9,6 +9,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.TimeSeries;
@@ -116,18 +117,24 @@ public class CompareChart4 {
         domainAxis.setAutoTickUnitSelection(false);
         DateTickUnit dateTickUnit = null;
         domainAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
-        if (dataset.getItemCount(0) < 20) {
-            //刻度单位月,半年为间隔
-            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 3, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
-        } else if (dataset.getItemCount(0) < 40) {
-            //刻度单位月,半年为间隔
-            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 5, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
-        } else {// 数据过多,不显示数据
 
+        int num=dataset.getItemCount(0);
+        if (num < 10) {
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 1, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
+        } else if (num < 20) {
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 3, new SimpleDateFormat("yyyy-MM-dd"));// 第二个参数是时间轴间距
+        } else if (num < 40){
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 8, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
+        }else if (num < 60){
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 17, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
+        }else if (num < 200){
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 31, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
+        }else{
             dateTickUnit = new DateTickUnit(DateTickUnitType.MONTH, 1, new SimpleDateFormat("yyyy-MM")); // 第二个参数是时间轴间距
         }
         XYLineAndShapeRenderer xyRenderer = (XYLineAndShapeRenderer) xyplot.getRenderer();
         xyRenderer.setBaseItemLabelsVisible(false);
+
 
 
         // 设置时间单位
