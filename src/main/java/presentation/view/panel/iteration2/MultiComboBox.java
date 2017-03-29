@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
+import javax.swing.plaf.basic.*;
 
 public class MultiComboBox extends TemplatePanel {
 
@@ -65,7 +65,7 @@ public class MultiComboBox extends TemplatePanel {
 //      editor.setBorder(getBorder());
         editor.addMouseListener(new EditorHandler());
         arrowButton = createArrowButton();
-        arrowButton.setBounds(adaptScreen(160,5,30,30));
+        arrowButton.setBounds(adaptScreen(164,5,30,30));
         arrowButton.addMouseListener(new EditorHandler());
         add(editor);
         add(arrowButton);

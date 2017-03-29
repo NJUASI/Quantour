@@ -35,12 +35,12 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
         JLabel lb= new JLabel("板块");
         lb.setForeground(Color.white);
-        lb.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,17));
+        lb.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16));
         lb.setBounds(adaptScreen(200,170,60,40));
         add(lb);
 
         Object[] value = new String[]{"全部", "主板","中小板" , "创业板" };
-        Object[] defaultValue = new String[]{ "" };
+        Object[] defaultValue = new String[]{ "主板","中小板" , "创业板" };
         mulit = new MultiComboBox(value, defaultValue);
         mulit.setBounds(adaptScreen(270,170,200,40));
 //        System.out.println(mulit.getSelectedValues()[0]);
@@ -53,6 +53,21 @@ public class ChooseStrategyPanel extends TemplatePanel {
         datePanel.setBounds(adaptScreen(200 , 370 , 520 , 35));
         add(datePanel);
 
+        JLabel lb1= new JLabel("收益基准");
+        lb1.setForeground(Color.white);
+        lb1.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16));
+        lb1.setBounds(adaptScreen(760,370,80,40));
+        add(lb1);
+
+        JComboBox comboBox=new JComboBox();
+        comboBox.setBounds(adaptScreen(850,370,200,35));
+        comboBox.addItem("沪深300");
+        comboBox.addItem("上证50");
+        comboBox.addItem("中证500");
+        comboBox.addItem("中证1000");
+        comboBox.setEditable(false);
+        comboBox.setToolTipText((String)comboBox.getItemAt(0));
+        add(comboBox);
 
         MyLabel label3=new MyLabel("选择策略") ;
         label3.setLocation(100*width/1920,500*height/1030);
@@ -72,9 +87,11 @@ public class ChooseStrategyPanel extends TemplatePanel {
         group = new ButtonGroup();// 创建单选按钮组
         group.add(radioButton1);// 将radioButton1增加到单选按钮组中
         group.add(radioButton2);// 将radioButton2增加到单选按钮组中
-
-        JButton button= new JButton("12121");
-        button.setBounds(adaptScreen(0,0,100,30));
+//        JPopupMenu jPopupMenu= new JPopupMenu();
+//        jPopupMenu.setBounds(100,100,100,330);
+//        add(jPopupMenu);
+        JButton button= new JButton("开始回测");
+        button.setBounds(adaptScreen(1200,370,80,35));
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -83,6 +100,8 @@ public class ChooseStrategyPanel extends TemplatePanel {
         });
 
         add(button);
+
+
     }
 
     public static ChooseStrategyPanel getInstance(){

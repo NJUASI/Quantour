@@ -1,9 +1,11 @@
 package presentation.view.panel.iteration2;
 
 import presentation.view.panel.TemplatePanel;
+import presentation.view.tools.MyTabUI;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 
 /**
@@ -28,7 +30,9 @@ public class AnalysePanel extends TemplatePanel {
         p2.setLayout(null);
         p2.add(s2);
         JPanel p3 = new JPanel();
+        p3.setBackground(WindowData.getInstance().getColor());
         JPanel p4 = new JPanel();
+        p4.setBackground(WindowData.getInstance().getColor());
 
 
         tab.add(p1,"Panel1");
@@ -38,6 +42,11 @@ public class AnalysePanel extends TemplatePanel {
         tab.setBounds(adaptScreen(0,0,1830,990));
 
         setLayout(null);
+        add(tab);
+        tab.setBackground(WindowData.getInstance().getColor());
+        tab.setForeground(new Color(201, 208, 214));
+        tab.setOpaque(true);
+        tab.setUI(new MyTabUI());
         add(tab);
     }
 
