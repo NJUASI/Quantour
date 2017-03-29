@@ -17,8 +17,9 @@ public class MyLabel extends JLabel {
         setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,16*width/1920));
         if(str.length()==2){
             setSize(60,35);
-        }
-        else if(str.length()==4){
+        }else if(str.length()==3){
+            setSize(80,35);
+        }else if(str.length()==4){
             setSize(100,35);
         }else{
 

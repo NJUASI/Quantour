@@ -34,6 +34,7 @@ public class AnalysePanel extends TemplatePanel {
         JPanel p4 = new JPanel();
         p4.setBackground(WindowData.getInstance().getColor());
 
+        //todo 画各种各样的图！
 
         tab.add(p1,"Panel1");
         tab.add(p2,"Panel2");

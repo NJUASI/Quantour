@@ -33,31 +33,7 @@ public class StrategyPanel extends TemplatePanel{
 
 //        ChooseStrategyPanel chooseStrategyPanel= ChooseStrategyPanel.getInstance();
         StrategySwitchController.getInstance().viewSwitch("chooseStrategyPanel");
-//
-//        JTabbedPane tab = new JTabbedPane(JTabbedPane.TOP);
-//        //容器
-//
-//        //对象化面板
-////        JPanel combop = new JPanel();
-//        JPanel p1 = new JPanel();
-//        JPanel p2 = new JPanel();
-//        JPanel p3 = new JPanel();
-//        JPanel p4 = new JPanel();
-//
-//
-//        tab.add(p1,"Select");
-//        tab.add(p2,"Updata");
-//        tab.add(p3,"Inserte");
-//        tab.add(p4,"Delete");
-//        tab.setBounds(adaptScreen(0,0,1870,1000));
-//
-//        setLayout(null);
-//        add(tab);
-//
-//
-//        cardPanel.add(ChooseStratage.getInstance(),"choosePanel");
-//        cardPanel.add(AnalysePanel.getInstance(),"analysePanel");
-//        card.show(cardPanel,"choosePanel");
+
     }
     public static StrategyPanel getInstance(){
         if(strategyPanel==null){

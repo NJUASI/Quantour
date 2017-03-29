@@ -61,18 +61,18 @@ public class MultiComboBox extends TemplatePanel {
         editor = new JTextField();
         editor.setBackground(Color.white);
         editor.setEditable(false);
-        editor.setBounds(adaptScreen(0,0,160,40));
+        editor.setBounds(adaptScreen(0,0,190,40));
 //      editor.setBorder(getBorder());
         editor.addMouseListener(new EditorHandler());
         arrowButton = createArrowButton();
-        arrowButton.setBounds(adaptScreen(164,5,30,30));
+        arrowButton.setBounds(adaptScreen(194,5,30,30));
         arrowButton.addMouseListener(new EditorHandler());
         add(editor);
         add(arrowButton);
         setText() ;
 
         JLabel lb=new JLabel();
-        lb.setBounds(adaptScreen(0,0,200,40));
+        lb.setBounds(adaptScreen(0,0,240,40));
         lb.setBackground(WindowData.getInstance().getColor());
         lb.setOpaque(true);
         add(lb);
