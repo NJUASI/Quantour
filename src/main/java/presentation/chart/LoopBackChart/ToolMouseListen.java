@@ -18,7 +18,6 @@ public class ToolMouseListen implements ChartMouseListener {
     ChartPanel chartPanel;
     Rectangle2D rectangle2D;
     ValueMarker markerX = null;
-    ValueMarker markerY = null;
 
 
     public ToolMouseListen(ChartPanel chartPanel) {
@@ -36,9 +35,8 @@ public class ToolMouseListen implements ChartMouseListener {
         XYPlot xyplot = chart.getXYPlot();
 
 
-        if (markerX != null && markerY != null) {
+        if (markerX != null) {
             xyplot.clearDomainMarkers();
-            xyplot.clearRangeMarkers();
         }
 
         int mouseX = event.getTrigger().getX();
@@ -49,12 +47,13 @@ public class ToolMouseListen implements ChartMouseListener {
         double yValue = xyplot.getRangeAxis().java2DToValue(point2D.getY(), info.getPlotInfo().getDataArea(), RectangleEdge.RIGHT);
         double xValue = xyplot.getDomainAxis().java2DToValue(point2D.getX(), info.getPlotInfo().getDataArea(), RectangleEdge.BOTTOM);
 
+        System.out.println("X: "+mouseX+" "+"Y: "+mouseY);
+        System.out.println("xValue: "+xValue+" "+"yValue: "+yValue);
         markerX = new ValueMarker(xValue);  // position is the value on the axis
-        markerY = new ValueMarker(yValue);  // position is the value on the axis
+
 
         this.setMyStoke();
         xyplot.addDomainMarker(markerX);
-        xyplot.addRangeMarker(markerY);
 
     }
 
@@ -62,8 +61,6 @@ public class ToolMouseListen implements ChartMouseListener {
         float dashes[] = {4.5f};
         markerX.setPaint(new Color(82, 98, 113));
         markerX.setStroke(new BasicStroke(0.9f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 8.f, dashes, 0.0f));
-        markerY.setPaint(new Color(82, 98, 113));
-        markerY.setStroke(new BasicStroke(0.001f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 8.f, dashes, 0.0f));
 
     }
 }
