@@ -4,15 +4,14 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.ui.RectangleEdge;
-import presentation.chart.Candlestick.ChartTool;
-import presentation.chart.Candlestick.ColorFactory;
-import utilities.exceptions.ColorNotExistException;
+import org.jfree.ui.TextAnchor;
+import presentation.chart.Candlestick.CandlestickChartTool;
 
 import java.awt.*;
 import java.text.NumberFormat;
@@ -22,15 +21,15 @@ import java.time.LocalDate;
 /**
  * Created by Byron Dong on 2017/3/28.
  */
-public class Tool {
+public class LoopBackChartTool {
 
     public static JFreeChart createLoopBackChart(){
-        ChartTool.setChartTheme();
-        JFreeChart chart = ChartFactory.createXYLineChart("","","",Tool.creatDataSet());
+        CandlestickChartTool.setChartTheme();
+        JFreeChart chart = ChartFactory.createXYLineChart("","","", LoopBackChartTool.creatDataSet());
         XYPlot plot = chart.getXYPlot();
-        plot.setRenderer(Tool.getRender());
-        plot.setDomainAxis(Tool.getX());
-        plot.setRangeAxis(Tool.getY());
+        plot.setRenderer(LoopBackChartTool.getRender());
+        plot.setDomainAxis(LoopBackChartTool.getX());
+        plot.setRangeAxis(LoopBackChartTool.getY());
 
         plot.setDomainGridlinesVisible(true);
         plot.setRangeGridlinesVisible(true);
@@ -45,7 +44,6 @@ public class Tool {
         chart.getLegend().setItemPaint(new Color(201, 208, 214));
         chart.getLegend().setBackgroundPaint(new Color(32,36,39));
         chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
-        chart.getLegend().setPosition(RectangleEdge.RIGHT);
         chart.getXYPlot().getDomainAxis().setVisible(true);
         chart.getTitle().setPaint(new Color(201, 208, 214));
         chart.setTextAntiAlias(false);
@@ -55,8 +53,8 @@ public class Tool {
     }
 
 
-    public static XYLineAndShapeRenderer getRender() {
-        XYLineAndShapeRenderer lineAndShapeRenderer = new XYLineAndShapeRenderer();
+    public static LoopBackXYLineRender getRender() {
+        LoopBackXYLineRender lineAndShapeRenderer = new LoopBackXYLineRender();
         lineAndShapeRenderer.setBaseItemLabelsVisible(true);
 
         lineAndShapeRenderer.setSeriesShapesVisible(0, false);
@@ -65,6 +63,9 @@ public class Tool {
         lineAndShapeRenderer.setSeriesPaint(0, new Color(255,0,0));
         lineAndShapeRenderer.setSeriesPaint(1, new Color(39,118,192));
 
+        lineAndShapeRenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE1, TextAnchor.BOTTOM_CENTER));
+        lineAndShapeRenderer.setBaseShapesVisible(false);
+        lineAndShapeRenderer.setSeriesShapesVisible(0,true);
 
         return lineAndShapeRenderer;
     }
@@ -126,8 +127,8 @@ public class Tool {
 
     public static TimeSeriesCollection creatDataSet(){
         TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
-        timeSeriesCollection.addSeries(Tool.createSeries1());
-        timeSeriesCollection.addSeries(Tool.createSeries2());
+        timeSeriesCollection.addSeries(LoopBackChartTool.createSeries1());
+        timeSeriesCollection.addSeries(LoopBackChartTool.createSeries2());
         return timeSeriesCollection;
     }
 

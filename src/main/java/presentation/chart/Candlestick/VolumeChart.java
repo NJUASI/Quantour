@@ -52,8 +52,8 @@ public class VolumeChart {
      */
     public ChartPanel createVolumePanel(){
 
-        XYPlot plot=new XYPlot(this.getVolumeData(),this.xAxis, ChartTool.getY(this.lowVolume,this.highVolume,15),
-                ChartTool.getXYBarRender(ohlcSeriesCollection,candlestickRenderer));
+        XYPlot plot=new XYPlot(this.getVolumeData(),this.xAxis, CandlestickChartTool.getY(this.lowVolume,this.highVolume,15),
+                CandlestickChartTool.getXYBarRender(ohlcSeriesCollection,candlestickRenderer));
         //建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
 
         plot.setDomainGridlinePaint(new Color(44, 50, 54));

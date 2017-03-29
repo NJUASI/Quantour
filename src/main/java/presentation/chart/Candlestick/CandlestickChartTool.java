@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by Byron Dong on 2017/3/21.
  */
-public class ChartTool {
+public class CandlestickChartTool {
 
     /**
      * 设置画笔

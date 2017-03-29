@@ -6,7 +6,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.SegmentedTimeline;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.util.DefaultShadowGenerator;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
@@ -113,8 +112,8 @@ public class CandlestickChart {
     public Panel createAllPanel() throws ColorNotExistException {
 
         Panel chartPanel =  new Panel(null);
-        VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(), ChartTool.getRenderer(),
-                ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
+        VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(), CandlestickChartTool.getRenderer(),
+                CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
         candlestickPanel.setBounds(0,0,1600* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
@@ -130,7 +129,7 @@ public class CandlestickChart {
     }
 
     private JFreeChart createCandlestickChart() throws ColorNotExistException {
-        ChartTool.setChartTheme();
+        CandlestickChartTool.setChartTheme();
 
         JFreeChart candlestickChart = ChartFactory.createCandlestickChart(this.data.get(0).name, "", "",
                 null, true);
@@ -138,7 +137,7 @@ public class CandlestickChart {
         candlestickChart.setTextAntiAlias(false);
         XYPlot plot = candlestickChart.getXYPlot();
         plot.setDataset(0, this.getCandlestickData());
-        plot.setRenderer(0, ChartTool.getRenderer());
+        plot.setRenderer(0, CandlestickChartTool.getRenderer());
         plot = averageChart.set(plot);
 
 
@@ -149,8 +148,8 @@ public class CandlestickChart {
         plot.setDomainGridlineStroke(new BasicStroke());
         plot.setRangeGridlineStroke(new BasicStroke());
 
-        plot.setDomainAxis(ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
-        plot.setRangeAxis(ChartTool.getY(this.low,this.high,30));//y轴的密度
+        plot.setDomainAxis(CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
+        plot.setRangeAxis(CandlestickChartTool.getY(this.low,this.high,30));//y轴的密度
 
         candlestickChart = this.setChart(candlestickChart);
 

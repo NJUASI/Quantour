@@ -69,7 +69,7 @@ public class AverageChart {
      */
     public XYPlot set(XYPlot plot) throws ColorNotExistException {
         plot.setDataset(1,this.getTimeSeriesCollection());
-        plot.setRenderer(1, ChartTool.getAveragerRender(this.days));
+        plot.setRenderer(1, CandlestickChartTool.getAveragerRender(this.days));
 
         return plot;
     }

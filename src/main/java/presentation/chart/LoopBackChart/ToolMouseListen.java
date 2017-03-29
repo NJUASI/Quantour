@@ -33,7 +33,6 @@ public class ToolMouseListen implements ChartMouseListener {
     public void chartMouseMoved(ChartMouseEvent event) {
         JFreeChart chart = event.getChart();
         XYPlot xyplot = chart.getXYPlot();
-        System.out.println(((XYItemEntity)event.getEntity()));
 
 
         if(markerX!=null&&markerY!=null){
