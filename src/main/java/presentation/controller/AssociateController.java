@@ -1,6 +1,6 @@
 package presentation.controller;
 
-import presentation.view.panel.AssociatePanel;
+import presentation.view.panel.associatePanel.AssociatePanel;
 import service.StockService;
 import service.serviceImpl.StockServiceImpl;
 

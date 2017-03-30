@@ -26,9 +26,9 @@ import java.time.LocalDate;
 public class DoubleDatePickerPanel  extends JFXPanel {
 
     //开始时间
-    private DatePicker startDate;
+    public DatePicker startDate;
     //结束时间
-    private DatePicker endDate;
+    public DatePicker endDate;
     ImageView image;
     Label label1,label2;
     //
@@ -85,7 +85,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 
         startDate = new DatePicker();
         startDate.setValue(LocalDate.of(2014, 4, 29));
-        startDate.setLayoutX(80);
+        startDate.setLayoutX(80*width/1920);
         startDate.setLayoutY(0);
         startDate.setMinSize(width*170/1920,37*height/1030);
         startDate.setPrefSize(width*170/1920,37*height/1030);
@@ -110,7 +110,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         label2.setPrefSize(80*width/1920,35*height/1030);
         label1.setLayoutX(0);
         label1.setLayoutY(0);
-        label2.setLayoutX(270);
+        label2.setLayoutX(270*width/1920);
         label2.setLayoutY(0);
 
 
@@ -159,12 +159,12 @@ public class DoubleDatePickerPanel  extends JFXPanel {
 
         endDate.setDayCellFactory(dayCellFactory);
 
-        startDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                setEndDate(newValue.plusDays(1));
-            }
-        });
+//        startDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+//            @Override
+//            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+//                setEndDate(newValue.plusDays(1));
+//            }
+//        });
     }
 
     public LocalDate getStartDate() {

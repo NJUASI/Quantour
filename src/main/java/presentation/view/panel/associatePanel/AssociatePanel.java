@@ -1,10 +1,9 @@
-package presentation.view.panel;
+package presentation.view.panel.associatePanel;
 
 import presentation.listener.associatePanelListener.ComparePanelChooseListener1;
 import presentation.listener.associatePanelListener.ComparePanelChooseListener2;
 import presentation.listener.associatePanelListener.KStringChooseListener;
 import presentation.listener.associatePanelListener.KeyControlListener;
-import presentation.view.panel.associatePanel.SearchComboBoxModel;
 import presentation.view.tools.WindowData;
 import vo.StockSearchVO;
 

@@ -1,4 +1,4 @@
-package presentation.chart;
+package presentation.chart.Candlestick;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.StandardChartTheme;
@@ -11,6 +11,7 @@ import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleInsets;
+import presentation.chart.tools.MyCandlestickRenderer;
 import utilities.exceptions.ColorNotExistException;
 
 import java.awt.*;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * Created by Byron Dong on 2017/3/21.
  */
-public class ChartTool {
+public class CandlestickChartTool {
 
     /**
      * 设置画笔
@@ -31,14 +32,13 @@ public class ChartTool {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
      */
-    public static CandlestickRenderer getRenderer() {
-        CandlestickRenderer render = new CandlestickRenderer();
+    public static MyCandlestickRenderer getRenderer(OHLCSeriesCollection ohlcSeriesCollection) {
+        MyCandlestickRenderer render = new MyCandlestickRenderer(ohlcSeriesCollection);
         render.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         render.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
         render.setAutoWidthGap(0.001);//设置各个K线图之间的间隔
         render.setUpPaint(new Color(255, 61, 61));//设置股票上涨的K线图颜色
         render.setDownPaint(new Color(15, 195, 81));//设置股票下跌的K线图颜色
-
 
         return render;
     }
@@ -75,19 +75,18 @@ public class ChartTool {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      * @param  seriesCollection 数据集合
-     * @param  candlestickRenderer K线的画笔
      * @return XYBarRenderer 成交量画笔
      */
-    public static XYBarRenderer getXYBarRender(OHLCSeriesCollection seriesCollection, CandlestickRenderer candlestickRenderer){
+    public static XYBarRenderer getXYBarRender(OHLCSeriesCollection seriesCollection){
         XYBarRenderer xyBarRender=new XYBarRenderer(){
 
             private static final long serialVersionUID = 1L;
 
             public Paint getItemPaint(int i, int j){//匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
                 if(seriesCollection.getCloseValue(i,j)>seriesCollection.getOpenValue(i,j)){//收盘价高于开盘价，股票上涨，选用股票上涨的颜色
-                    return candlestickRenderer.getUpPaint();
+                    return new Color(255, 61, 61);
                 }else{
-                    return candlestickRenderer.getDownPaint();
+                    return new Color(15, 195, 81);
                 }
             }};
         xyBarRender.setBarPainter(new StandardXYBarPainter());
@@ -124,6 +123,8 @@ public class ChartTool {
         xAxis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
         xAxis.setLabelPaint(new Color(201, 208, 214));
         xAxis.setTickLabelPaint(new Color(201, 208, 214));
+        xAxis.setAxisLineVisible(true);
+        xAxis.setPositiveArrowVisible(true);
 
         return xAxis;
     }
@@ -145,6 +146,7 @@ public class ChartTool {
         yAxis.setLabelPaint(new Color(201, 208, 214));
         yAxis.setTickLabelPaint(new Color(201, 208, 214));
         yAxis.setAutoRangeIncludesZero(false);
+        yAxis.setAxisLineVisible(true);
 
         return yAxis;
 

@@ -13,10 +13,7 @@ package presentation.view.tools;
 		import org.jfree.chart.ChartFactory;
 		import org.jfree.chart.JFreeChart;
 		import org.jfree.chart.StandardChartTheme;
-		import org.jfree.chart.axis.DateAxis;
-		import org.jfree.chart.axis.DateTickUnit;
-		import org.jfree.chart.axis.DateTickUnitType;
-		import org.jfree.chart.axis.ValueAxis;
+		import org.jfree.chart.axis.*;
 		import org.jfree.chart.block.BlockBorder;
 		import org.jfree.chart.labels.ItemLabelAnchor;
 		import org.jfree.chart.labels.ItemLabelPosition;
@@ -281,7 +278,6 @@ public class ChartUtils {
 		Color lineColor = new Color(31, 121, 170);
 		plot.getDomainAxis().setAxisLinePaint(lineColor);// X坐标轴颜色
 		plot.getDomainAxis().setTickMarkPaint(lineColor);// X坐标轴标记|竖线颜色
-
 	}
 
 	/**

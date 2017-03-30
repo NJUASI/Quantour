@@ -1,29 +1,37 @@
-package test;
+package test2;
 
-import java.text.SimpleDateFormat;
+import po.StockSituationPO;
+
+import java.io.File;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Locale;
 
 /**
- * Created by cuihua on 2017/3/26.
+ * Created by cuihua on 2017/3/28.
  */
 public class MainTest {
 
     public static void main(String[] args) {
-        MainTest obj = new MainTest();
 
         Date before = new Date();
 
-        CsvFileUtil util = new CsvFileUtil();
-        util.handle("C:\\Users\\61990\\Desktop\\股票历史数据ALL.csv");
-
+        CsvFileUtil util = new CsvFileUtil("/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv");
+        util.handle();
 
         Date after = new Date();
+        System.out.println("TOTAL:");
+        MainTest.printDifference(before, after);
 
-        obj.printDifference(before, after);
+
+//        final String fileSeparator = System.getProperty("file.separator");
+//        final String parent = System.getProperty("user.dir") + fileSeparator + "attachments" + fileSeparator;
+//        final String post = ".txt";
+//        final String sourcePath = parent + "stock_records_by_date";
+
     }
 
-
-    public void printDifference(Date startDate, Date endDate){
+    public static void printDifference(Date startDate, Date endDate){
 
         //milliseconds
         long different = endDate.getTime() - startDate.getTime();
@@ -52,6 +60,8 @@ public class MainTest {
                 "%d days, %d hours, %d minutes, %d seconds%n",
                 elapsedDays,
                 elapsedHours, elapsedMinutes, elapsedSeconds);
+        System.out.println();
 
     }
+
 }

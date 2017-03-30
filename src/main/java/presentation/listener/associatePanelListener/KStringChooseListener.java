@@ -1,8 +1,6 @@
 package presentation.listener.associatePanelListener;
 
-import presentation.controller.AssociateController;
 import presentation.controller.KStringPanelController;
-import presentation.view.panel.AssociatePanel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

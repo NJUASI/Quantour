@@ -28,6 +28,16 @@ public class StockSituationPO {
     // 开盘‐收盘大于5% * 上一个交易日收盘价的股票个数（使用收盘价进行计算）
     private int slipingNum;
 
+    public StockSituationPO() {
+        volume = "0";
+        limitUpNum = 0;
+        limitDownNum = 0;
+        surgingNum = 0;
+        slumpingNum = 0;
+        climbingNum = 0;
+        slumpingNum = 0;
+    }
+
     public StockSituationPO(String volume, int limitUpNum, int limitDownNum, int surgingNum, int slumpingNum, int climbingNum, int slipingNum) {
         this.volume = volume;
         this.limitUpNum = limitUpNum;
@@ -46,6 +56,17 @@ public class StockSituationPO {
         this.slumpingNum = Integer.parseInt(info[4]);
         this.climbingNum = Integer.parseInt(info[5]);
         this.slipingNum = Integer.parseInt(info[6]);
+    }
+
+    public StockSituationPO plus(StockSituationPO another) {
+        long newVolume = Long.parseLong(this.getVolume()) + Long.parseLong(another.getVolume());
+        int newLimitUpNum = this.limitUpNum+another.limitUpNum;
+        int newLimitDownNum = this.limitDownNum+another.limitDownNum;
+        int newSurgingNum = this.surgingNum+another.surgingNum;
+        int newSlumpingNum = this.slumpingNum+another.slumpingNum;
+        int newClimbingNum = this.climbingNum+another.climbingNum;
+        int newSlipingNum = this.slipingNum+another.slipingNum;
+        return new StockSituationPO(String.valueOf(newVolume), newLimitUpNum, newLimitDownNum, newSurgingNum, newSlumpingNum, newClimbingNum, newSlipingNum);
     }
 
     public String getVolume() {

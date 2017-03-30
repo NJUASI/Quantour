@@ -1,13 +1,11 @@
-package presentation.chart;
+package presentation.chart.Candlestick;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.*;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.SegmentedTimeline;
 import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.labels.SymbolicXYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.time.Day;
@@ -18,8 +16,8 @@ import org.jfree.data.xy.OHLCDataItem;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.ui.RectangleEdge;
 import presentation.listener.chartMouseListener.CandlestickListener;
-import presentation.view.tools.WindowData;
 import presentation.view.tools.ChartUtils;
+import presentation.view.tools.WindowData;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import utilities.exceptions.*;
@@ -30,6 +28,7 @@ import vo.StockVO;
 import java.awt.*;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -116,12 +115,13 @@ public class CandlestickChart {
     public Panel createAllPanel() throws ColorNotExistException {
 
         Panel chartPanel =  new Panel(null);
-        VolumeChart chart = new VolumeChart(this.data,this.getCandlestickData(),ChartTool.getRenderer(),
-                ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
+        OHLCSeriesCollection ohlcSeriesCollection = this.getCandlestickData();
+
+        VolumeChart chart = new VolumeChart(this.data,ohlcSeriesCollection,CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
-        candlestickPanel.setBounds(0,0,1600* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
-        volumePanel.setBounds(0,600*WindowData.getInstance().getHeight()/1030,1462* WindowData.getInstance().getWidth()/1920,250* WindowData.getInstance().getHeight()/1030);
+        candlestickPanel.setBounds(0,0,1620* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
+        volumePanel.setBounds(48,600*WindowData.getInstance().getHeight()/1030,1600* WindowData.getInstance().getWidth()/1920,250* WindowData.getInstance().getHeight()/1030);
         candlestickPanel.setVisible(true);
         volumePanel.setVisible(true);
 
@@ -133,26 +133,21 @@ public class CandlestickChart {
     }
 
     private JFreeChart createCandlestickChart() throws ColorNotExistException {
-        ChartTool.setChartTheme();
+        CandlestickChartTool.setChartTheme();
 
         JFreeChart candlestickChart = ChartFactory.createCandlestickChart(this.data.get(0).name, "", "",
                 null, true);
         candlestickChart.setAntiAlias(false);
         candlestickChart.setTextAntiAlias(false);
         XYPlot plot = candlestickChart.getXYPlot();
-        plot.setDataset(0, this.getCandlestickData());
-        plot.setRenderer(0, ChartTool.getRenderer());
+        OHLCSeriesCollection ohlcSeriesCollection = this.getCandlestickData();
+        plot.setDataset(0, ohlcSeriesCollection);
+        plot.setRenderer(0, CandlestickChartTool.getRenderer(ohlcSeriesCollection));
         plot = averageChart.set(plot);
 
-        plot.setDomainGridlinesVisible(true);
-        plot.setRangeGridlinesVisible(true);
-        plot.setDomainGridlinePaint(new Color(44, 50, 54));
-        plot.setRangeGridlinePaint(new Color(44, 50, 54));
-        plot.setDomainGridlineStroke(new BasicStroke());
-        plot.setRangeGridlineStroke(new BasicStroke());
-
-        plot.setDomainAxis(ChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
-        plot.setRangeAxis(ChartTool.getY(this.low,this.high,30));//y轴的密度
+        plot = this.setPlot(plot);
+        plot.setDomainAxis(CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
+        plot.setRangeAxis(CandlestickChartTool.getY(this.low,this.high,30));//y轴的密度
 
         candlestickChart = this.setChart(candlestickChart);
 
@@ -164,12 +159,22 @@ public class CandlestickChart {
         chart.getLegend().setItemPaint(new Color(201, 208, 214));
         chart.getLegend().setBackgroundPaint(new Color(32,36,39));
         chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
-        chart.getLegend().setPosition(RectangleEdge.RIGHT);
-        chart.getXYPlot().getDomainAxis().setVisible(true);
+        chart.getLegend().setPosition(RectangleEdge.LEFT);
         chart.getTitle().setPaint(new Color(201, 208, 214));
         chart.setTextAntiAlias(false);
-
+        chart.getXYPlot().getDomainAxis().setVisible(false);
         return chart;
+    }
+
+    private XYPlot setPlot(XYPlot plot){
+        plot.setDomainGridlinesVisible(true);
+        plot.setRangeGridlinesVisible(true);
+        plot.setDomainGridlinePaint(new Color(44, 50, 54));
+        plot.setRangeGridlinePaint(new Color(44, 50, 54));
+        plot.setDomainGridlineStroke(new BasicStroke());
+        plot.setRangeGridlineStroke(new BasicStroke());
+
+        return plot;
     }
 
     /**
