@@ -1,6 +1,6 @@
 package presentation.controller;
 
-import presentation.view.panel.CompareChartPanel;
+
 import presentation.view.panel.ComparePanel;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
