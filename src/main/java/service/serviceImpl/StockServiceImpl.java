@@ -4,6 +4,7 @@ import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
 import service.StockService;
+import utilities.StockCodeHelper;
 import utilities.exceptions.MatchNothingException;
 import vo.StockSearchVO;
 import vo.StockVO;
@@ -120,7 +121,7 @@ public class StockServiceImpl implements StockService {
             Set<String> codes = codeAndName.keySet();
             for (String code:codes) {
                 if(code.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(autoGenericCode(code),codeAndName.get(code));
+                    StockSearchVO vo = new StockSearchVO(StockCodeHelper.format(code),codeAndName.get(code));
                     stockSearchVOs.add(vo);
                 }
             }
@@ -132,7 +133,7 @@ public class StockServiceImpl implements StockService {
             Set<String> names = namesAndCode.keySet();
             for(String name:names){
                 if(name.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(autoGenericCode(namesAndCode.get(name)),name);
+                    StockSearchVO vo = new StockSearchVO(StockCodeHelper.format(namesAndCode.get(name)),name);
                     stockSearchVOs.add(vo);
                 }
             }
@@ -150,19 +151,5 @@ public class StockServiceImpl implements StockService {
 //            }
 //        }
         return  stockSearchVOs;
-    }
-
-
-    /**
-     * 不够位数的在前面补0，保留num的长度位数字
-     * @param code
-     * @return
-     */
-    private String autoGenericCode(String code) {
-
-        String result = "";
-        result = String.format("%0" + 6 + "d", Integer.parseInt(code));
-
-        return result;
     }
 }

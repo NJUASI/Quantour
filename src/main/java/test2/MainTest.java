@@ -1,11 +1,6 @@
 package test2;
 
-import po.StockSituationPO;
-
-import java.io.File;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by cuihua on 2017/3/28.
@@ -22,12 +17,6 @@ public class MainTest {
         Date after = new Date();
         System.out.println("TOTAL:");
         MainTest.printDifference(before, after);
-
-
-//        final String fileSeparator = System.getProperty("file.separator");
-//        final String parent = System.getProperty("user.dir") + fileSeparator + "attachments" + fileSeparator;
-//        final String post = ".txt";
-//        final String sourcePath = parent + "stock_records_by_date";
 
     }
 
