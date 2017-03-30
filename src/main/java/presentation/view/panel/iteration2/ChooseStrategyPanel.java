@@ -41,7 +41,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         setBounds(adaptScreen(0,0,1830,990));
 
         datePanel = new DoubleDatePickerPanel();
-        datePanel.setBounds(adaptScreen(200 , 370 , 525 , 37));
+        datePanel.setBounds(adaptScreen(200 , 370 , 520 , 37));
         add(datePanel);
         //股票池区域
         MyLabel label1=new MyLabel("选股票池") ;
@@ -54,16 +54,25 @@ public class ChooseStrategyPanel extends TemplatePanel {
         lb.setBounds(adaptScreen(200,168,60,40));
         add(lb);
 
+
         Object[] value = new String[]{"全部", "主板","中小板" , "创业板" };
         Object[] defaultValue = new String[]{ "主板","中小板" , "创业板" };
         mulit = new MultiComboBox(value, defaultValue);
         mulit.setBounds(adaptScreen(270,170,230,40));
 //        System.out.println(mulit.getSelectedValues()[0]);
         add(mulit);
+
+        //数据版块
+//        MyLabel label2=new MyLabel("数据选择") ;
+//        label2.setLocation(800*width/1920,100*height/1030);
+//        add(label2);
+//
+
+
         //区间板块
-        MyLabel label2=new MyLabel("回测区间") ;
-        label2.setLocation(100*width/1920,300*height/1030);
-        add(label2);
+        MyLabel label4=new MyLabel("回测区间") ;
+        label4.setLocation(100*width/1920,300*height/1030);
+        add(label4);
 
 
         JLabel lb1= new JLabel("收益基准");

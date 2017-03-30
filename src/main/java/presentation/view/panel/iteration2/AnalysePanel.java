@@ -1,11 +1,14 @@
 package presentation.view.panel.iteration2;
 
+import presentation.controller.StrategySwitchController;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.MyTabUI;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 
 /**
@@ -13,6 +16,7 @@ import java.awt.event.WindowAdapter;
  */
 public class AnalysePanel extends TemplatePanel {
     private static AnalysePanel analysePanel;
+    JLabel title;
     private AnalysePanel(){
         JTabbedPane tab = new JTabbedPane(JTabbedPane.TOP);
 
@@ -40,8 +44,7 @@ public class AnalysePanel extends TemplatePanel {
         tab.add(p2,"Panel2");
         tab.add(p3,"Panel3");
         tab.add(p4,"Panel4");
-        tab.setBounds(adaptScreen(0,0,1830,990));
-
+        tab.setBounds(adaptScreen(0,60,1830,930));
         setLayout(null);
         add(tab);
         tab.setBackground(WindowData.getInstance().getColor());
@@ -49,6 +52,23 @@ public class AnalysePanel extends TemplatePanel {
         tab.setOpaque(true);
         tab.setUI(new MyTabUI());
         add(tab);
+
+        JButton back=new JButton("返回");
+        back.setBounds(adaptScreen(10,10,60,25));
+        back.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*WindowData.getInstance().getWidth()/1920));
+        back.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                StrategySwitchController.getInstance().viewSwitch("chooseStrategyPanel");
+            }
+        });
+        add(back);
+
+        title=new JLabel("动量策略");
+        title.setForeground(new Color(255,255,255));
+        title.setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,17*WindowData.getInstance().getWidth()/1920));
+        title.setBounds(adaptScreen(850,3,120,35));
+        add(title);
     }
 
     public static AnalysePanel getInstance(){
