@@ -61,6 +61,7 @@ public class CandlestickChart {
     //Y轴的结束日期
     private LocalDate end ;
 
+    //均线图对象
     private AverageChart averageChart;
 
     /**
@@ -95,6 +96,15 @@ public class CandlestickChart {
         this.readData(chartShowCriteriaVO);
     }
 
+    /**
+     * 创建单一K线图面板
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @return  ChartPanel K线图容器
+     * @throws CodeNotFoundException
+     */
     public ChartPanel createCandlestickChartPanel() throws ColorNotExistException {
         JFreeChart candlestickChart = this.createCandlestickChart();
         ChartUtils.setAntiAlias(candlestickChart);
@@ -110,6 +120,15 @@ public class CandlestickChart {
         return chartPanel;
     }
 
+    /**
+     * 创建成交量和K线图组合容器
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @return  Panel 成交量和K线图组合容器
+     * @throws CodeNotFoundException
+     */
     public Panel createAllPanel() throws ColorNotExistException {
 
         Panel chartPanel =  new Panel(null);
@@ -130,6 +149,15 @@ public class CandlestickChart {
         return chartPanel;
     }
 
+    /**
+     * 创建K线图对象
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @return  JFreeChart Candlestick对象
+     * @throws CodeNotFoundException
+     */
     private JFreeChart createCandlestickChart() throws ColorNotExistException {
         CandlestickChartTool.setChartTheme();
 
@@ -152,6 +180,15 @@ public class CandlestickChart {
         return candlestickChart;
     }
 
+    /**
+     * 修饰K线图
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @param chart
+     * @return JFreeChart 修饰后的对象
+     */
     private JFreeChart setChart(JFreeChart chart){
         chart.setBackgroundPaint(new Color(32,36,39));
         chart.getLegend().setItemPaint(new Color(201, 208, 214));
@@ -164,6 +201,15 @@ public class CandlestickChart {
         return chart;
     }
 
+    /**
+     * 修饰画板
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @param plot 画板对象
+     * @return XYPlot 修饰后的对象
+     */
     private XYPlot setPlot(XYPlot plot){
         plot.setDomainGridlinesVisible(true);
         plot.setRangeGridlinesVisible(true);
@@ -305,6 +351,7 @@ public class CandlestickChart {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
+     * @param seriesCollection 数据集合
      */
     private void setHighAndLow(OHLCSeriesCollection seriesCollection) {
         int seriesCount = seriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
@@ -329,6 +376,8 @@ public class CandlestickChart {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
+     * @throws IOException
+     * @throws CodeNotFoundException
      */
     private void readData(String code) throws IOException, CodeNotFoundException {
         FirstLastDayVO firstLastDayVO = this.service.getFirstAndLastDay(code);
@@ -344,6 +393,10 @@ public class CandlestickChart {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
+     * @throws DateNotWithinException
+     * @throws IOException
+     * @throws CodeNotFoundException
+     * @throws NoDataWithinException
      */
     private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException {
         data = this.service.getSingleStockRecords(chartShowCriteriaVO);

@@ -16,7 +16,17 @@ import java.time.LocalDate;
  */
 public class TraceBackChartTool {
 
-    public static TraceBackXYLineRenderer getRender(int high, int low) {
+    /**
+     * 设置画笔
+     *
+     * @param  high 最大回测点的高值位置
+     * @param  low 最大会测点的低值位置
+     * @return TraceBackXYLineRenderer 画笔
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     */
+    public TraceBackXYLineRenderer getRender(int high, int low) {
         TraceBackXYLineRenderer lineAndShapeRenderer = new TraceBackXYLineRenderer(high,low);
         lineAndShapeRenderer.setBaseItemLabelsVisible(true);
 
@@ -38,10 +48,10 @@ public class TraceBackChartTool {
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/21
+     * @updateTime 2017/3/30
      * @return  DateAxis
      */
-    public static DateAxis getX (LocalDate start,LocalDate end) {
+    public DateAxis getX (LocalDate start,LocalDate end) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         DateAxis xAxis = new DateAxis();
 
@@ -67,11 +77,13 @@ public class TraceBackChartTool {
     /**
      * 设置Y轴
      *
+     * @param  high 最大回测点的高值位置
+     * @param  low 最大会测点的低值位置
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/11
+     * @updateTime 2017/3/30
      */
-    public static NumberAxis getY(double high , double low){
+    public NumberAxis getY(double high , double low){
         NumberAxis yAxis = new NumberAxis();
 
         yAxis.setAutoRange(false);//不使用自动设定范围

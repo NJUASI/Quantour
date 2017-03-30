@@ -28,11 +28,19 @@ public class VolumeChart {
     //根据要求取出的数据
     private List<StockVO> data;
 
+    //K线数据集合
     private OHLCSeriesCollection ohlcSeriesCollection;
 
-
+    //x轴
     private DateAxis xAxis;
 
+    /**
+     * 初始化
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     */
     public VolumeChart(List<StockVO> data, OHLCSeriesCollection ohlcSeriesCollection,DateAxis xAxis) {
         this.data = data;
         this.ohlcSeriesCollection = ohlcSeriesCollection;
@@ -46,7 +54,7 @@ public class VolumeChart {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
-     * @return XYPlot 成交量画板
+     * @return ChartPanel 成交量容器
      */
     public ChartPanel createVolumePanel(){
 
@@ -79,6 +87,7 @@ public class VolumeChart {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
+     * @param timeSeriesCollection 数据集合
      */
     private void setHighAndLowVolume(TimeSeriesCollection timeSeriesCollection) {
         int seriesCount2 = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个

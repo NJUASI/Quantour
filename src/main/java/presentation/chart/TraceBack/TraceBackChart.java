@@ -11,6 +11,7 @@ import presentation.chart.tools.CandlestickChartTool;
 import presentation.chart.tools.TraceBackChartTool;
 import service.TracebackService;
 import service.serviceImpl.TracebackServiceImpl;
+import utilities.exceptions.CodeNotFoundException;
 import vo.CumulativeReturnVO;
 import vo.TracebackChoiceVO;
 
@@ -24,33 +25,55 @@ import java.util.List;
  */
 public class TraceBackChart {
 
+    //最高比例
     private double high = Double.MIN_VALUE;
 
+    //最低比例
     private double low = Double.MAX_VALUE;
 
+    //逻辑层对象
     private TracebackService tracebackService;
 
+    //策略的数据集合
     private List<CumulativeReturnVO> strategyData;
 
+    //基准的数据集合
     private List<CumulativeReturnVO> baseData;
 
+    //最大回测点的位置
     private List<Integer> traceBackPoint;
 
+    /**
+     * 根据回测的信息载体
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     */
     public TraceBackChart(TracebackChoiceVO tracebackChoiceVO) {
 //        tracebackService = new TracebackServiceImpl();
         tracebackService = new TracebackSeviceStub();
         this.readData(tracebackChoiceVO);
     }
 
+    /**
+     * 创建回测图对象
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @return  JFreeChart TraceBackChart对象
+     */
     public JFreeChart createTracebackChart(){
         CandlestickChartTool.setChartTheme();
+        TraceBackChartTool tool = new TraceBackChartTool();
         JFreeChart traceBackChart = ChartFactory.createTimeSeriesChart("","","",this.getTracebackDataset());
 
         XYPlot plot = traceBackChart.getXYPlot();
-        plot.setRenderer(TraceBackChartTool.getRender(traceBackPoint.get(0),traceBackPoint.get(1)));
-        plot.setDomainAxis(TraceBackChartTool.getX(baseData.get(0).currentDate,
+        plot.setRenderer(tool.getRender(traceBackPoint.get(0),traceBackPoint.get(1)));
+        plot.setDomainAxis(tool.getX(baseData.get(0).currentDate,
                 baseData.get(baseData.size()-1).currentDate));
-        plot.setRangeAxis(TraceBackChartTool.getY(high,low));
+        plot.setRangeAxis(tool.getY(high,low));
 
         this.setPlot(plot);
         this.setTraceBackChart(traceBackChart);
@@ -58,6 +81,14 @@ public class TraceBackChart {
         return traceBackChart;
     }
 
+    /**
+     * 修饰h回测图图
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @param chart 图表对象
+     */
     private void setTraceBackChart(JFreeChart chart){
         chart.setBackgroundPaint(new Color(32,36,39));
         chart.getLegend().setItemPaint(new Color(201, 208, 214));
@@ -68,6 +99,15 @@ public class TraceBackChart {
         chart.setTextAntiAlias(false);
     }
 
+    /**
+     * 修饰画板
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @param plot 画板对象
+     * @return XYPlot 修饰后的对象
+     */
     private void setPlot(XYPlot plot){
         plot.setDomainGridlinesVisible(true);
         plot.setRangeGridlinesVisible(true);
@@ -77,6 +117,14 @@ public class TraceBackChart {
         plot.setRangeGridlineStroke(new BasicStroke());
     }
 
+    /**
+     * 获取回测数据集合
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @Return TimeSeriesCollection 数据集合
+     */
     private TimeSeriesCollection getTracebackDataset(){
 
         TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
@@ -107,6 +155,14 @@ public class TraceBackChart {
         return timeSeriesCollection;
     }
 
+    /**
+     * 获取数据的最高值和最低值(历史)
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     * @param timeSeriesCollection 数据集合
+     */
     private void setHighAndLow(TimeSeriesCollection timeSeriesCollection){
         int seriesCount = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
         for (int i = 0; i < seriesCount; i++) {
@@ -122,12 +178,16 @@ public class TraceBackChart {
         }
     }
 
-
+    /**
+     * 读取数据
+     *
+     * @param tracebackChoiceVO 回测信息载体
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/11
+     */
     private void readData(TracebackChoiceVO tracebackChoiceVO){
         this.strategyData = tracebackService.getStrategyCumulativeReturn(tracebackChoiceVO);
         this.baseData = tracebackService.getBaseCumulativeReturn(tracebackChoiceVO);
     }
-
-
-
 }

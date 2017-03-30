@@ -1,7 +1,6 @@
 package presentation.view.panel;
 
 import presentation.listener.comparePanelListener.*;
-import presentation.view.chart.CompareChartPanel;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;

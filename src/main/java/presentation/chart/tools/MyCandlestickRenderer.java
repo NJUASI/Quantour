@@ -11,6 +11,7 @@ import java.awt.*;
  */
 public class MyCandlestickRenderer extends CandlestickRenderer {
 
+    //k数据集合
     private OHLCSeriesCollection ohlcSeriesCollection;
 
     /**
@@ -49,6 +50,13 @@ public class MyCandlestickRenderer extends CandlestickRenderer {
         this.ohlcSeriesCollection = ohlcSeriesCollection;
     }
 
+    /**
+     * 重写getItemOutLinePaint方法
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/3/30
+     */
     public Paint getItemOutlinePaint(int row, int column) {
         Color color = new Color(255, 61, 61);
         if(ohlcSeriesCollection.getCloseValue(row,column)>ohlcSeriesCollection.getOpenValue(row,column)){

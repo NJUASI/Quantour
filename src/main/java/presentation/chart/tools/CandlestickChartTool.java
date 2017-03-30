@@ -26,6 +26,7 @@ public class CandlestickChartTool {
     /**
      * 设置画笔
      *
+     * @param  ohlcSeriesCollection 数据集合
      * @return CandlestickRenderer 蜡烛图画笔
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
@@ -48,6 +49,7 @@ public class CandlestickChartTool {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
+     * @param days 均线类型
      * @return  XYLineAndShapeRenderer 均线画笔
      * @throws ColorNotExistException 均线类型不存在
      */

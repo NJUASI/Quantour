@@ -129,6 +129,11 @@ public class AverageChart {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
+     * @throws NoDataWithinException
+     * @throws CodeNotFoundException
+     * @throws IOException
+     * @throws DateNotWithinException
+     * @throws DateShortException
      */
     private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws NoDataWithinException, CodeNotFoundException, IOException, DateNotWithinException, DateShortException {
 

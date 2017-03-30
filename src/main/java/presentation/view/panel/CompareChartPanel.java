@@ -11,6 +11,7 @@ import vo.StockComparisionVO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -20,19 +21,19 @@ public class CompareChartPanel extends JPanel {
     CompareChart1 chart1;
     CompareChart2 chart2;
     CompareChart3 chart3;
-    CompareChart4 chart4,chart5,chart6;
-    ChartPanel chartPanel1, chartPanel3,chartPanel4,chartPanel2, chartPanel5,chartPanel6;
+    CompareChart4 chart4, chart5, chart6;
+    ChartPanel chartPanel1, chartPanel3, chartPanel4, chartPanel2, chartPanel5, chartPanel6;
     WindowData windowData;
     JPanel panel;
     int width;
     int height;
     public JTextField s;
 
-    public CompareChartPanel(List<StockComparisionVO> vo){
-        windowData =WindowData.getInstance();
+    public CompareChartPanel(List<StockComparisionVO> vo) {
+        windowData = WindowData.getInstance();
         width = windowData.getWidth();
-        height =windowData.getHeight();
-        setBounds(adaptScreen(0,130,1830,990));
+        height = windowData.getHeight();
+        setBounds(adaptScreen(0, 130, 1830, 990));
         setLayout(null);
 //        panel=new JPanel(null);
 //        scrollPane=new JScrollPane();
@@ -54,11 +55,11 @@ public class CompareChartPanel extends JPanel {
         p3.setBackground(WindowData.getInstance().getColor());
         p3.setLayout(null);
 
-        tab.add(p1,"涨幅跌幅 对数收益方差");
-        tab.add(p2,"收盘价");
-        tab.add(p3,"对数收益率");
+        tab.add(p1, "涨幅跌幅 对数收益方差");
+        tab.add(p2, "收盘价");
+        tab.add(p3, "对数收益率");
 
-        tab.setBounds(adaptScreen(0,0,1830,990));
+        tab.setBounds(adaptScreen(0, 0, 1830, 990));
 
 
 //        chart1 = new CompareChart1(vo);
@@ -69,41 +70,57 @@ public class CompareChartPanel extends JPanel {
 
         chart2 = new CompareChart2(vo);
         chartPanel2 = chart2.createChart();
-        chartPanel2.setBounds(adaptScreen(200,80,600,600));
+        chartPanel2.setBounds(adaptScreen(200, 80, 600, 600));
         chartPanel2.setVisible(true);
         p1.add(chartPanel2);
 
 
         chart3 = new CompareChart3(vo);
         chartPanel3 = chart3.createChart();
-        chartPanel3.setBounds(adaptScreen(800,80,600,600));
+        chartPanel3.setBounds(adaptScreen(800, 80, 600, 600));
         chartPanel3.setVisible(true);
         p1.add(chartPanel3);
 
 
-        chart4 = new CompareChart4(vo.get(0).closes,null,vo.get(0).name,"","收盘价","");
-        chartPanel4= chart4.createChart();
-        chartPanel4.setBounds(adaptScreen(0,200,860,410));
-        chartPanel4.setVisible(true);
-        p2.add(chartPanel4);
+        try {
+            chart4 = new CompareChart4(vo.get(0).closes, null, vo.get(0).name, "", "收盘价", "");
+            chartPanel4 = chart4.createChart(vo.get(0).code);
+            chartPanel4.setBounds(adaptScreen(0, 200, 860, 410));
+            chartPanel4.setVisible(true);
+            p2.add(chartPanel4);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
-        chart5 = new CompareChart4(vo.get(1).closes,null,vo.get(1).name,"","收盘价","");
-        chartPanel5= chart5.createChart();
-        chartPanel5.setBounds(adaptScreen(860,200,860,410));
-        chartPanel5.setVisible(true);
-        p2.add(chartPanel5);
+        try {
+            chart5 = new CompareChart4(vo.get(1).closes, null, vo.get(1).name, "", "收盘价", "");
+            chartPanel5 = chart5.createChart(vo.get(1).code);
+            chartPanel5.setBounds(adaptScreen(860, 200, 860, 410));
+            chartPanel5.setVisible(true);
+            p2.add(chartPanel5);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        chart6 = new CompareChart4(vo.get(0).logarithmicYield,vo.get(1).logarithmicYield,vo.get(0).name,vo.get(1).name,"对数收益率","对数收益率");
-        chartPanel6 = chart6.createChart();
-        chartPanel6.setBounds(adaptScreen(100,30,1500,600));
-        chartPanel6.setVisible(true);
-        p3.add(chartPanel6);
+        try {
+            chart6 = new CompareChart4(vo.get(0).logarithmicYield, vo.get(1).logarithmicYield, vo.get(0).name, vo.get(1).name, "对数收益率", "对数收益率");
+            chartPanel6 = chart6.createChart(vo.get(0).code);
+            chartPanel6.setBounds(adaptScreen(100, 30, 1500, 600));
+            chartPanel6.setVisible(true);
+            p3.add(chartPanel6);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         tab.setBackground(WindowData.getInstance().getColor());
         tab.setForeground(new Color(201, 208, 214));
         tab.setOpaque(true);
+        tab.setBorder(BorderFactory.createEmptyBorder());
         tab.setUI(new MyTabUI());
         add(tab);
 
@@ -119,9 +136,10 @@ public class CompareChartPanel extends JPanel {
      * @author 61990
      * @updateTime 2017/3/7
      */
-    public Rectangle adaptScreen(int x,int y,int width,int height){
-        return new Rectangle(this.width*x/1920,this.height*y/1030,this.width*width/1920,this.height*height/1030);
+    public Rectangle adaptScreen(int x, int y, int width, int height) {
+        return new Rectangle(this.width * x / 1920, this.height * y / 1030, this.width * width / 1920, this.height * height / 1030);
     }
+
     @Override
     public void paintComponent(Graphics g) {
 

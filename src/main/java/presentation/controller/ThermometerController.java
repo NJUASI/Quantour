@@ -1,6 +1,6 @@
 package presentation.controller;
 
-import presentation.view.chart.StockSituationBarChart;
+import presentation.chart.compare.StockSituationBarChart;
 import presentation.view.panel.ThermometerPanel;
 import presentation.view.tools.MyLabel;
 import presentation.view.tools.WindowData;

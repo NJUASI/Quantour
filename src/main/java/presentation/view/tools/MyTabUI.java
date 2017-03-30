@@ -32,8 +32,8 @@ public class MyTabUI extends BasicTabbedPaneUI {
 
     public MyTabUI() {
         selectedColorSet = new ColorSet();
-        selectedColorSet.topGradColor1 =  new Color(37, 41, 44);//选中的最上层
-        selectedColorSet.topGradColor2 =  new Color(37, 41, 44);//选中的第二层
+        selectedColorSet.topGradColor1 = new Color(37, 41, 44);//选中的最上层
+        selectedColorSet.topGradColor2 = new Color(37, 41, 44);//选中的第二层
         selectedColorSet.bottomGradColor1 = new Color(37, 41, 44);//选中的第三层
         selectedColorSet.bottomGradColor2 = new Color(37, 41, 44);//选中的最下层
         defaultColorSet = new ColorSet();
@@ -43,7 +43,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
         defaultColorSet.bottomGradColor2 = new Color(19, 22, 24);
         hoverColorSet = new ColorSet();
         hoverColorSet.topGradColor1 = new Color(37, 41, 44);//鼠标在的时候最上层
-        hoverColorSet.topGradColor2 =  new Color(37, 41, 44);
+        hoverColorSet.topGradColor2 = new Color(37, 41, 44);
         hoverColorSet.bottomGradColor1 = new Color(37, 41, 44);
         hoverColorSet.bottomGradColor2 = new Color(37, 41, 44);
         maxTabHeight = 21;
@@ -58,6 +58,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
     public int getTabRunCount(JTabbedPane pane) {
         return 1;
     }
+
     protected void installDefaults() {
         super.installDefaults();
         RollOverListener l = new RollOverListener();
@@ -73,7 +74,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
 
     protected int calculateTabHeight(int tabPlacement, int tabIndex,
                                      int fontHeight) {
-        return 21;
+        return 25;
     }
 
     protected int calculateTabWidth(int tabPlacement, int tabIndex,
@@ -85,7 +86,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
     }
 
     protected int calculateMaxTabHeight(int tabPlacement) {
-        return 20;
+        return 25;
     }
 
     protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
@@ -98,7 +99,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
         }
     }
 
-    protected void paintTabBackground(Graphics g, int tabPlacement,int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+    protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
         Graphics2D g2d = (Graphics2D) g;
         ColorSet colorSet;
 
@@ -147,10 +148,11 @@ public class MyTabUI extends BasicTabbedPaneUI {
         RoundRectangle2D rect = new RoundRectangle2D.Float(x, y, w, h, 15, 15);
         return a;
     }
+
     protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex,
                                   int x, int y, int w, int h, boolean isSelected) {
         Rectangle rect = getTabBounds(tabIndex, new Rectangle(x, y, w, h));
-         g.setColor(dividerColor);
+        g.setColor(dividerColor);
         Graphics2D g2 = (Graphics2D) g;
         Composite old = g2.getComposite();
         AlphaComposite comp = AlphaComposite.getInstance(
@@ -160,7 +162,9 @@ public class MyTabUI extends BasicTabbedPaneUI {
         g2.drawLine(rect.x + rect.width, 0, rect.x + rect.width, 20);
         g2.setComposite(old);
     }
-    protected void paintContentBorderTopEdge(Graphics g, int tabPlacement, int selectedIndex, int x, int y, int w, int h) {}
+
+    protected void paintContentBorderTopEdge(Graphics g, int tabPlacement, int selectedIndex, int x, int y, int w, int h) {
+    }
 
     protected int getTabLabelShiftY(int tabPlacement, int tabIndex, boolean isSelected) {
         return 0;
@@ -173,24 +177,31 @@ public class MyTabUI extends BasicTabbedPaneUI {
         Color bottomGradColor2;
     }
 
-    private class RollOverListener implements MouseMotionListener,MouseListener {
+    private class RollOverListener implements MouseMotionListener, MouseListener {
         public void mouseDragged(MouseEvent e) {
         }
+
         public void mouseMoved(MouseEvent e) {
             checkRollOver();
         }
+
         public void mouseClicked(MouseEvent e) {
         }
+
         public void mousePressed(MouseEvent e) {
         }
+
         public void mouseReleased(MouseEvent e) {
         }
+
         public void mouseEntered(MouseEvent e) {
             checkRollOver();
         }
+
         public void mouseExited(MouseEvent e) {
             tabPane.repaint();
         }
+
         private void checkRollOver() {
             int currentRollOver = getRolloverTab();
             if (currentRollOver != lastRollOverTab) {
@@ -205,12 +216,15 @@ public class MyTabUI extends BasicTabbedPaneUI {
         public TabbedPaneLayout() {
             MyTabUI.this.super();
         }
+
         protected void calculateTabRects(int tabPlacement, int tabCount) {
             super.calculateTabRects(tabPlacement, tabCount);
             for (int i = 0; i < rects.length; i++) {
                 rects[i].x = rects[i].x + (5 * i);
             }
         }
-        protected void padSelectedTab(int tabPlacement, int selectedIndex) {}
+
+        protected void padSelectedTab(int tabPlacement, int selectedIndex) {
+        }
     }
 }
