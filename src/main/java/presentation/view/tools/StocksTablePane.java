@@ -34,20 +34,9 @@ public class StocksTablePane extends JScrollPane {
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
-        setSize(1500 * width / 1920, 800 * height / 1030);
+        setSize(1400 * width / 1920, 800 * height / 1030);
 
-        //加提示语言
-//        label = new JLabel("当日无股票信息",JLabel.CENTER);
-//        label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
-//        label.setBounds(0 * width / 1920, 0 * height / 1030, 1500 * width / 1920 , 800* height / 1030);
-//        label.setBorder(BorderFactory.createEmptyBorder());
-//        add(label);
-//        label.setVisible(false);
-//
-//        label.setBackground(new Color(32,36,39));
-//        label.setForeground(new Color(201,208,214));
-//        label.setOpaque(true);
-//        label.setVisible(true);
+
         try {
             jTable = new JTable(new StocksTableModel(date));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
@@ -55,8 +44,9 @@ public class StocksTablePane extends JScrollPane {
 //            jTable.setRowHeight (30);//设置每行的高度为30
 //            jTable.setRowMargin (5);//设置相邻两行单元格的距离
 //        table.removeColumn(table.getColumnModel().getColumn(columnIndex));// columnIndex是要删除的列序号
-
-
+            for(int i =2;i<5;i++) {
+                jTable.getColumnModel().getColumn(i).setPreferredWidth(80*width/1920);
+            }
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             jTable.setSelectionBackground(new Color(37,58,84));//设置所选择行的背景色

@@ -4,7 +4,7 @@ import presentation.listener.navigationBarListener.CompareListener;
 //import presentation.listener.navigationBarListener.FavoritesListener;
 import presentation.listener.navigationBarListener.KStringListener;
 import presentation.listener.navigationBarListener.StocksTableListener;
-import presentation.listener.navigationBarListener.ThermometerListener;
+import presentation.listener.navigationBarListener.StrategyListener;
 import presentation.view.tools.customizedButton.MyButton;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
  */
 public class NavigationBar extends TemplatePanel {
     int numOfChoosed;
-    MyButton kString,compare,thermometer,favorites;
+    MyButton kString,compare,stock,strategy;
     private static NavigationBar navigationBar;
 
     /**
@@ -42,26 +42,25 @@ public class NavigationBar extends TemplatePanel {
         add(logo1);
 
         //the door of function 4
-        favorites = new MyButton("stock",1);
-        favorites.setBounds(adaptScreen(3, 100, 84, 110));
-        favorites.addMouseListener(new StocksTableListener());
-        add(favorites);
+        stock = new MyButton("stock",1);
+        stock.setBounds(adaptScreen(3, 100, 84, 110));
+        stock.addMouseListener(new StocksTableListener());
+        add(stock);
 
-        favorites.addMouseListener(new MouseAdapter() {
+        stock.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(numOfChoosed!=1){
 //                    favorites.click2();
                     numOfChoosed=1;
                     whileClicked(numOfChoosed);
-                    TitlePanel.getInstance().setTitle("行情");
                 }
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 if(numOfChoosed!=1){
-                    favorites.moveIn();
+                    stock.moveIn();
 
                 }
             }
@@ -69,7 +68,7 @@ public class NavigationBar extends TemplatePanel {
             @Override
             public void mouseExited(MouseEvent e) {
                 if(numOfChoosed!=1){
-                    favorites.moveOut();
+                    stock.moveOut();
                 }
             }
         });
@@ -86,7 +85,6 @@ public class NavigationBar extends TemplatePanel {
 //                    kString.click2();
                     numOfChoosed=2;
                     whileClicked(numOfChoosed);
-                    TitlePanel.getInstance().setTitle("个股");
                 }
 
             }
@@ -119,7 +117,6 @@ public class NavigationBar extends TemplatePanel {
 //                    compare.click2();
                     numOfChoosed=3;
                     whileClicked(numOfChoosed);
-                    TitlePanel.getInstance().setTitle("对比");
                 }
 
             }
@@ -140,18 +137,16 @@ public class NavigationBar extends TemplatePanel {
             }
         });
         //the door of function 3
-        thermometer = new MyButton("market",1);
-        thermometer.setBounds(adaptScreen(3, 430, 84, 110));
-        thermometer.addMouseListener(new ThermometerListener());
-        add(thermometer);
-        thermometer.addMouseListener(new MouseAdapter() {
+        strategy = new MyButton("market",1);
+        strategy.setBounds(adaptScreen(3, 430, 84, 110));
+        strategy.addMouseListener(new StrategyListener());
+        add(strategy);
+        strategy.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(numOfChoosed!=4){
-//                    thermometer.click2();
                     numOfChoosed=4;
                     whileClicked(numOfChoosed);
-                    TitlePanel.getInstance().setTitle("市场");
                 }
 
             }
@@ -159,16 +154,18 @@ public class NavigationBar extends TemplatePanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if(numOfChoosed!=4){
-                    thermometer.moveIn();
+                    strategy.moveIn();
                 }
             }
             @Override
             public void mouseExited(MouseEvent e) {
                 if(numOfChoosed!=4){
-                    thermometer.moveOut();
+                    strategy.moveOut();
                 }
             }
         });
+
+
         //log out
 //        JButton logout = new JButton("注销");
 //        logout.setBounds(adaptScreen(90, 820, 70, 70));
@@ -193,38 +190,39 @@ public class NavigationBar extends TemplatePanel {
     public void whileClicked(int i){
         switch (i){
             case 1:
-                favorites.click2();
+                stock.click2();
                 kString.moveOut();
+                strategy.moveOut();
                 compare.moveOut();
-                thermometer.moveOut();
                 TitlePanel.getInstance().setTitle("行情");
                 numOfChoosed=1;
                 break;
             case 2:
                 kString.click2();
-                favorites.moveOut();
+                stock.moveOut();
                 compare.moveOut();
-                thermometer.moveOut();
+                strategy.moveOut();
                 TitlePanel.getInstance().setTitle("个股");
                 numOfChoosed=2;
                 break;
             case 3:
-                favorites.moveOut();
+                stock.moveOut();
                 kString.moveOut();
                 compare.click2();
-                thermometer.moveOut();
+                strategy.moveOut();
                 TitlePanel.getInstance().setTitle("对比");
                 numOfChoosed=3;
                 break;
             case 4:
-                thermometer.click2();
-                favorites.moveOut();
+                strategy.click2();
+                stock.moveOut();
                 kString.moveOut();
                 compare.moveOut();
-                TitlePanel.getInstance().setTitle("市场");
+                TitlePanel.getInstance().setTitle("策略");
                 numOfChoosed=4;
 
                 break;
+
             default:
                 break;
         }

@@ -2,6 +2,7 @@ package dataHelper.dataHelperImpl;
 
 import dataHelper.StockDataHelper;
 import po.StockPO;
+import utilities.StockCodeHelper;
 import utilities.enums.Market;
 
 import java.io.*;
@@ -38,7 +39,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
-        return getStockByPath(stockRecordByCodePathPre + backToSimplifiedStockCode(stockCode) + stockRecordPathPost);
+        return getStockByPath(stockRecordByCodePathPre + StockCodeHelper.simplify(stockCode) + stockRecordPathPost);
     }
 
     /**
@@ -67,7 +68,7 @@ public class StockDataHelperImpl implements StockDataHelper {
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                getResourceAsStream(stockRecordByCodePathPre + backToSimplifiedStockCode(stockCode) + stockRecordPathPost)));
+                getResourceAsStream(stockRecordByCodePathPre + StockCodeHelper.simplify(stockCode) + stockRecordPathPost)));
 
         List<StockPO> allResult = getStockRecords(stockCode);
 
@@ -150,15 +151,6 @@ public class StockDataHelperImpl implements StockDataHelper {
 
 
         return result;
-    }
-
-    private String backToSimplifiedStockCode(String stockCode) {
-        char[] parts = stockCode.toCharArray();
-        int i = 0;
-        for (; i < 6; i++) {
-            if (parts[i] != '0') break;
-        }
-        return stockCode.substring(i);
     }
 
 

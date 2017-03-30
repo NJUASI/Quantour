@@ -9,6 +9,7 @@ import dataHelper.dataHelperImpl.SearchDataHelperImpl;
 import dataHelper.dataHelperImpl.StockDataHelperImpl;
 import po.PrivateStockPO;
 import po.StockPO;
+import utilities.StockCodeHelper;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 
@@ -60,7 +61,7 @@ public class StockDaoImpl implements StockDao {
     @Override
     public StockPO getStockData(String stockCode, LocalDate date) throws IOException {
         List<StockPO> result = stockHelper.getStockRecords(date);
-        String modifiedCode = formatStockCode(stockCode);
+        String modifiedCode = StockCodeHelper.format(stockCode);
         for (StockPO stock : result) {
             if (stock.getCode().equals(modifiedCode)) {
                 return stock;
@@ -356,24 +357,6 @@ public class StockDaoImpl implements StockDao {
             reversedList.add(0, dataList.get(i));
         }
         return reversedList;
-    }
-
-    /**
-     * 转换为6位股票代码
-     *
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/18
-     * @param previous 需被格式化的股票代码
-     * @return 标准6位代码
-     */
-    private static String formatStockCode(String previous) {
-        int length = previous.length();
-        StringBuffer result = new StringBuffer(previous);
-        for (int i = length; i < 6; i++) {
-            result.insert(0, "0");
-        }
-        return result.toString();
     }
 
 }

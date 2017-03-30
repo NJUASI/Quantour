@@ -38,7 +38,7 @@ public class ThermometerController {
      * Instantiates a new Thermometer controller.
      */
     private ThermometerController(){
-        thermometerPanel = ThermometerPanel.getInstance();
+//        thermometerPanel = ThermometerPanel.getInstance();
         stockSituationService = new StockSituationServiceImpl();
     }
 
@@ -56,10 +56,10 @@ public class ThermometerController {
      */
     public void search() {
 
-        LocalDate date = thermometerPanel.getDate();
+//        LocalDate date = thermometerPanel.getDate();
         List<PriceRiseOrFallVO> list = null;
         try {
-            list = stockSituationService.getStockStituationData(date);
+            list = stockSituationService.getStockStituationData(LocalDate.now());
         } catch (NoSituationDataException e) {
             JOptionPane.showMessageDialog(thermometerPanel,e.getMessage());
             thermometerPanel.remove(barPanel1);
