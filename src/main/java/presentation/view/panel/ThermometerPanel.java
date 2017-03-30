@@ -33,22 +33,22 @@ public class ThermometerPanel extends TemplatePanel {
      */
     public ThermometerPanel() {
 
-        MyLabel label1=new MyLabel("涨停") ;
+        JLabel label1=new JLabel("涨停") ;
 //        label1.setHorizontalAlignment(SwingConstants.CENTER);
         label1.setBounds(adaptScreen(0,0,40,35));
         add(label1);
 
-        MyLabel label2=new MyLabel("跌停") ;
+        JLabel label2=new JLabel("跌停") ;
         label2.setBounds(adaptScreen(0,0,100,35));
         add(label2);
-        MyLabel label3=new MyLabel("涨幅超过5%") ;
+        JLabel label3=new JLabel("涨幅超过5%") ;
         label3.setBounds(adaptScreen(0,0,100,35));
         add(label3);
-        MyLabel label4=new MyLabel("开盘‐收盘大于5%*" +
+        JLabel label4=new JLabel("开盘‐收盘大于5%*" +
                 "上一个交易日收盘价") ;
         label4.setBounds(adaptScreen(0,0,100,35));
         add(label4);
-        MyLabel label5=new MyLabel("日期") ;
+        JLabel label5=new JLabel("日期") ;
         label5.setBounds(adaptScreen(0,0,100,35));
         add(label5);
 
