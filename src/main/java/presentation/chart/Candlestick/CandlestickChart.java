@@ -120,7 +120,7 @@ public class CandlestickChart {
         VolumeChart chart = new VolumeChart(this.data,ohlcSeriesCollection,CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
-        candlestickPanel.setBounds(0,0,1620* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);
+        candlestickPanel.setBounds(0,0,1620* WindowData.getInstance().getWidth()/1920,595* WindowData.getInstance().getHeight()/1030);
         volumePanel.setBounds(48,600*WindowData.getInstance().getHeight()/1030,1600* WindowData.getInstance().getWidth()/1920,250* WindowData.getInstance().getHeight()/1030);
         candlestickPanel.setVisible(true);
         volumePanel.setVisible(true);

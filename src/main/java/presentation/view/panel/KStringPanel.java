@@ -90,6 +90,10 @@ public class KStringPanel extends TemplatePanel {
         datePanel.setBounds(width * 100 / 1920, height * 50 / 1030, 520 * width / 1920, 35 * height / 1030);
         add(datePanel);
 
+        associatePanel = new AssociatePanel();
+        associatePanel.setVisible(false);
+        add(associatePanel);
+
 
         MyLabel label1=new MyLabel("股票") ;
         label1.setLocation(700*width/1920,50*height/1030);
@@ -121,9 +125,6 @@ public class KStringPanel extends TemplatePanel {
             }
         });
 
-        associatePanel = new AssociatePanel();
-        associatePanel.setVisible(false);
-        add(associatePanel);
 
         //隐藏联想面板
         addMouseListener(new MouseAdapter() {
@@ -299,7 +300,7 @@ public class KStringPanel extends TemplatePanel {
             System.out.println("该均线类型不存在"); //TODO 后期可能会更改
             e.printStackTrace();
         }
-        chartPanel.setBounds(adaptScreen(130,100,1600,850));
+        chartPanel.setBounds(adaptScreen(130,100,1620,850));
         chartPanel.setBackground(new Color(32, 36, 39));
         add(chartPanel);
         chartPanel.repaint();

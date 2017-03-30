@@ -30,7 +30,7 @@ public class StrategyTypePanel extends TemplatePanel {
         add(label2);
 
         comboBox1=new JComboBox();
-        comboBox1.setBounds(adaptScreen(180,50,70,35));
+        comboBox1.setBounds(adaptScreen(180,50,85,35));
         comboBox1.addItem("5");
         comboBox1.addItem("10");
         comboBox1.addItem("20");
@@ -39,13 +39,13 @@ public class StrategyTypePanel extends TemplatePanel {
         comboBox1.setToolTipText((String)comboBox1.getItemAt(0));
         add(comboBox1);
         label3= new MyLabel("天 ");
-        label3.setLocation(260* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
+        label3.setLocation(275* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
         add(label3);
 
 
 
         comboBox2=new JComboBox();
-        comboBox2.setBounds(adaptScreen(180,50,70,35));
+        comboBox2.setBounds(adaptScreen(180,50,85,35));
         comboBox2.addItem("5");
         comboBox2.addItem("10");
         comboBox2.addItem("30");
@@ -55,7 +55,7 @@ public class StrategyTypePanel extends TemplatePanel {
         comboBox2.setVisible(false);
         add(comboBox2);
         label4= new MyLabel("日均线");
-        label4.setLocation(260* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
+        label4.setLocation(275* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
         label4.setVisible(false);
         add(label4);
 
@@ -63,7 +63,7 @@ public class StrategyTypePanel extends TemplatePanel {
         label5.setLocation(400* WindowData.getInstance().getWidth()/1920,0*WindowData.getInstance().getHeight()/1030);
         add(label5);
         comboBox3=new JComboBox();
-        comboBox3.setBounds(adaptScreen(480,50,70,35));
+        comboBox3.setBounds(adaptScreen(480,50,85,35));
         comboBox3.addItem("5");
         comboBox3.addItem("10");
         comboBox3.addItem("20");
@@ -72,14 +72,14 @@ public class StrategyTypePanel extends TemplatePanel {
         comboBox3.setToolTipText((String)comboBox3.getItemAt(0));
         add(comboBox3);
         label7= new MyLabel("天 ");
-        label7.setLocation(560* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
+        label7.setLocation(575* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
         add(label7);
 
         label6= new MyLabel("持有股票");
         label6.setLocation(700* WindowData.getInstance().getWidth()/1920,0*WindowData.getInstance().getHeight()/1030);
         add(label6);
         comboBox4=new JComboBox();
-        comboBox4.setBounds(adaptScreen(780,50,70,35));
+        comboBox4.setBounds(adaptScreen(780,50,85,35));
         comboBox4.addItem("5");
         comboBox4.addItem("10");
         comboBox4.addItem("20");
@@ -88,7 +88,7 @@ public class StrategyTypePanel extends TemplatePanel {
         comboBox4.setToolTipText((String)comboBox3.getItemAt(0));
         add(comboBox4);
         label8= new MyLabel("支 ");
-        label8.setLocation(860* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
+        label8.setLocation(875* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
         add(label8);
 
     }
