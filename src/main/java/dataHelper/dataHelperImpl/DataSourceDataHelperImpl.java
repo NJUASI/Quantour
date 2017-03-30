@@ -1,66 +1,44 @@
-package test2;
+package dataHelper.dataHelperImpl;
 
+import dataHelper.DataSourceDataHelper;
 import po.StockSituationPO;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * Created by cuihua on 2017/3/28.
+ * Created by cuihua on 2017/3/30.
  */
-public class CsvFileUtil {
+public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
-    String sourceFile;
+    @Override
+    public boolean upload(String filePath) throws IOException {
+        CodeDirCreator creator = new CodeDirCreator(filePath);
+        creator.createDir();
 
-    public CsvFileUtil(String sourceFile) {
-        this.sourceFile = sourceFile;
-    }
+        OriginalDataReader reader = new OriginalDataReader(filePath);
+        reader.handle();
 
-    public boolean handle() {
+        DuplicationAdder adder = new DuplicationAdder();
+        adder.handle();
 
+        DateFilesCreator creator2 = new DateFilesCreator();
+        creator2.handle();
 
-        try {
-            Date date11 = new Date();
-            CodeDirCreator creator = new CodeDirCreator(sourceFile);
-            creator.createDir();
-            Date date12 = new Date();
-            MainTest.printDifference(date11, date12);
-
-            Date date21 = new Date();
-            OriginalDataReader reader = new OriginalDataReader(sourceFile);
-            reader.handle();
-            Date date22 = new Date();
-            MainTest.printDifference(date21, date22);
-
-            Date date31 = new Date();
-            DuplicationAdder adder = new DuplicationAdder();
-            adder.handle();
-            Date date32 = new Date();
-            MainTest.printDifference(date31, date32);
-
-            Date date41 = new Date();
-            DateFilesCreator creator2 = new DateFilesCreator();
-            creator2.handle();
-            Date date42 = new Date();
-            MainTest.printDifference(date41, date42);
-
-            Date date51 = new Date();
-            SituationCreator creator3 = new SituationCreator();
-            creator3.handle();
-            Date date52 = new Date();
-            MainTest.printDifference(date51, date52);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        SituationCreator creator3 = new SituationCreator();
+        creator3.handle();
         return true;
     }
 }
 
 
+
+
+/**
+ * 创建stock_records_by_code文件夹
+ */
 class CodeDirCreator {
 
     BufferedReader br;
@@ -115,6 +93,9 @@ class CodeDirCreator {
     }
 }
 
+/**
+ * 读取上传数据源中的数据并写入stock_records_by_code文件夹
+ */
 class OriginalDataReader {
 
     BufferedReader br;
@@ -204,6 +185,9 @@ class OriginalDataReader {
     }
 }
 
+/**
+ * 为stock_records_by_code文件夹中数据写入冗余信息昨日收盘价、昨日复权收盘价
+ */
 class DuplicationAdder {
 
     private BufferedReader br;
@@ -269,6 +253,9 @@ class DuplicationAdder {
 
 }
 
+/**
+ * 创建stock_records_by_date、stock_situation文件夹，将stock_records_by_code中数据按照日期再写一遍
+ */
 class DateFilesCreator {
 
     BufferedReader br;
@@ -338,6 +325,9 @@ class DateFilesCreator {
     }
 }
 
+/**
+ * 为stock_situation文件夹中写入当日的市场温度计
+ */
 class SituationCreator {
 
     final String fileSeparator = System.getProperty("file.separator");
