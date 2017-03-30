@@ -22,10 +22,10 @@ public class StockSituationPO {
     // 跌幅超过5%的股票数（使用复权收盘价进行计算）
     private int slumpingNum;
 
-    // 开盘‐收盘小于‐5% * 上一个交易日收盘价的股票个数（使用收盘价进行计算）
+    // 开盘‐收盘小于‐5% * 上一个交易日收盘价的股票个数（使用收盘价进行计算，负涨）
     private int climbingNum;
 
-    // 开盘‐收盘大于5% * 上一个交易日收盘价的股票个数（使用收盘价进行计算）
+    // 开盘‐收盘大于5% * 上一个交易日收盘价的股票个数（使用收盘价进行计算，正跌）
     private int slipingNum;
 
     public StockSituationPO() {

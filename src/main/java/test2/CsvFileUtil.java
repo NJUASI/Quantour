@@ -139,7 +139,8 @@ class OriginalDataReader {
 
         StringBuffer temp = new StringBuffer();
         while ((thisLine = br.readLine()) != null) {
-            if (thisLine.equals("Serial\tDate\tOpen\tHigh\tLow\tClose\tVolume\tAdj Close\tcode\tname\tmarket")) continue;
+            if (thisLine.equals("Serial\tDate\tOpen\tHigh\tLow\tClose\tVolume\tAdj Close\tcode\tname\tmarket"))
+                continue;
 
             String[] parts = thisLine.split("\t");
 
@@ -159,10 +160,10 @@ class OriginalDataReader {
             parts[1] = year + "-" + month + "-" + day;
 
             // 转化股票交易量单位为手（1手=100股）
-            parts[6] = String.valueOf((int)Double.parseDouble(parts[6]) / 100);
+            parts[6] = String.valueOf((int) Double.parseDouble(parts[6]) / 100);
 
             if (!parts[8].equals(desCode)) {
-                if (!desCode.equals("")){
+                if (!desCode.equals("")) {
                     write(temp);
                     temp.setLength(0);
                 }
@@ -358,10 +359,10 @@ class SituationCreator {
                     LocalDate nowLocalDate = getLocalDateOfFileName(s2);
                     StockSituationPO nowSituation = new StockSituationPO();
 
-                    br = new BufferedReader(new InputStreamReader(new FileInputStream(sourcePath+fileSeparator+s+fileSeparator+s2), "UTF-8"));
+                    br = new BufferedReader(new InputStreamReader(new FileInputStream(sourcePath + fileSeparator + s + fileSeparator + s2), "UTF-8"));
 
                     String thisLine = null;
-                    while ((thisLine = br.readLine())!= null) {
+                    while ((thisLine = br.readLine()) != null) {
                         String[] parts = thisLine.split("\t");
                         nowSituation = nowSituation.plus(calculateRecord(thisLine));
                     }
@@ -376,7 +377,12 @@ class SituationCreator {
 
     private StockSituationPO calculateRecord(String line) throws IOException {
         String[] parts = line.split("\t");
-        double adjRise = Double.valueOf(parts[5]) / Double.valueOf(parts[12]) - 1;
+
+        if (parts[11].equals("-1")){
+            return new StockSituationPO(parts[6], 0, 0, 0, 0, 0, 0);
+        }
+
+        double adjRise = Double.valueOf(parts[7]) / Double.valueOf(parts[12]) - 1;
         double rise = (Double.valueOf(parts[2]) - Double.valueOf(parts[5])) / Double.valueOf(parts[11]);
 
         // 涨停股票数，涨幅超过5%的股票数，开盘‐收盘小于‐5% * 上一个交易日收盘价的股票个数
@@ -384,30 +390,29 @@ class SituationCreator {
         // 跌停股票数，跌幅超过5%的股票数，开盘‐收盘大于5% * 上一个交易日收盘价的股票个数
         int b1 = 0, b2 = 0, b3 = 0;
 
-        if (!parts[11].equals("-1")){// 不是数据源中起始位置，可以计算涨跌幅
-            if (parts[8].contains("ST")) {// ST股票涨跌幅超5%即涨跌停
-                if (adjRise >= 0.05) {
-                    a1 = 1;a2 = 1;
-                } else if (adjRise <= -0.05) {
-                    b1 = 1;b2 = 1;
-                }
-            } else {// 非ST股票
-                // 涨跌停
-                if (adjRise >= 0.1) {
-                    a1 = 1;
-                } else if (adjRise <= -0.1) {
-                    b1 = 1;
-                }
-
-                // 涨跌幅超5%
-                if (adjRise >= 0.05) {
-                    a2 = 1;
-                } else if (adjRise <= 0.05) {
-                    b2 = 1;
-                }
-            }
+        double margin = 0;
+        if (parts[8].contains("ST")) {
+            // ST股票涨跌幅超5%即涨跌停
+            margin = 0.05;
+        } else {
+            margin = 0.1;
         }
 
+        // 涨跌停
+        if (adjRise >= margin) {
+            a1 = 1;
+        } else if (adjRise <= -margin) {
+            b1 = 1;
+        }
+
+        // 涨跌幅超5%
+        if (adjRise > 0.05) {
+            a2 = 1;
+        } else if (adjRise < -0.05) {
+            b2 = 1;
+        }
+
+        // 开盘‐收盘小于‐5% * 上一个交易日收盘价的股票个数
         if (rise < -0.05) {
             a3 = 1;
         } else if (rise > 0.05) {
@@ -415,6 +420,7 @@ class SituationCreator {
         }
 
         return new StockSituationPO(parts[6], a1, b1, a2, b2, a3, b3);
+
     }
 
     private void write(LocalDate localDate, StockSituationPO po) throws IOException {
@@ -432,6 +438,6 @@ class SituationCreator {
 
     private LocalDate getLocalDateOfFileName(String fileName) {
         String[] dateMsg = fileName.split("-");
-        return LocalDate.of(Integer.parseInt(dateMsg[0]), Integer.parseInt(dateMsg[1]), Integer.parseInt(dateMsg[2].substring(0,2)));
+        return LocalDate.of(Integer.parseInt(dateMsg[0]), Integer.parseInt(dateMsg[1]), Integer.parseInt(dateMsg[2].substring(0, 2)));
     }
 }
