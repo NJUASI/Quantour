@@ -76,8 +76,8 @@ public class StockVO {
         this.preAdjClose = po.getPreAdjClose();
 
         if (this.preAdjClose == -1) {
-            this.increase = -1;
-            this.increaseMargin = -1;
+            this.increase = -10000;
+            this.increaseMargin = -10000;
         } else {
             this.increase = po.getAdjClose() - po.getPreAdjClose();
             this.increaseMargin = increase / po.getPreAdjClose();

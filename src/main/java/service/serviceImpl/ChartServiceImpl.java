@@ -231,7 +231,7 @@ public class ChartServiceImpl implements ChartService {
      * @return StockPO的列表
      */
     private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException, DateNotWithinException, NoDataWithinException {
-            return stockDao.getStockData(vo.stockCode, vo.start,vo.end);
+        return stockDao.getStockData(vo.stockCode, vo.start, vo.end);
     }
 
 
