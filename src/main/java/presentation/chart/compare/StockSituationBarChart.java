@@ -1,4 +1,4 @@
-package presentation.view.chart;
+package presentation.chart.compare;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;

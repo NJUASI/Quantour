@@ -1,4 +1,4 @@
-package presentation.view.chart;
+package presentation.chart.compare;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -43,7 +43,7 @@ public class CompareChart4 {
     String name1,name2;
     String y,message;
 
-    CompareChart4( Map<LocalDate,Double> num1,Map<LocalDate,Double> num2,String name1,String name2,String y, String message){
+    public CompareChart4(Map<LocalDate, Double> num1, Map<LocalDate, Double> num2, String name1, String name2, String y, String message){
         this.num1=num1;
         this.num2=num2;
         this.name1=name1;

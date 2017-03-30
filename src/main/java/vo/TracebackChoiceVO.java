@@ -10,16 +10,16 @@ import java.time.LocalDate;
 public class TracebackChoiceVO {
 
     //回测区间的起始时间
-    LocalDate startDate;
+    public LocalDate startDate;
 
     //回测区间的结束时间
-    LocalDate endDate;
+    public LocalDate endDate;
 
     //持有期
-    int holdingPeriod;
+    public int holdingPeriod;
 
     // 形成期  或者  乖离率
-    int formativePeriod;
+    public int formativePeriod;
 
     // 板块
     public Object[] block;

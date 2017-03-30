@@ -1,6 +1,10 @@
-package presentation.view.chart;
+package presentation.view.panel;
 
 import org.jfree.chart.ChartPanel;
+import presentation.chart.compare.CompareChart1;
+import presentation.chart.compare.CompareChart2;
+import presentation.chart.compare.CompareChart3;
+import presentation.chart.compare.CompareChart4;
 import presentation.view.tools.MyTabUI;
 import presentation.view.tools.WindowData;
 import vo.StockComparisionVO;
