@@ -8,11 +8,11 @@ package vo;
 public class RelativeIndexReturnVO {
 
     //正收益周期数
-    int positivePeriod;
+    public int positivePeriod;
 
     //负收益周期数
-    int negativePeriod;
+    public int negativePeriod;
 
     //赢率
-    double strategyWinRate;
+    public double strategyWinRate;
 }

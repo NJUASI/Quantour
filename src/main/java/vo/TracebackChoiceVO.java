@@ -10,21 +10,21 @@ import java.time.LocalDate;
 public class TracebackChoiceVO {
 
     //回测区间的起始时间
-    LocalDate startDate;
+    public LocalDate startDate;
 
     //回测区间的结束时间
-    LocalDate endDate;
+    public LocalDate endDate;
 
     //所选股票池
-    String stockPool;
+    public  String stockPool;
 
     //所选策略类型
-    String strategy;
+    public  String strategy;
 
     //持有期
-    int holdingPeriod;
+    public int holdingPeriod;
 
     //形成期
-    int formativePeriod;
+    public int formativePeriod;
 
 }

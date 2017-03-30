@@ -2,7 +2,7 @@ package presentation.view.panel;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import presentation.chart.Candlestick.CandlestickChart;
+import presentation.chart.candlestick.CandlestickChart;
 import presentation.controller.KStringPanelController;
 import presentation.controller.ViewSwitchController;
 

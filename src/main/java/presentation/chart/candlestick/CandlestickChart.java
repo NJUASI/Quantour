@@ -1,13 +1,11 @@
-package presentation.chart.Candlestick;
+package presentation.chart.candlestick;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.SegmentedTimeline;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
@@ -15,6 +13,7 @@ import org.jfree.data.xy.DefaultOHLCDataset;
 import org.jfree.data.xy.OHLCDataItem;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.ui.RectangleEdge;
+import presentation.chart.tools.CandlestickChartTool;
 import presentation.listener.chartMouseListener.CandlestickListener;
 import presentation.view.tools.ChartUtils;
 import presentation.view.tools.WindowData;
@@ -28,7 +27,6 @@ import vo.StockVO;
 import java.awt.*;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -117,7 +115,7 @@ public class CandlestickChart {
         Panel chartPanel =  new Panel(null);
         OHLCSeriesCollection ohlcSeriesCollection = this.getCandlestickData();
 
-        VolumeChart chart = new VolumeChart(this.data,ohlcSeriesCollection,CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
+        VolumeChart chart = new VolumeChart(this.data,ohlcSeriesCollection, CandlestickChartTool.getX(this.start,this.end,this.getTimeLine(),this.getGap()));
         ChartPanel volumePanel =  chart.createVolumePanel();
         ChartPanel candlestickPanel = this.createCandlestickChartPanel();
         candlestickPanel.setBounds(0,0,1620* WindowData.getInstance().getWidth()/1920,600* WindowData.getInstance().getHeight()/1030);

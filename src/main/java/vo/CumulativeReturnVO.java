@@ -10,8 +10,17 @@ import java.time.LocalDate;
 public class CumulativeReturnVO {
 
     //当天的累计收益率
-    double cumulativeReturn;
+    public double cumulativeReturn;
 
     //当天的日期
-    LocalDate currentDate;
+    public LocalDate currentDate;
+
+    //是否为最大回测点
+    public boolean isTraceBack;
+
+    public CumulativeReturnVO(double cumulativeReturn, LocalDate currentDate, boolean isTraceBack) {
+        this.cumulativeReturn = cumulativeReturn;
+        this.currentDate = currentDate;
+        this.isTraceBack = isTraceBack;
+    }
 }

@@ -35,12 +35,14 @@ import service.ChartService;
  *       </p>
  */
 public class CompareChart4 {
+
     JFreeChart chart;
     ChartPanel chartPanel ;
     ChartService service;
     Map<LocalDate,Double> num1,num2;
     String name1,name2;
     String y,message;
+
     CompareChart4( Map<LocalDate,Double> num1,Map<LocalDate,Double> num2,String name1,String name2,String y, String message){
         this.num1=num1;
         this.num2=num2;
@@ -116,6 +118,7 @@ public class CompareChart4 {
         DateAxis domainAxis = (DateAxis) xyplot.getDomainAxis();
         domainAxis.setAutoTickUnitSelection(false);
         DateTickUnit dateTickUnit = null;
+
         domainAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
 
         int num=dataset.getItemCount(0);

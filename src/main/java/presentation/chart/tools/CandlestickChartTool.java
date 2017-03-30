@@ -1,4 +1,4 @@
-package presentation.chart.Candlestick;
+package presentation.chart.tools;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.StandardChartTheme;
@@ -11,7 +11,6 @@ import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleInsets;
-import presentation.chart.tools.MyCandlestickRenderer;
 import utilities.exceptions.ColorNotExistException;
 
 import java.awt.*;

@@ -77,14 +77,14 @@ public class CandlestickListener implements ChartMouseListener{
        this.setTheme(valueMarker);
         DecimalFormat df=new DecimalFormat("#.000");
         valueMarker.setLabel(df.format(value));
-       valueMarker.setLabelAnchor(RectangleAnchor.BOTTOM);
+       valueMarker.setLabelAnchor(RectangleAnchor.TOP);
     }
 
     private void setYMaker(ValueMarker valueMarker,double value){
         this.setTheme(valueMarker);
         DecimalFormat df=new DecimalFormat("#.000");
         valueMarker.setLabel(df.format(value));
-        valueMarker.setLabelAnchor(RectangleAnchor.RIGHT);
+        valueMarker.setLabelAnchor(RectangleAnchor.LEFT);
 
     }
 

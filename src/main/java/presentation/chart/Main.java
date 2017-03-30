@@ -3,8 +3,10 @@ package presentation.chart;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import presentation.chart.LoopBackChart.LoopBackChartTool;
-import presentation.chart.LoopBackChart.ToolMouseListen;
+import presentation.chart.TraceBack.TraceBackChart;
+import presentation.chart.tools.TraceBackChartTool;
+import presentation.chart.TraceBack.TraceBackListener;
+import vo.TracebackChoiceVO;
 
 import javax.swing.*;
 
@@ -14,13 +16,12 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String []args){
-        JFreeChart chart = LoopBackChartTool.createLoopBackChart();
+        TraceBackChart traceBackChart = new TraceBackChart(new TracebackChoiceVO());
+        JFreeChart chart = traceBackChart.createTracebackChart();
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.addChartMouseListener(new ToolMouseListen(chartPanel));
+        chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));
 
-//        ss.setLayout(new BorderLayout());
-//
-//        ss.add(new ChartPanel(null),BorderLayout.NORTH);
+
         JFrame ee=new JFrame();
         ee.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ee.setSize(750*2,400*2);
