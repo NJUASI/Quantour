@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by Harvey on 2017/3/13.
  */
-public class ThermometerListener extends MouseAdapter{
+public class StrategyListener extends MouseAdapter{
     /**
      * {@inheritDoc}
      *
@@ -18,7 +18,7 @@ public class ThermometerListener extends MouseAdapter{
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        ViewSwitchController.getInstance().viewSwitch("thermometerPanel");
+        ViewSwitchController.getInstance().viewSwitch("strategyPanel");
         KStringPanel.getInstance().associatePanel.setVisible(false);
         ComparePanel.getInstance().associatePanel.setVisible(false);
         ComparePanel.getInstance().associatePanel2.setVisible(false);

@@ -66,7 +66,7 @@ public class StocksTableController {
         }
         stocksTablePanel.label.setVisible(true);
         stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
-        stocksTablePane.setLocation(150 * width / 1920, 120 * height / 1030);
+        stocksTablePane.setLocation(50 * width / 1920, 120 * height / 1030);
         stocksTablePanel.add(stocksTablePane);
         stocksTablePane.repaint();
 

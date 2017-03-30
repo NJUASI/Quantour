@@ -51,7 +51,9 @@ public class AnalysePanel extends TemplatePanel {
         tab.setForeground(new Color(201, 208, 214));
         tab.setOpaque(true);
         tab.setUI(new MyTabUI());
+        tab.setBorder(null);
         add(tab);
+        setBorder(BorderFactory.createEmptyBorder());
 
         JButton back=new JButton("返回");
         back.setBounds(adaptScreen(10,10,60,25));
