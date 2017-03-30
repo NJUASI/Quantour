@@ -51,7 +51,9 @@ public class KStringPanelController {
      * Search. 查找局部信息
      */
     public void search() {
-        searchFunction(false);
+        if(!KStringPanel.getInstance().getStockCode().equals("")){
+            searchFunction(false);
+        }
     }
 
     /**

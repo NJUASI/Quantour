@@ -68,6 +68,7 @@ public class KStringPanel extends TemplatePanel {
         searchTextField = new JTextField();
 
         num = new JTextField();
+        num.setText("");
         searchAll = new JButton("总体信息");
         searchAll.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         search = new JButton("局部信息");
