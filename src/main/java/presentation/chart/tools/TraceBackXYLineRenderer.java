@@ -1,10 +1,19 @@
 package presentation.chart.tools;
 
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRendererState;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.util.LineUtilities;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.ui.RectangleEdge;
+import org.jfree.util.ShapeUtilities;
 
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Created by Byron Dong on 2017/3/28.
@@ -34,7 +43,7 @@ public class TraceBackXYLineRenderer extends XYLineAndShapeRenderer {
      */
     @Override
     public Shape getItemShape(int row, int column) {
-        Shape shape = new Ellipse2D.Double(-3.0, -3.0, 6.0, 6.0);
+        Shape shape = new Ellipse2D.Double(-2.0, -2.0, 10.0, 10.0);
 
         if(row==0&&this.isTraceBack(column)){
             return shape;
@@ -53,11 +62,25 @@ public class TraceBackXYLineRenderer extends XYLineAndShapeRenderer {
     @Override
     public Paint getItemPaint(int row, int column) {
         if(row==0&&this.isTraceBack(column)){
-            return Color.GREEN;
+            return new Color(201, 208, 214);
         }
 
         return lookupSeriesPaint(row);
     }
+
+    protected void drawFirstPassShape(Graphics2D g2, int pass, int series,
+                                      int item, Shape shape) {
+        g2.setStroke(getItemStroke(series, item));
+        if(series==0&&isTraceBack(item)){
+            g2.setPaint(new Color(255, 61, 61));
+
+        }
+        else {
+            g2.setPaint(getItemPaint(series, item));
+        }
+        g2.draw(shape);
+    }
+
 
     /**
      * 判断是否是最大回测点
