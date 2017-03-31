@@ -4,9 +4,8 @@ package presentation.chart;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import presentation.chart.TraceBack.TraceBackChart;
-import presentation.chart.tools.TraceBackChartTool;
 import presentation.chart.TraceBack.TraceBackListener;
-import vo.TracebackChoiceVO;
+import vo.TracebackCriteriaVO;
 
 import javax.swing.*;
 
@@ -16,7 +15,7 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String []args){
-        TraceBackChart traceBackChart = new TraceBackChart(new TracebackChoiceVO());
+        TraceBackChart traceBackChart = new TraceBackChart(new TracebackCriteriaVO());
         JFreeChart chart = traceBackChart.createTracebackChart();
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));

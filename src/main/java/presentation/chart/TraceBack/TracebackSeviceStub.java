@@ -3,7 +3,7 @@ package presentation.chart.TraceBack;
 import service.TracebackService;
 import vo.CumulativeReturnVO;
 import vo.RelativeIndexReturnVO;
-import vo.TracebackChoiceVO;
+import vo.TracebackCriteriaVO;
 import vo.TracebackNumValVO;
 
 import java.time.LocalDate;
@@ -17,14 +17,14 @@ public class TracebackSeviceStub implements TracebackService {
     /**
      * 获取策略累计收益率
      *
-     * @param tracebackChoiceVO 用户所选回测条件
+     * @param tracebackCriteriaVO 用户所选回测条件
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackChoiceVO tracebackChoiceVO) {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) {
         List<CumulativeReturnVO> list = new ArrayList<>();
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,1), 0, false));
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,2), 0.0003, false));
@@ -64,14 +64,14 @@ public class TracebackSeviceStub implements TracebackService {
     /**
      * 获取基准累计收益率
      *
-     * @param tracebackChoiceVO 用户所选回测条件
+     * @param tracebackCriteriaVO 用户所选回测条件
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public List<CumulativeReturnVO> getBaseCumulativeReturn(TracebackChoiceVO tracebackChoiceVO) {
+    public List<CumulativeReturnVO> getBaseCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) {
         List<CumulativeReturnVO> list = new ArrayList<>();
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,1), 0, false));
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,2), 0.0001, false));
@@ -111,28 +111,28 @@ public class TracebackSeviceStub implements TracebackService {
     /**
      * 计算回测中用列表列出的数值型数据，如阿尔法，beta
      *
-     * @param tracebackChoiceVO 用户所选回测条件
+     * @param tracebackCriteriaVO 用户所选回测条件
      * @return TracebackNumValVO 所需的所有数值型数据保存对象
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public TracebackNumValVO getNumericalVal(TracebackChoiceVO tracebackChoiceVO) {
+    public TracebackNumValVO getNumericalVal(TracebackCriteriaVO tracebackCriteriaVO) {
         return null;
     }
 
     /**
      * 计算相对收益指数
      *
-     * @param tracebackChoiceVO 用户所选回测条件
+     * @param tracebackCriteriaVO 用户所选回测条件
      * @return RelativeIndexReturnVO 保存表示相对收益指数的对象，包括正周期数，负周期数和赢率
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public RelativeIndexReturnVO getRelativeIndexReturn(TracebackChoiceVO tracebackChoiceVO) {
+    public RelativeIndexReturnVO getRelativeIndexReturn(TracebackCriteriaVO tracebackCriteriaVO) {
         return null;
     }
 }
