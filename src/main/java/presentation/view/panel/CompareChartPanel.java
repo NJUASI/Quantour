@@ -1,5 +1,6 @@
 package presentation.view.panel;
 
+import javafx.scene.control.DatePicker;
 import org.jfree.chart.ChartPanel;
 import presentation.chart.compare.CompareChart1;
 import presentation.chart.compare.CompareChart2;
@@ -59,7 +60,7 @@ public class CompareChartPanel extends JPanel {
         tab.add(p2, "收盘价");
         tab.add(p3, "对数收益率");
 
-        tab.setBounds(adaptScreen(0, 0, 1830, 990));
+        tab.setBounds(adaptScreen(-2, 0, 1833, 990));
 
 
 //        chart1 = new CompareChart1(vo);

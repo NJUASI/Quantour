@@ -33,8 +33,8 @@ public class TraceBackChartTool {
         lineAndShapeRenderer.setSeriesShapesVisible(0, false);
         lineAndShapeRenderer.setSeriesShapesVisible(1, false);
 
-        lineAndShapeRenderer.setSeriesPaint(0, new Color(255,0,0));
-        lineAndShapeRenderer.setSeriesPaint(1, new Color(39,118,192));
+        lineAndShapeRenderer.setSeriesPaint(0, new Color(255, 61, 61));
+        lineAndShapeRenderer.setSeriesPaint(1, new Color(15, 195, 81));
 
         lineAndShapeRenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE1, TextAnchor.BOTTOM_CENTER));
         lineAndShapeRenderer.setBaseShapesVisible(false);
