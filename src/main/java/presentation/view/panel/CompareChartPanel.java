@@ -33,14 +33,18 @@ public class CompareChartPanel extends JPanel {
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
-        setBounds(adaptScreen(0, 130, 1830, 990));
+        setBounds(adaptScreen(-2, 130, 1830, 990));
         setLayout(null);
-//        panel=new JPanel(null);
-//        scrollPane=new JScrollPane();
-//        scrollPane.add(panel);
-//        panel.setBounds(0,0,1500,800);
-//        panel.setVisible(true);
+
         JTabbedPane tab = new JTabbedPane(JTabbedPane.TOP);
+
+        tab.setBackground(WindowData.getInstance().getColor());
+        tab.setForeground(new Color(201, 208, 214));
+        tab.setOpaque(true);
+        tab.setUI(new MyTabUI());
+
+//        tab.setBorder(BorderFactory.createEmptyBorder());
+        add(tab);
 
         //对象化面板
         JPanel p1 = new JPanel();
@@ -117,13 +121,8 @@ public class CompareChartPanel extends JPanel {
         }
 
 
-        tab.setBackground(WindowData.getInstance().getColor());
-        tab.setForeground(new Color(201, 208, 214));
-        tab.setOpaque(true);
-        tab.setBorder(BorderFactory.createEmptyBorder());
-        tab.setUI(new MyTabUI());
-        add(tab);
 
+        repaint();
         setBorder(BorderFactory.createEmptyBorder());
 
     }

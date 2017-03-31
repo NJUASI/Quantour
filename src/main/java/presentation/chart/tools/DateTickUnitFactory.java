@@ -32,9 +32,9 @@ public class DateTickUnitFactory {
         }else if (num < 60){
             dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 17, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
         }else if (num < 200){
-            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 31, new SimpleDateFormat("yyyy-MM-dd")); // 第二个参数是时间轴间距
+            dateTickUnit = new DateTickUnit(DateTickUnitType.DAY, 52, new SimpleDateFormat("yyyy-MM")); // 第二个参数是时间轴间距
         }else{
-            dateTickUnit = new DateTickUnit(DateTickUnitType.MONTH, 1, new SimpleDateFormat("yyyy-MM")); // 第二个参数是时间轴间距
+            dateTickUnit = new DateTickUnit(DateTickUnitType.MONTH, 6, new SimpleDateFormat("yyyy")); // 第二个参数是时间轴间距
         }
 
         return dateTickUnit;

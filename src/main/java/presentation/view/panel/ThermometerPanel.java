@@ -44,14 +44,15 @@ public class ThermometerPanel extends TemplatePanel {
         JLabel label3=new JLabel("涨幅超过5%") ;
         label3.setBounds(adaptScreen(0,0,100,35));
         add(label3);
-        JLabel label4=new JLabel("开盘‐收盘大于5%*" +
-                "上一个交易日收盘价") ;
+        JLabel label4=new JLabel("跌幅超过5%") ;
         label4.setBounds(adaptScreen(0,0,100,35));
         add(label4);
-        JLabel label5=new JLabel("日期") ;
+        JLabel label5=new JLabel("开盘‐收盘大于5% * 上一个交易日收盘价 ") ;
         label5.setBounds(adaptScreen(0,0,100,35));
         add(label5);
-
+        JLabel label6=new JLabel("开盘‐收盘小于-5% * 上一个交易日收盘价 ") ;
+        label6.setBounds(adaptScreen(0,0,100,35));
+        add(label6);
 
 //        search = new JButton("搜索");
 //        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));

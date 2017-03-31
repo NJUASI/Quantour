@@ -18,7 +18,7 @@ public class CumulativeReturnVO {
     // 是否为最大回测点
     public boolean isTraceBack;
 
-    public CumulativeReturnVO(LocalDate currentDate, double cumulativeReturn, boolean isTraceBack) {
+    public CumulativeReturnVO( double cumulativeReturn,LocalDate currentDate, boolean isTraceBack) {
         this.currentDate = currentDate;
         this.cumulativeReturn = cumulativeReturn;
         this.isTraceBack = isTraceBack;

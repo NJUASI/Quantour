@@ -74,7 +74,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
 
     protected int calculateTabHeight(int tabPlacement, int tabIndex,
                                      int fontHeight) {
-        return 25;
+        return 15*WindowData.getInstance().getWidth()/1380;
     }
 
     protected int calculateTabWidth(int tabPlacement, int tabIndex,
@@ -82,11 +82,11 @@ public class MyTabUI extends BasicTabbedPaneUI {
         int w = super.calculateTabWidth(tabPlacement, tabIndex, metrics);
         int wid = metrics.charWidth('M');
         w += wid * 2;
-        return w;
+        return w*WindowData.getInstance().getWidth()/1380;
     }
 
     protected int calculateMaxTabHeight(int tabPlacement) {
-        return 25;
+        return 15*WindowData.getInstance().getWidth()/1380;
     }
 
     protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {

@@ -44,7 +44,7 @@ public class AnalysePanel extends TemplatePanel {
         tab.add(p2,"Panel2");
         tab.add(p3,"Panel3");
         tab.add(p4,"Panel4");
-        tab.setBounds(adaptScreen(0,60,1830,930));
+        tab.setBounds(adaptScreen(-2,60,1833,930));
         setLayout(null);
         add(tab);
         tab.setBackground(WindowData.getInstance().getColor());
