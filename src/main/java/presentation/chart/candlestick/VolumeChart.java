@@ -9,6 +9,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import presentation.chart.tools.CandlestickChartTool;
+import presentation.listener.chartMouseListener.VolumeChartListener;
 import vo.StockVO;
 
 import java.awt.*;
@@ -76,6 +77,7 @@ public class VolumeChart {
         ChartPanel volumePanel = new ChartPanel(chart);
         volumePanel.setMouseZoomable(true,false);
         volumePanel.setPopupMenu(null);
+        volumePanel.addChartMouseListener(new VolumeChartListener(volumePanel));
         volumePanel.setVisible(true);
 
         return volumePanel;
@@ -119,7 +121,7 @@ public class VolumeChart {
 
         for (StockVO stockVO : this.data) {
             series.add(new Day(stockVO.date.getDayOfMonth(), stockVO.date.getMonth().getValue(), stockVO.date.getYear())
-                    , (int)(Double.parseDouble(stockVO.volume) / 1000));
+                    , Double.parseDouble(stockVO.volume) / 1000);
         }
         timeSeriesCollection.addSeries(series);
         this.setHighAndLowVolume(timeSeriesCollection);

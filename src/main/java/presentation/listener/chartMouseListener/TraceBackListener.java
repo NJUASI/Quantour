@@ -1,4 +1,4 @@
-package presentation.chart.TraceBack;
+package presentation.listener.chartMouseListener;
 
 
 ;import org.jfree.chart.*;
@@ -70,9 +70,9 @@ public class TraceBackListener implements ChartMouseListener {
     }
 
     private void setMyStoke() {
-        float dashes[] = {4.5f};
+        float dashes[] = {21,9,3,9};
         markerX.setPaint(new Color(82, 98, 113));
-        markerX.setStroke(new BasicStroke(0.9f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 8.f, dashes, 0.0f));
+        markerX.setStroke(new BasicStroke(0.9f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 8.f, dashes, 10));
 
     }
 

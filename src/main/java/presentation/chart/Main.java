@@ -4,8 +4,7 @@ package presentation.chart;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import presentation.chart.TraceBack.TraceBackChart;
-import presentation.chart.tools.TraceBackChartTool;
-import presentation.chart.TraceBack.TraceBackListener;
+import presentation.listener.chartMouseListener.TraceBackListener;
 import vo.TracebackChoiceVO;
 
 import javax.swing.*;

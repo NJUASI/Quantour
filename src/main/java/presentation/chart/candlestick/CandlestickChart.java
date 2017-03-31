@@ -110,7 +110,7 @@ public class CandlestickChart {
         ChartUtils.setAntiAlias(candlestickChart);
 
         ChartPanel chartPanel = new ChartPanel(candlestickChart);
-        chartPanel.addChartMouseListener(new CandlestickListener(chartPanel));
+        chartPanel.addChartMouseListener(new CandlestickListener(chartPanel,this.getDate()));
         chartPanel.setPopupMenu(null);
         chartPanel.setMouseZoomable(true,false);
         chartPanel.setMouseWheelEnabled(true);
@@ -221,6 +221,15 @@ public class CandlestickChart {
         return plot;
     }
 
+    private List<LocalDate> getDate(){
+        List<LocalDate> result = new ArrayList<>();
+        for(StockVO stockVO:this.data){
+            result.add(stockVO.date);
+        }
+        return result;
+    }
+
+
     /**
      * 获取合适的日期间隔
      *
@@ -300,49 +309,6 @@ public class CandlestickChart {
         this.setHighAndLow(ohlcSeriesCollection);
 
         return ohlcSeriesCollection;
-    }
-
-    /**
-     * 获取K线数据集合
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/11
-     * @Return OHLCSeriesCollection 数据集合
-     */
-    private OHLCDataset getCandlestickDataset() {
-        List<OHLCDataItem> dataItems = new ArrayList<OHLCDataItem>();
-        DateFormat df = new SimpleDateFormat("y-M-d");
-
-        for (StockVO stockVO : this.data) {
-            Date date = null;
-            try {
-                date = df.parse(stockVO.date.toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            double open = stockVO.open;
-            double high = stockVO.high;
-            double low = stockVO.low;
-            double close = stockVO.close;
-            double volume = Double.parseDouble(stockVO.volume);
-            double adjClose = stockVO.adjClose;
-
-            // adjust data:
-            open = open * adjClose / close;
-            high = high * adjClose / close;
-            low = low * adjClose / close;
-
-            OHLCDataItem item = new OHLCDataItem(date, open, high, low, adjClose, volume);
-            dataItems.add(item);
-        }
-        Collections.reverse(dataItems);
-        OHLCDataItem[] dataSet = dataItems.toArray(new OHLCDataItem[dataItems.size()]);
-        OHLCDataset dataset = new DefaultOHLCDataset("", dataSet);
-
-       this.getCandlestickData();
-
-        return dataset;
     }
 
     /**
