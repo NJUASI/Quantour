@@ -10,10 +10,8 @@ import org.jfree.data.time.TimeSeriesCollection;
 import presentation.chart.tools.CandlestickChartTool;
 import presentation.chart.tools.TraceBackChartTool;
 import service.TracebackService;
-import service.serviceImpl.TracebackServiceImpl;
-import utilities.exceptions.CodeNotFoundException;
 import vo.CumulativeReturnVO;
-import vo.TracebackChoiceVO;
+import vo.TracebackCriteriaVO;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -50,10 +48,10 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(TracebackChoiceVO tracebackChoiceVO) {
+    public TraceBackChart(TracebackCriteriaVO tracebackCriteriaVO) {
 //        tracebackService = new TracebackServiceImpl();
         tracebackService = new TracebackSeviceStub();
-        this.readData(tracebackChoiceVO);
+        this.readData(tracebackCriteriaVO);
     }
 
     /**
@@ -181,13 +179,13 @@ public class TraceBackChart {
     /**
      * 读取数据
      *
-     * @param tracebackChoiceVO 回测信息载体
+     * @param tracebackCriteriaVO 回测信息载体
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(TracebackChoiceVO tracebackChoiceVO){
-        this.strategyData = tracebackService.getStrategyCumulativeReturn(tracebackChoiceVO);
-        this.baseData = tracebackService.getBaseCumulativeReturn(tracebackChoiceVO);
+    private void readData(TracebackCriteriaVO tracebackCriteriaVO){
+        this.strategyData = tracebackService.getStrategyCumulativeReturn(tracebackCriteriaVO);
+        this.baseData = tracebackService.getBaseCumulativeReturn(tracebackCriteriaVO);
     }
 }
