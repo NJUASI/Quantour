@@ -148,7 +148,7 @@ public class KStringPanel extends TemplatePanel {
         //加入比较按钮
         compare.setBounds(adaptScreen(1400, 50, 120, 35));
 
-        System.out.println(datePanel);
+//        System.out.println(datePanel);
         datePanel.startDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {

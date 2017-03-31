@@ -46,7 +46,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
         hoverColorSet.topGradColor2 = new Color(37, 41, 44);
         hoverColorSet.bottomGradColor1 = new Color(37, 41, 44);
         hoverColorSet.bottomGradColor2 = new Color(37, 41, 44);
-        maxTabHeight = 21;
+        maxTabHeight = 25;
         setContentInsets(1);
     }
 
@@ -163,9 +163,6 @@ public class MyTabUI extends BasicTabbedPaneUI {
         g2.setComposite(old);
     }
 
-    protected void paintContentBorderTopEdge(Graphics g, int tabPlacement, int selectedIndex, int x, int y, int w, int h) {
-    }
-
     protected int getTabLabelShiftY(int tabPlacement, int tabIndex, boolean isSelected) {
         return 0;
     }
@@ -222,9 +219,6 @@ public class MyTabUI extends BasicTabbedPaneUI {
             for (int i = 0; i < rects.length; i++) {
                 rects[i].x = rects[i].x + (5 * i);
             }
-        }
-
-        protected void padSelectedTab(int tabPlacement, int selectedIndex) {
         }
     }
 }

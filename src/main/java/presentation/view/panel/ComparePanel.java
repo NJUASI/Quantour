@@ -257,7 +257,6 @@ public class ComparePanel extends TemplatePanel {
         return name2.getText();
     }
 
-
     public void updateJList1(String searchString) {
         associatePanel.updateJList(searchString);
     }
@@ -288,7 +287,7 @@ public class ComparePanel extends TemplatePanel {
         compareChartPanel=new CompareChartPanel(vo);
         compareChartPanel.setVisible(true);
         add(compareChartPanel);
-//        compareChartPanel.repaint();
+        compareChartPanel.repaint();
         repaint();
     }
 
