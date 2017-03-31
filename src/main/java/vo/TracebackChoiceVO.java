@@ -9,25 +9,25 @@ import java.time.LocalDate;
  */
 public class TracebackChoiceVO {
 
-    //回测区间的起始时间
+    // 回测区间的起始时间
     public LocalDate startDate;
 
-    //回测区间的结束时间
+    // 回测区间的结束时间
     public LocalDate endDate;
 
-    //持有期
-    public int holdingPeriod;
-
-    // 形成期  或者  乖离率
+    // 形成期／乖离率
     public int formativePeriod;
+
+    // 持有期
+    public int holdingPeriod;
 
     // 板块
     public Object[] block;
 
     // 基准对比股票
-    public String baseStock;
+    public String baseStockCodew;
 
-    // ==1 动量策略 ==2 均值回归
+    // 1／动量策略，2／均值回归
     public int strategyType ;
 
     // 持有股票数
