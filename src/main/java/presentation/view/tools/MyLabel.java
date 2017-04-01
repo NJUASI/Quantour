@@ -25,4 +25,22 @@ public class MyLabel extends JLabel {
 
         }
     }
+    public MyLabel(String str, int font){
+        setText(str);
+        setBorder(null);
+        width=WindowData.getInstance().getWidth();
+        height=WindowData.getInstance().getHeight();
+        setForeground(new Color(255,255,255));
+        setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,font*width/1920));
+        setVerticalAlignment(SwingConstants.CENTER);
+        if(str.length()==2){
+            setSize(60,40);
+        }else if(str.length()==6){
+            setSize(120,40);
+        }else if(str.length()==4){
+            setSize(100,40);
+        }else{
+
+        }
+    }
 }

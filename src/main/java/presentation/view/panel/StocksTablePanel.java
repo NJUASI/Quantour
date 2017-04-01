@@ -41,6 +41,8 @@ public class StocksTablePanel extends TemplatePanel {
 
     public StocksTablePanel(){
 
+        setBounds(adaptScreen(0,0,1900,1400));
+
         MyLabel label1=new MyLabel("日期") ;
         label1.setLocation(300*width/1920,50*height/1030);
         add(label1);
@@ -63,7 +65,7 @@ public class StocksTablePanel extends TemplatePanel {
 
         label = new JLabel("当日无股票信息",JLabel.CENTER);
         label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
-        label.setBounds(150 * width / 1920, 120 * height / 1030, 1500 * width / 1920 , 800* height / 1030);
+        label.setBounds(0 * width / 1920, 120 * height / 1030, 1920-90 * width / 1920 , 800* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         label.setVisible(false);
         label.setBackground(new Color(32,36,39));
