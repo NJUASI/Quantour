@@ -32,6 +32,7 @@ public class TracebackServiceImplTest {
         //设置tracebackCriteriaVO
         tracebackCriteriaVO = new TracebackCriteriaVO();
         tracebackCriteriaVO.baseStockName = "深发展Ａ";
+//        tracebackCriteriaVO.baseStockName = "深物业A";
         tracebackCriteriaVO.startDate = start;
         tracebackCriteriaVO.endDate = end;
 
@@ -39,7 +40,7 @@ public class TracebackServiceImplTest {
         //设置自选股的股票代码
         stockCodes = new ArrayList<>();
         stockCodes.add("000001");
-        stockCodes.add("000010");
+        stockCodes.add("000011");
     }
 
     @Test
@@ -58,7 +59,7 @@ public class TracebackServiceImplTest {
     public void getCustomizedCumulativeReturn() throws Exception {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = tracebackService.getCustomizedCumulativeReturn(tracebackCriteriaVO,stockCodes);
-        assertEquals(-0.015,cumulativeReturnVOS.get(1).cumulativeReturn,0.001);
+        assertEquals(-0.021,cumulativeReturnVOS.get(1).cumulativeReturn,0.001);
 
     }
 

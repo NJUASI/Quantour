@@ -111,11 +111,6 @@ public class TracebackSeviceStub implements TracebackService {
         return list;
     }
 
-    @Override
-    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) {
-        return null;
-    }
-
     /**
      * 获取基准累计收益率，自选股
      *
