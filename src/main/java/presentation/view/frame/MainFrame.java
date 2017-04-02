@@ -1,17 +1,14 @@
 package presentation.view.frame;
 
 
-import java.awt.Dimension;
-import java.awt.*;
-import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import org.jb2011.lnf.beautyeye.*;
 import presentation.controller.ViewSwitchController;
 import presentation.view.panel.NavigationBar;
 import presentation.view.panel.TitlePanel;
 import presentation.view.tools.BeautyEyeUtil;
 import presentation.view.tools.WindowData;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by 61990 on 2017/3/5.

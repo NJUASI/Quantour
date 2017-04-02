@@ -1,5 +1,8 @@
 package vo;
 
+import utilities.enums.BlockType;
+import utilities.enums.StType;
+
 /**
  * Created by harvey on 17-3-31.
  *
@@ -8,14 +11,14 @@ package vo;
 public class StockPoolCriteriaVO {
 
     /**
-     * 是否包含st,全部为1;剔除st为0;只要st为-1
+     * 是否包含st
      */
-    int hasSt;
+    public StType stType;
 
     /**
      * 基准对比股票代码,可根据此确定股票的板块
      */
-    String baseStockCode;
+    public BlockType blockType;
 
 
 }

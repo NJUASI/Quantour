@@ -1,5 +1,7 @@
 package vo;
 
+import utilities.enums.TracebackStrategy;
+
 import java.time.LocalDate;
 
 /**
@@ -32,17 +34,20 @@ public class TracebackCriteriaVO {
     /**
      * 板块
      */
-    public StockPoolCriteriaVO stockPool;
+    public StockPoolCriteriaVO stockPoolVO;
 
     /**
      * 1／动量策略，2／均值回归
      */
-    public int strategyType ;
+    public TracebackStrategy strategyType ;
 
     /**
      * 持有股票数
      */
     public int holdingNum;
 
-
+    /**
+     * 基准股票的名称，如沪深300
+     */
+    public String baseStockName;
 }

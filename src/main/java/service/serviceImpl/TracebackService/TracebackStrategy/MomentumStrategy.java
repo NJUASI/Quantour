@@ -1,7 +1,6 @@
-package service.serviceImpl.TracebackStrategy;
+package service.serviceImpl.TracebackService.TracebackStrategy;
 
 import vo.CumulativeReturnVO;
-import vo.StockVO;
 import vo.TracebackCriteriaVO;
 
 import java.time.LocalDate;
@@ -38,16 +37,13 @@ public class MomentumStrategy {
     List<String> stockPool;
 
     /**
-     * 当前持有的股票
+     * 当前持有的股票，仅保存股票的代码
      */
-    List<StockVO> curHoldingStocks;
+    List<String> curHoldingStocks;
 
     /**
      * 策略收益率
      */
     List<CumulativeReturnVO> strategyReturn;
 
-    public void setTracebackCriteria(TracebackCriteriaVO vo){
-
-    }
 }

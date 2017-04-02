@@ -5,7 +5,9 @@ import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
 import service.StockService;
 import utilities.StockCodeHelper;
+import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.MatchNothingException;
+import utilities.exceptions.NoDataWithinException;
 import vo.StockSearchVO;
 import vo.StockVO;
 
@@ -151,5 +153,47 @@ public class StockServiceImpl implements StockService {
 //            }
 //        }
         return  stockSearchVOs;
+    }
+
+    /**
+     * 根据股票名称，起始日期，结束日期，获得该股票在此期间的数据
+     *
+     * @param stockCode 股票代码
+     * @param start     起始日期
+     * @param end       结束日期
+     * @return List<StockVO> 该股票信息的列表
+     */
+    @Override
+    public List<StockVO> getOneStockData(String stockCode, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
+        List<StockPO> stockPOS = stockDao.getStockData(stockCode,start,end);
+        return convertStockPO2VO(stockPOS);
+    }
+
+    /**
+     * 根据基准股票名称，起始日期，结束日期，获得该基准股票在此期间的数据
+     *
+     * @param stockName 股票名称
+     * @param start     起始日期
+     * @param end       结束日期
+     * @return List<StockVO> 基准股票信息的列表
+     */
+    @Override
+    public List<StockVO> getBaseStock(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
+        String baseStockCode = searchStock(stockName).get(0).code;
+        System.out.printf(baseStockCode);
+        return getOneStockData(baseStockCode,start,end);
+    }
+
+    /**
+     * 转换stockPO to stockVO
+     * @param stockPOS
+     * @return
+     */
+    private List<StockVO> convertStockPO2VO(List<StockPO> stockPOS) {
+        List<StockVO> stockVOS = new ArrayList<StockVO>();
+        for(int i = 0; i < stockPOS.size(); i++){
+            stockVOS.add(new StockVO(stockPOS.get(i)));
+        }
+        return stockVOS;
     }
 }

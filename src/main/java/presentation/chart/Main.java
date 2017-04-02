@@ -5,17 +5,20 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import presentation.chart.TraceBack.TraceBackChart;
 import presentation.listener.chartMouseListener.TraceBackListener;
-import vo.TracebackChoiceVO;
+import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
+import vo.TracebackCriteriaVO;
 
 import javax.swing.*;
+import java.io.IOException;
 
 /**
  * Created by Byron Dong on 2017/3/21.
  */
 public class Main {
 
-    public static void main(String []args){
-        TraceBackChart traceBackChart = new TraceBackChart(new TracebackChoiceVO());
+    public static void main(String []args) throws DateNotWithinException, NoDataWithinException, IOException {
+        TraceBackChart traceBackChart = new TraceBackChart(new TracebackCriteriaVO());
         JFreeChart chart = traceBackChart.createTracebackChart();
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));

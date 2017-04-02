@@ -1,10 +1,14 @@
 package service;
 
+import com.sun.deploy.trace.Trace;
+import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
 import vo.RelativeIndexReturnVO;
 import vo.TracebackCriteriaVO;
 import vo.TracebackNumValVO;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -26,7 +30,7 @@ public interface TracebackService {
     public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO);
 
     /**
-     * 获取基准累计收益率
+     * 获取基准累计收益率,非自选股
      *
      * @auther Harvey
      * @lastUpdatedBy Harvey
@@ -34,7 +38,15 @@ public interface TracebackService {
      * @param tracebackCriteriaVO 用户所选回测条件
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
-    public List<CumulativeReturnVO> getBaseCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO);
+    public List<CumulativeReturnVO> getBaseCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException;
+
+    /**
+     * 获取基准累计收益率，自选股
+     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param stockCodes 所有自选股的代码
+     * @return List<CumulativeReturnVO> 基准累计收益率的列表
+     */
+    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO,List<String> stockCodes);
 
     /**
      * 计算回测中用列表列出的数值型数据，如阿尔法，beta
