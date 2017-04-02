@@ -108,6 +108,11 @@ public class TracebackSeviceStub implements TracebackService {
         return list;
     }
 
+    @Override
+    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) {
+        return null;
+    }
+
     /**
      * 计算回测中用列表列出的数值型数据，如阿尔法，beta
      *

@@ -29,13 +29,19 @@ public class BlockCriteriaFilter extends StockPoolFilter {
     @Override
     public List<StockPoolVO> meetCriteria(List<StockPoolVO> stocks, StockPoolCriteriaVO vo) {
 
-        if(vo.blockType !=  BlockType.ALL){
+        // 选择ALL时放且只放在第一个位置
+        if(vo.blockTypes.get(0) !=  BlockType.ALL){
             for(int i = 0; i < stocks.size();){
-                if(stocks.get(i).blockType != vo.blockType){
-                    stocks.remove(i);
-                    continue;
+                for (BlockType bt : vo.blockTypes) {
+                    if(stocks.get(i).blockType == bt){
+                        i++;
+                        continue;
+                    }
                 }
-                i++;
+
+                // 此股票没有在期望的板块中
+                stocks.remove(i);
+
             }
         }
         return getNextFilter().meetCriteria(stocks,vo);

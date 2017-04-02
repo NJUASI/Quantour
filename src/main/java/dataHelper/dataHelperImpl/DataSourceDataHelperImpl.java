@@ -187,6 +187,8 @@ class OriginalDataReader {
 
 /**
  * 为stock_records_by_code文件夹中数据写入冗余信息昨日收盘价、昨日复权收盘价
+ *
+ * TODO 冯俊杰：待涨跌的公式正式确定之后，写入涨跌幅，涨跌额
  */
 class DuplicationAdder {
 
