@@ -322,6 +322,18 @@ public class StockServiceImpl implements StockService {
     }
 
     /**
+     * 计算从起始日期到结束日期之间总共有多少天的交易日，包括起始日期和结束日期
+     *
+     * @param start 起始日期
+     * @param end   结束日期
+     * @return 起始日期到结束日期之间总共有多少天的交易日
+     */
+    @Override
+    public int getTradingDays(LocalDate start, LocalDate end) {
+        return 0;
+    }
+
+    /**
      * 转换stockPO to stockVO
      * @param stockPOS
      * @return
