@@ -1,50 +1,215 @@
 package service.serviceImpl.TracebackService.TracebackStrategy;
 
+import service.StockService;
+import service.TracebackService;
+import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TracebackService.AllTracebackStrategy;
+import service.serviceImpl.TracebackService.TracebackServiceImpl;
 import vo.CumulativeReturnVO;
+import vo.StockVO;
 import vo.TracebackCriteriaVO;
 
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 
 /**
  * Created by harvey on 17-3-31.
  */
 public class MomentumStrategy implements AllTracebackStrategy {
 
-    /**
-     * 时间区间的第一天
-     */
-    LocalDate startDate;
+    StockService stockService;
+    TracebackService tracebackService;
+
+    //千元投资
+    final double initInvestment = 1000;
+
+    //当前的剩余投资
+    double currentInvestment;
+
+    public MomentumStrategy() {
+        stockService = new StockServiceImpl();
+        tracebackService = new TracebackServiceImpl();
+        currentInvestment = initInvestment;
+    }
 
     /**
-     * 时间区间的第二天
+     * 根据目标股票池及所给的标准，返回策略的累计收益率
+     *
+     * @param stockPoolCodes      目标股票池所有股票的代码
+     * @param tracebackCriteriaVO 回测的所有标准
+     * @return List<CumulativeReturnVO> 策略的累计收益率
      */
-    LocalDate endDate;
+    @Override
+    public List<CumulativeReturnVO> traceback(List<String> stockPoolCodes, TracebackCriteriaVO tracebackCriteriaVO) {
+
+        List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
+
+        //当前所持有的股票
+        List<String> holdingStocks = new ArrayList<String>();
+
+        //回测区间,从用户所选区间里再选出第一个交易日和最后一个交易日
+        LocalDate start = stockService.getNextTradingDay(tracebackCriteriaVO.startDate,stockPoolCodes);
+        LocalDate end = stockService.getNextTradingDay(tracebackCriteriaVO.endDate,stockPoolCodes);
+
+        int tradingDays = stockService.getTradingDays(start,end);
+
+        //形成期
+        int formativePeriod = tracebackCriteriaVO.formativePeriod;
+        //持有期
+        int holdingPeriod = tracebackCriteriaVO.holdingPeriod;
+
+        //周期数
+        int periodNum = 0;
+
+        //刚好能够均分
+        if(tradingDays%holdingPeriod == 0){
+            periodNum = tradingDays/holdingPeriod;
+        }
+        //不能均分，则周期数+1
+        else{
+            periodNum = tradingDays/holdingPeriod + 1;
+        }
+
+
+
+        //第一个形成期的起始日期
+        LocalDate startOfFormative = stockService.getTradingDayMinus(start, formativePeriod, stockPoolCodes);
+        //第一个形成期的结束日期
+        LocalDate endOfFormative = stockService.getLastTradingDay(start.minusDays(1),stockPoolCodes);
+
+        //第一个持有期的起始日期
+        LocalDate startOfHolding = start;
+        for (int i = 0; i < periodNum; i++ ){
+
+            //持有期所持有的股票
+            holdingStocks = pickStocks(formate(stockPoolCodes,startOfFormative,endOfFormative));
+
+            //持有期的结束日期，根据持有期的起始日期进行计算
+            LocalDate endOfHolding = stockService.getTradingDayPlus(startOfHolding,holdingPeriod,holdingStocks);
+
+            //最后一个周期，直接以最后一个交易日为最后一天
+            if(i == periodNum-1){
+                endOfHolding = end;
+            }
+
+            cumulativeReturnVOS.addAll(computeHoldingPeriod(holdingStocks, start, endOfHolding));
+        }
+
+        return cumulativeReturnVOS;
+    }
 
     /**
-     * 形成期
+     * 计算当前持有期所持有的股票在当前的持有期内每一天的总的累计收益率
+     * @param holdingStocks 当前持有期所持有的股票
+     * @param start 持有期的起始日期，为交易日
+     * @param end 持有期的结束日期，也为交易日
+     * @return
      */
-    int formativePeriod;
+    private List<CumulativeReturnVO> computeHoldingPeriod(List<String> holdingStocks, LocalDate start, LocalDate end) {
+
+        List<CumulativeReturnVO> dailyTotalCumulativeReturn = new ArrayList<CumulativeReturnVO>();
+
+
+
+        return dailyTotalCumulativeReturn;
+    }
 
     /**
-     * 持有期
+     * 对股票排序并挑选股票购买
+     * @param formativePeriodRate 形成期内，目标股票池所有股票的代码与累计收益率的键值对
+     * @return 选取前20%的股票购买 //TODO 目前挑选股票的参数，暂定为取前20%，不知后期是否要做活一点儿
      */
-    int holdingPeriod;
+    private List<String> pickStocks(Map<String, Double> formativePeriodRate) {
+
+       List<String> sortedStockPool = sortStocks(formativePeriodRate);
+
+       int size = formativePeriodRate.size();
+       int topTwentyPercent = 0;
+
+       //将所有的股票分为5组
+       if(size%5 == 0){
+           topTwentyPercent = size/5;
+       }
+       else{
+           topTwentyPercent = size/5+1;
+       }
+
+       //取前1/5，即前20%
+       return  sortedStockPool.subList(0,topTwentyPercent);
+    }
 
     /**
-     * 目标股票池,仅保存stock的code
+     * 对形成期的目标股票池进行排序
+     * @param formativePeriodRate 目标股票池的股票代码与形成期的累计收益率的键值对
+     * @return 经排序后的目标股票池的所有股票的代码 //TODO gcm 排序策略？这里直接按降序排序
      */
-    List<String> stockPool;
+    private List<String> sortStocks(Map<String, Double> formativePeriodRate) {
+        List<String> sortedStockCodes = new ArrayList<String>();
+
+        for(Map.Entry<String, Double> entry: formativePeriodRate.entrySet()){
+
+            //判断是否已经插入
+            boolean isInsert = false;
+
+            for(int i = 0; i < sortedStockCodes.size(); i++){
+                if(sortedStockCodes.size() == 0){
+                    sortedStockCodes.add(entry.getKey());
+                }
+                else {
+                    if(entry.getValue() > formativePeriodRate.get(sortedStockCodes.get(i))){
+                        sortedStockCodes.add(i,entry.getKey());
+                        isInsert = true;
+                    }
+                }
+            }
+
+            //未插入，说明最小，则加在最后
+            if(!isInsert){
+                sortedStockCodes.add(entry.getKey());
+            }
+        }
+
+        return sortedStockCodes;
+    }
 
     /**
-     * 当前持有的股票，仅保存股票的代码
+     * 计算某一时期的所选股票列表内的所有股票的累计收益率，股票代码与累计收益率键值对
+     * @param stockCodes 股票列表
+     * @param start 形成期起始日期
+     * @param end 形成期结束日期
+     * @return
      */
-    List<String> curHoldingStocks;
+    private Map<String,Double> formate(List<String> stockCodes, LocalDate start, LocalDate end){
 
-    /**
-     * 策略收益率
-     */
-    List<CumulativeReturnVO> strategyReturn;
+        Map<String,Double> formativePeriodRate = new TreeMap<String, Double>();
 
+        for(int i = 0; i < stockCodes.size(); i++){
+            formativePeriodRate.computeIfAbsent(stockCodes.get(i), new Function<String, Double>() {
+                /**
+                 * 根据股票代码及形成期的起始时间，计算该股票的累计收益率
+                 * @param stockCode 股票代码
+                 * @return Double 该股票形成期内的累计收益率
+                 */
+                @Override
+                public Double apply(String stockCode) {
+                    //因为该股票可能在形成期起始或者结束日期停牌，故寻找此区间内该股票的起始和停牌日期
+                    LocalDate thisStockStartDay = stockService.getNextTradingDay(start,stockCode);
+                    LocalDate thisStockEndDay = null;
+                    try {
+                         thisStockEndDay = stockService.getLastTradingDay(end,stockCode);
+                    } catch (IOException e) {
+                    }
+
+                    StockVO startVO =  stockService.getOneStockDataOneDay(stockCode, thisStockStartDay);
+                    StockVO endVO = stockService.getOneStockDataOneDay(stockCode, thisStockEndDay);
+
+                    return (endVO.close - startVO.close) / startVO.close;
+                }
+            });
+        }
+
+        return formativePeriodRate;
+    }
 }

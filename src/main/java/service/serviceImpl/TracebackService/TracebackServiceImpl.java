@@ -88,7 +88,7 @@ public class TracebackServiceImpl implements TracebackService {
         String stockName = tracebackCriteriaVO.baseStockName;
         List<StockVO> baseStock = stockService.getBaseStockData(stockName,start,end);
 
-        return getCumulativeReturnOfOneStock(baseStock,start);
+        return maxRetracement(getCumulativeReturnOfOneStock(baseStock,start));
     }
 
     /**
@@ -198,7 +198,7 @@ public class TracebackServiceImpl implements TracebackService {
     /**
      *
      * @param list 单一股票的信息
-     * @param start 因为起始日期可能不是交易日，但是还是以起始日期为准
+     * @param start 因为起始日期可能不是交易日，但是还是以起始日期为准 //TODO 在日期上，先把周末的日期挖掉,不让用户可以选择周末的日期
      * @return List<CumulativeReturnVO> 单一股票在时间区间内的累计收益率
      */
     private List<CumulativeReturnVO> getCumulativeReturnOfOneStock(List<StockVO> list,LocalDate start){
@@ -219,7 +219,7 @@ public class TracebackServiceImpl implements TracebackService {
             cumulativeReturnVOS.add(new CumulativeReturnVO(list.get(i).date, cumulativeReturn, false));
         }
 
-        return maxRetracement(cumulativeReturnVOS);
+        return cumulativeReturnVOS;
     }
 
 
