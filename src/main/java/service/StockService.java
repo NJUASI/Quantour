@@ -2,6 +2,8 @@ package service;
 
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
+import vo.StockPoolCriteriaVO;
+import vo.StockPoolVO;
 import vo.StockSearchVO;
 import vo.StockVO;
 
@@ -110,4 +112,12 @@ public interface StockService{
      * @return LocalDate
      */
     LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException;
+
+    /**
+     * 根据股票池的选择标准，选择符合标准的股票池 非自选股调用此方法
+     * @param stockPoolVO 股票池的选择标准
+     * @return List<String> 符合标准的股票池中所有股票的股票代码
+     */
+    List<String> getStockPool(StockPoolCriteriaVO stockPoolVO);
+
 }

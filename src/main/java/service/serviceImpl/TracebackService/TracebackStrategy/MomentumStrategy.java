@@ -1,5 +1,6 @@
 package service.serviceImpl.TracebackService.TracebackStrategy;
 
+import service.serviceImpl.TracebackService.AllTracebackStrategy;
 import vo.CumulativeReturnVO;
 import vo.TracebackCriteriaVO;
 
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by harvey on 17-3-31.
  */
-public class MomentumStrategy {
+public class MomentumStrategy implements AllTracebackStrategy {
 
     /**
      * 时间区间的第一天

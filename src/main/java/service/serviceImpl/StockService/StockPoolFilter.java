@@ -1,10 +1,11 @@
-package service.serviceImpl.TracebackService;
+package service.serviceImpl.StockService;
 
-import service.serviceImpl.TracebackService.StockPoolFilters.BlockCriteriaFilter;
-import service.serviceImpl.TracebackService.StockPoolFilters.StCriteriaFilter;
+import service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
+import service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
 import vo.StockPoolCriteriaVO;
 import vo.StockPoolVO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,4 +69,5 @@ public class StockPoolFilter {
         //设置责任链
         blockCriteriaFilter.setNextFilter(stCriteriaFilter);
     }
+
 }

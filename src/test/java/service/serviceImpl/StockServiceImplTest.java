@@ -3,6 +3,7 @@ package service.serviceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import service.StockService;
+import service.serviceImpl.StockService.StockServiceImpl;
 import vo.StockVO;
 
 import java.time.LocalDate;

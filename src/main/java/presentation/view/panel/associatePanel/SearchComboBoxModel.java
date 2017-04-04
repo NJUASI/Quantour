@@ -1,12 +1,10 @@
 package presentation.view.panel.associatePanel;
 
 import service.StockService;
-import service.serviceImpl.StockServiceImpl;
-import utilities.exceptions.MatchNothingException;
+import service.serviceImpl.StockService.StockServiceImpl;
 import vo.StockSearchVO;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

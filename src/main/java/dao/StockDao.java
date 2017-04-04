@@ -4,6 +4,7 @@ import po.PrivateStockPO;
 import po.StockPO;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
+import vo.StockPoolVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -193,4 +194,10 @@ public interface StockDao {
      * @return LocalDate
      */
     LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException;
+
+    /**
+     * 获取所有股票的版块有关的信息
+     * @return 所有股票的版块有关的信息
+     */
+    List<StockPoolVO> getAllStockPool();
 }

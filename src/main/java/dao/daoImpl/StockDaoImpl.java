@@ -12,6 +12,7 @@ import po.StockPO;
 import utilities.StockCodeHelper;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
+import vo.StockPoolVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -307,6 +308,17 @@ public class StockDaoImpl implements StockDao {
     @Override
     public LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException {
         return stockHelper.getLastTradingDay(date, stockCode);
+    }
+
+    /**
+     * 获取所有股票的版块有关的信息
+     *
+     * @return 所有股票的版块有关的信息
+     */
+    @Override
+    public List<StockPoolVO> getAllStockPool() {
+        //TODO gcm 待实现，因为数据里面没有带版块的信息
+        return null;
     }
 
     /**

@@ -1,7 +1,7 @@
 package presentation.view.tools;
 
 import service.StockService;
-import service.serviceImpl.StockServiceImpl;
+import service.serviceImpl.StockService.StockServiceImpl;
 import vo.StockVO;
 
 import javax.swing.table.AbstractTableModel;

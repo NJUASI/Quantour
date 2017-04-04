@@ -2,7 +2,7 @@ package presentation.controller;
 
 import presentation.view.panel.associatePanel.AssociatePanel;
 import service.StockService;
-import service.serviceImpl.StockServiceImpl;
+import service.serviceImpl.StockService.StockServiceImpl;
 
 import java.awt.event.KeyEvent;
 

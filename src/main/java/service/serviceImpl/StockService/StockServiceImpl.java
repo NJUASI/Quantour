@@ -1,4 +1,4 @@
-package service.serviceImpl;
+package service.serviceImpl.StockService;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
@@ -7,6 +7,8 @@ import service.StockService;
 import utilities.StockCodeHelper;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
+import vo.StockPoolCriteriaVO;
+import vo.StockPoolVO;
 import vo.StockSearchVO;
 import vo.StockVO;
 
@@ -25,9 +27,12 @@ import java.util.*;
 public class StockServiceImpl implements StockService {
 
     StockDao stockDao;
+    private StockPoolFilter stockPoolFilter;
+
 
     public StockServiceImpl() {
         stockDao = new StockDaoImpl();
+        stockPoolFilter = new StockPoolFilter();
     }
 
     /**
@@ -219,6 +224,25 @@ public class StockServiceImpl implements StockService {
     @Override
     public LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException {
         return stockDao.getLastTradingDay(date, stockCode);
+    }
+
+    /**
+     * 根据股票池的选择标准，选择符合标准的股票池 非自选股调用此方法
+     *
+     * @param stockPoolCriteriaVO 股票池的选择标准
+     * @return List<String> 符合标准的股票池中所有股票的股票代码
+     */
+    @Override
+    public List<String> getStockPool(StockPoolCriteriaVO stockPoolCriteriaVO) {
+        List<String> stockPoolCodes = new ArrayList<String>();
+        List<StockPoolVO> allStockPool = stockDao.getAllStockPool();
+
+        for(StockPoolVO vo : allStockPool){
+            stockPoolCodes.add(vo.stockCode);
+        }
+
+        return stockPoolCodes;
+
     }
 
     /**

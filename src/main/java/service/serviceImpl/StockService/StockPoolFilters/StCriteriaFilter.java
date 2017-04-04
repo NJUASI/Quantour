@@ -1,7 +1,6 @@
-package service.serviceImpl.TracebackService.StockPoolFilters;
+package service.serviceImpl.StockService.StockPoolFilters;
 
-import service.serviceImpl.TracebackService.StockPoolFilter;
-import utilities.enums.StType;
+import service.serviceImpl.StockService.StockPoolFilter;
 import vo.StockPoolCriteriaVO;
 import vo.StockPoolVO;
 

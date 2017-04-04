@@ -2,7 +2,9 @@ package service.serviceImpl.TracebackService;
 
 import service.StockService;
 import service.TracebackService;
-import service.serviceImpl.StockServiceImpl;
+import service.serviceImpl.StockService.StockPoolFilter;
+import service.serviceImpl.StockService.StockServiceImpl;
+import utilities.enums.TracebackStrategy;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.*;
@@ -21,11 +23,8 @@ public class TracebackServiceImpl implements TracebackService {
 
     private StockService stockService;
 
-    private StockPoolFilter stockPoolFilter;
-
     public TracebackServiceImpl() {
         stockService = new StockServiceImpl();
-        stockPoolFilter = new StockPoolFilter();
     }
 
 
@@ -41,20 +40,34 @@ public class TracebackServiceImpl implements TracebackService {
      */
     @Override
     public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) {
-        
-        return null;
+        //TODO gcm 需要下面的一个接口 还未实现
+
+        //获取目标股票池
+        List<String> stockPool = stockService.getStockPool(tracebackCriteriaVO.stockPoolVO);
+
+        //确定策略
+        AllTracebackStrategy tracebackStrategy = TracebackStrategyFactory.createTracebackStrategy(tracebackCriteriaVO.strategyType);
+
+        //回测
+        return tracebackStrategy.traceback(stockPool,tracebackCriteriaVO);
     }
 
     /**
      * 获取策略累计收益率，自选股票池
      *
      * @param tracebackCriteriaVO 用户所选回测条件
-     * @param stockCodes 策略累计收益率的列表
+     * @param stockCodes 自选股票池所有股票的代码
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
     @Override
     public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) {
-        return null;
+
+        //确定策略
+        AllTracebackStrategy tracebackStrategy = TracebackStrategyFactory.createTracebackStrategy(tracebackCriteriaVO.strategyType);
+
+        //回测
+        return tracebackStrategy.traceback(stockCodes,tracebackCriteriaVO);
+
     }
 
     /**
