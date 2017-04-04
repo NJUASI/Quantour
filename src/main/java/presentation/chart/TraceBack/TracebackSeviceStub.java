@@ -65,16 +65,19 @@ public class TracebackSeviceStub implements TracebackService {
     }
 
     /**
-     * 获取基准累计收益率
+     * 获取策略累计收益率，自选股票池
      *
      * @param tracebackCriteriaVO 用户所选回测条件
-     * @return List<CumulativeReturnVO> 基准累计收益率的列表
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/28
+     * @param stockCodes          策略累计收益率的列表
+     * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
     @Override
-    public List<CumulativeReturnVO> getBaseCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) {
+        return null;
+    }
+
+    @Override
+    public List<CumulativeReturnVO> getBaseCumulativeReturn(LocalDate start, LocalDate end, String stockName) {
         List<CumulativeReturnVO> list = new ArrayList<>();
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,1), 0, false));
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,2), 0.0001, false));
@@ -111,15 +114,8 @@ public class TracebackSeviceStub implements TracebackService {
         return list;
     }
 
-    /**
-     * 获取基准累计收益率，自选股
-     *
-     * @param tracebackCriteriaVO 用户所选回测条件
-     * @param stockCodes          所有自选股的代码
-     * @return List<CumulativeReturnVO> 基准累计收益率的列表
-     */
     @Override
-    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(LocalDate start, LocalDate end, List<String> stockCodes) throws IOException, NoDataWithinException, DateNotWithinException {
         return null;
     }
 

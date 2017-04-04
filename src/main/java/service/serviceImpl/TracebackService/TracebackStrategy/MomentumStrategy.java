@@ -5,6 +5,8 @@ import service.TracebackService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TracebackService.AllTracebackStrategy;
 import service.serviceImpl.TracebackService.TracebackServiceImpl;
+import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
 import vo.StockVO;
 import vo.TracebackCriteriaVO;
@@ -26,12 +28,12 @@ public class MomentumStrategy implements AllTracebackStrategy {
     final double initInvestment = 1000;
 
     //当前的剩余投资
-    double currentInvestment;
+    double cumulativeReturn;
 
     public MomentumStrategy() {
         stockService = new StockServiceImpl();
         tracebackService = new TracebackServiceImpl();
-        currentInvestment = initInvestment;
+        cumulativeReturn = initInvestment;
     }
 
     /**
@@ -42,7 +44,7 @@ public class MomentumStrategy implements AllTracebackStrategy {
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
     @Override
-    public List<CumulativeReturnVO> traceback(List<String> stockPoolCodes, TracebackCriteriaVO tracebackCriteriaVO) {
+    public List<CumulativeReturnVO> traceback(List<String> stockPoolCodes, TracebackCriteriaVO tracebackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 
@@ -94,6 +96,13 @@ public class MomentumStrategy implements AllTracebackStrategy {
                 endOfHolding = end;
             }
 
+
+            List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(holdingStocks, start, end);
+            //第一个周期，第一天的累计收益率置为0
+            if(i == 0){
+                cumulatives.get(0).cumulativeReturn = 0;
+            }
+
             cumulativeReturnVOS.addAll(computeHoldingPeriod(holdingStocks, start, endOfHolding));
         }
 
@@ -101,19 +110,29 @@ public class MomentumStrategy implements AllTracebackStrategy {
     }
 
     /**
-     * 计算当前持有期所持有的股票在当前的持有期内每一天的总的累计收益率
+     * 计算当前持有期所持有的股票在当前的持有期内每一天相对于回测区间起始日期的总的累计收益率
      * @param holdingStocks 当前持有期所持有的股票
-     * @param start 持有期的起始日期，为交易日
+     * @param start 持有期的起始日期的前一个交易日,由于第一天相对第一天为0,则应多往前计算一天,
      * @param end 持有期的结束日期，也为交易日
      * @return
      */
-    private List<CumulativeReturnVO> computeHoldingPeriod(List<String> holdingStocks, LocalDate start, LocalDate end) {
+    private List<CumulativeReturnVO> computeHoldingPeriod(List<String> holdingStocks, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
 
-        List<CumulativeReturnVO> dailyTotalCumulativeReturn = new ArrayList<CumulativeReturnVO>();
+        //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
+        List<CumulativeReturnVO> dailyTotalCumulativeReturn = tracebackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
 
+        List<CumulativeReturnVO> cumulativeReturn = new ArrayList<CumulativeReturnVO>();
 
+        //从1开始计数，因为日期多往前算了一天
+        for(int i = 1; i < dailyTotalCumulativeReturn.size(); i++){
+            LocalDate date = dailyTotalCumulativeReturn.get(i).currentDate;
+            double rate = dailyTotalCumulativeReturn.get(i).cumulativeReturn;
 
-        return dailyTotalCumulativeReturn;
+            this.cumulativeReturn = this.cumulativeReturn *(1+rate);
+            cumulativeReturn.add(new CumulativeReturnVO(date, (rate - initInvestment) / initInvestment, false));
+        }
+
+        return cumulativeReturn;
     }
 
     /**

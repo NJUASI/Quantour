@@ -189,6 +189,6 @@ public class TraceBackChart {
      */
     private void readData(TracebackCriteriaVO tracebackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException {
         this.strategyData = tracebackService.getStrategyCumulativeReturn(tracebackCriteriaVO);
-        this.baseData = tracebackService.getBaseCumulativeReturn(tracebackCriteriaVO);
+        this.baseData = tracebackService.getBaseCumulativeReturn(tracebackCriteriaVO.startDate,tracebackCriteriaVO.endDate,tracebackCriteriaVO.baseStockName);
     }
 }
