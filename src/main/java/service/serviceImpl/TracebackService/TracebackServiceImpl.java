@@ -21,10 +21,15 @@ public class TracebackServiceImpl implements TracebackService {
 
     private StockService stockService;
 
+    private StockPoolFilter stockPoolFilter;
+
     public TracebackServiceImpl() {
         stockService = new StockServiceImpl();
+        stockPoolFilter = new StockPoolFilter();
     }
 
+
+    //TODO gcm 看看自选股和非自选股可否分开两个类，帮忙看
     /**
      * 获取策略累计收益率
      *
@@ -36,6 +41,19 @@ public class TracebackServiceImpl implements TracebackService {
      */
     @Override
     public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) {
+        
+        return null;
+    }
+
+    /**
+     * 获取策略累计收益率，自选股票池
+     *
+     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param stockCodes 策略累计收益率的列表
+     * @return List<CumulativeReturnVO> 策略累计收益率的列表
+     */
+    @Override
+    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) {
         return null;
     }
 
@@ -97,7 +115,6 @@ public class TracebackServiceImpl implements TracebackService {
                 if(everyCumulativeReturnVOs.get(j).containsKey(start.plusDays(i))){
                     totalCumulativeReturn += everyCumulativeReturnVOs.get(j).get(start.plusDays(i)).cumulativeReturn;
                     notSuspended += 1;
-                    //访问的脚标+1
                 }
             }
             //未停牌的股票支数不为0,则说明当天有数据
@@ -128,7 +145,7 @@ public class TracebackServiceImpl implements TracebackService {
         for(int i = 1; i < list.size(); i++) {
             double sucClose = list.get(i).close;
             double cumulativeReturn = (sucClose - closeOfFirstDay) / closeOfFirstDay;
-            //TODO gcm 先将所有的最大回测点设为false
+            //先将所有的最大回测点设为false
             map.put(list.get(i).date,new CumulativeReturnVO(list.get(i).date, cumulativeReturn, false));
         }
 
@@ -185,7 +202,7 @@ public class TracebackServiceImpl implements TracebackService {
         for(int i = 1; i < list.size(); i++) {
             double sucClose = list.get(i).close;
             double cumulativeReturn = (sucClose - closeOfFirstDay) / closeOfFirstDay;
-            //TODO gcm 先将所有的最大回测点设为false
+            //先将所有的最大回测点设为false
             cumulativeReturnVOS.add(new CumulativeReturnVO(list.get(i).date, cumulativeReturn, false));
         }
 
@@ -194,9 +211,9 @@ public class TracebackServiceImpl implements TracebackService {
 
 
     /**
-     *
+     * 计算最大回撤点
      * @param cumulativeReturnVOS 未计算最大回测的累计收益率
-     * @return List<CumulativeReturnVO> 标记了两个最大回测点的累计收益率，标记点的isTraceBack为true
+     * @return List<CumulativeReturnVO> 标记了两个最大回撤点的累计收益率，标记点的isTraceBack为true
      */
     private List<CumulativeReturnVO> maxRetracement(List<CumulativeReturnVO> cumulativeReturnVOS){
 

@@ -18,7 +18,7 @@ import java.util.List;
 public interface TracebackService {
 
     /**
-     * 获取策略累计收益率
+     * 获取策略累计收益率，非自选
      *
      * @auther Harvey
      * @lastUpdatedBy Harvey
@@ -27,6 +27,15 @@ public interface TracebackService {
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
     public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO);
+
+
+    /**
+     * 获取策略累计收益率，自选股票池
+     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param stockCodes 策略累计收益率的列表
+     * @return List<CumulativeReturnVO> 策略累计收益率的列表
+     */
+    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TracebackCriteriaVO tracebackCriteriaVO,List<String> stockCodes);
 
     /**
      * 获取基准累计收益率,非自选股
