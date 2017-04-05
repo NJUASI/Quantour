@@ -6,8 +6,11 @@ import javafx.scene.control.DatePicker;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
 import javafx.util.Callback;
 
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 
 /**
@@ -27,6 +30,7 @@ public class SingleDatePickerPanel extends JFXPanel {
     public SingleDatePickerPanel(){
         int width= WindowData.getInstance().getWidth();
         int height= WindowData.getInstance().getHeight();
+        setBorder(BorderFactory.createEmptyBorder());
 
         Platform.runLater(new Runnable() {
             @Override
@@ -52,7 +56,8 @@ public class SingleDatePickerPanel extends JFXPanel {
                                         if (item.isBefore(LocalDate.of(2005,1,31))||item.isAfter(LocalDate.of(2014,4,29))
                                                 ) {
                                             setDisable(true);
-                                            setStyle("-fx-background-color: #ffc0cb;");
+                                            setStyle("-fx-background-color: #424B54;"+
+                                                    "-fx-text-fill: #1C2023");
                                         }
                                     }
                                 };

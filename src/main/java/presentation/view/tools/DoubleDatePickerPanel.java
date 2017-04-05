@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 import javafx.util.Callback;
 
 
-
+import javax.swing.*;
 import java.awt.Color;
 import java.time.LocalDate;
 
@@ -133,6 +133,8 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                                 if (item.isBefore(LocalDate.of(2005,1,31))||item.isAfter(LocalDate.of(2014,4,29))
                                         ) {
                                     setDisable(true);
+                                    setStyle("-fx-background-color: #424B54;"+
+                                            "-fx-text-fill: #1C2023");
                                 }
                             }
                         };
@@ -152,6 +154,8 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                                 if (item.isBefore(startDate.getValue().plusDays(1))||item.isAfter(LocalDate.of(2014,4,29))
                                         ) {
                                     setDisable(true);
+                                    setStyle("-fx-background-color: #424B54;"+
+                                            "-fx-text-fill: #1C2023");
                                 }
                             }
                         };
@@ -159,6 +163,8 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                 };
 
         endDate.setDayCellFactory(dayCellFactory);
+
+        setBorder(BorderFactory.createEmptyBorder());
 
 //        startDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
 //            @Override
