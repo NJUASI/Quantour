@@ -3,6 +3,7 @@ package utilities.enums;
 /**
  * Created by cuihua on 2017/3/4.
  *
+ * 股票证券市场
  * 以防之后新的证券市场出现
  */
 public enum Market {

@@ -5,6 +5,8 @@ import po.StockSituationPO;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -43,18 +45,9 @@ class CodeDirCreator {
 
     BufferedReader br;
 
-    String sourceFile;
-
-    final String separator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + separator + "attachments" + separator;
-    final String post = ".txt";
-    final String codeDesFileParentPath = parent + "stock_records_by_code";
-
-    private String desCode = "";
-    private String codeDesFilePath = null;
+    private List<String> codes = new ArrayList<>();
 
     public CodeDirCreator(String sourceFile) throws FileNotFoundException, UnsupportedEncodingException {
-        this.sourceFile = sourceFile;
         br = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), "UTF-8"));
     }
 
@@ -64,12 +57,14 @@ class CodeDirCreator {
         while ((thisLine = br.readLine()) != null) {
             if (thisLine.equals("Serial\tDate\tOpen\tHigh\tLow\tClose\tVolume\tAdj Close\tcode\tname\tmarket"))
                 continue;
-            write(thisLine);
+            judgeLine(thisLine);
         }
+
+        create();
         return true;
     }
 
-    private void write(String line) throws IOException {
+    private void judgeLine(String line) throws IOException {
         String[] parts = line.split("\t");
 
         // 去除停牌日的脏数据
@@ -77,18 +72,28 @@ class CodeDirCreator {
             return;
         }
 
+        if (!codes.contains(parts[8])) {
+            codes.add(parts[8]);
+        }
+    }
+
+    private void create() throws IOException {
+        final String separator = System.getProperty("file.separator");
+        final String parent = System.getProperty("user.dir") + separator + "attachments" + separator;
+        final String post = ".txt";
+        final String codeDesFileParentPath = parent + "stock_records_by_code";
+
         // 建立by_code目录
-        if (!parts[8].equals(desCode)) {
-            desCode = parts[8];
-            codeDesFilePath = codeDesFileParentPath + separator + desCode + post;
-        }
-        File codeParent = new File(codeDesFileParentPath);
-        if (!codeParent.exists()) {
-            codeParent.mkdirs();
-        }
-        File file = new File(codeDesFilePath);
-        if (!file.exists()) {
-            file.createNewFile();
+        for (String thisCode : codes) {
+            String codeDesFilePath = codeDesFileParentPath + separator + thisCode + post;
+            File codeParent = new File(codeDesFileParentPath);
+            if (!codeParent.exists()) {
+                codeParent.mkdirs();
+            }
+            File file = new File(codeDesFilePath);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ package utilities.exceptions;
 /**
  * Created by cuihua on 2017/4/2.
  */
-public class TracebackPeriodTooShortException extends Exception {
+public class TraceBackPeriodTooShortException extends Exception {
 
     @Override
     public String getMessage() {

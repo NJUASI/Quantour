@@ -1,10 +1,8 @@
-package service.serviceImpl.TracebackService;
+package service.serviceImpl.TraceBackService;
 
 import service.StockService;
-import service.TracebackService;
-import service.serviceImpl.StockService.StockPoolFilter;
+import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
-import utilities.enums.TracebackStrategy;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.*;
@@ -19,11 +17,11 @@ import java.util.TreeMap;
 /**
  * Created by harvey on 17-3-28.
  */
-public class TracebackServiceImpl implements TracebackService {
+public class TraceBackServiceImpl implements TraceBackService {
 
     private StockService stockService;
 
-    public TracebackServiceImpl() {
+    public TraceBackServiceImpl() {
         stockService = new StockServiceImpl();
     }
 
@@ -32,41 +30,41 @@ public class TracebackServiceImpl implements TracebackService {
     /**
      * 获取策略累计收益率
      *
-     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param traceBackCriteriaVO 用户所选回测条件
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException {
         //TODO gcm 需要下面的一个接口 还未实现
 
         //获取目标股票池
-        List<String> stockPool = stockService.getStockPool(tracebackCriteriaVO.stockPoolVO);
+        List<String> stockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
 
         //确定策略
-        AllTracebackStrategy tracebackStrategy = TracebackStrategyFactory.createTracebackStrategy(tracebackCriteriaVO.strategyType);
+        AllTraceBackStrategy tracebackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
 
         //回测
-        return tracebackStrategy.traceback(stockPool,tracebackCriteriaVO);
+        return tracebackStrategy.traceBack(stockPool, traceBackCriteriaVO);
     }
 
     /**
      * 获取策略累计收益率，自选股票池
      *
-     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param traceBackCriteriaVO 用户所选回测条件
      * @param stockCodes 自选股票池所有股票的代码
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
     @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException {
 
         //确定策略
-        AllTracebackStrategy tracebackStrategy = TracebackStrategyFactory.createTracebackStrategy(tracebackCriteriaVO.strategyType);
+        AllTraceBackStrategy tracebackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
 
         //回测
-        return tracebackStrategy.traceback(stockCodes,tracebackCriteriaVO);
+        return tracebackStrategy.traceBack(stockCodes, traceBackCriteriaVO);
 
     }
 
@@ -166,28 +164,28 @@ public class TracebackServiceImpl implements TracebackService {
     /**
      * 计算回测中用列表列出的数值型数据，如阿尔法，beta
      *
-     * @param tracebackCriteriaVO 用户所选回测条件
-     * @return TracebackNumValVO 所需的所有数值型数据保存对象
+     * @param traceBackCriteriaVO 用户所选回测条件
+     * @return TraceBackNumValVO 所需的所有数值型数据保存对象
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public TracebackNumValVO getNumericalVal(TracebackCriteriaVO tracebackCriteriaVO) {
+    public TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO) {
         return null;
     }
 
     /**
      * 计算相对收益指数
      *
-     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param traceBackCriteriaVO 用户所选回测条件
      * @return RelativeIndexReturnVO 保存表示相对收益指数的对象，包括正周期数，负周期数和赢率
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public RelativeIndexReturnVO getRelativeIndexReturn(TracebackCriteriaVO tracebackCriteriaVO) {
+    public RelativeIndexReturnVO getRelativeIndexReturn(TraceBackCriteriaVO traceBackCriteriaVO) {
         return null;
     }
 

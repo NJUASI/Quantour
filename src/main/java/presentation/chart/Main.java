@@ -1,14 +1,9 @@
 package presentation.chart;
 
 
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import presentation.chart.TraceBack.TraceBackChart;
-import presentation.listener.chartMouseListener.TraceBackListener;
 import presentation.view.tools.SingleDatePickerPanel;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
-import vo.TracebackCriteriaVO;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -19,7 +14,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String []args) throws DateNotWithinException, NoDataWithinException, IOException {
-//        TraceBackChart traceBackChart = new TraceBackChart(new TracebackCriteriaVO());
+//        TraceBackChart traceBackChart = new TraceBackChart(new TraceBackCriteriaVO());
 //        JFreeChart chart = traceBackChart.createTracebackChart();
 //        ChartPanel chartPanel = new ChartPanel(chart);
 //        chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));
