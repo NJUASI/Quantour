@@ -3,6 +3,8 @@ package vo;
 import utilities.enums.BlockType;
 import utilities.enums.StType;
 
+import java.util.List;
+
 /**
  * Created by harvey on 17-3-31.
  *
@@ -18,7 +20,7 @@ public class StockPoolCriteriaVO {
     /**
      * 基准对比股票代码,可根据此确定股票的板块
      */
-    public BlockType blockType;
+    public List<BlockType> blockTypes;
 
 
 }

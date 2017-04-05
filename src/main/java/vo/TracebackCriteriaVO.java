@@ -37,9 +37,9 @@ public class TracebackCriteriaVO {
     public StockPoolCriteriaVO stockPoolVO;
 
     /**
-     * 1／动量策略，2／均值回归
+     *  MS("动量策略")／MR("均值回归")
      */
-    public TracebackStrategy strategyType ;
+    public TracebackStrategy strategyType;
 
     /**
      * 持有股票数
