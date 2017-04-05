@@ -1,10 +1,10 @@
-package service.serviceImpl.TracebackService.TracebackStrategy;
+package service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import service.StockService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
-import service.serviceImpl.TracebackService.AllTracebackStrategy;
-import service.serviceImpl.TracebackService.TraceBackServiceImpl;
+import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
+import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
@@ -19,7 +19,7 @@ import java.util.function.Function;
 /**
  * Created by harvey on 17-3-31.
  */
-public class MomentumStrategy implements AllTracebackStrategy {
+public class MomentumStrategy implements AllTraceBackStrategy {
 
     StockService stockService;
     TraceBackService traceBackService;
@@ -44,7 +44,7 @@ public class MomentumStrategy implements AllTracebackStrategy {
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
     @Override
-    public List<CumulativeReturnVO> traceback(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<CumulativeReturnVO> traceBack(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 

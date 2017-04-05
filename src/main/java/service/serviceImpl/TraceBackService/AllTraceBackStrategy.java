@@ -1,4 +1,4 @@
-package service.serviceImpl.TracebackService;
+package service.serviceImpl.TraceBackService;
 
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by harvey on 17-4-3.
  */
-public interface AllTracebackStrategy {
+public interface AllTraceBackStrategy {
 
     /**
      * 根据目标股票池及所给的标准，返回策略的累计收益率
@@ -19,6 +19,6 @@ public interface AllTracebackStrategy {
      * @param traceBackCriteriaVO 回测的所有标准
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
-    public List<CumulativeReturnVO> traceback (List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException;
+    public List<CumulativeReturnVO> traceBack(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException;
 
 }

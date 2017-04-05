@@ -112,7 +112,7 @@ public class ChartServiceImpl implements ChartService {
 
             //之前的数据够用
             if (preList.size() >= days.get(i)) {
-                // preList中包含与现有poList中重复的begin的数据，股subList中需要减一
+                // preList中包含与现有poList中重复的begin的数据，故subList中需要减一
                 preList = preList.subList(preList.size() - days.get(i), preList.size() - 1);
             }
 

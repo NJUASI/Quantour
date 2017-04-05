@@ -1,4 +1,4 @@
-package service.serviceImpl.TracebackService;
+package service.serviceImpl.TraceBackService;
 
 import service.StockService;
 import service.TraceBackService;
@@ -44,10 +44,10 @@ public class TraceBackServiceImpl implements TraceBackService {
         List<String> stockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
 
         //确定策略
-        AllTracebackStrategy tracebackStrategy = TracebackStrategyFactory.createTracebackStrategy(traceBackCriteriaVO.strategyType);
+        AllTraceBackStrategy tracebackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
 
         //回测
-        return tracebackStrategy.traceback(stockPool, traceBackCriteriaVO);
+        return tracebackStrategy.traceBack(stockPool, traceBackCriteriaVO);
     }
 
     /**
@@ -61,10 +61,10 @@ public class TraceBackServiceImpl implements TraceBackService {
     public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException {
 
         //确定策略
-        AllTracebackStrategy tracebackStrategy = TracebackStrategyFactory.createTracebackStrategy(traceBackCriteriaVO.strategyType);
+        AllTraceBackStrategy tracebackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
 
         //回测
-        return tracebackStrategy.traceback(stockCodes, traceBackCriteriaVO);
+        return tracebackStrategy.traceBack(stockCodes, traceBackCriteriaVO);
 
     }
 

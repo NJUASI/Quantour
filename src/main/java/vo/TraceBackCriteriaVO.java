@@ -1,6 +1,6 @@
 package vo;
 
-import utilities.enums.TracebackStrategy;
+import utilities.enums.TraceBackStrategy;
 
 import java.time.LocalDate;
 
@@ -39,7 +39,7 @@ public class TraceBackCriteriaVO {
     /**
      *  MS("动量策略")／MR("均值回归")
      */
-    public TracebackStrategy strategyType;
+    public TraceBackStrategy strategyType;
 
     /**
      * 持有股票数
