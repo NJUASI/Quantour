@@ -1,10 +1,10 @@
-package service.serviceImpl.TracebackService;
+package service.serviceImpl.TraceBackService;
 
 import org.junit.Before;
 import org.junit.Test;
-import service.TracebackService;
+import service.TraceBackService;
 import vo.CumulativeReturnVO;
-import vo.TracebackCriteriaVO;
+import vo.TraceBackCriteriaVO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,26 +15,26 @@ import static org.junit.Assert.*;
 /**
  * Created by harvey on 17-4-2.
  */
-public class TracebackServiceImplTest {
+public class TraceBackServiceImplTest {
 
-    TracebackService tracebackService;
+    TraceBackService TraceBackService;
     LocalDate start;
     LocalDate end;
     List<String> stockCodes;
-    TracebackCriteriaVO tracebackCriteriaVO;
+    TraceBackCriteriaVO TraceBackCriteriaVO;
 
     @Before
     public void setUp(){
-        tracebackService = new TracebackServiceImpl();
+        TraceBackService = new TraceBackServiceImpl();
         start = LocalDate.of(2014,4,19);
         end = LocalDate.of(2014,4,29);
 
-        //设置tracebackCriteriaVO
-        tracebackCriteriaVO = new TracebackCriteriaVO();
-        tracebackCriteriaVO.baseStockName = "深发展Ａ";
-//        tracebackCriteriaVO.baseStockName = "深物业A";
-        tracebackCriteriaVO.startDate = start;
-        tracebackCriteriaVO.endDate = end;
+        //设置TraceBackCriteriaVO
+        TraceBackCriteriaVO = new TraceBackCriteriaVO();
+        TraceBackCriteriaVO.baseStockName = "深发展Ａ";
+//        TraceBackCriteriaVO.baseStockName = "深物业A";
+        TraceBackCriteriaVO.startDate = start;
+        TraceBackCriteriaVO.endDate = end;
 
 
         //设置自选股的股票代码
@@ -50,7 +50,7 @@ public class TracebackServiceImplTest {
     @Test
     public void getBaseCumulativeReturn() throws Exception {
 
-        List<CumulativeReturnVO> cumulativeReturnVOS = tracebackService.getBaseCumulativeReturn(tracebackCriteriaVO.startDate,tracebackCriteriaVO.endDate,tracebackCriteriaVO.baseStockName);
+        List<CumulativeReturnVO> cumulativeReturnVOS = TraceBackService.getBaseCumulativeReturn(TraceBackCriteriaVO.startDate,TraceBackCriteriaVO.endDate,TraceBackCriteriaVO.baseStockName);
         assertEquals(LocalDate.of(2014,4,19),cumulativeReturnVOS.get(0).currentDate);
         assertEquals(-0.0102,cumulativeReturnVOS.get(1).cumulativeReturn,0.0001);
     }
@@ -58,7 +58,7 @@ public class TracebackServiceImplTest {
     @Test
     public void getCustomizedCumulativeReturn() throws Exception {
 
-        List<CumulativeReturnVO> cumulativeReturnVOS = tracebackService.getCustomizedCumulativeReturn(tracebackCriteriaVO.startDate,tracebackCriteriaVO.endDate,stockCodes);
+        List<CumulativeReturnVO> cumulativeReturnVOS = TraceBackService.getCustomizedCumulativeReturn(TraceBackCriteriaVO.startDate,TraceBackCriteriaVO.endDate,stockCodes);
         assertEquals(-0.021,cumulativeReturnVOS.get(1).cumulativeReturn,0.001);
 
     }

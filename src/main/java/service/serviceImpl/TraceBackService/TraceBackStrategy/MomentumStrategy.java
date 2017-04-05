@@ -1,17 +1,17 @@
-package service.serviceImpl.TracebackService.TracebackStrategy;
+package service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import service.StockService;
 import service.StockTradingDayService;
-import service.TracebackService;
+import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockTradingDayServiceImpl;
-import service.serviceImpl.TracebackService.AllTracebackStrategy;
-import service.serviceImpl.TracebackService.TracebackServiceImpl;
+import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
+import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
 import vo.StockVO;
-import vo.TracebackCriteriaVO;
+import vo.TraceBackCriteriaVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -21,10 +21,10 @@ import java.util.function.Function;
 /**
  * Created by harvey on 17-3-31.
  */
-public class MomentumStrategy implements AllTracebackStrategy {
+public class MomentumStrategy implements AllTraceBackStrategy {
 
     StockService stockService;
-    TracebackService tracebackService;
+    TraceBackService TraceBackService;
     StockTradingDayService stockTradingDayService;
 
     //千元投资
@@ -35,7 +35,7 @@ public class MomentumStrategy implements AllTracebackStrategy {
 
     public MomentumStrategy() {
         stockService = new StockServiceImpl();
-        tracebackService = new TracebackServiceImpl();
+        TraceBackService = new TraceBackServiceImpl();
         stockTradingDayService = new StockTradingDayServiceImpl();
         cumulativeReturn = initInvestment;
     }
@@ -44,11 +44,11 @@ public class MomentumStrategy implements AllTracebackStrategy {
      * 根据目标股票池及所给的标准，返回策略的累计收益率
      *
      * @param stockPoolCodes      目标股票池所有股票的代码
-     * @param tracebackCriteriaVO 回测的所有标准
+     * @param TraceBackCriteriaVO 回测的所有标准
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
     @Override
-    public List<CumulativeReturnVO> traceback(List<String> stockPoolCodes, TracebackCriteriaVO tracebackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<CumulativeReturnVO> traceBack(List<String> stockPoolCodes, TraceBackCriteriaVO TraceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 
@@ -56,15 +56,15 @@ public class MomentumStrategy implements AllTracebackStrategy {
         List<String> holdingStocks = new ArrayList<String>();
 
         //回测区间,从用户所选区间里再选出第一个交易日和最后一个交易日
-        LocalDate start = stockTradingDayService.getNextTradingDay(tracebackCriteriaVO.startDate,stockPoolCodes);
-        LocalDate end = stockTradingDayService.getNextTradingDay(tracebackCriteriaVO.endDate,stockPoolCodes);
+        LocalDate start = stockTradingDayService.getNextTradingDay(TraceBackCriteriaVO.startDate,stockPoolCodes);
+        LocalDate end = stockTradingDayService.getNextTradingDay(TraceBackCriteriaVO.endDate,stockPoolCodes);
 
         int tradingDays = stockTradingDayService.getTradingDays(start,end,stockPoolCodes);
 
         //形成期
-        int formativePeriod = tracebackCriteriaVO.formativePeriod;
+        int formativePeriod = TraceBackCriteriaVO.formativePeriod;
         //持有期
-        int holdingPeriod = tracebackCriteriaVO.holdingPeriod;
+        int holdingPeriod = TraceBackCriteriaVO.holdingPeriod;
 
         //周期数
         int periodNum = 0;
@@ -123,7 +123,7 @@ public class MomentumStrategy implements AllTracebackStrategy {
     private List<CumulativeReturnVO> computeHoldingPeriod(List<String> holdingStocks, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
 
         //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
-        List<CumulativeReturnVO> dailyTotalCumulativeReturn = tracebackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
+        List<CumulativeReturnVO> dailyTotalCumulativeReturn = TraceBackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
 
         List<CumulativeReturnVO> cumulativeReturn = new ArrayList<CumulativeReturnVO>();
 
