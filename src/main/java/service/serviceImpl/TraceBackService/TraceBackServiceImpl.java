@@ -3,7 +3,9 @@ package service.serviceImpl.TraceBackService;
 import service.StockService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.DateShortException;
 import utilities.exceptions.NoDataWithinException;
 import vo.*;
 
@@ -37,17 +39,17 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @updateTime 2017/3/28
      */
     @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
         //TODO gcm 需要下面的一个接口 还未实现
 
         //获取目标股票池
         List<String> stockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
 
         //确定策略
-        AllTraceBackStrategy tracebackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
+        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
 
         //回测
-        return tracebackStrategy.traceBack(stockPool, traceBackCriteriaVO);
+        return traceBackStrategy.traceBack(stockPool, traceBackCriteriaVO);
     }
 
     /**
@@ -58,13 +60,13 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
     @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
 
         //确定策略
-        AllTraceBackStrategy tracebackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
+        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
 
         //回测
-        return tracebackStrategy.traceBack(stockCodes, traceBackCriteriaVO);
+        return traceBackStrategy.traceBack(stockCodes, traceBackCriteriaVO);
 
     }
 

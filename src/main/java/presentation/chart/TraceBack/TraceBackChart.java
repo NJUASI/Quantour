@@ -10,7 +10,9 @@ import org.jfree.data.time.TimeSeriesCollection;
 import presentation.chart.tools.CandlestickChartTool;
 import presentation.chart.tools.TraceBackChartTool;
 import service.TraceBackService;
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.DateShortException;
 import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
 import vo.TraceBackCriteriaVO;
@@ -51,7 +53,7 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
+    public TraceBackChart(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
 //        traceBackService = new TraceBackServiceImpl();
         traceBackService = new TraceBackSeviceStub();
         this.readData(traceBackCriteriaVO);
@@ -187,7 +189,7 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException {
+    private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
         this.strategyData = traceBackService.getStrategyCumulativeReturn(traceBackCriteriaVO);
         this.baseData = traceBackService.getBaseCumulativeReturn(traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate, traceBackCriteriaVO.baseStockName);
     }

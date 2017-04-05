@@ -121,7 +121,7 @@ public interface StockService{
     LocalDate getLastTradingDay(LocalDate date, List<String> stockCodes);
 
     /**
-     * 根据股票池的选择标准，选择符合标准的股票池 非自选股调用此方法
+     * 根据股票池的选择标准，选择符合标准的股票池（非自选股票池时）
      * @param stockPoolVO 股票池的选择标准
      * @return List<String> 符合标准的股票池中所有股票的股票代码
      */
@@ -138,7 +138,7 @@ public interface StockService{
     LocalDate getTradingDayMinus(LocalDate start, int minusDay, List<String> stockPoolCodes);
 
     /**
-     * 根据传入的股票代码，找出传入股票代码中相对于date最晚的交易日期。若参照日期date为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
+     * 根据传入的股票代码，找出传入股票代码中相对于date最晚的交易日期。若参照日期date为交易日，则返回参照日期；否则，返回参照日期的前一个交易日
      * @param date 参照日期
      * @param stockCodes 传入的股票代码列表
      * @return 参照日期的下一个交易日

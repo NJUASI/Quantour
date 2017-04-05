@@ -1,5 +1,6 @@
 package service.serviceImpl.TraceBackService;
 
+import service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversionStrategy;
 import service.serviceImpl.TraceBackService.TraceBackStrategy.MomentumStrategy;
 import utilities.enums.TraceBackStrategy;
 
@@ -8,12 +9,12 @@ import utilities.enums.TraceBackStrategy;
  */
 public class TraceBackStrategyFactory {
 
-    public static AllTraceBackStrategy createTraceBackStrategy(TraceBackStrategy traceBackStrategy){
-        switch (traceBackStrategy){
+    public static AllTraceBackStrategy createTraceBackStrategy(TraceBackStrategy traceBackStrategy) {
+        switch (traceBackStrategy) {
             case MS:
                 return new MomentumStrategy();
             case MR:
-                //TODO fjj 你自己加上去
+                return new MeanReversionStrategy();
         }
 
         return null;

@@ -1,6 +1,8 @@
 package service;
 
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.DateShortException;
 import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
 import vo.RelativeIndexReturnVO;
@@ -27,7 +29,7 @@ public interface TraceBackService {
      * @param traceBackCriteriaVO 用户所选回测条件
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
-    List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException;
+    List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException;
 
 
     /**
@@ -36,7 +38,7 @@ public interface TraceBackService {
      * @param stockCodes 策略累计收益率的列表
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
-    List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException;
+    List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException;
 
     /**
      * 获取基准累计收益率,非自选股票池
