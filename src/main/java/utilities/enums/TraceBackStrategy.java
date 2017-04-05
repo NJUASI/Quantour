@@ -5,14 +5,14 @@ package utilities.enums;
  *
  * 回测策略的类型
  */
-public enum TracebackStrategy {
+public enum TraceBackStrategy {
 
     MS("动量策略"),
     MR("均值回归");
 
     private String repre;
 
-    TracebackStrategy(String repre) {
+    TraceBackStrategy(String repre) {
         this.repre = repre;
     }
 
@@ -34,8 +34,8 @@ public enum TracebackStrategy {
      * String TO enum
      * 便于从数据库读入
      */
-    public static TracebackStrategy getEnum(String a) {
-        for (TracebackStrategy thisEnum : TracebackStrategy.values()){
+    public static TraceBackStrategy getEnum(String a) {
+        for (TraceBackStrategy thisEnum : TraceBackStrategy.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }

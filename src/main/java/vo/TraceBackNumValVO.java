@@ -7,7 +7,7 @@ import java.time.LocalDate;
  *
  * 用于列表展示回测中的数值型数据
  */
-public class TracebackNumValVO {
+public class TraceBackNumValVO {
 
     // 年化收益率
     public double annualizedRateOfReturn;
@@ -40,7 +40,7 @@ public class TracebackNumValVO {
     public LocalDate endDate;
 
 
-    public TracebackNumValVO(double annualizedRateOfReturn, double baseAnnualizedRateOfReturn, double alpha, double beta, double sharpeRatio, double maxRetracementRatio, double peakPointRatio, double valleyPointRatio, LocalDate startDate, LocalDate endDate) {
+    public TraceBackNumValVO(double annualizedRateOfReturn, double baseAnnualizedRateOfReturn, double alpha, double beta, double sharpeRatio, double maxRetracementRatio, double peakPointRatio, double valleyPointRatio, LocalDate startDate, LocalDate endDate) {
         this.annualizedRateOfReturn = annualizedRateOfReturn;
         this.baseAnnualizedRateOfReturn = baseAnnualizedRateOfReturn;
         this.alpha = alpha;

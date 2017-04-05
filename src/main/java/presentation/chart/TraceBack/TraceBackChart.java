@@ -9,11 +9,13 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import presentation.chart.tools.CandlestickChartTool;
 import presentation.chart.tools.TraceBackChartTool;
-import service.TracebackService;
+import service.TraceBackService;
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.DateShortException;
 import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
-import vo.TracebackCriteriaVO;
+import vo.TraceBackCriteriaVO;
 
 import java.awt.*;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class TraceBackChart {
     private double low = Double.MAX_VALUE;
 
     //逻辑层对象
-    private TracebackService tracebackService;
+    private TraceBackService traceBackService;
 
     //策略的数据集合
     private List<CumulativeReturnVO> strategyData;
@@ -51,10 +53,10 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(TracebackCriteriaVO tracebackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
-//        tracebackService = new TracebackServiceImpl();
-        tracebackService = new TracebackSeviceStub();
-        this.readData(tracebackCriteriaVO);
+    public TraceBackChart(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+//        traceBackService = new TraceBackServiceImpl();
+        traceBackService = new TraceBackSeviceStub();
+        this.readData(traceBackCriteriaVO);
     }
 
     /**
@@ -182,13 +184,13 @@ public class TraceBackChart {
     /**
      * 读取数据
      *
-     * @param tracebackCriteriaVO 回测信息载体
+     * @param traceBackCriteriaVO 回测信息载体
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(TracebackCriteriaVO tracebackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException {
-        this.strategyData = tracebackService.getStrategyCumulativeReturn(tracebackCriteriaVO);
-        this.baseData = tracebackService.getBaseCumulativeReturn(tracebackCriteriaVO.startDate,tracebackCriteriaVO.endDate,tracebackCriteriaVO.baseStockName);
+    private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
+        this.strategyData = traceBackService.getStrategyCumulativeReturn(traceBackCriteriaVO);
+        this.baseData = traceBackService.getBaseCumulativeReturn(traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate, traceBackCriteriaVO.baseStockName);
     }
 }

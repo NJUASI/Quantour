@@ -1,12 +1,12 @@
 package presentation.chart.TraceBack;
 
-import service.TracebackService;
+import service.TraceBackService;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
 import vo.RelativeIndexReturnVO;
-import vo.TracebackCriteriaVO;
-import vo.TracebackNumValVO;
+import vo.TraceBackCriteriaVO;
+import vo.TraceBackNumValVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,18 +16,18 @@ import java.util.List;
 /**
  * Created by Byron Dong on 2017/3/30.
  */
-public class TracebackSeviceStub implements TracebackService {
+public class TraceBackSeviceStub implements TraceBackService {
     /**
      * 获取策略累计收益率
      *
-     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param traceBackCriteriaVO 用户所选回测条件
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) {
         List<CumulativeReturnVO> list = new ArrayList<>();
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,1), 0, false));
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,2), 0.0003, false));
@@ -67,12 +67,12 @@ public class TracebackSeviceStub implements TracebackService {
     /**
      * 获取策略累计收益率，自选股票池
      *
-     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param traceBackCriteriaVO 用户所选回测条件
      * @param stockCodes          策略累计收益率的列表
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
     @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) {
         return null;
     }
 
@@ -122,28 +122,28 @@ public class TracebackSeviceStub implements TracebackService {
     /**
      * 计算回测中用列表列出的数值型数据，如阿尔法，beta
      *
-     * @param tracebackCriteriaVO 用户所选回测条件
-     * @return TracebackNumValVO 所需的所有数值型数据保存对象
+     * @param traceBackCriteriaVO 用户所选回测条件
+     * @return TraceBackNumValVO 所需的所有数值型数据保存对象
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public TracebackNumValVO getNumericalVal(TracebackCriteriaVO tracebackCriteriaVO) {
+    public TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO) {
         return null;
     }
 
     /**
      * 计算相对收益指数
      *
-     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param traceBackCriteriaVO 用户所选回测条件
      * @return RelativeIndexReturnVO 保存表示相对收益指数的对象，包括正周期数，负周期数和赢率
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
     @Override
-    public RelativeIndexReturnVO getRelativeIndexReturn(TracebackCriteriaVO tracebackCriteriaVO) {
+    public RelativeIndexReturnVO getRelativeIndexReturn(TraceBackCriteriaVO traceBackCriteriaVO) {
         return null;
     }
 }

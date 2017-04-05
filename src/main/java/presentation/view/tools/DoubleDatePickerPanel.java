@@ -91,6 +91,8 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         startDate.setPrefSize(width*170/1920,37*height/1030);
         startDate.setMaxSize(width*170/1920,37*height/1030);
         startDate.setEditable(false);
+        startDate.getStylesheets().add("DatePicker.css");
+
         endDate = new DatePicker();
         endDate.setValue(LocalDate.of(2014, 4, 29));
         endDate.setLayoutX(width*350/1920);
@@ -99,6 +101,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         endDate.setPrefSize(width*170/1920,37*height/1030);
         endDate.setMaxSize(width*170/1920,37*height/1030);
         endDate.setEditable(false);
+        endDate.getStylesheets().add("DatePicker.css");
 
         label1 =new Label("开始日期");
         label1.setFont(new Font("微软雅黑",16*width/1920));
@@ -130,7 +133,6 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                                 if (item.isBefore(LocalDate.of(2005,1,31))||item.isAfter(LocalDate.of(2014,4,29))
                                         ) {
                                     setDisable(true);
-                                    setStyle("-fx-background-color: #ffc0cb;");
                                 }
                             }
                         };
@@ -150,7 +152,6 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                                 if (item.isBefore(startDate.getValue().plusDays(1))||item.isAfter(LocalDate.of(2014,4,29))
                                         ) {
                                     setDisable(true);
-                                    setStyle("-fx-background-color: #ffc0cb;");
                                 }
                             }
                         };

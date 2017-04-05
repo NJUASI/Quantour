@@ -35,6 +35,7 @@ public class SingleDatePickerPanel extends JFXPanel {
                 Scene scene = new Scene(root, width*175/1920, 37*height/1030);
                 setScene(scene);
                 date = new DatePicker();
+                date.getStylesheets().add("DatePicker.css");
                 date.setMinSize(width*175/1920,37*height/1030);
                 date.setPrefSize(width*175/1920,37*height/1030);
                 date.setMaxSize(width*175/1920,37*height/1030);

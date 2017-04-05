@@ -1,6 +1,6 @@
 package vo;
 
-import utilities.enums.TracebackStrategy;
+import utilities.enums.TraceBackStrategy;
 
 import java.time.LocalDate;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
  *
  * 保存用户在界面上选择的回测的条件
  */
-public class TracebackCriteriaVO {
+public class TraceBackCriteriaVO {
 
     /**
      * 回测区间的起始时间
@@ -39,7 +39,7 @@ public class TracebackCriteriaVO {
     /**
      *  MS("动量策略")／MR("均值回归")
      */
-    public TracebackStrategy strategyType;
+    public TraceBackStrategy strategyType;
 
     /**
      * 持有股票数
