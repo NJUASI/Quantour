@@ -1,11 +1,14 @@
 package presentation.chart.TraceBack;
 
 import service.TracebackService;
+import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
 import vo.RelativeIndexReturnVO;
 import vo.TracebackCriteriaVO;
 import vo.TracebackNumValVO;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +109,18 @@ public class TracebackSeviceStub implements TracebackService {
         list.add(new CumulativeReturnVO(LocalDate.of(2014,7,31), 0.2289, false));
 
         return list;
+    }
+
+    /**
+     * 获取基准累计收益率，自选股
+     *
+     * @param tracebackCriteriaVO 用户所选回测条件
+     * @param stockCodes          所有自选股的代码
+     * @return List<CumulativeReturnVO> 基准累计收益率的列表
+     */
+    @Override
+    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) throws IOException, NoDataWithinException, DateNotWithinException {
+        return null;
     }
 
     /**

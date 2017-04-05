@@ -11,6 +11,7 @@ import java.util.List;
  * Created by harvey on 17-4-2.
  */
 public class StCriteriaFilter extends StockPoolFilter{
+
     /**
      * 筛选股票
      *

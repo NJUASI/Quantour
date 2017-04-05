@@ -1,6 +1,7 @@
 package service.serviceImpl.TracebackService;
 
 import service.serviceImpl.TracebackService.StockPoolFilters.BlockCriteriaFilter;
+import service.serviceImpl.TracebackService.StockPoolFilters.StCriteriaFilter;
 import vo.StockPoolCriteriaVO;
 import vo.StockPoolVO;
 
@@ -16,7 +17,7 @@ public class StockPoolFilter {
     StockPoolFilter nextFilter;
 
     public StockPoolFilter() {
-        setNextFilter(new BlockCriteriaFilter());
+        setFilterChains();
     }
 
     /**
@@ -56,4 +57,15 @@ public class StockPoolFilter {
         this.nextFilter = nextFilter; 
     }
 
+    /**
+     *  将责任链在此处设置好，以便以后增加过滤器
+     */
+    private void setFilterChains() {
+        //新建对象
+        BlockCriteriaFilter blockCriteriaFilter = new BlockCriteriaFilter();
+        StCriteriaFilter stCriteriaFilter = new StCriteriaFilter();
+
+        //设置责任链
+        blockCriteriaFilter.setNextFilter(stCriteriaFilter);
+    }
 }

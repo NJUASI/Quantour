@@ -1,7 +1,6 @@
 package service;
 
 import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.MatchNothingException;
 import utilities.exceptions.NoDataWithinException;
 import vo.StockSearchVO;
 import vo.StockVO;
@@ -10,6 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Harvey on 2017/3/5.
@@ -81,6 +81,15 @@ public interface StockService{
      * @param stockCode 股票代码
      * @param start 起始日期
      * @param end 结束日期
+     * @return Map<LocalDate, StockVO> 该股票信息和对应日期的键值对
+     */
+    Map<LocalDate, StockVO> getOneStockDateAndData(String stockCode, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException;
+
+    /**
+     * 根据股票代码，起始日期，结束日期，获得该股票在此期间的数据
+     * @param stockCode 股票代码
+     * @param start 起始日期
+     * @param end 结束日期
      * @return List<StockVO> 该股票信息的列表
      */
     List<StockVO> getOneStockData(String stockCode, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException;
@@ -92,5 +101,13 @@ public interface StockService{
      * @param end 结束日期
      * @return List<StockVO> 基准股票信息的列表
      */
-    List<StockVO> getBaseStock(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException;
+    List<StockVO> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException;
+
+    /**
+     * 若参照日期为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
+     * @param date 参照日期
+     * @param stockCode 股票代码
+     * @return LocalDate
+     */
+    LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException;
 }

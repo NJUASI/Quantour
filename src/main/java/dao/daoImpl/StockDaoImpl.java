@@ -298,6 +298,18 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
+     * 若参照日期为交易日，则返回参照日期;否则返回参照日期前的一个交易日
+     *
+     * @param date 参照日期
+     * @param stockCode
+     * @return LocalDate
+     */
+    @Override
+    public LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException {
+        return stockHelper.getLastTradingDay(date, stockCode);
+    }
+
+    /**
      * 判断目标时间是否在指定区域内
      *
      * @author Byron Dong

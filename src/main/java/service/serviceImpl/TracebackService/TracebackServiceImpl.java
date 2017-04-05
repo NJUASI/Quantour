@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by harvey on 17-3-28.
@@ -18,8 +19,6 @@ import java.util.List;
 public class TracebackServiceImpl implements TracebackService {
 
     private StockService stockService;
-
-    private List<StockVO> customizedStockPool;
 
     public TracebackServiceImpl() {
         stockService = new StockServiceImpl();
@@ -51,25 +50,14 @@ public class TracebackServiceImpl implements TracebackService {
     @Override
     public List<CumulativeReturnVO> getBaseCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
 
-        List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
         LocalDate start = tracebackCriteriaVO.startDate;
         LocalDate end = tracebackCriteriaVO.endDate;
-
-        CumulativeReturnVO firstDay = new CumulativeReturnVO(start,0.0,false);
-        //加入第一天的数据
-        cumulativeReturnVOS.add(firstDay);
+        int span = start.until(end).getDays();
 
         String stockName = tracebackCriteriaVO.baseStockName;
-        List<StockVO> baseStock = stockService.getBaseStock(stockName,start,end);
-        for(int i = 1; i < baseStock.size(); i++) {
-            double sucClose = baseStock.get(i).close;
-            double preClose = baseStock.get(i - 1).close;
-            double cumulativeReturn = (sucClose - preClose) / preClose;
-            //TODO gcm 先将所有的最大回测点设为false
-            cumulativeReturnVOS.add(new CumulativeReturnVO(baseStock.get(i).date, cumulativeReturn, false));
-        }
+        List<StockVO> baseStock = stockService.getBaseStockData(stockName,start,end);
 
-        return cumulativeReturnVOS;
+        return getCumulativeReturnOfOneStock(baseStock,span);
     }
 
     /**
@@ -80,11 +68,30 @@ public class TracebackServiceImpl implements TracebackService {
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
     @Override
-    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) {
+    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO, List<String> stockCodes) throws IOException, NoDataWithinException, DateNotWithinException {
+
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
-        //TODO gcm,等做
+        List<List<StockVO>> customizedStockVOs = new ArrayList<List<StockVO>>();
+
+        LocalDate start = tracebackCriteriaVO.startDate;
+        LocalDate end = tracebackCriteriaVO.endDate;
+        int span = start.until(end).getDays();
+
+        //添加第一天的数据，为0;
+        cumulativeReturnVOS.add(new CumulativeReturnVO(start,0,false));
+
+        //将每一支股票的信息添加进列表
+        for(int i = 0; i < stockCodes.size(); i++){
+            //每一支股票在日期范围内的信息
+            List<StockVO> list = stockService.getOneStockData(stockCodes.get(i),start,end);
+            customizedStockVOs.add(list);
+        }
+
+        //TODO gcm 还没有完成，nnd
+
         return cumulativeReturnVOS;
     }
+
 
     /**
      * 计算回测中用列表列出的数值型数据，如阿尔法，beta
@@ -112,5 +119,33 @@ public class TracebackServiceImpl implements TracebackService {
     @Override
     public RelativeIndexReturnVO getRelativeIndexReturn(TracebackCriteriaVO tracebackCriteriaVO) {
         return null;
+    }
+
+
+    /**
+     *
+     * @param list 单一股票的信息
+     * @param span 时间区间
+     * @return List<CumulativeReturnVO> 单一股票在时间区间内的累计收益率
+     */
+    private List<CumulativeReturnVO> getCumulativeReturnOfOneStock(List<StockVO> list,int span){
+
+        List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
+
+        //TODO gcm 将第一天的数据加入进去,查询果仁网，看第一天的日期是以交易日为准，还是以用户的选择为准
+        CumulativeReturnVO firstDay = new CumulativeReturnVO(list.get(0).date,0,false);
+        cumulativeReturnVOS.add(firstDay);
+
+        //累计收益率以第一个交易日的收益率来对比计算
+        double closeOfFirstDay = list.get(0).close;
+
+        for(int i = 1; i < list.size(); i++) {
+            double sucClose = list.get(i).close;
+            double cumulativeReturn = (sucClose - closeOfFirstDay) / closeOfFirstDay;
+            //TODO gcm 先将所有的最大回测点设为false
+            cumulativeReturnVOS.add(new CumulativeReturnVO(list.get(i).date, cumulativeReturn, false));
+        }
+
+        return cumulativeReturnVOS;
     }
 }

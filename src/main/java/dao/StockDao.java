@@ -185,4 +185,12 @@ public interface StockDao {
      * @return the all stocks first letters 返回所有股票的名称及其，名称作为键值
      */
     Map<String,String> getAllStocksName();
+
+    /**
+     * 若参照日期为交易日，则返回参照日期;否则返回参照日期前的一个交易日
+     * @param date 参照日期
+     * @param stockCode
+     * @return LocalDate
+     */
+    LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException;
 }

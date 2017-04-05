@@ -46,7 +46,7 @@ public interface TracebackService {
      * @param stockCodes 所有自选股的代码
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
-    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO,List<String> stockCodes);
+    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO,List<String> stockCodes) throws IOException, NoDataWithinException, DateNotWithinException;
 
     /**
      * 计算回测中用列表列出的数值型数据，如阿尔法，beta

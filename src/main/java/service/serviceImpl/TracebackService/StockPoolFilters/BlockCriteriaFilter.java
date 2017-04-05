@@ -12,10 +12,6 @@ import java.util.List;
  */
 public class BlockCriteriaFilter extends StockPoolFilter {
 
-    public BlockCriteriaFilter() {
-        setNextFilter(new StCriteriaFilter());
-    }
-
     /**
      * 筛选股票
      *

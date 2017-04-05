@@ -6,7 +6,6 @@ import po.StockPO;
 import service.StockService;
 import utilities.StockCodeHelper;
 import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.MatchNothingException;
 import utilities.exceptions.NoDataWithinException;
 import vo.StockSearchVO;
 import vo.StockVO;
@@ -164,8 +163,35 @@ public class StockServiceImpl implements StockService {
      * @return List<StockVO> 该股票信息的列表
      */
     @Override
+    public Map<LocalDate, StockVO> getOneStockDateAndData(String stockCode, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
+        Map<LocalDate, StockVO> dateAndData = new TreeMap<LocalDate, StockVO>();
+        List<StockVO> stockVOS = convertStockPO2VO(stockDao.getStockData(stockCode,start,end));
+        for(int i = 0; i < stockVOS.size(); i++){
+            dateAndData.put(stockVOS.get(i).date,stockVOS.get(i));
+        }
+        return dateAndData;
+    }
+
+    /**
+     * 根据股票代码，起始日期，结束日期，获得该股票在此期间的数据
+     *
+     * @param stockCode 股票代码
+     * @param start     起始日期
+     * @param end       结束日期
+     * @return List<StockVO> 该股票信息的列表
+     */
+    @Override
     public List<StockVO> getOneStockData(String stockCode, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
         List<StockPO> stockPOS = stockDao.getStockData(stockCode,start,end);
+        if(stockPOS.get(0).getDate().isAfter(start)){
+
+            //如果传入的起始日期是非交易日，则获取其前一个交易日的信息,并将其加入到列表首位
+            LocalDate lastTradingDay = getLastTradingDay(start, stockCode);
+            StockPO lastTradeStockPO = stockDao.getStockData(stockCode, lastTradingDay);
+            stockPOS.add(0,lastTradeStockPO);
+
+        }
+
         return convertStockPO2VO(stockPOS);
     }
 
@@ -178,10 +204,21 @@ public class StockServiceImpl implements StockService {
      * @return List<StockVO> 基准股票信息的列表
      */
     @Override
-    public List<StockVO> getBaseStock(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<StockVO> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
         String baseStockCode = searchStock(stockName).get(0).code;
-        System.out.printf(baseStockCode);
         return getOneStockData(baseStockCode,start,end);
+    }
+
+    /**
+     * 若参照日期为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
+     *
+     * @param date 参照日期
+     * @param stockCode
+     * @return LocalDate
+     */
+    @Override
+    public LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException {
+        return stockDao.getLastTradingDay(date, stockCode);
     }
 
     /**

@@ -7,6 +7,7 @@ import vo.StockVO;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -48,13 +49,13 @@ public class StockServiceImplTest {
 
     @Test
     public void getOneStockData() throws Exception {
-        List<StockVO> stockVOS = stockService.getOneStockData("000001",start,end);
+        Map<LocalDate,StockVO> stockVOS = stockService.getOneStockDateAndData("000001",start,end);
         assertEquals(8,stockVOS.size(),1);
     }
 
     @Test
     public void getBaseStock() throws Exception {
-        List<StockVO> stockVOS = stockService.getBaseStock("深发展Ａ",start,end);
+        List<StockVO> stockVOS = stockService.getBaseStockData("深发展Ａ",start,end);
         assertEquals(8,stockVOS.size(),1);
     }
 
