@@ -5,6 +5,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import presentation.chart.TraceBack.TraceBackChart;
 import presentation.listener.chartMouseListener.TraceBackListener;
+import presentation.view.tools.SingleDatePickerPanel;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.TracebackCriteriaVO;
@@ -18,16 +19,20 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String []args) throws DateNotWithinException, NoDataWithinException, IOException {
-        TraceBackChart traceBackChart = new TraceBackChart(new TracebackCriteriaVO());
-        JFreeChart chart = traceBackChart.createTracebackChart();
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));
+//        TraceBackChart traceBackChart = new TraceBackChart(new TracebackCriteriaVO());
+//        JFreeChart chart = traceBackChart.createTracebackChart();
+//        ChartPanel chartPanel = new ChartPanel(chart);
+//        chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));
+        SingleDatePickerPanel singleDatePickerPanel = new SingleDatePickerPanel();
+        singleDatePickerPanel.setBounds(350, 50,175,35);
+        singleDatePickerPanel.setVisible(true);
+
 
 
         JFrame ee=new JFrame();
         ee.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ee.setSize(750*2,400*2);
-        ee.getContentPane().add(chartPanel);
+        ee.getContentPane().add(singleDatePickerPanel);
         ee.setVisible(true);
 
     }
