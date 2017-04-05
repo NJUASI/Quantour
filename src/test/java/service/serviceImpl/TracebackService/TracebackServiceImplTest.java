@@ -1,6 +1,5 @@
 package service.serviceImpl.TracebackService;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.Before;
 import org.junit.Test;
 import service.TracebackService;
@@ -48,21 +47,21 @@ public class TracebackServiceImplTest {
     public void getStrategyCumulativeReturn() throws Exception {
     }
 
-//    @Test
-//    public void getBaseCumulativeReturn() throws Exception {
-//
-//        List<CumulativeReturnVO> cumulativeReturnVOS = tracebackService.getBaseCumulativeReturn(tracebackCriteriaVO);
-//        assertEquals(LocalDate.of(2014,4,19),cumulativeReturnVOS.get(0).currentDate);
-//        assertEquals(-0.0102,cumulativeReturnVOS.get(1).cumulativeReturn,0.0001);
-//    }
-//
-//    @Test
-//    public void getCustomizedCumulativeReturn() throws Exception {
-//
-//        List<CumulativeReturnVO> cumulativeReturnVOS = tracebackService.getCustomizedCumulativeReturn(tracebackCriteriaVO,stockCodes);
-//        assertEquals(-0.021,cumulativeReturnVOS.get(1).cumulativeReturn,0.001);
-//
-//    }
+    @Test
+    public void getBaseCumulativeReturn() throws Exception {
+
+        List<CumulativeReturnVO> cumulativeReturnVOS = tracebackService.getBaseCumulativeReturn(tracebackCriteriaVO.startDate, tracebackCriteriaVO.endDate, tracebackCriteriaVO.baseStockName);
+        assertEquals(LocalDate.of(2014,4,19),cumulativeReturnVOS.get(0).currentDate);
+        assertEquals(-0.0102,cumulativeReturnVOS.get(1).cumulativeReturn,0.0001);
+    }
+
+    @Test
+    public void getCustomizedCumulativeReturn() throws Exception {
+
+        List<CumulativeReturnVO> cumulativeReturnVOS = tracebackService.getCustomizedCumulativeReturn(tracebackCriteriaVO.startDate, tracebackCriteriaVO.endDate, stockCodes);
+        assertEquals(-0.021,cumulativeReturnVOS.get(1).cumulativeReturn,0.001);
+
+    }
 
     @Test
     public void getNumericalVal() throws Exception {
