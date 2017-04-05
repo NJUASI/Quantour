@@ -1,8 +1,10 @@
 package service.serviceImpl.TracebackService.TracebackStrategy;
 
 import service.StockService;
+import service.StockTradingDayService;
 import service.TracebackService;
 import service.serviceImpl.StockService.StockServiceImpl;
+import service.serviceImpl.StockTradingDayServiceImpl;
 import service.serviceImpl.TracebackService.AllTracebackStrategy;
 import service.serviceImpl.TracebackService.TracebackServiceImpl;
 import utilities.exceptions.DateNotWithinException;
@@ -23,6 +25,7 @@ public class MomentumStrategy implements AllTracebackStrategy {
 
     StockService stockService;
     TracebackService tracebackService;
+    StockTradingDayService stockTradingDayService;
 
     //千元投资
     final double initInvestment = 1000;
@@ -33,6 +36,7 @@ public class MomentumStrategy implements AllTracebackStrategy {
     public MomentumStrategy() {
         stockService = new StockServiceImpl();
         tracebackService = new TracebackServiceImpl();
+        stockTradingDayService = new StockTradingDayServiceImpl();
         cumulativeReturn = initInvestment;
     }
 
@@ -52,10 +56,10 @@ public class MomentumStrategy implements AllTracebackStrategy {
         List<String> holdingStocks = new ArrayList<String>();
 
         //回测区间,从用户所选区间里再选出第一个交易日和最后一个交易日
-        LocalDate start = stockService.getNextTradingDay(tracebackCriteriaVO.startDate,stockPoolCodes);
-        LocalDate end = stockService.getNextTradingDay(tracebackCriteriaVO.endDate,stockPoolCodes);
+        LocalDate start = stockTradingDayService.getNextTradingDay(tracebackCriteriaVO.startDate,stockPoolCodes);
+        LocalDate end = stockTradingDayService.getNextTradingDay(tracebackCriteriaVO.endDate,stockPoolCodes);
 
-        int tradingDays = stockService.getTradingDays(start,end);
+        int tradingDays = stockTradingDayService.getTradingDays(start,end,stockPoolCodes);
 
         //形成期
         int formativePeriod = tracebackCriteriaVO.formativePeriod;
@@ -77,9 +81,9 @@ public class MomentumStrategy implements AllTracebackStrategy {
 
 
         //第一个形成期的起始日期
-        LocalDate startOfFormative = stockService.getTradingDayMinus(start, formativePeriod, stockPoolCodes);
+        LocalDate startOfFormative = stockTradingDayService.getTradingDayMinus(start, formativePeriod, stockPoolCodes);
         //第一个形成期的结束日期
-        LocalDate endOfFormative = stockService.getLastTradingDay(start.minusDays(1),stockPoolCodes);
+        LocalDate endOfFormative = stockTradingDayService.getLastTradingDay(start.minusDays(1),stockPoolCodes);
 
         //第一个持有期的起始日期
         LocalDate startOfHolding = start;
@@ -89,7 +93,7 @@ public class MomentumStrategy implements AllTracebackStrategy {
             holdingStocks = pickStocks(formate(stockPoolCodes,startOfFormative,endOfFormative));
 
             //持有期的结束日期，根据持有期的起始日期进行计算
-            LocalDate endOfHolding = stockService.getTradingDayPlus(startOfHolding,holdingPeriod,holdingStocks);
+            LocalDate endOfHolding = stockTradingDayService.getTradingDayPlus(startOfHolding,holdingPeriod,holdingStocks);
 
             //最后一个周期，直接以最后一个交易日为最后一天
             if(i == periodNum-1){
@@ -214,10 +218,15 @@ public class MomentumStrategy implements AllTracebackStrategy {
                 @Override
                 public Double apply(String stockCode) {
                     //因为该股票可能在形成期起始或者结束日期停牌，故寻找此区间内该股票的起始和停牌日期
-                    LocalDate thisStockStartDay = stockService.getNextTradingDay(start,stockCode);
+                    LocalDate thisStockStartDay = null;
+                    try {
+                        thisStockStartDay = stockTradingDayService.getNextTradingDay(start,stockCode);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     LocalDate thisStockEndDay = null;
                     try {
-                         thisStockEndDay = stockService.getLastTradingDay(end,stockCode);
+                         thisStockEndDay = stockTradingDayService.getLastTradingDay(end,stockCode);
                     } catch (IOException e) {
                     }
 

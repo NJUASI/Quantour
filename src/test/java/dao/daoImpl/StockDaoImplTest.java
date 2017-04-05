@@ -1,5 +1,6 @@
 package dao.daoImpl;
 
+import com.sun.javafx.fxml.LoadListener;
 import dao.StockDao;
 import org.junit.After;
 import org.junit.Before;
@@ -53,6 +54,28 @@ public class StockDaoImplTest {
         assertEquals("飞亚达Ａ", testPO.getName());
         assertEquals(7.55, testPO.getPreClose(), 0);
         assertEquals(7.55, testPO.getPreAdjClose(), 0);
+    }
+
+    @Test
+    public void testGetLastTradingDay() throws Exception {
+
+        LocalDate start = LocalDate.of(2014,4,19);
+        String stockCode = "1";
+
+        LocalDate lastTradingDay = stockDao.getLastTradingDay(start,stockCode);
+
+        assertEquals(LocalDate.of(2014,4,18), lastTradingDay);
+    }
+
+    @Test
+    public void testGetNextTradingDay() throws  Exception {
+
+        LocalDate start = LocalDate.of(2014,4,19);
+        String stockCode = "1";
+
+        LocalDate nextTradingDay = stockDao.getNextTradingDay(start,stockCode);
+
+        assertEquals(LocalDate.of(2014,4,21), nextTradingDay);
     }
 
     @Test

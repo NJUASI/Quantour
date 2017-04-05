@@ -1,11 +1,8 @@
 package service.serviceImpl.StockService;
 
-import service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
-import service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
 import vo.StockPoolCriteriaVO;
 import vo.StockPoolVO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,10 +13,6 @@ import java.util.List;
 public class StockPoolFilter {
 
     StockPoolFilter nextFilter;
-
-    public StockPoolFilter() {
-        setFilterChains();
-    }
 
     /**
      * 筛选股票
@@ -58,16 +51,5 @@ public class StockPoolFilter {
         this.nextFilter = nextFilter; 
     }
 
-    /**
-     *  将责任链在此处设置好，以便以后增加过滤器
-     */
-    private void setFilterChains() {
-        //新建对象
-        BlockCriteriaFilter blockCriteriaFilter = new BlockCriteriaFilter();
-        StCriteriaFilter stCriteriaFilter = new StCriteriaFilter();
-
-        //设置责任链
-        blockCriteriaFilter.setNextFilter(stCriteriaFilter);
-    }
 
 }

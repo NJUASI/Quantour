@@ -9,10 +9,13 @@ import dataHelper.dataHelperImpl.SearchDataHelperImpl;
 import dataHelper.dataHelperImpl.StockDataHelperImpl;
 import po.PrivateStockPO;
 import po.StockPO;
+import sun.rmi.server.LoaderHandler;
+import sun.util.resources.sl.LocaleNames_sl;
 import utilities.StockCodeHelper;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.StockPoolVO;
+import vo.StockVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -307,7 +310,114 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException {
-        return stockHelper.getLastTradingDay(date, stockCode);
+
+        LocalDate[] minAndMax = findMinAndMaxDate(date, stockCode);
+
+        LocalDate lastTradingDay = null;
+
+        if(minAndMax[1].isEqual(date)){
+            lastTradingDay = minAndMax[1];
+        }
+        else {
+            lastTradingDay = minAndMax[0];
+        }
+
+        return lastTradingDay;
+    }
+
+    /**
+     * 若参照日期为交易日，则返回参照日期;否则返回参照日期前的一个交易日
+     *
+     * @param date      参照日期
+     * @param stockCode 股票代码
+     * @return 交易日
+     */
+    @Override
+    public LocalDate getNextTradingDay(LocalDate date, String stockCode) throws IOException {
+
+        LocalDate[] minAndMax = findMinAndMaxDate(date, stockCode);
+
+        LocalDate nextTradingDay = null;
+
+        if(minAndMax[0].isEqual(date)){
+            nextTradingDay = minAndMax[0];
+        }
+        else {
+            nextTradingDay = minAndMax[1];
+        }
+
+        return nextTradingDay;
+    }
+
+    /**
+     * 判断股票是否在传入日期开盘
+     *
+     * @param date           需要判断的日期
+     * @param stockPoolCodes 对应这个日期的所有·股票代码列表
+     * @return 是否有传入股票在传入日期开盘
+     */
+    @Override
+    public boolean isTradingDay(LocalDate date, List<String> stockPoolCodes) throws IOException {
+
+        boolean isTradingDay = false;
+
+        for(int i = 0; i < stockPoolCodes.size(); i++){
+            //只要有一只股票在此日期开盘，则返回true
+            if(getLastTradingDay(date, stockPoolCodes.get(i)).isEqual(date)){
+                isTradingDay = true;
+                break;
+            }
+        }
+
+        return isTradingDay;
+    }
+
+    /**
+     * 使用二分法找到date的最小范围
+     * @param date 日期
+     * @param stockCode 股票代码
+     * @return LocalDate[] 返回两个日期的数组，第一个日期为小值，第二个日期为大值
+     */
+    private LocalDate[] findMinAndMaxDate(LocalDate date, String stockCode) throws IOException {
+
+        LocalDate[] minAndMax = new LocalDate[2];
+
+        //默认为date,但是date可能并不是交易日
+        LocalDate lastTradingDay = date;
+
+        List<StockPO> stockVOS = getStockData(stockCode);
+        List<LocalDate> allTradingDates = new ArrayList<LocalDate>();
+
+        for(int i = 0; i < stockVOS.size(); i++){
+            allTradingDates.add(stockVOS.get(i).getDate());
+        }
+
+        //二分法
+        int minIndex = 0;
+        int maxIndex = allTradingDates.size()-1;
+        int midIndex;
+
+        while( (minIndex + 1) != maxIndex){
+
+            midIndex = (maxIndex + minIndex) / 2;
+
+            //当日期在上半部分
+            if(allTradingDates.get(minIndex).compareTo(date)<=0 && allTradingDates.get(midIndex).compareTo(date)>= 0){
+                maxIndex = midIndex;
+            }
+            //日期在下半部分
+            else{
+                minIndex = midIndex;
+            }
+
+        }
+
+        //小值
+        minAndMax[0] = allTradingDates.get(minIndex);
+        //大值
+        minAndMax[1] = allTradingDates.get(maxIndex);
+
+        return minAndMax;
     }
 
     /**

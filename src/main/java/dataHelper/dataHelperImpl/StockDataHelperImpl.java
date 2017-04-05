@@ -7,6 +7,7 @@ import utilities.enums.Market;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -104,54 +105,6 @@ public class StockDataHelperImpl implements StockDataHelper {
         }
 
         return dates;
-    }
-
-    /**
-     * 若参照日期为交易日，则返回参照日期;否则返回参照日期前的一个交易日
-     *
-     * @param date 参照日期
-     * @param stockCode
-     * @return LocalDate
-     */
-    @Override
-    public LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException {
-
-        //默认值为参照日期
-        LocalDate result = date;
-
-        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                getResourceAsStream(stockRecordByCodePathPre + StockCodeHelper.simplify(stockCode) + stockRecordPathPost)));
-
-        List<StockPO> allResult = getStockRecords(stockCode);
-
-        List<LocalDate> firstAndLastDay = getFirstAndLastDay(stockCode);
-        LocalDate firstDay = firstAndLastDay.get(0);
-        LocalDate lastDay = firstAndLastDay.get(1);
-
-        //第一天到参照日期的距离近
-        if(firstDay.until(date).getDays() < lastDay.until(date).getDays()){
-            for (int i = allResult.size()-1; i >= 0; i--){
-                if(allResult.get(i).getDate().isEqual(date)){
-                    break;
-                }
-                else if(allResult.get(i).getDate().isAfter(date)){
-                    result = allResult.get(i-1).getDate();
-                    break;
-                }
-            }
-        }
-        else{
-            for(int i = 0; i < allResult.size(); i++){
-                if(allResult.get(i).getDate().isEqual(date)){
-                    break;
-                }
-                else if(allResult.get(i).getDate().isBefore(date)){
-                    result = allResult.get(i).getDate();
-                    break;
-                }
-            }
-        }
-        return result;
     }
 
     /**

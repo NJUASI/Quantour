@@ -58,12 +58,4 @@ public interface StockDataHelper {
      */
     List<LocalDate> getDateWithoutData(String stockCode) throws IOException;
 
-    /**
-     * 若参照日期为交易日，则返回参照日期;否则返回参照日期前的一个交易日
-     *
-     * @param date 参照日期
-     * @param stockCode 股票代码
-     * @return LocalDate
-     */
-    LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException;
 }

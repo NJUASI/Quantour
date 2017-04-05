@@ -4,12 +4,10 @@ import dataHelper.StockDataHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runners.Parameterized;
 import po.StockPO;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -132,14 +130,6 @@ public class StockDataHelperImplTest {
     public void testGetDateWithoutData() throws IOException {
         List<LocalDate> result = stockDataHelper.getDateWithoutData("17");
         assertEquals(2207, result.size());
-    }
-
-    @Test
-    public void testGetLastTradingDay() throws Exception {
-        LocalDate date = LocalDate.of(2014,4,20);
-        String stockCode = "1";
-        LocalDate lastTradingDay = stockDataHelper.getLastTradingDay(date,stockCode);
-        assertEquals(LocalDate.of(2014,4,18),lastTradingDay);
     }
 }
 

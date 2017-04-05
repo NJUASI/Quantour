@@ -200,4 +200,20 @@ public interface StockDao {
      * @return 所有股票的版块有关的信息
      */
     List<StockPoolVO> getAllStockPool();
+
+    /**
+     *  若参照日期为交易日，则返回参照日期;否则返回参照日期前的一个交易日
+     * @param date 参照日期
+     * @param stockCode 股票代码
+     * @return 交易日
+     */
+    LocalDate getNextTradingDay(LocalDate date, String stockCode) throws IOException;
+
+    /**
+     * 判断股票是否在传入日期开盘
+     * @param date 需要判断的日期
+     * @param stockPoolCodes 对应这个日期的所有·股票代码列表
+     * @return 是否有传入股票在传入日期开盘
+     */
+    boolean isTradingDay(LocalDate date, List<String> stockPoolCodes) throws IOException;
 }

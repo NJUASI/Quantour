@@ -4,6 +4,10 @@ import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
 import service.StockService;
+import service.StockTradingDayService;
+import service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
+import service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
+import service.serviceImpl.StockTradingDayServiceImpl;
 import utilities.StockCodeHelper;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
@@ -28,11 +32,13 @@ public class StockServiceImpl implements StockService {
 
     StockDao stockDao;
     private StockPoolFilter stockPoolFilter;
+    StockTradingDayService stockTradingDayService;
 
 
     public StockServiceImpl() {
         stockDao = new StockDaoImpl();
         stockPoolFilter = new StockPoolFilter();
+        stockTradingDayService = new StockTradingDayServiceImpl();
     }
 
     /**
@@ -191,7 +197,7 @@ public class StockServiceImpl implements StockService {
         if(stockPOS.get(0).getDate().isAfter(start)){
 
             //如果传入的起始日期是非交易日，则获取其前一个交易日的信息,并将其加入到列表首位
-            LocalDate lastTradingDay = getLastTradingDay(start, stockCode);
+            LocalDate lastTradingDay = stockTradingDayService.getLastTradingDay(start, stockCode);
             StockPO lastTradeStockPO = stockDao.getStockData(stockCode, lastTradingDay);
             stockPOS.add(0,lastTradeStockPO);
 
@@ -215,30 +221,6 @@ public class StockServiceImpl implements StockService {
     }
 
     /**
-     * 若参照日期为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
-     *
-     * @param date 参照日期
-     * @param stockCode
-     * @return LocalDate
-     */
-    @Override
-    public LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException {
-        return stockDao.getLastTradingDay(date, stockCode);
-    }
-
-    /**
-     * 根据传入的股票代码，找出传入股票代码中相对于date最晚的交易日期。若参照日期date为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
-     *
-     * @param date       参照日期
-     * @param stockCodes 传入的股票代码列表
-     * @return
-     */
-    @Override
-    public LocalDate getLastTradingDay(LocalDate date, List<String> stockCodes) {
-        return null;
-    }
-
-    /**
      * 根据股票池的选择标准，选择符合标准的股票池 非自选股调用此方法
      *
      * @param stockPoolCriteriaVO 股票池的选择标准
@@ -246,67 +228,28 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<String> getStockPool(StockPoolCriteriaVO stockPoolCriteriaVO) {
-        List<String> stockPoolCodes = new ArrayList<String>();
-        List<StockPoolVO> allStockPool = stockDao.getAllStockPool();
 
+        //新建所有filter对象
+        StockPoolFilter stockPoolFilter = new StockPoolFilter();
+        StockPoolFilter blockCriteriaFilter = new BlockCriteriaFilter();
+        StockPoolFilter stCriteriaFilter = new StCriteriaFilter();
+
+        //设置责任链
+        stockPoolFilter.setNextFilter(blockCriteriaFilter);
+        blockCriteriaFilter.setNextFilter(stCriteriaFilter);
+
+
+        List<String> stockPoolCodes = new ArrayList<String>();
+        //筛选股票
+        List<StockPoolVO> allStockPool = stockPoolFilter.meetCriteria(stockDao.getAllStockPool(),stockPoolCriteriaVO);
+
+        //只需要股票池所有股票的股票代码
         for(StockPoolVO vo : allStockPool){
             stockPoolCodes.add(vo.stockCode);
         }
 
         return stockPoolCodes;
 
-    }
-
-    /**
-     * 以参照日期为基准，减去minusDay的交易日天数，获取到那天的日期
-     * 例： start = 4.21.2014 minusDay = 2 则返回值为4.17.2014
-     *
-     * @param start          作为参照的日期
-     * @param minusDay       减去的交易日的天数
-     * @param stockPoolCodes 传入的股票代码列表
-     * @return
-     */
-    @Override
-    public LocalDate getTradingDayMinus(LocalDate start, int minusDay, List<String> stockPoolCodes) {
-        return null;
-    }
-
-    /**
-     * 根据传入的股票代码，找出传入股票代码中相对于date最晚的交易日期。若参照日期date为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
-     *
-     * @param date       参照日期
-     * @param stockCodes 传入的股票代码列表
-     * @return 参照日期的下一个交易日
-     */
-    @Override
-    public LocalDate getNextTradingDay(LocalDate date, List<String> stockCodes) {
-        return null;
-    }
-
-    /**
-     * 若参照日期date为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
-     *
-     * @param date      参照日期
-     * @param stockCode 传入的股票代码
-     * @return 参照日期的下一个交易日
-     */
-    @Override
-    public LocalDate getNextTradingDay(LocalDate date, String stockCode) {
-        return null;
-    }
-
-    /**
-     * 以参照日期为基准，加上plusDay的交易日天数，获取到那天的日期
-     * 例： start = 4.17.2014 plusDay = 2 则返回值为4.21.2014
-     *
-     * @param start          作为参照的日期
-     * @param plusDay        加上的交易日的天数
-     * @param stockPoolCodes 传入的股票代码列表
-     * @return
-     */
-    @Override
-    public LocalDate getTradingDayPlus(LocalDate start, int plusDay, List<String> stockPoolCodes) {
-        return null;
     }
 
     /**
@@ -319,18 +262,6 @@ public class StockServiceImpl implements StockService {
     @Override
     public StockVO getOneStockDataOneDay(String stockCode, LocalDate date) {
         return null;
-    }
-
-    /**
-     * 计算从起始日期到结束日期之间总共有多少天的交易日，包括起始日期和结束日期
-     *
-     * @param start 起始日期
-     * @param end   结束日期
-     * @return 起始日期到结束日期之间总共有多少天的交易日
-     */
-    @Override
-    public int getTradingDays(LocalDate start, LocalDate end) {
-        return 0;
     }
 
     /**
