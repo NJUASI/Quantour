@@ -105,8 +105,10 @@
     -fx-text-fill: #C9D0D6;
 }
 
+
 .date-picker-popup > .calendar-grid {
     -fx-background-color: derive(-fx-selection-bar-non-focused, 60%);
+    -fx-border-color: #282C30;
     /*-fx-background-insets: 1 0 0 0;*/
     -fx-padding: 0;
 }
@@ -114,6 +116,7 @@
 .date-picker-popup > * > .date-cell {
     -fx-background-color: transparent;
     -fx-background-insets: 1, 2;
+    -fx-border-color: #1C2023;
     -fx-padding: 0;
     -fx-alignment: BASELINE_CENTER;
     -fx-opacity: 1.0;
@@ -122,13 +125,14 @@
 .date-picker-popup > * > .day-name-cell,
 .date-picker-popup > * > .week-number-cell {
     -fx-background-color:#282C30 ;
+    -fx-border-color: #282C30;
     -fx-font-size: 0.916667em;
     -fx-text-fill: #C9D0D6;
 }
 
 .date-picker-popup > * > .week-number-cell {
     -fx-padding: 0.333333em 0.583333em 0.333333em 0.583333em; /* 4 7 4 7 */
-    -fx-border-color: #282C30;
+    -fx-border-color: #1C2023;
     -fx-border-width: 1px;
     -fx-background: #282C30;
     -fx-background-color: #282C30;
@@ -137,7 +141,7 @@
 
 .date-picker-popup > * > .day-cell {
     -fx-padding: 0.333333em 0.583333em 0.333333em 0.583333em; /* 4 7 4 7 */
-    -fx-border-color: derive(-fx-selection-bar-non-focused, 60%);
+    -fx-border-color: #1C2023;
     -fx-border-width: 1px;
     -fx-font-size: 1em;
     -fx-background: #282C30;
@@ -149,6 +153,7 @@
     -fx-alignment: TOP_LEFT;
     -fx-padding: 0.083333em 0.333333em 0.083333em 0.333333em; /* 1 4 1 4 */
     -fx-cell-size: 2.75em;
+    -fx-border-color: #1C2023;
 }
 
 .date-picker-popup > * > .day-cell > .secondary-text {
@@ -158,23 +163,24 @@
 .date-picker-popup > * > .today {
     -fx-background-color: #282C30, derive(-fx-selection-bar-non-focused, -20%), #282C30;
     -fx-background-insets: 1, 2, 3;
+    -fx-border-color: #282C30, derive(-fx-selection-bar-non-focused, -20%), #282C30;
 }
 
 .date-picker-popup > * > .day-cell:hover,
 .date-picker-popup > * > .selected,
 .date-picker-popup > * > .previous-month.selected,
 .date-picker-popup > * > .next-month.selected {
-    -fx-background: -fx-selection-bar;
+    -fx-background: #253A54;
 }
 
 .date-picker-popup > * > .previous-month:hover,
 .date-picker-popup > * > .next-month:hover {
-    -fx-background: -fx-selection-bar-non-focused;
+    -fx-background: #253A54;
 }
 
 .date-picker-popup > * > .today:hover,
 .date-picker-popup > * > .today.selected {
-    -fx-background-color: -fx-selection-bar, derive(-fx-selection-bar-non-focused, -20%), -fx-selection-bar;
+    -fx-background-color: #253A54, derive(#253A54, -20%), #253A54;
 }
 
 .date-picker-popup > * > .day-cell:focused,
@@ -187,12 +193,12 @@
 .date-picker-popup > * > .today:focused:hover,
 .date-picker-popup > * > .selected:focused,
 .date-picker-popup > * > .today.selected:focused {
-    -fx-background-color: -fx-selection-bar, -fx-cell-focus-inner-border, -fx-selection-bar;
+    -fx-background-color: #284569, #284569,#284569;
 }
 
 .date-picker-popup > * > .previous-month,
 .date-picker-popup > * > .next-month {
-    -fx-background: derive(#284569, -4%);
+    -fx-background: derive(#424B54, -4%);
 }
 
 .date-picker-popup > * > .day-cell:hover > .secondary-text,
@@ -204,10 +210,23 @@
 
 .date-picker-popup > * > .previous-month.today,
 .date-picker-popup > * > .next-month.today {
-    -fx-background-color: derive(#284569, -4%), derive(-fx-selection-bar-non-focused, -20%), derive(#284569, -4%);
+    -fx-background-color: derive(#424B54, -4%), derive(#253A54, -20%), derive(#424B54, -4%);
 }
 
 .date-picker-popup > * > .previous-month.today:hover,
 .date-picker-popup > * > .next-month.today:hover {
-    -fx-background-color: -fx-selection-bar-non-focused, derive(-fx-selection-bar-non-focused, -20%), -fx-selection-bar-non-focused;
+    -fx-background-color: #253A54, derive(#253A54, -20%), #253A54;
 }
+
+/*.date-picker:disabled {*/
+    /*-fx-opacity: 0.4;*/
+    /*-fx-background-color: red;*/
+    /*-fx-text-fill: #039ED3;*/
+/*}*/
+
+/*!* For date-picker textfield *!*/
+/*.date-picker > .date-picker-display-node:disabled {*/
+    /*-fx-opacity:  0.4;*/
+    /*-fx-background-color: #9a42c8;*/
+    /*-fx-text-fill: #C9D0D6;*/
+/*}*/
