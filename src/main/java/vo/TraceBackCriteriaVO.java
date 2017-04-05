@@ -9,7 +9,7 @@ import java.time.LocalDate;
  *
  * 保存用户在界面上选择的回测的条件
  */
-public class TracebackCriteriaVO {
+public class TraceBackCriteriaVO {
 
     /**
      * 回测区间的起始时间

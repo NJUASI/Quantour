@@ -8,7 +8,7 @@ import utilities.exceptions.NoDataWithinException;
 import vo.ChartShowCriteriaVO;
 import vo.CumulativeReturnVO;
 import vo.MovingAverageVO;
-import vo.TracebackCriteriaVO;
+import vo.TraceBackCriteriaVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -30,19 +30,19 @@ public class Test {
 
     }
 
-    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TracebackCriteriaVO tracebackCriteriaVO) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException {
+    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException {
         // 一次性获得所有的均线数据（向前走了一天，获得前一天的）
-        ChartShowCriteriaVO criteriaVO = new ChartShowCriteriaVO("12", tracebackCriteriaVO.startDate.minusDays(1), tracebackCriteriaVO.endDate);
-//        ChartShowCriteriaVO criteriaVO = new ChartShowCriteriaVO(tracebackCriteriaVO, tracebackCriteriaVO.startDate, tracebackCriteriaVO.endDate);
+        ChartShowCriteriaVO criteriaVO = new ChartShowCriteriaVO("12", traceBackCriteriaVO.startDate.minusDays(1), traceBackCriteriaVO.endDate);
+//        ChartShowCriteriaVO criteriaVO = new ChartShowCriteriaVO(traceBackCriteriaVO, traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate);
         List<Integer> formatAve = new LinkedList<>();
-        formatAve.add(tracebackCriteriaVO.formativePeriod);
+        formatAve.add(traceBackCriteriaVO.formativePeriod);
         Map<Integer, List<MovingAverageVO>> aveInfo = service.getAveData(criteriaVO, formatAve);
         List<MovingAverageVO> aves = aveInfo.values().iterator().next();
 
-        int myStockNum = tracebackCriteriaVO.holdingNum;
-        int holdingPeriod = tracebackCriteriaVO.holdingPeriod;
+        int myStockNum = traceBackCriteriaVO.holdingNum;
+        int holdingPeriod = traceBackCriteriaVO.holdingPeriod;
 
-        int cycles = (int) tracebackCriteriaVO.startDate.until(tracebackCriteriaVO.endDate, ChronoUnit.DAYS);
+        int cycles = (int) traceBackCriteriaVO.startDate.until(traceBackCriteriaVO.endDate, ChronoUnit.DAYS);
 
         // 整个周期的计算
         for (int i = 0; i < cycles; i++) {
