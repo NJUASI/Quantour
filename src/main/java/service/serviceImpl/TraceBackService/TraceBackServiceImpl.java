@@ -23,8 +23,16 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     private StockService stockService;
 
+    //保存策略累计收益率
+    private List<CumulativeReturnVO> strategyCumulativeReturn;
+
+    //保存基准累计收益率
+    private List<CumulativeReturnVO> baseCumulativeReturn;
+
     public TraceBackServiceImpl() {
         stockService = new StockServiceImpl();
+        strategyCumulativeReturn = new ArrayList<CumulativeReturnVO>();
+        baseCumulativeReturn = new ArrayList<CumulativeReturnVO>();
     }
 
 
@@ -49,7 +57,9 @@ public class TraceBackServiceImpl implements TraceBackService {
         AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
 
         //回测
-        return traceBackStrategy.traceBack(stockPool, traceBackCriteriaVO);
+        setStrategyCumulativeReturn(traceBackStrategy.traceBack(stockPool, traceBackCriteriaVO));
+
+        return strategyCumulativeReturn;
     }
 
     /**
@@ -66,8 +76,9 @@ public class TraceBackServiceImpl implements TraceBackService {
         AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
 
         //回测
-        return traceBackStrategy.traceBack(stockCodes, traceBackCriteriaVO);
+        setStrategyCumulativeReturn(traceBackStrategy.traceBack(stockCodes, traceBackCriteriaVO));
 
+        return strategyCumulativeReturn;
     }
 
     /**
@@ -86,7 +97,9 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         List<StockVO> baseStock = stockService.getBaseStockData(stockName,start,end);
 
-        return maxRetracement(getCumulativeReturnOfOneStock(baseStock,start));
+        setBaseCumulativeReturn(getCumulativeReturnOfOneStock(baseStock,start));
+
+        return baseCumulativeReturn;
     }
 
     /**
@@ -133,7 +146,9 @@ public class TraceBackServiceImpl implements TraceBackService {
             }
         }
 
-        return maxRetracement(cumulativeReturnVOS);
+        setBaseCumulativeReturn(cumulativeReturnVOS);
+
+        return baseCumulativeReturn;
     }
 
     /**
@@ -219,41 +234,11 @@ public class TraceBackServiceImpl implements TraceBackService {
         return cumulativeReturnVOS;
     }
 
+    private void setStrategyCumulativeReturn(List<CumulativeReturnVO> strategyCumulativeReturn) {
+        this.strategyCumulativeReturn = strategyCumulativeReturn;
+    }
 
-    /**
-     * 计算最大回撤点
-     * @param cumulativeReturnVOS 未计算最大回测的累计收益率
-     * @return List<CumulativeReturnVO> 标记了两个最大回撤点的累计收益率，标记点的isTraceBack为true
-     */
-    private List<CumulativeReturnVO> maxRetracement(List<CumulativeReturnVO> cumulativeReturnVOS){
-
-        //TODO gcm 用了两个循环，不知道怎么改进算法，你们可以帮下忙
-
-        //回撤点的峰值在list中的位置
-        int top = 0;
-        //回撤点的谷值在list中的位置
-        int down = 0;
-
-        //将第一个位置默认为最大回撤值点
-        cumulativeReturnVOS.get(0).isTraceBack = true;
-
-        double max = 0;
-
-        for(int i = 0; i < cumulativeReturnVOS.size(); i++){
-            for (int j = 0; j < cumulativeReturnVOS.size(); j++){
-                double diff = cumulativeReturnVOS.get(i).cumulativeReturn - cumulativeReturnVOS.get(j).cumulativeReturn;
-                if(max < diff){
-                    //重新设置最大回撤点
-                    cumulativeReturnVOS.get(top).isTraceBack = false;
-                    cumulativeReturnVOS.get(down).isTraceBack = false;
-                    top = i;
-                    down = j;
-                    cumulativeReturnVOS.get(top).isTraceBack = true;
-                    cumulativeReturnVOS.get(down).isTraceBack = true;
-                }
-            }
-        }
-
-        return cumulativeReturnVOS;
+    private void setBaseCumulativeReturn(List<CumulativeReturnVO> baseCumulativeReturn) {
+        this.baseCumulativeReturn = baseCumulativeReturn;
     }
 }

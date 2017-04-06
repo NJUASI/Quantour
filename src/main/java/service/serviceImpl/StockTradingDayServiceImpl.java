@@ -73,7 +73,7 @@ public class StockTradingDayServiceImpl implements StockTradingDayService {
 
         LocalDate tradingDayMinus = start;
 
-        for(int i = 0; i < minusDay;){
+        for(int i = 0; i < minusDay; i++){
             tradingDayMinus = getLastTradingDay(tradingDayMinus.minusDays(1),stockPoolCodes);
         }
 
@@ -133,8 +133,8 @@ public class StockTradingDayServiceImpl implements StockTradingDayService {
 
         LocalDate tradingDayPlus = start;
 
-        for(int i = 0; i < plusDay;){
-            tradingDayPlus = getNextTradingDay(tradingDayPlus.minusDays(1),stockPoolCodes);
+        for(int i = 0; i < plusDay; i++){
+            tradingDayPlus = getNextTradingDay(tradingDayPlus.plusDays(1),stockPoolCodes);
         }
 
         return tradingDayPlus;

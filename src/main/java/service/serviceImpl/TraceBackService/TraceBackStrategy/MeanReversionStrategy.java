@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * Created by cuihua on 2017/3/31.
  */
-public class MeanReversionStrategy implements AllTraceBackStrategy {
+public class MeanReversionStrategy extends AllTraceBackStrategy {
 
     ChartService chartService;
     StockDao stockDao;
