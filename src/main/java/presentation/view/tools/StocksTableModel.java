@@ -6,6 +6,7 @@ import vo.StockVO;
 
 import javax.swing.table.AbstractTableModel;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class StocksTableModel extends AbstractTableModel {
 
-    private final static int columns = 10;
+    private final static int columns = 12;
 
     private String[] columnNames;
     private Object[][] data;
@@ -33,7 +34,7 @@ public class StocksTableModel extends AbstractTableModel {
 
     //初始化列表名称和数据
     private void init() throws IOException {
-        columnNames = new String[]{"股票代码", "股票名称", "开盘指数", "最高指数",
+        columnNames = new String[]{"股票代码", "股票名称", "涨/跌额","涨/跌幅","开盘指数", "最高指数",
                 "最低指数", "收盘指数", "成交量", "复权后的收盘指数", "昨日收盘指数", "昨日复权收盘指数"};
         List<StockVO> stockList = stockService.getAllStocks(date);
 
@@ -41,17 +42,21 @@ public class StocksTableModel extends AbstractTableModel {
 
         for (int i = 0; i < stockList.size(); i++) {
             StockVO stockVO = stockList.get(i);
+            NumberFormat ddf= NumberFormat.getNumberInstance() ;
+            ddf.setMaximumFractionDigits(4);
 
             data[i][0] = stockVO.code;
             data[i][1] = stockVO.name;
-            data[i][2] = stockVO.open;
-            data[i][3] = stockVO.high;
-            data[i][4] = stockVO.low;
-            data[i][5] = stockVO.close;
-            data[i][6] = stockVO.volume;
-            data[i][7] = stockVO.adjClose;
-            data[i][8] = stockVO.preClose;
-            data[i][9] = stockVO.preAdjClose;
+            data[i][2] = ddf.format(stockVO.increase);
+            data[i][3] = ddf.format(stockVO.increaseMargin);
+            data[i][4] = stockVO.open;
+            data[i][5] = stockVO.high;
+            data[i][6] = stockVO.low;
+            data[i][7] = stockVO.close;
+            data[i][8] = stockVO.volume;
+            data[i][9] = stockVO.adjClose;
+            data[i][10] = stockVO.preClose;
+            data[i][11] = stockVO.preAdjClose;
         }
     }
 

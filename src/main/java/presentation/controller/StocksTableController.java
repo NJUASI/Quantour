@@ -72,8 +72,9 @@ public class StocksTableController {
 
         if (stocksTablePane != null) {
             stocksTablePanel.remove(stocksTablePane);
-
         }
+
+
         if (thermometerPanel != null) {
             stocksTablePanel.remove(thermometerPanel);
         }
@@ -82,23 +83,25 @@ public class StocksTableController {
         stockSituationService=new StockSituationServiceImpl();
         int num[]=null;
         try {
-
+            stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
+            stocksTablePane.setLocation(50 * width / 1920, 120 * height / 1030);
+            if(stocksTablePane!=null) {
+                stocksTablePanel.add(stocksTablePane);
+                stocksTablePane.repaint();
+            }
             list  = stockSituationService.getStockStituationData(stocksTablePanel.getChooseDate());
              num=new int[]{ list.get(0).num,list.get(1).num,list.get(2).num,list.get(3).num,list.get(4).num,list.get(5).num};
-            thermometerPanel=new ThermometerPanel(num);
-            thermometerPanel.setLocation(1460 * width / 1920, 120 * height / 1030);
+            thermometerPanel=new ThermometerPanel(num,list.get(6).num);
+            thermometerPanel.setLocation(1460 * width / 1920, 40 * height / 1030);
             stocksTablePanel.add(thermometerPanel);
             thermometerPanel.repaint();
+
         }catch (NoSituationDataException e) {
-//            JOptionPane.showMessageDialog(stocksTablePane,e.getMessage());
+            stocksTablePanel.label.setVisible(true);
+            stocksTablePanel.remove(stocksTablePane);
+            stocksTablePane.repaint();
         }
 
-
-        stocksTablePanel.label.setVisible(true);
-        stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
-        stocksTablePane.setLocation(50 * width / 1920, 120 * height / 1030);
-        stocksTablePanel.add(stocksTablePane);
-        stocksTablePane.repaint();
 
     }
 
@@ -110,6 +113,7 @@ public class StocksTableController {
         try {
             KStringPanel.getInstance().count=1;
             kStringPanel = KStringPanel.getInstance();
+            kStringPanel.addMessage("", "");
             kStringPanel.datePanel.setDate(stocksTablePanel.getChooseDate());
             NavigationBar.getInstance().whileClicked(2);
             kStringPanel.addMessage(stocksTablePane.getName(), stocksTablePane.getCode());
