@@ -1,10 +1,12 @@
 package service.serviceImpl.TraceBackService;
 
+import service.TraceBackService;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
 import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
+import vo.HoldingDetailVO;
 import vo.TraceBackCriteriaVO;
 
 import java.io.IOException;
@@ -15,18 +17,21 @@ import java.util.List;
  */
 public abstract class AllTraceBackStrategy {
 
+    public List<String> stockPoolCodes;
 
-    public AllTraceBackStrategy() {
+    public TraceBackCriteriaVO traceBackCriteriaVO;
+
+    public AllTraceBackStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
+        this.stockPoolCodes = stockPoolCodes;
+        this.traceBackCriteriaVO = traceBackCriteriaVO;
     }
 
     /**
      * 根据目标股票池及所给的标准，返回策略的累计收益率
      *
-     * @param stockPoolCodes      目标股票池所有股票的代码
-     * @param traceBackCriteriaVO 回测的所有标准
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
-    public abstract List<CumulativeReturnVO> traceBack(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
+    public abstract List<CumulativeReturnVO> traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
 
     /**
      * 计算最大回撤点

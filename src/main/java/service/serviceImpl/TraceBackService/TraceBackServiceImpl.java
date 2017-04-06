@@ -29,6 +29,15 @@ public class TraceBackServiceImpl implements TraceBackService {
     //保存基准累计收益率
     private List<CumulativeReturnVO> baseCumulativeReturn;
 
+    //保存每一个持有期的策略收益率
+    private List<HoldingDetailVO> strategyReturnEveryPeriod;
+
+    //保存每一个持有期的基准收益率
+    private List<HoldingDetailVO> baseReturnEveryPeriod;
+
+    //保存每一个持有期的相对收益率
+    private List<HoldingDetailVO> relativeReturnEveryPeriod;
+
     public TraceBackServiceImpl() {
         stockService = new StockServiceImpl();
         strategyCumulativeReturn = new ArrayList<CumulativeReturnVO>();
@@ -54,10 +63,10 @@ public class TraceBackServiceImpl implements TraceBackService {
         List<String> stockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
 
         //确定策略
-        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
+        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(stockPool, traceBackCriteriaVO);
 
         //回测
-        setStrategyCumulativeReturn(traceBackStrategy.traceBack(stockPool, traceBackCriteriaVO));
+        setStrategyCumulativeReturn(traceBackStrategy.traceBack());
 
         return strategyCumulativeReturn;
     }
@@ -73,10 +82,10 @@ public class TraceBackServiceImpl implements TraceBackService {
     public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
 
         //确定策略
-        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackCriteriaVO.strategyType);
+        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(stockCodes,traceBackCriteriaVO);
 
         //回测
-        setStrategyCumulativeReturn(traceBackStrategy.traceBack(stockCodes, traceBackCriteriaVO));
+        setStrategyCumulativeReturn(traceBackStrategy.traceBack());
 
         return strategyCumulativeReturn;
     }
@@ -205,7 +214,6 @@ public class TraceBackServiceImpl implements TraceBackService {
     public RelativeIndexReturnVO getRelativeIndexReturn(TraceBackCriteriaVO traceBackCriteriaVO) {
         return null;
     }
-
 
     /**
      *
