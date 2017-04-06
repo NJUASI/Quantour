@@ -1,16 +1,15 @@
 package service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import service.ChartService;
+import service.StockService;
 import service.serviceImpl.ChartServiceImpl;
+import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
 import utilities.exceptions.NoDataWithinException;
-import vo.ChartShowCriteriaVO;
-import vo.CumulativeReturnVO;
-import vo.MovingAverageVO;
-import vo.TraceBackCriteriaVO;
+import vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -22,13 +21,15 @@ import java.util.*;
  */
 public class MeanReversionStrategy implements AllTraceBackStrategy {
 
-    ChartService service;
+    ChartService chartService;
+    StockService stockService;
 
     final double initMpney = 10000;
     double nowMoney;
 
     public MeanReversionStrategy() {
-        this.service = new ChartServiceImpl();
+        chartService = new ChartServiceImpl();
+        stockService = new StockServiceImpl();
         nowMoney = initMpney;
     }
 
@@ -41,7 +42,7 @@ public class MeanReversionStrategy implements AllTraceBackStrategy {
 
             List<Integer> formatAve = new LinkedList<>();
             formatAve.add(traceBackCriteriaVO.formativePeriod);
-            Map<Integer, List<MovingAverageVO>> aveInfo = service.getAveData(criteriaVO, formatAve);
+            Map<Integer, List<MovingAverageVO>> aveInfo = chartService.getAveData(criteriaVO, formatAve);
             List<MovingAverageVO> aves = aveInfo.values().iterator().next();
 
             allAves.put(s, aves);
@@ -88,25 +89,31 @@ public class MeanReversionStrategy implements AllTraceBackStrategy {
         // 先加入前 持有股票数 支股票，再计算后面的
         int i = 0;
         for (Map.Entry<String, List<MovingAverageVO>> entry : allAves.entrySet()) {
+            String s = entry.getKey();
+            List<MovingAverageVO> thisMA = entry.getValue();
+
             if (i < holdingNum) {
-                String s = entry.getKey();
-                List<MovingAverageVO> thisMA = entry.getValue();
                 for (MovingAverageVO vo : thisMA) {
                     if (vo.date == thisDate) {
-                        result.put(s, vo.average);
+                        StockVO stockVO = stockService.getOneStockDataOneDay(s, thisDate);
+                        double biasRatio = (vo.average - stockVO.adjClose) / vo.average;
+                        result.put(s, biasRatio);
                         break;
                     }
                 }
                 i++;
+                continue;
             }
 
-
-            List<MovingAverageVO> temp = entry.getValue();
-            for (MovingAverageVO vo : temp) {
+            for (MovingAverageVO vo : thisMA) {
                 String min = getMin(result);
-                if (vo.date == thisDate && vo.average > result.get(min)) {
+
+                StockVO stockVO = stockService.getOneStockDataOneDay(s, thisDate);
+                double biasRatio = (vo.average - stockVO.adjClose) / vo.average;
+
+                if (vo.date == thisDate && biasRatio > result.get(min)) {
                     result.remove(min);
-                    result.put(entry.getKey(), vo.average);
+                    result.put(s, biasRatio);
                 }
             }
         }

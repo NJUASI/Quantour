@@ -4,8 +4,6 @@ import org.junit.*;
 import org.junit.Test;
 import service.StockTradingDayService;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by harvey on 17-4-5.
  */
