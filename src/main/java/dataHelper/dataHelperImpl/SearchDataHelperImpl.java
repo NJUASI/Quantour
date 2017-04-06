@@ -39,7 +39,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksCode() {
-        propertiesload("stockName-code");
+        propertiesload("stockName-code/stockName-code");
         Map<String,String> codesAndNames = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             codesAndNames.put((String)entry.getValue(),(String)entry.getKey());
@@ -54,7 +54,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksName() {
-        propertiesload("stockName-code");
+        propertiesload("stockName-code/stockName-code");
         Map<String,String> namesAndCode = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             namesAndCode.put((String)entry.getKey(),(String)entry.getValue());
