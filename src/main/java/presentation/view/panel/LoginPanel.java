@@ -3,7 +3,6 @@ package presentation.view.panel;
 import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 import presentation.listener.loginPanelListener.LoginListener;
 import presentation.view.frame.LoginFrame;
-import presentation.view.tools.ColorUtils;
 import presentation.view.tools.customizedButton.MyButton;
 import presentation.view.tools.MyLabel;
 
@@ -87,7 +86,7 @@ public class LoginPanel extends TemplatePanel {
         JButton login = new JButton("游客登录");
         login.setBounds(adaptScreen(90, 340, 260, 40));
 
-        login.setForeground(ColorUtils.fontColor());
+        login.setForeground(new Color(255,255,255));
         login.setFont(new Font("", Font.CENTER_BASELINE, 20 * width / 1920));
         login.setUI(new BEButtonUI().setNormalColor(BEButtonUI.NormalColor.blue));
         login.addMouseListener(new LoginListener());
@@ -105,7 +104,7 @@ public class LoginPanel extends TemplatePanel {
 
         //关闭按钮
         close=new MyButton("close",0);
-        close.setBounds(adaptScreen(405,0,40,35));
+        close.setBounds(adaptScreen(400,0,45,40));
         close.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -125,7 +124,7 @@ public class LoginPanel extends TemplatePanel {
         add(close);
         //最小化按钮
         min=new MyButton("min",0);
-        min.setBounds(adaptScreen(350,0,40,35));
+        min.setBounds(adaptScreen(345,0,45,40));
         min.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

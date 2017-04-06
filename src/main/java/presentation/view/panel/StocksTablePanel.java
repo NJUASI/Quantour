@@ -2,7 +2,6 @@ package presentation.view.panel;
 
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
-import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyLabel;
 import presentation.view.tools.SingleDatePickerPanel;
 import presentation.view.tools.StocksTablePane;
@@ -66,11 +65,11 @@ public class StocksTablePanel extends TemplatePanel {
 
         label = new JLabel("当日无股票信息",JLabel.CENTER);
         label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
-        label.setBounds(0 * width / 1920, 120 * height / 1030, 1920-90 * width / 1920 , 800* height / 1030);
+        label.setBounds(0 * width / 1920, 120 * height / 1030, (1920-90) * width / 1920 , 800* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         label.setVisible(false);
-        label.setBackground(ColorUtils.backgroundColor());
-        label.setForeground(ColorUtils.fontColor());
+        label.setBackground(new Color(32,36,39));
+        label.setForeground(new Color(201,208,214));
         label.setOpaque(true);
         add(label);
 
