@@ -44,19 +44,22 @@ public class StocksTablePane extends JScrollPane {
 //            jTable.setRowHeight (30);//设置每行的高度为30
 //            jTable.setRowMargin (5);//设置相邻两行单元格的距离
 //        table.removeColumn(table.getColumnModel().getColumn(columnIndex));// columnIndex是要删除的列序号
-            for(int i =2;i<5;i++) {
+            for(int i =4;i<7;i++) {
                 jTable.getColumnModel().getColumn(i).setPreferredWidth(80*width/1920);
+            }
+            for(int i =2;i<4;i++) {
+                jTable.getColumnModel().getColumn(i).setPreferredWidth(50*width/1920);
             }
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             jTable.setSelectionBackground(new Color(37,58,84));//设置所选择行的背景色
-            jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
+            jTable.setSelectionForeground(new Color(201,208,214));//设置所选择行的前景色
 
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
-            jTable.setBackground(ColorUtils.backgroundColor());
-            jTable.setForeground(ColorUtils.fontColor());
+            jTable.setBackground(new Color(32, 36, 39));
+            jTable.setForeground(new Color(201,208,214));
             jTable.setRowSelectionInterval(0, 0);
-            jTable.setGridColor(ColorUtils.divideColor());
+            jTable.setGridColor(new Color(19, 22, 24));
             jTable.setBorder(BorderFactory.createEmptyBorder());
 
             JTableHeader header = jTable.getTableHeader();
@@ -66,10 +69,10 @@ public class StocksTablePane extends JScrollPane {
             Dimension size = header.getPreferredSize();
             size.height = 30;
             header.setPreferredSize(size);
-            setForeground(ColorUtils.fontColor());
+            setForeground(new Color(201,208,214));
 
             getVerticalScrollBar().setUI(new MyScrollBarUI());
-            setBackground(ColorUtils.backgroundColor());
+            setBackground(new Color(32,36,39));
             setBorder(BorderFactory.createEmptyBorder());
             setViewportView(jTable);
             count=0;

@@ -2,6 +2,7 @@ package dataHelper.dataHelperImpl;
 
 import dataHelper.DataSourceDataHelper;
 import po.StockSituationPO;
+import utilities.StockCodeHelper;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -35,7 +36,70 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
     }
 }
 
+/**
+ * 创建stockName-Code.properties
+ */
+class StockNameToCodeCreator {
 
+    private String readerPath = "";
+    private String writerDesPath = "";
+    private String post = ".properties";
+
+    private File[] fileName;
+    private ArrayList<String> key = new ArrayList<String>();
+
+    public StockNameToCodeCreator(String readerPath, String writerDesPath) {
+        this.readerPath = readerPath;
+        this.writerDesPath = writerDesPath;
+    }
+
+    public void handle() {
+        this.reader();
+        this.writer();
+    }
+
+    private void writer() {
+        File file = new File(writerDesPath + post);
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+            for (String temp : this.key) {
+                writer.write(temp);
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void reader() {
+        File tempFile = new File(readerPath);
+        fileName = tempFile.listFiles();
+
+        for (File file : fileName) {
+
+            File temp = new File(readerPath + file.getName());
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(temp), "UTF-8"));
+                String line = reader.readLine();
+
+                String[] tempString = line.split("\t");
+
+                String tempF = file.getName().substring(0, file.getName().length() - 4);
+
+                this.key.add(tempString[9] + "=" + tempF);
+                reader.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+}
 
 
 /**
@@ -71,6 +135,9 @@ class CodeDirCreator {
         if (parts[6].equals("0")) {
             return;
         }
+
+        // 转化股票代码为6位标准形式
+        parts[8] = StockCodeHelper.format(parts[8]);
 
         if (!codes.contains(parts[8])) {
             codes.add(parts[8]);
@@ -148,6 +215,9 @@ class OriginalDataReader {
             // 转化股票交易量单位为手（1手=100股）
             parts[6] = String.valueOf((int) Double.parseDouble(parts[6]) / 100);
 
+            // 转化股票代码为6位标准形式
+            parts[8] = StockCodeHelper.format(parts[8]);
+
             if (!parts[8].equals(desCode)) {
                 if (!desCode.equals("")) {
                     write(temp);
@@ -192,7 +262,7 @@ class OriginalDataReader {
 
 /**
  * 为stock_records_by_code文件夹中数据写入冗余信息昨日收盘价、昨日复权收盘价
- *
+ * <p>
  * TODO 冯俊杰：待涨跌的公式正式确定之后，写入涨跌幅，涨跌额
  */
 class DuplicationAdder {
@@ -375,7 +445,7 @@ class SituationCreator {
     private StockSituationPO calculateRecord(String line) throws IOException {
         String[] parts = line.split("\t");
 
-        if (parts[11].equals("-1")){
+        if (parts[11].equals("-1")) {
             return new StockSituationPO(parts[6], 0, 0, 0, 0, 0, 0);
         }
 
