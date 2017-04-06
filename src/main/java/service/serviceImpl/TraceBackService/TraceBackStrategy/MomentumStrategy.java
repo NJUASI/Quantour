@@ -33,7 +33,8 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     //当前的剩余投资
     double cumulativeReturn;
 
-    public MomentumStrategy() {
+    public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
+        super(stockPoolCodes,traceBackCriteriaVO);
         stockService = new StockServiceImpl();
         TraceBackService = new TraceBackServiceImpl();
         stockTradingDayService = new StockTradingDayServiceImpl();
@@ -43,12 +44,10 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     /**
      * 根据目标股票池及所给的标准，返回策略的累计收益率
      *
-     * @param stockPoolCodes      目标股票池所有股票的代码
-     * @param TraceBackCriteriaVO 回测的所有标准
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
     @Override
-    public List<CumulativeReturnVO> traceBack(List<String> stockPoolCodes, TraceBackCriteriaVO TraceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<CumulativeReturnVO> traceBack() throws IOException, NoDataWithinException, DateNotWithinException {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 
@@ -56,15 +55,15 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         List<String> holdingStocks = new ArrayList<String>();
 
         //回测区间,从用户所选区间里再选出第一个交易日和最后一个交易日
-        LocalDate start = stockTradingDayService.getNextTradingDay(TraceBackCriteriaVO.startDate,stockPoolCodes);
-        LocalDate end = stockTradingDayService.getNextTradingDay(TraceBackCriteriaVO.endDate,stockPoolCodes);
+        LocalDate start = stockTradingDayService.getNextTradingDay(traceBackCriteriaVO.startDate,stockPoolCodes);
+        LocalDate end = stockTradingDayService.getNextTradingDay(traceBackCriteriaVO.endDate,stockPoolCodes);
 
         int tradingDays = stockTradingDayService.getTradingDays(start,end,stockPoolCodes);
 
         //形成期
-        int formativePeriod = TraceBackCriteriaVO.formativePeriod;
+        int formativePeriod = traceBackCriteriaVO.formativePeriod;
         //持有期
-        int holdingPeriod = TraceBackCriteriaVO.holdingPeriod;
+        int holdingPeriod = traceBackCriteriaVO.holdingPeriod;
 
         //周期数
         int periodNum = 0;

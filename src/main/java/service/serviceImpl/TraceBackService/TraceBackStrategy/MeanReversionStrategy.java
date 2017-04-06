@@ -30,14 +30,16 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
     final double initMpney = 10000;
     double nowMoney;
 
-    public MeanReversionStrategy() {
+    public MeanReversionStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
+        super(stockPoolCodes, traceBackCriteriaVO);
+
         chartService = new ChartServiceImpl();
         stockDao = new StockDaoImpl();
         nowMoney = initMpney;
     }
 
     @Override
-    public List<CumulativeReturnVO> traceBack(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+    public List<CumulativeReturnVO> traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
         // 一次性获得所有的均线数据（整体区间向前推了一天，因为均值回归当日的调仓标准是前一日的均线数据）
         Map<String, List<MovingAverageVO>> allAves = new TreeMap<>();
         for (String s : stockPoolCodes) {
