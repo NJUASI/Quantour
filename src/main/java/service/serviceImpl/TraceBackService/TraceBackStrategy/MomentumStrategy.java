@@ -230,8 +230,13 @@ public class MomentumStrategy implements AllTraceBackStrategy {
                     } catch (IOException e) {
                     }
 
-                    StockVO startVO =  stockService.getOneStockDataOneDay(stockCode, thisStockStartDay);
-                    StockVO endVO = stockService.getOneStockDataOneDay(stockCode, thisStockEndDay);
+                    StockVO startVO = null, endVO = null;
+                    try {
+                        startVO = stockService.getOneStockDataOneDay(stockCode, thisStockStartDay);
+                        endVO = stockService.getOneStockDataOneDay(stockCode, thisStockEndDay);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     return (endVO.close - startVO.close) / startVO.close;
                 }
