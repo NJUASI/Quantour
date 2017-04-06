@@ -7,12 +7,12 @@ package utilities.enums;
  */
 public enum MovingAverageType {
 
-    FIVE(5),
-    TEN(10),
-    TWENTY(20),
-    SIXTY(60),
-    ONE_HUNDRED_TWENTY(120),
-    TWO_HUNDRED_FIFTY(250);
+    MA5(5),
+    MA10(10),
+    MA20(20),
+    MA60(60),
+    MA120(120),
+    MA250(250);
 
     private int repre;
 
