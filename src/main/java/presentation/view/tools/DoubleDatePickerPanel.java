@@ -1,8 +1,6 @@
 package presentation.view.tools;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,8 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.*;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 
@@ -91,7 +87,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         startDate.setPrefSize(width*170/1920,37*height/1030);
         startDate.setMaxSize(width*170/1920,37*height/1030);
         startDate.setEditable(false);
-        startDate.getStylesheets().add("DatePicker.css");
+        startDate.getStylesheets().add("css/DatePicker.css");
 
         endDate = new DatePicker();
         endDate.setValue(LocalDate.of(2014, 4, 29));
@@ -101,15 +97,15 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         endDate.setPrefSize(width*170/1920,37*height/1030);
         endDate.setMaxSize(width*170/1920,37*height/1030);
         endDate.setEditable(false);
-        endDate.getStylesheets().add("DatePicker.css");
+        endDate.getStylesheets().add("css/DatePicker.css");
 
         label1 =new Label("开始日期");
         label1.setFont(new Font("微软雅黑",16*width/1920));
-        label1.setTextFill(javafx.scene.paint.Color.WHITE);
+        label1.setTextFill(javafx.scene.paint.Color.rgb(201,208,214));
         label1.setPrefSize(80*width/1920,35*height/1030);
         label2 =new Label("结束日期");
         label2.setFont(new Font("微软雅黑",16*width/1920));
-        label2.setTextFill(javafx.scene.paint.Color.WHITE);
+        label2.setTextFill(javafx.scene.paint.Color.rgb(201,208,214));
         label2.setPrefSize(80*width/1920,35*height/1030);
         label1.setLayoutX(0);
         label1.setLayoutY(0);

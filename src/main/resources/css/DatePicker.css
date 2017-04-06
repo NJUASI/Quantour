@@ -7,6 +7,7 @@
 .date-picker > .arrow-button{
     -fx-background-color: #424B54;
     -fx-border-color: #424B54;
+    -fx-opacity: 1.0;
 }
 
 .date-picker > .arrow-button > .arrow {

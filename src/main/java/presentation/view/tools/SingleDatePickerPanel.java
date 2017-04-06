@@ -6,11 +6,9 @@ import javafx.scene.control.DatePicker;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
 import javafx.util.Callback;
 
 import javax.swing.*;
-import java.awt.*;
 import java.time.LocalDate;
 
 /**
@@ -39,7 +37,7 @@ public class SingleDatePickerPanel extends JFXPanel {
                 Scene scene = new Scene(root, width*175/1920, 37*height/1030);
                 setScene(scene);
                 date = new DatePicker();
-                date.getStylesheets().add("DatePicker.css");
+                date.getStylesheets().add("css/DatePicker.css");
                 date.setMinSize(width*175/1920,37*height/1030);
                 date.setPrefSize(width*175/1920,37*height/1030);
                 date.setMaxSize(width*175/1920,37*height/1030);
