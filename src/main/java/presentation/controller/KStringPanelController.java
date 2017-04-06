@@ -2,6 +2,7 @@ package presentation.controller;
 
 import presentation.chart.candlestick.CandlestickChart;
 import presentation.view.panel.KStringPanel;
+import utilities.enums.MovingAverageType;
 import utilities.exceptions.*;
 import vo.ChartShowCriteriaVO;
 import vo.StockSearchVO;
@@ -99,12 +100,12 @@ public class KStringPanelController {
             }
 
             // 创建图形
-            ArrayList<Integer> tag = new ArrayList<Integer>();
-            tag.add(5);
-            tag.add(10);
-            tag.add(20);
-            tag.add(30);
-            tag.add(60);
+            ArrayList<MovingAverageType> tag = new ArrayList<>();
+            tag.add(MovingAverageType.MA5);
+            tag.add(MovingAverageType.MA10);
+            tag.add(MovingAverageType.MA20);
+            tag.add(MovingAverageType.MA30);
+            tag.add(MovingAverageType.MA60);
 
             try {
                 CandlestickChart candlestickChart = null;

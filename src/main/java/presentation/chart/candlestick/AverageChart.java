@@ -7,6 +7,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import presentation.chart.tools.CandlestickChartTool;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
+import utilities.enums.MovingAverageType;
 import utilities.exceptions.*;
 import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
@@ -25,7 +26,7 @@ public class AverageChart {
     private ChartService service;
 
     //需要显示均线列表
-    private List<Integer> days;
+    private List<MovingAverageType> days;
 
     //均线数据集合
     private List<TimeSeries> data;
@@ -37,7 +38,7 @@ public class AverageChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
      */
-    public AverageChart(String code, List<Integer> days) {
+    public AverageChart(String code, List<MovingAverageType> days) {
         service = new ChartServiceImpl();
         data = new ArrayList<>();
         this.days = days;
@@ -51,7 +52,7 @@ public class AverageChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
      */
-    public AverageChart(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws NoDataWithinException, CodeNotFoundException, DateShortException, DateNotWithinException, IOException {
+    public AverageChart(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> days) throws NoDataWithinException, CodeNotFoundException, DateShortException, DateNotWithinException, IOException {
         service = new ChartServiceImpl();
         data = new ArrayList<>();
         this.days = days;
@@ -103,11 +104,11 @@ public class AverageChart {
      */
     private void readData(String code) {
         try {
-            Map<Integer, List<MovingAverageVO>> tempMap = this.service.getAveData(code, this.days);
+            Map<MovingAverageType, List<MovingAverageVO>> tempMap = this.service.getAveData(code, this.days);
 
-            for (int i : days) {
-                TimeSeries series = new TimeSeries("MA"+String.valueOf(i));
-                List<MovingAverageVO> movingAverageVOS = tempMap.get(i);
+            for (MovingAverageType type : days) {
+                TimeSeries series = new TimeSeries(type.toString());
+                List<MovingAverageVO> movingAverageVOS = tempMap.get(type);
                 for(int j = 0;j<movingAverageVOS.size();j++){
                     MovingAverageVO vo = movingAverageVOS.get(j);
                     series.add(new Day(vo.date.getDayOfMonth(), vo.date.getMonth().getValue(), vo.date.getYear()), vo.average);
@@ -137,11 +138,11 @@ public class AverageChart {
      */
     private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws NoDataWithinException, CodeNotFoundException, IOException, DateNotWithinException, DateShortException {
 
-            Map<Integer, List<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO, this.days);
+            Map<MovingAverageType, List<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO, this.days);
 
-            for (int i : days) {
-                TimeSeries series = new TimeSeries("MA"+String.valueOf(i));
-                List<MovingAverageVO> movingAverageVOS = tempMap.get(i);
+            for (MovingAverageType type : days) {
+                TimeSeries series = new TimeSeries(type.toString());
+                List<MovingAverageVO> movingAverageVOS = tempMap.get(type);
                 for(int j = 0;j<movingAverageVOS.size();j++){
                     MovingAverageVO vo = movingAverageVOS.get(j);
                     series.add(new Day(vo.date.getDayOfMonth(), vo.date.getMonth().getValue(), vo.date.getYear()), vo.average);

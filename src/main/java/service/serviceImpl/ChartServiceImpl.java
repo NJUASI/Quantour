@@ -2,6 +2,7 @@ package service.serviceImpl;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
+import utilities.enums.MovingAverageType;
 import utilities.exceptions.*;
 import po.StockPO;
 import service.ChartService;
@@ -89,12 +90,12 @@ public class ChartServiceImpl implements ChartService {
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param chartShowCriteriaVO the chart show criteria vo 用户所选股票的信息
-     * @param days  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
+     * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      */
     @Override
-    public Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException {
-        Map<Integer, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
+    public Map<MovingAverageType, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> MATypes) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException {
+        Map<MovingAverageType, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
 
         String code = chartShowCriteriaVO.stockCode;
         LocalDate begin = chartShowCriteriaVO.start;
@@ -106,21 +107,22 @@ public class ChartServiceImpl implements ChartService {
         }
 
         // 按5日／10日等分别计算
-        for (int i = 0; i < days.size(); i++) {
+        for (int i = 0; i < MATypes.size(); i++) {
             LocalDate firstDay = stockDao.getFirstAndLastDay(code).get(0);
             List<StockPO> preList = stockDao.getStockData(code, firstDay, begin);
 
             //之前的数据够用
-            if (preList.size() >= days.get(i)) {
+            int thisMARepre = MATypes.get(i).getRepre();
+            if (preList.size() >= thisMARepre) {
                 // preList中包含与现有poList中重复的begin的数据，故subList中需要减一
-                preList = preList.subList(preList.size() - days.get(i), preList.size() - 1);
+                preList = preList.subList(preList.size() - thisMARepre, preList.size() - 1);
             }
 
             List<StockPO> tempList = preList;
             tempList.addAll(poList);
 
             //放入天数和其所对应的均值点的数据
-            aveDataMap.put(days.get(i), calculate(tempList, days.get(i)));
+            aveDataMap.put(MovingAverageType.getEnum(thisMARepre), calculate(tempList, thisMARepre));
         }
         return aveDataMap;
     }
@@ -132,14 +134,14 @@ public class ChartServiceImpl implements ChartService {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/10
      * @param code  用户所选股票的代号
-     * @param days  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
+     * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
     @Override
-    public Map<Integer, List<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException {
+    public Map<MovingAverageType, List<MovingAverageVO>> getAveData(String code, List<MovingAverageType> MATypes) throws DateShortException {
 
-        Map<Integer, List<MovingAverageVO>> aveDataMap = new TreeMap<Integer, List<MovingAverageVO>>();
+        Map<MovingAverageType, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
 
         //获取单支股票全部数据
         List<StockPO> poList = null;
@@ -149,9 +151,9 @@ public class ChartServiceImpl implements ChartService {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < days.size(); i++) {
+        for (int i = 0; i < MATypes.size(); i++) {
             try {
-                aveDataMap.put(days.get(i), calculate(poList, days.get(i)));
+                aveDataMap.put(MATypes.get(i), calculate(poList, MATypes.get(i).getRepre()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

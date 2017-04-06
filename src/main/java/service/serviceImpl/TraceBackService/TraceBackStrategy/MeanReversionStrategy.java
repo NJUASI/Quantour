@@ -8,6 +8,7 @@ import service.StockService;
 import service.serviceImpl.ChartServiceImpl;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
+import utilities.enums.MovingAverageType;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
@@ -45,9 +46,9 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         for (String s : stockPoolCodes) {
             ChartShowCriteriaVO criteriaVO = new ChartShowCriteriaVO(s, traceBackCriteriaVO.startDate.minusDays(1), traceBackCriteriaVO.endDate.minusDays(1));
 
-            List<Integer> formatAve = new LinkedList<>();
-            formatAve.add(traceBackCriteriaVO.formativePeriod);
-            Map<Integer, List<MovingAverageVO>> aveInfo = chartService.getAveData(criteriaVO, formatAve);
+            List<MovingAverageType> formatAve = new LinkedList<>();
+            formatAve.add(MovingAverageType.getEnum(traceBackCriteriaVO.formativePeriod));
+            Map<MovingAverageType, List<MovingAverageVO>> aveInfo = chartService.getAveData(criteriaVO, formatAve);
             List<MovingAverageVO> aves = aveInfo.values().iterator().next();
 
             allAves.put(s, aves);

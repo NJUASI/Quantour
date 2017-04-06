@@ -1,5 +1,6 @@
 package service;
 
+import utilities.enums.MovingAverageType;
 import utilities.exceptions.*;
 import vo.*;
 
@@ -48,11 +49,11 @@ public interface ChartService {
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @param chartShowCriteriaVO the chart show criteria vo 用户所选股票的信息
-     * @param days  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
+     * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<Integer, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException;
+    Map<MovingAverageType, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> MATypes) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException;
 
     /**
      * 获取单支股票所有数据均线图的平均值.
@@ -61,11 +62,11 @@ public interface ChartService {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/10
      * @param code  用户所选股票的代号
-     * @param days  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
+     * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<Integer, List<MovingAverageVO>> getAveData(String code, List<Integer> days) throws DateShortException, DateNotWithinException;
+    Map<MovingAverageType, List<MovingAverageVO>> getAveData(String code, List<MovingAverageType> MATypes) throws DateShortException, DateNotWithinException;
 
     /**
      * 获取两只股票的比较信息

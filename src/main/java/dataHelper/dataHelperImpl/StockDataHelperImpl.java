@@ -1,5 +1,6 @@
 package dataHelper.dataHelperImpl;
 
+import dataHelper.SearchDataHelper;
 import dataHelper.StockDataHelper;
 import po.StockPO;
 import utilities.StockCodeHelper;
@@ -105,6 +106,21 @@ public class StockDataHelperImpl implements StockDataHelper {
         }
 
         return dates;
+    }
+
+    @Override
+    public List<LocalDate> getDateWithData() throws IOException {
+        List<LocalDate> dates = new LinkedList<>();
+
+        // TODO
+        // TODO 得到所有的股票代码再foreach？？？感觉很费时间
+
+        SearchDataHelper searchDataHelper = new SearchDataHelperImpl();
+
+        // TODO 问董金玉接口详情
+//        List<String> allCode = searchDataHelper.getAllStocksCode();
+
+        return null;
     }
 
     /**
