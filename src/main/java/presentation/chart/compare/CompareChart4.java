@@ -13,6 +13,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import presentation.chart.tools.CompareTool;
 import presentation.chart.tools.DateTickUnitFactory;
 import presentation.view.tools.ChartUtils;
+import presentation.view.tools.ColorUtils;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 
@@ -72,7 +73,7 @@ public class CompareChart4 {
         ChartUtils.setLegendEmptyBorder(chart);
 
         chartPanel = new ChartPanel(chart);
-        chartPanel.setBackground(new Color(32, 36, 39));
+        chartPanel.setBackground(ColorUtils.backgroundColor());
 
         return chartPanel;
     }

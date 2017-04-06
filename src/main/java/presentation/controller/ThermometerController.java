@@ -2,6 +2,7 @@ package presentation.controller;
 
 import presentation.chart.compare.StockSituationBarChart;
 import presentation.view.panel.ThermometerPanel;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyLabel;
 import presentation.view.tools.WindowData;
 import service.StockSituationService;
@@ -106,10 +107,10 @@ public class ThermometerController {
         barPanel2.setBounds(thermometerPanel.adaptScreen(650,150,540,720));
         barPanel3.setBounds(thermometerPanel.adaptScreen(1270,150,540,720));
 
-        barPanel1.setBackground(new Color(32, 36, 39));
-        barPanel2.setBackground(new Color(32, 36, 39));
-        barPanel3.setBackground(new Color(32, 36, 39));
-        volume.setForeground(new Color(255,255,255));
+        barPanel1.setBackground(ColorUtils.backgroundColor());
+        barPanel2.setBackground(ColorUtils.backgroundColor());
+        barPanel3.setBackground(ColorUtils.backgroundColor());
+        volume.setForeground(ColorUtils.fontColor());
         volume.setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,16*WindowData.getInstance().getWidth()/1920));
 
         thermometerPanel.add(volumeName);
@@ -117,7 +118,7 @@ public class ThermometerController {
         thermometerPanel.add(barPanel1);
         thermometerPanel.add(barPanel2);
         thermometerPanel.add(barPanel3);
-        thermometerPanel.setBackground(new Color(32, 36, 39));
+        thermometerPanel.setBackground(ColorUtils.backgroundColor());
         barPanel1.repaint();
         barPanel2.repaint();
         barPanel3.repaint();

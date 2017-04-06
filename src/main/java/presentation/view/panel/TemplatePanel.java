@@ -1,6 +1,7 @@
 package presentation.view.panel;
 
 import presentation.view.tools.BeautyEyeUtil;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class TemplatePanel extends JPanel {
         height =windowData.getHeight();
         setLayout(null);
         setBackground(WindowData.getInstance().getColor());
-        setBackground(new Color(32,36,39));
+        setBackground(ColorUtils.backgroundColor());
 
         //osLookAndDecorated
         BeautyEyeUtil.beautyEye();

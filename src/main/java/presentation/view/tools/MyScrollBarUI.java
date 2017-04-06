@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class MyScrollBarUI extends BasicScrollBarUI {
 
-    private Color frameColor = new Color(19, 22, 24);
+    private Color frameColor = ColorUtils.divideColor();
 
     public Dimension getPreferredSize(JComponent c)
     {
@@ -49,15 +49,15 @@ public class MyScrollBarUI extends BasicScrollBarUI {
         GradientPaint gp = null;
         if (this.scrollbar.getOrientation() == JScrollBar.VERTICAL)
         {
-            gp = new GradientPaint(0, 0, new Color(19, 22, 24), trackBounds.width, 0, new Color(19, 22, 24));
+            gp = new GradientPaint(0, 0, ColorUtils.divideColor(), trackBounds.width, 0,ColorUtils.divideColor());
         }
         if (this.scrollbar.getOrientation() == JScrollBar.HORIZONTAL)
         {
-            gp = new GradientPaint(0, 0, new Color(19, 22, 24), 0, trackBounds.height, new Color(19, 22, 24));
+            gp = new GradientPaint(0, 0, ColorUtils.divideColor(), 0, trackBounds.height,ColorUtils.divideColor());
         }
         g2.setPaint(gp);
         g2.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
-        g2.setColor(new Color(19, 22, 24));
+        g2.setColor(ColorUtils.divideColor());
         g2.drawRect(trackBounds.x, trackBounds.y, trackBounds.width - 1, trackBounds.height - 1);
         if (trackHighlight == BasicScrollBarUI.DECREASE_HIGHLIGHT)
             this.paintDecreaseHighlight(g);
@@ -68,7 +68,7 @@ public class MyScrollBarUI extends BasicScrollBarUI {
     // 重绘当鼠标点击滑动到向上或向左按钮之间的区域
     protected void paintDecreaseHighlight(Graphics g)
     {
-        g.setColor(new Color(19, 22, 24));
+        g.setColor(ColorUtils.divideColor());
         int x = this.getTrackBounds().x;
         int y = this.getTrackBounds().y;
         int w = 0, h = 0;
@@ -90,7 +90,7 @@ public class MyScrollBarUI extends BasicScrollBarUI {
     protected void paintIncreaseHighlight(Graphics g)
     {
         Insets insets = scrollbar.getInsets();
-        g.setColor(new Color(19, 22, 24));
+        g.setColor(ColorUtils.divideColor());
         int x = this.getThumbBounds().x;
         int y = this.getThumbBounds().y;
         int w = this.getTrackBounds().width;

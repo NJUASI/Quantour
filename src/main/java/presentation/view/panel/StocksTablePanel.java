@@ -2,6 +2,7 @@ package presentation.view.panel;
 
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyLabel;
 import presentation.view.tools.SingleDatePickerPanel;
 import presentation.view.tools.StocksTablePane;
@@ -68,8 +69,8 @@ public class StocksTablePanel extends TemplatePanel {
         label.setBounds(0 * width / 1920, 120 * height / 1030, 1920-90 * width / 1920 , 800* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         label.setVisible(false);
-        label.setBackground(new Color(32,36,39));
-        label.setForeground(new Color(201,208,214));
+        label.setBackground(ColorUtils.backgroundColor());
+        label.setForeground(ColorUtils.fontColor());
         label.setOpaque(true);
         add(label);
 

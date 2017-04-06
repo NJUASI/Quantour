@@ -11,6 +11,7 @@ import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleInsets;
+import presentation.view.tools.ColorUtils;
 import utilities.exceptions.ColorNotExistException;
 
 import java.awt.*;
@@ -37,8 +38,8 @@ public class CandlestickChartTool {
         render.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         render.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
         render.setAutoWidthGap(0.001);//设置各个K线图之间的间隔
-        render.setUpPaint(new Color(255, 61, 61));//设置股票上涨的K线图颜色
-        render.setDownPaint(new Color(15, 195, 81));//设置股票下跌的K线图颜色
+        render.setUpPaint(ColorUtils.upColor());//设置股票上涨的K线图颜色
+        render.setDownPaint(ColorUtils.downColor());//设置股票下跌的K线图颜色
 
         return render;
     }
@@ -85,9 +86,9 @@ public class CandlestickChartTool {
 
             public Paint getItemPaint(int i, int j){//匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
                 if(seriesCollection.getCloseValue(i,j)>seriesCollection.getOpenValue(i,j)){//收盘价高于开盘价，股票上涨，选用股票上涨的颜色
-                    return new Color(255, 61, 61);
+                    return ColorUtils.upColor();
                 }else{
-                    return new Color(15, 195, 81);
+                    return ColorUtils.downColor();
                 }
             }};
         xyBarRender.setBarPainter(new StandardXYBarPainter());
@@ -122,8 +123,8 @@ public class CandlestickChartTool {
         xAxis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
         xAxis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, gap));//设置时间刻度的间隔，一般以周为单位
         xAxis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
-        xAxis.setLabelPaint(new Color(201, 208, 214));
-        xAxis.setTickLabelPaint(new Color(201, 208, 214));
+        xAxis.setLabelPaint(ColorUtils.fontColor());
+        xAxis.setTickLabelPaint(ColorUtils.fontColor());
         xAxis.setAxisLineVisible(true);
         xAxis.setPositiveArrowVisible(true);
 
@@ -144,8 +145,8 @@ public class CandlestickChartTool {
         yAxis.setAutoRange(false);//不使用自动设定范围
         yAxis.setRange(low*0.9, high*1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
         yAxis.setTickUnit(new NumberTickUnit((high*1.1-low*0.9)/num));//设置刻度显示的密度
-        yAxis.setLabelPaint(new Color(201, 208, 214));
-        yAxis.setTickLabelPaint(new Color(201, 208, 214));
+        yAxis.setLabelPaint(ColorUtils.fontColor());
+        yAxis.setTickLabelPaint(ColorUtils.fontColor());
         yAxis.setAutoRangeIncludesZero(false);
         yAxis.setAxisLineVisible(true);
 
@@ -169,27 +170,27 @@ public class CandlestickChartTool {
         // 设置轴向的字体
         chartTheme.setLargeFont(FONT);
         chartTheme.setSmallFont(FONT);
-        chartTheme.setTitlePaint(new Color(201, 208, 214));
-        chartTheme.setSubtitlePaint(new Color(201, 208, 214));
+        chartTheme.setTitlePaint(ColorUtils.fontColor());
+        chartTheme.setSubtitlePaint(ColorUtils.fontColor());
 
-        chartTheme.setLegendBackgroundPaint(new Color(32,36,39));// 设置标注
-        chartTheme.setLegendItemPaint(new Color(201, 208, 214));//
-        chartTheme.setChartBackgroundPaint(new Color(32,36,39));
+        chartTheme.setLegendBackgroundPaint(ColorUtils.backgroundColor());// 设置标注
+        chartTheme.setLegendItemPaint(ColorUtils.fontColor());//
+        chartTheme.setChartBackgroundPaint(ColorUtils.backgroundColor());
 
 
-        chartTheme.setPlotBackgroundPaint(new Color(32,36,39));// 绘制区域
-        chartTheme.setPlotOutlinePaint(new Color(32,36,39));// 绘制区域外边框
-        chartTheme.setLabelLinkPaint(new Color(8, 55, 114));// 链接标签颜色
+        chartTheme.setPlotBackgroundPaint(ColorUtils.backgroundColor());// 绘制区域
+        chartTheme.setPlotOutlinePaint(ColorUtils.backgroundColor());// 绘制区域外边框
+        chartTheme.setLabelLinkPaint(ColorUtils.linkColor());// 链接标签颜色
         chartTheme.setLabelLinkStyle(PieLabelLinkStyle.CUBIC_CURVE);
 
         chartTheme.setAxisOffset(new RectangleInsets(5, 12, 5, 12));
-        chartTheme.setDomainGridlinePaint(new Color(44, 50, 54));// X坐标轴垂直网格颜色
-        chartTheme.setRangeGridlinePaint(new Color(44, 50, 54));// Y坐标轴水平网格颜色
+        chartTheme.setDomainGridlinePaint(ColorUtils.lineColor());// X坐标轴垂直网格颜色
+        chartTheme.setRangeGridlinePaint(ColorUtils.lineColor());// Y坐标轴水平网格颜色
 
-        chartTheme.setBaselinePaint(new Color(44, 50, 54));
-        chartTheme.setCrosshairPaint(new Color(44, 50, 54));// 不确定含义
-        chartTheme.setAxisLabelPaint(new Color(201, 208, 214));// 坐标轴标题文字颜色
-        chartTheme.setTickLabelPaint(new Color(201, 208, 214));// 刻度数字
+        chartTheme.setBaselinePaint(ColorUtils.lineColor());
+        chartTheme.setCrosshairPaint(ColorUtils.lineColor());// 不确定含义
+        chartTheme.setAxisLabelPaint(ColorUtils.fontColor());// 坐标轴标题文字颜色
+        chartTheme.setTickLabelPaint(ColorUtils.fontColor());// 刻度数字
         chartTheme.setBarPainter(new StandardBarPainter());// 设置柱状图渲染
         chartTheme.setXYBarPainter(new StandardXYBarPainter());// XYBar 渲染
 
