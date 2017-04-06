@@ -10,6 +10,7 @@ import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.CumulativeReturnVO;
+import vo.HoldingDetailVO;
 import vo.StockVO;
 import vo.TraceBackCriteriaVO;
 
@@ -35,6 +36,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
     public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
         super(stockPoolCodes,traceBackCriteriaVO);
+
         stockService = new StockServiceImpl();
         TraceBackService = new TraceBackServiceImpl();
         stockTradingDayService = new StockTradingDayServiceImpl();
@@ -56,7 +58,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         //回测区间,从用户所选区间里再选出第一个交易日和最后一个交易日
         LocalDate start = stockTradingDayService.getNextTradingDay(traceBackCriteriaVO.startDate,stockPoolCodes);
-        LocalDate end = stockTradingDayService.getNextTradingDay(traceBackCriteriaVO.endDate,stockPoolCodes);
+        LocalDate end = stockTradingDayService.getLastTradingDay(traceBackCriteriaVO.endDate,stockPoolCodes);
 
         int tradingDays = stockTradingDayService.getTradingDays(start,end,stockPoolCodes);
 
@@ -77,16 +79,15 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             periodNum = tradingDays/holdingPeriod + 1;
         }
 
-
-
-        //第一个形成期的起始日期
-        LocalDate startOfFormative = stockTradingDayService.getTradingDayMinus(start, formativePeriod, stockPoolCodes);
-        //第一个形成期的结束日期
-        LocalDate endOfFormative = stockTradingDayService.getLastTradingDay(start.minusDays(1),stockPoolCodes);
-
         //第一个持有期的起始日期
         LocalDate startOfHolding = start;
+
         for (int i = 0; i < periodNum; i++ ){
+
+            //形成期的起始日期
+            LocalDate startOfFormative = stockTradingDayService.getTradingDayMinus(startOfHolding, formativePeriod, stockPoolCodes);
+            //形成期的结束日期
+            LocalDate endOfFormative = stockTradingDayService.getLastTradingDay(startOfHolding.minusDays(1),stockPoolCodes);
 
             //持有期所持有的股票
             holdingStocks = pickStocks(formate(stockPoolCodes,startOfFormative,endOfFormative));
@@ -99,7 +100,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
                 endOfHolding = end;
             }
 
-
             List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(holdingStocks, start, end);
             //第一个周期，第一天的累计收益率置为0
             if(i == 0){
@@ -107,9 +107,22 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             }
 
             cumulativeReturnVOS.addAll(computeHoldingPeriod(holdingStocks, start, endOfHolding));
+
+            //更新持有期的开始日期
+            startOfHolding = stockTradingDayService.getNextTradingDay(endOfHolding,holdingStocks);
         }
 
         return maxRetracement(cumulativeReturnVOS);
+    }
+
+    /**
+     * 根据目标股票池及所给的标准，返回策略在每个周期的累计收益率
+     *
+     * @return List<HoldingDetailVO> 策略在每个周期的累计收益率
+     */
+    @Override
+    public List<HoldingDetailVO> calculateHoldingPeriod() {
+        return null;
     }
 
     /**
@@ -203,43 +216,18 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      * @param end 形成期结束日期
      * @return
      */
-    private Map<String,Double> formate(List<String> stockCodes, LocalDate start, LocalDate end){
+    private Map<String,Double> formate(List<String> stockCodes, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
 
         Map<String,Double> formativePeriodRate = new TreeMap<String, Double>();
 
         for(int i = 0; i < stockCodes.size(); i++){
-            formativePeriodRate.computeIfAbsent(stockCodes.get(i), new Function<String, Double>() {
-                /**
-                 * 根据股票代码及形成期的起始时间，计算该股票的累计收益率
-                 * @param stockCode 股票代码
-                 * @return Double 该股票形成期内的累计收益率
-                 */
-                @Override
-                public Double apply(String stockCode) {
-                    //因为该股票可能在形成期起始或者结束日期停牌，故寻找此区间内该股票的起始和停牌日期
-                    LocalDate thisStockStartDay = null;
-                    try {
-                        thisStockStartDay = stockTradingDayService.getNextTradingDay(start,stockCode);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    LocalDate thisStockEndDay = null;
-                    try {
-                         thisStockEndDay = stockTradingDayService.getLastTradingDay(end,stockCode);
-                    } catch (IOException e) {
-                    }
 
-                    StockVO startVO = null, endVO = null;
-                    try {
-                        startVO = stockService.getOneStockDataOneDay(stockCode, thisStockStartDay);
-                        endVO = stockService.getOneStockDataOneDay(stockCode, thisStockEndDay);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            //TODO gcm 这里是否以形成期的前一天为基准，还是以形成期的第一天为基准
+            List<StockVO> stockVOS = stockService.getOneStockData(stockCodes.get(i), start, end);
 
-                    return (endVO.close - startVO.close) / startVO.close;
-                }
-            });
+            double rate = (stockVOS.get(stockVOS.size()-1).close - stockVOS.get(0).close) / stockVOS.get(0).close;
+
+            formativePeriodRate.put(stockVOS.get(0).code, rate);
         }
 
         return formativePeriodRate;

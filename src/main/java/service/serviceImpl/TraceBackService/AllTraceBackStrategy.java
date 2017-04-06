@@ -17,8 +17,14 @@ import java.util.List;
  */
 public abstract class AllTraceBackStrategy {
 
+    /**
+     * 目标股票池
+     */
     public List<String> stockPoolCodes;
 
+    /**
+     * 回测标准
+     */
     public TraceBackCriteriaVO traceBackCriteriaVO;
 
     public AllTraceBackStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
@@ -32,6 +38,13 @@ public abstract class AllTraceBackStrategy {
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
     public abstract List<CumulativeReturnVO> traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
+
+    /**
+     * 根据目标股票池及所给的标准，返回策略在每个周期的累计收益率
+     *
+     * @return List<HoldingDetailVO> 策略在每个周期的累计收益率
+     */
+    public abstract List<HoldingDetailVO> calculateHoldingPeriod();
 
     /**
      * 计算最大回撤点

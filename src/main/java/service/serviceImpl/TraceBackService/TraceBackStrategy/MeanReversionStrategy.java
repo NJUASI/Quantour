@@ -88,6 +88,16 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         return null;
     }
 
+    /**
+     * 根据目标股票池及所给的标准，返回策略在每个周期的累计收益率
+     *
+     * @return List<HoldingDetailVO> 策略在每个周期的累计收益率
+     */
+    @Override
+    public List<HoldingDetailVO> calculateHoldingPeriod() {
+        return null;
+    }
+
     private List<String> getTopStockCodes(int holdingNum, Map<String, List<MovingAverageVO>> allAves, LocalDate thisDate) throws IOException {
         Map<String, Double> result = new HashMap<>(holdingNum);
 

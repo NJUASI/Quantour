@@ -3,6 +3,8 @@ package service.serviceImpl;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import service.StockTradingDayService;
+import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -95,7 +97,7 @@ public class StockTradingDayServiceImpl implements StockTradingDayService {
     /**
      * 根据传入的股票代码，找出传入股票代码中相对于date最晚的交易日期。若参照日期date为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
      *
-     * @param date       参照日期
+     * @param date    参照日期
      * @param stockCodes 传入的股票代码列表
      * @return 参照日期的下一个交易日
      */
@@ -149,21 +151,24 @@ public class StockTradingDayServiceImpl implements StockTradingDayService {
      * @return 起始日期到结束日期之间总共有多少天的交易日
      */
     @Override
-    public int getTradingDays(LocalDate start, LocalDate end, List<String> stockPoolCodes) throws IOException {
+    public int getTradingDays(LocalDate start, LocalDate end, List<String> stockPoolCodes) throws IOException, DateNotWithinException, NoDataWithinException {
 
-        int tradingDays = 0;
+        List<Integer> tradingDays = new ArrayList<Integer>();
 
-        int diff = start.until(end).getDays();
+        int maxTradingDays = 0;
 
-        for(int i = 0; i <= diff; i++){
-
-            if(stockDao.isTradingDay(start.plusDays(i), stockPoolCodes)){
-                tradingDays++;
-            }
-
+        for(int i = 0; i < stockPoolCodes.size(); i++){
+            tradingDays.add(stockDao.getStockData(stockPoolCodes.get(i),start,end).size());
         }
 
-        return tradingDays;
+
+        maxTradingDays = tradingDays.get(0);
+
+        for(int i = 0; i < tradingDays.size(); i++){
+            maxTradingDays = maxTradingDays > tradingDays.get(i) ? maxTradingDays : tradingDays.get(i);
+        }
+
+        return maxTradingDays;
     }
 
 }

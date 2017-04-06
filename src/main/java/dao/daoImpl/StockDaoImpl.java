@@ -352,7 +352,7 @@ public class StockDaoImpl implements StockDao {
     /**
      * 判断股票是否在传入日期开盘
      *
-     * @param date           需要判断的日期
+     * @param date  需要判断的日期
      * @param stockPoolCodes 对应这个日期的所有·股票代码列表
      * @return 是否有传入股票在传入日期开盘
      */

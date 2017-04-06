@@ -1,5 +1,8 @@
 package service;
 
+import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -70,5 +73,5 @@ public interface StockTradingDayService {
      * @param stockPoolCodes 股票代码列表
      * @return 起始日期到结束日期之间总共有多少天的交易日
      */
-    int getTradingDays(LocalDate start, LocalDate end, List<String> stockPoolCodes) throws IOException;
+    int getTradingDays(LocalDate start, LocalDate end, List<String> stockPoolCodes) throws IOException, DateNotWithinException, NoDataWithinException;
 }
