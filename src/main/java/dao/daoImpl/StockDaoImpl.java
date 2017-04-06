@@ -65,9 +65,8 @@ public class StockDaoImpl implements StockDao {
     @Override
     public StockPO getStockData(String stockCode, LocalDate date) throws IOException {
         List<StockPO> result = stockHelper.getStockRecords(date);
-        String modifiedCode = StockCodeHelper.format(stockCode);
         for (StockPO stock : result) {
-            if (stock.getCode().equals(modifiedCode)) {
+            if (stock.getCode().equals(stockCode)) {
                 return stock;
             }
         }

@@ -3,7 +3,7 @@ package utilities;
 /**
  * Created by cuihua on 2017/3/30.
  *
- * 对股票代码进行形式上的转化
+ * 对股票代码进行格式化处理
  */
 public class StockCodeHelper {
 

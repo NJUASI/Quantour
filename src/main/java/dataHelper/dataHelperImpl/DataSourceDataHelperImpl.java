@@ -2,6 +2,7 @@ package dataHelper.dataHelperImpl;
 
 import dataHelper.DataSourceDataHelper;
 import po.StockSituationPO;
+import utilities.StockCodeHelper;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -71,6 +72,9 @@ class CodeDirCreator {
         if (parts[6].equals("0")) {
             return;
         }
+
+        // 转化股票代码为6位标准形式
+        parts[8] = StockCodeHelper.format(parts[8]);
 
         if (!codes.contains(parts[8])) {
             codes.add(parts[8]);
@@ -147,6 +151,9 @@ class OriginalDataReader {
 
             // 转化股票交易量单位为手（1手=100股）
             parts[6] = String.valueOf((int) Double.parseDouble(parts[6]) / 100);
+
+            // 转化股票代码为6位标准形式
+            parts[8] = StockCodeHelper.format(parts[8]);
 
             if (!parts[8].equals(desCode)) {
                 if (!desCode.equals("")) {

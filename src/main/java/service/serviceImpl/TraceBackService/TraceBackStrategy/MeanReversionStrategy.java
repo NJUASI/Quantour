@@ -69,8 +69,6 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
             // TODO
             getPeriodYield(thisHoldingPeriodStocks, start, end);
 
-
-
         }
 
         // 最后一个不足周期的计算

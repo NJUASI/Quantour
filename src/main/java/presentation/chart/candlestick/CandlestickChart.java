@@ -349,7 +349,7 @@ public class CandlestickChart {
         FirstLastDayVO firstLastDayVO = this.service.getFirstAndLastDay(code);
         start = firstLastDayVO.first;
         end = firstLastDayVO.last;
-        data = this.service.getSingleStockRecords(String.valueOf(Integer.parseInt(code)));
+        data = this.service.getSingleStockRecords(code);
     }
 
     /**

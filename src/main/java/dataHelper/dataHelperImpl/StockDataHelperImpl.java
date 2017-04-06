@@ -40,7 +40,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
-        return getStockByPath(stockRecordByCodePathPre + StockCodeHelper.simplify(stockCode) + stockRecordPathPost);
+        return getStockByPath(stockRecordByCodePathPre + stockCode + stockRecordPathPost);
     }
 
     /**
@@ -69,7 +69,7 @@ public class StockDataHelperImpl implements StockDataHelper {
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                getResourceAsStream(stockRecordByCodePathPre + StockCodeHelper.simplify(stockCode) + stockRecordPathPost)));
+                getResourceAsStream(stockRecordByCodePathPre + stockCode + stockRecordPathPost)));
 
         List<StockPO> allResult = getStockRecords(stockCode);
 
@@ -118,6 +118,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @throws IOException IO
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
+        System.out.println(path);
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                 getResourceAsStream(path), "UTF-8"));
 

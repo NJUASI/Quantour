@@ -22,7 +22,7 @@ public class TraceBackCriteriaVO {
     public LocalDate endDate;
 
     /**
-     * 形成期／乖离率
+     * 形成期（MS）／多少天均值（MR）
      */
     public int formativePeriod;
 
@@ -42,7 +42,7 @@ public class TraceBackCriteriaVO {
     public TraceBackStrategy strategyType;
 
     /**
-     * 持有股票数
+     * 持有股票数（MR）
      */
     public int holdingNum;
 
