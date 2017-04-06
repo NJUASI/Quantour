@@ -6,6 +6,7 @@ import presentation.chart.compare.CompareChart1;
 import presentation.chart.compare.CompareChart2;
 import presentation.chart.compare.CompareChart3;
 import presentation.chart.compare.CompareChart4;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTabUI;
 import presentation.view.tools.WindowData;
 import vo.StockComparisionVO;
@@ -119,7 +120,7 @@ public class CompareChartPanel extends JPanel {
 
 
         tab.setBackground(WindowData.getInstance().getColor());
-        tab.setForeground(new Color(201, 208, 214));
+        tab.setForeground(ColorUtils.fontColor());
         tab.setOpaque(true);
         tab.setBorder(BorderFactory.createEmptyBorder());
         tab.setUI(new MyTabUI());

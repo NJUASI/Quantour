@@ -9,6 +9,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.chart.tools.CompareTool;
 import presentation.view.tools.ChartUtils;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.Serie;
 import vo.StockComparisionVO;
 
@@ -37,7 +38,7 @@ public class CompareChart3 {
 
         //使用chartPanel接收
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setBackground(new Color(32, 36, 39));
+        chartPanel.setBackground(ColorUtils.backgroundColor());
         return chartPanel;
     }
 

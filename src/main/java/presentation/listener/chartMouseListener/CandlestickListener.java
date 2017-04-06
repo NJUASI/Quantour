@@ -5,6 +5,7 @@ import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
+import presentation.view.tools.ColorUtils;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -71,9 +72,9 @@ public class CandlestickListener implements ChartMouseListener{
 
     private void setMyStoke(){
         float dashes[] = {21,9,3,9};
-        markerX.setPaint(new Color(82,98,113));
+        markerX.setPaint(ColorUtils.makerLineColor());
         markerX.setStroke(new BasicStroke(0.9f,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,8.f,dashes,10));
-        markerY.setPaint(new Color(82,98,113));
+        markerY.setPaint(ColorUtils.makerLineColor());
         markerY.setStroke(new BasicStroke(0.001f,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,8.f,dashes,10));
 
     }
@@ -93,9 +94,9 @@ public class CandlestickListener implements ChartMouseListener{
     }
 
     private void setTheme(ValueMarker valueMarker){
-        valueMarker.setLabelPaint(new Color(201, 208, 214));
-        valueMarker.setOutlinePaint(new Color(201, 208, 214));
-        valueMarker.setLabelBackgroundColor(new Color(87,107,131));
+        valueMarker.setLabelPaint(ColorUtils.fontColor());
+        valueMarker.setOutlinePaint(ColorUtils.fontColor());
+        valueMarker.setLabelBackgroundColor(ColorUtils.makerLabelColor());
         valueMarker.setLabelFont(new Font("宋体", Font.PLAIN, 12));
     }
 

@@ -10,6 +10,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import presentation.chart.tools.CandlestickChartTool;
 import presentation.listener.chartMouseListener.VolumeChartListener;
+import presentation.view.tools.ColorUtils;
 import vo.StockVO;
 
 import java.awt.*;
@@ -63,14 +64,14 @@ public class VolumeChart {
                 CandlestickChartTool.getXYBarRender(ohlcSeriesCollection));
         //建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
 
-        plot.setDomainGridlinePaint(new Color(44, 50, 54));
-        plot.setRangeGridlinePaint(new Color(44, 50, 54));
-        plot.setBackgroundPaint(new Color(32,36,39));
+        plot.setDomainGridlinePaint(ColorUtils.lineColor());
+        plot.setRangeGridlinePaint(ColorUtils.lineColor());
+        plot.setBackgroundPaint(ColorUtils.backgroundColor());
         plot.setDomainGridlineStroke(new BasicStroke());
         plot.setRangeGridlineStroke(new BasicStroke());
 
         JFreeChart chart = new JFreeChart(plot);
-        chart.setBackgroundPaint(new Color(32,36,39));
+        chart.setBackgroundPaint(ColorUtils.backgroundColor());
         chart.getLegend().setVisible(false);
         chart.setTextAntiAlias(false);
 

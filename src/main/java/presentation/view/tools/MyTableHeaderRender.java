@@ -21,7 +21,7 @@ public class MyTableHeaderRender implements TableCellRenderer {
         if (c instanceof JLabel) {
             JLabel label = (JLabel) c;
             label.setBackground(new Color(41,46,51));
-            label.setForeground(new Color(201,208,214));
+            label.setForeground(ColorUtils.fontColor());
             label.setFont(labelFont);
             label.setBorder(null);
             label.setHorizontalAlignment(SwingConstants.CENTER);

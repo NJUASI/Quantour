@@ -5,6 +5,7 @@ import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
 import presentation.view.tools.ChartUtils;
+import presentation.view.tools.ColorUtils;
 
 import java.awt.*;
 
@@ -31,7 +32,7 @@ public class CompareTool {
         chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
 
         CategoryPlot plot = chart.getCategoryPlot();
-        plot.setBackgroundPaint(new Color(32,36,39));
+        plot.setBackgroundPaint(ColorUtils.backgroundColor());
 
         return chart;
     }
@@ -53,7 +54,7 @@ public class CompareTool {
         ChartUtils.setXY_XAixs(xyplot);
         ChartUtils.setXY_YAixs(xyplot);
 
-        xyplot.setBackgroundPaint(new Color(32, 36, 39));
+        xyplot.setBackgroundPaint(ColorUtils.backgroundColor());
 
         return chart;
     }

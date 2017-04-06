@@ -11,6 +11,7 @@ import presentation.listener.kStringPanelListener.SearchListener;
 import presentation.listener.kStringPanelListener.StockCodeDocListener;
 import presentation.listener.kStringPanelListener.StockNameDocListener;
 import presentation.view.panel.associatePanel.AssociatePanel;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
 
@@ -303,7 +304,7 @@ public class KStringPanel extends TemplatePanel {
             e.printStackTrace();
         }
         chartPanel.setBounds(adaptScreen(130,100,1620,850));
-        chartPanel.setBackground(new Color(32, 36, 39));
+        chartPanel.setBackground(ColorUtils.backgroundColor());
         add(chartPanel);
         chartPanel.repaint();
     }

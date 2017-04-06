@@ -2,6 +2,7 @@ package presentation.view.panel;
 
 import presentation.listener.comparePanelListener.*;
 import presentation.view.panel.associatePanel.AssociatePanel;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
 import service.ChartService;
@@ -126,7 +127,7 @@ public class ComparePanel extends TemplatePanel {
         num2.setBounds(adaptScreen(750, 80, 150, 35));
         add(num2);
 
-        setBackground(new Color(32,36,39));
+        setBackground(ColorUtils.backgroundColor());
 
         add(compare);
 
