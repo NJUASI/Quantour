@@ -21,7 +21,7 @@ import java.util.function.Function;
 /**
  * Created by harvey on 17-3-31.
  */
-public class MomentumStrategy implements AllTraceBackStrategy {
+public class MomentumStrategy extends AllTraceBackStrategy {
 
     StockService stockService;
     TraceBackService TraceBackService;
@@ -110,7 +110,7 @@ public class MomentumStrategy implements AllTraceBackStrategy {
             cumulativeReturnVOS.addAll(computeHoldingPeriod(holdingStocks, start, endOfHolding));
         }
 
-        return cumulativeReturnVOS;
+        return maxRetracement(cumulativeReturnVOS);
     }
 
     /**
