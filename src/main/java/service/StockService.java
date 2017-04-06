@@ -118,5 +118,5 @@ public interface StockService{
      * @param date 当前日期
      * @return
      */
-    StockVO getOneStockDataOneDay(String stockCode, LocalDate date);
+    StockVO getOneStockDataOneDay(String stockCode, LocalDate date) throws IOException;
 }

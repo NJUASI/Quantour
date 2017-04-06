@@ -1,5 +1,8 @@
 package service.serviceImpl.TraceBackService.TraceBackStrategy;
 
+import dao.StockDao;
+import dao.daoImpl.StockDaoImpl;
+import po.StockPO;
 import service.ChartService;
 import service.StockService;
 import service.serviceImpl.ChartServiceImpl;
@@ -22,14 +25,14 @@ import java.util.*;
 public class MeanReversionStrategy implements AllTraceBackStrategy {
 
     ChartService chartService;
-    StockService stockService;
+    StockDao stockDao;
 
     final double initMpney = 10000;
     double nowMoney;
 
     public MeanReversionStrategy() {
         chartService = new ChartServiceImpl();
-        stockService = new StockServiceImpl();
+        stockDao = new StockDaoImpl();
         nowMoney = initMpney;
     }
 
@@ -83,7 +86,7 @@ public class MeanReversionStrategy implements AllTraceBackStrategy {
         return null;
     }
 
-    private List<String> getTopStockCodes(int holdingNum, Map<String, List<MovingAverageVO>> allAves, LocalDate thisDate) {
+    private List<String> getTopStockCodes(int holdingNum, Map<String, List<MovingAverageVO>> allAves, LocalDate thisDate) throws IOException {
         Map<String, Double> result = new HashMap<>(holdingNum);
 
         // 先加入前 持有股票数 支股票，再计算后面的
@@ -95,8 +98,8 @@ public class MeanReversionStrategy implements AllTraceBackStrategy {
             if (i < holdingNum) {
                 for (MovingAverageVO vo : thisMA) {
                     if (vo.date == thisDate) {
-                        StockVO stockVO = stockService.getOneStockDataOneDay(s, thisDate);
-                        double biasRatio = (vo.average - stockVO.adjClose) / vo.average;
+                        StockPO stockPO = stockDao.getStockData(s, thisDate);
+                        double biasRatio = (vo.average - stockPO.getAdjClose()) / vo.average;
                         result.put(s, biasRatio);
                         break;
                     }
@@ -108,8 +111,8 @@ public class MeanReversionStrategy implements AllTraceBackStrategy {
             for (MovingAverageVO vo : thisMA) {
                 String min = getMin(result);
 
-                StockVO stockVO = stockService.getOneStockDataOneDay(s, thisDate);
-                double biasRatio = (vo.average - stockVO.adjClose) / vo.average;
+                StockPO stockPO = stockDao.getStockData(s, thisDate);
+                double biasRatio = (vo.average - stockPO.getAdjClose()) / vo.average;
 
                 if (vo.date == thisDate && biasRatio > result.get(min)) {
                     result.remove(min);
@@ -118,7 +121,6 @@ public class MeanReversionStrategy implements AllTraceBackStrategy {
             }
         }
         return new LinkedList<>(result.keySet());
-
     }
 
     private String getMin(Map<String, Double> result) {

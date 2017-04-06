@@ -253,15 +253,15 @@ public class StockServiceImpl implements StockService {
     }
 
     /**
-     * 查找当前日期，股票的信息
+     * 查找特定日期日期特定股票股票的一支信息
      *
      * @param stockCode 股票代码
      * @param date      当前日期
      * @return
      */
     @Override
-    public StockVO getOneStockDataOneDay(String stockCode, LocalDate date) {
-        return null;
+    public StockVO getOneStockDataOneDay(String stockCode, LocalDate date) throws IOException {
+        return new StockVO(stockDao.getStockData(stockCode, date));
     }
 
     /**
