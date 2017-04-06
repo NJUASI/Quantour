@@ -13,7 +13,7 @@ public class MyLabel extends JLabel {
         setBorder(null);
         width=WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
-        setForeground(new Color(201,208,214));
+        setForeground(ColorUtils.fontColor());
         setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,16*width/1920));
         if(str.length()==2){
             setSize(60,35);
@@ -30,7 +30,7 @@ public class MyLabel extends JLabel {
         setBorder(null);
         width=WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
-        setForeground(new Color(201,208,214));
+        setForeground(ColorUtils.fontColor());
         setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,font*width/1920));
         setVerticalAlignment(SwingConstants.CENTER);
         if(str.length()==2){

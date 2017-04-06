@@ -5,6 +5,7 @@ import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 
 import org.jfree.ui.TextAnchor;
+import presentation.view.tools.ColorUtils;
 
 import java.awt.*;
 import java.text.NumberFormat;
@@ -33,8 +34,8 @@ public class TraceBackChartTool {
         lineAndShapeRenderer.setSeriesShapesVisible(0, false);
         lineAndShapeRenderer.setSeriesShapesVisible(1, false);
 
-        lineAndShapeRenderer.setSeriesPaint(0, new Color(255, 61, 61));
-        lineAndShapeRenderer.setSeriesPaint(1, new Color(15, 195, 81));
+        lineAndShapeRenderer.setSeriesPaint(0, ColorUtils.upColor());
+        lineAndShapeRenderer.setSeriesPaint(1, ColorUtils.downColor());
 
         lineAndShapeRenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE1, TextAnchor.BOTTOM_CENTER));
         lineAndShapeRenderer.setBaseShapesVisible(false);
@@ -67,8 +68,8 @@ public class TraceBackChartTool {
         xAxis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
         xAxis.setTickUnit(new DateTickUnit(DateTickUnit.DAY,3));//设置时间刻度的间隔，一般以周为单位
         xAxis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
-        xAxis.setLabelPaint(new Color(201, 208, 214));
-        xAxis.setTickLabelPaint(new Color(201, 208, 214));
+        xAxis.setLabelPaint(ColorUtils.fontColor());
+        xAxis.setTickLabelPaint(ColorUtils.fontColor());
         xAxis.setAxisLineVisible(false);
 
         return xAxis;
@@ -89,8 +90,8 @@ public class TraceBackChartTool {
         yAxis.setAutoRange(false);//不使用自动设定范围
         yAxis.setRange(low-0.1, high+0.1);
         yAxis.setTickUnit(new NumberTickUnit((0.025)));//设置刻度显示的密度
-        yAxis.setLabelPaint(new Color(201, 208, 214));
-        yAxis.setTickLabelPaint(new Color(201, 208, 214));
+        yAxis.setLabelPaint(ColorUtils.fontColor());
+        yAxis.setTickLabelPaint(ColorUtils.fontColor());
         yAxis.setAutoRangeIncludesZero(false);
         yAxis.setNumberFormatOverride(NumberFormat.getPercentInstance());
 

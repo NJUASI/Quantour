@@ -5,6 +5,7 @@ import presentation.listener.navigationBarListener.CompareListener;
 import presentation.listener.navigationBarListener.KStringListener;
 import presentation.listener.navigationBarListener.StocksTableListener;
 import presentation.listener.navigationBarListener.StrategyListener;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.customizedButton.MyButton;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class NavigationBar extends TemplatePanel {
     public NavigationBar() {
         numOfChoosed=1;
         setLayout(null);
-        setBackground(new Color(19,22,24));
+        setBackground(ColorUtils.divideColor());
         setBounds(adaptScreen(0,0,90,1030));
 
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));

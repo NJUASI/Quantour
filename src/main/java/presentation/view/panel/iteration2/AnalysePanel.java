@@ -2,6 +2,7 @@ package presentation.view.panel.iteration2;
 
 import presentation.controller.StrategySwitchController;
 import presentation.view.panel.TemplatePanel;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTabUI;
 import presentation.view.tools.WindowData;
 
@@ -48,7 +49,7 @@ public class AnalysePanel extends TemplatePanel {
         setLayout(null);
         add(tab);
         tab.setBackground(WindowData.getInstance().getColor());
-        tab.setForeground(new Color(201, 208, 214));
+        tab.setForeground(ColorUtils.fontColor());
         tab.setOpaque(true);
         tab.setUI(new MyTabUI());
         tab.setBorder(null);
@@ -67,7 +68,7 @@ public class AnalysePanel extends TemplatePanel {
         add(back);
 
         title=new JLabel("动量策略");
-        title.setForeground(new Color(255,255,255));
+        title.setForeground(ColorUtils.fontColor());
         title.setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,17*WindowData.getInstance().getWidth()/1920));
         title.setBounds(adaptScreen(850,3,120,35));
         add(title);

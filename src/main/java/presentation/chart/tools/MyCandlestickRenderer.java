@@ -3,6 +3,8 @@ package presentation.chart.tools;
 import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import presentation.view.tools.ColorUtils;
+import sun.plugin2.util.ColorUtil;
 
 import java.awt.*;
 
@@ -58,12 +60,11 @@ public class MyCandlestickRenderer extends CandlestickRenderer {
      * @updateTime 2017/3/30
      */
     public Paint getItemOutlinePaint(int row, int column) {
-        Color color = new Color(255, 61, 61);
+
         if(ohlcSeriesCollection.getCloseValue(row,column)>ohlcSeriesCollection.getOpenValue(row,column)){
-            return color;
+            return ColorUtils.upColor();
         }else{
-            color = new Color(15, 195, 81);
-            return color;
+            return ColorUtils.downColor();
         }
     }
 }

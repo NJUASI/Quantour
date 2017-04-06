@@ -9,6 +9,7 @@ import org.jfree.chart.util.LineUtilities;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.util.ShapeUtilities;
+import presentation.view.tools.ColorUtils;
 
 
 import java.awt.*;
@@ -62,7 +63,7 @@ public class TraceBackXYLineRenderer extends XYLineAndShapeRenderer {
     @Override
     public Paint getItemPaint(int row, int column) {
         if(row==0&&this.isTraceBack(column)){
-            return new Color(201, 208, 214);
+            return ColorUtils.fontColor();
         }
 
         return lookupSeriesPaint(row);
@@ -72,7 +73,7 @@ public class TraceBackXYLineRenderer extends XYLineAndShapeRenderer {
                                       int item, Shape shape) {
         g2.setStroke(getItemStroke(series, item));
         if(series==0&&isTraceBack(item)){
-            g2.setPaint(new Color(255, 61, 61));
+            g2.setPaint(ColorUtils.upColor());
 
         }
         else {

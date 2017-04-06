@@ -1,4 +1,4 @@
-package presentation.chart.TraceBack;
+package presentation.chart.traceBack;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -9,6 +9,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import presentation.chart.tools.CandlestickChartTool;
 import presentation.chart.tools.TraceBackChartTool;
+import presentation.view.tools.ColorUtils;
 import service.TraceBackService;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
@@ -93,12 +94,12 @@ public class TraceBackChart {
      * @param chart 图表对象
      */
     private void setTraceBackChart(JFreeChart chart){
-        chart.setBackgroundPaint(new Color(32,36,39));
-        chart.getLegend().setItemPaint(new Color(201, 208, 214));
-        chart.getLegend().setBackgroundPaint(new Color(32,36,39));
-        chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
+        chart.setBackgroundPaint(ColorUtils.backgroundColor());
+        chart.getLegend().setItemPaint(ColorUtils.fontColor());
+        chart.getLegend().setBackgroundPaint(ColorUtils.backgroundColor());
+        chart.getLegend().setFrame(new BlockBorder(ColorUtils.backgroundColor()));
         chart.getXYPlot().getDomainAxis().setVisible(true);
-        chart.getTitle().setPaint(new Color(201, 208, 214));
+        chart.getTitle().setPaint(ColorUtils.fontColor());
         chart.setTextAntiAlias(false);
     }
 
@@ -114,8 +115,8 @@ public class TraceBackChart {
     private void setPlot(XYPlot plot){
         plot.setDomainGridlinesVisible(true);
         plot.setRangeGridlinesVisible(true);
-        plot.setDomainGridlinePaint(new Color(44, 50, 54));
-        plot.setRangeGridlinePaint(new Color(44, 50, 54));
+        plot.setDomainGridlinePaint(ColorUtils.lineColor());
+        plot.setRangeGridlinePaint(ColorUtils.lineColor());
         plot.setDomainGridlineStroke(new BasicStroke());
         plot.setRangeGridlineStroke(new BasicStroke());
     }

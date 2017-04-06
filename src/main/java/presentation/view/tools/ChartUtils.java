@@ -71,35 +71,35 @@ public class ChartUtils {
 		// 设置轴向的字体
 		chartTheme.setLargeFont(FONT);
 		chartTheme.setSmallFont(FONT);
-		chartTheme.setTitlePaint(new Color(201, 208, 214));
-		chartTheme.setSubtitlePaint(new Color(201, 208, 214));
+		chartTheme.setTitlePaint(ColorUtils.fontColor());
+		chartTheme.setSubtitlePaint(ColorUtils.fontColor());
 
-		chartTheme.setLegendBackgroundPaint(new Color(32,36,39));// 设置标注
-		chartTheme.setLegendItemPaint(new Color(201, 208, 214));//
-		chartTheme.setChartBackgroundPaint(new Color(32,36,39));
+		chartTheme.setLegendBackgroundPaint(ColorUtils.backgroundColor());// 设置标注
+		chartTheme.setLegendItemPaint(ColorUtils.fontColor());//
+		chartTheme.setChartBackgroundPaint(ColorUtils.backgroundColor());
 		// 绘制颜色绘制颜色.轮廓供应商
 		// paintSequence,outlinePaintSequence,strokeSequence,outlineStrokeSequence,shapeSequence
 
-		Paint[] OUTLINE_PAINT_SEQUENCE = new Paint[] { new Color(32,36,39) };
+		Paint[] OUTLINE_PAINT_SEQUENCE = new Paint[] { ColorUtils.backgroundColor() };
 		// 绘制器颜色源
 		DefaultDrawingSupplier drawingSupplier = new DefaultDrawingSupplier(CHART_COLORS, CHART_COLORS, OUTLINE_PAINT_SEQUENCE,
 				DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE, DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
 				DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE);
 		chartTheme.setDrawingSupplier(drawingSupplier);
 
-		chartTheme.setPlotBackgroundPaint(new Color(32,36,39));// 绘制区域
-		chartTheme.setPlotOutlinePaint(new Color(32,36,39));// 绘制区域外边框
-		chartTheme.setLabelLinkPaint(new Color(8, 55, 114));// 链接标签颜色
+		chartTheme.setPlotBackgroundPaint(ColorUtils.backgroundColor());// 绘制区域
+		chartTheme.setPlotOutlinePaint(ColorUtils.backgroundColor());// 绘制区域外边框
+		chartTheme.setLabelLinkPaint(ColorUtils.linkColor());// 链接标签颜色
 		chartTheme.setLabelLinkStyle(PieLabelLinkStyle.CUBIC_CURVE);
 
 		chartTheme.setAxisOffset(new RectangleInsets(5, 12, 5, 12));
-		chartTheme.setDomainGridlinePaint(new Color(44, 50, 54));// X坐标轴垂直网格颜色
-		chartTheme.setRangeGridlinePaint(new Color(44, 50, 54));// Y坐标轴水平网格颜色
+		chartTheme.setDomainGridlinePaint(ColorUtils.lineColor());// X坐标轴垂直网格颜色
+		chartTheme.setRangeGridlinePaint(ColorUtils.lineColor());// Y坐标轴水平网格颜色
 
-		chartTheme.setBaselinePaint(new Color(44, 50, 54));
-		chartTheme.setCrosshairPaint(new Color(44, 50, 54));// 不确定含义
-		chartTheme.setAxisLabelPaint(new Color(201, 208, 214));// 坐标轴标题文字颜色
-		chartTheme.setTickLabelPaint(new Color(201, 208, 214));// 刻度数字
+		chartTheme.setBaselinePaint(ColorUtils.lineColor());
+		chartTheme.setCrosshairPaint(ColorUtils.lineColor());// 不确定含义
+		chartTheme.setAxisLabelPaint(ColorUtils.fontColor());// 坐标轴标题文字颜色
+		chartTheme.setTickLabelPaint(ColorUtils.fontColor());// 刻度数字
 		chartTheme.setBarPainter(new StandardBarPainter());// 设置柱状图渲染
 		chartTheme.setXYBarPainter(new StandardXYBarPainter());// XYBar 渲染
 
@@ -121,7 +121,7 @@ public class ChartUtils {
 	 * 设置图例无边框，默认黑色边框
 	 */
 	public static void setLegendEmptyBorder(JFreeChart chart) {
-		chart.getLegend().setFrame(new BlockBorder(new Color(32,36,39)));
+		chart.getLegend().setFrame(new BlockBorder(ColorUtils.backgroundColor()));
 
 	}
 

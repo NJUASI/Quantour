@@ -37,10 +37,10 @@ public class MyTabUI extends BasicTabbedPaneUI {
         selectedColorSet.bottomGradColor1 = new Color(37, 41, 44);//选中的第三层
         selectedColorSet.bottomGradColor2 = new Color(37, 41, 44);//选中的最下层
         defaultColorSet = new ColorSet();
-        defaultColorSet.topGradColor1 = new Color(19, 22, 24);//未选的最上层
-        defaultColorSet.topGradColor2 = new Color(19, 22, 24);
-        defaultColorSet.bottomGradColor1 = new Color(19, 22, 24);
-        defaultColorSet.bottomGradColor2 = new Color(19, 22, 24);
+        defaultColorSet.topGradColor1 = ColorUtils.divideColor();//未选的最上层
+        defaultColorSet.topGradColor2 = ColorUtils.divideColor();
+        defaultColorSet.bottomGradColor1 = ColorUtils.divideColor();
+        defaultColorSet.bottomGradColor2 = ColorUtils.divideColor();
         hoverColorSet = new ColorSet();
         hoverColorSet.topGradColor1 = new Color(37, 41, 44);//鼠标在的时候最上层
         hoverColorSet.topGradColor2 = new Color(37, 41, 44);
@@ -91,7 +91,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
 
     protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setPaint(new Color(32, 36, 39));
+        g2d.setPaint(ColorUtils.backgroundColor());
         super.paintTabArea(g, tabPlacement, selectedIndex);
         if (contentTopBorderDrawn) {
             g2d.setColor(lineColor);
