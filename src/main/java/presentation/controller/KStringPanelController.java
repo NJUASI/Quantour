@@ -113,7 +113,7 @@ public class KStringPanelController {
                     candlestickChart = new CandlestickChart(stockCode,tag);
                 }
                 else{
-                    ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(String.valueOf(Integer.parseInt(stockCode)),kStringPanel.getStartDate(),kStringPanel.getEndDate());
+                    ChartShowCriteriaVO chartShowCriteriaVO=new ChartShowCriteriaVO(stockCode,kStringPanel.getStartDate(),kStringPanel.getEndDate());
                     try{
                         candlestickChart = new CandlestickChart(chartShowCriteriaVO,tag);
                     } catch (NoDataWithinException e) {
