@@ -129,11 +129,13 @@ public class StockServiceImpl implements StockService {
 
         //通过匹配股票的拼音来查询
         if(searchString.matches("[0-9]+")){
+            searchString =StockCodeHelper.simplify(searchString);
             Map<String,String> codeAndName = stockDao.getAllStocksCode();
             Set<String> codes = codeAndName.keySet();
             for (String code:codes) {
                 if(code.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(code,codeAndName.get(code));
+
+                    StockSearchVO vo = new StockSearchVO(StockCodeHelper.format(code),codeAndName.get(code));
                     stockSearchVOs.add(vo);
                 }
             }
@@ -145,7 +147,7 @@ public class StockServiceImpl implements StockService {
             Set<String> names = namesAndCode.keySet();
             for(String name:names){
                 if(name.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(namesAndCode.get(name),name);
+                    StockSearchVO vo = new StockSearchVO(StockCodeHelper.format(namesAndCode.get(name)),name);
                     stockSearchVOs.add(vo);
                 }
             }
