@@ -32,8 +32,6 @@
             <version>3.6.1</version>
         </dependency>
 
-
-
         <!--
        maven远程库并没有下列依赖，需要先本地安装，到目录(/lib)下用maven安装到本地仓库中
        $ mvn install:install-file -DgroupId=com.github.stuxuhai -DartifactId=jpinyin -Dversion=1.1.8 -Dpackaging=jar -Dfile=jpinyin-1.1.8.jar
@@ -112,5 +110,5 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+        </properties>
 </project>
