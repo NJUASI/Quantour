@@ -9,15 +9,11 @@ import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
-import vo.CumulativeReturnVO;
-import vo.HoldingDetailVO;
-import vo.StockVO;
-import vo.TraceBackCriteriaVO;
+import vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * Created by harvey on 17-3-31.
@@ -25,22 +21,27 @@ import java.util.function.Function;
 public class MomentumStrategy extends AllTraceBackStrategy {
 
     StockService stockService;
-    TraceBackService TraceBackService;
+    TraceBackService traceBackService;
     StockTradingDayService stockTradingDayService;
 
-    //千元投资
-    final double initInvestment = 1000;
+    //初始投资
+    double initInvestment;
 
-    //当前的剩余投资
-    double cumulativeReturn;
+    //剩余投资
+    double remainInvestment;
+
+
 
     public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
         super(stockPoolCodes,traceBackCriteriaVO);
 
         stockService = new StockServiceImpl();
-        TraceBackService = new TraceBackServiceImpl();
+        traceBackService = new TraceBackServiceImpl();
         stockTradingDayService = new StockTradingDayServiceImpl();
-        cumulativeReturn = initInvestment;
+
+        //初始为千元投资
+        initInvestment = 1000;
+        remainInvestment = initInvestment;
     }
 
     /**
@@ -93,23 +94,24 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             holdingStocks = pickStocks(formate(stockPoolCodes,startOfFormative,endOfFormative));
 
             //持有期的结束日期，根据持有期的起始日期进行计算
-            LocalDate endOfHolding = stockTradingDayService.getTradingDayPlus(startOfHolding,holdingPeriod,holdingStocks);
+            LocalDate endOfHolding = stockTradingDayService.getTradingDayPlus(startOfHolding,holdingPeriod-1,holdingStocks);
 
             //最后一个周期，直接以最后一个交易日为最后一天
             if(i == periodNum-1){
                 endOfHolding = end;
             }
 
-            List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(holdingStocks, start, end);
+            List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(holdingStocks, startOfHolding, endOfHolding);
+
             //第一个周期，第一天的累计收益率置为0
             if(i == 0){
                 cumulatives.get(0).cumulativeReturn = 0;
             }
 
-            cumulativeReturnVOS.addAll(computeHoldingPeriod(holdingStocks, start, endOfHolding));
+            cumulativeReturnVOS.addAll(cumulatives);
 
             //更新持有期的开始日期
-            startOfHolding = stockTradingDayService.getNextTradingDay(endOfHolding,holdingStocks);
+            startOfHolding = stockTradingDayService.getNextTradingDay(endOfHolding.plusDays(1),holdingStocks);
         }
 
         return maxRetracement(cumulativeReturnVOS);
@@ -134,8 +136,11 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      */
     private List<CumulativeReturnVO> computeHoldingPeriod(List<String> holdingStocks, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
 
+        //多往前计算一天
+        start = stockTradingDayService.getLastTradingDay(start.minusDays(1), holdingStocks);
+
         //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
-        List<CumulativeReturnVO> dailyTotalCumulativeReturn = TraceBackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
+        List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
 
         List<CumulativeReturnVO> cumulativeReturn = new ArrayList<CumulativeReturnVO>();
 
@@ -144,19 +149,23 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             LocalDate date = dailyTotalCumulativeReturn.get(i).currentDate;
             double rate = dailyTotalCumulativeReturn.get(i).cumulativeReturn;
 
-            this.cumulativeReturn = this.cumulativeReturn *(1+rate);
-            cumulativeReturn.add(new CumulativeReturnVO(date, (rate - initInvestment) / initInvestment, false));
+            double remainInvestment = this.remainInvestment;
+            remainInvestment = remainInvestment *(1+rate);
+            cumulativeReturn.add(new CumulativeReturnVO(date, (remainInvestment - initInvestment) / initInvestment, false));
         }
+
+        //更新剩余资金
+        remainInvestment = remainInvestment * (1+dailyTotalCumulativeReturn.get(dailyTotalCumulativeReturn.size()-1).cumulativeReturn);
 
         return cumulativeReturn;
     }
 
     /**
      * 对股票排序并挑选股票购买
-     * @param formativePeriodRate 形成期内，目标股票池所有股票的代码与累计收益率的键值对
+     * @param formativePeriodRate 形成期内，目标股票池所有股票的代码与累计收益率的列表
      * @return 选取前20%的股票购买 //TODO 目前挑选股票的参数，暂定为取前20%，不知后期是否要做活一点儿
      */
-    private List<String> pickStocks(Map<String, Double> formativePeriodRate) {
+    private List<String> pickStocks(List<FormativePeriodRateVO> formativePeriodRate) {
 
        List<String> sortedStockPool = sortStocks(formativePeriodRate);
 
@@ -180,30 +189,15 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      * @param formativePeriodRate 目标股票池的股票代码与形成期的累计收益率的键值对
      * @return 经排序后的目标股票池的所有股票的代码 //TODO gcm 排序策略？这里直接按降序排序
      */
-    private List<String> sortStocks(Map<String, Double> formativePeriodRate) {
+    private List<String> sortStocks(List<FormativePeriodRateVO> formativePeriodRate) {
+
         List<String> sortedStockCodes = new ArrayList<String>();
 
-        for(Map.Entry<String, Double> entry: formativePeriodRate.entrySet()){
+        //按默认方式排序
+        formativePeriodRate.sort(null);
 
-            //判断是否已经插入
-            boolean isInsert = false;
-
-            for(int i = 0; i < sortedStockCodes.size(); i++){
-                if(sortedStockCodes.size() == 0){
-                    sortedStockCodes.add(entry.getKey());
-                }
-                else {
-                    if(entry.getValue() > formativePeriodRate.get(sortedStockCodes.get(i))){
-                        sortedStockCodes.add(i,entry.getKey());
-                        isInsert = true;
-                    }
-                }
-            }
-
-            //未插入，说明最小，则加在最后
-            if(!isInsert){
-                sortedStockCodes.add(entry.getKey());
-            }
+        for(int i = 0; i < formativePeriodRate.size(); i++){
+            sortedStockCodes.add(formativePeriodRate.get(i).stockCode);
         }
 
         return sortedStockCodes;
@@ -216,9 +210,9 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      * @param end 形成期结束日期
      * @return
      */
-    private Map<String,Double> formate(List<String> stockCodes, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
+    private List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
 
-        Map<String,Double> formativePeriodRate = new TreeMap<String, Double>();
+        List<FormativePeriodRateVO> formativePeriodRate = new ArrayList<FormativePeriodRateVO>();
 
         for(int i = 0; i < stockCodes.size(); i++){
 
@@ -227,7 +221,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
             double rate = (stockVOS.get(stockVOS.size()-1).close - stockVOS.get(0).close) / stockVOS.get(0).close;
 
-            formativePeriodRate.put(stockVOS.get(0).code, rate);
+            formativePeriodRate.add(new FormativePeriodRateVO(stockVOS.get(0).code, rate));
         }
 
         return formativePeriodRate;

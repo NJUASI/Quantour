@@ -28,7 +28,7 @@ public class MomentumStrategyTest {
     public void setUp() throws Exception {
 
         stockCodes = new ArrayList<String>();
-        stockCodes.add("1");
+        stockCodes.add("000001");
 
         traceBackCriteriaVO = new TraceBackCriteriaVO();
         traceBackCriteriaVO.strategyType = TraceBackStrategy.MS;
@@ -45,7 +45,7 @@ public class MomentumStrategyTest {
     public void traceBack() throws Exception {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = allTraceBackStrategy.traceBack();
-        assertEquals(-0.009,cumulativeReturnVOS.get(0).cumulativeReturn,0.001);
+        assertEquals(-0.02,cumulativeReturnVOS.get(1).cumulativeReturn,0.01);
 
     }
 

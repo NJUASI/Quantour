@@ -57,7 +57,7 @@ public interface StockTradingDayService {
     LocalDate getNextTradingDay(LocalDate date, String stockCode) throws IOException;
 
     /**
-     * 以参照日期为基准，加上plusDay的交易日天数，获取到那天的日期
+     * 以参照日期为基准，加上plusDay的交易日天数，获取到那天的日期，参照日期不算在内
      * 例： start = 4.17.2014 plusDay = 2 则返回值为4.21.2014
      * @param start 作为参照的日期
      * @param plusDay 加上的交易日的天数
