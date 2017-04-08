@@ -31,7 +31,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     double remainInvestment;
 
 
-
     public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
         super(stockPoolCodes,traceBackCriteriaVO);
 
@@ -118,16 +117,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     }
 
     /**
-     * 根据目标股票池及所给的标准，返回策略在每个周期的累计收益率
-     *
-     * @return List<HoldingDetailVO> 策略在每个周期的累计收益率
-     */
-    @Override
-    public List<HoldingDetailVO> calculateHoldingPeriod() {
-        return null;
-    }
-
-    /**
      * 计算当前持有期所持有的股票在当前的持有期内每一天相对于回测区间起始日期的总的累计收益率
      * @param holdingStocks 当前持有期所持有的股票
      * @param start 持有期的起始日期的前一个交易日,由于第一天相对第一天为0,则应多往前计算一天,
@@ -142,6 +131,12 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
         List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
 
+        //保存当前持仓期详情信息
+        HoldingDetailVO curHoldingPeriod = new HoldingDetailVO();
+        curHoldingPeriod.periodSerial = holdingDetailVOS.size()+1;
+        curHoldingPeriod.startDate = start;
+        curHoldingPeriod.endDate = end;
+
         List<CumulativeReturnVO> cumulativeReturn = new ArrayList<CumulativeReturnVO>();
 
         //从1开始计数，因为日期多往前算了一天
@@ -154,8 +149,20 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             cumulativeReturn.add(new CumulativeReturnVO(date, (remainInvestment - initInvestment) / initInvestment, false));
         }
 
+        //持仓期最后一天的累计收益率
+        double lastRate = dailyTotalCumulativeReturn.get(dailyTotalCumulativeReturn.size()-1).cumulativeReturn;
+
+        //保存之前的
+        double preRemainInvestment = remainInvestment;
+
         //更新剩余资金
-        remainInvestment = remainInvestment * (1+dailyTotalCumulativeReturn.get(dailyTotalCumulativeReturn.size()-1).cumulativeReturn);
+        remainInvestment = remainInvestment * (1+lastRate);
+
+        //当前持仓期剩余投资资金
+        curHoldingPeriod.remainInvestment = remainInvestment;
+        //当前持仓期的策略收益
+        curHoldingPeriod.rate = (preRemainInvestment - remainInvestment) / remainInvestment;
+
 
         return cumulativeReturn;
     }

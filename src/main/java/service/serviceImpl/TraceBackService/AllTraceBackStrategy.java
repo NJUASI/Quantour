@@ -1,6 +1,5 @@
 package service.serviceImpl.TraceBackService;
 
-import service.TraceBackService;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
@@ -10,6 +9,7 @@ import vo.HoldingDetailVO;
 import vo.TraceBackCriteriaVO;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,9 +27,17 @@ public abstract class AllTraceBackStrategy {
      */
     public TraceBackCriteriaVO traceBackCriteriaVO;
 
+    /**
+     * 保存每个持仓期详情
+     */
+    public List<HoldingDetailVO> holdingDetailVOS;
+
+
     public AllTraceBackStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
         this.stockPoolCodes = stockPoolCodes;
         this.traceBackCriteriaVO = traceBackCriteriaVO;
+
+        holdingDetailVOS = new ArrayList<HoldingDetailVO>();
     }
 
     /**
@@ -38,13 +46,6 @@ public abstract class AllTraceBackStrategy {
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
     public abstract List<CumulativeReturnVO> traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
-
-    /**
-     * 根据目标股票池及所给的标准，返回策略在每个周期的累计收益率
-     *
-     * @return List<HoldingDetailVO> 策略在每个周期的累计收益率
-     */
-    public abstract List<HoldingDetailVO> calculateHoldingPeriod();
 
     /**
      * 计算最大回撤点
@@ -84,4 +85,12 @@ public abstract class AllTraceBackStrategy {
         return cumulativeReturnVOS;
     }
 
+    /**
+     * 获取历史持仓详情，因为在回测时一起计算了历史持仓详情，故没有其它接口提供出去直接计算该数据，
+     * 只提供该接口获取数据
+     * @return List<HoldingDetailVO> 历史持仓详情
+     */
+    public List<HoldingDetailVO> getHoldingDetailVOS() {
+        return holdingDetailVOS;
+    }
 }
