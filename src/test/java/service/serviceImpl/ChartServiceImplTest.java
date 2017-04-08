@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import service.ChartService;
+import utilities.enums.MovingAverageType;
 import vo.ChartShowCriteriaVO;
 import vo.MovingAverageVO;
 import vo.StockComparisionVO;
@@ -58,12 +59,12 @@ public class ChartServiceImplTest {
     @Test
     public void testGetAveDataForChartShowCriteriaVODays() throws Exception {
         ChartShowCriteriaVO vo = new ChartShowCriteriaVO("1",LocalDate.of(2012,2,1),LocalDate.of(2012,3,20));
-        List<Integer> days = new ArrayList<Integer>();
-        days.add(5);
-        days.add(10);
-        days.add(20);
+        List<MovingAverageType> days = new ArrayList<>();
+        days.add(MovingAverageType.MA5);
+        days.add(MovingAverageType.MA10);
+        days.add(MovingAverageType.MA20);
 
-        Map<Integer,List<MovingAverageVO>> map = service.getAveData(vo,days);
+        Map<MovingAverageType,List<MovingAverageVO>> map = service.getAveData(vo,days);
 
 //        for(int i:days){
 //            List<MovingAverageVO> list = map.get(i);

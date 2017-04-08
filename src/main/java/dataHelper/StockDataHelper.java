@@ -54,8 +54,16 @@ public interface StockDataHelper {
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/23
      * @param stockCode 股票代码
-     * @return 此年份此股票需要被剔除的所有日期
+     * @return 此股票需要被剔除的所有日期
      */
     List<LocalDate> getDateWithoutData(String stockCode) throws IOException;
+
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/6
+     * @return 所有交易日期
+     */
+    List<LocalDate> getDateWithData() throws IOException;
 
 }

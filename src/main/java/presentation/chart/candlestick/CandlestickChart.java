@@ -20,6 +20,7 @@ import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
+import utilities.enums.MovingAverageType;
 import utilities.exceptions.*;
 import vo.ChartShowCriteriaVO;
 import vo.FirstLastDayVO;
@@ -72,11 +73,11 @@ public class CandlestickChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public CandlestickChart(String code,List<Integer> days) throws IOException, CodeNotFoundException {
+    public CandlestickChart(String code, List<MovingAverageType> days) throws IOException, CodeNotFoundException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         dateException = this.service.getDateWithoutData(code);
-        averageChart = new AverageChart(code,days);
+        averageChart = new AverageChart(code, days);
         this.readData(code);
     }
 
@@ -87,11 +88,11 @@ public class CandlestickChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public CandlestickChart(ChartShowCriteriaVO chartShowCriteriaVO,List<Integer> days) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException, DateShortException {
+    public CandlestickChart(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> days) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException, DateShortException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         dateException = this.service.getDateWithoutData(chartShowCriteriaVO);
-        averageChart = new AverageChart(chartShowCriteriaVO,days);
+        averageChart = new AverageChart(chartShowCriteriaVO, days);
         start = chartShowCriteriaVO.start;
         end = chartShowCriteriaVO.end;
         this.readData(chartShowCriteriaVO);

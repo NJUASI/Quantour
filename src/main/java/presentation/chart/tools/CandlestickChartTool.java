@@ -12,6 +12,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 import presentation.view.tools.ColorUtils;
+import utilities.enums.MovingAverageType;
 import utilities.exceptions.ColorNotExistException;
 
 import java.awt.*;
@@ -54,17 +55,17 @@ public class CandlestickChartTool {
      * @return  XYLineAndShapeRenderer 均线画笔
      * @throws ColorNotExistException 均线类型不存在
      */
-    public static XYLineAndShapeRenderer getAveragerRender(List<Integer> days) throws ColorNotExistException {
+    public static XYLineAndShapeRenderer getAveragerRender(List<MovingAverageType> days) throws ColorNotExistException {
         ColorFactory factory = new ColorFactory();
         XYLineAndShapeRenderer lineAndShapeRenderer = new XYLineAndShapeRenderer();
         lineAndShapeRenderer.setBaseItemLabelsVisible(true);
 
         for (int i = 0; i < days.size(); i++) {
             lineAndShapeRenderer.setSeriesShapesVisible(i, false);
-            if (factory.getColor(days.get(i)) == null) {
+            if (factory.getColor(days.get(i).getRepre()) == null) {
                 throw new ColorNotExistException();
             }
-            lineAndShapeRenderer.setSeriesPaint(i, factory.getColor(days.get(i)));
+            lineAndShapeRenderer.setSeriesPaint(i, factory.getColor(days.get(i).getRepre()));
         }
 
         return lineAndShapeRenderer;

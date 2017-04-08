@@ -73,6 +73,10 @@ public interface StockDao {
      */
     List<StockPO> getStockData(LocalDate date) throws IOException;
 
+
+    /*
+    交易日期相关
+     */
     /**
      * @author cuihua
      * @lastUpdatedBy cuihua
@@ -91,6 +95,13 @@ public interface StockDao {
      */
     List<LocalDate> getDateWithoutData(String stockCode, LocalDate start, LocalDate end) throws IOException;
 
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/6
+     * @return 所有的交易日期
+     */
+    List<LocalDate> getDateWithData() throws IOException;
 
     /*
     自选股操作

@@ -176,6 +176,11 @@ public class StockDaoImpl implements StockDao {
         return temp;
     }
 
+    @Override
+    public List<LocalDate> getDateWithData() throws IOException {
+        return stockHelper.getDateWithData();
+    }
+
 
 
 
