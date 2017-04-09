@@ -115,10 +115,10 @@ public class StocksTableController {
             kStringPanel = KStringPanel.getInstance();
             kStringPanel.addMessage("", "");
             kStringPanel.datePanel.setDate(stocksTablePanel.getChooseDate());
-            kStringPanel.removeChartPanel();
             NavigationBar.getInstance().whileClicked(2);
             kStringPanel.addMessage(stocksTablePane.getName(), stocksTablePane.getCode());
             KStringPanel.getInstance().count=0;
+            kStringPanel.removeChartPanel();
         }catch (Exception e){
 
         }
