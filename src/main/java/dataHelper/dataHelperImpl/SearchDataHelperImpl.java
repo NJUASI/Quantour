@@ -1,6 +1,7 @@
 package dataHelper.dataHelperImpl;
 
 import dataHelper.SearchDataHelper;
+import utilities.StockCodeHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,10 +18,22 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     private Properties properties = new Properties();
 
+
     /**
-     * Gets all stocks code. 获取所有股票的代码
-     *
-     * @return the all stocks code 返回所有股票的代码及其名称，代码作为键值
+     * @return 所有股票六位代码
+     */
+    @Override
+    public List<String> getAllStockCodes() {
+        propertiesload("stockName-code/stockName-code");
+        List<String> result = new LinkedList<>();
+        for(Map.Entry<Object,Object> entry:properties.entrySet()){
+            result.add(StockCodeHelper.format((String)entry.getValue()));
+        }
+        return result;
+    }
+
+    /**
+     * @return 所有股票名称的首字母缩写及其名称，名称作为键值
      */
     @Override
     public Map<String, String> getAllStocksFirstLetters() {
@@ -33,9 +46,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
     }
 
     /**
-     * Gets all stocks first letters.获取所有股票的首字母
-     *
-     * @return the all stocks first letters 返回所有股票的首字母及其名称，名称作为键值
+     * @return 返回所有股票的代码及其名称，代码作为键值
      */
     @Override
     public Map<String, String> getAllStocksCode() {
@@ -48,9 +59,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
     }
 
     /**
-     * Gets all stocks first letters.获取所有股票的名称
-     *
-     * @return the all stocks first letters 返回所有股票的名称及其代码，名称作为键值
+     * @return 返回所有股票的汉语名称及其代码，名称作为键值
      */
     @Override
     public Map<String, String> getAllStocksName() {
