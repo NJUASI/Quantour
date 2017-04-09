@@ -3,6 +3,7 @@ package service.serviceImpl.TraceBackService.TraceBackStrategy;
 import org.junit.Before;
 import org.junit.Test;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum.MomentumStrategy;
 import utilities.enums.TraceBackStrategy;
 import vo.CumulativeReturnVO;
 import vo.TraceBackCriteriaVO;

@@ -126,8 +126,7 @@ public class StockServiceImpl implements StockService {
 
         List<StockSearchVO> stockSearchVOs = new ArrayList<StockSearchVO>();
 
-
-        //通过匹配股票的拼音来查询
+        //通过匹配股票的代码来查询
         if(searchString.matches("[0-9]+")){
             Map<String,String> codeAndName = stockDao.getAllStocksCode();
             Set<String> codes = codeAndName.keySet();

@@ -1,4 +1,4 @@
-package service.serviceImpl.TraceBackService.TraceBackStrategy;
+package service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum;
 
 import service.StockService;
 import service.StockTradingDayService;
@@ -100,7 +100,16 @@ public class MomentumStrategy extends AllTraceBackStrategy {
                 endOfHolding = end;
             }
 
-            List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(holdingStocks, startOfHolding, endOfHolding);
+            //多往前计算一天
+            startOfHolding = stockTradingDayService.getLastTradingDay(startOfHolding.minusDays(1), holdingStocks);
+
+            //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
+            List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
+
+            List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(dailyTotalCumulativeReturn, startOfHolding, endOfHolding);
+
+            HoldingDetailVO holdingDetailVO = computeHoldingDetailVO(dailyTotalCumulativeReturn, startOfHolding, endOfHolding);
+            //TODO holdingDetailVO应该加入到哪个成员变量里面
 
             //第一个周期，第一天的累计收益率置为0
             if(i == 0){
@@ -118,24 +127,12 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
     /**
      * 计算当前持有期所持有的股票在当前的持有期内每一天相对于回测区间起始日期的总的累计收益率
-     * @param holdingStocks 当前持有期所持有的股票
+     * @param dailyTotalCumulativeReturn 当前持有期所持有股票每天的累计收益率
      * @param start 持有期的起始日期的前一个交易日,由于第一天相对第一天为0,则应多往前计算一天,
      * @param end 持有期的结束日期，也为交易日
      * @return
      */
-    private List<CumulativeReturnVO> computeHoldingPeriod(List<String> holdingStocks, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
-
-        //多往前计算一天
-        start = stockTradingDayService.getLastTradingDay(start.minusDays(1), holdingStocks);
-
-        //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
-        List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
-
-        //保存当前持仓期详情信息
-        HoldingDetailVO curHoldingPeriod = new HoldingDetailVO();
-        curHoldingPeriod.periodSerial = holdingDetailVOS.size()+1;
-        curHoldingPeriod.startDate = start;
-        curHoldingPeriod.endDate = end;
+    private List<CumulativeReturnVO> computeHoldingPeriod(List<CumulativeReturnVO> dailyTotalCumulativeReturn, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
 
         List<CumulativeReturnVO> cumulativeReturn = new ArrayList<CumulativeReturnVO>();
 
@@ -149,22 +146,37 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             cumulativeReturn.add(new CumulativeReturnVO(date, (remainInvestment - initInvestment) / initInvestment, false));
         }
 
+        return cumulativeReturn;
+    }
+
+    /**
+     * 计算一个持仓期的持仓详情
+     * @param dailyTotalCumulativeReturn 当前持有期所持有股票每天的累计收益率
+     * @param start 持有期的起始日期的前一个交易日,由于第一天相对第一天为0,则应多往前计算一天
+     * @param end 持有期的结束日期，也为交易日
+     * @return HoldingDetailVO  持仓期的持仓详情
+     */
+    private HoldingDetailVO computeHoldingDetailVO(List<CumulativeReturnVO> dailyTotalCumulativeReturn, LocalDate start, LocalDate end){
+
+        //保存当前持仓期详情信息
+        HoldingDetailVO curHoldingPeriod = new HoldingDetailVO();
+        curHoldingPeriod.periodSerial = holdingDetailVOS.size()+1;
+        curHoldingPeriod.startDate = start;
+        curHoldingPeriod.endDate = end;
+
+        //保存之前的投资资金
+        double preRemainInvestment = remainInvestment;
         //持仓期最后一天的累计收益率
         double lastRate = dailyTotalCumulativeReturn.get(dailyTotalCumulativeReturn.size()-1).cumulativeReturn;
-
-        //保存之前的
-        double preRemainInvestment = remainInvestment;
-
         //更新剩余资金
         remainInvestment = remainInvestment * (1+lastRate);
-
         //当前持仓期剩余投资资金
         curHoldingPeriod.remainInvestment = remainInvestment;
+
         //当前持仓期的策略收益
-        curHoldingPeriod.rate = (preRemainInvestment - remainInvestment) / remainInvestment;
+        curHoldingPeriod.strategyReturn = (preRemainInvestment - remainInvestment) / remainInvestment;
 
-
-        return cumulativeReturn;
+        return curHoldingPeriod;
     }
 
     /**

@@ -1,8 +1,7 @@
 package service.serviceImpl.TraceBackService;
 
 import service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversionStrategy;
-import service.serviceImpl.TraceBackService.TraceBackStrategy.MomentumStrategy;
-import utilities.enums.TraceBackStrategy;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum.MomentumStrategy;
 import vo.TraceBackCriteriaVO;
 
 import java.util.List;

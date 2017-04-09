@@ -40,9 +40,19 @@ public class HoldingDetailVO {
     public int sellNum;
 
     /**
-     * 本期收益(策略|基准) 相对于上一周期 若保存超额收益,则表示策略-基准的收益
+     * 策略收益,相对于上一周期
      */
-    public double rate;
+    public double strategyReturn;
+
+    /**
+     * 本期收益，相对上一周期
+     */
+    public double baseReturn;
+
+    /**
+     * 超额收益，相对上一周期
+     */
+    public double excessReturn;
 
     /**
      * 模拟投资
