@@ -54,7 +54,6 @@ public class ThermometerPanel extends TemplatePanel {
 
         }
         colorLabel1.setOpaque(true);
-        colorLabel1.setBackground(RED);
         add(colorLabel1);
 
         label12=new MyLabel(num[1]+"");
@@ -156,7 +155,7 @@ public class ThermometerPanel extends TemplatePanel {
         add(label1);
 
         JLabel color1=new JLabel();
-        color1.setBounds(adaptScreen(30,84+move,300,20));
+        color1.setBounds(adaptScreen(30,85+move,300,20));
         color1.setOpaque(true);
         color1.setBackground(GREEN);
         add(color1);
@@ -171,7 +170,7 @@ public class ThermometerPanel extends TemplatePanel {
         add(label3);
 
         JLabel color2=new JLabel();
-        color2.setBounds(adaptScreen(30,179+move,300,20));
+        color2.setBounds(adaptScreen(30,180+move,300,20));
         color2.setOpaque(true);
         color2.setBackground(GREEN);
         add(color2);
@@ -192,7 +191,7 @@ public class ThermometerPanel extends TemplatePanel {
         label52.setVerticalAlignment(SwingConstants.TOP);
         add(label52);
         JLabel color3=new JLabel();
-        color3.setBounds(adaptScreen(30,299+move,300,20));
+        color3.setBounds(adaptScreen(30,300+move,300,20));
         color3.setOpaque(true);
         color3.setBackground(GREEN);
         add(color3);

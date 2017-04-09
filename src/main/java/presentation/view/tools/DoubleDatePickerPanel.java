@@ -147,7 +147,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                             @Override
                             public void updateItem(LocalDate item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if (item.isBefore(startDate.getValue().plusDays(1))||item.isAfter(LocalDate.of(2014,4,29))
+                                if (item.isBefore(startDate.getValue().plusDays(1))||item.isAfter(endDate.getValue())
                                         ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #424B54;"+
