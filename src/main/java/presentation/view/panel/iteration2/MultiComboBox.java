@@ -4,6 +4,7 @@ package presentation.view.panel.iteration2;
 
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.WindowData;
+import utilities.enums.BlockType;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.*;
@@ -61,11 +63,11 @@ public class MultiComboBox extends TemplatePanel {
         editor = new JTextField();
         editor.setBackground(Color.white);
         editor.setEditable(false);
-        editor.setBounds(adaptScreen(0,0,190,40));
-//      editor.setBorder(getBorder());
+        editor.setBounds(adaptScreen(0,0,190,35));
         editor.addMouseListener(new EditorHandler());
-        arrowButton = createArrowButton();
-        arrowButton.setBounds(adaptScreen(194,5,30,30));
+
+        arrowButton = new JButton();
+        arrowButton.setBounds(adaptScreen(190,0,35,35));
         arrowButton.addMouseListener(new EditorHandler());
         add(editor);
         add(arrowButton);
@@ -80,8 +82,21 @@ public class MultiComboBox extends TemplatePanel {
 
     }
 
-    public Object[] getSelectedValues() {
-        return popup.getSelectedValues();
+    public List<BlockType> getSelectedValues() {
+        Object[] block=popup.getSelectedValues();
+        List<BlockType> blockTypes=null;
+        if(block.length!=0){
+            for(int ij=0;ij<block.length;ij++){
+                if(block[ij].equals("中小板")){
+                    blockTypes.add(BlockType.ZXB);
+                }else if(block[ij].equals("主板")){
+                    blockTypes.add(BlockType.ZB);
+                }else if(block[ij].equals("创业板")){
+                    blockTypes.add(BlockType.CYB);
+                }
+            }
+        }
+        return  blockTypes;
     }
 
     public void addActionListener(ActionListener listener) {

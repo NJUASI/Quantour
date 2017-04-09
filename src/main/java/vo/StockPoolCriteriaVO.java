@@ -12,6 +12,11 @@ import java.util.List;
  */
 public class StockPoolCriteriaVO {
 
+    public StockPoolCriteriaVO(StType stType, List<BlockType> blockTypes) {
+        this.stType = stType;
+        this.blockTypes = blockTypes;
+    }
+
     /**
      * 是否包含st
      */

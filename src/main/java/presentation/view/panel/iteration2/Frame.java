@@ -11,9 +11,7 @@ import java.awt.*;
  * Created by 61990 on 2017/3/25.
  */
 public class Frame extends JFrame {
-    private static MainFrame mainPanel;
     private static JPanel cardPanel;
-    public static JPanel barPanel,titlePanel;
     private static CardLayout card;
     Frame(){
         BeautyEyeUtil.beautyEye();

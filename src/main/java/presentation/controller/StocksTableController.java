@@ -122,6 +122,5 @@ public class StocksTableController {
         }catch (Exception e){
 
         }
-
     }
 }

@@ -1,10 +1,17 @@
 package presentation.view.panel.iteration2;
 
 import presentation.controller.StrategySwitchController;
+import presentation.listener.strategyPanelListener.SearchListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
+import presentation.view.tools.MyMouseListener;
 import presentation.view.tools.WindowData;
+import utilities.enums.StType;
+import utilities.enums.TraceBackStrategy;
+import vo.StockPoolCriteriaVO;
+import vo.StockPoolVO;
+import vo.TraceBackCriteriaVO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,8 +29,8 @@ public class ChooseStrategyPanel extends TemplatePanel {
     ButtonGroup group;
     MultiComboBox mulit;
     DoubleDatePickerPanel datePanel;
-    StrategyTypePanel strategyPanel;
-    JComboBox comboBox;
+    StrategyTypePanel strategyTypePanel;
+    JComboBox comboBox,STComboBox;
     int width;
     int height;
     /**
@@ -58,16 +65,24 @@ public class ChooseStrategyPanel extends TemplatePanel {
         Object[] value = new String[]{"全部", "主板","中小板" , "创业板" };
         Object[] defaultValue = new String[]{ "主板","中小板" , "创业板" };
         mulit = new MultiComboBox(value, defaultValue);
-        mulit.setBounds(adaptScreen(270,170,230,40));
+        mulit.setBounds(adaptScreen(270,170,230,35));
 //        System.out.println(mulit.getSelectedValues()[0]);
         add(mulit);
 
-        //数据版块
-//        MyLabel label2=new MyLabel("数据选择") ;
-//        label2.setLocation(800*width/1920,100*height/1030);
-//        add(label2);
-//
+        JLabel lb3= new JLabel("ST");
+        lb3.setForeground(Color.white);
+        lb3.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
+        lb3.setBounds(adaptScreen(570,168,20,40));
+        add(lb3);
 
+        STComboBox=new JComboBox();
+        STComboBox.setBounds(adaptScreen(620,170,140,35));
+        STComboBox.addItem("包含ST");
+        STComboBox.addItem("排除ST");
+        STComboBox.addItem("仅有ST");
+        STComboBox.setEditable(false);
+        STComboBox.setToolTipText((String)STComboBox.getItemAt(0));
+        add(STComboBox);
 
         //区间板块
         MyLabel label4=new MyLabel("回测区间") ;
@@ -104,7 +119,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         radioButton1.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                strategyPanel.openType1();
+                strategyTypePanel.openType1();
             }
         });
 
@@ -115,7 +130,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         radioButton2.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                strategyPanel.openType2();
+                strategyTypePanel.openType2();
             }
         });
         add(radioButton2);// 策略2按钮
@@ -124,16 +139,17 @@ public class ChooseStrategyPanel extends TemplatePanel {
         group.add(radioButton1);// 将radioButton1增加到单选按钮组中
         group.add(radioButton2);// 将radioButton2增加到单选按钮组中
 
-        strategyPanel=new StrategyTypePanel();
-        add(strategyPanel);
+        strategyTypePanel=new StrategyTypePanel();
+        add(strategyTypePanel);
 
 
         JButton searchBt= new JButton("开始回测");
         searchBt.setBounds(adaptScreen(1200,550,100,35));
         searchBt.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
+        searchBt.addMouseListener(new SearchListener());
         searchBt.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 StrategySwitchController.getInstance().viewSwitch("analysePanel");
             }
         });
@@ -155,5 +171,43 @@ public class ChooseStrategyPanel extends TemplatePanel {
             chooseStrategyPanel=new ChooseStrategyPanel();
         }
         return chooseStrategyPanel;
+    }
+    /**
+     * get ALL panel message
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/4/9
+     */
+    public TraceBackCriteriaVO getInfo(){
+        int formative;
+        TraceBackStrategy traceBackStrategy=null;
+        if(radioButton1.isSelected()){
+            formative=strategyTypePanel.getMS();
+            traceBackStrategy=TraceBackStrategy.MS;
+            System.out.println("动量被选");
+        }else{
+            formative=strategyTypePanel.getMR();
+            traceBackStrategy=TraceBackStrategy.MR;
+        }
+
+        return new TraceBackCriteriaVO(datePanel.getStartDate(),datePanel.getEndDate(),formative,strategyTypePanel.getHoldingPeriod(),
+                getPoolVO(),traceBackStrategy,strategyTypePanel.getHoldingNum(),getBasicStock());
+    }
+    private StockPoolCriteriaVO getPoolVO(){
+        StType stType = null;
+
+        if(STComboBox.getSelectedItem().equals("排除ST")){
+            stType=StType.EXCLUDE;
+        }else if(STComboBox.getSelectedItem().equals("包含ST")){
+            stType=StType.INCLUDE;
+        }else if(STComboBox.getSelectedItem().equals("仅有ST")){
+            stType=StType.ONLY;
+        }
+         return new StockPoolCriteriaVO(stType , mulit.getSelectedValues());
+    }
+    private String getBasicStock(){
+        return comboBox.getSelectedItem().toString();
     }
 }

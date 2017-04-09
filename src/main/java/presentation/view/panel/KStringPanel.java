@@ -2,6 +2,7 @@ package presentation.view.panel;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 import presentation.chart.candlestick.CandlestickChart;
 import presentation.controller.KStringPanelController;
 import presentation.controller.ViewSwitchController;
