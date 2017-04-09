@@ -23,94 +23,30 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     private StockService stockService;
 
-    //保存策略累计收益率
-    private List<CumulativeReturnVO> strategyCumulativeReturn;
-
-    //保存基准累计收益率
-    private List<CumulativeReturnVO> baseCumulativeReturn;
-
-    //保存每一个持有期的策略收益率
-    private List<HoldingDetailVO> strategyReturnEveryPeriod;
-
-    //保存每一个持有期的基准收益率
-    private List<HoldingDetailVO> baseReturnEveryPeriod;
-
-    //保存每一个持有期的相对收益率
-    private List<HoldingDetailVO> relativeReturnEveryPeriod;
 
     public TraceBackServiceImpl() {
         stockService = new StockServiceImpl();
-        strategyCumulativeReturn = new ArrayList<CumulativeReturnVO>();
-        baseCumulativeReturn = new ArrayList<CumulativeReturnVO>();
+    }
+
+    @Override
+    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException {
+        // TODO strategy获得TraceBackStrategyVO，再获得Base的数据，再将超额收益初始进表内
+
+        return null;
+    }
+
+    @Override
+    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<CumulativeReturnVO> getBaseCumulativeReturn(LocalDate start, LocalDate end, String stockName) throws IOException, NoDataWithinException, DateNotWithinException {
+        return null;
     }
 
 
     //TODO gcm 看看自选股和非自选股可否分开两个类，帮忙看
-    /**
-     * 获取策略累计收益率
-     *
-     * @param traceBackCriteriaVO 用户所选回测条件
-     * @return List<CumulativeReturnVO> 策略累计收益率的列表
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/28
-     */
-    @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
-        //TODO gcm 需要下面的一个接口 还未实现
-
-        //获取目标股票池
-        List<String> stockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
-
-        //确定策略
-        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(stockPool, traceBackCriteriaVO);
-
-        //回测
-        setStrategyCumulativeReturn(traceBackStrategy.traceBack());
-
-        return strategyCumulativeReturn;
-    }
-
-    /**
-     * 获取策略累计收益率，自选股票池
-     *
-     * @param traceBackCriteriaVO 用户所选回测条件
-     * @param stockCodes 自选股票池所有股票的代码
-     * @return List<CumulativeReturnVO> 策略累计收益率的列表
-     */
-    @Override
-    public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
-
-        //确定策略
-        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(stockCodes,traceBackCriteriaVO);
-
-        //回测
-        setStrategyCumulativeReturn(traceBackStrategy.traceBack());
-
-        return strategyCumulativeReturn;
-    }
-
-    /**
-     * 获取基准累计收益率,非自选股
-     *
-     * @param start 回测区间起始日期
-     * @param end 回测区间结束日期
-     * @param stockName 基准股票的名称
-     * @return List<CumulativeReturnVO> 基准累计收益率的列表
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/28
-     */
-    @Override
-    public List<CumulativeReturnVO> getBaseCumulativeReturn(LocalDate start, LocalDate end, String stockName) throws IOException, NoDataWithinException, DateNotWithinException {
-
-        List<StockVO> baseStock = stockService.getBaseStockData(stockName,start,end);
-
-        setBaseCumulativeReturn(getCumulativeReturnOfOneStock(baseStock,start));
-
-        return baseCumulativeReturn;
-    }
-
     /**
      * 获取基准累计收益率，自选股
      *
@@ -155,9 +91,12 @@ public class TraceBackServiceImpl implements TraceBackService {
             }
         }
 
-        setBaseCumulativeReturn(cumulativeReturnVOS);
+        return cumulativeReturnVOS;
+    }
 
-        return baseCumulativeReturn;
+    @Override
+    public TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO) {
+        return null;
     }
 
     /**
@@ -188,34 +127,6 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     /**
-     * 计算回测中用列表列出的数值型数据，如阿尔法，beta
-     *
-     * @param traceBackCriteriaVO 用户所选回测条件
-     * @return TraceBackNumValVO 所需的所有数值型数据保存对象
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/28
-     */
-    @Override
-    public TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO) {
-        return null;
-    }
-
-    /**
-     * 计算相对收益指数
-     *
-     * @param traceBackCriteriaVO 用户所选回测条件
-     * @return RelativeIndexReturnVO 保存表示相对收益指数的对象，包括正周期数，负周期数和赢率
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/28
-     */
-    @Override
-    public RelativeIndexReturnVO getRelativeIndexReturn(TraceBackCriteriaVO traceBackCriteriaVO) {
-        return null;
-    }
-
-    /**
      *
      * @param list 单一股票的信息
      * @param start 因为起始日期可能不是交易日，但是还是以起始日期为准 //TODO 在日期上，先把周末的日期挖掉,不让用户可以选择周末的日期
@@ -242,11 +153,4 @@ public class TraceBackServiceImpl implements TraceBackService {
         return cumulativeReturnVOS;
     }
 
-    private void setStrategyCumulativeReturn(List<CumulativeReturnVO> strategyCumulativeReturn) {
-        this.strategyCumulativeReturn = strategyCumulativeReturn;
-    }
-
-    private void setBaseCumulativeReturn(List<CumulativeReturnVO> baseCumulativeReturn) {
-        this.baseCumulativeReturn = baseCumulativeReturn;
-    }
 }

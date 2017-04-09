@@ -3,12 +3,11 @@ package dataHelper.dataHelperImpl;
 import dataHelper.SearchDataHelper;
 import dataHelper.StockDataHelper;
 import po.StockPO;
-import utilities.StockCodeHelper;
+import utilities.LocalDateComparator;
 import utilities.enums.Market;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -124,6 +123,8 @@ public class StockDataHelperImpl implements StockDataHelper {
                 }
             }
         }
+
+        dates.sort(new LocalDateComparator());
         return dates;
     }
 

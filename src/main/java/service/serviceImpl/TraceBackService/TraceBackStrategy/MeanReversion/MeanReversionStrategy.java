@@ -1,4 +1,4 @@
-package service.serviceImpl.TraceBackService.TraceBackStrategy;
+package service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversion;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
@@ -15,7 +15,6 @@ import vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -38,7 +37,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
     }
 
     @Override
-    public List<CumulativeReturnVO> traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+    public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
         // 一次性获得所有的均线数据（整体区间向前推了一天，因为均值回归当日的调仓标准是前一日的均线数据）
         Map<String, List<MovingAverageVO>> allAves = new TreeMap<>();
         for (String s : stockPoolCodes) {
@@ -56,33 +55,58 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         int holdingNum = traceBackCriteriaVO.holdingNum;
         int holdingPeriod = traceBackCriteriaVO.holdingPeriod;
 
-        int cycles = (int) traceBackCriteriaVO.startDate.until(traceBackCriteriaVO.endDate, ChronoUnit.DAYS) / holdingPeriod;
+        List<LocalDate> withinDates = stockDao.getDateWithData(traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate);
 
-        LocalDate start, end;
+        int cycles = withinDates.size() / holdingPeriod;
+
+        LocalDate periodStart, periodEnd, periodJudge;
 
         // 整个周期的计算
         for (int i = 0; i < cycles; i++) {
-            start = traceBackCriteriaVO.startDate.plusDays(i * holdingPeriod);
-            end = start.plusDays(holdingPeriod-1);
+            int tempStartIndex = i * holdingPeriod;
+            periodStart = withinDates.get(tempStartIndex);
+            periodEnd = withinDates.get(tempStartIndex + holdingPeriod -1);
+            // 第一个周期第一天，没有累计收益率
+            if (i == 0) {
 
-            List<String> thisHoldingPeriodStocks = getTopStockCodes(holdingNum, allAves, start.minusDays(1));
+            }
+
+            periodJudge = withinDates.get(tempStartIndex - 1);
+
+            List<String> thisHoldingPeriodStocks = getTopStockCodes(holdingNum, allAves, periodJudge);
 
             // TODO
-            getPeriodYield(thisHoldingPeriodStocks, start, end);
+            getPeriodYield(thisHoldingPeriodStocks, periodStart, periodEnd);
 
         }
 
         // 最后一个不足周期的计算
-        start = traceBackCriteriaVO.startDate.plusDays(cycles * holdingPeriod);
-        end = traceBackCriteriaVO.endDate;
+        periodStart = withinDates.get(cycles * holdingPeriod);
+        periodEnd = withinDates.get(withinDates.size()-1);
+        periodJudge = withinDates.get(cycles * holdingPeriod - 1);
 
-        List<String> thisHoldingPeriodStocks = getTopStockCodes(holdingNum, allAves, start.minusDays(1));
+        List<String> thisHoldingPeriodStocks = getTopStockCodes(holdingNum, allAves, periodJudge);
 
         // TODO
-        getPeriodYield(thisHoldingPeriodStocks, start, end);
+        getPeriodYield(thisHoldingPeriodStocks, periodStart, periodEnd);
 
 
         return null;
+    }
+
+    @Override
+    protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException {
+        return null;
+    }
+
+    @Override
+    protected List<String> pickStocks(List<FormativePeriodRateVO> formativePeriodRate) {
+        return null;
+    }
+
+    @Override
+    protected void calculate() {
+
     }
 
     private List<String> getTopStockCodes(int holdingNum, Map<String, List<MovingAverageVO>> allAves, LocalDate thisDate) throws IOException {
