@@ -1,12 +1,11 @@
 package presentation.view.panel.iteration2;
 
 import presentation.view.panel.TemplatePanel;
-import presentation.view.tools.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
-import java.awt.*;
+import java.lang.Object;
 
 /**
  * Created by day on 17/3/29.
@@ -111,7 +110,19 @@ public class StrategyTypePanel extends TemplatePanel {
         label4.setVisible(true);
     }
 
+    public int getMS(){
+        return (Integer)comboBox1.getSelectedItem();
+    }
 
+    public int getMR(){
+        return (Integer)comboBox1.getSelectedItem();
+    }
+    public int getHoldingPeriod(){
+        return (Integer)comboBox3.getSelectedItem();
+    }
+    public int getHoldingNum(){
+        return (Integer)comboBox4.getSelectedItem();
+    }
 
 
 }

@@ -112,15 +112,19 @@ public class StockDataHelperImpl implements StockDataHelper {
     public List<LocalDate> getDateWithData() throws IOException {
         List<LocalDate> dates = new LinkedList<>();
 
-        // TODO
-        // TODO 得到所有的股票代码再foreach？？？感觉很费时间
-
         SearchDataHelper searchDataHelper = new SearchDataHelperImpl();
+        List<String> allCode = searchDataHelper.getAllStockCodes();
 
-        // TODO 问董金玉接口详情
-//        List<String> allCode = searchDataHelper.getAllStocksCode();
-
-        return null;
+        for (String s : allCode) {
+            List<StockPO> temp = getStockRecords(s);
+            for (StockPO po : temp) {
+                LocalDate thisDate = po.getDate();
+                if (!dates.contains(thisDate)){
+                    dates.add(po.getDate());
+                }
+            }
+        }
+        return dates;
     }
 
     /**

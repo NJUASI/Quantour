@@ -2,6 +2,7 @@ package service.serviceImpl;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
+import utilities.StockCodeHelper;
 import utilities.enums.MovingAverageType;
 import utilities.exceptions.*;
 import po.StockPO;
@@ -269,6 +270,9 @@ public class ChartServiceImpl implements ChartService {
      * @throws CodeNotFoundException 数据源中未找到此股票
      */
     private boolean codeExist(String code) throws CodeNotFoundException {
+
+        code = StockCodeHelper.simplify(code);
+
         if(allCodes.contains(code)) return true;
         else throw new CodeNotFoundException();
     }

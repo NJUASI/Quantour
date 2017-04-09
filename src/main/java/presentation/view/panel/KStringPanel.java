@@ -2,6 +2,7 @@ package presentation.view.panel;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 import presentation.chart.candlestick.CandlestickChart;
 import presentation.controller.KStringPanelController;
 import presentation.controller.ViewSwitchController;
@@ -19,6 +20,7 @@ import utilities.exceptions.ColorNotExistException;
 import vo.StockSearchVO;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

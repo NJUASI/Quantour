@@ -118,9 +118,9 @@ public class StocksTableController {
             NavigationBar.getInstance().whileClicked(2);
             kStringPanel.addMessage(stocksTablePane.getName(), stocksTablePane.getCode());
             KStringPanel.getInstance().count=0;
+            kStringPanel.removeChartPanel();
         }catch (Exception e){
 
         }
-
     }
 }

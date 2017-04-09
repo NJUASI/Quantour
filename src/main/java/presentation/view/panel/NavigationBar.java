@@ -138,7 +138,7 @@ public class NavigationBar extends TemplatePanel {
             }
         });
         //the door of function 3
-        strategy = new MyButton("market",1);
+        strategy = new MyButton("strategy",1);
         strategy.setBounds(adaptScreen(3, 430, 84, 110));
         strategy.addMouseListener(new StrategyListener());
         add(strategy);

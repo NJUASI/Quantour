@@ -32,6 +32,7 @@ public class TemplatePanel extends JPanel {
         setBackground(WindowData.getInstance().getColor());
         setBackground(ColorUtils.backgroundColor());
 
+
         //osLookAndDecorated
         BeautyEyeUtil.beautyEye();
 

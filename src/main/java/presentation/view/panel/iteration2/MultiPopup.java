@@ -1,7 +1,6 @@
 package presentation.view.panel.iteration2;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -46,10 +45,6 @@ public class MultiPopup extends JPopupMenu {
             listeners.add(listener);
     }
 
-    public void removeActionListener(ActionListener listener) {
-        if (listeners.contains(listener))
-            listeners.remove(listener);
-    }
 
     private void initComponent() {
 
@@ -58,7 +53,6 @@ public class MultiPopup extends JPopupMenu {
         JPanel buttonPane = new JPanel();
 
         this.setLayout(new BorderLayout());
-
 
         for(Object v : values){
             JCheckBox temp = new JCheckBox(v.toString() , selected(v));

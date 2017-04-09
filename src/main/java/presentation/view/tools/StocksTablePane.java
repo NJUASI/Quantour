@@ -6,12 +6,15 @@ import presentation.view.panel.StocksTablePanel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  * Created by 61990 on 2017/3/10.
@@ -44,6 +47,8 @@ public class StocksTablePane extends JScrollPane {
 //            jTable.setRowHeight (30);//设置每行的高度为30
 //            jTable.setRowMargin (5);//设置相邻两行单元格的距离
 //        table.removeColumn(table.getColumnModel().getColumn(columnIndex));// columnIndex是要删除的列序号
+
+
             for(int i =4;i<7;i++) {
                 jTable.getColumnModel().getColumn(i).setPreferredWidth(80*width/1920);
             }
@@ -70,6 +75,29 @@ public class StocksTablePane extends JScrollPane {
             size.height = 30;
             header.setPreferredSize(size);
             setForeground(new Color(201,208,214));
+
+            DefaultTableCellRenderer cellRanderer = new DefaultTableCellRenderer() {
+                @Override
+                protected void setValue(Object value) {
+                        if(value.toString().substring(0,1).equals("-")){
+                            setForeground(new Color(15,195,81));
+                            setText(value.toString());
+                        }else{
+                            setForeground(new Color(255,61,61));
+                            setText(value.toString());
+                        }
+                }
+            };
+//            TableColumn tc = jTable.getColumn("开盘指数");
+
+//            tc.setCellRenderer(cellRanderer);
+            //初始化table的渲染器
+//            DefaultTableCellRenderer cellRanderer = new DefaultTableCellRenderer();
+//            cellRanderer.setForeground(new Color(255,61,61));
+            jTable.getColumnModel().getColumn(2).setCellRenderer(cellRanderer);
+//            DefaultTableCellRenderer cellRanderer1 = new DefaultTableCellRenderer();
+//            cellRanderer1.setForeground(new Color(15,195,81));
+            jTable.getColumnModel().getColumn(3).setCellRenderer(cellRanderer);
 
             getVerticalScrollBar().setUI(new MyScrollBarUI());
             setBackground(new Color(32,36,39));

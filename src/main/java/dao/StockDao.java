@@ -103,6 +103,16 @@ public interface StockDao {
      */
     List<LocalDate> getDateWithData() throws IOException;
 
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/6
+     * @param start 指定区间开始日期
+     * @param end 指定区间结束日期
+     * @return 指定区间内所有的交易日期
+     */
+    List<LocalDate> getDateWithData(LocalDate start, LocalDate end) throws IOException;
+
     /*
     自选股操作
      */

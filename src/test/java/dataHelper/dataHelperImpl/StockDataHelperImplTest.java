@@ -131,5 +131,15 @@ public class StockDataHelperImplTest {
         List<LocalDate> result = stockDataHelper.getDateWithoutData("17");
         assertEquals(2207, result.size());
     }
+
+    /**
+     * Method: getDateWithData()
+     */
+    @Test
+    public void testGetDateWithData() throws IOException {
+        List<LocalDate> result = stockDataHelper.getDateWithData();
+        assertEquals(2246, result.size());
+    }
+
 }
 

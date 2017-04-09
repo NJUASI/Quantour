@@ -181,6 +181,19 @@ public class StockDaoImpl implements StockDao {
         return stockHelper.getDateWithData();
     }
 
+    @Override
+    public List<LocalDate> getDateWithData(LocalDate start, LocalDate end) throws IOException {
+        List<LocalDate> result = getDateWithData();
+        for (int i = 0; i < result.size(); ) {
+            if (!isDateWithinWanted(start, end, result.get(i))) {
+                result.remove(i);
+            } else {
+                i++;
+            }
+        }
+        return result;
+    }
+
 
 
 
@@ -295,7 +308,7 @@ public class StockDaoImpl implements StockDao {
     /**
      * 获取所有股票的名称
      *
-     * @return the all stocks first letters 返回所有股票的名称及其，名称作为键值
+     * @return the all stocks first letters 返回所有股票的名称及其自然代码，名称作为键值
      * @author Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/14
