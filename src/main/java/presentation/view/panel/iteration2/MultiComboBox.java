@@ -84,14 +84,14 @@ public class MultiComboBox extends TemplatePanel {
 
     public List<BlockType> getSelectedValues() {
         Object[] block=popup.getSelectedValues();
-        List<BlockType> blockTypes=null;
+        List<BlockType> blockTypes=new ArrayList<>();
         if(block.length!=0){
-            for(int ij=0;ij<block.length;ij++){
-                if(block[ij].equals("中小板")){
+            for(int i=0;i<block.length;i++){
+                if(block[i].equals("中小板")){
                     blockTypes.add(BlockType.ZXB);
-                }else if(block[ij].equals("主板")){
+                }else if(block[i].equals("主板")){
                     blockTypes.add(BlockType.ZB);
-                }else if(block[ij].equals("创业板")){
+                }else if(block[i].equals("创业板")){
                     blockTypes.add(BlockType.CYB);
                 }
             }

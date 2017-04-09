@@ -1,6 +1,7 @@
 package presentation.listener.strategyPanelListener;
 
 import presentation.controller.KStringPanelController;
+import presentation.controller.StrategyPanelController;
 import presentation.view.panel.iteration2.StrategyPanel;
 
 import java.awt.event.MouseAdapter;
@@ -13,6 +14,6 @@ public class SearchListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-//        StrategyPanelController.getInstance().search();
+        StrategyPanelController.getInstance().search();
     }
 }

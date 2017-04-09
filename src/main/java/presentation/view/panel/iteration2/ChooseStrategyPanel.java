@@ -186,7 +186,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         if(radioButton1.isSelected()){
             formative=strategyTypePanel.getMS();
             traceBackStrategy=TraceBackStrategy.MS;
-            System.out.println("动量被选");
+            System.out.println("动量");
         }else{
             formative=strategyTypePanel.getMR();
             traceBackStrategy=TraceBackStrategy.MR;
