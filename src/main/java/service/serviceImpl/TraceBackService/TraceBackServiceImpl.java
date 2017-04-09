@@ -96,7 +96,23 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     @Override
     public TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO) {
-        return null;
+
+        TraceBackParameter parameter = null;
+        try {
+            parameter = new TraceBackParameter(traceBackCriteriaVO);
+        } catch (CodeNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DateNotWithinException e) {
+            e.printStackTrace();
+        } catch (NoDataWithinException e) {
+            e.printStackTrace();
+        } catch (DateShortException e) {
+            e.printStackTrace();
+        }
+
+        return parameter.getTraceBackNumValVO();
     }
 
     /**

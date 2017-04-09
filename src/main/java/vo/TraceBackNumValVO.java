@@ -15,6 +15,18 @@ public class TraceBackNumValVO {
     // 基准年化收益率
     public double baseAnnualizedRateOfReturn;
 
+    //年化波动率
+    public double returnVolatility;
+
+    //基准年化波动率
+    public double baseReturnVolatility;
+
+    //总收益率
+    public double sumRate;
+
+    //基准总收益率
+    public double baseSumRate;
+
     // 阿尔法比率
     public double alpha;
 
@@ -23,6 +35,9 @@ public class TraceBackNumValVO {
 
     // 夏普比率
     public double sharpeRatio;
+
+    //基准夏普比率
+    public double baseSharpeRatio;
 
     // 最大回撤率
     public double maxRetracementRatio;
@@ -40,16 +55,27 @@ public class TraceBackNumValVO {
     public LocalDate endDate;
 
 
-    public TraceBackNumValVO(double annualizedRateOfReturn, double baseAnnualizedRateOfReturn, double alpha, double beta, double sharpeRatio, double maxRetracementRatio, double peakPointRatio, double valleyPointRatio, LocalDate startDate, LocalDate endDate) {
+    public TraceBackNumValVO(double annualizedRateOfReturn, double baseAnnualizedRateOfReturn, double returnVolatility,
+                             double baseReturnVolatility, double sumRate, double baseSumRate, double alpha, double beta,
+                             double sharpeRatio, double baseSharpeRatio, double maxRetracementRatio, double peakPointRatio,
+                             double valleyPointRatio, LocalDate startDate, LocalDate endDate) {
         this.annualizedRateOfReturn = annualizedRateOfReturn;
         this.baseAnnualizedRateOfReturn = baseAnnualizedRateOfReturn;
+        this.returnVolatility = returnVolatility;
+        this.baseReturnVolatility = baseReturnVolatility;
+        this.sumRate = sumRate;
+        this.baseSumRate = baseSumRate;
         this.alpha = alpha;
         this.beta = beta;
         this.sharpeRatio = sharpeRatio;
+        this.baseSharpeRatio = baseSharpeRatio;
         this.maxRetracementRatio = maxRetracementRatio;
         this.peakPointRatio = peakPointRatio;
         this.valleyPointRatio = valleyPointRatio;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public TraceBackNumValVO() {
     }
 }
