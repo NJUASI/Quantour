@@ -4,11 +4,10 @@ import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
 import utilities.exceptions.NoDataWithinException;
-import vo.CumulativeReturnVO;
-import vo.HoldingDetailVO;
-import vo.TraceBackCriteriaVO;
+import vo.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,9 @@ import java.util.List;
  */
 public abstract class AllTraceBackStrategy {
 
+    /*
+    成员变量
+     */
     /**
      * 目标股票池
      */
@@ -27,10 +29,25 @@ public abstract class AllTraceBackStrategy {
      */
     public TraceBackCriteriaVO traceBackCriteriaVO;
 
+
+
+    /*
+    在traceBack之后需要初始化的东西
+     */
     /**
-     * 保存每个持仓期详情
+     * 策略累计收益率
+     */
+    public List<CumulativeReturnVO> strategyCumulativeReturn;
+
+    /**
+     * 历史持仓详情
      */
     public List<HoldingDetailVO> holdingDetailVOS;
+
+    /**
+     * 策略的数值型数据
+     */
+    public TraceBackNumValVO strategyTraceBackNumValVO;
 
 
     public AllTraceBackStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
@@ -45,7 +62,24 @@ public abstract class AllTraceBackStrategy {
      *
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
-    public abstract List<CumulativeReturnVO> traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
+    public abstract TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
+
+
+    /**
+     * 计算某一时期的所选股票列表内的所有股票的累计收益率，股票代码与累计收益率键值对
+     *
+     * @param stockCodes      股票列表
+     * @param periodStart     形成期起始日期
+     * @param formativePeriod 形成期长度（MS）／多少天均值（MR）
+     * @return
+     */
+    protected abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException;
+
+
+    protected abstract List<String> pickStocks(List<FormativePeriodRateVO> formativePeriodRate);
+
+    protected abstract void calculate();
+
 
     /**
      * 计算最大回撤点
@@ -83,14 +117,5 @@ public abstract class AllTraceBackStrategy {
         }
 
         return cumulativeReturnVOS;
-    }
-
-    /**
-     * 获取历史持仓详情，因为在回测时一起计算了历史持仓详情，故没有其它接口提供出去直接计算该数据，
-     * 只提供该接口获取数据
-     * @return List<HoldingDetailVO> 历史持仓详情
-     */
-    public List<HoldingDetailVO> getHoldingDetailVOS() {
-        return holdingDetailVOS;
     }
 }

@@ -49,7 +49,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
     @Override
-    public List<CumulativeReturnVO> traceBack() throws IOException, NoDataWithinException, DateNotWithinException {
+    public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 

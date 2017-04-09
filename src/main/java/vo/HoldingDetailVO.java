@@ -45,7 +45,7 @@ public class HoldingDetailVO {
     public double strategyReturn;
 
     /**
-     * 本期收益，相对上一周期
+     * 基准收益，相对上一周期
      */
     public double baseReturn;
 

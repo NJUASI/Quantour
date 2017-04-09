@@ -23,11 +23,8 @@ public interface TraceBackService {
      * @param traceBackCriteriaVO 回测标准
      * @param stockPool 自选股的代码列表
      * @return 回测所要展示的数据
-     * @throws IOException
-     * @throws NoDataWithinException
-     * @throws DateNotWithinException
      */
-    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException ;
+    TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException ;
 
     /**
      * 获取策略累计收益率，非自选股票池
