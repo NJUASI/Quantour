@@ -5,10 +5,10 @@ package vo;
  */
 public class FormativePeriodRateVO implements Comparable<FormativePeriodRateVO>{
 
-    //股票代码
+    // 股票代码
     public String stockCode;
 
-    //一段时间内的累计收益率
+    // 一段时间内的累计收益率（MS）／相应的偏离度（MR）
     public double periodReturn;
 
     public FormativePeriodRateVO(String stockCode, double periodReturn) {

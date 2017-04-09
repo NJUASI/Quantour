@@ -27,7 +27,7 @@ public class HoldingDetailVO {
     /**
      * 股票持有只数
      */
-    public int holdNum;
+    public int holdingNum;
 
     /**
      * 买入只数
@@ -59,4 +59,12 @@ public class HoldingDetailVO {
      */
     public double remainInvestment;
 
+    public HoldingDetailVO(int periodSerial, LocalDate startDate, LocalDate endDate, int holdingNum, double strategyReturn, double remainInvestment) {
+        this.periodSerial = periodSerial;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.holdingNum = holdingNum;
+        this.strategyReturn = strategyReturn;
+        this.remainInvestment = remainInvestment;
+    }
 }

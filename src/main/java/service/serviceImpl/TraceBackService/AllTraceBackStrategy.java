@@ -65,20 +65,32 @@ public abstract class AllTraceBackStrategy {
     public abstract TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
 
 
+
     /**
-     * 计算某一时期的所选股票列表内的所有股票的累计收益率，股票代码与累计收益率键值对
+     * 形成期／N日均值，用于后续策略筛选
      *
      * @param stockCodes      股票列表
-     * @param periodStart     形成期起始日期
-     * @param formativePeriod 形成期长度（MS）／多少天均值（MR）
-     * @return
+     * @param periodStart     持有期起始日期
+     * @param formativePeriod 形成期长度（MS）／N日均值偏离度（MR）
+     * @return 形成的
      */
-    protected abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException;
+    protected abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
 
-
+    /**
+     * 挑选形成期后的股票数据，用于后续策略计算
+     *
+     * @param formativePeriodRate 形成期长度（MS）／N日均值偏离度（MR）
+     * @return 持有期中会持有的股票代码
+     */
     protected abstract List<String> pickStocks(List<FormativePeriodRateVO> formativePeriodRate);
 
-    protected abstract void calculate();
+    /**
+     * 计算
+     *  @param periodStart 持有期起始日期
+     * @param periodEnd 持有期结束日期
+     * @param periodSerial 周期序号
+     */
+    protected abstract void calculate(LocalDate periodStart, LocalDate periodEnd, int periodSerial) throws DateNotWithinException, NoDataWithinException, IOException;
 
 
     /**

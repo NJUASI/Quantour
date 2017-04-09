@@ -4,6 +4,7 @@ import service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversion.Mean
 import service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum.MomentumStrategy;
 import vo.TraceBackCriteriaVO;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class TraceBackStrategyFactory {
 
-    public static AllTraceBackStrategy createTraceBackStrategy(List<String> stockCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
+    public static AllTraceBackStrategy createTraceBackStrategy(List<String> stockCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException {
         switch (traceBackCriteriaVO.strategyType) {
             case MS:
                 return new MomentumStrategy(stockCodes,traceBackCriteriaVO);

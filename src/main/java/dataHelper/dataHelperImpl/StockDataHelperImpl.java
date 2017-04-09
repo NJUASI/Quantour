@@ -68,6 +68,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
+        System.out.println(stockCode);
         br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                 getResourceAsStream(stockRecordByCodePathPre + stockCode + stockRecordPathPost)));
 

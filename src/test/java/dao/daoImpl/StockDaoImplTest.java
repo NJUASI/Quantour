@@ -32,12 +32,34 @@ public class StockDaoImplTest {
     public void after() throws Exception {
     }
 
+    @Test
+    public void testGetLastTradingDay() throws Exception {
+
+        LocalDate start = LocalDate.of(2014,4,19);
+        String stockCode = "000001";
+
+        LocalDate lastTradingDay = stockDao.getLastTradingDay(start,stockCode);
+
+        assertEquals(LocalDate.of(2014,4,18), lastTradingDay);
+    }
+
+    @Test
+    public void testGetNextTradingDay() throws  Exception {
+
+        LocalDate start = LocalDate.of(2014,4,19);
+        String stockCode = "000001";
+
+        LocalDate nextTradingDay = stockDao.getNextTradingDay(start,stockCode);
+
+        assertEquals(LocalDate.of(2014,4,21), nextTradingDay);
+    }
+
     /**
      * Method: getStockData(String stockCode, LocalDate date)
      */
     @Test
     public void getStockData1_1() throws Exception {
-        StockPO testPO = stockDao.getStockData("26", LocalDate.of(2014, 2, 25));
+        StockPO testPO = stockDao.getStockData("000026", LocalDate.of(2014, 2, 25));
 
         // expected:
         // 45	2014-02-25	7.53	7.66	7.25	7.29	117079	7.29	26	飞亚达Ａ	SZ	7.55	7.55
@@ -57,30 +79,8 @@ public class StockDaoImplTest {
     }
 
     @Test
-    public void testGetLastTradingDay() throws Exception {
-
-        LocalDate start = LocalDate.of(2014,4,19);
-        String stockCode = "1";
-
-        LocalDate lastTradingDay = stockDao.getLastTradingDay(start,stockCode);
-
-        assertEquals(LocalDate.of(2014,4,18), lastTradingDay);
-    }
-
-    @Test
-    public void testGetNextTradingDay() throws  Exception {
-
-        LocalDate start = LocalDate.of(2014,4,19);
-        String stockCode = "1";
-
-        LocalDate nextTradingDay = stockDao.getNextTradingDay(start,stockCode);
-
-        assertEquals(LocalDate.of(2014,4,21), nextTradingDay);
-    }
-
-    @Test
     public void getStockData1_2() throws Exception {
-        StockPO testPO = stockDao.getStockData("2001", LocalDate.of(2012, 10, 30));
+        StockPO testPO = stockDao.getStockData("002001", LocalDate.of(2012, 10, 30));
 
         // expected:
         // 388	2012-10-30	18.69	18.89	18.5	18.62	8408	18.15	2001	新 和 成	SZ	18.72	18.24
@@ -105,7 +105,7 @@ public class StockDaoImplTest {
      */
     @Test
     public void getStockData2_1() throws Exception {
-        List<StockPO> result = stockDao.getStockData("1", LocalDate.of(2014, 4, 25), LocalDate.of(2014, 4, 29));
+        List<StockPO> result = stockDao.getStockData("000001", LocalDate.of(2014, 4, 25), LocalDate.of(2014, 4, 29));
 
         StockPO testPO = result.get(1);
 
@@ -130,7 +130,7 @@ public class StockDaoImplTest {
 
     @Test
     public void getStockData2_2() throws Exception {
-        List<StockPO> result = stockDao.getStockData("2067", LocalDate.of(2011, 1, 14), LocalDate.of(2011, 1, 24));
+        List<StockPO> result = stockDao.getStockData("002067", LocalDate.of(2011, 1, 14), LocalDate.of(2011, 1, 24));
 
         // expected:
         // 838	2011-01-14	3.44	3.45	3.35	3.42	76905	1.67	2067	景兴纸业	SZ	3.45	1.68
@@ -157,7 +157,36 @@ public class StockDaoImplTest {
         assertEquals(Market.SZ, testPO.getMarket());
         assertEquals(3.42, testPO.getPreClose(), 0);
         assertEquals(1.67, testPO.getPreAdjClose(), 0);
+    }
 
+    @Test
+    public void getStockData2_3() throws Exception {
+        List<StockPO> result = stockDao.getStockData("002067", LocalDate.of(2011, 1, 15), LocalDate.of(2011, 1, 24));
+
+        // expected:
+        // 837	2011-01-17	3.4	3.43	3.25	3.25	108437	1.58	2067	景兴纸业	SZ	3.42	1.67
+        // 836	2011-01-18	3.25	3.31	3.23	3.3	66930	1.6	2067	景兴纸业	SZ	3.25	1.58
+        // 835	2011-01-19	3.31	3.35	3.28	3.35	86315	1.63	2067	景兴纸业	SZ	3.3	1.6
+        // 834	2011-01-20	3.32	3.34	3.26	3.26	103575	1.59	2067	景兴纸业	SZ	3.35	1.63
+        // 833	2011-01-21	3.24	3.32	3.23	3.29	71037	1.6	2067	景兴纸业	SZ	3.26	1.59
+        // 832	2011-01-24	3.29	3.31	3.23	3.26	60536	1.59	2067	景兴纸业	SZ	3.29	1.6
+
+        assertEquals(6, result.size());
+
+        StockPO testPO = result.get(0);
+        assertEquals(837, testPO.getSerial());
+        assertEquals(LocalDate.of(2011, 1, 17), testPO.getDate());
+        assertEquals(3.4, testPO.getOpen(), 0);
+        assertEquals(3.43, testPO.getHigh(), 0);
+        assertEquals(3.25, testPO.getLow(), 0);
+        assertEquals(3.25, testPO.getClose(), 0);
+        assertEquals("108437", testPO.getVolume());
+        assertEquals(1.58, testPO.getAdjClose(), 0);
+        assertEquals("002067", testPO.getCode());
+        assertEquals("景兴纸业", testPO.getName());
+        assertEquals(Market.SZ, testPO.getMarket());
+        assertEquals(3.42, testPO.getPreClose(), 0);
+        assertEquals(1.67, testPO.getPreAdjClose(), 0);
     }
 
     /**
@@ -165,7 +194,7 @@ public class StockDaoImplTest {
      */
     @Test
     public void getStockData3_1() throws Exception {
-        List<StockPO> result = stockDao.getStockData("1");
+        List<StockPO> result = stockDao.getStockData("000001");
         assertEquals(2100, result.size());
 
         StockPO testPO = result.get(10);
@@ -192,7 +221,7 @@ public class StockDaoImplTest {
 
     @Test
     public void getStockData3_2() throws Exception {
-        List<StockPO> result = stockDao.getStockData("2077");
+        List<StockPO> result = stockDao.getStockData("002077");
         assertEquals(1768, result.size());
 
         StockPO testPO = result.get(1767);
@@ -225,7 +254,7 @@ public class StockDaoImplTest {
         List<StockPO> result = stockDao.getStockData(LocalDate.of(2009, 4, 7));
         assertEquals(311, result.size());
 
-        StockPO testPO = result.get(46);
+        StockPO testPO = result.get(69);
 
         // expected:
         // 1284	2009-04-07	18.78	18.88	18.46	18.62	59933	10.88	2028	思源电气	SZ	18.81	10.99
@@ -250,7 +279,7 @@ public class StockDaoImplTest {
         List<StockPO> result = stockDao.getStockData(LocalDate.of(2008, 8, 8));
         assertEquals(299, result.size());
 
-        StockPO testPO = result.get(211);
+        StockPO testPO = result.get(233);
 
         // expected:
         // 1446	2008-08-08	2.3	2.31	2.16	2.16	24555	0.43	2198	嘉应制药	SZ	2.36	0.46
@@ -275,7 +304,7 @@ public class StockDaoImplTest {
      */
     @Test
     public void testGetDateWithoutData_11() throws Exception {
-        List<LocalDate> result = stockDao.getDateWithoutData("17");
+        List<LocalDate> result = stockDao.getDateWithoutData("000017");
         assertEquals(2207, result.size());
     }
 
@@ -284,13 +313,13 @@ public class StockDaoImplTest {
      */
     @Test
     public void testGetDateWithoutData_21() throws Exception {
-        List<LocalDate> result = stockDao.getDateWithoutData("17", LocalDate.of(2014, 4, 10), LocalDate.of(2014, 4, 29));
+        List<LocalDate> result = stockDao.getDateWithoutData("000017", LocalDate.of(2014, 4, 10), LocalDate.of(2014, 4, 29));
         assertEquals(6, result.size());
     }
 
     @Test
     public void testGetDateWithoutData_22() throws Exception {
-        List<LocalDate> result = stockDao.getDateWithoutData("2037", LocalDate.of(2010, 6, 1), LocalDate.of(2010, 6, 30));
+        List<LocalDate> result = stockDao.getDateWithoutData("002037", LocalDate.of(2010, 6, 1), LocalDate.of(2010, 6, 30));
         assertEquals(11, result.size());
     }
 
@@ -338,12 +367,12 @@ public class StockDaoImplTest {
      */
     @Test
     public void getFirstAndLastDay() throws Exception {
-        assertEquals(LocalDate.of(2005, 2, 1), stockDao.getFirstAndLastDay("17").get(0));
-        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("17").get(1));
-        assertEquals(LocalDate.of(2009, 8, 28), stockDao.getFirstAndLastDay("2286").get(0));
-        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("2286").get(1));
-        assertEquals(LocalDate.of(2009, 12, 18), stockDao.getFirstAndLastDay("2324").get(0));
-        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("2324").get(1));
+        assertEquals(LocalDate.of(2005, 2, 1), stockDao.getFirstAndLastDay("000017").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("000017").get(1));
+        assertEquals(LocalDate.of(2009, 8, 28), stockDao.getFirstAndLastDay("002286").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("002286").get(1));
+        assertEquals(LocalDate.of(2009, 12, 18), stockDao.getFirstAndLastDay("002324").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("002324").get(1));
         assertEquals(LocalDate.of(2010, 8, 12), stockDao.getFirstAndLastDay("300103").get(0));
         assertEquals(LocalDate.of(2014, 4, 29), stockDao.getFirstAndLastDay("300103").get(1));
 

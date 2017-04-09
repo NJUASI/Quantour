@@ -7,7 +7,9 @@ import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockTradingDayServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
+import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.DateShortException;
 import utilities.exceptions.NoDataWithinException;
 import vo.*;
 
@@ -122,7 +124,13 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             startOfHolding = stockTradingDayService.getNextTradingDay(endOfHolding.plusDays(1),holdingStocks);
         }
 
-        return maxRetracement(cumulativeReturnVOS);
+//        return maxRetracement(cumulativeReturnVOS);
+        return null;
+    }
+
+    @Override
+    protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+        return null;
     }
 
     /**
@@ -184,7 +192,8 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      * @param formativePeriodRate 形成期内，目标股票池所有股票的代码与累计收益率的列表
      * @return 选取前20%的股票购买 //TODO 目前挑选股票的参数，暂定为取前20%，不知后期是否要做活一点儿
      */
-    private List<String> pickStocks(List<FormativePeriodRateVO> formativePeriodRate) {
+    @Override
+    protected List<String> pickStocks(List<FormativePeriodRateVO> formativePeriodRate) {
 
        List<String> sortedStockPool = sortStocks(formativePeriodRate);
 
@@ -201,6 +210,11 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
        //取前1/5，即前20%
        return  sortedStockPool.subList(0,topTwentyPercent);
+    }
+
+    @Override
+    protected void calculate(LocalDate periodStart, LocalDate periodEnd, int periodSerial) {
+
     }
 
     /**

@@ -12,4 +12,9 @@ public class TraceBackStrategyVO {
 
     // 历史持仓详情
     public List<HoldingDetailVO> holdingDetailVOS;
+
+    public TraceBackStrategyVO(List<CumulativeReturnVO> strategyCumulativeReturn, List<HoldingDetailVO> holdingDetailVOS) {
+        this.strategyCumulativeReturn = strategyCumulativeReturn;
+        this.holdingDetailVOS = holdingDetailVOS;
+    }
 }

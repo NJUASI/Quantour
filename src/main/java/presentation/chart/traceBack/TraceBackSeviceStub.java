@@ -3,10 +3,7 @@ package presentation.chart.traceBack;
 import service.TraceBackService;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
-import vo.CumulativeReturnVO;
-import vo.RelativeIndexReturnVO;
-import vo.TraceBackCriteriaVO;
-import vo.TraceBackNumValVO;
+import vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -17,6 +14,11 @@ import java.util.List;
  * Created by Byron Dong on 2017/3/30.
  */
 public class TraceBackSeviceStub implements TraceBackService {
+    @Override
+    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException {
+        return null;
+    }
+
     /**
      * 获取策略累计收益率
      *
@@ -71,7 +73,6 @@ public class TraceBackSeviceStub implements TraceBackService {
      * @param stockCodes          策略累计收益率的列表
      * @return List<CumulativeReturnVO> 策略累计收益率的列表
      */
-    @Override
     public List<CumulativeReturnVO> getStrategyCumulativeReturnOfCustomized(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockCodes) {
         return null;
     }
@@ -142,7 +143,6 @@ public class TraceBackSeviceStub implements TraceBackService {
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
-    @Override
     public RelativeIndexReturnVO getRelativeIndexReturn(TraceBackCriteriaVO traceBackCriteriaVO) {
         return null;
     }

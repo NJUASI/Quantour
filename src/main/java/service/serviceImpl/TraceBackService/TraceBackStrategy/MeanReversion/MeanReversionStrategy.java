@@ -22,129 +22,157 @@ import java.util.*;
  */
 public class MeanReversionStrategy extends AllTraceBackStrategy {
 
-    ChartService chartService;
-    StockDao stockDao;
+    private ChartService chartService;
+    private StockDao stockDao;
 
-    final double initMpney = 10000;
-    double nowMoney;
+    // 默认1000元初始投资资本
+    private final double initMpney = 1000;
+    private double nowMoney;
 
-    public MeanReversionStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
+    // 持股数，持有期，N日均值
+    private final int holdingNum, holdingPeriod, formativePeriod;
+
+    // 所有股票
+    private final List<LocalDate> withinDates;
+
+    // 挑选出的持有期N支股票
+    private List<String> wantedStockCodes;
+
+    // 保存相应要返回的数据
+    List<CumulativeReturnVO> strategyCumulativeReturn;
+    List<HoldingDetailVO> holdingDetailVOS;
+
+    public MeanReversionStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException {
         super(stockPoolCodes, traceBackCriteriaVO);
-
         chartService = new ChartServiceImpl();
         stockDao = new StockDaoImpl();
         nowMoney = initMpney;
+
+        holdingNum = traceBackCriteriaVO.holdingNum;
+        holdingPeriod = traceBackCriteriaVO.holdingPeriod;
+        formativePeriod = traceBackCriteriaVO.formativePeriod;
+
+        withinDates = stockDao.getDateWithData(traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate);
     }
 
     @Override
     public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
-        // 一次性获得所有的均线数据（整体区间向前推了一天，因为均值回归当日的调仓标准是前一日的均线数据）
-        Map<String, List<MovingAverageVO>> allAves = new TreeMap<>();
-        for (String s : stockPoolCodes) {
-            ChartShowCriteriaVO criteriaVO = new ChartShowCriteriaVO(s, traceBackCriteriaVO.startDate.minusDays(1), traceBackCriteriaVO.endDate.minusDays(1));
-
-            List<MovingAverageType> formatAve = new LinkedList<>();
-            formatAve.add(MovingAverageType.getEnum(traceBackCriteriaVO.formativePeriod));
-            Map<MovingAverageType, List<MovingAverageVO>> aveInfo = chartService.getAveData(criteriaVO, formatAve);
-            List<MovingAverageVO> aves = aveInfo.values().iterator().next();
-
-            allAves.put(s, aves);
-        }
-
-
-        int holdingNum = traceBackCriteriaVO.holdingNum;
-        int holdingPeriod = traceBackCriteriaVO.holdingPeriod;
-
-        List<LocalDate> withinDates = stockDao.getDateWithData(traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate);
-
         int cycles = withinDates.size() / holdingPeriod;
 
-        LocalDate periodStart, periodEnd, periodJudge;
+        // 回测时间太短，不足一个持有期
+        if (cycles == 0) {
+            calculate(withinDates.get(0), withinDates.get(withinDates.size() - 1), 0);
+            return new TraceBackStrategyVO(strategyCumulativeReturn, holdingDetailVOS);
+        }
 
+        // 至少一个持有期
+        LocalDate periodStart, periodEnd;
         // 整个周期的计算
         for (int i = 0; i < cycles; i++) {
-            int tempStartIndex = i * holdingPeriod;
-            periodStart = withinDates.get(tempStartIndex);
-            periodEnd = withinDates.get(tempStartIndex + holdingPeriod -1);
-            // 第一个周期第一天，没有累计收益率
-            if (i == 0) {
+            int startIndex = i * holdingPeriod;
+            periodStart = withinDates.get(startIndex);
+            periodEnd = withinDates.get(startIndex + holdingPeriod - 1);
 
-            }
-
-            periodJudge = withinDates.get(tempStartIndex - 1);
-
-            List<String> thisHoldingPeriodStocks = getTopStockCodes(holdingNum, allAves, periodJudge);
-
-            // TODO
-            getPeriodYield(thisHoldingPeriodStocks, periodStart, periodEnd);
-
+            wantedStockCodes = pickStocks(formate(stockPoolCodes, periodStart, formativePeriod));
+            calculate(periodStart, periodEnd, i);
         }
 
         // 最后一个不足周期的计算
         periodStart = withinDates.get(cycles * holdingPeriod);
-        periodEnd = withinDates.get(withinDates.size()-1);
-        periodJudge = withinDates.get(cycles * holdingPeriod - 1);
+        periodEnd = withinDates.get(withinDates.size() - 1);
 
-        List<String> thisHoldingPeriodStocks = getTopStockCodes(holdingNum, allAves, periodJudge);
+        wantedStockCodes = pickStocks(formate(stockPoolCodes, periodStart, formativePeriod));
+        calculate(periodStart, periodEnd, cycles + 1);
 
-        // TODO
-        getPeriodYield(thisHoldingPeriodStocks, periodStart, periodEnd);
+        // TODO 根据果仁网，第一天数据设置为0
+        strategyCumulativeReturn.get(0).cumulativeReturn = 0;
 
-
-        return null;
+        return new TraceBackStrategyVO(strategyCumulativeReturn, holdingDetailVOS);
     }
 
     @Override
-    protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException {
-        return null;
+    protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+        List<FormativePeriodRateVO> result = new LinkedList<>();
+
+        for (String s : stockPoolCodes) {
+            // 获得前一个交易日的均值
+            LocalDate periodJudge = withinDates.get(withinDates.indexOf(periodStart) - 1);
+            ChartShowCriteriaVO criteriaVO = new ChartShowCriteriaVO(s, periodJudge, periodJudge);
+            List<MovingAverageType> formatAve = new LinkedList<>();
+            formatAve.add(MovingAverageType.getEnum(traceBackCriteriaVO.formativePeriod));
+            Map<MovingAverageType, List<MovingAverageVO>> aveInfo = chartService.getAveData(criteriaVO, formatAve);
+            MovingAverageVO ma = aveInfo.values().iterator().next().get(0);
+
+            StockPO po = stockDao.getStockData(s, periodJudge);
+            double biasRatio = (ma.average - po.getAdjClose()) / ma.average;
+
+            result.add(new FormativePeriodRateVO(s, biasRatio));
+        }
+        return result;
     }
 
     @Override
     protected List<String> pickStocks(List<FormativePeriodRateVO> formativePeriodRate) {
-        return null;
-    }
-
-    @Override
-    protected void calculate() {
-
-    }
-
-    private List<String> getTopStockCodes(int holdingNum, Map<String, List<MovingAverageVO>> allAves, LocalDate thisDate) throws IOException {
+        // 股票代码，偏离度
         Map<String, Double> result = new HashMap<>(holdingNum);
 
         // 先加入前 持有股票数 支股票，再计算后面的
         int i = 0;
-        for (Map.Entry<String, List<MovingAverageVO>> entry : allAves.entrySet()) {
-            String s = entry.getKey();
-            List<MovingAverageVO> thisMA = entry.getValue();
-
+        for (FormativePeriodRateVO vo : formativePeriodRate) {
             if (i < holdingNum) {
-                for (MovingAverageVO vo : thisMA) {
-                    if (vo.date == thisDate) {
-                        StockPO stockPO = stockDao.getStockData(s, thisDate);
-                        double biasRatio = (vo.average - stockPO.getAdjClose()) / vo.average;
-                        result.put(s, biasRatio);
-                        break;
-                    }
-                }
+                result.put(vo.stockCode, vo.periodReturn);
                 i++;
                 continue;
             }
 
-            for (MovingAverageVO vo : thisMA) {
-                String min = getMin(result);
-
-                StockPO stockPO = stockDao.getStockData(s, thisDate);
-                double biasRatio = (vo.average - stockPO.getAdjClose()) / vo.average;
-
-                if (vo.date == thisDate && biasRatio > result.get(min)) {
-                    result.remove(min);
-                    result.put(s, biasRatio);
-                }
+            String min = getMin(result);
+            if (vo.periodReturn > result.get(min)) {
+                result.remove(min);
+                result.put(vo.stockCode, vo.periodReturn);
             }
         }
         return new LinkedList<>(result.keySet());
     }
+
+    @Override
+    protected void calculate(LocalDate periodStart, LocalDate periodEnd, int periodSerial) throws DateNotWithinException, NoDataWithinException, IOException {
+        Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
+        List<Double> tempYields = new LinkedList<>();
+
+        // 对阶段内的每只股票进行数据读取
+        for (String s : wantedStockCodes) {
+            List<StockPO> pos = stockDao.getStockData(s, periodStart, periodEnd);
+
+            for (StockPO po : pos) {
+                LocalDate thisDate = po.getDate();
+                double profit = getProfit(po);
+
+                if (forCalcu.keySet().contains(thisDate)) {
+                    forCalcu.get(thisDate).add(profit);
+                } else {
+                    List<Double> values = new LinkedList<>();
+                    values.add(profit);
+                    forCalcu.put(thisDate, values);
+                }
+            }
+        }
+
+        // 依次处理每一交易日
+        for (Map.Entry<LocalDate, List<Double>> entry : forCalcu.entrySet()) {
+            double thisYield = getYield(entry.getValue());
+            strategyCumulativeReturn.add(new CumulativeReturnVO(entry.getKey(), thisYield, false));
+            tempYields.add(thisYield);
+        }
+
+        // 对这整个周期进行处理
+        double yieldSum = 0;
+        for (double tempYield : tempYields) {
+            yieldSum += tempYield;
+        }
+        nowMoney *= yieldSum;
+        holdingDetailVOS.add(new HoldingDetailVO(periodSerial, periodStart, periodEnd, holdingNum, yieldSum, nowMoney));
+    }
+
 
     private String getMin(Map<String, Double> result) {
         String min = result.keySet().iterator().next();
@@ -155,10 +183,17 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
     }
 
 
-    // 一个持有期周期内的收益率
-    private double getPeriodYield(List<String> stockCodes, LocalDate start, LocalDate end) {
+    // 计算单只股票在单日对此日造成的收益率影响
+    private double getProfit(StockPO po) {
+        return po.getAdjClose() / po.getPreAdjClose();
+    }
 
-
-        return 0;
+    // 计算value的平均值
+    private double getYield(List<Double> value) {
+        double sum = 0;
+        for (double temp : value) {
+            sum += temp;
+        }
+        return sum / value.size();
     }
 }
