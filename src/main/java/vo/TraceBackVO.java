@@ -1,7 +1,5 @@
 package vo;
 
-import com.sun.deploy.trace.Trace;
-
 import java.util.List;
 
 /**
@@ -15,13 +13,7 @@ public class TraceBackVO {
     // 策略累计收益率，历史持仓详情
     public TraceBackStrategyVO traceBackStrategyVO;
 
-
-
-
-    // 基准的数值型数据
-    public TraceBackNumValVO baseTraceBackNumValVO;
-
-    // 策略的数值型数据
-    public TraceBackNumValVO strategyTraceBackNumValVO;
+    // 数值型数据
+    public TraceBackNumValVO traceBackNumValVO;
 
 }

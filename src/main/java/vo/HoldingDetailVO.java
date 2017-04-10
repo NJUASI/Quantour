@@ -67,4 +67,7 @@ public class HoldingDetailVO {
         this.strategyReturn = strategyReturn;
         this.remainInvestment = remainInvestment;
     }
+
+    public HoldingDetailVO() {
+    }
 }

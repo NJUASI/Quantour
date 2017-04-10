@@ -9,19 +9,19 @@ import java.time.LocalDate;
  */
 public class TraceBackNumValVO {
 
-    // 年化收益率
+    // 策略年化收益率
     public double annualizedRateOfReturn;
 
     // 基准年化收益率
     public double baseAnnualizedRateOfReturn;
 
-    //年化波动率
+    // 策略年化波动率
     public double returnVolatility;
 
     //基准年化波动率
     public double baseReturnVolatility;
 
-    //总收益率
+    // 策略总收益率
     public double sumRate;
 
     //基准总收益率
@@ -33,7 +33,7 @@ public class TraceBackNumValVO {
     // 贝塔
     public double beta;
 
-    // 夏普比率
+    // 策略夏普比率
     public double sharpeRatio;
 
     //基准夏普比率
