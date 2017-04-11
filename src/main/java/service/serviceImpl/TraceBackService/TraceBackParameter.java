@@ -183,6 +183,7 @@ public class TraceBackParameter {
      */
     public double calculateBeta(List<DailyRateVO> strategy, List<DailyRateVO> base, double baseStdev) {
         List<DailyRateVO> result = new ArrayList<>();
+        //TODO 董金玉 逻辑可能有问题
         for (int i = 0; i < strategy.size(); i++) {
             result.add(new DailyRateVO(strategy.get(i).rate * base.get(i).rate,null));
         }
