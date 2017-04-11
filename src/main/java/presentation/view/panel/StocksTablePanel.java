@@ -1,7 +1,9 @@
 package presentation.view.panel;
 
+import presentation.controller.StocksTableController;
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
+import presentation.view.tools.FileChoose;
 import presentation.view.tools.MyLabel;
 import presentation.view.tools.SingleDatePickerPanel;
 import presentation.view.tools.StocksTablePane;
@@ -9,6 +11,9 @@ import presentation.view.tools.customizedButton.MyButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.time.LocalDate;
 
 /**
@@ -29,7 +34,7 @@ public class StocksTablePanel extends TemplatePanel {
     SingleDatePickerPanel datePickerPanel;
 
     public JLabel label;
-
+    File file;
     /**
      * 股票列表面板构造器
      *
@@ -56,6 +61,12 @@ public class StocksTablePanel extends TemplatePanel {
         search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListener());
         add(search);
+
+        JButton importData= new JButton("导入数据");
+        importData.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
+        importData.setBounds(adaptScreen(900,50,110,35));
+        importData.addMouseListener(new FileChoose());
+        add(importData);
 
         JButton detailOfCode = new JButton("查看详情");
         detailOfCode.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
@@ -98,4 +109,8 @@ public class StocksTablePanel extends TemplatePanel {
     public LocalDate getChooseDate(){
         return datePickerPanel.getDate();
     }
+
+
+
+
 }

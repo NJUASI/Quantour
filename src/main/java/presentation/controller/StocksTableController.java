@@ -59,10 +59,19 @@ public class StocksTableController {
     public static StocksTableController getInstance(){
         return stocksTableController;
     }
+    /**
+     * TODO 导入数据
+     * filePath 路径
+     */
+
+    public void importDate(String filePath) {
+
+    }
 
     /**
      * Search. 选定日期，搜索列表
      */
+
     public void search() {
 
         WindowData windowData = WindowData.getInstance();

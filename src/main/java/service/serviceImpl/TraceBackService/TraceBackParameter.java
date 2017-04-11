@@ -1,6 +1,5 @@
 package service.serviceImpl.TraceBackService;
 
-import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import service.StockService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;

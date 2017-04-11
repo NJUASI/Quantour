@@ -3,19 +3,19 @@ package presentation.view.panel.iteration2;
 import presentation.controller.StrategySwitchController;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
+import presentation.view.tools.FileChoose;
 import presentation.view.tools.MyTabUI;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
+import java.awt.event.*;
+import java.io.File;
 
 /**
  * Created by day on 17/3zx/28.
  */
-public class AnalysePanel extends TemplatePanel {
+public class AnalysePanel extends TemplatePanel implements ActionListener {
     private static AnalysePanel analysePanel;
     JLabel title;
     private AnalysePanel(){
@@ -27,6 +27,11 @@ public class AnalysePanel extends TemplatePanel {
         s1.setBounds(30,30,200,200);
         p1.setBackground(WindowData.getInstance().getColor());
         p1.setLayout(null);
+        s1.addMouseListener(new FileChoose());
+//        FileChoose fileChoose =new FileChoose();
+//        fileChoose.setBounds(400,200,600,600);
+//        p1.add(fileChoose);
+
         p1.add(s1);
         JPanel p2 = new JPanel();
         JButton s2= new JButton("312122");
@@ -79,5 +84,18 @@ public class AnalysePanel extends TemplatePanel {
             analysePanel=new AnalysePanel();
         }
         return analysePanel;
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser jfc=new JFileChooser();
+        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );
+        jfc.showDialog(new JLabel(), "选择");
+        File file=jfc.getSelectedFile();
+        if(file.isDirectory()){
+            System.out.println("文件夹:"+file.getAbsolutePath());
+        }else if(file.isFile()){
+            System.out.println("文件:"+file.getAbsolutePath());
+        }
+        System.out.println(jfc.getSelectedFile().getName());
     }
 }
