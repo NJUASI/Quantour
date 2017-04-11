@@ -4,7 +4,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
-import presentation.view.tools.ChartUtils;
 import presentation.view.tools.ColorUtils;
 
 import java.awt.*;

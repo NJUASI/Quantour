@@ -9,13 +9,10 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
-import org.jfree.data.xy.DefaultOHLCDataset;
-import org.jfree.data.xy.OHLCDataItem;
-import org.jfree.data.xy.OHLCDataset;
 import org.jfree.ui.RectangleEdge;
 import presentation.chart.tools.CandlestickChartTool;
 import presentation.listener.chartMouseListener.CandlestickListener;
-import presentation.view.tools.ChartUtils;
+import presentation.chart.tools.ChartUtils;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 import service.ChartService;
@@ -28,13 +25,10 @@ import vo.StockVO;
 
 import java.awt.*;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -3,7 +3,6 @@ package presentation.view.panel.iteration2;
 import presentation.controller.StrategySwitchController;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.FileChoose;
 import presentation.view.tools.MyTabUI;
 import presentation.view.tools.WindowData;
 
@@ -17,28 +16,16 @@ import java.io.File;
  */
 public class AnalysePanel extends TemplatePanel implements ActionListener {
     private static AnalysePanel analysePanel;
+    TraceBackChartPanel traceBackChartPanelPanel;
+    TraceBackAnalysePanel traceBackAnalysePanelPanel;
     JLabel title;
     private AnalysePanel(){
         JTabbedPane tab = new JTabbedPane(JTabbedPane.TOP);
 
         //对象化面板
-        JPanel p1 = new JPanel();
-        JButton s1= new JButton("32");
-        s1.setBounds(30,30,200,200);
-        p1.setBackground(WindowData.getInstance().getColor());
-        p1.setLayout(null);
-        s1.addMouseListener(new FileChoose());
-//        FileChoose fileChoose =new FileChoose();
-//        fileChoose.setBounds(400,200,600,600);
-//        p1.add(fileChoose);
+        traceBackChartPanelPanel= new TraceBackChartPanel();
+        traceBackAnalysePanelPanel= new TraceBackAnalysePanel();
 
-        p1.add(s1);
-        JPanel p2 = new JPanel();
-        JButton s2= new JButton("312122");
-        p2.setBackground(WindowData.getInstance().getColor());
-        s2.setBounds(30,30,200,200);
-        p2.setLayout(null);
-        p2.add(s2);
         JPanel p3 = new JPanel();
         p3.setBackground(WindowData.getInstance().getColor());
         JPanel p4 = new JPanel();
@@ -46,8 +33,8 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
 
         //todo 画各种各样的图！
 
-        tab.add(p1,"Panel1");
-        tab.add(p2,"Panel2");
+        tab.add(traceBackChartPanelPanel,"Panel1");
+        tab.add(traceBackAnalysePanelPanel,"Panel2");
         tab.add(p3,"Panel3");
         tab.add(p4,"Panel4");
         tab.setBounds(adaptScreen(-2,60,1833,930));

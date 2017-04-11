@@ -1,4 +1,4 @@
-package presentation.view.tools;
+package presentation.chart.tools;
 
 		import java.awt.BasicStroke;
 		import java.awt.Color;
@@ -35,6 +35,7 @@ package presentation.view.tools;
 		import org.jfree.data.time.TimeSeries;
 		import org.jfree.ui.RectangleInsets;
 		import org.jfree.ui.TextAnchor;
+        import presentation.view.tools.ColorUtils;
 
 /**
  * Jfreechart工具类
@@ -47,9 +48,9 @@ public class ChartUtils {
 	private static String NO_DATA_MSG = "数据加载失败";
 	private static Font FONT = new Font("宋体", Font.PLAIN, 12);
 	public static Color[] CHART_COLORS = {
-			new Color(76,162,235), new Color(250,157,0), new Color(144,237,125), new Color(255,188,117),
-			new Color(153,158,255), new Color(255,117,153), new Color(253,236,109), new Color(128,133,232),
-			new Color(158,90,102),new Color(255, 204, 102) };// 颜色
+			new Color(255,61,61), new Color(15,195,81), new Color(255,61,61), new Color(15,195,81),
+			new Color(255,61,61), new Color(15,195,81),
+			new Color(255,61,61), new Color(15,195,81), };// 颜色
 
 	static {
 		setChartTheme();
@@ -151,23 +152,6 @@ public class ChartUtils {
 
 	}
 
-	/**
-	 * 创建饼图数据集合
-	 */
-	public static DefaultPieDataset createDefaultPieDataset(String[] categories, Object[] datas) {
-		DefaultPieDataset dataset = new DefaultPieDataset();
-		for (int i = 0; i < categories.length && categories != null; i++) {
-			String value = datas[i].toString();
-			if (isPercent(value)) {
-				value = value.substring(0, value.length() - 1);
-			}
-			if (isNumber(value)) {
-				dataset.setValue(categories[i], Double.valueOf(value));
-			}
-		}
-		return dataset;
-
-	}
 
 	/**
 	 * 创建时间序列数据

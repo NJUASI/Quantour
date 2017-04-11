@@ -12,12 +12,11 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import presentation.chart.tools.CompareTool;
 import presentation.chart.tools.DateTickUnitFactory;
-import presentation.view.tools.ChartUtils;
+import presentation.chart.tools.ChartUtils;
 import presentation.view.tools.ColorUtils;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 
-import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
