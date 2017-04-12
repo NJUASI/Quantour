@@ -3,8 +3,8 @@ package presentation.view.panel.iteration2;
 import presentation.controller.StrategySwitchController;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.MyTabUI;
 import presentation.view.tools.ProgressBar;
+import presentation.view.tools.UI.MyTabUI;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;

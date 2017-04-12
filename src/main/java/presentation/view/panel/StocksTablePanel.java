@@ -1,17 +1,12 @@
 package presentation.view.panel;
 
-import presentation.controller.StocksTableController;
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
-import presentation.view.frame.MainFrame;
 import presentation.view.tools.*;
-import presentation.view.tools.customizedButton.MyButton;
+import presentation.view.tools.datePicker.SingleDatePickerPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.time.LocalDate;
 
 /**
