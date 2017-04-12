@@ -28,7 +28,7 @@ public class CompareTool {
         ChartUtils.setBarRenderer(chart.getCategoryPlot(), false);//
         ChartUtils.setXAixs(chart.getCategoryPlot());// X坐标轴渲染
         ChartUtils.setYAixs(chart.getCategoryPlot());// Y坐标轴渲染
-        chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
+        chart.getLegend().setFrame(new BlockBorder(ColorUtils.backgroundColor()));
 
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(ColorUtils.backgroundColor());

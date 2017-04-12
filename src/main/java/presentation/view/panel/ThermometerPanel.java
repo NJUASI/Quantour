@@ -116,28 +116,28 @@ public class ThermometerPanel extends TemplatePanel {
         createPanel();
 
     }
-
-
-    public static void main(String[] args) {
-        BeautyEyeUtil.beautyEye();
-        JFrame j= new JFrame();
-        j.setTitle("Quantourist");
-        j.setLayout(null);
-
-        WindowData.setWindowData(1920, 1030);//save the window's data
-
-        int width=WindowData.getInstance().getWidth();
-        int height=WindowData.getInstance().getHeight();
-        j.setSize(width,height);
-
-
-//        setUndecorated(true);
-       j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        j.setVisible(true);
-        j.setResizable(false);
-//        j.add(new ThermometerPanel(new int[]{1,2,3,4,5,6}));
-    }
+//
+//
+//    public static void main(String[] args) {
+//        BeautyEyeUtil.beautyEye();
+//        JFrame j= new JFrame();
+//        j.setTitle("Quantourist");
+//        j.setLayout(null);
+//
+//        WindowData.setWindowData(1920, 1030);//save the window's data
+//
+//        int width=WindowData.getInstance().getWidth();
+//        int height=WindowData.getInstance().getHeight();
+//        j.setSize(width,height);
+//
+//
+////        setUndecorated(true);
+//       j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//        j.setVisible(true);
+//        j.setResizable(false);
+////        j.add(new ThermometerPanel(new int[]{1,2,3,4,5,6}));
+//    }
 
     void createPanel(){
 

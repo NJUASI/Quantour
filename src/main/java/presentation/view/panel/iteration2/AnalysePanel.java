@@ -72,6 +72,12 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
         }
         return analysePanel;
     }
+
+    public void createChart(){
+        traceBackAnalysePanelPanel.createChart();
+        traceBackChartPanelPanel.createChart();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser jfc=new JFileChooser();

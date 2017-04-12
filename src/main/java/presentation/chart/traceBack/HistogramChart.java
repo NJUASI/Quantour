@@ -9,6 +9,7 @@ import presentation.chart.tools.ChartUtils;
 import presentation.chart.tools.CompareTool;
 import presentation.chart.tools.Serie;
 import presentation.view.tools.ColorUtils;
+import presentation.view.tools.WindowData;
 
 import java.awt.*;
 import java.util.Vector;
@@ -22,24 +23,24 @@ public class HistogramChart {
     }
     public DefaultCategoryDataset createDataset() {
         // 标注类别
-        String[] categories = { " ", "2%", "  ", "4%", "   ", "6%", "    ", "8%", "     ", "10%", "      ", "12%" };
+        String[] categories = { " ", "2%", "  ", "4%", "   ", "6%", "    ", "8%", "     ", "10%", "      ", ">12%" };
         Vector<Serie> series = new Vector<Serie>();
         // 柱子名称：柱子所有的值集合
         series.add(new Serie("正收益次数", new Integer[] {11,11,10,9,8,7,6,5,4,3,2,1}));
         series.add(new Serie("负收益次数", new Object[] {1,11,10,9,8,7,6,5,4,3,2,1}));
+
 
         DefaultCategoryDataset dataset = ChartUtils.createDefaultCategoryDataset(series, categories);
         return dataset;
     }
 
     public ChartPanel createChart() {
-        // 2：创建Chart
-        JFreeChart chart = ChartFactory.createBarChart("", "", "次", createDataset());
+        // 创建Chart
+        JFreeChart chart = ChartFactory.createBarChart("收益率分布", "", "", createDataset());
         chart = CompareTool.setChartCategory(chart);//修饰chart
 
-        chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
-
         ChartPanel chartPanel = new ChartPanel(chart);
+
         chartPanel.setBackground(ColorUtils.backgroundColor());
         return chartPanel;
     }

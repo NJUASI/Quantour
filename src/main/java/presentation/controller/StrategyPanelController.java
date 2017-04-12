@@ -40,6 +40,7 @@ public class StrategyPanelController {
 
     public void search() {
         TraceBackCriteriaVO vo=chooseStrategyPanel.getInfo();
+        analysePanel.createChart();
     }
 
 }

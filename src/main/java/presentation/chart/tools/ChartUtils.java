@@ -241,7 +241,8 @@ public class ChartUtils {
 		plot.setInsets(new RectangleInsets(10, 10, 5, 10));
 		BarRenderer renderer = (BarRenderer) plot.getRenderer();
 		renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-		renderer.setMaximumBarWidth(0.075);// 设置柱子最大宽度
+		renderer.setMaximumBarWidth(0.035);// 设置柱子最大宽度
+		renderer.setItemMargin(0.05);
 
 		if (isShowDataLabels) {
 			renderer.setBaseItemLabelsVisible(true);
@@ -250,6 +251,7 @@ public class ChartUtils {
 		setXAixs(plot);
 		setYAixs(plot);
 	}
+
 
 
 

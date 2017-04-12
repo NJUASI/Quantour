@@ -44,7 +44,7 @@ public class TraceBackXYLineRenderer extends XYLineAndShapeRenderer {
      */
     @Override
     public Shape getItemShape(int row, int column) {
-        Shape shape = new Ellipse2D.Double(-2.0, -2.0, 10.0, 10.0);
+        Shape shape = new Ellipse2D.Double(-4.0, -4.0, 7.0, 10.0);
 
         if(row==0&&this.isTraceBack(column)){
             return shape;

@@ -3,12 +3,14 @@ package presentation.chart.compare;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.block.BlockBorder;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.chart.tools.CompareTool;
 import presentation.chart.tools.ChartUtils;
 import presentation.view.tools.ColorUtils;
 import presentation.chart.tools.Serie;
+import presentation.view.tools.WindowData;
 import vo.StockComparisionVO;
 
 import java.util.List;

@@ -14,11 +14,17 @@ import javax.swing.*;
  * Created by 61990 on 2017/4/12.
  */
 public class TraceBackChartPanel extends TemplatePanel {
+    ChartPanel chartPanel;
     public TraceBackChartPanel(){
-
         setBackground(WindowData.getInstance().getColor());
         setLayout(null);
         ChartPanel chartPanel=null;
+    }
+
+    public void createChart(){
+        if(chartPanel!=null){
+            remove(chartPanel);
+        }
         try {
             chartPanel = new ChartPanel(new TraceBackChart(ChooseStrategyPanel.getInstance().getInfo()).createTracebackChart());
         }catch (Exception e){
@@ -27,7 +33,5 @@ public class TraceBackChartPanel extends TemplatePanel {
         chartPanel.setBounds(adaptScreen(200, 80, 1400, 600));
         chartPanel.setVisible(true);
         add(chartPanel);
-
-
     }
 }
