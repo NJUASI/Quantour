@@ -1,13 +1,16 @@
 package presentation.view.panel;
 
+import presentation.controller.StocksTableController;
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
-import presentation.view.tools.FileChoose;
-import presentation.view.tools.MyLabel;
-import presentation.view.tools.datePicker.SingleDatePickerPanel;
+import presentation.view.frame.MainFrame;
+import presentation.view.tools.*;
+import presentation.view.tools.customizedButton.MyButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.time.LocalDate;
 
@@ -27,9 +30,8 @@ public class StocksTablePanel extends TemplatePanel {
      * The Date picker panel.
      */
     SingleDatePickerPanel datePickerPanel;
-
     public JLabel label;
-    File file;
+    public JButton search;
     /**
      * 股票列表面板构造器
      *
@@ -51,7 +53,7 @@ public class StocksTablePanel extends TemplatePanel {
         datePickerPanel.setBounds(adaptScreen(350, 50,175,35));
         add(datePickerPanel);
 
-        JButton search = new JButton("搜索");
+        search = new JButton("搜索");
         search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListener());
@@ -59,13 +61,15 @@ public class StocksTablePanel extends TemplatePanel {
 
         JButton importData= new JButton("导入数据");
         importData.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        importData.setBounds(adaptScreen(900,50,110,35));
+        importData.setBounds(adaptScreen(1150,50,110,35));
         importData.addMouseListener(new FileChoose());
         add(importData);
 
+
+
         JButton detailOfCode = new JButton("查看详情");
         detailOfCode.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        detailOfCode.setBounds(adaptScreen(1150,50,110,35));
+        detailOfCode.setBounds(adaptScreen(900,50,110,35));
         detailOfCode.addMouseListener(new DetailOfCodeListener());
         add(detailOfCode);
 
@@ -74,7 +78,7 @@ public class StocksTablePanel extends TemplatePanel {
         label.setBounds(0 * width / 1920, 120 * height / 1030, (1920-90) * width / 1920 , 800* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         label.setVisible(false);
-        label.setBackground(new Color(32,36,39));
+        label.setBackground(ColorUtils.backgroundColor());
         label.setForeground(new Color(201,208,214));
         label.setOpaque(true);
         add(label);

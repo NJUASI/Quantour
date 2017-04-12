@@ -1,6 +1,7 @@
 package presentation.view.tools;
 
 import presentation.controller.StocksTableController;
+import presentation.view.panel.StocksTablePanel;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
