@@ -4,6 +4,7 @@ import presentation.controller.StrategySwitchController;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTabUI;
+import presentation.view.tools.ProgressBar;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
@@ -27,6 +28,23 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
         traceBackAnalysePanelPanel= new TraceBackAnalysePanel();
 
         JPanel p3 = new JPanel();
+        p3.setLayout(null);
+
+        JButton button = new JButton("312");
+        button.setBounds(adaptScreen(100,100,100,100));
+        p3.add(button);
+
+        JProgressBar progressBar = new JProgressBar();
+        progressBar.setStringPainted(true);  //显示提示信息
+        progressBar.setIndeterminate(false);
+
+        progressBar.setBounds(adaptScreen(200,200,300,200));
+
+        p3.add(progressBar);
+
+        new ProgressBar(progressBar, button).start();
+
+
         p3.setBackground(WindowData.getInstance().getColor());
         JPanel p4 = new JPanel();
         p4.setBackground(WindowData.getInstance().getColor());
@@ -65,6 +83,7 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
         title.setBounds(adaptScreen(850,3,120,35));
         add(title);
     }
+
 
     public static AnalysePanel getInstance(){
         if(analysePanel==null){

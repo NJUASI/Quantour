@@ -2,6 +2,7 @@ package presentation.view.tools;
 
 import presentation.controller.LoginController;
 import presentation.controller.StocksTableController;
+import presentation.view.panel.StocksTablePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

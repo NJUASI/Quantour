@@ -1,6 +1,7 @@
 package presentation.controller;
 
 import presentation.view.panel.*;
+import presentation.view.tools.ProgressBar;
 import presentation.view.tools.StocksTablePane;
 import presentation.view.tools.WindowData;
 import service.StockSituationService;
@@ -42,7 +43,7 @@ public class StocksTableController {
      */
     StocksTablePane stocksTablePane;
     ThermometerPanel thermometerPanel;
-
+    JProgressBar progressBar;
     StockSituationService stockSituationService;
     /**
      * Instantiates a new Stocks table controller.
@@ -66,6 +67,15 @@ public class StocksTableController {
 
     public void importDate(String filePath) {
 
+        if(progressBar!=null){
+            stocksTablePanel.remove(progressBar);
+        }
+        progressBar = new JProgressBar();
+        progressBar.setStringPainted(true);  //显示提示信息
+        progressBar.setIndeterminate(false);
+        progressBar.setBounds(1300,50,200,35);
+        stocksTablePanel.add(progressBar);
+        new ProgressBar(progressBar,stocksTablePanel.search).start();
     }
 
     /**
