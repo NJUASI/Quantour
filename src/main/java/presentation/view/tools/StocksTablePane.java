@@ -1,20 +1,13 @@
 package presentation.view.tools;
 
-import presentation.controller.StocksTableController;
-import presentation.controller.ViewSwitchController;
 import presentation.view.panel.StocksTablePanel;
+import presentation.view.tools.UI.MyScrollBarUI;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalDate;
-import java.util.Locale;
-import java.util.Random;
 
 /**
  * Created by 61990 on 2017/3/10.

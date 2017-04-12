@@ -4,6 +4,8 @@ import presentation.view.frame.LoginFrame;
 import presentation.view.frame.MainFrame;
 import presentation.view.frame.RegisterFrame;
 import presentation.view.panel.LoginPanel;
+import presentation.view.tools.ColorUtils;
+import presentation.view.tools.UI.MyScrollBarUI;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
 import utilities.IDReserve;
@@ -62,6 +64,7 @@ public class LoginController{
                 MainFrame.getInstance();
                 LoginFrame.getInstance().refresh();
                 RegisterFrame.getInstance().refresh();
+                setUIManage();
                 return true;
             }
 
@@ -73,5 +76,25 @@ public class LoginController{
             JOptionPane.showMessageDialog(loginPanel,"密码错误");
         }
         return false;
+    }
+
+    private static void setUIManage(){
+
+        UIManager.put("ToolBar.background", ColorUtils.lineColor());
+        UIManager.put("ToolBar.foreground",ColorUtils.fontColor());
+
+        UIManager.put("Panel.background",ColorUtils.backgroundColor());
+        UIManager.put("Panel.foreground",ColorUtils.fontColor());
+
+        UIManager.put("Label.foreground",ColorUtils.fontColor());
+
+        UIManager.put("ComboBox.background", ColorUtils.makerLabelColor());
+        UIManager.put("ComboBox.foreground", ColorUtils.fontColor());
+
+        UIManager.put("TextField.background",ColorUtils.makerLabelColor());
+        UIManager.put("TextField.foreground",ColorUtils.fontColor());
+
+
+        UIManager.put("FileChooser.noPlacesBar", Boolean.TRUE);
     }
 }

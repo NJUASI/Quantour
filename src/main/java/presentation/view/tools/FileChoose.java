@@ -1,11 +1,10 @@
 package presentation.view.tools;
 
-import presentation.controller.LoginController;
 import presentation.controller.StocksTableController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicFileChooserUI;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -21,10 +20,12 @@ public class FileChoose extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        JFileChooser jfc=new JFileChooser();
+
+        JFileChooser jfc = new JFileChooser();
         jfc.setFileSelectionMode(JFileChooser.OPEN_DIALOG);
+
         jfc.showDialog(new JLabel(), "选择");
-        File file=jfc.getSelectedFile();
+        File file = jfc.getSelectedFile();
         try {
             if (file.isDirectory()) {
                 JOptionPane.showMessageDialog(null, "选择合适的文件");
@@ -32,7 +33,7 @@ public class FileChoose extends MouseAdapter {
                 System.out.println(file.getAbsolutePath());
                 StocksTableController.getInstance().importDate(file.getAbsolutePath());
             }
-        }catch (NullPointerException e1){
+        } catch (NullPointerException e1) {
 
         }
     }

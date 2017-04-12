@@ -1,4 +1,4 @@
-package presentation.view.tools;
+package presentation.view.tools.datePicker;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
+import presentation.view.tools.WindowData;
 
 
 import javax.swing.*;

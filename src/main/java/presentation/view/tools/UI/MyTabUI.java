@@ -1,4 +1,7 @@
-package presentation.view.tools;
+package presentation.view.tools.UI;
+
+import presentation.view.tools.ColorUtils;
+import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
@@ -74,7 +77,7 @@ public class MyTabUI extends BasicTabbedPaneUI {
 
     protected int calculateTabHeight(int tabPlacement, int tabIndex,
                                      int fontHeight) {
-        return 20*WindowData.getInstance().getHeight()/1030;
+        return 20* WindowData.getInstance().getHeight()/1030;
     }
 
     protected int calculateTabWidth(int tabPlacement, int tabIndex,

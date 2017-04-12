@@ -1,4 +1,6 @@
-package presentation.view.tools;
+package presentation.view.tools.UI;
+
+import presentation.view.tools.ColorUtils;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;

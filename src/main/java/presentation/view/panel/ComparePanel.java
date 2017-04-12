@@ -3,7 +3,7 @@ package presentation.view.panel;
 import presentation.listener.comparePanelListener.*;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.DoubleDatePickerPanel;
+import presentation.view.tools.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.MyLabel;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;

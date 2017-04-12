@@ -1,4 +1,4 @@
-package presentation.view.tools;
+package presentation.view.tools.datePicker;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.DateCell;
@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Callback;
+import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package presentation.view.tools;
+package presentation.view.tools.UI;
 
 import javax.swing.plaf.basic.BasicButtonUI;
 

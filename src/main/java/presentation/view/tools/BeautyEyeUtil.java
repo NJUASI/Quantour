@@ -1,6 +1,10 @@
 package presentation.view.tools;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
+import presentation.view.tools.UI.MyScrollBarUI;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Harvey on 2017/3/25.

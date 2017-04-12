@@ -50,6 +50,11 @@
             <artifactId>beautyeye_lnf</artifactId>
             <version>4.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.jb2011</groupId>
+            <artifactId>beautyeye_lnf</artifactId>
+            <version>4.0</version>
+        </dependency>
     </dependencies>
 
     <build>

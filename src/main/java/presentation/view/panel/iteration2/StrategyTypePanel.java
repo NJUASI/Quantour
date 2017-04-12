@@ -5,7 +5,6 @@ import presentation.view.tools.MyLabel;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
-import java.lang.Object;
 
 /**
  * Created by day on 17/3/29.
