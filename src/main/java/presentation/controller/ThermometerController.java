@@ -3,7 +3,7 @@ package presentation.controller;
 import presentation.chart.compare.StockSituationBarChart;
 import presentation.view.panel.ThermometerPanel;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.MyLabel;
+import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.WindowData;
 import service.StockSituationService;
 import service.serviceImpl.StockSituationServiceImpl;

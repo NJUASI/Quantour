@@ -12,8 +12,9 @@ import presentation.listener.kStringPanelListener.StockCodeDocListener;
 import presentation.listener.kStringPanelListener.StockNameDocListener;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.datePicker.DoubleDatePickerPanel;
-import presentation.view.tools.MyLabel;
+import presentation.view.tools.component.MyTextField;
+import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
+import presentation.view.tools.component.MyLabel;
 
 import utilities.exceptions.ColorNotExistException;
 import vo.StockSearchVO;
@@ -66,9 +67,9 @@ public class KStringPanel extends TemplatePanel {
      */
     public KStringPanel() {
         //初始化datePicker
-        searchTextField = new JTextField();
+        searchTextField = new MyTextField();
 
-        num = new JTextField();
+        num = new MyTextField();
         num.setText("");
         searchAll = new JButton("总体信息");
         searchAll.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));

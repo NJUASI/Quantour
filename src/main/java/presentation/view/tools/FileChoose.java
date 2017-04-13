@@ -22,6 +22,7 @@ public class FileChoose extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
 
+        setUIManage();
         JFileChooser jfc = new JFileChooser();
         jfc.setFileSelectionMode(JFileChooser.OPEN_DIALOG);
 
@@ -37,5 +38,24 @@ public class FileChoose extends MouseAdapter {
         } catch (NullPointerException e1) {
 
         }
+    }
+
+    private static void setUIManage() {
+
+        UIManager.put("ToolBar.background", ColorUtils.backgroundColor());
+        UIManager.put("ToolBar.foreground", ColorUtils.fontColor());
+
+        UIManager.put("Panel.background", ColorUtils.backgroundColor());
+        UIManager.put("Panel.foreground", ColorUtils.fontColor());
+
+        UIManager.put("Label.foreground", ColorUtils.fontColor());
+
+        UIManager.put("ComboBox.background", ColorUtils.titleColor());
+        UIManager.put("ComboBox.foreground", ColorUtils.fontColor());
+
+        UIManager.put("TextField.background", ColorUtils.titleColor());
+        UIManager.put("TextField.foreground", ColorUtils.fontColor());
+
+        UIManager.put("FileChooser.noPlacesBar", Boolean.TRUE);
     }
 }

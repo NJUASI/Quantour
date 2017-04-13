@@ -2,10 +2,9 @@ package presentation.view.panel;
 
 import presentation.view.frame.MainFrame;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.SearchPopupMenu;
-import presentation.view.tools.SearchTextField;
+import presentation.view.tools.component.SearchPopupMenu;
+import presentation.view.tools.component.SearchTextField;
 import presentation.view.tools.customizedButton.MyButton;
-import vo.StockSearchVO;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

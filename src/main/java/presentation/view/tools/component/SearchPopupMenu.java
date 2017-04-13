@@ -1,4 +1,4 @@
-package presentation.view.tools;
+package presentation.view.tools.component;
 
 import vo.StockSearchVO;
 

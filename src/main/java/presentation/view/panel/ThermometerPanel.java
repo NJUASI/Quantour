@@ -1,7 +1,7 @@
 package presentation.view.panel;
 
 
-import presentation.view.tools.MyLabel;
+import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;

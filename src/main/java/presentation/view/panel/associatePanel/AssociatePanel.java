@@ -4,6 +4,8 @@ import presentation.listener.associatePanelListener.ComparePanelChooseListener1;
 import presentation.listener.associatePanelListener.ComparePanelChooseListener2;
 import presentation.listener.associatePanelListener.KStringChooseListener;
 import presentation.listener.associatePanelListener.KeyControlListener;
+import presentation.view.tools.ColorUtils;
+import presentation.view.tools.UI.MyScrollBarUI;
 import presentation.view.tools.WindowData;
 import vo.StockSearchVO;
 
@@ -13,7 +15,7 @@ import java.awt.*;
 /**
  * Created by 61990 on 2017/3/8.
  */
-public class AssociatePanel extends ScrollPane {
+public class AssociatePanel extends JScrollPane {
 
     private static AssociatePanel associatePanel;
 
@@ -23,6 +25,7 @@ public class AssociatePanel extends ScrollPane {
 
     public AssociatePanel(){
 
+
         WindowData windowData = WindowData.getInstance();
         int width = windowData.getWidth();
         int height =windowData.getHeight();
@@ -31,7 +34,9 @@ public class AssociatePanel extends ScrollPane {
 
         list.addKeyListener(new KeyControlListener());
         list.setLocation(0,0);
-        add(list);
+        setAssociate();
+        setViewportView(list);
+
     }
 
     public void updateJList(String str){
@@ -78,5 +83,16 @@ public class AssociatePanel extends ScrollPane {
     //为ComparePanel的associatePanel2增加监听
     public void comparePanelChooose2() {
         list.addMouseListener(new ComparePanelChooseListener2());
+    }
+
+    private void setAssociate(){
+        getVerticalScrollBar().setUI(new MyScrollBarUI());
+        setBackground(ColorUtils.titleColor());
+        setForeground(ColorUtils.fontColor());
+        setBorder(BorderFactory.createEmptyBorder());
+
+        list.setBackground(ColorUtils.titleColor());
+        list.setForeground(ColorUtils.fontColor());
+        list.setBorder(BorderFactory.createEmptyBorder());
     }
 }

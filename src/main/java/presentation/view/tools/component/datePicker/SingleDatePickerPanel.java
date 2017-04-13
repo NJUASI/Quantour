@@ -1,4 +1,4 @@
-package presentation.view.tools.datePicker;
+package presentation.view.tools.component.datePicker;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.DateCell;

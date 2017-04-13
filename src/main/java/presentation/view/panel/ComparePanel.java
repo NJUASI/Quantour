@@ -3,8 +3,9 @@ package presentation.view.panel;
 import presentation.listener.comparePanelListener.*;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.datePicker.DoubleDatePickerPanel;
-import presentation.view.tools.MyLabel;
+import presentation.view.tools.component.MyTextField;
+import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
+import presentation.view.tools.component.MyLabel;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import vo.StockComparisionVO;
@@ -81,10 +82,10 @@ public class ComparePanel extends TemplatePanel {
         datePanel = new DoubleDatePickerPanel();
         datePanel.setBounds(width * 100 / 1920, height * 50 / 1030, 520 * width / 1920, 35 * height / 1030);
         add(datePanel);
-        name1 = new JTextField();
-        num1 = new JTextField();
-        name2 = new JTextField();
-        num2 = new JTextField();
+        name1 = new MyTextField();
+        num1 = new MyTextField();
+        name2 = new MyTextField();
+        num2 = new MyTextField();
         chartService =new ChartServiceImpl();
         //搜索按钮
         compare = new JButton("比较");

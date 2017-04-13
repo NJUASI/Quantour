@@ -3,7 +3,8 @@ package presentation.view.panel;
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
 import presentation.view.tools.*;
-import presentation.view.tools.datePicker.SingleDatePickerPanel;
+import presentation.view.tools.component.MyLabel;
+import presentation.view.tools.component.datePicker.SingleDatePickerPanel;
 
 import javax.swing.*;
 import java.awt.*;

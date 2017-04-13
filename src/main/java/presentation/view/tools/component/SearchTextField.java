@@ -1,4 +1,6 @@
-package presentation.view.tools;
+package presentation.view.tools.component;
+
+import presentation.view.tools.ButtonImageLoad;
 
 import javax.swing.*;
 import java.awt.*;

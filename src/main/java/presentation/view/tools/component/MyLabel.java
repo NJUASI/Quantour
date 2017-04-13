@@ -1,4 +1,7 @@
-package presentation.view.tools;
+package presentation.view.tools.component;
+
+import presentation.view.tools.ColorUtils;
+import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +14,7 @@ public class MyLabel extends JLabel {
     public MyLabel(String str){
         setText(str);
         setBorder(null);
-        width=WindowData.getInstance().getWidth();
+        width= WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
         setForeground(ColorUtils.fontColor());
         setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,16*width/1920));

@@ -4,7 +4,7 @@ import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 import presentation.listener.loginPanelListener.LoginListener;
 import presentation.view.frame.LoginFrame;
 import presentation.view.tools.customizedButton.MyButton;
-import presentation.view.tools.MyLabel;
+import presentation.view.tools.component.MyLabel;
 
 import javax.swing.*;
 import java.awt.*;

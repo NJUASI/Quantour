@@ -1,4 +1,4 @@
-package presentation.view.tools.datePicker;
+package presentation.view.tools.component.datePicker;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;

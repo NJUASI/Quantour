@@ -43,4 +43,6 @@ public class ColorUtils {
         return  new Color(19,22,24);
     }
 
+    public static Color titleColor(){return new Color(40,50,55);}
+
 }

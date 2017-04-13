@@ -1,7 +1,7 @@
 package presentation.controller;
 
 import presentation.view.panel.*;
-import presentation.view.tools.ProgressBar;
+import presentation.view.tools.component.ProgressBar;
 import presentation.view.tools.StocksTablePane;
 import presentation.view.tools.WindowData;
 import service.StockSituationService;
@@ -10,7 +10,6 @@ import utilities.exceptions.NoSituationDataException;
 import vo.PriceRiseOrFallVO;
 
 import javax.swing.*;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
