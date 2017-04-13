@@ -3,6 +3,7 @@ package dao.daoImpl;
 import dao.DataSourceDao;
 import dataHelper.DataSourceDataHelper;
 import dataHelper.dataHelperImpl.DataSourceDataHelperImpl;
+import po.DataSourceInfoPO;
 
 import java.io.*;
 
@@ -20,5 +21,10 @@ public class DataSourceDaoImpl implements DataSourceDao {
     @Override
     public boolean upload(String filePath) throws IOException {
         return helper.upload(filePath);
+    }
+
+    @Override
+    public DataSourceInfoPO getMyDataSource() throws IOException {
+        return helper.getMyDataSource();
     }
 }

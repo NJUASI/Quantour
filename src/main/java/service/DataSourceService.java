@@ -1,5 +1,7 @@
 package service;
 
+import vo.DataSourceInfoVO;
+
 import java.io.IOException;
 
 /**
@@ -17,4 +19,12 @@ public interface DataSourceService {
      * @return 上传成功
      */
     boolean upload(String filePath) throws IOException;
+
+    /**
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/13
+     * @return 用户自己上传的数据源格式信息，没有返回null
+     */
+    DataSourceInfoVO getMyDataSource();
 }

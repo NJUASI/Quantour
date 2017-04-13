@@ -3,6 +3,7 @@ package service.serviceImpl;
 import dao.DataSourceDao;
 import dao.daoImpl.DataSourceDaoImpl;
 import service.DataSourceService;
+import vo.DataSourceInfoVO;
 
 import java.io.IOException;
 
@@ -20,5 +21,10 @@ public class DataSourceServiceImpl implements DataSourceService {
     @Override
     public boolean upload(String filePath) throws IOException {
         return dao.upload(filePath);
+    }
+
+    @Override
+    public DataSourceInfoVO getMyDataSource() {
+        return dao.getMyDataSource();
     }
 }
