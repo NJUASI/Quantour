@@ -25,6 +25,11 @@ public class DataSourceServiceImpl implements DataSourceService {
 
     @Override
     public DataSourceInfoVO getMyDataSource() {
-        return dao.getMyDataSource();
+        try {
+            return new DataSourceInfoVO(dao.getMyDataSource());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
