@@ -1,10 +1,12 @@
 package dataHelper.dataHelperImpl;
 
 import dataHelper.DataSourceDataHelper;
+import po.DataSourceInfoPO;
 import po.StockSituationPO;
 import utilities.StockCodeHelper;
 
 import java.io.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,98 +34,52 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
         SituationCreator creator3 = new SituationCreator();
         creator3.handle();
+
+        StockNameToCodeCreator creator4 = new StockNameToCodeCreator();
+        creator4.handle();
+
         return true;
     }
-}
 
-/**
- * 创建stockName-Code.properties
- */
-class StockNameToCodeCreator {
+    @Override
+    public DataSourceInfoPO getMyDataSource() throws IOException {
+        // TODO 用户姓名未实现
 
-    private String readerPath = "";
-    private String writerDesPath = "";
-    private String post = ".properties";
+        final String separator = System.getProperty("file.separator");
+        final String filePath = System.getProperty("user.dir") + separator + "attachments" + separator + "info.txt";
+        File thisFile = new File(filePath);
+        if (!thisFile.exists()) return null;
 
-    private File[] fileName;
-    private ArrayList<String> key = new ArrayList<String>();
-
-    public StockNameToCodeCreator(String readerPath, String writerDesPath) {
-        this.readerPath = readerPath;
-        this.writerDesPath = writerDesPath;
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
+        String[] result = br.readLine().split("\t");
+        return new DataSourceInfoPO(new Timestamp(Long.parseLong(result[0])), result[1], "null");
     }
-
-    public void handle() {
-        this.reader();
-        this.writer();
-    }
-
-    private void writer() {
-        File file = new File(writerDesPath + post);
-        try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-            for (String temp : this.key) {
-                writer.write(temp);
-                writer.newLine();
-            }
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void reader() {
-        File tempFile = new File(readerPath);
-        fileName = tempFile.listFiles();
-
-        for (File file : fileName) {
-
-            File temp = new File(readerPath + file.getName());
-
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(temp), "UTF-8"));
-                String line = reader.readLine();
-
-                String[] tempString = line.split("\t");
-
-                String tempF = file.getName().substring(0, file.getName().length() - 4);
-
-                this.key.add(tempString[9] + "=" + tempF);
-                reader.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
 }
 
 
 /**
- * 创建stock_records_by_code文件夹
+ * 创建stock_records_by_code文件夹，同时创建数据源附属信息
  */
 class CodeDirCreator {
 
     BufferedReader br;
 
+    String sourceFile;
     private List<String> codes = new ArrayList<>();
 
-    public CodeDirCreator(String sourceFile) throws FileNotFoundException, UnsupportedEncodingException {
+    CodeDirCreator(String sourceFile) throws FileNotFoundException, UnsupportedEncodingException {
+        this.sourceFile = sourceFile;
         br = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), "UTF-8"));
     }
 
-    public boolean createDir() throws IOException {
+    boolean createDir() throws IOException {
+        // 创建目录
         String thisLine = null;
-
         while ((thisLine = br.readLine()) != null) {
             if (thisLine.equals("Serial\tDate\tOpen\tHigh\tLow\tClose\tVolume\tAdj Close\tcode\tname\tmarket"))
                 continue;
             judgeLine(thisLine);
         }
-
         create();
         return true;
     }
@@ -162,6 +118,18 @@ class CodeDirCreator {
                 file.createNewFile();
             }
         }
+
+        // 创建数据源附属信息，未写入当前用户信息 TODO 待之后写入
+        File dataSourceInfo = new File(parent + "info" + post);
+        dataSourceInfo.createNewFile();
+
+        File sourceFile = new File(this.sourceFile);
+        long timeDistance = sourceFile.lastModified();
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(dataSourceInfo, false));
+        bw.write(this.sourceFile + '\t' + timeDistance + '\t' + "null");
+        bw.flush();
+        bw.close();
     }
 }
 
@@ -181,11 +149,11 @@ class OriginalDataReader {
     private String desCode = "";
     private String codeDesFilePath = null;
 
-    public OriginalDataReader(String sourceFile) throws FileNotFoundException, UnsupportedEncodingException {
+    OriginalDataReader(String sourceFile) throws FileNotFoundException, UnsupportedEncodingException {
         br = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), "UTF-8"));
     }
 
-    public boolean handle() throws IOException {
+    boolean handle() throws IOException {
         final String lineSeparator = System.getProperty("line.separator");
 
         String thisLine = null;
@@ -282,7 +250,7 @@ class DuplicationAdder {
 
     private StringBuffer result = new StringBuffer();
 
-    public boolean handle() throws IOException {
+    boolean handle() throws IOException {
         for (String s : getFileList()) {
             if (!s.equals(".DS_Store")) {
                 addDuplication(s);
@@ -347,7 +315,7 @@ class DateFilesCreator {
 
     Map<LocalDate, StringBuffer> results = new TreeMap<>();
 
-    public boolean handle() throws IOException {
+    boolean handle() throws IOException {
         for (String s : getFileList()) {
             if (!s.equals(".DS_Store")) {
                 br = new BufferedReader(new InputStreamReader(new FileInputStream(sourcePath + fileSeparator + s), "UTF-8"));
@@ -415,7 +383,7 @@ class SituationCreator {
         return new File(sourcePath).list();
     }
 
-    public boolean handle() throws IOException {
+    boolean handle() throws IOException {
         // 读取stock_records_by_date里面以股票代码为区分的数据
         BufferedReader br = null;
 
@@ -506,5 +474,70 @@ class SituationCreator {
     private LocalDate getLocalDateOfFileName(String fileName) {
         String[] dateMsg = fileName.split("-");
         return LocalDate.of(Integer.parseInt(dateMsg[0]), Integer.parseInt(dateMsg[1]), Integer.parseInt(dateMsg[2].substring(0, 2)));
+    }
+}
+
+/**
+ * 创建stockName-Code.properties
+ */
+class StockNameToCodeCreator {
+
+    final String separator = System.getProperty("file.separator");
+    final String parent = System.getProperty("user.dir") + separator + "attachments";
+    final String post = ".properties";
+
+    private ArrayList<String> key = new ArrayList<String>();
+
+
+    void handle() {
+        this.reader();
+        this.writer();
+    }
+
+    private void writer() {
+        try {
+            // 新建相关文件夹
+            File writeDesParentPath = new File(parent + separator + "stockName-code");
+            writeDesParentPath.mkdirs();
+
+            String writerDesPath = parent + separator + "stockName-code" + separator + "stockName-code" + post;
+            writeDesParentPath.createNewFile();
+
+            File file = new File(writerDesPath);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+            for (String temp : this.key) {
+                writer.write(temp);
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void reader() {
+        String readerPath = parent + separator + "stock_records_by_code" + separator;
+
+        File parentFile = new File(readerPath);
+        String[] fileName = parentFile.list();
+
+        for (String fileNameForRead : fileName) {
+            File temp = new File(readerPath + fileNameForRead);
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(temp), "UTF-8"));
+                String line = reader.readLine();
+
+                // 删除StockName中的空格（包括S ST 被替换为SST）
+                String tempName = line.split("\t")[9].replace(" ", "");
+                String tempCode = fileNameForRead.substring(0, fileNameForRead.length() - 4);
+
+                this.key.add(tempName + "=" + tempCode);
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
