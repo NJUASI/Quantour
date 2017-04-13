@@ -7,6 +7,7 @@ public class IDReserve {
     private static IDReserve idReserve = new IDReserve();
 
     private String userID;
+    private String password;
     /**
      * 获得单件IDReserve
      *
@@ -29,6 +30,7 @@ public class IDReserve {
     public String getUserID() {
         return userID;
     }
+
     /**
      * 设置ID
      *
@@ -37,7 +39,8 @@ public class IDReserve {
      * @author 61990
      * @updateTime 2017/3/5
      */
-    public void setUserID(String userID) {
+    public void setUserID(String userID, String password) {
         this.userID = userID;
+        this.password = password;
     }
 }

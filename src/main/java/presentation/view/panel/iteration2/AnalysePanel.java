@@ -43,7 +43,7 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
 
         p3.add(progressBar);
 
-        new ProgressBar(progressBar, button).start();
+        new ProgressBar(progressBar).start();
 
 
         p3.setBackground(WindowData.getInstance().getColor());

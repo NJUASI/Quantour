@@ -59,23 +59,7 @@ public class StocksTableController {
     public static StocksTableController getInstance(){
         return stocksTableController;
     }
-    /**
-     * TODO 导入数据
-     * filePath 路径
-     */
 
-    public void importDate(String filePath) {
-
-        if(progressBar!=null){
-            stocksTablePanel.remove(progressBar);
-        }
-        progressBar = new JProgressBar();
-        progressBar.setStringPainted(true);  //显示提示信息
-        progressBar.setIndeterminate(false);
-        progressBar.setBounds(1300,50,200,35);
-        stocksTablePanel.add(progressBar);
-        new ProgressBar(progressBar,stocksTablePanel.search).start();
-    }
 
     /**
      * Search. 选定日期，搜索列表
@@ -140,5 +124,14 @@ public class StocksTableController {
         }catch (Exception e){
 
         }
+    }
+
+    /**
+     * 将选择的股票加入自选股
+     */
+    public void addFavorite() {
+        //todo 加入自选股
+//     名称   stocksTablePane.getName()
+//     代码   stocksTablePane.getCode()
     }
 }

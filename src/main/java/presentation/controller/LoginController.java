@@ -53,10 +53,9 @@ public class LoginController{
         UserService userService=new UserServiceImpl();
         String name = loginPanel.getUsername();
         String password = loginPanel.getPassword();
-        System.out.println(name);
         try {
             if(userService.logIn(name,password)){
-                IDReserve.getInstance().setUserID(name);
+                IDReserve.getInstance().setUserID(name,password);
                 loginPanel.setUsername("Enter your admin");
                 loginPanel.setPassword("");
                 MainFrame.getInstance();

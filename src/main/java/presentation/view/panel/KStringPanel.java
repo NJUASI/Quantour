@@ -120,7 +120,7 @@ public class KStringPanel extends TemplatePanel {
         });
         
         //股票名称框
-        searchTextField.setBounds(adaptScreen(900, 50, 150, 35));
+        searchTextField.setBounds(adaptScreen(910, 50, 150, 35));
         add(searchTextField);
         searchTextField.addMouseListener(new MouseAdapter() {
             @Override

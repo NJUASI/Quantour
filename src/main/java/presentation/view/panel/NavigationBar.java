@@ -1,10 +1,7 @@
 package presentation.view.panel;
 
-import presentation.listener.navigationBarListener.CompareListener;
+import presentation.listener.navigationBarListener.*;
 //import presentation.listener.navigationBarListener.FavoritesListener;
-import presentation.listener.navigationBarListener.KStringListener;
-import presentation.listener.navigationBarListener.StocksTableListener;
-import presentation.listener.navigationBarListener.StrategyListener;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.customizedButton.MyCustomizedButton;
 
@@ -36,10 +33,21 @@ public class NavigationBar extends TemplatePanel {
         setBounds(adaptScreen(0,0,90,1030));
 
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
+
         JLabel logo1 =new JLabel();
         bgPicture.setImage(bgPicture.getImage().getScaledInstance(80*width/1920, 80*height/1130, Image.SCALE_DEFAULT ));
         logo1.setIcon(bgPicture);
+        logo1.addMouseListener(new UserListener());
         logo1.setBounds(adaptScreen(5,5,80,80));
+        logo1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(numOfChoosed!=0){
+                    numOfChoosed=0;
+                    whileClicked(numOfChoosed);
+                }
+            }
+        });
         add(logo1);
 
         //the door of function 4
@@ -52,7 +60,6 @@ public class NavigationBar extends TemplatePanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(numOfChoosed!=1){
-//                    favorites.click2();
                     numOfChoosed=1;
                     whileClicked(numOfChoosed);
                 }
@@ -190,6 +197,14 @@ public class NavigationBar extends TemplatePanel {
     }
     public void whileClicked(int i){
         switch (i){
+            case 0:
+                stock.moveOut();
+                kString.moveOut();
+                strategy.moveOut();
+                compare.moveOut();
+                TitlePanel.getInstance().setTitle("主页");
+                numOfChoosed=0;
+                break;
             case 1:
                 stock.click2();
                 kString.moveOut();

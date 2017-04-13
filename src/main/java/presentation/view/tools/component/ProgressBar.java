@@ -8,12 +8,10 @@ import javax.swing.*;
 public class ProgressBar extends Thread {
 //    static ProgressBar progressBar;
     JProgressBar bar;
-    JComponent component;
 
-    public ProgressBar(JProgressBar progressBar, JComponent component) {
+    public ProgressBar(JProgressBar progressBar) {
         this.bar = progressBar;
-        this.component = component;
-        component.setEnabled(false);
+
     }
 
     public void run() {
@@ -28,7 +26,6 @@ public class ProgressBar extends Thread {
         }
         bar.setIndeterminate(false);
         bar.setString("导入成功！");
-        component.setEnabled(true);
     }
 //    public static ProgressBar getInstance(JProgressBar bar, JComponent component){
 //        if(progressBar==null){

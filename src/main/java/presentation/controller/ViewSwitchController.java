@@ -3,6 +3,7 @@ package presentation.controller;
 import presentation.view.frame.MainFrame;
 import presentation.view.panel.*;
 import presentation.view.panel.iteration2.StrategyPanel;
+import presentation.view.panel.user.UserPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,14 +56,15 @@ public class ViewSwitchController{
                 case "comparePanel":
                     cardPanel.add(ComparePanel.getInstance(),"comparePanel");
                     break;
-//                case "thermometerPanel":
-//                    cardPanel.add(ThermometerPanel.getInstance(),"thermometerPanel");
-//                    break;
+
                 case "stocksTablePanel":
                     cardPanel.add(StocksTablePanel.getInstance(),"stocksTablePanel");
                     break;
                 case "strategyPanel":
                     cardPanel.add(StrategyPanel.getInstance(),"strategyPanel");
+                    break;
+                case "userPanel":
+                    cardPanel.add(UserPanel.getInstance(),"userPanel");
                     break;
             }
             panelNames.add(panelName);

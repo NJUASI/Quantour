@@ -1,6 +1,7 @@
 package presentation.view.tools;
 
 import java.awt.*;
+import java.time.LocalDate;
 
 /**
  * Created by 61990 on 2017/3/5.
@@ -12,6 +13,7 @@ public class WindowData {
     private static int width;
     private static int height;
     private static Color bgColor;
+    private static LocalDate date;
 
     /**
      * 设置屏幕高和宽度
@@ -26,6 +28,7 @@ public class WindowData {
         windowData.height = height;
         windowData.width = width;
         bgColor = ColorUtils.backgroundColor();
+        date=LocalDate.of(2014,4,29);
     }
 
     /**
@@ -65,6 +68,17 @@ public class WindowData {
      */
     public Color getColor() {
         return bgColor;
+    }
+    /**
+     * 获得当前日期
+     *
+     * @param
+     * @return width 宽 height 高
+     * @author 61990
+     * @updateTime 2017/3/10
+     */
+    public LocalDate getDate() {
+        return date;
     }
 
     /**

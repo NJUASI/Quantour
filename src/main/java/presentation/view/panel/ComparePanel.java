@@ -116,14 +116,14 @@ public class ComparePanel extends TemplatePanel {
         label3.setLocation(960*width/1920,5*height/1030);
         add(label3);
 
-        name1.setBounds(adaptScreen(900, 40, 150, 35));
+        name1.setBounds(adaptScreen(910, 40, 150, 35));
         add(name1);
 
         num1.setBounds(adaptScreen(750, 40, 150, 35));
         add(num1);
 
 
-        name2.setBounds(adaptScreen(900, 80, 150, 35));
+        name2.setBounds(adaptScreen(910, 80, 150, 35));
         add(name2);
 
         num2.setBounds(adaptScreen(750, 80, 150, 35));

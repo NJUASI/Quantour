@@ -42,7 +42,7 @@ public class SingleDatePickerPanel extends JFXPanel {
                 date.setMinSize(width*175/1920,37*height/1030);
                 date.setPrefSize(width*175/1920,37*height/1030);
                 date.setMaxSize(width*175/1920,37*height/1030);
-                date.setValue(LocalDate.of(2014, 4, 29));
+                date.setValue(WindowData.getInstance().getDate());
                 date.setEditable(false);
                 Callback<DatePicker, DateCell> dayCellFactory2 =
                         new Callback<DatePicker, DateCell>() {

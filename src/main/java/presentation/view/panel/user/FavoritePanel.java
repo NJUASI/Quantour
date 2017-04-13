@@ -1,6 +1,9 @@
-package presentation.view.tools;
+package presentation.view.panel.user;
 
 import presentation.view.panel.StocksTablePanel;
+import presentation.view.tools.MyMouseListener;
+import presentation.view.tools.MyTableHeaderRender;
+import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
 
 import javax.swing.*;
@@ -10,25 +13,30 @@ import java.awt.*;
 import java.time.LocalDate;
 
 /**
- * Created by 61990 on 2017/3/10.
+ * Created by 61990 on 2017/4/13.
  */
-public class StocksTablePane extends JScrollPane {
-
+public class FavoritePanel extends JScrollPane{
+    LocalDate date;
     private JTable jTable;
+
     WindowData windowData;
+
     int width;
+
     int height;
 
-    public StocksTablePane(LocalDate date) {
+    public FavoritePanel(){
+        date = WindowData.getInstance().getDate();
+        //TODO 获得一个人的自选股  date  日期的股票信息
+        windowData = WindowData.getInstance();
+        width = windowData.getWidth();
+        height = windowData.getHeight();
 
+        setSize(600 * width / 1920, 600 * height / 1030);
 
-            windowData = WindowData.getInstance();
-            width = windowData.getWidth();
-            height = windowData.getHeight();
-            setSize(1400 * width / 1920, 800 * height / 1030);
-            try {
-                jTable = new JTable(new StocksTableModel(date));
-                jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
+        try {
+            jTable = new JTable(new FavoriteTableModel(date));
+            jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
 //            jTable.setRowHeight (30);//设置每行的高度为30
 //            jTable.setRowMargin (5);//设置相邻两行单元格的距离
 //        table.removeColumn(table.getColumnModel().getColumn(columnIndex));// columnIndex是要删除的列序号
@@ -64,13 +72,13 @@ public class StocksTablePane extends JScrollPane {
             DefaultTableCellRenderer cellRanderer = new DefaultTableCellRenderer() {
                 @Override
                 protected void setValue(Object value) {
-                        if(value.toString().substring(0,1).equals("-")){
-                            setForeground(new Color(15,195,81));
-                            setText(value.toString());
-                        }else{
-                            setForeground(new Color(255,61,61));
-                            setText(value.toString());
-                        }
+                    if(value.toString().substring(0,1).equals("-")){
+                        setForeground(new Color(15,195,81));
+                        setText(value.toString());
+                    }else{
+                        setForeground(new Color(255,61,61));
+                        setText(value.toString());
+                    }
                 }
             };
 //            TableColumn tc = jTable.getColumn("开盘指数");
@@ -95,16 +103,5 @@ public class StocksTablePane extends JScrollPane {
         } catch (Exception e) {
             StocksTablePanel.getInstance().label.setVisible(true);
         }
-
-    }
-
-    public String getCode() {
-        String cellValue = "" + jTable.getValueAt(jTable.getSelectedRow(), 0);// 取单元格数据,row是行号,column是列号
-        return cellValue;
-    }
-
-    public String getName() {
-        String cellValue = "" + jTable.getValueAt(jTable.getSelectedRow(), 1);// 取单元格数据,row是行号,column是列号
-        return cellValue;
     }
 }
