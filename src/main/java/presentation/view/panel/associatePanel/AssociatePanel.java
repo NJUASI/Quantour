@@ -5,12 +5,11 @@ import presentation.listener.associatePanelListener.ComparePanelChooseListener2;
 import presentation.listener.associatePanelListener.KStringChooseListener;
 import presentation.listener.associatePanelListener.KeyControlListener;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.UI.MyScrollBarUI;
+import presentation.view.tools.ui.MyScrollBarUI;
 import presentation.view.tools.WindowData;
 import vo.StockSearchVO;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by 61990 on 2017/3/8.

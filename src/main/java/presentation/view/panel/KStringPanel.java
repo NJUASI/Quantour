@@ -12,6 +12,7 @@ import presentation.listener.kStringPanelListener.StockCodeDocListener;
 import presentation.listener.kStringPanelListener.StockNameDocListener;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.ColorUtils;
+import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyTextField;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
@@ -71,11 +72,11 @@ public class KStringPanel extends TemplatePanel {
 
         num = new MyTextField();
         num.setText("");
-        searchAll = new JButton("总体信息");
+        searchAll = new MyButton("总体信息");
         searchAll.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        search = new JButton("局部信息");
+        search = new MyButton("局部信息");
         search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        compare = new JButton("加入比较");
+        compare = new MyButton("加入比较");
         compare.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         init();
     }

@@ -1,7 +1,7 @@
 package presentation.view.tools;
 
 import presentation.view.panel.StocksTablePanel;
-import presentation.view.tools.UI.MyScrollBarUI;
+import presentation.view.tools.ui.MyScrollBarUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

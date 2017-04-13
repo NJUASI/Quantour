@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Created by 61990 on 2017/3/17.
  */
-public class MyButton extends JLabel {
+public class MyCustomizedButton extends JLabel {
     ImageIcon bgPicture;
     int x=40;
     int y=35;
@@ -16,7 +16,7 @@ public class MyButton extends JLabel {
     int width;
     int height;
     int type;
-    public MyButton(String str,int i){
+    public MyCustomizedButton(String str, int i){
         type=i;
         path=str;
         width= WindowData.getInstance().getWidth();

@@ -3,7 +3,7 @@ package presentation.view.panel;
 import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 import presentation.listener.loginPanelListener.LoginListener;
 import presentation.view.frame.LoginFrame;
-import presentation.view.tools.customizedButton.MyButton;
+import presentation.view.tools.customizedButton.MyCustomizedButton;
 import presentation.view.tools.component.MyLabel;
 
 import javax.swing.*;
@@ -28,7 +28,7 @@ public class LoginPanel extends TemplatePanel {
     //注册按钮
     JButton openRegister;
 
-    MyButton close,min;
+    MyCustomizedButton close,min;
     /**
      * 构造器
      *
@@ -103,7 +103,7 @@ public class LoginPanel extends TemplatePanel {
 //        add(openRegister);
 
         //关闭按钮
-        close=new MyButton("close",0);
+        close=new MyCustomizedButton("close",0);
         close.setBounds(adaptScreen(400,0,45,40));
         close.addMouseListener(new MouseAdapter() {
             @Override
@@ -123,7 +123,7 @@ public class LoginPanel extends TemplatePanel {
         });
         add(close);
         //最小化按钮
-        min=new MyButton("min",0);
+        min=new MyCustomizedButton("min",0);
         min.setBounds(adaptScreen(345,0,45,40));
         min.addMouseListener(new MouseAdapter() {
             @Override

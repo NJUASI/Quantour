@@ -3,7 +3,7 @@ package presentation.view.panel;
 import presentation.listener.registerPanelListener.RegisterListener;
 import presentation.view.frame.LoginFrame;
 import presentation.view.frame.RegisterFrame;
-import presentation.view.tools.customizedButton.MyButton;
+import presentation.view.tools.customizedButton.MyCustomizedButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,7 @@ public class RegisterPanel extends TemplatePanel {
     //注册按钮
     private JButton register;
 
-    MyButton close,min;
+    MyCustomizedButton close,min;
     /**
      * 构造器
      *
@@ -86,7 +86,7 @@ public class RegisterPanel extends TemplatePanel {
         add(register);
 
         //关闭按钮
-        close=new MyButton("close",0);
+        close=new MyCustomizedButton("close",0);
         close.setBounds(adaptScreen(405,0,40,35));
         close.addMouseListener(new MouseAdapter() {
             @Override
@@ -106,7 +106,7 @@ public class RegisterPanel extends TemplatePanel {
         });
         add(close);
         //最小化按钮
-        min=new MyButton("min",0);
+        min=new MyCustomizedButton("min",0);
         min.setBounds(adaptScreen(350,0,40,35));
         min.addMouseListener(new MouseAdapter() {
             @Override

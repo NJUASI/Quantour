@@ -3,8 +3,9 @@ package presentation.view.panel.iteration2;
 import presentation.controller.StrategySwitchController;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
+import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.ProgressBar;
-import presentation.view.tools.UI.MyTabUI;
+import presentation.view.tools.ui.MyTabUI;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
         JPanel p3 = new JPanel();
         p3.setLayout(null);
 
-        JButton button = new JButton("312");
+        JButton button = new MyButton("312");
         button.setBounds(adaptScreen(100,100,100,100));
         p3.add(button);
 
@@ -66,7 +67,7 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
         add(tab);
         setBorder(BorderFactory.createEmptyBorder());
 
-        JButton back=new JButton("返回");
+        JButton back=new MyButton("返回");
         back.setBounds(adaptScreen(10,10,60,25));
         back.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*WindowData.getInstance().getWidth()/1920));
         back.addMouseListener(new MouseAdapter() {

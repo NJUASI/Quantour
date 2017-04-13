@@ -6,7 +6,7 @@ import presentation.chart.compare.CompareChart2;
 import presentation.chart.compare.CompareChart3;
 import presentation.chart.compare.CompareChart4;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.UI.MyTabUI;
+import presentation.view.tools.ui.MyTabUI;
 import presentation.view.tools.WindowData;
 import vo.StockComparisionVO;
 

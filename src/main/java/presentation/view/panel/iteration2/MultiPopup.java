@@ -1,5 +1,8 @@
 package presentation.view.panel.iteration2;
 
+import presentation.view.tools.ColorUtils;
+import presentation.view.tools.component.MyButton;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,11 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 
 public class MultiPopup extends JPopupMenu {
 
@@ -25,7 +24,7 @@ public class MultiPopup extends JPopupMenu {
 
     private List<JCheckBox> checkBoxList = new ArrayList<JCheckBox>();
 
-    private JButton commitButton ;
+    private JButton commitButton;
 
     private JButton cancelButton;
 
@@ -33,7 +32,7 @@ public class MultiPopup extends JPopupMenu {
 
     public static final String CANCEL_EVENT = "cancel";
 
-    public MultiPopup(Object[] value , Object[] defaultValue) {
+    public MultiPopup(Object[] value, Object[] defaultValue) {
         super();
         values = value;
         defaultValues = defaultValue;
@@ -47,37 +46,40 @@ public class MultiPopup extends JPopupMenu {
 
 
     private void initComponent() {
+        setBorder(BorderFactory.createEmptyBorder());
+        setBackground(ColorUtils.backgroundColor());
+        setForeground(ColorUtils.fontColor());
 
         JPanel checkboxPane = new JPanel();
+        checkboxPane.setBackground(ColorUtils.backgroundColor());
+        checkboxPane.setForeground(ColorUtils.fontColor());
+        checkboxPane.setBorder(BorderFactory.createEmptyBorder());
 
         JPanel buttonPane = new JPanel();
+        buttonPane.setBackground(ColorUtils.backgroundColor());
+        buttonPane.setForeground(ColorUtils.fontColor());
+        buttonPane.setBorder(BorderFactory.createEmptyBorder());
 
         this.setLayout(new BorderLayout());
 
-        for(Object v : values){
-            JCheckBox temp = new JCheckBox(v.toString() , selected(v));
+        for (Object v : values) {
+            JCheckBox temp = new JCheckBox(v.toString(), selected(v));
             checkBoxList.add(temp);
         }
 
-        if(checkBoxList.get(0).getText().equals("全部"))
-            checkBoxList.get(0).addItemListener(new ItemListener()
-            {
-                public void itemStateChanged(ItemEvent e)
-                {
-                    if(checkBoxList.get(0).isSelected())//Select All 被选中
+        if (checkBoxList.get(0).getText().equals("全部"))
+            checkBoxList.get(0).addItemListener(new ItemListener() {
+                public void itemStateChanged(ItemEvent e) {
+                    if (checkBoxList.get(0).isSelected())//Select All 被选中
                     {
                         //检查其他的是否被选中乳沟没有就选中他们
-                        for(int i=1; i< checkBoxList.size();i++)
-                        {
-                            if(!checkBoxList.get(i).isSelected())
+                        for (int i = 1; i < checkBoxList.size(); i++) {
+                            if (!checkBoxList.get(i).isSelected())
                                 checkBoxList.get(i).setSelected(true);
                         }
-                    }
-                    else
-                    {
-                        for(int i=1; i< checkBoxList.size();i++)
-                        {
-                            if(checkBoxList.get(i).isSelected())
+                    } else {
+                        for (int i = 1; i < checkBoxList.size(); i++) {
+                            if (checkBoxList.get(i).isSelected())
                                 checkBoxList.get(i).setSelected(false);
                         }
                     }
@@ -85,15 +87,17 @@ public class MultiPopup extends JPopupMenu {
             });
 
 
+        checkboxPane.setLayout(new GridLayout(checkBoxList.size(), 1, 3, 3));
+        for (JCheckBox box : checkBoxList) {
+            box.setBackground(ColorUtils.backgroundColor());
+            box.setForeground(ColorUtils.fontColor());
 
-        checkboxPane.setLayout(new GridLayout(checkBoxList.size() , 1 ,3, 3));
-        for(JCheckBox box : checkBoxList){
             checkboxPane.add(box);
         }
 
-        commitButton = new JButton("确定");
+        commitButton = new MyButton("确定");
 
-        commitButton.addActionListener(new ActionListener(){
+        commitButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 commit();
@@ -101,9 +105,9 @@ public class MultiPopup extends JPopupMenu {
 
         });
 
-        cancelButton = new JButton("取消");
+        cancelButton = new MyButton("取消");
 
-        cancelButton.addActionListener(new ActionListener(){
+        cancelButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 cancel();
@@ -115,16 +119,15 @@ public class MultiPopup extends JPopupMenu {
 
         buttonPane.add(cancelButton);
 
-        this.add(checkboxPane , BorderLayout.CENTER);
+        this.add(checkboxPane, BorderLayout.CENTER);
 
-        this.add(buttonPane , BorderLayout.SOUTH);
-
+        this.add(buttonPane, BorderLayout.SOUTH);
 
     }
 
     private boolean selected(Object v) {
-        for(Object dv : defaultValues){
-            if( dv .equals(v) ){
+        for (Object dv : defaultValues) {
+            if (dv.equals(v)) {
                 return true;
             }
         }
@@ -137,30 +140,25 @@ public class MultiPopup extends JPopupMenu {
         }
     }
 
-    public Object[] getSelectedValues(){
+    public Object[] getSelectedValues() {
         List<Object> selectedValues = new ArrayList<Object>();
 
-        if(checkBoxList.get(0).getText().equals("全部"))
-        {
-            if(checkBoxList.get(0).isSelected())
-            {
-                for(int i = 1 ; i < checkBoxList.size() ; i++)
-                {
+        if (checkBoxList.get(0).getText().equals("全部")) {
+            if (checkBoxList.get(0).isSelected()) {
+                for (int i = 1; i < checkBoxList.size(); i++) {
                     selectedValues.add(values[i]);
                 }
-            }
-            else
-            {
-                for(int i = 1 ; i < checkBoxList.size() ; i++){
+            } else {
+                for (int i = 1; i < checkBoxList.size(); i++) {
 
-                    if(checkBoxList.get(i).isSelected())
+                    if (checkBoxList.get(i).isSelected())
                         selectedValues.add(values[i]);
                 }
             }
-        }else
-            for(int i = 0 ; i < checkBoxList.size() ; i++){
+        } else
+            for (int i = 0; i < checkBoxList.size(); i++) {
 
-                if(checkBoxList.get(i).isSelected())
+                if (checkBoxList.get(i).isSelected())
                     selectedValues.add(values[i]);
             }
 
@@ -173,11 +171,11 @@ public class MultiPopup extends JPopupMenu {
 
     }
 
-    public void commit(){
+    public void commit() {
         fireActionPerformed(new ActionEvent(this, 0, COMMIT_EVENT));
     }
 
-    public void cancel(){
+    public void cancel() {
         fireActionPerformed(new ActionEvent(this, 0, CANCEL_EVENT));
     }
 

@@ -1,4 +1,4 @@
-package presentation.view.tools.UI;
+package presentation.view.tools.ui;
 
 import presentation.view.tools.ColorUtils;
 

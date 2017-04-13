@@ -3,6 +3,7 @@ package presentation.view.panel.iteration2;
 import presentation.controller.StrategySwitchController;
 import presentation.listener.strategyPanelListener.SearchListener;
 import presentation.view.panel.TemplatePanel;
+import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.WindowData;
@@ -141,7 +142,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         add(strategyTypePanel);
 
 
-        JButton searchBt= new JButton("开始回测");
+        JButton searchBt= new MyButton("开始回测");
         searchBt.setBounds(adaptScreen(1200,550,100,35));
         searchBt.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         searchBt.addMouseListener(new SearchListener());

@@ -2,9 +2,10 @@ package presentation.view.panel;
 
 import presentation.view.frame.MainFrame;
 import presentation.view.tools.ColorUtils;
+import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.SearchPopupMenu;
 import presentation.view.tools.component.SearchTextField;
-import presentation.view.tools.customizedButton.MyButton;
+import presentation.view.tools.customizedButton.MyCustomizedButton;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -22,7 +23,7 @@ public class TitlePanel extends TemplatePanel {
 
     JLabel label;
 
-    MyButton close, min;
+    MyCustomizedButton close, min;
 
     //搜索按钮
     JButton searchBt;
@@ -46,7 +47,7 @@ public class TitlePanel extends TemplatePanel {
         add(label);
 
         //关闭按钮
-        close = new MyButton("close", 0);
+        close = new MyCustomizedButton("close", 0);
         close.setBounds(adaptScreen(1760, 0, 45, 40));
         close.addMouseListener(new MouseAdapter() {
             @Override
@@ -66,7 +67,7 @@ public class TitlePanel extends TemplatePanel {
         });
         add(close);
         //最小化按钮
-        min = new MyButton("min", 0);
+        min = new MyCustomizedButton("min", 0);
         min.setBounds(adaptScreen(1695, 0, 45, 40));
         min.addMouseListener(new MouseAdapter() {
             @Override
@@ -114,7 +115,7 @@ public class TitlePanel extends TemplatePanel {
 
 
         //搜索按钮
-        searchBt = new JButton();
+        searchBt = new MyButton();
         searchBt.setBounds(40,5,20,20);
 //        add(searchBt);
         searchBt.addMouseListener(new MouseAdapter() {

@@ -6,7 +6,7 @@ import presentation.listener.navigationBarListener.KStringListener;
 import presentation.listener.navigationBarListener.StocksTableListener;
 import presentation.listener.navigationBarListener.StrategyListener;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.customizedButton.MyButton;
+import presentation.view.tools.customizedButton.MyCustomizedButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ import java.awt.event.MouseEvent;
  */
 public class NavigationBar extends TemplatePanel {
     int numOfChoosed;
-    MyButton kString,compare,stock,strategy;
+    MyCustomizedButton kString,compare,stock,strategy;
     private static NavigationBar navigationBar;
 
     /**
@@ -43,7 +43,7 @@ public class NavigationBar extends TemplatePanel {
         add(logo1);
 
         //the door of function 4
-        stock = new MyButton("stock",1);
+        stock = new MyCustomizedButton("stock",1);
         stock.setBounds(adaptScreen(3, 100, 84, 110));
         stock.addMouseListener(new StocksTableListener());
         add(stock);
@@ -75,7 +75,7 @@ public class NavigationBar extends TemplatePanel {
         });
 
         //the door of function 1
-        kString = new MyButton("kString",1);
+        kString = new MyCustomizedButton("kString",1);
         kString.setBounds(adaptScreen(3, 210, 84, 110));
         kString.addMouseListener(new KStringListener());
         add(kString);
@@ -107,7 +107,7 @@ public class NavigationBar extends TemplatePanel {
         });
 
         //the door of function 2
-        compare = new MyButton("compare",1);
+        compare = new MyCustomizedButton("compare",1);
         compare.setBounds(adaptScreen(3, 320, 84, 110));
         compare.addMouseListener(new CompareListener());
         add(compare);
@@ -138,7 +138,7 @@ public class NavigationBar extends TemplatePanel {
             }
         });
         //the door of function 3
-        strategy = new MyButton("strategy",1);
+        strategy = new MyCustomizedButton("strategy",1);
         strategy.setBounds(adaptScreen(3, 430, 84, 110));
         strategy.addMouseListener(new StrategyListener());
         add(strategy);

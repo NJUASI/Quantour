@@ -3,6 +3,7 @@ package presentation.view.panel;
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
 import presentation.view.tools.*;
+import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.component.datePicker.SingleDatePickerPanel;
 
@@ -49,13 +50,13 @@ public class StocksTablePanel extends TemplatePanel {
         datePickerPanel.setBounds(adaptScreen(350, 50,175,35));
         add(datePickerPanel);
 
-        search = new JButton("搜索");
+        search = new MyButton("搜索");
         search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListener());
         add(search);
 
-        JButton importData= new JButton("导入数据");
+        JButton importData= new MyButton("导入数据");
         importData.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         importData.setBounds(adaptScreen(1150,50,110,35));
         importData.addMouseListener(new FileChoose());
@@ -63,7 +64,7 @@ public class StocksTablePanel extends TemplatePanel {
 
 
 
-        JButton detailOfCode = new JButton("查看详情");
+        JButton detailOfCode = new MyButton("查看详情");
         detailOfCode.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         detailOfCode.setBounds(adaptScreen(900,50,110,35));
         detailOfCode.addMouseListener(new DetailOfCodeListener());

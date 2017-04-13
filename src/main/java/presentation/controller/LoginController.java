@@ -4,8 +4,6 @@ import presentation.view.frame.LoginFrame;
 import presentation.view.frame.MainFrame;
 import presentation.view.frame.RegisterFrame;
 import presentation.view.panel.LoginPanel;
-import presentation.view.tools.ColorUtils;
-import presentation.view.tools.UI.MyScrollBarUI;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
 import utilities.IDReserve;

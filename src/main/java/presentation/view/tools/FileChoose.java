@@ -1,11 +1,8 @@
 package presentation.view.tools;
 
 import presentation.controller.StocksTableController;
-import presentation.view.panel.StocksTablePanel;
 
 import javax.swing.*;
-import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicFileChooserUI;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -47,6 +44,9 @@ public class FileChoose extends MouseAdapter {
 
         UIManager.put("Panel.background", ColorUtils.backgroundColor());
         UIManager.put("Panel.foreground", ColorUtils.fontColor());
+
+        UIManager.put("Button.background",ColorUtils.titleColor());
+        UIManager.put("Button.foreground",ColorUtils.fontColor());
 
         UIManager.put("Label.foreground", ColorUtils.fontColor());
 

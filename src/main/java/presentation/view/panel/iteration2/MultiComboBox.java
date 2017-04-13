@@ -1,9 +1,11 @@
 package presentation.view.panel.iteration2;
 
 
-
 import presentation.view.panel.TemplatePanel;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyButton;
+import presentation.view.tools.component.MyTextField;
 import utilities.enums.BlockType;
 
 import java.awt.Color;
@@ -37,17 +39,17 @@ public class MultiComboBox extends TemplatePanel {
 
     private JTextField editor;
 
-    protected JButton   arrowButton;
+    protected JButton arrowButton;
 
     private String valueSperator;
 
     private static final String DEFAULT_VALUE_SPERATOR = ",";
 
-    public MultiComboBox(Object[] value, Object[] defaultValue){
-        this(value,defaultValue,DEFAULT_VALUE_SPERATOR);
+    public MultiComboBox(Object[] value, Object[] defaultValue) {
+        this(value, defaultValue, DEFAULT_VALUE_SPERATOR);
     }
 
-    public MultiComboBox(Object[] value, Object[] defaultValue , String valueSperator) {
+    public MultiComboBox(Object[] value, Object[] defaultValue, String valueSperator) {
         values = value;
         defaultValues = defaultValue;
         this.valueSperator = valueSperator;
@@ -57,24 +59,26 @@ public class MultiComboBox extends TemplatePanel {
     private void initComponent() {
         //暂时使用该布局,后续自己写个布局
         setLayout(null);
-        setBackground(Color.BLACK);
-        popup =new  MultiPopup(values,defaultValues);
+        setBackground(ColorUtils.backgroundColor());
+
+
+        popup = new MultiPopup(values, defaultValues);
         popup.addActionListener(new PopupAction());
-        editor = new JTextField();
-        editor.setBackground(Color.white);
+
+        editor = new MyTextField();
         editor.setEditable(false);
-        editor.setBounds(adaptScreen(0,0,190,35));
+        editor.setBounds(adaptScreen(0, 0, 190, 35));
         editor.addMouseListener(new EditorHandler());
 
-        arrowButton = new JButton();
-        arrowButton.setBounds(adaptScreen(190,0,35,35));
+        arrowButton = new MyButton();
+        arrowButton.setBounds(adaptScreen(190, 0, 35, 35));
         arrowButton.addMouseListener(new EditorHandler());
         add(editor);
         add(arrowButton);
-        setText() ;
+        setText();
 
-        JLabel lb=new JLabel();
-        lb.setBounds(adaptScreen(0,0,240,40));
+        JLabel lb = new JLabel();
+        lb.setBounds(adaptScreen(0, 0, 240, 40));
         lb.setBackground(WindowData.getInstance().getColor());
         lb.setOpaque(true);
         add(lb);
@@ -83,30 +87,20 @@ public class MultiComboBox extends TemplatePanel {
     }
 
     public List<BlockType> getSelectedValues() {
-        Object[] block=popup.getSelectedValues();
-        List<BlockType> blockTypes=new ArrayList<>();
-        if(block.length!=0){
-            for(int i=0;i<block.length;i++){
-                if(block[i].equals("中小板")){
+        Object[] block = popup.getSelectedValues();
+        List<BlockType> blockTypes = new ArrayList<>();
+        if (block.length != 0) {
+            for (int i = 0; i < block.length; i++) {
+                if (block[i].equals("中小板")) {
                     blockTypes.add(BlockType.ZXB);
-                }else if(block[i].equals("主板")){
+                } else if (block[i].equals("主板")) {
                     blockTypes.add(BlockType.ZB);
-                }else if(block[i].equals("创业板")){
+                } else if (block[i].equals("创业板")) {
                     blockTypes.add(BlockType.CYB);
                 }
             }
         }
-        return  blockTypes;
-    }
-
-    public void addActionListener(ActionListener listener) {
-        if (!listeners.contains(listener))
-            listeners.add(listener);
-    }
-
-    public void removeActionListener(ActionListener listener) {
-        if (listeners.contains(listener))
-            listeners.remove(listener);
+        return blockTypes;
     }
 
     protected void fireActionPerformed(ActionEvent e) {
@@ -115,13 +109,13 @@ public class MultiComboBox extends TemplatePanel {
         }
     }
 
-    private class PopupAction implements ActionListener{
+    private class PopupAction implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
 
-            if(e.getActionCommand().equals(MultiPopup.CANCEL_EVENT)){
+            if (e.getActionCommand().equals(MultiPopup.CANCEL_EVENT)) {
 
-            }else if(e.getActionCommand().equals(MultiPopup.COMMIT_EVENT)){
+            } else if (e.getActionCommand().equals(MultiPopup.COMMIT_EVENT)) {
                 defaultValues = popup.getSelectedValues();
                 setText();
                 //把事件继续传递出去
@@ -135,10 +129,10 @@ public class MultiComboBox extends TemplatePanel {
 
     }
 
-    private void togglePopup(){
-        if(popup.isVisible()){
+    private void togglePopup() {
+        if (popup.isVisible()) {
             popup.setVisible(false);
-        }else{
+        } else {
             popup.setDefaultValue(defaultValues);
             popup.show(this, 0, getHeight());
         }
@@ -146,15 +140,15 @@ public class MultiComboBox extends TemplatePanel {
 
     private void setText() {
         StringBuilder builder = new StringBuilder();
-        for(Object dv : defaultValues){
+        for (Object dv : defaultValues) {
             builder.append(dv);
             builder.append(valueSperator);
         }
 
-        editor.setText(builder.substring(0, builder.length() > 0 ? builder.length() -1  : 0).toString());
+        editor.setText(builder.substring(0, builder.length() > 0 ? builder.length() - 1 : 0).toString());
     }
 
-    private class EditorHandler implements MouseListener{
+    private class EditorHandler implements MouseListener {
 
         public void mouseClicked(MouseEvent e) {
             togglePopup();
@@ -178,51 +172,8 @@ public class MultiComboBox extends TemplatePanel {
 
     }
 
-
-    public void paintComponent(Graphics g){
-        g.setColor(Color.white);
-        g.fillRect(0,0,getWidth(),getHeight());
+    public void paintComponent(Graphics g) {
+        g.setColor(ColorUtils.backgroundColor());
+        g.fillRect(0, 0, getWidth(), getHeight());
     }
-
-
-    protected JButton createArrowButton() {
-        JButton button = new BasicArrowButton(BasicArrowButton.SOUTH,
-                UIManager.getColor("ComboBox.buttonBackground"),
-                UIManager.getColor("ComboBox.buttonShadow"),
-                UIManager.getColor("ComboBox.buttonDarkShadow"),
-                UIManager.getColor("ComboBox.buttonHighlight"));
-        button.setName("ComboBox.arrowButton");
-        return button;
-    }
-
-    private class MulitComboboxLayout  implements LayoutManager{
-
-        public void addLayoutComponent(String name, Component comp) {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void removeLayoutComponent(Component comp) {
-            // TODO Auto-generated method stub
-
-        }
-
-        public Dimension preferredLayoutSize(Container parent) {
-            return parent.getPreferredSize();
-        }
-
-        public Dimension minimumLayoutSize(Container parent) {
-            return parent.getMinimumSize();
-        }
-
-        public void layoutContainer(Container parent) {
-            int w=parent.getWidth();
-            int h=parent.getHeight();
-            Insets insets=parent.getInsets();
-            h=h-insets.top-insets.bottom;
-
-        }
-
-    }
-
 }

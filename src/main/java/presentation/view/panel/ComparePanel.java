@@ -3,6 +3,7 @@ package presentation.view.panel;
 import presentation.listener.comparePanelListener.*;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.ColorUtils;
+import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyTextField;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
@@ -88,7 +89,7 @@ public class ComparePanel extends TemplatePanel {
         num2 = new MyTextField();
         chartService =new ChartServiceImpl();
         //搜索按钮
-        compare = new JButton("比较");
+        compare = new MyButton("比较");
         compare.setBounds(adaptScreen(1300, 50, 70, 35));
         compare.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         compare.addMouseListener(new CompareListener());
