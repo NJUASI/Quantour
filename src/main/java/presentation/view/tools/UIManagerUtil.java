@@ -19,7 +19,7 @@ public class UIManagerUtil {
         UIManager.put("ComboBox.background", ColorUtils.titleColor());
         UIManager.put("ComboBox.foreground", ColorUtils.fontColor());
 
-        UIManager.put("TextField.background", ColorUtils.titleColor());
+        UIManager.put("TextField.background", ColorUtils.fieldColor());
         UIManager.put("TextField.foreground", ColorUtils.fontColor());
 
         UIManager.put("PasswordField.background",ColorUtils.titleColor());

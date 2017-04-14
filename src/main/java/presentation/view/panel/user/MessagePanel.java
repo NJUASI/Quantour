@@ -4,6 +4,7 @@ import presentation.listener.navigationBarListener.UserListener;
 import presentation.listener.userPanelListener.ModifyPasswordListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;
 import utilities.IDReserve;
 
@@ -46,7 +47,7 @@ public class MessagePanel extends TemplatePanel{
 
         setMessage();
 
-        modify = new JButton("修改密码");
+        modify = new MyButton("修改密码");
         modify.setBounds(adaptScreen(170,255,80 ,25));
         modify.addMouseListener(new MouseAdapter() {
             @Override
@@ -76,12 +77,12 @@ public class MessagePanel extends TemplatePanel{
         password2.setBounds(adaptScreen(120,250,160,35));
         add(password2);
 
-        sure = new JButton("确认");
+        sure = new MyButton("确认");
         sure.setBounds(adaptScreen(160,305,60 ,30));
         sure.addMouseListener(new ModifyPasswordListener());
         add(sure);
 
-        cancel= new JButton("取消");
+        cancel= new MyButton("取消");
         cancel.setBounds(adaptScreen(230,305,60 ,30));
         cancel.addMouseListener(new MouseAdapter() {
             @Override

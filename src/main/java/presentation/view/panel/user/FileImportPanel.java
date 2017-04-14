@@ -3,6 +3,7 @@ package presentation.view.panel.user;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.FileChoose;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;
 
 import javax.swing.*;
@@ -69,7 +70,7 @@ public class FileImportPanel extends TemplatePanel {
         name2.setBounds(adaptScreen(30, 240, 100, 35));
         add(name2);
 
-        JButton importData= new JButton("导入数据");
+        JButton importData= new MyButton("导入数据");
         importData.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         importData.setBounds(adaptScreen(80,290,120,25));
         importData.addMouseListener(new FileChoose());

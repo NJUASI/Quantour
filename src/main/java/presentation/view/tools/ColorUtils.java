@@ -45,4 +45,6 @@ public class ColorUtils {
 
     public static Color titleColor(){return new Color(40,50,55);}
 
+    public static  Color fieldColor(){return new Color(56,63,69);}
+
 }

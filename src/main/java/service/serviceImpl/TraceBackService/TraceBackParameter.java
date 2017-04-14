@@ -1,7 +1,6 @@
 package service.serviceImpl.TraceBackService;
 
 import service.StockService;
-import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
@@ -10,8 +9,11 @@ import utilities.exceptions.NoDataWithinException;
 import vo.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/4/9.
@@ -180,11 +182,11 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public double calculateBeta(List<DailyRateVO> strategy, List<DailyRateVO> base, double baseStdev) {
+    private double calculateBeta(List<DailyRateVO> strategy, List<DailyRateVO> base, double baseStdev) {
         List<DailyRateVO> result = new ArrayList<>();
-        //TODO 董金玉 逻辑可能有问题
-        for (int i = 0; i < strategy.size(); i++) {
-            result.add(new DailyRateVO(strategy.get(i).rate * base.get(i).rate,null));
+
+        for (int i = 0; i < base.size(); i++) {
+            result.add(new DailyRateVO(strategy.get(i).rate * base.get(i).rate, null));
         }
 
         double beta = this.calMeanOfDaily(result) - (meanStrategy * meanBase);
@@ -203,7 +205,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public double calculateAlpha(double beta, double annualizedRateOfReturn, double baseAnnualizedRateOfReturn) {
+    private double calculateAlpha(double beta, double annualizedRateOfReturn, double baseAnnualizedRateOfReturn) {
         double result = annualizedRateOfReturn - beta * baseAnnualizedRateOfReturn;
         result = result + (beta - 1) * riskFreeRate;
         return result;
@@ -219,7 +221,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public double calculateAnnualizedReturn(double rate, double days) {
+    private double calculateAnnualizedReturn(double rate, double days) {
         double result = Math.pow((rate + 1), (365.25 / days)) - 1;
         return result;
     }
@@ -234,7 +236,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public double calculateSharpeRatio(double annualizedReturn, double returnVolatility) {
+    private double calculateSharpeRatio(double annualizedReturn, double returnVolatility) {
         return ((annualizedReturn - this.riskFreeRate) / returnVolatility);
     }
 
@@ -247,7 +249,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public double calculateReturnVolatility(double stdevRate) {
+    private double calculateReturnVolatility(double stdevRate) {
         return (stdevRate * Math.sqrt(250));
     }
 
@@ -260,7 +262,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public double calMeanOfDaily(List<DailyRateVO> rateList) {
+    private double calMeanOfDaily(List<DailyRateVO> rateList) {
         double sum = 0;
         for (DailyRateVO dailyRateVO : rateList) {
             sum = sum + dailyRateVO.rate;
@@ -278,7 +280,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public double calStdevOfDaily(List<DailyRateVO> rateList, double mean) {
+    private double calStdevOfDaily(List<DailyRateVO> rateList, double mean) {
 
         List<DailyRateVO> tempList = rateList;
 
@@ -299,7 +301,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/10
      */
-    public double calSumRate(List<HoldingDetailVO> holdingDetailVOS) {
+    private double calSumRate(List<HoldingDetailVO> holdingDetailVOS) {
         double result = (holdingDetailVOS.get(holdingDetailVOS.size() - 1).remainInvestment /
                 holdingDetailVOS.get(0).remainInvestment) - 1;
         return result;
@@ -314,7 +316,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public double calSumRateBase(List<HoldingDetailVO> holdingDetailVOS) {
+    private double calSumRateBase(List<HoldingDetailVO> holdingDetailVOS) {
         double result = 1.0;
         for (HoldingDetailVO holdingDetailVO : holdingDetailVOS) {
             result = result * (1 + holdingDetailVO.baseReturn);
@@ -329,12 +331,17 @@ public class TraceBackParameter {
      * @return List<Double> 策略的信息列表
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/4/10
+     * @updateTime 2017/4/14
      */
     private List<DailyRateVO> calStrategyDailyRate(List<List<StockVO>> list) {
-        //TODO 董金玉 冯俊杰 龚尘淼 商议接口
-        List<DailyRateVO> result = null;
+        Map<LocalDate,DailyRateVO> map = this.convert(list);
+        List<DailyRateVO> result = new ArrayList<>();
 
+        for(LocalDate date : map.keySet()){
+            DailyRateVO dailyRateVO = map.get(date);
+            dailyRateVO.rate = dailyRateVO.rate/dailyRateVO.count;
+            result.add(dailyRateVO);
+        }
 
         return result;
     }
@@ -343,7 +350,7 @@ public class TraceBackParameter {
      * 获取日收益列表
      *
      * @param list 股票信息列表
-     * @return  List<DailyRateVO> 策略的日收益列表
+     * @return List<DailyRateVO> 策略的日收益列表
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/10
@@ -362,4 +369,32 @@ public class TraceBackParameter {
         return result;
     }
 
+    /**
+     * 对多只股票的日收益率转换
+     *
+     * @param list 股票信息列表
+     * @return Map<LocalDate, DailyRateVO> 策略的日收益map
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/14
+     */
+    private Map<LocalDate, DailyRateVO> convert(List<List<StockVO>> list) {
+
+        Map<LocalDate, DailyRateVO> map = new HashMap<LocalDate, DailyRateVO>();
+
+        for (List<StockVO> stock : list) {
+            List<DailyRateVO> temp = this.calDailyRate(stock);
+            for (DailyRateVO dailyRateVO : temp) {
+                if (map.containsKey(dailyRateVO.date)) {
+                    DailyRateVO dailyRateVO1 = map.get(dailyRateVO.date);
+                    dailyRateVO1.rate = dailyRateVO1.rate + dailyRateVO.rate;
+                    dailyRateVO1.count++;
+                    map.put(dailyRateVO.date, dailyRateVO1);
+                } else {
+                    map.put(dailyRateVO.date, dailyRateVO);
+                }
+            }
+        }
+        return map;
+    }
 }

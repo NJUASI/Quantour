@@ -13,11 +13,15 @@ public class DailyRateVO {
     // 收益指数对应日期
     public LocalDate date;
 
+    public int count;
+
     public DailyRateVO() {
+        count = 1;
     }
 
     public DailyRateVO(double rate, LocalDate date) {
         this.rate = rate;
         this.date = date;
+        count = 1;
     }
 }
