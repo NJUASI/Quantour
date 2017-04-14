@@ -58,13 +58,11 @@ public class StocksTablePanel extends TemplatePanel {
         add(datePickerPanel);
 
         search = new MyButton("搜索");
-//        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         search.setBounds(adaptScreen(600,50,80,35));
         search.addMouseListener(new SearchListener());
         add(search);
 
         JButton importData= new MyButton("加入收藏");
-//        importData.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         importData.setBounds(adaptScreen(1150,50,110,35));
         importData.addMouseListener(new AddFavoriteListener());
         add(importData);
@@ -72,18 +70,16 @@ public class StocksTablePanel extends TemplatePanel {
 
 
         JButton detailOfCode = new MyButton("查看详情");
-//        detailOfCode.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         detailOfCode.setBounds(adaptScreen(900,50,110,35));
         detailOfCode.addMouseListener(new DetailOfCodeListener());
         add(detailOfCode);
 
-        label = new JLabel("当日无股票信息",JLabel.CENTER);
-        label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,20));
+        label = new MyLabel("当日无股票信息",JLabel.CENTER);
         label.setBounds(0 * width / 1920, 120 * height / 1030, (1920-90) * width / 1920 , 800* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         label.setVisible(false);
         label.setBackground(ColorUtils.backgroundColor());
-        label.setForeground(new Color(201,208,214));
+        label.setForeground(ColorUtils.fontColor());
         label.setOpaque(true);
         add(label);
 

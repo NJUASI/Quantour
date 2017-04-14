@@ -58,9 +58,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         label1.setLocation(100*width/1920,100*height/1030);
         add(label1);
 
-        JLabel lb= new JLabel("板块");
-        lb.setForeground(Color.white);
-        lb.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
+        JLabel lb= new MyLabel("板块",16);
         lb.setBounds(adaptScreen(200,168,60,40));
         add(lb);
 
@@ -72,9 +70,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
 //        System.out.println(mulit.getSelectedValues()[0]);
         add(mulit);
 
-        JLabel lb3= new JLabel("ST");
-        lb3.setForeground(Color.white);
-        lb3.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
+        JLabel lb3= new MyLabel("ST");
         lb3.setBounds(adaptScreen(570,168,20,40));
         add(lb3);
 
@@ -94,9 +90,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         add(label4);
 
 
-        JLabel lb1= new JLabel("收益基准");
-        lb1.setForeground(Color.white);
-        lb1.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
+        JLabel lb1= new MyLabel("收益基准");
         lb1.setBounds(adaptScreen(760,368,80,40));
         add(lb1);
 
@@ -149,7 +143,6 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
         JButton searchBt= new MyButton("开始回测");
         searchBt.setBounds(adaptScreen(1200,550,100,35));
-        searchBt.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         searchBt.addMouseListener(new SearchListener());
         searchBt.addMouseListener(new MouseAdapter() {
             @Override

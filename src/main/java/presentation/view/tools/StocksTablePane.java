@@ -42,14 +42,14 @@ public class StocksTablePane extends JScrollPane {
             }
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            jTable.setSelectionBackground(new Color(37,58,84));//设置所选择行的背景色
-            jTable.setSelectionForeground(new Color(201,208,214));//设置所选择行的前景色
+            jTable.setSelectionBackground(ColorUtils.markColor());//设置所选择行的背景色
+            jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
 
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
-            jTable.setBackground(new Color(32, 36, 39));
-            jTable.setForeground(new Color(201,208,214));
+            jTable.setBackground(ColorUtils.backgroundColor());
+            jTable.setForeground(ColorUtils.fontColor());
             jTable.setRowSelectionInterval(0, 0);
-            jTable.setGridColor(new Color(19, 22, 24));
+            jTable.setGridColor(ColorUtils.divideColor());
             jTable.setBorder(BorderFactory.createEmptyBorder());
 
             JTableHeader header = jTable.getTableHeader();
@@ -59,16 +59,16 @@ public class StocksTablePane extends JScrollPane {
             Dimension size = header.getPreferredSize();
             size.height = 30;
             header.setPreferredSize(size);
-            setForeground(new Color(201,208,214));
+            setForeground(ColorUtils.fontColor());
 
             DefaultTableCellRenderer cellRanderer = new DefaultTableCellRenderer() {
                 @Override
                 protected void setValue(Object value) {
                         if(value.toString().substring(0,1).equals("-")){
-                            setForeground(new Color(15,195,81));
+                            setForeground(ColorUtils.downColor());
                             setText(value.toString());
                         }else{
-                            setForeground(new Color(255,61,61));
+                            setForeground(ColorUtils.upColor());
                             setText(value.toString());
                         }
                 }
@@ -85,7 +85,7 @@ public class StocksTablePane extends JScrollPane {
             jTable.getColumnModel().getColumn(3).setCellRenderer(cellRanderer);
 
             getVerticalScrollBar().setUI(new MyScrollBarUI());
-            setBackground(new Color(32,36,39));
+            setBackground(ColorUtils.backgroundColor());
             setBorder(BorderFactory.createEmptyBorder());
             setViewportView(jTable);
 

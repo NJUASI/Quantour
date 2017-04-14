@@ -91,7 +91,6 @@ public class ComparePanel extends TemplatePanel {
         //搜索按钮
         compare = new MyButton("比较");
         compare.setBounds(adaptScreen(1300, 50, 70, 35));
-        compare.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         compare.addMouseListener(new CompareListener());
 
         //提示框面板

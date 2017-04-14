@@ -1,6 +1,7 @@
 package presentation.view.panel;
 
 
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.WindowData;
 
@@ -19,8 +20,8 @@ public class ThermometerPanel extends TemplatePanel {
     //搜索按钮
 //    MyLabel search;
 
-    Color GREEN =new Color(15,195,81);
-    Color RED =new Color(255,61,61);
+    Color GREEN = ColorUtils.downColor();
+    Color RED =ColorUtils.upColor();
     int move=150;
 
     /**

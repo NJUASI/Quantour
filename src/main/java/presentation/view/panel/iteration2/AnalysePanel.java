@@ -69,7 +69,6 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
 
         JButton back=new MyButton("返回");
         back.setBounds(adaptScreen(10,10,60,25));
-        back.setFont(new Font("微软雅黑",Font.LAYOUT_NO_LIMIT_CONTEXT,16*WindowData.getInstance().getWidth()/1920));
         back.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

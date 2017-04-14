@@ -14,10 +14,10 @@ public class MyLabel extends JLabel {
     public MyLabel(String str){
         setText(str);
         setBorder(null);
+        setFont(new Font("微软雅黑",Font.CENTER_BASELINE,16* WindowData.getInstance().getWidth()/1920));
         width= WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
         setForeground(ColorUtils.fontColor());
-        setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,16*width/1920));
         if(str.length()==2){
             setSize(60,35);
         }else if(str.length()==3){

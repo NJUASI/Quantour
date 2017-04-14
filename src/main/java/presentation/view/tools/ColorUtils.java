@@ -47,4 +47,6 @@ public class ColorUtils {
 
     public static  Color fieldColor(){return new Color(56,63,69);}
 
+    public static  Color markColor(){return new Color(37,58,84);}
+
 }

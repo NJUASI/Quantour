@@ -73,11 +73,8 @@ public class KStringPanel extends TemplatePanel {
         num = new MyTextField();
         num.setText("");
         searchAll = new MyButton("总体信息");
-        searchAll.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         search = new MyButton("局部信息");
-        search.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         compare = new MyButton("加入比较");
-        compare.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         init();
     }
 

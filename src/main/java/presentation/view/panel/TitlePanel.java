@@ -3,6 +3,7 @@ package presentation.view.panel;
 import presentation.view.frame.MainFrame;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.component.MyButton;
+import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.component.SearchPopupMenu;
 import presentation.view.tools.component.SearchTextField;
 import presentation.view.tools.customizedButton.MyCustomizedButton;
@@ -40,7 +41,7 @@ public class TitlePanel extends TemplatePanel {
         setBackground(new Color(44, 50, 55));
         setVisible(true);
 
-        label = new JLabel("行情");
+        label = new MyLabel("行情");
         label.setFont(new Font("微软雅黑", Font.BOLD, 23 * width / 1920));
         label.setForeground(ColorUtils.fontColor());
         label.setBounds(adaptScreen(840, 0, 60, 40));
