@@ -3,6 +3,7 @@ package presentation.view.panel;
 import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 import presentation.listener.loginPanelListener.LoginListener;
 import presentation.view.frame.LoginFrame;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.customizedButton.MyCustomizedButton;
 import presentation.view.tools.component.MyLabel;
 
@@ -46,6 +47,7 @@ public class LoginPanel extends TemplatePanel {
         admin = new JTextField("Guest");
         admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         admin.setBounds(adaptScreen(90, 200, 260, 38));
+        admin.setBackground(ColorUtils.divideColor());
 //        admin.addMouseListener(new MouseAdapter() {
 //            @Override
 //            public void mousePressed(MouseEvent e) {
@@ -78,6 +80,7 @@ public class LoginPanel extends TemplatePanel {
         password.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         password.setBounds(adaptScreen(90, 255, 260, 38));
         password.setVisible(true);
+        password.setBackground(ColorUtils.divideColor());
         add(password);
 
         password.setEnabled(false);

@@ -1,6 +1,8 @@
 package presentation.view.panel.iteration2;
 
 import presentation.view.panel.TemplatePanel;
+import presentation.view.tools.ColorUtils;
+import presentation.view.tools.UIManagerUtil;
 import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.WindowData;
 
@@ -13,9 +15,11 @@ public class StrategyTypePanel extends TemplatePanel {
     MyLabel label1,label2,label3,label4,label5,label6,label7,label8;
     JComboBox MScomboBox,MRcomboBox,holdingDate,holdingNum;
     public StrategyTypePanel(){
+
         setLayout(null);
         setBounds(adaptScreen(100,630,1400,200));
         setBackground(WindowData.getInstance().getColor());
+
 
         label1= new MyLabel("形成期");
         label1.setLocation(100* WindowData.getInstance().getWidth()/1920,0*WindowData.getInstance().getHeight()/1030);

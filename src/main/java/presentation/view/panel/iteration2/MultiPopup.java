@@ -46,19 +46,9 @@ public class MultiPopup extends JPopupMenu {
 
 
     private void initComponent() {
-        setBorder(BorderFactory.createEmptyBorder());
-        setBackground(ColorUtils.backgroundColor());
-        setForeground(ColorUtils.fontColor());
 
         JPanel checkboxPane = new JPanel();
-        checkboxPane.setBackground(ColorUtils.backgroundColor());
-        checkboxPane.setForeground(ColorUtils.fontColor());
-        checkboxPane.setBorder(BorderFactory.createEmptyBorder());
-
         JPanel buttonPane = new JPanel();
-        buttonPane.setBackground(ColorUtils.backgroundColor());
-        buttonPane.setForeground(ColorUtils.fontColor());
-        buttonPane.setBorder(BorderFactory.createEmptyBorder());
 
         this.setLayout(new BorderLayout());
 
@@ -89,9 +79,6 @@ public class MultiPopup extends JPopupMenu {
 
         checkboxPane.setLayout(new GridLayout(checkBoxList.size(), 1, 3, 3));
         for (JCheckBox box : checkBoxList) {
-            box.setBackground(ColorUtils.backgroundColor());
-            box.setForeground(ColorUtils.fontColor());
-
             checkboxPane.add(box);
         }
 

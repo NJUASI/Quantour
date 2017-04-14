@@ -3,6 +3,8 @@ package presentation.view.panel.iteration2;
 import presentation.controller.StrategySwitchController;
 import presentation.listener.strategyPanelListener.SearchListener;
 import presentation.view.panel.TemplatePanel;
+import presentation.view.tools.ColorUtils;
+import presentation.view.tools.UIManagerUtil;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
@@ -13,6 +15,7 @@ import vo.StockPoolCriteriaVO;
 import vo.TraceBackCriteriaVO;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -41,6 +44,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
      * @updateTime 2017/3/28
      */
     private ChooseStrategyPanel(){
+
         width= WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
         setLayout(null);
@@ -81,6 +85,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         STComboBox.addItem("仅有ST");
         STComboBox.setEditable(false);
         STComboBox.setToolTipText((String)STComboBox.getItemAt(0));
+
         add(STComboBox);
 
         //区间板块
@@ -209,4 +214,5 @@ public class ChooseStrategyPanel extends TemplatePanel {
     private String getBasicStock(){
         return comboBox.getSelectedItem().toString();
     }
+
 }
