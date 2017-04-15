@@ -1,5 +1,6 @@
 package service;
 
+import utilities.enums.DataSourceState;
 import vo.DataSourceInfoVO;
 
 import java.io.IOException;
@@ -27,4 +28,12 @@ public interface DataSourceService {
      * @return 用户自己上传的数据源格式信息，没有返回null
      */
     DataSourceInfoVO getMyDataSource() throws IOException;
+
+    /**
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/15
+     * @return 用户选择修改数据源来源
+     */
+    boolean changeDataSourceState(DataSourceState newState);
 }

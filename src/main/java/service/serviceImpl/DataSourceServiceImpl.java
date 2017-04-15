@@ -3,6 +3,8 @@ package service.serviceImpl;
 import dao.DataSourceDao;
 import dao.daoImpl.DataSourceDaoImpl;
 import service.DataSourceService;
+import utilities.DataSourceStateKeeper;
+import utilities.enums.DataSourceState;
 import vo.DataSourceInfoVO;
 
 import java.io.IOException;
@@ -26,5 +28,11 @@ public class DataSourceServiceImpl implements DataSourceService {
     @Override
     public DataSourceInfoVO getMyDataSource() throws IOException {
         return new DataSourceInfoVO(dao.getMyDataSource());
+    }
+
+    @Override
+    public boolean changeDataSourceState(DataSourceState newState) {
+        DataSourceStateKeeper.getInstance().setState(newState);
+        return true;
     }
 }

@@ -1,9 +1,12 @@
 package dataHelper.dataHelperImpl;
 
 import dataHelper.SearchDataHelper;
+import utilities.DataSourceStateKeeper;
 import utilities.StockCodeHelper;
+import utilities.enums.DataSourceState;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -12,6 +15,8 @@ import java.util.*;
  * Created by Harvey on 2017/3/14.
  */
 public class SearchDataHelperImpl implements SearchDataHelper {
+
+    private static final String separator = System.getProperty("file.separator");
 
     /**
      * The Properties.
@@ -24,7 +29,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public List<String> getAllStockCodes() {
-        propertiesload("stockName-code/stockName-code");
+        propertiesload("stockName-code" + separator + "stockName-code.properties");
         List<String> result = new LinkedList<>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             result.add(StockCodeHelper.format((String)entry.getValue()));
@@ -50,7 +55,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksCode() {
-        propertiesload("stockName-code/stockName-code");
+        propertiesload("stockName-code" + separator + "stockName-code.properties");
         Map<String,String> codesAndNames = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             codesAndNames.put((String)entry.getValue(),(String)entry.getKey());
@@ -63,7 +68,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksName() {
-        propertiesload("stockName-code/stockName-code");
+        propertiesload("stockName-code" + separator + "stockName-code.properties");
         Map<String,String> namesAndCode = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             namesAndCode.put((String)entry.getKey(),(String)entry.getValue());
@@ -80,7 +85,15 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     private void propertiesload(String path) {
         try {
-            properties.load(new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(path+".properties"))));
+            if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+                System.out.println(DataSourceState.ORIGINAL);
+                properties.load(new BufferedReader(new InputStreamReader(
+                        Thread.currentThread().getContextClassLoader().getResourceAsStream(path))));
+            } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
+                System.out.println(DataSourceState.USER);
+                properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(
+                        System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8")));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

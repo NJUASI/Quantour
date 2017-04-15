@@ -38,7 +38,7 @@ public class StockDataHelperImplTest {
      */
     @Test
     public void testGetStockStockCode01() throws Exception {
-        List<StockPO> result = stockDataHelper.getStockRecords("1");
+        List<StockPO> result = stockDataHelper.getStockRecords("000001");
         assertEquals(2100, result.size());
 
         StockPO thisStock = result.get(0);
@@ -52,7 +52,7 @@ public class StockDataHelperImplTest {
     }
     @Test
     public void testGetStockStockCode02() throws Exception {
-        List<StockPO> result = stockDataHelper.getStockRecords("2044");
+        List<StockPO> result = stockDataHelper.getStockRecords("002044");
         assertEquals(2117, result.size());
     }
     @Test
@@ -74,40 +74,40 @@ public class StockDataHelperImplTest {
         List<StockPO> result = stockDataHelper.getStockRecords(LocalDate.of(2008, 4, 7));
 
         // expected:
-        // 1545	2008-04-07	5.38	5.94	5.31	5.9	190431	0.71	157	中联重科	SZ	5.45	0.66
+        // 1496	2008-04-07	12.5	13.2	12.31	13.2	18026	12.87	000019	深深宝Ａ	SZ	12	11.7
 
         StockPO testPO = result.get(9);
-        assertEquals(1545, testPO.getSerial());
-        assertEquals(5.38, testPO.getOpen(), 0);
-        assertEquals(5.94, testPO.getHigh(), 0);
-        assertEquals(5.31, testPO.getLow(), 0);
-        assertEquals(5.9, testPO.getClose(), 0);
-        assertEquals("190431", testPO.getVolume());
-        assertEquals(0.71, testPO.getAdjClose(), 0);
-        assertEquals("000157", testPO.getCode());
-        assertEquals("中联重科", testPO.getName());
-        assertEquals(5.45, testPO.getPreClose(), 0);
-        assertEquals(0.66, testPO.getPreAdjClose(), 0);
+        assertEquals(1496, testPO.getSerial());
+        assertEquals(12.5, testPO.getOpen(), 0);
+        assertEquals(13.2, testPO.getHigh(), 0);
+        assertEquals(12.31, testPO.getLow(), 0);
+        assertEquals(13.2, testPO.getClose(), 0);
+        assertEquals("18026", testPO.getVolume());
+        assertEquals(12.87, testPO.getAdjClose(), 0);
+        assertEquals("000019", testPO.getCode());
+        assertEquals("深深宝Ａ", testPO.getName());
+        assertEquals(12, testPO.getPreClose(), 0);
+        assertEquals(11.7, testPO.getPreAdjClose(), 0);
     }
     @Test
     public void testGetStockRecordsDate02() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords(LocalDate.of(2011, 2, 25));
 
         // expected:
-        // 813	2011-02-25	5.38	5.47	5.38	5.47	13956	5.47	17	*ST中华A	SZ	5.39	5.39
+        // 813	2011-02-25	9.33	9.39	9	9.23	93635	9.15	000023	深天地Ａ	SZ	9.47	9.39
 
         StockPO testPO = result.get(13);
         assertEquals(813, testPO.getSerial());
-        assertEquals(5.38, testPO.getOpen(), 0);
-        assertEquals(5.47, testPO.getHigh(), 0);
-        assertEquals(5.38, testPO.getLow(), 0);
-        assertEquals(5.47, testPO.getClose(), 0);
-        assertEquals("13956", testPO.getVolume());
-        assertEquals(5.47, testPO.getAdjClose(), 0);
-        assertEquals("000017", testPO.getCode());
-        assertEquals("*ST中华A", testPO.getName());
-        assertEquals(5.39, testPO.getPreClose(), 0);
-        assertEquals(5.39, testPO.getPreAdjClose(), 0);
+        assertEquals(9.33, testPO.getOpen(), 0);
+        assertEquals(9.39, testPO.getHigh(), 0);
+        assertEquals(9, testPO.getLow(), 0);
+        assertEquals(9.23, testPO.getClose(), 0);
+        assertEquals("93635", testPO.getVolume());
+        assertEquals(9.15, testPO.getAdjClose(), 0);
+        assertEquals("000023", testPO.getCode());
+        assertEquals("深天地Ａ", testPO.getName());
+        assertEquals(9.47, testPO.getPreClose(), 0);
+        assertEquals(9.39, testPO.getPreAdjClose(), 0);
     }
 
     /**
@@ -115,12 +115,12 @@ public class StockDataHelperImplTest {
      */
     @Test
     public void testGetFirstAndLastDay() throws Exception {
-        assertEquals(LocalDate.of(2005, 2, 1), stockDataHelper.getFirstAndLastDay("17").get(0));
-        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("17").get(1));
-        assertEquals(LocalDate.of(2007, 12, 19), stockDataHelper.getFirstAndLastDay("2198").get(0));
-        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("2198").get(1));
-        assertEquals(LocalDate.of(2007, 12, 3), stockDataHelper.getFirstAndLastDay("2189").get(0));
-        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("2189").get(1));
+        assertEquals(LocalDate.of(2005, 2, 1), stockDataHelper.getFirstAndLastDay("000017").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("000017").get(1));
+        assertEquals(LocalDate.of(2007, 12, 19), stockDataHelper.getFirstAndLastDay("002198").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("002198").get(1));
+        assertEquals(LocalDate.of(2007, 12, 3), stockDataHelper.getFirstAndLastDay("002189").get(0));
+        assertEquals(LocalDate.of(2014, 4, 29), stockDataHelper.getFirstAndLastDay("002189").get(1));
     }
 
     /**
@@ -128,7 +128,7 @@ public class StockDataHelperImplTest {
      */
     @Test
     public void testGetDateWithoutData() throws IOException {
-        List<LocalDate> result = stockDataHelper.getDateWithoutData("17");
+        List<LocalDate> result = stockDataHelper.getDateWithoutData("000017");
         assertEquals(2207, result.size());
     }
 

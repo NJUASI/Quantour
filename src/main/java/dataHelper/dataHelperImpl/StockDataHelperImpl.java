@@ -3,7 +3,9 @@ package dataHelper.dataHelperImpl;
 import dataHelper.SearchDataHelper;
 import dataHelper.StockDataHelper;
 import po.StockPO;
+import utilities.DataSourceStateKeeper;
 import utilities.LocalDateComparator;
+import utilities.enums.DataSourceState;
 import utilities.enums.Market;
 
 import java.io.*;
@@ -20,8 +22,10 @@ import java.util.List;
  */
 public class StockDataHelperImpl implements StockDataHelper {
 
-    private final static String stockRecordByCodePathPre = "stock_records_by_code/";
-    private final static String stockRecordByDatePathPre = "stock_records_by_date/";
+    private static final String separator = System.getProperty("file.separator");
+
+    private final static String stockRecordByCodePathPre = "stock_records_by_code" + separator;
+    private final static String stockRecordByDatePathPre = "stock_records_by_date" + separator;
     private final static String stockRecordPathPost = ".txt";
 
     private BufferedReader br;
@@ -68,10 +72,6 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
-        System.out.println(stockCode);
-        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                getResourceAsStream(stockRecordByCodePathPre + stockCode + stockRecordPathPost)));
-
         List<StockPO> allResult = getStockRecords(stockCode);
 
         List<LocalDate> result = new LinkedList<>();
@@ -141,8 +141,16 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
         System.out.println(path);
-        br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                getResourceAsStream(path), "UTF-8"));
+
+        if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+            System.out.println(DataSourceState.ORIGINAL);
+            br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
+                    getResourceAsStream(path), "UTF-8"));
+        } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){
+            System.out.println(DataSourceState.USER);
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(
+                    System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8"));
+        }
 
         List<StockPO> result = new LinkedList<StockPO>();
 
