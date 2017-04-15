@@ -11,7 +11,7 @@ public class DataSourceStateKeeper {
 
     private static DataSourceStateKeeper keeper;
 
-    private DataSourceState state = DataSourceState.ORIGINAL;
+    private DataSourceState state = DataSourceState.USER;
 
     private DataSourceStateKeeper() {
     }
