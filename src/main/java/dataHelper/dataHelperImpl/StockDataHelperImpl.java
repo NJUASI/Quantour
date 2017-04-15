@@ -29,8 +29,8 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     private static final String separator = System.getProperty("file.separator");
 
-    private final static String stockRecordByCodePathPre = "stock_records_by_code" + separator;
-    private final static String stockRecordByDatePathPre = "stock_records_by_date" + separator;
+    private final static String stockRecordByCodePathPre = "stocks" + separator + "stock_records_by_code" + separator;
+    private final static String stockRecordByDatePathPre = "stocks" + separator + "stock_records_by_date" + separator;
     private final static String stockRecordPathPost = ".txt";
 
     private BufferedReader br;
@@ -117,15 +117,25 @@ public class StockDataHelperImpl implements StockDataHelper {
     public List<LocalDate> getDateWithData() throws IOException {
         List<LocalDate> dates = new LinkedList<>();
 
-        SearchDataHelper searchDataHelper = new SearchDataHelperImpl();
-        List<String> allCode = searchDataHelper.getAllStockCodes();
+        String parent = null;
 
-        for (String s : allCode) {
-            List<StockPO> temp = getStockRecords(s);
-            for (StockPO po : temp) {
-                LocalDate thisDate = po.getDate();
-                if (!dates.contains(thisDate)){
-                    dates.add(po.getDate());
+        if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+            parent = Thread.currentThread().getContextClassLoader().getResource("stock_records_by_date").getPath();
+        } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
+            parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + "stock_records_by_date";
+        }
+
+        String[] years = new File(parent).list();
+
+        for (String thisYear : years) {
+            if (thisYear.equals(".DS_Store")) {
+                continue;
+            }
+            String yearDir = parent + separator + thisYear;
+            String[] dateFiles = new File(yearDir).list();
+            for (String thisDate : dateFiles) {
+                if (!thisDate.equals(".DS_Store")) {
+                    dates.add(convertLocalDate(thisDate));
                 }
             }
         }
@@ -219,5 +229,11 @@ public class StockDataHelperImpl implements StockDataHelper {
     private boolean dateEquals(LocalDate date1, LocalDate date2) {
         if (date1.getYear() == date2.getYear() && date1.getDayOfYear() == date2.getDayOfYear()) return true;
         else return false;
+    }
+
+    private LocalDate convertLocalDate(String formated) {
+        // formated as 2011-01-18.txt
+        String[] parts = formated.split("-");
+        return LocalDate.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2].substring(0, parts[2].length()-4)));
     }
 }
