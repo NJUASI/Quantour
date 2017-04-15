@@ -246,7 +246,7 @@ public class StockDaoImpl implements StockDao {
      * @return 添加是否成功
      */
     @Override
-    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException {
+    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException {
         return privateStockDataHelper.addPrivateStock(userName, stockCode);
     }
 
@@ -261,7 +261,7 @@ public class StockDaoImpl implements StockDao {
      * @return 删除是否成功
      */
     @Override
-    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException {
+    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException {
         return privateStockDataHelper.deletePrivateStock(userName, stockCode);
     }
 

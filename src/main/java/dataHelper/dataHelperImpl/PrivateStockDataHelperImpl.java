@@ -10,8 +10,8 @@ import java.util.*;
 
 /**
  * Created by Administrator on 2017/3/5.
- * Last updated by cuihua
- * Update time 2017/3/12
+ * Last updated by Byron Dong
+ * Update time 2017/4/15
  * <p>
  */
 public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
@@ -33,8 +33,8 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @param userName 用户名称
      * @return 自选股代码列表
      * @author Harvey
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/12
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/15
      */
     @Override
     public List<String> getPrivateStockCode(String userName) throws PrivateStockNotFoundException {
@@ -42,7 +42,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
         String desPath = this.parent + separator + userName + post;
 
         try {
-            br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(desPath)));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(desPath)));
             String thisLine = null;
             while ((thisLine = br.readLine()) != null) {
                 result.add(thisLine);
@@ -61,19 +61,18 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @param stockCode 股票代码
      * @return 添加是否成功
      * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/15
      */
     @Override
-    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException {
+    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException {
 
-        try {
+
+        if (this.wasExists(userName)) {
             List<String> stockCodes = this.getPrivateStockCode(userName);
             if (stockCodes.contains(stockCode)) {
                 throw new PrivateStockExistedException();
             }
-        } catch (PrivateStockNotFoundException e) {
-            e.printStackTrace();
         }
 
 
@@ -98,22 +97,18 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @param stockCode 股票代码
      * @return 删除是否成功
      * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/15
      */
     @Override
-    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException {
+    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException {
 
         List<String> stockCodes = null;
 
-        try {
             stockCodes = this.getPrivateStockCode(userName);
             if (stockCodes.contains(stockCode)) {
                 throw new PrivateStockNotExistException();
             }
-        } catch (PrivateStockNotFoundException e) {
-            e.printStackTrace();
-        }
 
         try {
             String desPath = this.parent + this.separator + userName + post;
@@ -139,14 +134,16 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/15
      */
-    private void isExists(String userName) {
-        File file = new File(parent);
+    private boolean wasExists(String userName) {
+        File file = new File(parent + separator + userName + post);
         try {
             if (!file.exists()) {
                 file.createNewFile();
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return true;
     }
 }
