@@ -20,6 +20,9 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
     @Override
     public boolean upload(String filePath) throws IOException {
+        OldDirRemover remover = new OldDirRemover();
+        remover.myDelete();
+
         CodeDirCreator creator = new CodeDirCreator(filePath);
         creator.createDir();
 
@@ -56,6 +59,38 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
     }
 }
 
+
+
+/**
+ * 移除之前的attachments，如果之前没有就不操作
+ */
+class OldDirRemover {
+
+    private final String separator = System.getProperty("file.separator");
+
+    boolean myDelete() {
+        final String parent = "/Users/cuihua/Desktop/forTest";
+        File parentFile = new File(parent);
+        if (parentFile.exists()) return delete(parent);
+        else return true;
+    }
+
+    private boolean delete(String path) {
+        File thisFile = new File(path);
+        if (thisFile.isDirectory()) {
+            String[] parts = thisFile.list();
+            for (String eachPath : parts) {
+                delete(path + separator + eachPath);
+            }
+            thisFile.delete();
+        } else {
+            thisFile.delete();
+        }
+
+        return true;
+    }
+
+}
 
 /**
  * 创建stock_records_by_code文件夹，同时创建数据源附属信息
