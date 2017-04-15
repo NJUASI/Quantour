@@ -1,7 +1,5 @@
 package presentation.view.tools.component;
 
-import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
-import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;

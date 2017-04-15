@@ -25,6 +25,6 @@ public class UIManagerUtil {
         UIManager.put("PasswordField.background",ColorUtils.titleColor());
         UIManager.put("PasswordField.foreground",ColorUtils.fontColor());
 
-        UIManager.put("FileChooser.noPlacesBar", Boolean.TRUE);
+//        UIManager.put("FileChooser.noPlacesBar", Boolean.TRUE);
     }
 }

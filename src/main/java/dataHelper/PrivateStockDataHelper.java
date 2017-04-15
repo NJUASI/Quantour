@@ -1,5 +1,9 @@
 package dataHelper;
 
+import utilities.exceptions.PrivateStockExistedException;
+import utilities.exceptions.PrivateStockNotExistException;
+import utilities.exceptions.PrivateStockNotFoundException;
+
 import java.util.List;
 
 /**
@@ -18,7 +22,7 @@ public interface PrivateStockDataHelper {
      * @param userName 用户名称
      * @return 自选股代码列表
      */
-    List<String> getPrivateStockCode(String userName);
+    List<String> getPrivateStockCode(String userName) throws PrivateStockNotFoundException;
 
 
     /**
@@ -31,7 +35,7 @@ public interface PrivateStockDataHelper {
      * @param stockCode 股票代码
      * @return 添加是否成功
      */
-    boolean addPrivateStock(String userName, String stockCode);
+    boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException;
 
     /**
      * 删除用户自选股
@@ -43,5 +47,5 @@ public interface PrivateStockDataHelper {
      * @param stockCode 股票代码
      * @return 删除是否成功
      */
-    boolean deletePrivateStock(String userName, String stockCode);
+    boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException;
 }

@@ -48,7 +48,7 @@ public class MessagePanel extends TemplatePanel{
         setMessage();
 
         modify = new MyButton("修改密码");
-        modify.setBounds(adaptScreen(170,255,80 ,25));
+        modify.setBounds(adaptScreen(170,255,100 ,25));
         modify.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

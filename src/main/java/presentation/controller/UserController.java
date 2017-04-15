@@ -1,10 +1,12 @@
 package presentation.controller;
 
 import presentation.view.panel.user.UserPanel;
+import presentation.view.tools.WindowData;
 import presentation.view.tools.component.ProgressBar;
 import service.StockSituationService;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by 61990 on 2017/4/13.
@@ -52,7 +54,7 @@ public class UserController {
         progressBar = new JProgressBar();
         progressBar.setStringPainted(true);  //显示提示信息
         progressBar.setIndeterminate(false);
-        progressBar.setBounds(60,340,200,35);
+        progressBar.setBounds(adaptScreen(60,340,200,35));
         userPanel.fileImportPanel.add(progressBar);
         new ProgressBar(progressBar).start();
     }
@@ -72,4 +74,18 @@ public class UserController {
         }
 
     }
+    /**
+     * 适应不同大小的屏幕
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/7
+     */
+    public Rectangle adaptScreen(int x, int y, int width, int height){
+        int w=WindowData.getInstance().getWidth();
+        int h=WindowData.getInstance().getHeight();
+        return new Rectangle(w*x/1920,h*y/1030,w*width/1920,h*height/1030);
+    }
+
 }

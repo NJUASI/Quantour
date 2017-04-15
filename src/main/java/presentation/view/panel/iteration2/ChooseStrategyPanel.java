@@ -151,6 +151,17 @@ public class ChooseStrategyPanel extends TemplatePanel {
             }
         });
 
+        JButton returnBt= new MyButton("查看上次");
+        returnBt.setBounds(adaptScreen(1200,500,100,35));
+        returnBt.addMouseListener(new SearchListener());
+        returnBt.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                StrategySwitchController.getInstance().viewSwitch("analysePanel");
+            }
+        });
+
+
         add(searchBt);
 
 

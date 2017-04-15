@@ -35,7 +35,7 @@
         <!--
        maven远程库并没有下列依赖，需要先本地安装，到目录(/lib)下用maven安装到本地仓库中
        $ mvn install:install-file -DgroupId=com.github.stuxuhai -DartifactId=jpinyin -Dversion=1.1.8 -Dpackaging=jar -Dfile=jpinyin-1.1.8.jar
-       $ mvn install:install-file -DgroupId=org.jb2011 -DartifactId=beautyeye_lnf -Dversion=4.0 -Dpackaging=jar -Dfile=beautyeye_lnf-4.0.jar
+       $ mvn install:install-file -DgroupId=org.jb2011 -DartifactId=beautyeye_lnf -Dversion=4.1 -Dpackaging=jar -Dfile=beautyeye_lnf-4.1.jar
        -->
 
         <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.github.stuxuhai/jpinyin &ndash;&gt;-->
@@ -48,12 +48,7 @@
         <dependency>
             <groupId>org.jb2011</groupId>
             <artifactId>beautyeye_lnf</artifactId>
-            <version>4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jb2011</groupId>
-            <artifactId>beautyeye_lnf</artifactId>
-            <version>4.0</version>
+            <version>4.1</version>
         </dependency>
     </dependencies>
 

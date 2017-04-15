@@ -6,6 +6,7 @@ import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyTextField;
+import presentation.view.tools.customizedButton.MyCustomizedButton;
 import utilities.enums.BlockType;
 
 import java.awt.Color;
@@ -39,7 +40,7 @@ public class MultiComboBox extends TemplatePanel {
 
     private JTextField editor;
 
-    protected JButton arrowButton;
+    protected MyCustomizedButton arrowButton;
 
     private String valueSperator;
 
@@ -70,7 +71,7 @@ public class MultiComboBox extends TemplatePanel {
         editor.setBounds(adaptScreen(0, 0, 190, 35));
         editor.addMouseListener(new EditorHandler());
 
-        arrowButton = new MyButton();
+        arrowButton = new MyCustomizedButton("arrowBt",2);
         arrowButton.setBounds(adaptScreen(190, 0, 35, 35));
         arrowButton.addMouseListener(new EditorHandler());
         add(editor);

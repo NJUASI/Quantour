@@ -9,8 +9,7 @@ import service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
 import service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
 import service.serviceImpl.StockTradingDayServiceImpl;
 import utilities.StockCodeHelper;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.StockPoolCriteriaVO;
 import vo.StockPoolVO;
 import vo.StockSearchVO;
@@ -76,7 +75,7 @@ public class StockServiceImpl implements StockService {
      * @return the iterator 自选股信息列表
      */
     @Override
-    public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException {
+    public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
             stockVOList.add(new StockVO(po));
@@ -94,7 +93,7 @@ public class StockServiceImpl implements StockService {
      * @return 是否添加成功
      */
     @Override
-    public boolean addPrivateStock(String userName, String stockCode) {
+    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException {
         return stockDao.addPrivateStock(userName, stockCode);
     }
 
@@ -108,7 +107,7 @@ public class StockServiceImpl implements StockService {
      * @return 是否删除成功
      */
     @Override
-    public boolean deletePrivateStock(String userName, String stockCode) {
+    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException {
         return stockDao.deletePrivateStock(userName, stockCode);
     }
 

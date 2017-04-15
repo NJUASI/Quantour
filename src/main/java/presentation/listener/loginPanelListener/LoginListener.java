@@ -18,7 +18,7 @@ public class LoginListener extends MouseAdapter {
      * @param e
      */
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {
         LoginController.getInstance().login();
     }
 

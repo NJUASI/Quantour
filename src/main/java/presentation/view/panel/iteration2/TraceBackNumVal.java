@@ -1,11 +1,13 @@
-package presentation.view.panel.user;
+package presentation.view.panel.iteration2;
 
 import presentation.view.panel.StocksTablePanel;
+import presentation.view.panel.user.FavoriteTableModel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyMouseListener;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
+import vo.TraceBackCriteriaVO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -14,9 +16,9 @@ import java.awt.*;
 import java.time.LocalDate;
 
 /**
- * Created by 61990 on 2017/4/13.
+ * Created by 61990 on 2017/4/15.
  */
-public class FavoritePanel extends JScrollPane{
+public class TraceBackNumVal  extends JScrollPane {
     LocalDate date;
     private JTable jTable;
 
@@ -26,29 +28,18 @@ public class FavoritePanel extends JScrollPane{
 
     int height;
 
-    public FavoritePanel(){
+    public TraceBackNumVal(){
         date = WindowData.getInstance().getDate();
-        //TODO 获得一个人的自选股  date  日期的股票信息
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
 
-        setSize(600 * width / 1920, 600 * height / 1030);
+        setSize(1000 * width / 1920, 130 * height / 1030);
 
         try {
-            jTable = new JTable(new FavoriteTableModel(date));
+            jTable = new JTable(new TraceBackNumModel(ChooseStrategyPanel.getInstance().getInfo()));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
-//            jTable.setRowHeight (30);//设置每行的高度为30
-//            jTable.setRowMargin (5);//设置相邻两行单元格的距离
-//        table.removeColumn(table.getColumnModel().getColumn(columnIndex));// columnIndex是要删除的列序号
 
-
-            for(int i =4;i<7;i++) {
-                jTable.getColumnModel().getColumn(i).setPreferredWidth(80*width/1920);
-            }
-            for(int i =2;i<4;i++) {
-                jTable.getColumnModel().getColumn(i).setPreferredWidth(50*width/1920);
-            }
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             jTable.setSelectionBackground(ColorUtils.markColor());//设置所选择行的背景色
@@ -70,38 +61,16 @@ public class FavoritePanel extends JScrollPane{
             header.setPreferredSize(size);
             setForeground(ColorUtils.fontColor());
 
-            DefaultTableCellRenderer cellRanderer = new DefaultTableCellRenderer() {
-                @Override
-                protected void setValue(Object value) {
-                    if(value.toString().substring(0,1).equals("-")){
-                        setForeground(ColorUtils.downColor());
-                        setText(value.toString());
-                    }else{
-                        setForeground(ColorUtils.upColor());
-                        setText(value.toString());
-                    }
-                }
-            };
-//            TableColumn tc = jTable.getColumn("开盘指数");
-
-//            tc.setCellRenderer(cellRanderer);
-            //初始化table的渲染器
-//            DefaultTableCellRenderer cellRanderer = new DefaultTableCellRenderer();
-//            cellRanderer.setForeground(new Color(255,61,61));
-            jTable.getColumnModel().getColumn(2).setCellRenderer(cellRanderer);
-//            DefaultTableCellRenderer cellRanderer1 = new DefaultTableCellRenderer();
-//            cellRanderer1.setForeground(new Color(15,195,81));
-            jTable.getColumnModel().getColumn(3).setCellRenderer(cellRanderer);
-
             getVerticalScrollBar().setUI(new MyScrollBarUI());
             setBackground(ColorUtils.backgroundColor());
             setBorder(BorderFactory.createEmptyBorder());
             setViewportView(jTable);
 
 //            StocksTablePanel.getInstance().label.setVisible(false);
-            jTable.repaint();
+//            jTable.repaint();
         } catch (Exception e) {
 //            StocksTablePanel.getInstance().label.setVisible(true);
         }
     }
 }
+
