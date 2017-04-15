@@ -1,5 +1,6 @@
 package presentation.controller;
 
+import presentation.view.panel.user.FavoritePanel;
 import presentation.view.panel.user.UserPanel;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.component.ProgressBar;
@@ -74,6 +75,15 @@ public class UserController {
         }
 
     }
+    public void deleteFavorite(){
+        //TODO delete Code of favorite
+
+        userPanel.favoritePanel.getCode();
+        userPanel.remove(userPanel.favoritePanel);
+
+        userPanel.refreshFavorite();
+    }
+
     /**
      * 适应不同大小的屏幕
      *

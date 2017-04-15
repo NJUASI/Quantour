@@ -4,6 +4,7 @@ import presentation.controller.ViewSwitchController;
 import presentation.view.frame.MainFrame;
 import presentation.view.panel.KStringPanel;
 import presentation.view.panel.NavigationBar;
+import utilities.CodeReserve;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,6 +24,7 @@ public class MyMouseListener extends MouseAdapter {
         System.out.println(clickNum);
         if (MyMouseListener.clickNum == 1) {// 1时执行双击事件
             KStringPanel.getInstance().count=1;
+            CodeReserve.getInstance().setCode(StocksTableController.getInstance().stocksTablePane.getCode(),StocksTableController.getInstance().stocksTablePane.getName());
             ViewSwitchController.getInstance().viewSwitch("kStringPanel");
             StocksTableController.getInstance().checkDetail();
             KStringPanel.getInstance().count=0;
