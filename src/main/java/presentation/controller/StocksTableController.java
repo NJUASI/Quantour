@@ -136,7 +136,6 @@ public class StocksTableController {
      * 将选择的股票加入自选股
      */
     public void addFavorite() throws PrivateStockExistedException, PrivateStockNotFoundException {
-        //todo 加入自选股
         stockService = new StockServiceImpl();
         stockService.addPrivateStock(IDReserve.getInstance().getUserID(),stocksTablePane.getCode());
     }
