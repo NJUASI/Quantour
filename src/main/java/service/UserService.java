@@ -3,6 +3,8 @@ package service;
 import utilities.exceptions.*;
 import vo.UserVO;
 
+import java.io.IOException;
+
 /**
  * Created by cuihua on 2017/3/4.
  * Last updated by Harvey
@@ -21,7 +23,7 @@ public interface UserService{
      * @return 是否注册成功
      * @throws DuplicatedNameException 用户名重复
      */
-    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException;
+    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException;
 
     /**
      * 修改用户信息

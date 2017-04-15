@@ -63,7 +63,7 @@ public class UserDataHelperImpl implements UserDataHelper {
 
         File directory = new File(parent);//设定为当前文件夹
         try {
-            properties.store(new FileWriter(directory.getCanonicalPath()+"userInfo.properties"),"");
+            properties.store(new FileWriter(directory.getCanonicalPath()+separator+"userInfo.properties"),"");
         } catch (IOException e) {
             e.printStackTrace();
         }
