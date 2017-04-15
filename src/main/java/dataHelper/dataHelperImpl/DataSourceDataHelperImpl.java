@@ -102,7 +102,7 @@ class CodeDirCreator {
 
     private void create() throws IOException {
         final String separator = System.getProperty("file.separator");
-        final String parent = System.getProperty("user.dir") + separator + "attachments" + separator;
+        final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator;
         final String post = ".txt";
         final String codeDesFileParentPath = parent + "stock_records_by_code";
 
@@ -142,7 +142,7 @@ class OriginalDataReader {
     BufferedWriter bw;
 
     final String fileSeparator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + "attachments" + fileSeparator;
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator;
     final String post = ".txt";
     final String codeDesFileParentPath = parent + "stock_records_by_code";
 
@@ -242,7 +242,7 @@ class DuplicationAdder {
 
     final String fileSeparator = System.getProperty("file.separator");
     final String lineSeparator = System.getProperty("line.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + "attachments" + fileSeparator;
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator;
     final String sourceFilePath = parent + "stock_records_by_code";
 
     private String previousRecord;
@@ -307,7 +307,7 @@ class DateFilesCreator {
 
     final String fileSeparator = System.getProperty("file.separator");
     final String lineSeparator = System.getProperty("line.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + "attachments" + fileSeparator;
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator;
     final String post = ".txt";
     final String sourcePath = parent + "stock_records_by_code";
     final String dateDesFileParentPath = parent + "stock_records_by_date";
@@ -376,7 +376,7 @@ class DateFilesCreator {
 class SituationCreator {
 
     final String fileSeparator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + "attachments" + fileSeparator;
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator;
     final String sourcePath = parent + "stock_records_by_date";
 
     private String[] getFileList() {
@@ -483,7 +483,7 @@ class SituationCreator {
 class StockNameToCodeCreator {
 
     final String separator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + separator + "attachments";
+    final String parent = System.getProperty("user.dir") + separator + ".attachments";
     final String post = ".properties";
 
     private ArrayList<String> key = new ArrayList<String>();

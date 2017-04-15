@@ -26,5 +26,5 @@ public interface DataSourceService {
      * @updateTime 2017/4/13
      * @return 用户自己上传的数据源格式信息，没有返回null
      */
-    DataSourceInfoVO getMyDataSource();
+    DataSourceInfoVO getMyDataSource() throws IOException;
 }
