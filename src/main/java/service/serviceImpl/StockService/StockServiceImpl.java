@@ -75,12 +75,12 @@ public class StockServiceImpl implements StockService {
      * @return the iterator 自选股信息列表
      */
     @Override
-    public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
+    public List<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
             stockVOList.add(new StockVO(po));
         }
-        return stockVOList.iterator();
+        return stockVOList;
     }
 
     /**
