@@ -59,7 +59,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(LocalDate date) throws IOException {
-        return getStockByPath(stockRecordByDatePathPre + date.getYear() + "/" + date.toString() + stockRecordPathPost);
+        return getStockByPath(stockRecordByDatePathPre + date.getYear() + separator + date.toString() + stockRecordPathPost);
     }
 
     /**
