@@ -15,10 +15,12 @@ import javax.swing.*;
  */
 public class TraceBackChartPanel extends TemplatePanel {
     ChartPanel chartPanel;
+    TraceBackNumVal traceBackNumVal;
     public TraceBackChartPanel(){
         setBackground(WindowData.getInstance().getColor());
         setLayout(null);
         ChartPanel chartPanel=null;
+        traceBackNumVal=null;
     }
 
     public void createChart(){
@@ -27,11 +29,19 @@ public class TraceBackChartPanel extends TemplatePanel {
         }
         try {
             chartPanel = new ChartPanel(new TraceBackChart(ChooseStrategyPanel.getInstance().getInfo()).createTracebackChart());
+            chartPanel.setBounds(adaptScreen(100, 210, 1500, 600));
+            chartPanel.setVisible(true);
+            add(chartPanel);
+
+            traceBackNumVal=new TraceBackNumVal();
+            traceBackNumVal.setBounds(adaptScreen(200,50,1400,130));
+            add(traceBackNumVal);
         }catch (Exception e){
 
         }
-        chartPanel.setBounds(adaptScreen(200, 80, 1400, 600));
-        chartPanel.setVisible(true);
-        add(chartPanel);
+
+
+
+
     }
 }

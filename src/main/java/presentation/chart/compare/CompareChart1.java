@@ -45,7 +45,6 @@ public class CompareChart1 {
         Object[] datas1 = new Object[]{vo.get(0).min, vo.get(0).max};
         Object[] datas2 = new Object[]{vo.get(1).min, vo.get(1).max};
 
-        //TODO 获得两股股票的名称
         series.add(new Serie(vo.get(0).name, datas1));
         series.add(new Serie(vo.get(1).name, datas2));
 

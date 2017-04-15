@@ -152,7 +152,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         });
 
         JButton returnBt= new MyButton("查看上次");
-        returnBt.setBounds(adaptScreen(1200,550,100,35));
+        returnBt.setBounds(adaptScreen(1200,500,100,35));
         returnBt.addMouseListener(new SearchListener());
         returnBt.addMouseListener(new MouseAdapter() {
             @Override

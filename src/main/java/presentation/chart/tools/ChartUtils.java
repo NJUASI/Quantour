@@ -48,9 +48,12 @@ public class ChartUtils {
 	private static String NO_DATA_MSG = "数据加载失败";
 	private static Font FONT = new Font("宋体", Font.PLAIN, 12);
 	public static Color[] CHART_COLORS = {
-			new Color(255,61,61), new Color(15,195,81), new Color(255,61,61), new Color(15,195,81),
 			new Color(255,61,61), new Color(15,195,81),
-			new Color(255,61,61), new Color(15,195,81), };// 颜色
+			new Color(255,61,61), new Color(15,195,81),
+			new Color(255,61,61), new Color(15,195,81),
+			new Color(255,61,61), new Color(15,195,81)
+
+	};// 颜色
 
 	static {
 		setChartTheme();
@@ -83,7 +86,7 @@ public class ChartUtils {
 
 		Paint[] OUTLINE_PAINT_SEQUENCE = new Paint[] { ColorUtils.backgroundColor() };
 		// 绘制器颜色源
-		DefaultDrawingSupplier drawingSupplier = new DefaultDrawingSupplier(CHART_COLORS, CHART_COLORS, OUTLINE_PAINT_SEQUENCE,
+		DefaultDrawingSupplier drawingSupplier = new DefaultDrawingSupplier(CHART_COLORS, CHART_COLORS, CHART_COLORS,
 				DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE, DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
 				DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE);
 		chartTheme.setDrawingSupplier(drawingSupplier);

@@ -16,7 +16,7 @@ import java.io.File;
 /**
  * Created by day on 17/3zx/28.
  */
-public class AnalysePanel extends TemplatePanel implements ActionListener {
+public class AnalysePanel extends TemplatePanel {
     private static AnalysePanel analysePanel;
     TraceBackChartPanel traceBackChartPanelPanel;
     TraceBackAnalysePanel traceBackAnalysePanelPanel;
@@ -35,16 +35,6 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
         button.setBounds(adaptScreen(100,100,100,100));
         p3.add(button);
 
-        JProgressBar progressBar = new JProgressBar();
-        progressBar.setStringPainted(true);  //显示提示信息
-        progressBar.setIndeterminate(false);
-
-        progressBar.setBounds(adaptScreen(200,200,300,200));
-
-        p3.add(progressBar);
-
-        new ProgressBar(progressBar).start();
-
 
         p3.setBackground(WindowData.getInstance().getColor());
         JPanel p4 = new JPanel();
@@ -52,8 +42,8 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
 
         //todo 画各种各样的图！
 
-        tab.add(traceBackChartPanelPanel,"Panel1");
-        tab.add(traceBackAnalysePanelPanel,"Panel2");
+        tab.add(traceBackChartPanelPanel,"收益曲线");
+        tab.add(traceBackAnalysePanelPanel,"收益周期统计");
         tab.add(p3,"Panel3");
         tab.add(p4,"Panel4");
         tab.setBounds(adaptScreen(-2,60,1833,930));
@@ -97,17 +87,5 @@ public class AnalysePanel extends TemplatePanel implements ActionListener {
         traceBackChartPanelPanel.createChart();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JFileChooser jfc=new JFileChooser();
-        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );
-        jfc.showDialog(new JLabel(), "选择");
-        File file=jfc.getSelectedFile();
-        if(file.isDirectory()){
-            System.out.println("文件夹:"+file.getAbsolutePath());
-        }else if(file.isFile()){
-            System.out.println("文件:"+file.getAbsolutePath());
-        }
-        System.out.println(jfc.getSelectedFile().getName());
-    }
+
 }
