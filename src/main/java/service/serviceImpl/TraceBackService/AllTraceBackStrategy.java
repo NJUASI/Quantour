@@ -103,7 +103,7 @@ public abstract class AllTraceBackStrategy {
         double max = 0;
 
         for (int i = 0; i < cumulativeReturnVOS.size(); i++) {
-            for (int j = 0; j < cumulativeReturnVOS.size(); j++) {
+            for (int j = i+1; j < cumulativeReturnVOS.size(); j++) {
                 double diff = cumulativeReturnVOS.get(i).cumulativeReturn - cumulativeReturnVOS.get(j).cumulativeReturn;
                 if (max < diff) {
                     //重新设置最大回撤点

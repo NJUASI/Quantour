@@ -6,11 +6,13 @@ import presentation.view.tools.MyMouseListener;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
+import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -26,7 +28,7 @@ public class FavoritePanel extends JScrollPane{
 
     int height;
 
-    public FavoritePanel(){
+    public FavoritePanel() throws IOException, PrivateStockNotFoundException {
         date = WindowData.getInstance().getDate();
         //TODO 获得一个人的自选股  date  日期的股票信息
         windowData = WindowData.getInstance();
@@ -35,7 +37,7 @@ public class FavoritePanel extends JScrollPane{
 
         setSize(600 * width / 1920, 600 * height / 1030);
 
-        try {
+//        try {
             jTable = new JTable(new FavoriteTableModel(date));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
 //            jTable.setRowHeight (30);//设置每行的高度为30
@@ -100,9 +102,9 @@ public class FavoritePanel extends JScrollPane{
 
 //            StocksTablePanel.getInstance().label.setVisible(false);
             jTable.repaint();
-        } catch (Exception e) {
-//            StocksTablePanel.getInstance().label.setVisible(true);
-        }
+//        } catch (Exception e) {
+////            StocksTablePanel.getInstance().label.setVisible(true);
+//        }
     }
 
     public String getCode() {

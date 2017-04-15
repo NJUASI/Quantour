@@ -111,7 +111,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
             List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(dailyTotalCumulativeReturn);
 
-            double lastRate = dailyTotalCumulativeReturn.get(dailyTotalCumulativeReturn.size()-1).cumulativeReturn;
+            double lastRate = cumulatives.get(cumulatives.size()-1).cumulativeReturn;
 
             HoldingDetailVO holdingDetailVO = computeHoldingDetailVO(lastRate, startOfHolding, endOfHolding);
             holdingDetailVOS.add(holdingDetailVO);
@@ -186,9 +186,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         double preRemainInvestment = remainInvestment;
 
         //更新剩余资金
-        remainInvestment = remainInvestment * (1+lastRate);
-        //当前持仓期剩余投资资金
-        curHoldingPeriod.remainInvestment = remainInvestment;
+        remainInvestment = initInvestment * (1+lastRate);
 
         //当前持仓期的策略收益
         curHoldingPeriod.strategyReturn = (remainInvestment - preRemainInvestment) / preRemainInvestment;

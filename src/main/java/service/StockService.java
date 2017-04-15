@@ -42,7 +42,7 @@ public interface StockService{
      * @param date 用户选择日期
      * @return the iterator 自选股信息列表
      */
-    Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException;
+    List<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException;
 
     /**
      * 用户添加自选股
@@ -53,7 +53,7 @@ public interface StockService{
      * @param stockCode 股票代码
      * @return 是否添加成功
      */
-    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException;
+    boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException;
 
     /**
      * 用户删除自选股

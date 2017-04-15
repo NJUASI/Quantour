@@ -77,5 +77,4 @@ public interface StockDataHelper {
      * @return 所有股票的版块有关的信息
      */
     List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException;
-
 }

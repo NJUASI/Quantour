@@ -36,6 +36,7 @@ public class HistogramChart {
         Object[]  datas1= new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
         Object[] datas2 = new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
 
+
         series.add(new Serie("正收益次数",datas1));
         series.add(new Serie("负收益次数", datas2));
 

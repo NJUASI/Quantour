@@ -75,12 +75,12 @@ public class StockServiceImpl implements StockService {
      * @return the iterator 自选股信息列表
      */
     @Override
-    public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
+    public List<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
             stockVOList.add(new StockVO(po));
         }
-        return stockVOList.iterator();
+        return stockVOList;
     }
 
     /**
@@ -193,15 +193,6 @@ public class StockServiceImpl implements StockService {
     @Override
     public List<StockVO> getOneStockData(String stockCode, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
         List<StockPO> stockPOS = stockDao.getStockData(stockCode,start,end);
-        if(stockPOS.get(0).getDate().isAfter(start)){
-
-            //如果传入的起始日期是非交易日，则获取其前一个交易日的信息,并将其加入到列表首位
-            LocalDate lastTradingDay = stockTradingDayService.getLastTradingDay(start, stockCode);
-            StockPO lastTradeStockPO = stockDao.getStockData(stockCode, lastTradingDay);
-            stockPOS.add(0,lastTradeStockPO);
-
-        }
-
         return convertStockPO2VO(stockPOS);
     }
 
@@ -215,7 +206,8 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<StockVO> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
-        String baseStockCode = searchStock(stockName).get(0).code;
+        Map<String, String> map = stockDao.getAllStocksName();
+        String baseStockCode = StockCodeHelper.format(map.get(stockName));
         return getOneStockData(baseStockCode,start,end);
     }
 

@@ -2,6 +2,8 @@ package presentation.view.panel.user;
 
 import service.StockService;
 import service.serviceImpl.StockService.StockServiceImpl;
+import utilities.IDReserve;
+import utilities.exceptions.PrivateStockNotFoundException;
 import vo.StockVO;
 
 import javax.swing.table.AbstractTableModel;
@@ -26,17 +28,17 @@ public class FavoriteTableModel extends AbstractTableModel {
     private LocalDate date;
     private StockService stockService;
 
-    public FavoriteTableModel(LocalDate date) throws IOException {
+    public FavoriteTableModel(LocalDate date) throws IOException, PrivateStockNotFoundException {
         this.date = date;
         this.stockService = new StockServiceImpl();
         init();
     }
 
     //初始化列表名称和数据
-    private void init() throws IOException {
+    private void init() throws IOException, PrivateStockNotFoundException {
         columnNames = new String[]{"股票代码", "股票名称", "涨/跌额","涨/跌幅","开盘指数", "最高指数",
                 "最低指数", "收盘指数", "成交量", "复权后的收盘指数", "昨日收盘指数", "昨日复权收盘指数"};
-        List<StockVO> stockList = stockService.getAllStocks(date);
+        List<StockVO> stockList = stockService.getPrivateStocks(IDReserve.getInstance().getUserID(),date);
 
         data = new Object[stockList.size()][columns];
 

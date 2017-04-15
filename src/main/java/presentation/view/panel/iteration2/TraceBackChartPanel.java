@@ -39,9 +39,5 @@ public class TraceBackChartPanel extends TemplatePanel {
         }catch (Exception e){
 
         }
-
-
-
-
     }
 }

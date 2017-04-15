@@ -29,7 +29,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public List<String> getAllStockCodes() {
-        propertiesload("stockName-code" + separator + "stockName-code.properties");
+        propertiesload("stocks" + separator + "stockName-code" + separator + "stockName-code.properties");
         List<String> result = new LinkedList<>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             result.add(StockCodeHelper.format((String)entry.getValue()));
@@ -42,7 +42,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksFirstLetters() {
-        propertiesload("shortPinyin");
+        propertiesload("stocks" + separator + "shortPinyin.properties");
         Map<String,String> shortPinyinAndNames = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             shortPinyinAndNames.put((String)entry.getValue(),(String)entry.getKey());
@@ -55,7 +55,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksCode() {
-        propertiesload("stockName-code" + separator + "stockName-code.properties");
+        propertiesload("stocks" + separator + "stockName-code" + separator + "stockName-code.properties");
         Map<String,String> codesAndNames = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             codesAndNames.put((String)entry.getValue(),(String)entry.getKey());
@@ -68,7 +68,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksName() {
-        propertiesload("stockName-code" + separator + "stockName-code.properties");
+        propertiesload("stocks" + separator + "stockName-code" + separator + "stockName-code.properties");
         Map<String,String> namesAndCode = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             namesAndCode.put((String)entry.getKey(),(String)entry.getValue());
@@ -87,12 +87,13 @@ public class SearchDataHelperImpl implements SearchDataHelper {
         try {
             if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
                 System.out.println(DataSourceState.ORIGINAL);
+                System.out.println(Thread.currentThread().getContextClassLoader().getResourceAsStream(path));
                 properties.load(new BufferedReader(new InputStreamReader(
                         Thread.currentThread().getContextClassLoader().getResourceAsStream(path))));
             } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
                 System.out.println(DataSourceState.USER);
                 properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(
-                        System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + path), "UTF-8")));
+                        System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8")));
             }
         } catch (IOException e) {
             e.printStackTrace();
