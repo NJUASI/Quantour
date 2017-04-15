@@ -10,6 +10,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.chart.tools.ChartUtils;
 import presentation.chart.tools.CompareTool;
 import presentation.chart.tools.Serie;
+import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 
@@ -30,6 +31,7 @@ public class HistogramChart {
         // 柱子名称：柱子所有的值集合
         Object[]  datas1= new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
         Object[] datas2 = new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
+
 
         series.add(new Serie("正收益次数",datas1));
         series.add(new Serie("负收益次数", datas2));

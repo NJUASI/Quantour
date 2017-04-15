@@ -2,8 +2,10 @@ package service.serviceImpl.TraceBackService;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import service.StockService;
+import service.StockTradingDayService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
+import service.serviceImpl.StockTradingDayServiceImpl;
 import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
@@ -90,18 +92,20 @@ public class TraceBackServiceImpl implements TraceBackService {
     private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool, boolean certainFormate) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
 
         List<ExcessAndWinRateDistVO> certainHoldings = new ArrayList<>();
+        int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;
+        int initFormativePeriod = traceBackCriteriaVO.formativePeriod;
 
-        for(int i = 2; i <= 50; i = i+2){
+        for(int i = 2; i <= 10; i = i+2){
             ExcessAndWinRateDistVO excessAndWinRateDistVO = new ExcessAndWinRateDistVO();
             //给定形成期
             if(certainFormate){
                 //新的持有期
-                traceBackCriteriaVO.holdingPeriod = i;
+                traceBackCriteriaVO.holdingPeriod = initHoldingPeriod*i;
             }
             //给定持有期
             else{
                 //新的形成期
-                traceBackCriteriaVO.formativePeriod = i;
+                traceBackCriteriaVO.formativePeriod = initFormativePeriod*i;
             }
 
             TraceBackVO traceBackVO = new TraceBackVO();
@@ -169,8 +173,8 @@ public class TraceBackServiceImpl implements TraceBackService {
             //为负
             else{
                 if(holdingDetailVOS.get(i).strategyReturn < 0){
-                    //向下去整
-                    double rate = Math.floor(holdingDetailVOS.get(i).strategyReturn*100);
+                    //取绝对值,并向上取整
+                    double rate = (Math.ceil(Math.abs(holdingDetailVOS.get(i).strategyReturn*100)));
                     if(negativeNums.containsKey(rate)){
                         negativeNums.put(rate,negativeNums.get(rate)+1);
                     }
@@ -225,16 +229,13 @@ public class TraceBackServiceImpl implements TraceBackService {
                 positivePeriodsNum++;
             }
             //为负
-            else{
-                if(holdingDetailVOS.get(i).excessReturn < 0){
-                    //向下去整
-                    double rate = Math.floor(holdingDetailVOS.get(i).excessReturn*100);
-                    if(negativeNums.containsKey(rate)){
-                        negativeNums.put(rate,negativeNums.get(rate)+1);
-                    }
-                    else {
-                        negativeNums.put(rate,1);
-                    }
+            else if(holdingDetailVOS.get(i).excessReturn < 0) {
+                //取绝对值,并向上取整
+                double rate = (Math.ceil(Math.abs(holdingDetailVOS.get(i).strategyReturn * 100)));
+                if (negativeNums.containsKey(rate)) {
+                    negativeNums.put(rate, negativeNums.get(rate) + 1);
+                } else {
+                    negativeNums.put(rate, 1);
                 }
                 //负周期数+1
                 negativePeriodNum++;
@@ -269,8 +270,8 @@ public class TraceBackServiceImpl implements TraceBackService {
             double lastRate = 0;
 
             if ((i + holdPeriod -1) < baseCumulativeReturn.size()){
-                // 一个持仓周期最后一天的累计收益率
-                lastRate = baseCumulativeReturn.get(i).cumulativeReturn;
+                // 一个持仓周期最后一天的基准累计收益率
+                lastRate = baseCumulativeReturn.get(i + holdPeriod -1).cumulativeReturn;
             }
             //最后一个周期可能不满持仓周期数
             else {
@@ -280,14 +281,15 @@ public class TraceBackServiceImpl implements TraceBackService {
             double preRemainInvestment = remainInvestment;
 
             //更新剩余资金
-            remainInvestment = remainInvestment * (1+lastRate);
+            remainInvestment = initInvestment * (1+lastRate);
 
-            //当前持仓起的基准收益率
+            //当前持仓期的基准收益率
             double baseReturn = (remainInvestment - preRemainInvestment) / preRemainInvestment;
             holdingDetailVOS.get(holdingSerial).baseReturn = baseReturn;
             //超额收益率
             holdingDetailVOS.get(holdingSerial).excessReturn = holdingDetailVOS.get(holdingSerial).strategyReturn - baseReturn;
 
+            holdingSerial++;
             i = i+holdPeriod;
         }
 
@@ -430,17 +432,26 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @param end   结束日期
      * @return List<CumulativeReturnVO> 单一股票在时间区间内的累计收益率
      */
-    private List<CumulativeReturnVO> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
+    private List<CumulativeReturnVO> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) throws IOException {
 
-        List<StockVO> list = stockService.getBaseStockData(stockName,start,end);
+        List<StockVO> list = null;
+        try {
+            list = stockService.getBaseStockData(stockName,start,end);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoDataWithinException e) {
+            e.printStackTrace();
+        } catch (DateNotWithinException e) {
+            e.printStackTrace();
+        }
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 
-        CumulativeReturnVO firstDay = new CumulativeReturnVO(start,0,false);
+        CumulativeReturnVO firstDay = new CumulativeReturnVO(list.get(0).date,0,false);
         cumulativeReturnVOS.add(firstDay);
 
-        //累计收益率以第一个交易日的收益率来对比计算
-        double closeOfFirstDay = list.get(0).close;
+        //累计收益率以第一个交易日的前一个交易日的收益率来对比计算
+        double closeOfFirstDay = list.get(0).preClose;
 
         for(int i = 1; i < list.size(); i++) {
             double sucClose = list.get(i).close;

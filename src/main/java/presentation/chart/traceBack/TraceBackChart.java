@@ -195,30 +195,24 @@ public class TraceBackChart {
      */
     private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
-        traceBackCriteriaVO1.baseStockName = "深发展Ａ";
         //设置TraceBackCriteriaVO
-        traceBackCriteriaVO1.baseStockName = "深发展Ａ";
-//        TraceBackCriteriaVO.baseStockName = "深物业A";
+        traceBackCriteriaVO1.baseStockName = "深发展A";
         traceBackCriteriaVO1.startDate = LocalDate.of(2014,4,19);
         traceBackCriteriaVO1.endDate = LocalDate.of(2014,4,29);
         traceBackCriteriaVO1.strategyType = TraceBackStrategy.MS;
-        traceBackCriteriaVO1.formativePeriod = 10;
-        traceBackCriteriaVO1.holdingPeriod = 5;
+        traceBackCriteriaVO1.formativePeriod = 2;
+        traceBackCriteriaVO1.holdingPeriod = 1;
         traceBackCriteriaVO1.isCustomized = false;
 
         List<String> stockPool = new ArrayList<>();
-        stockPool.add("000001");
         stockPool.add("000002");
-        stockPool.add("000004");
-        stockPool.add("000010");
-        stockPool.add("000011");
-        stockPool.add("000012");
-        stockPool.add("000014");
-        stockPool.add("000016");
-        stockPool.add("000017");
-        stockPool.add("000018");
+//        stockPool.add("000010");
+//        stockPool.add("000004");
 
+        long startTime = System.currentTimeMillis();
+        System.out.println(startTime);
         TraceBackVO traceBackVO = traceBackService.traceBack(traceBackCriteriaVO1,stockPool);
+        System.out.println(System.currentTimeMillis()-startTime);
         System.out.println("enter");
         this.strategyData = traceBackVO.strategyCumulativeReturn;
         this.baseData = traceBackVO.baseCumulativeReturn;
