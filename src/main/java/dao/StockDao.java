@@ -2,8 +2,7 @@ package dao;
 
 import po.PrivateStockPO;
 import po.StockPO;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.StockPoolVO;
 
 import java.io.IOException;
@@ -126,7 +125,7 @@ public interface StockDao {
      * @param date 股票代码
      * @return （时间相同）指定用户指定日期的自选股票数据
      */
-    List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException;
+    List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException;
 
     /**
      * 获取用户的自选股票
@@ -137,7 +136,7 @@ public interface StockDao {
      * @param userName 用户名称
      * @return 指定用户的自选股
      */
-    PrivateStockPO getPrivateStocks(String userName);
+    PrivateStockPO getPrivateStocks(String userName) throws PrivateStockNotFoundException;
 
     /**
      * 添加用户自选股
@@ -149,7 +148,7 @@ public interface StockDao {
      * @param stockCode 股票代码
      * @return 添加是否成功
      */
-    boolean addPrivateStock(String userName, String stockCode);
+    boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException;
 
     /**
      * 删除用户自选股
@@ -161,7 +160,7 @@ public interface StockDao {
      * @param stockCode 股票代码
      * @return 删除是否成功
      */
-    boolean deletePrivateStock(String userName, String stockCode);
+    boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException;
 
 
 

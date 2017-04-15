@@ -12,8 +12,7 @@ import po.StockPO;
 import sun.rmi.server.LoaderHandler;
 import sun.util.resources.sl.LocaleNames_sl;
 import utilities.StockCodeHelper;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.StockPoolVO;
 import vo.StockVO;
 
@@ -211,7 +210,7 @@ public class StockDaoImpl implements StockDao {
      * @return 指定用户的自选股票
      */
     @Override
-    public List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException {
+    public List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
         List<StockPO> result = new LinkedList<StockPO>();
 
         PrivateStockPO myPrivateStockPO = getPrivateStocks(userName);
@@ -232,7 +231,7 @@ public class StockDaoImpl implements StockDao {
      * @return 指定用户的自选股
      */
     @Override
-    public PrivateStockPO getPrivateStocks(String userName) {
+    public PrivateStockPO getPrivateStocks(String userName) throws PrivateStockNotFoundException {
         return new PrivateStockPO(userName, privateStockDataHelper.getPrivateStockCode(userName));
     }
 
@@ -247,7 +246,7 @@ public class StockDaoImpl implements StockDao {
      * @return 添加是否成功
      */
     @Override
-    public boolean addPrivateStock(String userName, String stockCode) {
+    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException {
         return privateStockDataHelper.addPrivateStock(userName, stockCode);
     }
 
@@ -262,7 +261,7 @@ public class StockDaoImpl implements StockDao {
      * @return 删除是否成功
      */
     @Override
-    public boolean deletePrivateStock(String userName, String stockCode) {
+    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException {
         return privateStockDataHelper.deletePrivateStock(userName, stockCode);
     }
 
