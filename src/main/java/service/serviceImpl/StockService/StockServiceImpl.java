@@ -226,7 +226,7 @@ public class StockServiceImpl implements StockService {
      * @return List<String> 符合标准的股票池中所有股票的股票代码
      */
     @Override
-    public List<String> getStockPool(StockPoolCriteriaVO stockPoolCriteriaVO) {
+    public List<String> getStockPool(StockPoolCriteriaVO stockPoolCriteriaVO) throws IOException, UnhandleBlockTypeException {
 
         //新建所有filter对象
         StockPoolFilter stockPoolFilter = new StockPoolFilter();
