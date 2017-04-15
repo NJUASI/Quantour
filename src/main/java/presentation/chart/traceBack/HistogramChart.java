@@ -4,6 +4,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.chart.tools.ChartUtils;
@@ -42,6 +43,7 @@ public class HistogramChart {
         // 创建Chart
         JFreeChart chart = ChartFactory.createBarChart("", "", "", createDataset());
         chart = CompareTool.setChartCategory(chart);//修饰chart
+
 
         ChartPanel chartPanel = new ChartPanel(chart);
 

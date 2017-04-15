@@ -83,6 +83,7 @@ class OldDirRemover {
         if (osName.contains("win")) {
             String sets = "attrib +H \"" + parentFile.getAbsolutePath() + "\"";
             Runtime.getRuntime().exec(sets);
+            System.out.println("winwiniwiwninwinwiwniw");
         }
 
         return true;

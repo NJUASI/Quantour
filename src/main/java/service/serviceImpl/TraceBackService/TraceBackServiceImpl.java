@@ -308,7 +308,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         LocalDate start = traceBackCriteriaVO.startDate;
         LocalDate end = traceBackCriteriaVO.endDate;
 
-        if(traceBackCriteriaVO.isCustomized){
+        if(!traceBackCriteriaVO.isCustomized){
             return getCumulativeReturnOfOneStock(traceBackCriteriaVO.baseStockName, start, end);
         }
         else{

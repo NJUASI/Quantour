@@ -33,7 +33,6 @@ public class TraceBackServiceImplTest {
         //设置TraceBackCriteriaVO
         TraceBackCriteriaVO = new TraceBackCriteriaVO();
         TraceBackCriteriaVO.baseStockName = "深发展Ａ";
-//        TraceBackCriteriaVO.baseStockName = "深物业A";
         TraceBackCriteriaVO.startDate = start;
         TraceBackCriteriaVO.endDate = end;
 

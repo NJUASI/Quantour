@@ -47,9 +47,10 @@ public class RegisterController {
         String password2 = registerPanel.getPassword2();
 
         try {
+            //TODO 注册
             if (userService.registerUser(new UserVO(userName, password), password2)) {
-//                ViewSwitchController.getInstance().viewSwitch("loginPanel");
-//                RegisterFrame.getInstance().setVisible(false);
+                ViewSwitchController.getInstance().viewSwitch("loginPanel");
+                RegisterFrame.getInstance().setVisible(false);
                 RegisterFrame.getInstance().refresh();
             }
         } catch (DuplicatedNameException e) {
