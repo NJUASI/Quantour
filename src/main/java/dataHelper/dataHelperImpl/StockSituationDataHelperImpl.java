@@ -2,6 +2,8 @@ package dataHelper.dataHelperImpl;
 
 import dataHelper.StockSituationDataHelper;
 import po.StockSituationPO;
+import utilities.DataSourceStateKeeper;
+import utilities.enums.DataSourceState;
 import utilities.exceptions.NoDataWithinException;
 import utilities.exceptions.NoSituationDataException;
 
@@ -17,8 +19,10 @@ import java.time.LocalDate;
  */
 public class StockSituationDataHelperImpl implements StockSituationDataHelper {
 
-    private final String pathPre = "stock_situation/";
-    private final String pathPost = ".txt";
+    private static final String separator = System.getProperty("file.separator");
+
+    private static final String pathPre = "stock_situation" + separator;
+    private static final String pathPost = ".txt";
 
     private BufferedReader br;
 
@@ -33,19 +37,30 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
      */
     @Override
     public StockSituationPO getStockSituation(LocalDate date) throws NoSituationDataException {
+        String path = pathPre + date.getYear() + separator + date.toString() + pathPost;
 
         String line = null;
         try {
-            InputStream inputStream = Thread.currentThread().getContextClassLoader().
-                    getResourceAsStream(pathPre + date.getYear() + "/" + date.toString() + pathPost);
-            if(inputStream == null){
-                throw new NoSituationDataException();
+            if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+                InputStream inputStream = Thread.currentThread().getContextClassLoader().
+                        getResourceAsStream(path);
+                if (inputStream == null) {
+                    throw new NoSituationDataException();
+                } else {
+                    br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                }
+            } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){
+                br = new BufferedReader(new InputStreamReader(new FileInputStream(
+                        System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8"));
             }
-            else{
-                br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                line = br.readLine();
-                br.close();
-            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new NoSituationDataException();
+        }
+        try {
+            line = br.readLine();
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

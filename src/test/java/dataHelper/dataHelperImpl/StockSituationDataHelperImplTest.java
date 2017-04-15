@@ -38,9 +38,9 @@ public class StockSituationDataHelperImplTest {
         StockSituationPO thisStockSituation = stockSituationDataHelper.getStockSituation(LocalDate.of(2009, 1, 9));
 
         assertEquals("26794465", thisStockSituation.getVolume());
-        assertEquals(95, thisStockSituation.getLimitUpNum());
+        assertEquals(5, thisStockSituation.getLimitUpNum());
         assertEquals(0, thisStockSituation.getLimitDownNum());
-        assertEquals(108, thisStockSituation.getSurgingNum());
+        assertEquals(104, thisStockSituation.getSurgingNum());
         assertEquals(0, thisStockSituation.getSlumpingNum());
         assertEquals(108, thisStockSituation.getClimbingNum());
         assertEquals(0, thisStockSituation.getSlipingNum());
@@ -51,12 +51,12 @@ public class StockSituationDataHelperImplTest {
         StockSituationPO thisStockSituation = stockSituationDataHelper.getStockSituation(LocalDate.of(2014, 4, 29));
 
         assertEquals("27844947", thisStockSituation.getVolume());
-        assertEquals(5, thisStockSituation.getLimitUpNum());
-        assertEquals(0, thisStockSituation.getLimitDownNum());
-        assertEquals(31, thisStockSituation.getSurgingNum());
-        assertEquals(15, thisStockSituation.getSlumpingNum());
-        assertEquals(31, thisStockSituation.getClimbingNum());
-        assertEquals(15, thisStockSituation.getSlipingNum());
+        assertEquals(4, thisStockSituation.getLimitUpNum());
+        assertEquals(3, thisStockSituation.getLimitDownNum());
+        assertEquals(32, thisStockSituation.getSurgingNum());
+        assertEquals(18, thisStockSituation.getSlumpingNum());
+        assertEquals(38, thisStockSituation.getClimbingNum());
+        assertEquals(2, thisStockSituation.getSlipingNum());
     }
 
     @Test
@@ -64,11 +64,11 @@ public class StockSituationDataHelperImplTest {
         StockSituationPO thisStockSituation = stockSituationDataHelper.getStockSituation(LocalDate.of(2008, 4, 7));
 
         assertEquals("11270732", thisStockSituation.getVolume());
-        assertEquals(202, thisStockSituation.getLimitUpNum());
+        assertEquals(9, thisStockSituation.getLimitUpNum());
         assertEquals(0, thisStockSituation.getLimitDownNum());
-        assertEquals(215, thisStockSituation.getSurgingNum());
-        assertEquals(0, thisStockSituation.getSlumpingNum());
-        assertEquals(215, thisStockSituation.getClimbingNum());
+        assertEquals(178, thisStockSituation.getSurgingNum());
+        assertEquals(1, thisStockSituation.getSlumpingNum());
+        assertEquals(221, thisStockSituation.getClimbingNum());
         assertEquals(0, thisStockSituation.getSlipingNum());
     }
 
@@ -76,11 +76,11 @@ public class StockSituationDataHelperImplTest {
     public void testGetStockSituation04() throws Exception {
         StockSituationPO thisStockSituation = stockSituationDataHelper.getStockSituation(LocalDate.of(2012, 6, 8));
         assertEquals("26271420", thisStockSituation.getVolume());
-        assertEquals(8, thisStockSituation.getLimitUpNum());
-        assertEquals(0, thisStockSituation.getLimitDownNum());
-        assertEquals(9, thisStockSituation.getSurgingNum());
-        assertEquals(2, thisStockSituation.getSlumpingNum());
+        assertEquals(9, thisStockSituation.getLimitUpNum());
+        assertEquals(1, thisStockSituation.getLimitDownNum());
+        assertEquals(22, thisStockSituation.getSurgingNum());
+        assertEquals(5, thisStockSituation.getSlumpingNum());
         assertEquals(7, thisStockSituation.getClimbingNum());
-        assertEquals(4, thisStockSituation.getSlipingNum());
+        assertEquals(10, thisStockSituation.getSlipingNum());
     }
 }
