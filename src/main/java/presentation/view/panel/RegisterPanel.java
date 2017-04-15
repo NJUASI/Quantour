@@ -3,6 +3,7 @@ package presentation.view.panel;
 import presentation.listener.registerPanelListener.RegisterListener;
 import presentation.view.frame.LoginFrame;
 import presentation.view.frame.RegisterFrame;
+import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.customizedButton.MyCustomizedButton;
 
 import javax.swing.*;
@@ -44,28 +45,36 @@ public class RegisterPanel extends TemplatePanel {
     public RegisterPanel() {
 
         //the field to write your message to register
-        admin=new JTextField("your Phone/Admin");
+
+        MyLabel label1 = new MyLabel("输入账号");
+        label1.setBounds(adaptScreen(30,100,100,38));
+        add(label1);
+
+        admin=new JTextField("");
         admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
-        admin.setBounds(adaptScreen(90, 100, 260, 38));
-//        admin.setOpaque(false);
-//        admin.setBorder(null);
+        admin.setBounds(adaptScreen(150, 100, 260, 38));
         admin.setVisible(true);
         add(admin);
 
+        MyLabel label2 = new MyLabel("输入密码");
+        label2.setBounds(adaptScreen(30,155,100,38));
+        add(label2);
 
         password = new JPasswordField();
-        password.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
-        password.setBounds(adaptScreen(90, 155, 260, 38));
-//        password.setBorder(null);
-//        password.setOpaque(false);
+        password.setFont(new Font("", Font.CENTER_BASELINE, 14 * width / 1920));
+        password.setBounds(adaptScreen(150, 155, 260, 38));
+
         password.setVisible(true);
         add(password);
 
+        MyLabel label3 = new MyLabel("确认密码");
+        label3.setBounds(adaptScreen(30,210,100,38));
+        add(label3);
+
         password2=new JPasswordField();
-        password2.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
-        password2.setBounds(adaptScreen(90, 210, 260, 38));
-//        password2.setBorder(null);
-//        password2.setOpaque(false);
+        password2.setFont(new Font("", Font.CENTER_BASELINE, 14 * width / 1920));
+        password2.setBounds(adaptScreen(150, 210, 260, 38));
+
         password2.setVisible(true);
         add(password2);
 
@@ -80,7 +89,9 @@ public class RegisterPanel extends TemplatePanel {
 
         //the Button setting of register
         register =new JButton("注册");
-        register.setBounds(adaptScreen(90, 280, 260, 40));
+        register.setBounds(adaptScreen(90, 310, 260, 40));
+        register.setForeground(new Color(255,255,255));
+        register.setFont(new Font("", Font.CENTER_BASELINE, 20 * width / 1920));
         register.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
         register.addMouseListener(new RegisterListener());
         add(register);
