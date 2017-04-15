@@ -16,7 +16,8 @@ import java.util.*;
  */
 public class SearchDataHelperImpl implements SearchDataHelper {
 
-    private static final String separator = System.getProperty("file.separator");
+    private final static String separator = System.getProperty("file.separator");
+    private final static String nameCodePathPre = "stocks" + separator + "stockName-code" + separator;
 
     /**
      * The Properties.
@@ -29,7 +30,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public List<String> getAllStockCodes() {
-        propertiesload("stocks" + separator + "stockName-code" + separator + "stockName-code.properties");
+        propertiesload(nameCodePathPre + "stockName-code.properties");
         List<String> result = new LinkedList<>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             result.add(StockCodeHelper.format((String)entry.getValue()));
@@ -55,7 +56,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksCode() {
-        propertiesload("stocks" + separator + "stockName-code" + separator + "stockName-code.properties");
+        propertiesload(nameCodePathPre + "stockName-code.properties");
         Map<String,String> codesAndNames = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             codesAndNames.put((String)entry.getValue(),(String)entry.getKey());
@@ -68,7 +69,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksName() {
-        propertiesload("stocks" + separator + "stockName-code" + separator + "stockName-code.properties");
+        propertiesload(nameCodePathPre + "stockName-code.properties");
         Map<String,String> namesAndCode = new TreeMap<String,String>();
         for(Map.Entry<Object,Object> entry:properties.entrySet()){
             namesAndCode.put((String)entry.getKey(),(String)entry.getValue());

@@ -42,8 +42,7 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
         String line = null;
         try {
             if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
-                InputStream inputStream = Thread.currentThread().getContextClassLoader().
-                        getResourceAsStream(path);
+                InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
                 if (inputStream == null) {
                     throw new NoSituationDataException();
                 } else {
