@@ -87,7 +87,7 @@ public class LoginPanel extends TemplatePanel {
 //        password.setEnabled(false);
 //        admin.setEnabled(false);
         //the Button setting of logIn to mainPanel
-        JButton login = new JButton("游客登录");
+        JButton login = new JButton("登  录");
         login.setBounds(adaptScreen(90, 340, 260, 40));
 
         login.setForeground(new Color(255,255,255));

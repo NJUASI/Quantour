@@ -10,6 +10,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.chart.tools.ChartUtils;
 import presentation.chart.tools.CompareTool;
 import presentation.chart.tools.Serie;
+import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 
@@ -25,9 +26,13 @@ public class HistogramChart {
     }
     public DefaultCategoryDataset createDataset() {
         // 标注类别
-        String[] categories = { " ", "2%", "  ", "4%", "   ", "6%", "    ", "8%", "     ", "10%", "      ", ">12%" };
+
         Vector<Serie> series = new Vector<Serie>();
         // 柱子名称：柱子所有的值集合
+
+//        ChooseStrategyPanel.getInstance().getInfo()
+
+        String[] categories = { " ", "2%", "  ", "4%", "   ", "6%", "    ", "8%", "     ", "10%", "      ", ">12%" };
         Object[]  datas1= new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
         Object[] datas2 = new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
 

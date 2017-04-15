@@ -91,7 +91,6 @@ public class RegisterPanel extends TemplatePanel {
         register =new JButton("注册");
         register.setBounds(adaptScreen(90, 310, 260, 40));
         register.setForeground(new Color(255,255,255));
-        register.setFont(new Font("", Font.CENTER_BASELINE, 20 * width / 1920));
         register.setFont(new Font("",Font.CENTER_BASELINE,20*width/1920));
         register.addMouseListener(new RegisterListener());
         add(register);

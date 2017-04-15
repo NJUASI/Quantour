@@ -44,6 +44,5 @@ public class TraceBackAnalysePanel extends TemplatePanel {
         chartPanel2.setBounds(adaptScreen(900, 180, 600, 400));
         chartPanel2.setVisible(true);
         add(chartPanel2);
-
     }
 }
