@@ -8,6 +8,7 @@ import service.StockService;
 import service.StockSituationService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockSituationServiceImpl;
+import utilities.IDReserve;
 import utilities.exceptions.NoSituationDataException;
 import utilities.exceptions.PrivateStockExistedException;
 import utilities.exceptions.PrivateStockNotFoundException;
@@ -137,6 +138,6 @@ public class StocksTableController {
     public void addFavorite() throws PrivateStockExistedException, PrivateStockNotFoundException {
         //todo 加入自选股
         stockService = new StockServiceImpl();
-        stockService.addPrivateStock(stocksTablePane.getName(),stocksTablePane.getCode());
+        stockService.addPrivateStock(IDReserve.getInstance().getUserID(),stocksTablePane.getCode());
     }
 }

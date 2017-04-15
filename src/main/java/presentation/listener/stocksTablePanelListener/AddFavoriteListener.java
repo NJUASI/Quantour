@@ -17,6 +17,7 @@ public class AddFavoriteListener extends MouseAdapter {
     public void mouseClicked(MouseEvent e) {
         try {
             StocksTableController.getInstance().addFavorite();
+            new PopUpFrame("添加自选股成功！");
         } catch (PrivateStockExistedException e1) {
             new PopUpFrame(e1.getMessage());
         } catch (PrivateStockNotFoundException e1) {
