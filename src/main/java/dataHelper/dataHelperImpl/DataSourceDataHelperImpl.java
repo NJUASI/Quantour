@@ -20,6 +20,9 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
     @Override
     public boolean upload(String filePath) throws IOException {
+        OldDirRemover remover = new OldDirRemover();
+        remover.myDelete();
+
         CodeDirCreator creator = new CodeDirCreator(filePath);
         creator.createDir();
 
@@ -56,6 +59,51 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
     }
 }
 
+
+
+/**
+ * 移除之前的attachments，如果之前没有就不操作
+ * 同时创建父目录.attachments
+ */
+class OldDirRemover {
+
+    private final String separator = System.getProperty("file.separator");
+
+    boolean myDelete() throws IOException {
+        final String separator = System.getProperty("file.separator");
+        final String parent = System.getProperty("user.dir") + separator + ".attachments";
+
+        File parentFile = new File(parent);
+        if (parentFile.exists()) {
+            delete(parent);
+        }
+
+        // 判断windows / macOS生成隐藏文件
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("win")) {
+            String sets = "attrib +H \"" + parentFile.getAbsolutePath() + "\"";
+            Runtime.getRuntime().exec(sets);
+        }
+
+        return true;
+    }
+
+    private boolean delete(String path) {
+        File thisFile = new File(path);
+        if (thisFile.isDirectory()) {
+            String[] parts = thisFile.list();
+            for (String eachPath : parts) {
+                delete(path + separator + eachPath);
+            }
+            thisFile.delete();
+        } else {
+            thisFile.delete();
+        }
+
+        return true;
+    }
+
+}
 
 /**
  * 创建stock_records_by_code文件夹，同时创建数据源附属信息

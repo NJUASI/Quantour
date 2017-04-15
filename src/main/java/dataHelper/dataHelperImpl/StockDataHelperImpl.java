@@ -7,6 +7,7 @@ import utilities.DataSourceStateKeeper;
 import utilities.LocalDateComparator;
 import utilities.enums.DataSourceState;
 import utilities.enums.Market;
+import vo.StockPoolVO;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -59,7 +60,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(LocalDate date) throws IOException {
-        return getStockByPath(stockRecordByDatePathPre + date.getYear() + "/" + date.toString() + stockRecordPathPost);
+        return getStockByPath(stockRecordByDatePathPre + date.getYear() + separator + date.toString() + stockRecordPathPost);
     }
 
     /**
@@ -127,6 +128,14 @@ public class StockDataHelperImpl implements StockDataHelper {
 
         dates.sort(new LocalDateComparator());
         return dates;
+    }
+
+    @Override
+    public List<StockPoolVO> getAllStockPool() {
+
+
+
+        return null;
     }
 
     /**

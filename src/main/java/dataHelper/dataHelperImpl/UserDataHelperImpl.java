@@ -21,7 +21,12 @@ public class UserDataHelperImpl implements UserDataHelper {
      */
     private Properties properties = new Properties();
 
+    private final String separator = System.getProperty("file.separator");
+    private final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "user";
+
     public UserDataHelperImpl(){
+
+        wasExists(); //user文件夹和userInfo.properties未创建，则创建
         propertiesload();
     }
 
@@ -29,13 +34,13 @@ public class UserDataHelperImpl implements UserDataHelper {
      * 加载资源文件
      *
      * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/15
      */
     private void propertiesload() {
 
         try {
-            properties.load(new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("userInfo.properties"))));
+            properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(parent+separator+"userInfo.properties"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,9 +58,10 @@ public class UserDataHelperImpl implements UserDataHelper {
      */
     @Override
     public boolean add(UserPO userPO) {
+
         properties.put(userPO.getUserName(),userPO.getPassword());
 
-        File directory = new File("");//设定为当前文件夹
+        File directory = new File(parent);//设定为当前文件夹
         try {
             properties.store(new FileWriter(directory.getCanonicalPath()+"userInfo.properties"),"");
         } catch (IOException e) {
@@ -109,6 +115,28 @@ public class UserDataHelperImpl implements UserDataHelper {
     public Set<Object> getAllUserNames() {
 
         return properties.keySet();
+    }
+
+    /**
+     * 判断该用户文件及文件夹是否存在，不存在则生成
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/15
+     */
+    private boolean wasExists() {
+        File file = new File(parent);
+        try {
+            if (!file.exists()&& !file.isDirectory()) {
+                file.mkdir();
+                File tempFile = new File(parent+separator+"userInfo.properties");
+                tempFile.createNewFile();
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
 }

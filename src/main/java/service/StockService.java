@@ -53,7 +53,7 @@ public interface StockService{
      * @param stockCode 股票代码
      * @return 是否添加成功
      */
-    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException;
+    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException;
 
     /**
      * 用户删除自选股
@@ -64,7 +64,7 @@ public interface StockService{
      * @param stockCode 股票代码
      * @return 是否删除成功
      */
-    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException;
+    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException;
 
     /**
      * 用户输入代码或者股票首字母或股票名称，查找符合条件的股票

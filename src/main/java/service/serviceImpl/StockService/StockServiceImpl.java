@@ -93,7 +93,7 @@ public class StockServiceImpl implements StockService {
      * @return 是否添加成功
      */
     @Override
-    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException {
+    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException {
         return stockDao.addPrivateStock(userName, stockCode);
     }
 
@@ -107,7 +107,7 @@ public class StockServiceImpl implements StockService {
      * @return 是否删除成功
      */
     @Override
-    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException {
+    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException {
         return stockDao.deletePrivateStock(userName, stockCode);
     }
 

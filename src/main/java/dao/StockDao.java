@@ -148,7 +148,7 @@ public interface StockDao {
      * @param stockCode 股票代码
      * @return 添加是否成功
      */
-    boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException;
+    boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException;
 
     /**
      * 删除用户自选股
@@ -160,7 +160,7 @@ public interface StockDao {
      * @param stockCode 股票代码
      * @return 删除是否成功
      */
-    boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException;
+    boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException;
 
 
 
