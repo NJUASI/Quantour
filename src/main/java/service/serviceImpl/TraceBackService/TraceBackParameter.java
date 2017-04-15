@@ -123,7 +123,7 @@ public class TraceBackParameter {
         strategyRate = this.calStrategyDailyRate(list);
 
         //计算策略的总收益率
-        traceBackNumValVO.sumRate = this.calSumRate(traceBackVO.traceBackStrategyVO.holdingDetailVOS);
+        traceBackNumValVO.sumRate = this.calSumRate(traceBackVO.holdingDetailVOS);
         //计算策略的日收益率均值
         this.meanStrategy = this.calMeanOfDaily(strategyRate);
         //计算策略的日收益率标准差
@@ -156,7 +156,7 @@ public class TraceBackParameter {
                 traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate));
 
         //计算基准的总收益率
-        traceBackNumValVO.baseSumRate = this.calSumRateBase(traceBackVO.traceBackStrategyVO.holdingDetailVOS);
+        traceBackNumValVO.baseSumRate = this.calSumRateBase(traceBackVO.holdingDetailVOS);
         //计算基准的日收益率均值
         this.meanBase = this.calMeanOfDaily(baseRate);
         //计算基准的日收益率标准差

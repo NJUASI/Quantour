@@ -30,15 +30,9 @@ public abstract class AllTraceBackStrategy {
     public TraceBackCriteriaVO traceBackCriteriaVO;
 
 
-
     /*
     在traceBack之后需要初始化的东西
      */
-    /**
-     * 策略累计收益率
-     */
-    public List<CumulativeReturnVO> strategyCumulativeReturn;
-
     /**
      * 历史持仓详情
      */
@@ -119,6 +113,7 @@ public abstract class AllTraceBackStrategy {
                     down = j;
                     cumulativeReturnVOS.get(top).isTraceBack = true;
                     cumulativeReturnVOS.get(down).isTraceBack = true;
+                    max = diff;
                 }
             }
         }
