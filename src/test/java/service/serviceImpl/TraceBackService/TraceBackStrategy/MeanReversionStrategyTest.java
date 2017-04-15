@@ -51,8 +51,6 @@ public class MeanReversionStrategyTest {
     @Test
     public void testTraceBack() throws Exception {
         TraceBackStrategyVO vo = strategy.traceBack();
-
-        List<HoldingDetailVO> aa = vo.holdingDetailVOS;
     }
 
     /**

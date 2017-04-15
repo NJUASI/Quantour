@@ -53,6 +53,9 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         formativePeriod = traceBackCriteriaVO.formativePeriod;
 
         withinDates = stockDao.getDateWithData(traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate);
+
+        strategyCumulativeReturn = new LinkedList<>();
+        holdingDetailVOS = new LinkedList<>();
     }
 
     @Override
@@ -84,7 +87,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         wantedStockCodes = pickStocks(formate(stockPoolCodes, periodStart, formativePeriod));
         calculate(periodStart, periodEnd, cycles + 1);
 
-        // TODO 根据果仁网，第一天数据设置为0
+        // 根据果仁网，第一天数据设置为0
         strategyCumulativeReturn.get(0).cumulativeReturn = 0;
 
         return new TraceBackStrategyVO(strategyCumulativeReturn, holdingDetailVOS);
