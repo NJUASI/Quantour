@@ -443,8 +443,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPoolVO> getAllStockPool() {
-        //TODO gcm 待实现，因为数据里面没有带版块的信息
-        return null;
+        return stockHelper.getAllStockPool();
     }
 
     /**

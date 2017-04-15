@@ -7,6 +7,7 @@ import utilities.DataSourceStateKeeper;
 import utilities.LocalDateComparator;
 import utilities.enums.DataSourceState;
 import utilities.enums.Market;
+import vo.StockPoolVO;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -127,6 +128,14 @@ public class StockDataHelperImpl implements StockDataHelper {
 
         dates.sort(new LocalDateComparator());
         return dates;
+    }
+
+    @Override
+    public List<StockPoolVO> getAllStockPool() {
+
+
+
+        return null;
     }
 
     /**

@@ -2,4 +2,10 @@ target/*
 
 .idea/workspace.xml
 
-.attachments/*
+.attachments/stock_records_by_code/*
+
+.attachments/stock_records_by_date/*
+
+.attachments/stock_situation/*
+
+.attachments/stockName-code/*

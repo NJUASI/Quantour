@@ -1,6 +1,7 @@
 package dataHelper;
 
 import po.StockPO;
+import vo.StockPoolVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -65,5 +66,14 @@ public interface StockDataHelper {
      * @return 所有交易日期
      */
     List<LocalDate> getDateWithData() throws IOException;
+
+
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/15
+     * @return 所有股票的版块有关的信息
+     */
+    List<StockPoolVO> getAllStockPool();
 
 }
