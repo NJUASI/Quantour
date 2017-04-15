@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import po.StockPO;
+import utilities.exceptions.UnhandleBlockTypeException;
+import vo.StockPoolVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -139,6 +141,19 @@ public class StockDataHelperImplTest {
     public void testGetDateWithData() throws IOException {
         List<LocalDate> result = stockDataHelper.getDateWithData();
         assertEquals(2246, result.size());
+    }
+
+    /**
+     * Method: getAllStockPool()
+     */
+    @Test
+    public void testGetAllStockPool() throws IOException, UnhandleBlockTypeException {
+        List<StockPoolVO> result = stockDataHelper.getAllStockPool();
+        assertEquals(791, result.size());
+        for (StockPoolVO vo : result) {
+            System.out.println(vo.stockCode + "  " + vo.blockType + "  " + vo.isSt);
+        }
+
     }
 
 }

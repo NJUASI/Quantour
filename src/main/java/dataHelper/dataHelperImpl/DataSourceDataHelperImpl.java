@@ -149,7 +149,7 @@ class CodeDirCreator {
         final String separator = System.getProperty("file.separator");
         final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator;
         final String post = ".txt";
-        final String codeDesFileParentPath = parent + "stock_records_by_code";
+        final String codeDesFileParentPath = parent + "stocks/stock_records_by_code";
 
         // 建立by_code目录
         for (String thisCode : codes) {
@@ -189,7 +189,7 @@ class OriginalDataReader {
     final String fileSeparator = System.getProperty("file.separator");
     final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments"  + fileSeparator + "stocks"+ fileSeparator;
     final String post = ".txt";
-    final String codeDesFileParentPath = parent + "stock_records_by_code";
+    final String codeDesFileParentPath = parent + "stocks/stock_records_by_code";
 
     private String desCode = "";
     private String codeDesFilePath = null;
@@ -288,7 +288,7 @@ class DuplicationAdder {
     final String fileSeparator = System.getProperty("file.separator");
     final String lineSeparator = System.getProperty("line.separator");
     final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + "stocks" + fileSeparator;
-    final String sourceFilePath = parent + "stock_records_by_code";
+    final String sourceFilePath = parent + "stocks/stock_records_by_code";
 
     private String previousRecord;
     private String currentRecord;
@@ -354,7 +354,7 @@ class DateFilesCreator {
     final String lineSeparator = System.getProperty("line.separator");
     final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + "stocks" + fileSeparator;
     final String post = ".txt";
-    final String sourcePath = parent + "stock_records_by_code";
+    final String sourcePath = parent + "stocks/stock_records_by_code";
     final String dateDesFileParentPath = parent + "stock_records_by_date";
     final String situationDesFileParentPath = parent + "stock_situation";
 
@@ -562,7 +562,7 @@ class StockNameToCodeCreator {
     }
 
     private void reader() {
-        String readerPath = parent + separator + "stock_records_by_code" + separator;
+        String readerPath = parent + separator + "stocks/stock_records_by_code" + separator;
 
         File parentFile = new File(readerPath);
         String[] fileName = parentFile.list();

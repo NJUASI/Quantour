@@ -29,7 +29,7 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     private static final String separator = System.getProperty("file.separator");
 
-    private final static String stockRecordByCodePathPre = "stocks" + separator + "stock_records_by_code" + separator;
+    private final static String stockRecordByCodePathPre = "stocks" + separator + "stocks/stock_records_by_code" + separator;
     private final static String stockRecordByDatePathPre = "stocks" + separator + "stock_records_by_date" + separator;
     private final static String stockRecordPathPost = ".txt";
 
