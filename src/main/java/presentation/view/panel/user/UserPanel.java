@@ -2,10 +2,13 @@ package presentation.view.panel.user;
 
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.FileChoose;
+import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
+import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by 61990 on 2017/4/13.
@@ -31,9 +34,17 @@ public class UserPanel extends TemplatePanel {
         messagePanel.setBounds(adaptScreen(100,100,310,400));
         add(messagePanel);
 
-        favoritePanel=new FavoritePanel();
-        favoritePanel.setBounds(adaptScreen(900,100,600,600));
-        add(favoritePanel);
+        try {
+            favoritePanel=new FavoritePanel();
+            favoritePanel.setBounds(adaptScreen(900,100,600,600));
+            add(favoritePanel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (PrivateStockNotFoundException e) {
+            e.printStackTrace();
+            new PopUpFrame(e.getMessage());
+            //TODO 高源后期添加
+        }
 
     }
     public static UserPanel getInstance(){

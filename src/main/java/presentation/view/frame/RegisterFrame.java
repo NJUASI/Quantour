@@ -16,13 +16,13 @@ public class RegisterFrame extends JFrame {
     private static RegisterFrame registerFrame;
     RegisterPanel registerPanel;
     public RegisterFrame(){
-        try {
-            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
-            UIManager.put("RootPane.setupButtonVisible", false);
-            BeautyEyeLNFHelper.launchBeautyEyeLNF();
-        } catch (Exception e) {
-
-        }
+//        try {
+//            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
+//            UIManager.put("RootPane.setupButtonVisible", false);
+//            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+//        } catch (Exception e) {
+//
+//        }
         createWindow();
     }
     void createWindow() {
@@ -32,15 +32,17 @@ public class RegisterFrame extends JFrame {
         setIconImage(bgPicture.getImage());
 
         setLayout(null);
-        setUndecorated(true);
+//        setUndecorated(true);
         int width=WindowData.getInstance().getWidth();
         int height=WindowData.getInstance().getHeight();
 
-        setBounds((width-450)/2*width/1920, (height-380)/2*height/1030,
+        setBounds((width-450)/2*width/1920, (height-420)/2*height/1030,
                 450*width/1920, 440*height/1030);
+
         registerPanel=RegisterPanel.getInstance();
-//        setBounds(100,100,100,100);
+        registerPanel.setBounds(0,0,450*width/1920, 440*height/1030);
         add(registerPanel);
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

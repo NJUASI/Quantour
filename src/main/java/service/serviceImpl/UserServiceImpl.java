@@ -2,10 +2,14 @@ package service.serviceImpl;
 
 import dao.UserDao;
 import dao.daoImpl.UserDaoImpl;
+import utilities.AttahmentsInitializer;
+import utilities.MD5Util;
 import utilities.exceptions.*;
 import po.UserPO;
 import service.UserService;
 import vo.UserVO;
+
+import java.io.IOException;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -26,15 +30,17 @@ public class UserServiceImpl implements UserService {
      * 用户注册.
      *
      * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/15
      * @param userVO 注册用户信息
      * @param password2
      * @return 是否注册成功
      * @throws DuplicatedNameException 用户名重复
      */
     @Override
-    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException {
+    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException {
+
+        AttahmentsInitializer.init();
 
         if(userDao.getAllUserNames().contains(userVO.userName)){
             throw new DuplicatedNameException();
@@ -42,6 +48,7 @@ public class UserServiceImpl implements UserService {
         else if(!userVO.password.equals(password2)){
             throw new PasswordNotSameException();
         }
+        userVO.password = MD5Util.encodeMD5(userVO.password);
         userDao.add(new UserPO(userVO));
         return true;
     }
@@ -57,6 +64,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean modifyUser(UserVO userVO) {
+        userVO.password = MD5Util.encodeMD5(userVO.password);
         return userDao.modify(new UserPO(userVO));
     }
 
@@ -94,7 +102,7 @@ public class UserServiceImpl implements UserService {
             if(userDao.getLoginUserNames().contains(userName)){
                 throw new DuplicateLoginException();
             }
-            else if (!userDao.get(userName).getPassword().equals(password)){
+            else if (!userDao.get(userName).getPassword().equals(MD5Util.encodeMD5(password))){
                 throw new PasswordWrongException();
             }
             else{

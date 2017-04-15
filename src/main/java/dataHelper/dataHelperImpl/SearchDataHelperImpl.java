@@ -92,7 +92,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
             } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
                 System.out.println(DataSourceState.USER);
                 properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(
-                        System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8")));
+                        System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + path), "UTF-8")));
             }
         } catch (IOException e) {
             e.printStackTrace();

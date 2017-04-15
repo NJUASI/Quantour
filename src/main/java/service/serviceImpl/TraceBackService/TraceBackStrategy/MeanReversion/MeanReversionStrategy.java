@@ -96,7 +96,15 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
 
         for (String s : stockPoolCodes) {
             // 获得前一个交易日的均值
-            LocalDate periodJudge = withinDates.get(withinDates.indexOf(periodStart) - 1);
+            LocalDate periodJudge;
+            int startIndex = withinDates.indexOf(periodStart);
+            if (startIndex == 0) {
+                List<LocalDate> allDates = stockDao.getDateWithData();
+                periodJudge = allDates.get(allDates.indexOf(periodStart) - 1);
+            } else {
+                periodJudge = withinDates.get(withinDates.indexOf(periodStart) - 1);
+            }
+
             ChartShowCriteriaVO criteriaVO = new ChartShowCriteriaVO(s, periodJudge, periodJudge);
             List<MovingAverageType> formatAve = new LinkedList<>();
             formatAve.add(MovingAverageType.getEnum(traceBackCriteriaVO.formativePeriod));

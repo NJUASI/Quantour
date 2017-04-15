@@ -175,11 +175,23 @@ public class StockDaoImpl implements StockDao {
         return temp;
     }
 
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @return 所有的数据日期
+     */
     @Override
     public List<LocalDate> getDateWithData() throws IOException {
         return stockHelper.getDateWithData();
     }
 
+    /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/23
+     * @return 在指定时间区段的所有日期
+     */
     @Override
     public List<LocalDate> getDateWithData(LocalDate start, LocalDate end) throws IOException {
         List<LocalDate> result = getDateWithData();
@@ -442,7 +454,7 @@ public class StockDaoImpl implements StockDao {
      * @return 所有股票的版块有关的信息
      */
     @Override
-    public List<StockPoolVO> getAllStockPool() {
+    public List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException {
         return stockHelper.getAllStockPool();
     }
 

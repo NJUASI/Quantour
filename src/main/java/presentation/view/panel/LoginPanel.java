@@ -2,6 +2,7 @@ package presentation.view.panel;
 
 import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 import presentation.listener.loginPanelListener.LoginListener;
+import presentation.listener.loginPanelListener.OpenRegisterListener;
 import presentation.view.frame.LoginFrame;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.customizedButton.MyCustomizedButton;
@@ -83,10 +84,10 @@ public class LoginPanel extends TemplatePanel {
         password.setBackground(ColorUtils.divideColor());
         add(password);
 
-        password.setEnabled(false);
-        admin.setEnabled(false);
+//        password.setEnabled(false);
+//        admin.setEnabled(false);
         //the Button setting of logIn to mainPanel
-        JButton login = new JButton("游客登录");
+        JButton login = new JButton("登  录");
         login.setBounds(adaptScreen(90, 340, 260, 40));
 
         login.setForeground(new Color(255,255,255));
@@ -97,13 +98,13 @@ public class LoginPanel extends TemplatePanel {
 
         //the Button setting of opening register panel
 
-//        openRegister = new JButton("注册");
-//        openRegister.setFont(new Font("", Font.CENTER_BASELINE, 15 * width / 1920));
-//        openRegister.setBounds(adaptScreen(350, 350, 60, 35));
-//        openRegister.setContentAreaFilled(false);
-//        openRegister.setForeground(new Color(254, 104, 4));
-//        openRegister.addMouseListener(new OpenRegisterListener());
-//        add(openRegister);
+        openRegister = new JButton("注册");
+        openRegister.setFont(new Font("", Font.CENTER_BASELINE, 15 * width / 1920));
+        openRegister.setBounds(adaptScreen(350, 350, 60, 35));
+        openRegister.setContentAreaFilled(false);
+        openRegister.setForeground(new Color(254, 104, 4));
+        openRegister.addMouseListener(new OpenRegisterListener());
+        add(openRegister);
 
         //关闭按钮
         close=new MyCustomizedButton("close",0);

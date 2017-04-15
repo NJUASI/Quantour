@@ -3,6 +3,7 @@ package dataHelper.dataHelperImpl;
 import dataHelper.DataSourceDataHelper;
 import po.DataSourceInfoPO;
 import po.StockSituationPO;
+import utilities.AttahmentsInitializer;
 import utilities.StockCodeHelper;
 
 import java.io.*;
@@ -49,7 +50,7 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
         // TODO 用户姓名未实现
 
         final String separator = System.getProperty("file.separator");
-        final String filePath = System.getProperty("user.dir") + separator + "attachments" + separator + "info.txt";
+        final String filePath = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + "info.txt";
         File thisFile = new File(filePath);
         if (!thisFile.exists()) return null;
 
@@ -70,20 +71,15 @@ class OldDirRemover {
     private final String separator = System.getProperty("file.separator");
 
     boolean myDelete() throws IOException {
+        // init the .attachments folder
+        AttahmentsInitializer.init();
+
         final String separator = System.getProperty("file.separator");
-        final String parent = System.getProperty("user.dir") + separator + ".attachments";
+        final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks";
 
         File parentFile = new File(parent);
         if (parentFile.exists()) {
             delete(parent);
-        }
-
-        // 判断windows / macOS生成隐藏文件
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.contains("win")) {
-            String sets = "attrib +H \"" + parentFile.getAbsolutePath() + "\"";
-            Runtime.getRuntime().exec(sets);
-            System.out.println("winwiniwiwninwinwiwniw");
         }
 
         return true;
@@ -151,9 +147,9 @@ class CodeDirCreator {
 
     private void create() throws IOException {
         final String separator = System.getProperty("file.separator");
-        final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator;
+        final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator;
         final String post = ".txt";
-        final String codeDesFileParentPath = parent + "stock_records_by_code";
+        final String codeDesFileParentPath = parent + "stocks/stock_records_by_code";
 
         // 建立by_code目录
         for (String thisCode : codes) {
@@ -191,9 +187,9 @@ class OriginalDataReader {
     BufferedWriter bw;
 
     final String fileSeparator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator;
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments"  + fileSeparator + "stocks"+ fileSeparator;
     final String post = ".txt";
-    final String codeDesFileParentPath = parent + "stock_records_by_code";
+    final String codeDesFileParentPath = parent + "stocks/stock_records_by_code";
 
     private String desCode = "";
     private String codeDesFilePath = null;
@@ -291,8 +287,8 @@ class DuplicationAdder {
 
     final String fileSeparator = System.getProperty("file.separator");
     final String lineSeparator = System.getProperty("line.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator;
-    final String sourceFilePath = parent + "stock_records_by_code";
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + "stocks" + fileSeparator;
+    final String sourceFilePath = parent + "stocks/stock_records_by_code";
 
     private String previousRecord;
     private String currentRecord;
@@ -356,9 +352,9 @@ class DateFilesCreator {
 
     final String fileSeparator = System.getProperty("file.separator");
     final String lineSeparator = System.getProperty("line.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator;
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + "stocks" + fileSeparator;
     final String post = ".txt";
-    final String sourcePath = parent + "stock_records_by_code";
+    final String sourcePath = parent + "stocks/stock_records_by_code";
     final String dateDesFileParentPath = parent + "stock_records_by_date";
     final String situationDesFileParentPath = parent + "stock_situation";
 
@@ -425,7 +421,7 @@ class DateFilesCreator {
 class SituationCreator {
 
     final String fileSeparator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator;
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + "stocks" + fileSeparator;
     final String sourcePath = parent + "stock_records_by_date";
 
     private String[] getFileList() {
@@ -532,7 +528,7 @@ class SituationCreator {
 class StockNameToCodeCreator {
 
     final String separator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + separator + ".attachments";
+    final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks";
     final String post = ".properties";
 
     private ArrayList<String> key = new ArrayList<String>();
@@ -566,7 +562,7 @@ class StockNameToCodeCreator {
     }
 
     private void reader() {
-        String readerPath = parent + separator + "stock_records_by_code" + separator;
+        String readerPath = parent + separator + "stocks/stock_records_by_code" + separator;
 
         File parentFile = new File(readerPath);
         String[] fileName = parentFile.list();

@@ -1,9 +1,10 @@
-package service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversion;
+package service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversion.MeanReversionStrategy;
 import utilities.enums.BlockType;
 import utilities.enums.StType;
 import utilities.enums.TraceBackStrategy;
@@ -28,14 +29,14 @@ public class MeanReversionStrategyTest {
     public void before() throws Exception {
         List<String> stockPool = new LinkedList<>();
         stockPool.add("000001");
-        stockPool.add("000002");
+//        stockPool.add("000002");
 
         List<BlockType> blockTypeList = new LinkedList<>();
         blockTypeList.add(BlockType.ALL);
 
         StockPoolCriteriaVO vo = new StockPoolCriteriaVO(StType.INCLUDE, blockTypeList);
-        TraceBackCriteriaVO criteriaVO = new TraceBackCriteriaVO(LocalDate.of(2010, 1,1), LocalDate.of(2014, 4,29),
-                5, 10, vo, TraceBackStrategy.MR, 100, "hushen");
+        TraceBackCriteriaVO criteriaVO = new TraceBackCriteriaVO(LocalDate.of(2014, 1,1), LocalDate.of(2014, 4,29),
+                5, 10, vo, TraceBackStrategy.MR, 100, null);
 
         strategy = new MeanReversionStrategy(stockPool, criteriaVO);
     }

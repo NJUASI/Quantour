@@ -19,7 +19,7 @@ public class MD5Util {
      * @params info 需要加密的信息
      * @return String 加密后的字符
      */
-    public String encodeMD5(String info) {
+    public static String encodeMD5(String info) {
 
         MessageDigest md5 = null;
 

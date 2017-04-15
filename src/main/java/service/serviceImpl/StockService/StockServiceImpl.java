@@ -75,12 +75,12 @@ public class StockServiceImpl implements StockService {
      * @return the iterator 自选股信息列表
      */
     @Override
-    public Iterator<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
+    public List<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
             stockVOList.add(new StockVO(po));
         }
-        return stockVOList.iterator();
+        return stockVOList;
     }
 
     /**
@@ -218,7 +218,7 @@ public class StockServiceImpl implements StockService {
      * @return List<String> 符合标准的股票池中所有股票的股票代码
      */
     @Override
-    public List<String> getStockPool(StockPoolCriteriaVO stockPoolCriteriaVO) {
+    public List<String> getStockPool(StockPoolCriteriaVO stockPoolCriteriaVO) throws IOException, UnhandleBlockTypeException {
 
         //新建所有filter对象
         StockPoolFilter stockPoolFilter = new StockPoolFilter();

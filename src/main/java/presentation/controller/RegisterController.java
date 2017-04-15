@@ -8,6 +8,8 @@ import utilities.exceptions.DuplicatedNameException;
 import utilities.exceptions.PasswordNotSameException;
 import vo.UserVO;
 
+import java.io.IOException;
+
 /**
  * Created by Harvey on 2017/3/12.
  */
@@ -47,14 +49,16 @@ public class RegisterController {
         String password2 = registerPanel.getPassword2();
 
         try {
+            //TODO 注册
             if (userService.registerUser(new UserVO(userName, password), password2)) {
-//                ViewSwitchController.getInstance().viewSwitch("loginPanel");
-//                RegisterFrame.getInstance().setVisible(false);
                 RegisterFrame.getInstance().refresh();
+                RegisterFrame.getInstance().setVisible(false);
             }
         } catch (DuplicatedNameException e) {
             e.printStackTrace();
         } catch (PasswordNotSameException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

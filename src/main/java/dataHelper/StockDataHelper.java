@@ -1,9 +1,11 @@
 package dataHelper;
 
 import po.StockPO;
+import utilities.exceptions.UnhandleBlockTypeException;
 import vo.StockPoolVO;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -74,6 +76,5 @@ public interface StockDataHelper {
      * @updateTime 2017/4/15
      * @return 所有股票的版块有关的信息
      */
-    List<StockPoolVO> getAllStockPool();
-
+    List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException;
 }

@@ -2,10 +2,7 @@ package service.serviceImpl.TraceBackService;
 
 import service.StockService;
 import service.serviceImpl.StockService.StockServiceImpl;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.*;
 
 import java.io.IOException;
@@ -60,7 +57,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException {
+    public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException, UnhandleBlockTypeException {
         this.stockService = new StockServiceImpl();
         traceBackNumValVO = new TraceBackNumValVO();
         this.traceBackVO = traceBackVO;
@@ -113,7 +110,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    private void initStrategy(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException {
+    private void initStrategy(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, UnhandleBlockTypeException {
         List<String> codes = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
         List<List<StockVO>> list = new ArrayList<>();
 

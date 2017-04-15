@@ -4,6 +4,7 @@ import presentation.view.frame.LoginFrame;
 import presentation.view.frame.MainFrame;
 import presentation.view.frame.RegisterFrame;
 import presentation.view.panel.LoginPanel;
+import presentation.view.tools.PopUpFrame;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
 import utilities.IDReserve;
@@ -65,11 +66,11 @@ public class LoginController{
             }
 
         } catch (DuplicateLoginException e) {
-            JOptionPane.showMessageDialog(loginPanel,"重复登录");
+            new PopUpFrame("重复登录");
         } catch (UserNotExistException e) {
-            JOptionPane.showMessageDialog(loginPanel,"用户名不存在");
+            new PopUpFrame("用户名不存在");
         } catch (PasswordWrongException e) {
-            JOptionPane.showMessageDialog(loginPanel,"密码错误");
+            new PopUpFrame("密码错误");
         }
         return false;
     }
