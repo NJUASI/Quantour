@@ -51,6 +51,9 @@ public class UserPanel extends TemplatePanel {
     }
 
     public void refreshFavorite(){
+        if (favoritePanel!=null){
+            remove(favoritePanel);
+        }
         try {
             favoritePanel=new FavoritePanel();
             favoritePanel.setBounds(adaptScreen(900,100,600,600));

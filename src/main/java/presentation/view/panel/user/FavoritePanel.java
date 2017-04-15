@@ -98,10 +98,16 @@ public class FavoritePanel extends JScrollPane{
             getVerticalScrollBar().setUI(new MyScrollBarUI());
             setBackground(ColorUtils.backgroundColor());
             setBorder(BorderFactory.createEmptyBorder());
-            setViewportView(jTable);
+            jTable.setBackground(WindowData.getInstance().getColor());
+//            setViewportView(jTable);
+
+            JLabel label = new JLabel("1231231231");
+            label.setBounds(0,0,600,600);
+            add(label);
+
 
 //            StocksTablePanel.getInstance().label.setVisible(false);
-            jTable.repaint();
+//            jTable.repaint();
 //        } catch (Exception e) {
 ////            StocksTablePanel.getInstance().label.setVisible(true);
 //        }
@@ -109,6 +115,10 @@ public class FavoritePanel extends JScrollPane{
 
     public String getCode() {
         String cellValue = "" + jTable.getValueAt(jTable.getSelectedRow(), 0);// 取单元格数据,row是行号,column是列号
+        return cellValue;
+    }
+    public String getName() {
+        String cellValue = "" + jTable.getValueAt(jTable.getSelectedRow(), 1);// 取单元格数据,row是行号,column是列号
         return cellValue;
     }
 }
