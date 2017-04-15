@@ -7,9 +7,7 @@ import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import utilities.enums.BlockType;
 import utilities.enums.StType;
 import utilities.enums.TraceBackStrategy;
-import vo.StockPoolCriteriaVO;
-import vo.StockPoolVO;
-import vo.TraceBackCriteriaVO;
+import vo.*;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -51,7 +49,9 @@ public class MeanReversionStrategyTest {
      */
     @Test
     public void testTraceBack() throws Exception {
-//TODO: Test goes here... 
+        TraceBackStrategyVO vo = strategy.traceBack();
+
+        List<HoldingDetailVO> aa = vo.holdingDetailVOS;
     }
 
     /**

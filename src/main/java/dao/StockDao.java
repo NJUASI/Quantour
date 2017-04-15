@@ -219,7 +219,7 @@ public interface StockDao {
      * 获取所有股票的版块有关的信息
      * @return 所有股票的版块有关的信息
      */
-    List<StockPoolVO> getAllStockPool();
+    List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException;
 
     /**
      *  若参照日期为交易日，则返回参照日期;否则返回参照日期前的一个交易日

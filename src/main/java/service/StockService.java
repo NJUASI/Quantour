@@ -108,7 +108,7 @@ public interface StockService{
      * @param stockPoolVO 股票池的选择标准
      * @return List<String> 符合标准的股票池中所有股票的股票代码
      */
-    List<String> getStockPool(StockPoolCriteriaVO stockPoolVO);
+    List<String> getStockPool(StockPoolCriteriaVO stockPoolVO) throws IOException, UnhandleBlockTypeException;
 
 
     /**

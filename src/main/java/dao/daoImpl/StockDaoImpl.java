@@ -442,7 +442,7 @@ public class StockDaoImpl implements StockDao {
      * @return 所有股票的版块有关的信息
      */
     @Override
-    public List<StockPoolVO> getAllStockPool() {
+    public List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException {
         return stockHelper.getAllStockPool();
     }
 

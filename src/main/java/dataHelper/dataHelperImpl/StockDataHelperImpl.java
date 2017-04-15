@@ -5,14 +5,18 @@ import dataHelper.StockDataHelper;
 import po.StockPO;
 import utilities.DataSourceStateKeeper;
 import utilities.LocalDateComparator;
+import utilities.enums.BlockType;
 import utilities.enums.DataSourceState;
 import utilities.enums.Market;
+import utilities.exceptions.UnhandleBlockTypeException;
 import vo.StockPoolVO;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/3/5.
@@ -131,11 +135,32 @@ public class StockDataHelperImpl implements StockDataHelper {
     }
 
     @Override
-    public List<StockPoolVO> getAllStockPool() {
+    public List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException {
+        List<StockPoolVO> result = new LinkedList<>();
 
+        SearchDataHelper searchDataHelper = new SearchDataHelperImpl();
+        Map<String, String> codeName = searchDataHelper.getAllStocksCode();
+        List<String> stockCodes = new ArrayList<>(codeName.keySet());
+        List<String> stockNames = new ArrayList<>(codeName.values());
 
+        for (int i = 0; i < stockCodes.size(); i++) {
+            String tempCode = stockCodes.get(i);
 
-        return null;
+            BlockType thisBlockType = null;
+            if (tempCode.startsWith("001") || tempCode.startsWith("000")) {
+                thisBlockType = BlockType.ZB;
+            } else if (tempCode.startsWith("002")) {
+                thisBlockType = BlockType.ZXB;
+            } else if (tempCode.startsWith("300")) {
+                thisBlockType = BlockType.CYB;
+            } else throw new UnhandleBlockTypeException();
+
+            boolean isSt = stockNames.get(i).contains("ST");
+            
+            result.add(new StockPoolVO(tempCode, thisBlockType ,isSt));
+        }
+
+        return result;
     }
 
     /**
@@ -149,14 +174,10 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @throws IOException IO
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
-        System.out.println(path);
-
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
-            System.out.println(DataSourceState.ORIGINAL);
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream(path), "UTF-8"));
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){
-            System.out.println(DataSourceState.USER);
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
                     System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8"));
         }
