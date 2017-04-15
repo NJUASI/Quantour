@@ -66,6 +66,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         //形成期
         int formativePeriod = traceBackCriteriaVO.formativePeriod;
+
         //持有期
         int holdingPeriod = traceBackCriteriaVO.holdingPeriod;
 
@@ -103,15 +104,17 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             }
 
             //多往前计算一天
-            startOfHolding = stockTradingDayService.getLastTradingDay(startOfHolding.minusDays(1), holdingStocks);
+            LocalDate startOfHoldingMinusOne = stockTradingDayService.getLastTradingDay(startOfHolding.minusDays(1), holdingStocks);
 
             //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
-            List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(start,end,holdingStocks);
+            List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(startOfHoldingMinusOne,endOfHolding,holdingStocks);
 
-            List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(dailyTotalCumulativeReturn, startOfHolding, endOfHolding);
+            List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(dailyTotalCumulativeReturn);
 
-            HoldingDetailVO holdingDetailVO = computeHoldingDetailVO(dailyTotalCumulativeReturn, startOfHolding, endOfHolding);
-            //TODO holdingDetailVO应该加入到哪个成员变量里面
+            double lastRate = dailyTotalCumulativeReturn.get(dailyTotalCumulativeReturn.size()-1).cumulativeReturn;
+
+            HoldingDetailVO holdingDetailVO = computeHoldingDetailVO(lastRate, startOfHolding, endOfHolding);
+            holdingDetailVOS.add(holdingDetailVO);
 
             //第一个周期，第一天的累计收益率置为0
             if(i == 0){
@@ -124,10 +127,19 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             startOfHolding = stockTradingDayService.getNextTradingDay(endOfHolding.plusDays(1),holdingStocks);
         }
 
-//        return maxRetracement(cumulativeReturnVOS);
-        return null;
+        TraceBackStrategyVO traceBackStrategyVO = new TraceBackStrategyVO(maxRetracement(cumulativeReturnVOS),holdingDetailVOS);
+
+        return traceBackStrategyVO;
     }
 
+    /**
+     * 形成期／N日均值，用于后续策略筛选
+     *
+     * @param stockCodes      股票列表
+     * @param periodStart     持有期起始日期
+     * @param formativePeriod 形成期长度（MS）／N日均值偏离度（MR）
+     * @return 形成的
+     */
     @Override
     protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
         return null;
@@ -136,11 +148,9 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     /**
      * 计算当前持有期所持有的股票在当前的持有期内每一天相对于回测区间起始日期的总的累计收益率
      * @param dailyTotalCumulativeReturn 当前持有期所持有股票每天的累计收益率
-     * @param start 持有期的起始日期的前一个交易日,由于第一天相对第一天为0,则应多往前计算一天,
-     * @param end 持有期的结束日期，也为交易日
      * @return
      */
-    private List<CumulativeReturnVO> computeHoldingPeriod(List<CumulativeReturnVO> dailyTotalCumulativeReturn, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
+    private List<CumulativeReturnVO> computeHoldingPeriod(List<CumulativeReturnVO> dailyTotalCumulativeReturn) throws DateNotWithinException, NoDataWithinException, IOException {
 
         List<CumulativeReturnVO> cumulativeReturn = new ArrayList<CumulativeReturnVO>();
 
@@ -159,12 +169,12 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
     /**
      * 计算一个持仓期的持仓详情
-     * @param dailyTotalCumulativeReturn 当前持有期所持有股票每天的累计收益率
+     * @param lastRate 当前持仓周期最后一天相对于该持仓周期第一天的累计收益率
      * @param start 持有期的起始日期的前一个交易日,由于第一天相对第一天为0,则应多往前计算一天
      * @param end 持有期的结束日期，也为交易日
      * @return HoldingDetailVO  持仓期的持仓详情
      */
-    private HoldingDetailVO computeHoldingDetailVO(List<CumulativeReturnVO> dailyTotalCumulativeReturn, LocalDate start, LocalDate end){
+    private HoldingDetailVO computeHoldingDetailVO(double lastRate, LocalDate start, LocalDate end){
 
         //保存当前持仓期详情信息
         HoldingDetailVO curHoldingPeriod = new HoldingDetailVO();
@@ -174,15 +184,14 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         //保存之前的投资资金
         double preRemainInvestment = remainInvestment;
-        //持仓期最后一天的累计收益率
-        double lastRate = dailyTotalCumulativeReturn.get(dailyTotalCumulativeReturn.size()-1).cumulativeReturn;
+
         //更新剩余资金
         remainInvestment = remainInvestment * (1+lastRate);
         //当前持仓期剩余投资资金
         curHoldingPeriod.remainInvestment = remainInvestment;
 
         //当前持仓期的策略收益
-        curHoldingPeriod.strategyReturn = (preRemainInvestment - remainInvestment) / remainInvestment;
+        curHoldingPeriod.strategyReturn = (remainInvestment - preRemainInvestment) / preRemainInvestment;
 
         return curHoldingPeriod;
     }

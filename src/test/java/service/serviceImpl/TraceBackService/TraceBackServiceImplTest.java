@@ -49,14 +49,6 @@ public class TraceBackServiceImplTest {
     }
 
     @Test
-    public void getBaseCumulativeReturn() throws Exception {
-
-        List<CumulativeReturnVO> cumulativeReturnVOS = TraceBackService.getBaseCumulativeReturn(TraceBackCriteriaVO.startDate,TraceBackCriteriaVO.endDate,TraceBackCriteriaVO.baseStockName);
-        assertEquals(LocalDate.of(2014,4,19),cumulativeReturnVOS.get(0).currentDate);
-        assertEquals(-0.0102,cumulativeReturnVOS.get(1).cumulativeReturn,0.0001);
-    }
-
-    @Test
     public void getCustomizedCumulativeReturn() throws Exception {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = TraceBackService.getCustomizedCumulativeReturn(TraceBackCriteriaVO.startDate,TraceBackCriteriaVO.endDate,stockCodes);

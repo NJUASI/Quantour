@@ -44,17 +44,12 @@ public abstract class AllTraceBackStrategy {
      */
     public List<HoldingDetailVO> holdingDetailVOS;
 
-    /**
-     * 策略的数值型数据
-     */
-    public TraceBackNumValVO strategyTraceBackNumValVO;
-
 
     public AllTraceBackStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
         this.stockPoolCodes = stockPoolCodes;
         this.traceBackCriteriaVO = traceBackCriteriaVO;
 
-        holdingDetailVOS = new ArrayList<HoldingDetailVO>();
+        holdingDetailVOS = new ArrayList<>();
     }
 
     /**

@@ -63,4 +63,9 @@ public class TraceBackCriteriaVO {
      * 基准股票的名称，如沪深300
      */
     public String baseStockName;
+
+    /**
+     * 指出是否是自选股
+     */
+    public boolean isCustomized;
 }

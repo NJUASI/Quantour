@@ -7,6 +7,7 @@ import service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum.MomentumS
 import utilities.enums.TraceBackStrategy;
 import vo.CumulativeReturnVO;
 import vo.TraceBackCriteriaVO;
+import vo.TraceBackStrategyVO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,13 +46,11 @@ public class MomentumStrategyTest {
     @Test
     public void traceBack() throws Exception {
 
-//        List<CumulativeReturnVO> cumulativeReturnVOS = allTraceBackStrategy.traceBack();
-//        assertEquals(-0.02,cumulativeReturnVOS.get(1).cumulativeReturn,0.01);
+        TraceBackStrategyVO traceBackStrategyVO = allTraceBackStrategy.traceBack();
+        List<CumulativeReturnVO> cumulativeReturnVOS = traceBackStrategyVO.strategyCumulativeReturn;
+        assertEquals(-0.02,cumulativeReturnVOS.get(1).cumulativeReturn,0.01);
 
-    }
 
-    @Test
-    public void calculateHoldingPeriod() throws Exception {
     }
 
 }
