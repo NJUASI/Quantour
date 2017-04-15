@@ -57,7 +57,7 @@ public class MainFrame extends JFrame {
         cardPanel.add(mainPane, "mainPane");
 
         //进入股票信息界面
-        ViewSwitchController.getInstance().viewSwitch("stocksTablePanel");
+        ViewSwitchController.getInstance().viewSwitch("userPanel");
 
 
     }
