@@ -4,9 +4,13 @@ import presentation.view.panel.*;
 import presentation.view.tools.component.ProgressBar;
 import presentation.view.tools.StocksTablePane;
 import presentation.view.tools.WindowData;
+import service.StockService;
 import service.StockSituationService;
+import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockSituationServiceImpl;
 import utilities.exceptions.NoSituationDataException;
+import utilities.exceptions.PrivateStockExistedException;
+import utilities.exceptions.PrivateStockNotFoundException;
 import vo.PriceRiseOrFallVO;
 
 import javax.swing.*;
@@ -44,6 +48,7 @@ public class StocksTableController {
     ThermometerPanel thermometerPanel;
     JProgressBar progressBar;
     StockSituationService stockSituationService;
+    StockService stockService;
     /**
      * Instantiates a new Stocks table controller.
      */
@@ -129,9 +134,9 @@ public class StocksTableController {
     /**
      * 将选择的股票加入自选股
      */
-    public void addFavorite() {
+    public void addFavorite() throws PrivateStockExistedException, PrivateStockNotFoundException {
         //todo 加入自选股
-//     名称   stocksTablePane.getName()
-//     代码   stocksTablePane.getCode()
+        stockService = new StockServiceImpl();
+        stockService.addPrivateStock(stocksTablePane.getName(),stocksTablePane.getCode());
     }
 }
