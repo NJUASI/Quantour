@@ -50,8 +50,8 @@ public class RegisterController {
             //TODO 注册
             if (userService.registerUser(new UserVO(userName, password), password2)) {
                 ViewSwitchController.getInstance().viewSwitch("loginPanel");
-                RegisterFrame.getInstance().setVisible(false);
                 RegisterFrame.getInstance().refresh();
+                RegisterFrame.getInstance().setVisible(false);
             }
         } catch (DuplicatedNameException e) {
             e.printStackTrace();

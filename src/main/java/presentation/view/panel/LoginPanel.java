@@ -99,7 +99,7 @@ public class LoginPanel extends TemplatePanel {
         //the Button setting of opening register panel
 
         openRegister = new JButton("注册");
-//        openRegister.setFont(new Font("", Font.CENTER_BASELINE, 15 * width / 1920));
+        openRegister.setFont(new Font("", Font.CENTER_BASELINE, 15 * width / 1920));
         openRegister.setBounds(adaptScreen(350, 350, 60, 35));
         openRegister.setContentAreaFilled(false);
         openRegister.setForeground(new Color(254, 104, 4));
