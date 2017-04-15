@@ -1,11 +1,17 @@
 package presentation.view.panel.user;
 
+import presentation.listener.userPanelListener.DeleteFavoriteListener;
+import presentation.listener.userPanelListener.DetailOfCodeListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.FileChoose;
+import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyButton;
+import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by 61990 on 2017/4/13.
@@ -41,10 +47,10 @@ public class UserPanel extends TemplatePanel {
         search.addMouseListener(new DetailOfCodeListener());
         add(search);
 
+        refreshFavorite();
+    }
 
-        favoritePanel=new FavoritePanel();
-        favoritePanel.setBounds(adaptScreen(900,100,600,600));
-        add(favoritePanel);
+    public void refreshFavorite(){
         try {
             favoritePanel=new FavoritePanel();
             favoritePanel.setBounds(adaptScreen(900,100,600,600));
@@ -56,7 +62,6 @@ public class UserPanel extends TemplatePanel {
             new PopUpFrame(e.getMessage());
             //TODO 高源后期添加
         }
-
     }
     public static UserPanel getInstance(){
         if(userPanel==null){

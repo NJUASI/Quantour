@@ -79,12 +79,9 @@ public class UserController {
         //TODO delete Code of favorite
 
         userPanel.favoritePanel.getCode();
-
-
         userPanel.remove(userPanel.favoritePanel);
-        userPanel.favoritePanel=new FavoritePanel();
-        userPanel.favoritePanel.setBounds(adaptScreen(900,100,600,600));
-        userPanel.add(userPanel.favoritePanel);
+
+        userPanel.refreshFavorite();
     }
 
     /**
