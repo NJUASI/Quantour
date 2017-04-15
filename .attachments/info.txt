@@ -1,1 +1,1 @@
-/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv	1488438084000	null
+E:\软工3\数据\量化交易\股票历史数据ALL.csv	1488545635513	null
