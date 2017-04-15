@@ -1,8 +1,14 @@
 package presentation.view.panel.user;
 
+import presentation.listener.stocksTablePanelListener.AddFavoriteListener;
+
+import presentation.listener.userPanelListener.DeleteFavoriteListener;
+import presentation.listener.userPanelListener.DetailOfCodeListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.FileChoose;
+import presentation.view.tools.MyMouseListener;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +36,17 @@ public class UserPanel extends TemplatePanel {
         messagePanel=new MessagePanel();
         messagePanel.setBounds(adaptScreen(100,100,310,400));
         add(messagePanel);
+
+        JButton delete= new MyButton("删除");
+        delete.setBounds(adaptScreen(1250,50,110,35));
+        delete.addMouseListener(new DeleteFavoriteListener());
+        add(delete);
+
+        JButton search= new MyButton("查看");
+        search.setBounds(adaptScreen(1050,50,110,35));
+        search.addMouseListener(new DetailOfCodeListener());
+        add(search);
+
 
         favoritePanel=new FavoritePanel();
         favoritePanel.setBounds(adaptScreen(900,100,600,600));

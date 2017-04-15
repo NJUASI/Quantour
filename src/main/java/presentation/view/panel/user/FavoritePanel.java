@@ -104,4 +104,9 @@ public class FavoritePanel extends JScrollPane{
 //            StocksTablePanel.getInstance().label.setVisible(true);
         }
     }
+
+    public String getCode() {
+        String cellValue = "" + jTable.getValueAt(jTable.getSelectedRow(), 0);// 取单元格数据,row是行号,column是列号
+        return cellValue;
+    }
 }

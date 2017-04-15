@@ -185,6 +185,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+            System.out.println(path);
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream(path), "UTF-8"));
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){

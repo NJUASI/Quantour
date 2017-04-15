@@ -8,6 +8,7 @@ import service.StockService;
 import service.StockSituationService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockSituationServiceImpl;
+import utilities.CodeReserve;
 import utilities.exceptions.NoSituationDataException;
 import utilities.exceptions.PrivateStockExistedException;
 import utilities.exceptions.PrivateStockNotFoundException;
@@ -44,9 +45,8 @@ public class StocksTableController {
     /**
      * The Stocks table.
      */
-    StocksTablePane stocksTablePane;
+    public StocksTablePane stocksTablePane;
     ThermometerPanel thermometerPanel;
-    JProgressBar progressBar;
     StockSituationService stockSituationService;
     StockService stockService;
     /**
@@ -123,7 +123,7 @@ public class StocksTableController {
             kStringPanel.addMessage("", "");
             kStringPanel.datePanel.setDate(stocksTablePanel.getChooseDate());
             NavigationBar.getInstance().whileClicked(2);
-            kStringPanel.addMessage(stocksTablePane.getName(), stocksTablePane.getCode());
+            kStringPanel.addMessage(CodeReserve.getInstance().getName(), CodeReserve.getInstance().getCode());
             KStringPanel.getInstance().count=0;
             kStringPanel.removeChartPanel();
         }catch (Exception e){
