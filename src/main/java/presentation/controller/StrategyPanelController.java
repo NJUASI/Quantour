@@ -47,7 +47,7 @@ public class StrategyPanelController {
         analysePanel=AnalysePanel.getInstance();
     }
 
-    public void search() throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException {
+    public void search() throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException, InvalidInputException, DataSourceFirstDayException {
         traceBackService = new TraceBackServiceImpl();
         analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
 

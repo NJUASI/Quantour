@@ -6,6 +6,7 @@ import service.StockTradingDayService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockTradingDayServiceImpl;
+import utilities.Detector;
 import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.*;
 import vo.*;
@@ -30,7 +31,13 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     @Override
-    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
+    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException, InvalidInputException {
+
+        Detector detector = new Detector();
+        detector.cycleDetector(String.valueOf(traceBackCriteriaVO.holdingNum),String.valueOf(50));
+        detector.cycleDetector(String.valueOf(traceBackCriteriaVO.holdingPeriod),String.valueOf(250));
+
+
         TraceBackVO traceBackVO = new TraceBackVO();
 
         //累计基准收益率

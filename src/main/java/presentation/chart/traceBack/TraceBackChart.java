@@ -208,7 +208,12 @@ public class TraceBackChart {
 
         long startTime = System.currentTimeMillis();
         System.out.println(startTime);
-        TraceBackVO traceBackVO = traceBackService.traceBack(traceBackCriteriaVO1,stockPool);
+        TraceBackVO traceBackVO = null;
+        try {
+            traceBackVO = traceBackService.traceBack(traceBackCriteriaVO1,stockPool);
+        } catch (InvalidInputException e) {
+            e.printStackTrace();
+        }
         System.out.println(System.currentTimeMillis()-startTime);
         System.out.println("enter");
         this.strategyData = traceBackVO.strategyCumulativeReturn;

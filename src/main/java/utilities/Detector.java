@@ -49,6 +49,23 @@ public class Detector {
 		}
 		return true;
 	}
+
+    /**
+     * @author Byron Dong
+     * @lastChangedBy Byron Dong
+     * @updateTime 2016/4/16
+     * @param express
+     *            传入需要检查不合法符号的信息内容
+     * @return boolean 是否符合要求规范
+     */
+    public boolean cycleDetector(String express,String length) throws InvalidInputException {
+        expression = "[1-"+length+"]";
+
+        if(!this.getResultOfDetector(express)){
+            throw new InvalidInputException(); 	//统一检测填写信息内容中的不合法标识符
+        }
+        return true;
+    }
 	
 	/**
 	 * @author Byron Dong

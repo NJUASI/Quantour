@@ -10,19 +10,6 @@ import java.time.LocalDate;
  * 保存用户在界面上选择的回测的条件
  */
 public class TraceBackCriteriaVO {
-    public TraceBackCriteriaVO(){
-
-    }
-    public TraceBackCriteriaVO(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteriaVO stockPoolVO, TraceBackStrategy strategyType, int holdingNum, String baseStockName) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.formativePeriod = formativePeriod;
-        this.holdingPeriod = holdingPeriod;
-        this.stockPoolVO = stockPoolVO;
-        this.strategyType = strategyType;
-        this.holdingNum = holdingNum;
-        this.baseStockName = baseStockName;
-    }
 
     /**
      * 回测区间的起始时间
@@ -68,4 +55,18 @@ public class TraceBackCriteriaVO {
      * 指出是否是自选股
      */
     public boolean isCustomized;
+
+    public TraceBackCriteriaVO(){
+
+    }
+    public TraceBackCriteriaVO(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteriaVO stockPoolVO, TraceBackStrategy strategyType, int holdingNum, String baseStockName) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.formativePeriod = formativePeriod;
+        this.holdingPeriod = holdingPeriod;
+        this.stockPoolVO = stockPoolVO;
+        this.strategyType = strategyType;
+        this.holdingNum = holdingNum;
+        this.baseStockName = baseStockName;
+    }
 }
