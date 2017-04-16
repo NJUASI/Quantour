@@ -32,7 +32,7 @@ public class HistogramChart {
 
 //        ChooseStrategyPanel.getInstance().getInfo()
 
-        String[] categories = { " ", "2%", "  ", "4%", "   ", "6%", "    ", "8%", "     ", "10%", "      ", ">12%" };
+        String[] categories = { "1%", "2%", "3%", "4%","5%", "6%", "7%", "8%", "9%", "10%", "11%", ">12%" };
         Object[]  datas1= new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
         Object[] datas2 = new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
 

@@ -1,7 +1,6 @@
 package presentation.view.panel;
 
 import org.jfree.chart.ChartPanel;
-import presentation.chart.candlestick.LineChart;
 import presentation.chart.compare.CompareChart1;
 import presentation.chart.compare.CompareChart2;
 import presentation.chart.compare.CompareChart3;

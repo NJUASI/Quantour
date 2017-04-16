@@ -1,14 +1,12 @@
 package presentation.view.panel.iteration2;
 
 import org.jfree.chart.ChartPanel;
-import presentation.chart.candlestick.LineChart;
-import presentation.chart.traceBack.TraceBackChart;
+import presentation.chart.traceBack.LineChart;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by 61990 on 2017/4/16.

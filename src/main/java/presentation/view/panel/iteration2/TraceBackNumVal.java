@@ -57,7 +57,7 @@ public class TraceBackNumVal  extends JScrollPane {
             header.setReorderingAllowed(false);
             header.setResizingAllowed(false);
             Dimension size = header.getPreferredSize();
-            size.height = 33* height / 1030;
+            size.height = 31* height / 1030;
             header.setPreferredSize(size);
             setForeground(ColorUtils.fontColor());
 
