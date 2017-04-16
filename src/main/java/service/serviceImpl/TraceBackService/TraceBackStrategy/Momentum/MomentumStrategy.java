@@ -110,16 +110,17 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         for (int i = 0; i < periodNum; i++ ){
 
-            //形成期的起始日期
-            LocalDate startOfFormative = formativeDates.get(i*formativePeriod);
+            //持有期的开始日期
+            LocalDate startOfHolding = holdingDates.get(i*holdingPeriod);
+
             //形成期的结束日期
-            LocalDate endOfFormative = formativeDates.get((i+1)*formativePeriod-1);
+            LocalDate endOfFormative = formativeDates.get(formativeDates.indexOf(startOfHolding)-1);
+            //形成期的起始日期
+            LocalDate startOfFormative = formativeDates.get(formativeDates.indexOf(endOfFormative)-formativePeriod+1);
+
 
             //持有期所持有的股票
             holdingStocks = pickStocks(formate(stockPoolCodes,startOfFormative,endOfFormative));
-
-            //持有期的开始日期
-            LocalDate startOfHolding = holdingDates.get(i*holdingPeriod);
 
             //持有期的结束日期
             LocalDate endOfHolding = null;
