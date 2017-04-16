@@ -36,6 +36,7 @@ public class CompareChart3 {
         //使用chartPanel接收
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBackground(ColorUtils.backgroundColor());
+        chartPanel.setPopupMenu(null);
         return chartPanel;
     }
 

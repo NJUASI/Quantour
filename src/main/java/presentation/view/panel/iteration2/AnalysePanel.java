@@ -2,9 +2,12 @@ package presentation.view.panel.iteration2;
 
 import presentation.controller.StrategySwitchController;
 import presentation.view.panel.TemplatePanel;
+import presentation.view.panel.iteration2.traceBackPanel.TraceBackAnalysePanel;
+import presentation.view.panel.iteration2.traceBackPanel.TraceBackChartPanel;
+import presentation.view.panel.iteration2.traceBackPanel.TraceBackDetail;
+import presentation.view.panel.iteration2.traceBackPanel.TraceBackWinRatePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.component.MyButton;
-import presentation.view.tools.component.ProgressBar;
 import presentation.view.tools.ui.MyTabUI;
 import presentation.view.tools.WindowData;
 import vo.TraceBackVO;
@@ -12,7 +15,6 @@ import vo.TraceBackVO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 
 /**
  * Created by day on 17/3zx/28.

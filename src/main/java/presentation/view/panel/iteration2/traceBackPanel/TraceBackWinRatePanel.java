@@ -1,7 +1,7 @@
-package presentation.view.panel.iteration2;
+package presentation.view.panel.iteration2.traceBackPanel;
 
 import org.jfree.chart.ChartPanel;
-import presentation.chart.traceBack.LineChart;
+import presentation.chart.traceBack.WinRateChart;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class TraceBackWinRatePanel extends TemplatePanel {
     TraceBackWinTable traceBackWinTable;
-    LineChart lineChart1,lineChart2;
+    WinRateChart winRateChart1,winRateChart2;
     ChartPanel chartPanel1,chartPanel2;
     JLabel label;
     public TraceBackWinRatePanel(){
@@ -31,14 +31,14 @@ public class TraceBackWinRatePanel extends TemplatePanel {
             remove(label);
         }
         try {
-            lineChart1=new LineChart(certainFormates,1);
-            chartPanel1=lineChart1.createChart();
+            winRateChart1=new WinRateChart(certainFormates,1);
+            chartPanel1=winRateChart1.createChart();
             chartPanel1.setBounds(adaptScreen(700,30,800,400));
             chartPanel1.setVisible(true);
             add(chartPanel1);
 
-            lineChart2=new LineChart(certainFormates,2);
-            chartPanel2=lineChart2.createChart();
+            winRateChart2=new WinRateChart(certainFormates,2);
+            chartPanel2=winRateChart2.createChart();
             chartPanel2.setBounds(adaptScreen(700,450,800,400));
             chartPanel2.setVisible(true);
             add(chartPanel2);

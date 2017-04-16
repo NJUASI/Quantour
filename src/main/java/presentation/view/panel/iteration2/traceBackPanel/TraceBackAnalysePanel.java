@@ -1,4 +1,4 @@
-package presentation.view.panel.iteration2;
+package presentation.view.panel.iteration2.traceBackPanel;
 
 import org.jfree.chart.ChartPanel;
 import presentation.chart.traceBack.HistogramChart;

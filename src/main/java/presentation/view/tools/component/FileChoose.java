@@ -1,9 +1,10 @@
-package presentation.view.tools;
+package presentation.view.tools.component;
 
 import presentation.controller.LoginController;
 import presentation.controller.StocksTableController;
 import presentation.controller.UserController;
 import presentation.view.panel.StocksTablePanel;
+import presentation.view.tools.UIManagerUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -1,23 +1,21 @@
-package presentation.view.panel.iteration2;
+package presentation.view.panel.iteration2.traceBackPanel;
 
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
-import vo.ExcessAndWinRateDistVO;
+import vo.TraceBackNumValVO;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.util.*;
-import java.util.List;
 
 /**
- * Created by 61990 on 2017/4/16.
+ * Created by 61990 on 2017/4/15.
  */
-public class TraceBackWinTable extends JScrollPane {
+public class TraceBackNumVal  extends JScrollPane {
 
-    public JTable jTable;
+    private JTable jTable;
 
     WindowData windowData;
 
@@ -25,15 +23,16 @@ public class TraceBackWinTable extends JScrollPane {
 
     int height;
 
-    public TraceBackWinTable(List<ExcessAndWinRateDistVO> certainFormates){
+    public TraceBackNumVal(TraceBackNumValVO traceBackNumValVO){
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
-        setSize(300 * width / 1920, 800 * height / 1030);
+
+        setSize(1000 * width / 1920, 120 * height / 1030);
 
         try {
-            jTable = new JTable(new TraceBackWinModel(ChooseStrategyPanel.getInstance().getInfo()));
-            jTable.setBounds(0, 0, 300 * width / 1920, 800 * height / 1030);
+            jTable = new JTable(new TraceBackNumModel(traceBackNumValVO));
+            jTable.setBounds(0, 0, 1000 * width / 1920, 120 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -41,7 +40,6 @@ public class TraceBackWinTable extends JScrollPane {
             jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
 
             jTable.setRowHeight(30);
-
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
             jTable.setBackground(ColorUtils.backgroundColor());
             jTable.setForeground(ColorUtils.fontColor());
@@ -63,9 +61,11 @@ public class TraceBackWinTable extends JScrollPane {
             setBorder(BorderFactory.createEmptyBorder());
             setViewportView(jTable);
 
-
+//            StocksTablePanel.getInstance().label.setVisible(false);
+//            jTable.repaint();
         } catch (Exception e) {
-
+//            StocksTablePanel.getInstance().label.setVisible(true);
         }
     }
 }
+

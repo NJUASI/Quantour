@@ -28,6 +28,8 @@ public class UIManagerUtil {
         UIManager.put("PasswordField.foreground",ColorUtils.fontColor());
         UIManager.put("PasswordField.caretForeground", ColorUtils.fontColor());
 
+        UIManager.put("ToolTip.foreground",ColorUtils.fontColor());
+
 //        UIManager.put("FileChooser.noPlacesBar", Boolean.TRUE);
     }
 }

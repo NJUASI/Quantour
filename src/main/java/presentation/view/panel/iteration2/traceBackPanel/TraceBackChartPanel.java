@@ -1,16 +1,14 @@
-package presentation.view.panel.iteration2;
+package presentation.view.panel.iteration2.traceBackPanel;
 
 
 
 import org.jfree.chart.ChartPanel;
-import presentation.chart.traceBack.HistogramChart;
 import presentation.chart.traceBack.TraceBackChart;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.WindowData;
 import vo.CumulativeReturnVO;
 import vo.TraceBackNumValVO;
 
-import javax.swing.*;
 import java.util.List;
 
 /**
@@ -34,6 +32,7 @@ public class TraceBackChartPanel extends TemplatePanel {
             chartPanel = new ChartPanel(new TraceBackChart(strategyCumulativeReturn,baseCumulativeReturn).createTracebackChart());
             chartPanel.setBounds(adaptScreen(100, 210, 1500, 600));
             chartPanel.setVisible(true);
+            chartPanel.setPopupMenu(null);
             add(chartPanel);
 
             traceBackNumVal=new TraceBackNumVal(traceBackNumValVO);

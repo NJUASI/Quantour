@@ -34,6 +34,7 @@ public class CompareChart1 {
 
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBackground(ColorUtils.backgroundColor());
+        chartPanel.setPopupMenu(null);
 
         return chartPanel;
     }
