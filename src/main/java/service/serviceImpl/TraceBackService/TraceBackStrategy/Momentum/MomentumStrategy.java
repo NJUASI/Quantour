@@ -1,5 +1,7 @@
 package service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum;
 
+import dao.StockDao;
+import dao.daoImpl.StockDaoImpl;
 import service.StockService;
 import service.StockTradingDayService;
 import service.TraceBackService;
@@ -7,6 +9,7 @@ import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockTradingDayServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
+import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
@@ -24,6 +27,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
     StockService stockService;
     TraceBackService traceBackService;
+    StockDao stockDao;
     StockTradingDayService stockTradingDayService;
 
     //初始投资
@@ -32,17 +36,39 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     //剩余投资
     double remainInvestment;
 
+    //所有持有期有数据的日期
+    List<LocalDate> holdingDates = new ArrayList<>();
 
-    public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
+    //所有形成期有数据的日期
+    List<LocalDate> formativeDates = new ArrayList<>();
+
+
+    public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException {
         super(stockPoolCodes,traceBackCriteriaVO);
 
         stockService = new StockServiceImpl();
+        stockDao = new StockDaoImpl();
         traceBackService = new TraceBackServiceImpl();
         stockTradingDayService = new StockTradingDayServiceImpl();
 
         //初始为千元投资
         initInvestment = 1000;
         remainInvestment = initInvestment;
+
+        //设置持有期和形成期有数据的日期
+        setDates();
+    }
+
+    /**
+     * 设置持有其和形成期有数据的日期
+     */
+    private void setDates() throws IOException {
+        holdingDates = stockDao.getDateWithData(traceBackCriteriaVO.startDate,traceBackCriteriaVO.endDate);
+
+        LocalDate startOfFormative = stockTradingDayService.getTradingDayMinus(traceBackCriteriaVO.startDate, 20, stockPoolCodes);
+        LocalDate endOfFormative = stockTradingDayService.getLastTradingDay(traceBackCriteriaVO.startDate, stockPoolCodes);
+        formativeDates = stockDao.getDateWithData(startOfFormative,endOfFormative);
+        formativeDates.addAll(holdingDates);
     }
 
     /**
@@ -59,10 +85,10 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         List<String> holdingStocks = new ArrayList<String>();
 
         //回测区间,从用户所选区间里再选出第一个交易日和最后一个交易日
-        LocalDate start = stockTradingDayService.getNextTradingDay(traceBackCriteriaVO.startDate,stockPoolCodes);
-        LocalDate end = stockTradingDayService.getLastTradingDay(traceBackCriteriaVO.endDate,stockPoolCodes);
+        LocalDate start = holdingDates.get(0);
+        LocalDate end = holdingDates.get(holdingDates.size()-1);
 
-        int tradingDays = stockTradingDayService.getTradingDays(start,end,stockPoolCodes);
+        int tradingDays = holdingDates.size();
 
         //形成期
         int formativePeriod = traceBackCriteriaVO.formativePeriod;
@@ -82,29 +108,31 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             periodNum = tradingDays/holdingPeriod + 1;
         }
 
-        //第一个持有期的起始日期
-        LocalDate startOfHolding = start;
-
         for (int i = 0; i < periodNum; i++ ){
 
             //形成期的起始日期
-            LocalDate startOfFormative = stockTradingDayService.getTradingDayMinus(startOfHolding, formativePeriod, stockPoolCodes);
+            LocalDate startOfFormative = formativeDates.get(i*formativePeriod);
             //形成期的结束日期
-            LocalDate endOfFormative = stockTradingDayService.getLastTradingDay(startOfHolding.minusDays(1),stockPoolCodes);
+            LocalDate endOfFormative = formativeDates.get((i+1)*formativePeriod-1);
 
             //持有期所持有的股票
             holdingStocks = pickStocks(formate(stockPoolCodes,startOfFormative,endOfFormative));
 
-            //持有期的结束日期，根据持有期的起始日期进行计算
-            LocalDate endOfHolding = stockTradingDayService.getTradingDayPlus(startOfHolding,holdingPeriod-1,holdingStocks);
+            //持有期的开始日期
+            LocalDate startOfHolding = holdingDates.get(i*holdingPeriod);
 
+            //持有期的结束日期
+            LocalDate endOfHolding = null;
             //最后一个周期，直接以最后一个交易日为最后一天
             if(i == periodNum-1){
                 endOfHolding = end;
             }
+            else {
+                endOfHolding = holdingDates.get((i+1)*holdingPeriod-1);
+            }
 
             //多往前计算一天
-            LocalDate startOfHoldingMinusOne = stockTradingDayService.getLastTradingDay(startOfHolding.minusDays(1), holdingStocks);
+            LocalDate startOfHoldingMinusOne = formativeDates.get(formativeDates.indexOf(startOfHolding)-1);
 
             //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
             List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(startOfHoldingMinusOne,endOfHolding,holdingStocks);
@@ -122,9 +150,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             }
 
             cumulativeReturnVOS.addAll(cumulatives);
-
-            //更新持有期的开始日期
-            startOfHolding = stockTradingDayService.getNextTradingDay(endOfHolding.plusDays(1),holdingStocks);
         }
 
         TraceBackStrategyVO traceBackStrategyVO = new TraceBackStrategyVO(maxRetracement(cumulativeReturnVOS),holdingDetailVOS);
