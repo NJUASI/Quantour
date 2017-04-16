@@ -92,16 +92,7 @@ public class FavoritePanel extends JScrollPane{
 
             setViewportView(jTable);
 
-//            JLabel label = new JLabel("1231231231");
-//            label.setBounds(0,0,600,600);
-//            add(label);
 
-
-//            StocksTablePanel.getInstance().label.setVisible(false);
-//            jTable.repaint();
-//        } catch (Exception e) {
-////            StocksTablePanel.getInstance().label.setVisible(true);
-//        }
     }
 
     public String getCode() {

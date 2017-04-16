@@ -2,6 +2,7 @@ package presentation.controller;
 
 import presentation.view.frame.RegisterFrame;
 import presentation.view.panel.RegisterPanel;
+import presentation.view.tools.PopUpFrame;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
 import utilities.exceptions.DuplicatedNameException;
@@ -53,6 +54,7 @@ public class RegisterController {
             if (userService.registerUser(new UserVO(userName, password), password2)) {
                 RegisterFrame.getInstance().refresh();
                 RegisterFrame.getInstance().setVisible(false);
+                new PopUpFrame("注册成功");
             }
         } catch (DuplicatedNameException e) {
             e.printStackTrace();

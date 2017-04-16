@@ -74,7 +74,7 @@ public class UserPanel extends TemplatePanel {
             new PopUpFrame(e.getMessage());
             //TODO 高源后期添加
         }
-        label.repaint();
+//        label.repaint();
     }
     public static UserPanel getInstance(){
         if(userPanel==null){
