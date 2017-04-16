@@ -67,7 +67,7 @@ public class FavoritePanel extends JScrollPane{
             header.setReorderingAllowed(false);
             header.setResizingAllowed(false);
             Dimension size = header.getPreferredSize();
-            size.height = 30* height / 1030;
+            size.height = 33* height / 1030;
             header.setPreferredSize(size);
             setForeground(ColorUtils.fontColor());
 
