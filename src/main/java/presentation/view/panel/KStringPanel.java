@@ -10,6 +10,7 @@ import presentation.listener.kStringPanelListener.SearchAllListener;
 import presentation.listener.kStringPanelListener.SearchListener;
 import presentation.listener.kStringPanelListener.StockCodeDocListener;
 import presentation.listener.kStringPanelListener.StockNameDocListener;
+import presentation.listener.navigationBarListener.UserListener;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.component.MyButton;
@@ -76,6 +77,15 @@ public class KStringPanel extends TemplatePanel {
         search = new MyButton("局部信息");
         compare = new MyButton("加入比较");
         init();
+
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
+        JLabel logo =new JLabel();
+        bgPicture.setImage(bgPicture.getImage());
+        logo.setIcon(bgPicture);
+        logo.addMouseListener(new UserListener());
+        logo.setBounds(850*width/1920-200,900*height/1920-200,400,400);
+        add(logo);
+
     }
 
     /**
@@ -299,7 +309,6 @@ public class KStringPanel extends TemplatePanel {
         try {
             chartPanel = candlestickChart.createAllPanel();
         } catch (ColorNotExistException e) {
-            System.out.println("该均线类型不存在"); //TODO 后期可能会更改
             e.printStackTrace();
         }
         chartPanel.setBounds(adaptScreen(130,100,1620,850));

@@ -52,7 +52,7 @@ public class AverageChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
      */
-    public AverageChart(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> days) throws NoDataWithinException, CodeNotFoundException, DateShortException, DateNotWithinException, IOException {
+    public AverageChart(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> days) throws NoDataWithinException, CodeNotFoundException, DateShortException, DateNotWithinException, IOException, NoMatchEnumException {
         service = new ChartServiceImpl();
         data = new ArrayList<>();
         this.days = days;
@@ -118,7 +118,6 @@ public class AverageChart {
         } catch (DateShortException e) {
             e.printStackTrace();
         } catch (DateNotWithinException e1) {
-            // TODO 高源：超出数据库内时间区间范围
             e1.printStackTrace();
         }
     }
@@ -136,7 +135,7 @@ public class AverageChart {
      * @throws DateNotWithinException
      * @throws DateShortException
      */
-    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws NoDataWithinException, CodeNotFoundException, IOException, DateNotWithinException, DateShortException {
+    private void readData(ChartShowCriteriaVO chartShowCriteriaVO) throws NoDataWithinException, CodeNotFoundException, IOException, DateNotWithinException, DateShortException, NoMatchEnumException {
 
             Map<MovingAverageType, List<MovingAverageVO>> tempMap = this.service.getAveData(chartShowCriteriaVO, this.days);
 

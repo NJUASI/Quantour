@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * MeanReversionStrategy Tester.
  *
@@ -51,8 +53,7 @@ public class MeanReversionStrategyTest {
     @Test
     public void testTraceBack() throws Exception {
         TraceBackStrategyVO vo = strategy.traceBack();
-
-        List<HoldingDetailVO> aa = vo.holdingDetailVOS;
+        assertEquals(8, vo.holdingDetailVOS.size());
     }
 
     /**

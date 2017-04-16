@@ -1,9 +1,12 @@
 package presentation.view.panel.user;
 
+import presentation.listener.userPanelListener.DeleteFavoriteListener;
+import presentation.listener.userPanelListener.DetailOfCodeListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.FileChoose;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyButton;
 import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
@@ -34,6 +37,23 @@ public class UserPanel extends TemplatePanel {
         messagePanel.setBounds(adaptScreen(100,100,310,400));
         add(messagePanel);
 
+        JButton delete= new MyButton("删除");
+        delete.setBounds(adaptScreen(1250,50,110,35));
+        delete.addMouseListener(new DeleteFavoriteListener());
+        add(delete);
+
+        JButton search= new MyButton("查看");
+        search.setBounds(adaptScreen(1050,50,110,35));
+        search.addMouseListener(new DetailOfCodeListener());
+        add(search);
+
+        refreshFavorite();
+    }
+
+    public void refreshFavorite(){
+        if (favoritePanel!=null){
+            remove(favoritePanel);
+        }
         try {
             favoritePanel=new FavoritePanel();
             favoritePanel.setBounds(adaptScreen(900,100,600,600));
@@ -45,7 +65,6 @@ public class UserPanel extends TemplatePanel {
             new PopUpFrame(e.getMessage());
             //TODO 高源后期添加
         }
-
     }
     public static UserPanel getInstance(){
         if(userPanel==null){

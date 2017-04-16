@@ -7,10 +7,7 @@ import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import utilities.enums.MovingAverageType;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.*;
 
 import java.io.IOException;
@@ -53,10 +50,13 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         formativePeriod = traceBackCriteriaVO.formativePeriod;
 
         withinDates = stockDao.getDateWithData(traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate);
+
+        strategyCumulativeReturn = new LinkedList<>();
+        holdingDetailVOS = new LinkedList<>();
     }
 
     @Override
-    public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+    public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException {
         int cycles = withinDates.size() / holdingPeriod;
 
         // 回测时间太短，不足一个持有期
@@ -78,20 +78,22 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         }
 
         // 最后一个不足周期的计算
-        periodStart = withinDates.get(cycles * holdingPeriod);
-        periodEnd = withinDates.get(withinDates.size() - 1);
+        if (withinDates.size() % holdingPeriod != 0) {
+            periodStart = withinDates.get(cycles * holdingPeriod);
+            periodEnd = withinDates.get(withinDates.size() - 1);
 
-        wantedStockCodes = pickStocks(formate(stockPoolCodes, periodStart, formativePeriod));
-        calculate(periodStart, periodEnd, cycles + 1);
+            wantedStockCodes = pickStocks(formate(stockPoolCodes, periodStart, formativePeriod));
+            calculate(periodStart, periodEnd, cycles + 1);
+        }
 
-        // TODO 根据果仁网，第一天数据设置为0
+        // 根据果仁网，第一天数据设置为0
         strategyCumulativeReturn.get(0).cumulativeReturn = 0;
 
-        return new TraceBackStrategyVO(strategyCumulativeReturn, holdingDetailVOS);
+        return new TraceBackStrategyVO(maxRetracement(strategyCumulativeReturn), holdingDetailVOS);
     }
 
     @Override
-    protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+    protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException {
         List<FormativePeriodRateVO> result = new LinkedList<>();
 
         for (String s : stockPoolCodes) {
@@ -177,7 +179,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         for (double tempYield : tempYields) {
             yieldSum += tempYield;
         }
-        nowMoney *= yieldSum;
+        nowMoney *= (yieldSum+1);
         holdingDetailVOS.add(new HoldingDetailVO(periodSerial, periodStart, periodEnd, holdingNum, yieldSum, nowMoney));
     }
 
@@ -193,7 +195,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
 
     // 计算单只股票在单日对此日造成的收益率影响
     private double getProfit(StockPO po) {
-        return po.getAdjClose() / po.getPreAdjClose();
+        return po.getClose() / po.getPreClose() - 1;
     }
 
     // 计算value的平均值

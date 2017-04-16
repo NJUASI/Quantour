@@ -120,7 +120,7 @@ public class StockDataHelperImpl implements StockDataHelper {
         String parent = null;
 
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
-            parent = Thread.currentThread().getContextClassLoader().getResource("stock_records_by_date").getPath();
+            parent = Thread.currentThread().getContextClassLoader().getResource("stocks" + separator + "stock_records_by_date").getPath();
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
             parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + "stock_records_by_date";
         }
@@ -185,6 +185,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+            System.out.println(path);
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream(path), "UTF-8"));
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){

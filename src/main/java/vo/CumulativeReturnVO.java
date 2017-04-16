@@ -16,7 +16,6 @@ public class CumulativeReturnVO {
     public double cumulativeReturn;
 
     // 是否为最大回测点
-    //TODO 是否要在这里面加入这个布尔值 gcm
     public boolean isTraceBack;
 
     public CumulativeReturnVO(LocalDate currentDate, double cumulativeReturn, boolean isTraceBack) {

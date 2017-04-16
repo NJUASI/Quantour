@@ -1,9 +1,19 @@
 package presentation.controller;
 
+import presentation.view.panel.user.FavoritePanel;
 import presentation.view.panel.user.UserPanel;
+import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.component.ProgressBar;
+import service.StockService;
 import service.StockSituationService;
+import service.UserService;
+import service.serviceImpl.StockService.StockServiceImpl;
+import service.serviceImpl.UserServiceImpl;
+import utilities.IDReserve;
+import utilities.exceptions.PrivateStockNotExistException;
+import utilities.exceptions.PrivateStockNotFoundException;
+import vo.UserVO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,13 +33,15 @@ public class UserController {
     private UserPanel userPanel;
 
 
-
     JProgressBar progressBar;
     StockSituationService stockSituationService;
+    StockService stockService;
+    UserService userService;
+
     /**
      * Instantiates a new User controller.
      */
-    private UserController(){
+    private UserController() {
         userPanel = UserPanel.getInstance();
     }
 
@@ -38,9 +50,10 @@ public class UserController {
      *
      * @return the  User controller.
      */
-    public static UserController getInstance(){
+    public static UserController getInstance() {
         return userController;
     }
+
     /**
      * TODO 导入数据
      * filePath 路径
@@ -48,32 +61,39 @@ public class UserController {
 
     public void importDate(String filePath) {
 
-        if(progressBar!=null){
+        if (progressBar != null) {
             userPanel.fileImportPanel.remove(progressBar);
         }
         progressBar = new JProgressBar();
         progressBar.setStringPainted(true);  //显示提示信息
         progressBar.setIndeterminate(false);
-        progressBar.setBounds(adaptScreen(60,340,200,35));
+        progressBar.setBounds(adaptScreen(60, 340, 200, 35));
         userPanel.fileImportPanel.add(progressBar);
         new ProgressBar(progressBar).start();
     }
 
-    public void modifyPassword(){
-        String newPassword =userPanel.messagePanel.getPassword();
-        if(newPassword!=null){
-            //TODO 修改密码
-            try {
-//         账号   IDReserve.getInstance().getUserID();
-//         新密码   newPassword;
-                userPanel.messagePanel.cancelModify();
-            }catch (Exception e){
-
-            }
-
+    public void modifyPassword() {
+        userService = new UserServiceImpl();
+        String newPassword = userPanel.messagePanel.getPassword();
+        if (newPassword != null) {
+            userService.modifyUser(new UserVO(IDReserve.getInstance().getUserID(), newPassword));
+            new PopUpFrame("修改成功！");
+            userPanel.messagePanel.cancelModify();
         }
 
     }
+
+    public void deleteFavorite() throws PrivateStockNotExistException, PrivateStockNotFoundException {
+
+        stockService = new StockServiceImpl();
+
+        stockService.deletePrivateStock(IDReserve.getInstance().getUserID(), userPanel.favoritePanel.getCode());
+
+        userPanel.remove(userPanel.favoritePanel);
+
+        userPanel.refreshFavorite();
+    }
+
     /**
      * 适应不同大小的屏幕
      *
@@ -82,10 +102,10 @@ public class UserController {
      * @author 61990
      * @updateTime 2017/3/7
      */
-    public Rectangle adaptScreen(int x, int y, int width, int height){
-        int w=WindowData.getInstance().getWidth();
-        int h=WindowData.getInstance().getHeight();
-        return new Rectangle(w*x/1920,h*y/1030,w*width/1920,h*height/1030);
+    public Rectangle adaptScreen(int x, int y, int width, int height) {
+        int w = WindowData.getInstance().getWidth();
+        int h = WindowData.getInstance().getHeight();
+        return new Rectangle(w * x / 1920, h * y / 1030, w * width / 1920, h * height / 1030);
     }
 
 }

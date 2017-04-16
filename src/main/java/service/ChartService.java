@@ -53,7 +53,7 @@ public interface ChartService {
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<MovingAverageType, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> MATypes) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException;
+    Map<MovingAverageType, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> MATypes) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException, NoMatchEnumException;
 
     /**
      * 获取单支股票所有数据均线图的平均值.

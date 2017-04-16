@@ -1,11 +1,8 @@
-package presentation.listener.stocksTablePanelListener;
+package presentation.listener.userPanelListener;
 
 import presentation.controller.StocksTableController;
 import presentation.controller.ViewSwitchController;
-import presentation.view.panel.NavigationBar;
-import presentation.view.panel.StocksTablePanel;
 import presentation.view.panel.user.UserPanel;
-import presentation.view.tools.StocksTablePane;
 import utilities.CodeReserve;
 
 import java.awt.event.MouseAdapter;
@@ -23,7 +20,7 @@ public class DetailOfCodeListener extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        CodeReserve.getInstance().setCode(StocksTableController.getInstance().stocksTablePane.getCode(),StocksTableController.getInstance().stocksTablePane.getName());
+        CodeReserve.getInstance().setCode(UserPanel.getInstance().favoritePanel.getCode(),UserPanel.getInstance().favoritePanel.getName());
         ViewSwitchController.getInstance().viewSwitch("kStringPanel");
         StocksTableController.getInstance().checkDetail();
     }

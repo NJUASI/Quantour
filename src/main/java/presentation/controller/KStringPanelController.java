@@ -123,6 +123,8 @@ public class KStringPanelController {
                         e.printStackTrace();
                     } catch (DateShortException e) {
                         e.printStackTrace();
+                    } catch (NoMatchEnumException e) {
+                        e.printStackTrace();
                     }
                 }
 

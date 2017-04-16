@@ -82,7 +82,7 @@ public class CandlestickChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    public CandlestickChart(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> days) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException, DateShortException {
+    public CandlestickChart(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> days) throws DateNotWithinException, IOException, CodeNotFoundException, NoDataWithinException, DateShortException, NoMatchEnumException {
         data = new ArrayList<StockVO>();
         this.service = new ChartServiceImpl();
         dateException = this.service.getDateWithoutData(chartShowCriteriaVO);

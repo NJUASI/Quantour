@@ -68,6 +68,7 @@ public class TraceBackChartTool {
         xAxis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
         xAxis.setTickUnit(new DateTickUnit(DateTickUnit.DAY,3));//设置时间刻度的间隔，一般以周为单位
         xAxis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
+        xAxis.setVerticalTickLabels(true);
         xAxis.setLabelPaint(ColorUtils.fontColor());
         xAxis.setTickLabelPaint(ColorUtils.fontColor());
         xAxis.setAxisLineVisible(false);
