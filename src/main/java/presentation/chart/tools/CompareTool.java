@@ -33,6 +33,9 @@ public class CompareTool {
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(ColorUtils.backgroundColor());
 
+        chart.getCategoryPlot().getRenderer().setSeriesPaint(0,ColorUtils.upColor());
+        chart.getCategoryPlot().getRenderer().setSeriesPaint(1,ColorUtils.downColor());
+
         return chart;
     }
 

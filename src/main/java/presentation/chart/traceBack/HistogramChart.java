@@ -50,7 +50,6 @@ public class HistogramChart {
         JFreeChart chart = ChartFactory.createBarChart("", "", "", createDataset());
         chart = CompareTool.setChartCategory(chart);//修饰chart
 
-
         ChartPanel chartPanel = new ChartPanel(chart);
 
         chartPanel.setBackground(ColorUtils.backgroundColor());
