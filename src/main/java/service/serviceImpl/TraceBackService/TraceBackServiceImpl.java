@@ -7,10 +7,7 @@ import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockTradingDayServiceImpl;
 import utilities.enums.TraceBackStrategy;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.*;
 
 import java.io.IOException;
@@ -33,12 +30,14 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     @Override
-    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
-
+    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException {
         TraceBackVO traceBackVO = new TraceBackVO();
 
         //累计基准收益率
         traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO, stockPool);
+
+        // TODO Filter
+
 
         //选择策略
         AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(stockPool,traceBackCriteriaVO);
@@ -70,7 +69,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws DateShortException
      * @throws CodeNotFoundException
      */
-    private List<ExcessAndWinRateDistVO> findFormateWithCertainHolding(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
+    private List<ExcessAndWinRateDistVO> findFormateWithCertainHolding(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException {
         return findBestFormateOrHolding(traceBackCriteriaVO, stockPool, false);
     }
 
@@ -85,11 +84,11 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws NoDataWithinException
      * @throws IOException
      */
-    private List<ExcessAndWinRateDistVO>  findHoldingWithCertainFormate(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException {
+    private List<ExcessAndWinRateDistVO>  findHoldingWithCertainFormate(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, NoMatchEnumException {
         return findBestFormateOrHolding(traceBackCriteriaVO, stockPool, true);
     }
 
-    private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool, boolean certainFormate) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
+    private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool, boolean certainFormate) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException {
 
         List<ExcessAndWinRateDistVO> certainHoldings = new ArrayList<>();
         int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;

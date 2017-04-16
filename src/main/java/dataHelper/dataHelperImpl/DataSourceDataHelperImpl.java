@@ -4,6 +4,7 @@ import dataHelper.DataSourceDataHelper;
 import po.DataSourceInfoPO;
 import po.StockSituationPO;
 import utilities.AttahmentsInitializer;
+import utilities.IDReserve;
 import utilities.StockCodeHelper;
 
 import java.io.*;
@@ -47,8 +48,6 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
     @Override
     public DataSourceInfoPO getMyDataSource() throws IOException {
-        // TODO 用户姓名未实现
-
         final String separator = System.getProperty("file.separator");
         final String filePath = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + "info.txt";
         File thisFile = new File(filePath);
@@ -56,7 +55,7 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
         String[] result = br.readLine().split("\t");
-        return new DataSourceInfoPO(new Timestamp(Long.parseLong(result[0])), result[1], "null");
+        return new DataSourceInfoPO(new Timestamp(Long.parseLong(result[0])), result[1], result[2]);
     }
 }
 
@@ -164,7 +163,7 @@ class CodeDirCreator {
             }
         }
 
-        // 创建数据源附属信息，未写入当前用户信息 TODO 待之后写入
+        // 创建数据源附属信息
         File dataSourceInfo = new File(parent + "info" + post);
         dataSourceInfo.createNewFile();
 
@@ -172,7 +171,7 @@ class CodeDirCreator {
         long timeDistance = sourceFile.lastModified();
 
         BufferedWriter bw = new BufferedWriter(new FileWriter(dataSourceInfo, false));
-        bw.write(this.sourceFile + '\t' + timeDistance + '\t' + "null");
+        bw.write(this.sourceFile + '\t' + timeDistance + '\t' + IDReserve.getInstance().getUserID());
         bw.flush();
         bw.close();
     }

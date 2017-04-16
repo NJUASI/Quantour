@@ -7,10 +7,7 @@ import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import utilities.enums.MovingAverageType;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.*;
 
 import java.io.IOException;
@@ -59,7 +56,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
     }
 
     @Override
-    public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+    public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException {
         int cycles = withinDates.size() / holdingPeriod;
 
         // 回测时间太短，不足一个持有期
@@ -96,7 +93,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
     }
 
     @Override
-    protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+    protected List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException {
         List<FormativePeriodRateVO> result = new LinkedList<>();
 
         for (String s : stockPoolCodes) {

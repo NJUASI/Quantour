@@ -1,9 +1,6 @@
 package service.serviceImpl.TraceBackService;
 
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.*;
 
 import java.io.IOException;
@@ -51,7 +48,7 @@ public abstract class AllTraceBackStrategy {
      *
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
-    public abstract TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
+    public abstract TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException;
 
 
 
@@ -63,7 +60,7 @@ public abstract class AllTraceBackStrategy {
      * @param formativePeriod 形成期长度（MS）／N日均值偏离度（MR）
      * @return 形成的
      */
-    protected abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException;
+    protected abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException;
 
     /**
      * 挑选形成期后的股票数据，用于后续策略计算

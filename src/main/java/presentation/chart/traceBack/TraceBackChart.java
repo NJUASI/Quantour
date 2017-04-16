@@ -13,10 +13,7 @@ import presentation.view.tools.ColorUtils;
 import service.TraceBackService;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
 import utilities.enums.TraceBackStrategy;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.CumulativeReturnVO;
 import vo.TraceBackCriteriaVO;
 import vo.TraceBackVO;
@@ -57,7 +54,7 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+    public TraceBackChart(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException {
         traceBackService = new TraceBackServiceImpl();
 //        traceBackService = new TraceBackSeviceStub();
         this.readData(traceBackCriteriaVO);
@@ -193,7 +190,7 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
+    private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException {
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
         traceBackCriteriaVO1.baseStockName = "深发展A";

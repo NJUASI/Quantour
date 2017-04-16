@@ -1,5 +1,7 @@
 package utilities.enums;
 
+import utilities.exceptions.NoMatchEnumException;
+
 /**
  * Created by harvey on 17-4-2.
  *
@@ -34,12 +36,12 @@ public enum TraceBackStrategy {
      * String TO enum
      * 便于从数据库读入
      */
-    public static TraceBackStrategy getEnum(String a) {
+    public static TraceBackStrategy getEnum(String a) throws NoMatchEnumException {
         for (TraceBackStrategy thisEnum : TraceBackStrategy.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }
         }
-        return null;
+        throw new NoMatchEnumException();
     }
 }

@@ -1,5 +1,7 @@
 package utilities.enums;
 
+import utilities.exceptions.NoMatchEnumException;
+
 /**
  * Created by harvey on 17-4-2.
  *
@@ -36,12 +38,12 @@ public enum  BlockType {
      * String TO enum
      * 便于从数据库读入
      */
-    public static BlockType getEnum(String a) {
+    public static BlockType getEnum(String a) throws NoMatchEnumException {
         for (BlockType thisEnum : BlockType.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }
         }
-        return null;
+        throw new NoMatchEnumException();
     }
 }

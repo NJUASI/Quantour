@@ -1,5 +1,7 @@
 package utilities.enums;
 
+import utilities.exceptions.NoMatchEnumException;
+
 /**
  * Created by harvey on 17-4-2.
  */
@@ -33,13 +35,13 @@ public enum StType {
      * String TO enum
      * 便于从数据库读入
      */
-    public static StType getEnum(String a) {
+    public static StType getEnum(String a) throws NoMatchEnumException {
         for (StType thisEnum : StType.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }
         }
-        return null;
+        throw new NoMatchEnumException();
     }
 
 
