@@ -30,7 +30,7 @@ public class TraceBackDetail  extends JScrollPane {
         height = windowData.getHeight();
 
         setSize(1400 * width / 1920, 800 * height / 1030);
-        try {
+
             jTable = new JTable(new TraceBackDetailModel(holdingDetailVOS));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
 
@@ -61,10 +61,6 @@ public class TraceBackDetail  extends JScrollPane {
             setBorder(BorderFactory.createEmptyBorder());
             setViewportView(jTable);
 
-
-        } catch (Exception e) {
-
-        }
     }
 }
 
