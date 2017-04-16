@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class FavoriteTableModel extends AbstractTableModel {
 
-    private final static int columns = 12;
+    private final static int columns = 7;
 
     private String[] columnNames;
     private Object[][] data;
@@ -27,6 +27,8 @@ public class FavoriteTableModel extends AbstractTableModel {
     //查询的日期
     private LocalDate date;
     private StockService stockService;
+
+
 
     public FavoriteTableModel(LocalDate date) throws IOException, PrivateStockNotFoundException {
         this.date = date;
@@ -36,8 +38,8 @@ public class FavoriteTableModel extends AbstractTableModel {
 
     //初始化列表名称和数据
     private void init() throws IOException, PrivateStockNotFoundException {
-        columnNames = new String[]{"股票代码", "股票名称", "涨/跌额","涨/跌幅","开盘指数", "最高指数",
-                "最低指数", "收盘指数", "成交量", "复权后的收盘指数", "昨日收盘指数", "昨日复权收盘指数"};
+        columnNames = new String[]{"股票代码", "股票名称", "涨/跌额","涨/跌幅", "最高指数",
+                "最低指数", "成交量"};
         List<StockVO> stockList = stockService.getPrivateStocks(IDReserve.getInstance().getUserID(),date);
 
         data = new Object[stockList.size()][columns];
@@ -51,14 +53,10 @@ public class FavoriteTableModel extends AbstractTableModel {
             data[i][1] = stockVO.name;
             data[i][2] = ddf.format(stockVO.increase);
             data[i][3] = ddf.format(stockVO.increaseMargin);
-            data[i][4] = stockVO.open;
-            data[i][5] = stockVO.high;
-            data[i][6] = stockVO.low;
-            data[i][7] = stockVO.close;
-            data[i][8] = stockVO.volume;
-            data[i][9] = stockVO.adjClose;
-            data[i][10] = stockVO.preClose;
-            data[i][11] = stockVO.preAdjClose;
+            data[i][4] = stockVO.high;
+            data[i][5] = stockVO.low;
+            data[i][6] = stockVO.volume;
+
         }
     }
 

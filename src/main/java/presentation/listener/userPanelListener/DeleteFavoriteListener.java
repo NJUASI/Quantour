@@ -16,7 +16,6 @@ public class DeleteFavoriteListener extends MouseAdapter {
     public void mouseClicked(MouseEvent e){
         try {
             UserController.getInstance().deleteFavorite();
-            new PopUpFrame("删除该自选股成功");
         } catch (PrivateStockNotExistException e1) {
             new PopUpFrame(e1.getMessage());
         } catch (PrivateStockNotFoundException e1) {

@@ -27,7 +27,7 @@ public class NavigationBar extends TemplatePanel {
      * @updateTime 2017/3/5
      */
     public NavigationBar() {
-        numOfChoosed=1;
+        numOfChoosed=0;
         setLayout(null);
         setBackground(ColorUtils.divideColor());
         setBounds(adaptScreen(0,0,90,1030));
