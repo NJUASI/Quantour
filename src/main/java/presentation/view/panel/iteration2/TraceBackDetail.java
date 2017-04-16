@@ -31,7 +31,7 @@ public class TraceBackDetail  extends JScrollPane {
 
         setSize(1400 * width / 1920, 800 * height / 1030);
         try {
-            jTable = new JTable(new TraceBackDetailModel(ChooseStrategyPanel.getInstance().getInfo()));
+            jTable = new JTable(new TraceBackDetailModel(holdingDetailVOS));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择

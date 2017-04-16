@@ -7,8 +7,11 @@ import service.TraceBackService;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
 import utilities.exceptions.*;
 import vo.TraceBackCriteriaVO;
+import vo.TraceBackVO;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 61990 on 2017/4/9.
@@ -47,11 +50,26 @@ public class StrategyPanelController {
     public void search() throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException {
         traceBackService = new TraceBackServiceImpl();
         analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
-        //TODO 获得整个VO 分发
+
+
         TraceBackCriteriaVO vo=chooseStrategyPanel.getInfo();
+
         vo.isCustomized=false; //TODO 后期需要删去
          //TODO 后期需要改成其他对象，不是null
-        analysePanel.createChart(traceBackService.traceBack(vo,null));
+        List<String> stockPool = new ArrayList<>();
+        stockPool.add("000001");
+
+        TraceBackVO traceBackVO = new TraceBackVO();
+        traceBackVO.holdingDetailVOS=null;
+        traceBackVO.certainHoldings=null;
+        traceBackVO.certainFormates=null;
+        traceBackVO.strategyCumulativeReturn=null;
+        traceBackVO.baseCumulativeReturn=null;
+        traceBackVO.traceBackNumValVO=null;
+        traceBackVO.relativeReturnPeriodVO=null;
+        traceBackVO.absoluteReturnPeriodVO=null;
+//        analysePanel.createChart(traceBackService.traceBack(vo,stockPool));
+        analysePanel.createChart(traceBackVO);
     }
 
 }

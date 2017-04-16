@@ -31,9 +31,7 @@ public class TraceBackChartPanel extends TemplatePanel {
             remove(traceBackNumVal);
         }
         try {
-
-            //TODO baseCumulativeReturn
-            chartPanel = new ChartPanel(new TraceBackChart(ChooseStrategyPanel.getInstance().getInfo()).createTracebackChart());
+            chartPanel = new ChartPanel(new TraceBackChart(strategyCumulativeReturn,baseCumulativeReturn).createTracebackChart());
             chartPanel.setBounds(adaptScreen(100, 210, 1500, 600));
             chartPanel.setVisible(true);
             add(chartPanel);

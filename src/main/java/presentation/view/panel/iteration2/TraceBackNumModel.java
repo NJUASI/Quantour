@@ -24,23 +24,14 @@ public class TraceBackNumModel extends AbstractTableModel {
     private String[] columnNames;
     private Object[][] data;
 
-    TraceBackNumValVO traceBackNumValVO;
-    TraceBackService traceBackService;
-
     public TraceBackNumModel(TraceBackNumValVO vo) throws IOException {
-        traceBackService= new TraceBackServiceImpl();
         init(vo);
     }
 
     //初始化列表名称和数据
-    private void init(TraceBackNumValVO vo) throws IOException {
+    private void init(TraceBackNumValVO traceBackNumValVO) throws IOException {
         columnNames = new String[]{"投资组合", "总收益", "年化收益","夏普比率","最大回撤率", "收益波动率",
                 "贝塔率", " 阿尔法比率"};
-        try {
-//            traceBackNumValVO=traceBackService.getNumericalVal(vo);
-        }catch (Exception e){
-
-        }
 
         data = new Object[3][columns];
         for (int i = 0 ; i<3;i++){
@@ -48,9 +39,9 @@ public class TraceBackNumModel extends AbstractTableModel {
                 data[i][j]="-";
             }
         }
-//        data[0][0]="本投资";
+        data[0][0]="本投资";
 //        data[1][0]="";//TODO 基准收益的名字
-//        data[2][0]="相对收益";
+        data[2][0]="相对收益";
 //
 //        data[0][1]=traceBackNumValVO.sumRate;
 //        data[1][1]=traceBackNumValVO.baseSumRate;
@@ -65,16 +56,16 @@ public class TraceBackNumModel extends AbstractTableModel {
 //        data[2][3]=traceBackNumValVO.sharpeRatio-traceBackNumValVO.baseSharpeRatio;
 //
 //        data[0][4]=traceBackNumValVO.maxRetracementRatio;
-//        data[1][4]=traceBackNumValVO;TODO 获得基准收益率的最大回撤率
+//        data[1][4]=traceBackNumValVO;//TODO 获得基准收益率的最大回撤率
 //        data[2][4]=traceBackNumValVO.sharpeRatio-traceBackNumValVO.maxRetracementRatio;
 //
 //        data[0][5]=traceBackNumValVO.returnVolatility;
 //        data[1][5]=traceBackNumValVO.baseReturnVolatility;
 //        data[2][5]=traceBackNumValVO.returnVolatility-traceBackNumValVO.baseReturnVolatility;
-//
+
 //        data[0][6]=traceBackNumValVO.beta;
-////        data[1][6]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的beta
-////        data[2][6]=traceBackNumValVO.beta-traceBackNumValVO.baseReturnVolatility;
+//        data[1][6]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的beta
+//        data[2][6]=traceBackNumValVO.beta-traceBackNumValVO.baseReturnVolatility;
 //
 //        data[0][7]=traceBackNumValVO.alpha;
 ////        data[1][7]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的alpha
