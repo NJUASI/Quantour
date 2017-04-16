@@ -36,7 +36,7 @@ public class LineChart {
 
         String[] categories = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
         Vector<Serie> series = new Vector<Serie>();
-        series.add(new Serie("Tyo", new Double[] { 1.0, 1.5, 6.4, 9.2, -4.0, -6.0, 5.6, 8.5, 1.4, 4.1, 5.6, 4.4}));
+        series.add(new Serie("", new Double[] { 1.0, 1.5, 6.4, 9.2, -4.0, -6.0, 5.6, 8.5, 1.4, 4.1, 5.6, 4.4}));
 
 
         DefaultCategoryDataset dataset = ChartUtils.createDefaultCategoryDataset(series, categories);
@@ -44,11 +44,9 @@ public class LineChart {
     }
 
     public ChartPanel createChart() {
-        JFreeChart chart = ChartFactory.createLineChart("", "", "", createDataset());
+        JFreeChart chart = ChartFactory.createAreaChart("", "", "%", createDataset());
 
 		ChartUtils.setAntiAlias(chart);
-
-		ChartUtils.setLineRender(chart.getCategoryPlot(), false,false);//
 
 		ChartUtils.setXAixs(chart.getCategoryPlot());// X坐标轴渲染
 		ChartUtils.setYAixs(chart.getCategoryPlot());// Y坐标轴渲染
