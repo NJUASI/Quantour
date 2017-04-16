@@ -45,7 +45,7 @@ public class TraceBackWinRatePanel extends TemplatePanel {
             traceBackWinTable.setBounds(adaptScreen(200,50,300,800));
 
             label = new JLabel();
-            label.setBounds(200 * width / 1920, (50+30*(traceBackWinTable.jTable.getRowCount()+1)) * height / 1030, 300 * width / 1920 , 800* height / 1030);
+            label.setBounds(200 * width / 1920, 30*(traceBackWinTable.jTable.getRowCount()+1)+50 * height / 1030, 300 * width / 1920 , 800* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(ColorUtils.backgroundColor());
             label.setOpaque(true);

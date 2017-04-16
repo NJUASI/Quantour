@@ -100,7 +100,7 @@ public class AnalysePanel extends TemplatePanel {
 
 
         label = new JLabel("");
-        label.setBounds(200 * width / 1920, (50+30*(traceBackDetail.jTable.getRowCount()+1)) * height / 1030, 1400 * width / 1920 , 600* height / 1030);
+        label.setBounds(200 * width / 1920, 30*(traceBackDetail.jTable.getRowCount()+1)+50 * height / 1030, 1400 * width / 1920 , 600* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         label.setBackground(ColorUtils.backgroundColor());
         label.setForeground(Color.WHITE);
