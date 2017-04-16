@@ -86,13 +86,15 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         // 至少一个持有期，整个周期的计算
         for (int i = 0; i < cycles; i++) {
             int startIndex = allStartIndex + i * holdingPeriod;
-            cycleCalcu(startIndex, i);
+            int endIndex = startIndex + holdingPeriod - 1;
+            cycleCalcu(startIndex, endIndex, i);
         }
 
         // 最后一个不足周期的计算
         if ((allEndIndex - allStartIndex + 1) % holdingPeriod != 0) {
             int startIndex = allStartIndex + cycles * holdingPeriod;
-            cycleCalcu(startIndex, cycles + 1);
+            int endIndex = allEndIndex;
+            cycleCalcu(startIndex, endIndex, cycles);
         }
 
         // 根据果仁网，第一天数据设置为0
@@ -101,12 +103,11 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         return new TraceBackStrategyVO(maxRetracement(strategyCumulativeReturn), holdingDetailVOS);
     }
 
-    private void cycleCalcu(int startIndex, int periodSerial) throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, DataSourceFirstDayException {
+    private void cycleCalcu(int startIndex, int endIndex, int periodSerial) throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, DataSourceFirstDayException {
         System.out.println("calculate cycle: " + periodSerial);
 
         LocalDate periodStart = withinDates.get(startIndex);
-        LocalDate periodEnd = withinDates.get(startIndex + holdingPeriod - 1);
-
+        LocalDate periodEnd = withinDates.get(endIndex);
         wantedStockCodes = pickStocks(formate(stockPoolCodes, periodStart, formativePeriod));
         calculate(periodStart, periodEnd, periodSerial);
     }
