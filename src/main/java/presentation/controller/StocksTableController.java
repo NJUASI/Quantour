@@ -1,7 +1,6 @@
 package presentation.controller;
 
 import presentation.view.panel.*;
-import presentation.view.tools.component.ProgressBar;
 import presentation.view.tools.StocksTablePane;
 import presentation.view.tools.WindowData;
 import service.StockService;
@@ -10,7 +9,6 @@ import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockSituationServiceImpl;
 import utilities.CodeReserve;
 import utilities.IDReserve;
-import utilities.exceptions.NoSituationDataException;
 import utilities.exceptions.PrivateStockExistedException;
 import utilities.exceptions.PrivateStockNotFoundException;
 import vo.PriceRiseOrFallVO;

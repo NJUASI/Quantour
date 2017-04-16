@@ -48,6 +48,8 @@ public class StrategyPanelController {
     }
 
     public void search() throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException, InvalidInputException, DataSourceFirstDayException {
+//        chooseStrategyPanel.start();
+
         traceBackService = new TraceBackServiceImpl();
         analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
 
@@ -70,6 +72,7 @@ public class StrategyPanelController {
         traceBackVO.absoluteReturnPeriodVO=null;
 //        analysePanel.createChart(traceBackService.traceBack(vo,stockPool));
         analysePanel.createChart(traceBackVO);
+//        chooseStrategyPanel.end();
     }
 
 }

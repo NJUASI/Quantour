@@ -4,6 +4,7 @@ import presentation.controller.StrategySwitchController;
 import presentation.listener.strategyPanelListener.SearchListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
+import presentation.view.tools.LoadingPanel;
 import presentation.view.tools.UIManagerUtil;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
@@ -33,6 +34,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
     DoubleDatePickerPanel datePanel;
     StrategyTypePanel strategyTypePanel;
     JComboBox comboBox,STComboBox;
+    LoadingPanel loadingPanel;
     int width;
     int height;
     /**
@@ -188,6 +190,17 @@ public class ChooseStrategyPanel extends TemplatePanel {
             return "均值回归";
         }
 
+    }
+    public void start(){
+        loadingPanel=new LoadingPanel();
+        loadingPanel.setLocation(500*width/1920,400*height/1030);
+        add(loadingPanel);
+        loadingPanel.start();
+    }
+    public void  end(){
+        loadingPanel.out=true;
+        remove(loadingPanel);
+        loadingPanel=null;
     }
     /**
      * get ALL panel message
