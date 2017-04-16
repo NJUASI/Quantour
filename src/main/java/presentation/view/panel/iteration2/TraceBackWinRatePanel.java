@@ -31,13 +31,13 @@ public class TraceBackWinRatePanel extends TemplatePanel {
             remove(label);
         }
         try {
-            lineChart1=new LineChart(certainFormates);
+            lineChart1=new LineChart(certainFormates,1);
             chartPanel1=lineChart1.createChart();
             chartPanel1.setBounds(adaptScreen(700,30,800,400));
             chartPanel1.setVisible(true);
             add(chartPanel1);
 
-            lineChart2=new LineChart(certainFormates);
+            lineChart2=new LineChart(certainFormates,2);
             chartPanel2=lineChart2.createChart();
             chartPanel2.setBounds(adaptScreen(700,450,800,400));
             chartPanel2.setVisible(true);
