@@ -5,6 +5,7 @@ import dataHelper.StockDataHelper;
 import po.StockPO;
 import utilities.DataSourceStateKeeper;
 import utilities.LocalDateComparator;
+import utilities.StockCodeHelper;
 import utilities.enums.BlockType;
 import utilities.enums.DataSourceState;
 import utilities.enums.Market;
@@ -154,7 +155,7 @@ public class StockDataHelperImpl implements StockDataHelper {
         List<String> stockNames = new ArrayList<>(codeName.values());
 
         for (int i = 0; i < stockCodes.size(); i++) {
-            String tempCode = stockCodes.get(i);
+            String tempCode = StockCodeHelper.format(stockCodes.get(i));
 
             BlockType thisBlockType = null;
             if (tempCode.startsWith("001") || tempCode.startsWith("000")) {

@@ -33,15 +33,15 @@ public class UserController {
     private UserPanel userPanel;
 
 
+
     JProgressBar progressBar;
     StockSituationService stockSituationService;
     StockService stockService;
     UserService userService;
-
     /**
      * Instantiates a new User controller.
      */
-    private UserController() {
+    private UserController(){
         userPanel = UserPanel.getInstance();
     }
 
@@ -50,10 +50,9 @@ public class UserController {
      *
      * @return the  User controller.
      */
-    public static UserController getInstance() {
+    public static UserController getInstance(){
         return userController;
     }
-
     /**
      * TODO 导入数据
      * filePath 路径
@@ -82,7 +81,6 @@ public class UserController {
         }
 
     }
-
     public void deleteFavorite() throws PrivateStockNotExistException, PrivateStockNotFoundException {
 
         stockService = new StockServiceImpl();
@@ -102,10 +100,10 @@ public class UserController {
      * @author 61990
      * @updateTime 2017/3/7
      */
-    public Rectangle adaptScreen(int x, int y, int width, int height) {
-        int w = WindowData.getInstance().getWidth();
-        int h = WindowData.getInstance().getHeight();
-        return new Rectangle(w * x / 1920, h * y / 1030, w * width / 1920, h * height / 1030);
+    public Rectangle adaptScreen(int x, int y, int width, int height){
+        int w=WindowData.getInstance().getWidth();
+        int h=WindowData.getInstance().getHeight();
+        return new Rectangle(w*x/1920,h*y/1030,w*width/1920,h*height/1030);
     }
 
 }

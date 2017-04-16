@@ -1,7 +1,5 @@
 package utilities.enums;
 
-import utilities.exceptions.NoMatchEnumException;
-
 /**
  * Created by cuihua on 2017/4/5.
  *
@@ -39,12 +37,12 @@ public enum MovingAverageType {
      *
      * String TO enum
      */
-    public static MovingAverageType getEnum(int a) throws NoMatchEnumException {
+    public static MovingAverageType getEnum(int a) {
         for (MovingAverageType thisEnum : MovingAverageType.values()){
             if (thisEnum.repre == a){
                 return thisEnum;
             }
         }
-        throw new NoMatchEnumException();
+        return null;
     }
 }

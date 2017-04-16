@@ -13,6 +13,7 @@ import presentation.listener.kStringPanelListener.StockNameDocListener;
 import presentation.listener.navigationBarListener.UserListener;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.ColorUtils;
+import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyTextField;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
@@ -51,6 +52,7 @@ public class KStringPanel extends TemplatePanel {
     //总体信息
     JButton searchAll;
 
+    public JLabel logo;
     //
     JButton compare;
 
@@ -79,7 +81,7 @@ public class KStringPanel extends TemplatePanel {
         init();
 
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
-        JLabel logo =new JLabel();
+        logo =new JLabel();
         bgPicture.setImage(bgPicture.getImage());
         logo.setIcon(bgPicture);
         logo.addMouseListener(new UserListener());
@@ -309,7 +311,7 @@ public class KStringPanel extends TemplatePanel {
         try {
             chartPanel = candlestickChart.createAllPanel();
         } catch (ColorNotExistException e) {
-            e.printStackTrace();
+//            new PopUpFrame("均线类型");
         }
         chartPanel.setBounds(adaptScreen(130,100,1620,850));
         chartPanel.setBackground(ColorUtils.backgroundColor());

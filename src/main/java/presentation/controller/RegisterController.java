@@ -45,11 +45,6 @@ public class RegisterController {
     public void register() {
         RegisterPanel registerPanel = RegisterPanel.getInstance();
 
-        //TODO 高源这几行没有用?
-        registerPanel.setUserName("请输入姓名");
-        registerPanel.setPassword("请输入密码");
-        registerPanel.setPassword2("请确认密码");
-
         String userName = registerPanel.getUserName();
         String password = registerPanel.getPassword();
         String password2 = registerPanel.getPassword2();
