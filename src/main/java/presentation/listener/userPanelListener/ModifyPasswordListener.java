@@ -1,6 +1,8 @@
 package presentation.listener.userPanelListener;
 
 import presentation.controller.UserController;
+import presentation.view.tools.PopUpFrame;
+import utilities.exceptions.PasswordInputException;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,6 +18,10 @@ public class ModifyPasswordListener  extends MouseAdapter {
      */
     @Override
     public void mouseClicked(MouseEvent e){
-        UserController.getInstance().modifyPassword();
+        try {
+            UserController.getInstance().modifyPassword();
+        } catch (PasswordInputException e1) {
+            new PopUpFrame(e1.getMessage());
+        }
     }
 }

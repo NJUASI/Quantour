@@ -3,6 +3,7 @@ package service.serviceImpl;
 import dao.UserDao;
 import dao.daoImpl.UserDaoImpl;
 import utilities.AttahmentsInitializer;
+import utilities.Detector;
 import utilities.MD5Util;
 import utilities.exceptions.*;
 import po.UserPO;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
      * @throws DuplicatedNameException 用户名重复
      */
     @Override
-    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException {
+    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException, PasswordInputException, InvalidInputException {
 
         AttahmentsInitializer.init();
 
@@ -48,6 +49,12 @@ public class UserServiceImpl implements UserService {
         else if(!userVO.password.equals(password2)){
             throw new PasswordNotSameException();
         }
+
+        //检测密码与用户名是否存在不合法符号
+        Detector detector = new Detector();
+        detector.passwordDetector(userVO.password);
+        detector.infoDetector(userVO.userName);
+
         userVO.password = MD5Util.encodeMD5(userVO.password);
         userDao.add(new UserPO(userVO));
         return true;
@@ -63,7 +70,12 @@ public class UserServiceImpl implements UserService {
      * @return 是否修改成功
      */
     @Override
-    public boolean modifyUser(UserVO userVO) {
+    public boolean modifyUser(UserVO userVO) throws PasswordInputException {
+
+        //检测密码与用户名是否存在不合法符号
+        Detector detector = new Detector();
+        detector.passwordDetector(userVO.password);
+
         userVO.password = MD5Util.encodeMD5(userVO.password);
         return userDao.modify(new UserPO(userVO));
     }
@@ -94,7 +106,13 @@ public class UserServiceImpl implements UserService {
      * @updateTime 2017/3/5
      */
     @Override
-    public boolean logIn(String userName, String password) throws UserNotExistException, DuplicateLoginException, PasswordWrongException {
+    public boolean logIn(String userName, String password) throws UserNotExistException, DuplicateLoginException, PasswordWrongException, PasswordInputException, InvalidInputException {
+
+        //检测密码与用户名是否存在不合法符号
+        Detector detector = new Detector();
+        detector.passwordDetector(password);
+        detector.infoDetector(userName);
+
         if(!userDao.getAllUserNames().contains(userName)){
             throw new UserNotExistException();
         }
