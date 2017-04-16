@@ -23,18 +23,6 @@ public class StockTradingDayServiceImpl implements StockTradingDayService {
     }
 
     /**
-     * 若参照日期为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
-     *
-     * @param date 参照日期
-     * @param stockCode
-     * @return LocalDate
-     */
-    @Override
-    public LocalDate getLastTradingDay(LocalDate date, String stockCode) throws IOException {
-        return stockDao.getLastTradingDay(date, stockCode);
-    }
-
-    /**
      * 根据传入的股票代码，找出传入股票代码中相对于date最晚的交易日期。若参照日期date为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
      *
      * @param date       参照日期
@@ -80,95 +68,6 @@ public class StockTradingDayServiceImpl implements StockTradingDayService {
         }
 
         return tradingDayMinus;
-    }
-
-    /**
-     * 若参照日期date为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
-     *
-     * @param date      参照日期
-     * @param stockCode 传入的股票代码
-     * @return 参照日期的下一个交易日
-     */
-    @Override
-    public LocalDate getNextTradingDay(LocalDate date, String stockCode) throws IOException {
-        return stockDao.getNextTradingDay(date, stockCode);
-    }
-
-    /**
-     * 根据传入的股票代码，找出传入股票代码中相对于date最晚的交易日期。若参照日期date为交易日，则返回参照日期;否则，返回参照日期的前一个交易日
-     *
-     * @param date    参照日期
-     * @param stockCodes 传入的股票代码列表
-     * @return 参照日期的下一个交易日
-     */
-    @Override
-    public LocalDate getNextTradingDay(LocalDate date, List<String> stockCodes) throws IOException {
-        List<LocalDate> dates = new ArrayList<LocalDate>();
-
-        //获取列表中第一支股票的参照日期的后一个交易日
-        LocalDate nextTradingDay = stockDao.getNextTradingDay(date, stockCodes.get(0));
-
-        for(int i = 0; i < stockCodes.size(); i++){
-            dates.add(stockDao.getNextTradingDay(date,stockCodes.get(i)));
-        }
-
-        for(int i = 0; i < dates.size(); i++){
-            if (dates.get(i).isBefore(nextTradingDay)){
-                nextTradingDay = dates.get(i);
-            }
-        }
-
-        return nextTradingDay;
-    }
-
-    /**
-     * 以参照日期为基准，加上plusDay的交易日天数，获取到那天的日期
-     * 例： start = 4.17.2014 plusDay = 2 则返回值为4.21.2014
-     *
-     * @param start          作为参照的日期
-     * @param plusDay        加上的交易日的天数
-     * @param stockPoolCodes 传入的股票代码列表
-     * @return
-     */
-    @Override
-    public LocalDate getTradingDayPlus(LocalDate start, int plusDay, List<String> stockPoolCodes) throws IOException {
-
-        LocalDate tradingDayPlus = start;
-
-        for(int i = 0; i < plusDay; i++){
-            tradingDayPlus = getNextTradingDay(tradingDayPlus.plusDays(1),stockPoolCodes);
-        }
-
-        return tradingDayPlus;
-    }
-
-    /**
-     * 计算从起始日期到结束日期之间总共有多少天的交易日，包括起始日期和结束日期
-     *
-     * @param start 起始日期
-     * @param end   结束日期
-     * @param stockPoolCodes 股票代码列表
-     * @return 起始日期到结束日期之间总共有多少天的交易日
-     */
-    @Override
-    public int getTradingDays(LocalDate start, LocalDate end, List<String> stockPoolCodes) throws IOException, DateNotWithinException, NoDataWithinException {
-
-        List<Integer> tradingDays = new ArrayList<Integer>();
-
-        int maxTradingDays = 0;
-
-        for(int i = 0; i < stockPoolCodes.size(); i++){
-            tradingDays.add(stockDao.getStockData(stockPoolCodes.get(i),start,end).size());
-        }
-
-
-        maxTradingDays = tradingDays.get(0);
-
-        for(int i = 0; i < tradingDays.size(); i++){
-            maxTradingDays = maxTradingDays > tradingDays.get(i) ? maxTradingDays : tradingDays.get(i);
-        }
-
-        return maxTradingDays;
     }
 
 }

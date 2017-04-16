@@ -354,53 +354,6 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
-     * 若参照日期为交易日，则返回参照日期;否则返回参照日期前的一个交易日
-     *
-     * @param date      参照日期
-     * @param stockCode 股票代码
-     * @return 交易日
-     */
-    @Override
-    public LocalDate getNextTradingDay(LocalDate date, String stockCode) throws IOException {
-
-        LocalDate[] minAndMax = findMinAndMaxDate(date, stockCode);
-
-        LocalDate nextTradingDay = null;
-
-        if(minAndMax[0].isEqual(date)){
-            nextTradingDay = minAndMax[0];
-        }
-        else {
-            nextTradingDay = minAndMax[1];
-        }
-
-        return nextTradingDay;
-    }
-
-    /**
-     * 判断股票是否在传入日期开盘
-     *
-     * @param date  需要判断的日期
-     * @param stockPoolCodes 对应这个日期的所有·股票代码列表
-     * @return 是否有传入股票在传入日期开盘
-     */
-    @Override
-    public boolean isTradingDay(LocalDate date, List<String> stockPoolCodes) throws IOException {
-
-        boolean isTradingDay = false;
-
-        for(int i = 0; i < stockPoolCodes.size(); i++){
-            //只要有一只股票在此日期开盘，则返回true
-            if(getLastTradingDay(date, stockPoolCodes.get(i)).isEqual(date)){
-                isTradingDay = true;
-                break;
-            }
-        }
-
-        return isTradingDay;
-    }
-
-    /**
      * 使用二分法找到date的最小范围
      * @param date 日期
      * @param stockCode 股票代码
