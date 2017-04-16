@@ -173,7 +173,7 @@ public interface StockDao {
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/25
      * @param stockCode 股票代码
-     * @return 数据库中股票存在记录的起讫时间
+     * @return 数据库中股票存在记录的起讫时间，List.get(0)为第一天，List.get(1)为最后一天
      */
     List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException;
 

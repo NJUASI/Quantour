@@ -72,7 +72,7 @@ public class VolumeChartListener implements ChartMouseListener {
 
     private void setMyStoke(){
         float dashes[] = {21,9,3,9};
-        markerY.setPaint(ColorUtils.makerLineColor());
+        markerY.setPaint(ColorUtils.markLineColor());
         markerY.setStroke(new BasicStroke(0.001f,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,8.f,dashes,10));
 
     }
@@ -88,7 +88,7 @@ public class VolumeChartListener implements ChartMouseListener {
     private void setTheme(ValueMarker valueMarker){
         valueMarker.setLabelPaint(ColorUtils.fontColor());
         valueMarker.setOutlinePaint(ColorUtils.fontColor());
-        valueMarker.setLabelBackgroundColor(ColorUtils.makerLabelColor());
+        valueMarker.setLabelBackgroundColor(ColorUtils.markLabelColor());
         valueMarker.setLabelFont(new Font("宋体", Font.PLAIN, 12));
     }
 }

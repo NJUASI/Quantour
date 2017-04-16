@@ -1,7 +1,6 @@
 package presentation.view.tools;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by Byron Dong on 2017/4/14.
@@ -20,7 +19,7 @@ public class UIManagerUtil {
         UIManager.put("ComboBox.background", ColorUtils.titleColor());
         UIManager.put("ComboBox.foreground", ColorUtils.fontColor());
 
-        UIManager.put("TextField.background", ColorUtils.fieldColor());
+        UIManager.put("TextField.background", ColorUtils.fieldUnselectedColor());
         UIManager.put("TextField.foreground", ColorUtils.fontColor());
         UIManager.put("TextField.caretForeground",ColorUtils.fontColor());
 

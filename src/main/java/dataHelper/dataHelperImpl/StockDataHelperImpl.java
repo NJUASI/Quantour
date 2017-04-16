@@ -50,6 +50,8 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
+        System.out.println("Stock DataHelper------------getStockRecords " + stockCode);
+
         return getStockByPath(stockRecordByCodePathPre + stockCode + stockRecordPathPost);
     }
 
@@ -65,6 +67,8 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(LocalDate date) throws IOException {
+        System.out.println("Stock DataHelper------------getStockRecords " + date);
+
         return getStockByPath(stockRecordByDatePathPre + date.getYear() + separator + date.toString() + stockRecordPathPost);
     }
 
@@ -78,6 +82,8 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
+        System.out.println("Stock DataHelper------------getFirstAndLastDay " + stockCode);
+
         List<StockPO> allResult = getStockRecords(stockCode);
 
         List<LocalDate> result = new LinkedList<>();
@@ -95,6 +101,8 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
+        System.out.println("Stock DataHelper------------getDateWithoutData " + stockCode);
+
         List<LocalDate> dates = new LinkedList<>();
         LocalDate temp = getFirstAndLastDay(stockCode).get(0);
         LocalDate end = getFirstAndLastDay(stockCode).get(1);
@@ -116,6 +124,9 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     @Override
     public List<LocalDate> getDateWithData() throws IOException {
+        System.out.println("Stock DataHelper------------getDateWithData ");
+
+
         List<LocalDate> dates = new LinkedList<>();
 
         String parent = null;
@@ -187,7 +198,6 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
-            System.out.println(path);
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream(path), "UTF-8"));
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){
