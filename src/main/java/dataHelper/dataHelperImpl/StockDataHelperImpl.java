@@ -30,11 +30,27 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     private static final String separator = System.getProperty("file.separator");
 
-    private static final String stockRecordByCodePathPre = "stocks" + separator + "stock_records_by_code" + separator;
-    private static final String stockRecordByDatePathPre = "stocks" + separator + "stock_records_by_date" + separator;
+    private static final String notBaseStockParent = "stocks";
+    private static final String isBaseStockParent = "base_stocks";
+
+    private static final String stockRecordByCodePathPre = separator + "stock_records_by_code" + separator;
+    private static final String stockRecordByDatePathPre = separator + "stock_records_by_date" + separator;
     private static final String stockRecordPathPost = ".txt";
 
     private BufferedReader br;
+    private SearchDataHelper searchDataHelper;
+
+    private final List<String> baseStocks;
+
+    public StockDataHelperImpl() {
+        searchDataHelper = new SearchDataHelperImpl();
+
+        // 格式化为6位标准形式
+        baseStocks = searchDataHelper.getAllBaseStockCodes();
+        for (int i = 0; i < baseStocks.size(); i++) {
+            baseStocks.set(i, StockCodeHelper.format(baseStocks.get(i)));
+        }
+    }
 
     /**
      * 获取指定股票所有数据
@@ -48,9 +64,8 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
-
-
-        return getStockByPath(stockRecordByCodePathPre + stockCode + stockRecordPathPost);
+        if (isBaseStock(stockCode)) return getStockByPath(isBaseStockParent + stockRecordByCodePathPre + stockCode + stockRecordPathPost);
+        else return getStockByPath(notBaseStockParent + stockRecordByCodePathPre + stockCode + stockRecordPathPost);
     }
 
     /**
@@ -65,7 +80,9 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(LocalDate date) throws IOException {
-        return getStockByPath(stockRecordByDatePathPre + date.getYear() + separator + date.toString() + stockRecordPathPost);
+        List<StockPO> result = getStockByPath(notBaseStockParent + stockRecordByDatePathPre + date.getYear() + separator + date.toString() + stockRecordPathPost);
+        result.addAll(getStockByPath(isBaseStockParent + stockRecordByDatePathPre + date.getYear() + separator + date.toString() + stockRecordPathPost));
+        return result;
     }
 
     /**
@@ -124,7 +141,7 @@ public class StockDataHelperImpl implements StockDataHelper {
             parent = Thread.currentThread().getContextClassLoader().getResource("stocks").getFile();
             parent += separator + "stock_records_by_date";
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
-            parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + "stock_records_by_date";
+            parent = System.getProperty("user.dir") + separator + ".attachments" + separator + notBaseStockParent + separator + "stock_records_by_date";
         }
 
         String[] years = new File(parent).list();
@@ -150,12 +167,9 @@ public class StockDataHelperImpl implements StockDataHelper {
     public List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException {
         List<StockPoolVO> result = new LinkedList<>();
 
-        SearchDataHelper searchDataHelper = new SearchDataHelperImpl();
         Map<String, String> codeName = searchDataHelper.getAllStocksCode();
         List<String> stockCodes = new ArrayList<>(codeName.keySet());
         List<String> stockNames = new ArrayList<>(codeName.values());
-
-        List<String> kkk = searchDataHelper.getAllBaseStockCodes();
 
         stockCodes.removeAll(searchDataHelper.getAllBaseStockCodes());
 
@@ -193,6 +207,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @throws IOException IO
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
+        System.out.println(path);
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream(path), "UTF-8"));
@@ -239,5 +254,12 @@ public class StockDataHelperImpl implements StockDataHelper {
         // formated as 2011-01-18.txt
         String[] parts = formated.split("-");
         return LocalDate.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2].substring(0, parts[2].length()-4)));
+    }
+
+    private boolean isBaseStock(String stockCode) {
+        for (String s : baseStocks) {
+            if (stockCode.equals(s)) return true;
+        }
+        return false;
     }
 }
