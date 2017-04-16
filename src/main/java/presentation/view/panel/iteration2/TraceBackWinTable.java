@@ -12,7 +12,7 @@ import java.awt.*;
 /**
  * Created by 61990 on 2017/4/16.
  */
-public class TraceBackDetail  extends JScrollPane {
+public class TraceBackWinTable extends JScrollPane {
 
     public JTable jTable;
 
@@ -22,13 +22,13 @@ public class TraceBackDetail  extends JScrollPane {
 
     int height;
 
-    public TraceBackDetail(){
+    public TraceBackWinTable(){
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
 
         try {
-            jTable = new JTable(new TraceBackDetailModel(ChooseStrategyPanel.getInstance().getInfo()));
+            jTable = new JTable(new TraceBackWinModel(ChooseStrategyPanel.getInstance().getInfo()));
             jTable.setBounds(0, 0, 1400 * width / 1920, 120 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择
@@ -64,4 +64,3 @@ public class TraceBackDetail  extends JScrollPane {
         }
     }
 }
-

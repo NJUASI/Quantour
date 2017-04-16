@@ -5,6 +5,7 @@ package presentation.chart.tools;
 		import java.awt.Font;
 		import java.awt.Paint;
 		import java.text.DecimalFormat;
+		import java.text.NumberFormat;
 		import java.text.ParseException;
 		import java.text.SimpleDateFormat;
 		import java.util.Date;
@@ -26,6 +27,7 @@ package presentation.chart.tools;
 		import org.jfree.chart.plot.Plot;
 		import org.jfree.chart.plot.XYPlot;
 		import org.jfree.chart.renderer.category.BarRenderer;
+		import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 		import org.jfree.chart.renderer.category.StandardBarPainter;
 		import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 		import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -189,7 +191,30 @@ public class ChartUtils {
 	}
 
 
+	/**
+	 * 设置折线图样式
+	 *
+	 * @param plot
+	 * @param isShowDataLabels
+	 *            是否显示数据标签
+	 */
+	public static void setLineRender(CategoryPlot plot, boolean isShowDataLabels, boolean isShapesVisible) {
+		plot.setNoDataMessage(NO_DATA_MSG);
+		plot.setInsets(new RectangleInsets(10, 10, 0, 10), false);
+		LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
 
+		renderer.setStroke(new BasicStroke(1.5F));
+		if (isShowDataLabels) {
+			renderer.setBaseItemLabelsVisible(true);
+			renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator(StandardCategoryItemLabelGenerator.DEFAULT_LABEL_FORMAT_STRING,
+					NumberFormat.getInstance()));
+			renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.OUTSIDE1, TextAnchor.BOTTOM_CENTER));// weizhi
+		}
+		renderer.setBaseShapesVisible(isShapesVisible);// 数据点绘制形状
+		setXAixs(plot);
+		setYAixs(plot);
+
+	}
 	/**
 	 * 设置时间序列图样式
 	 *

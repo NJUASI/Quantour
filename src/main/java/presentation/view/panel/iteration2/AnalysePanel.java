@@ -20,32 +20,34 @@ public class AnalysePanel extends TemplatePanel {
     private static AnalysePanel analysePanel;
     TraceBackChartPanel traceBackChartPanelPanel;
     TraceBackAnalysePanel traceBackAnalysePanelPanel;
-    JLabel title;
+    TraceBackDetail traceBackDetail;
+    TraceBackWinRatePanel traceBackWinRatePanel;
+    JPanel detailOfTraceBack;
+    JLabel title,label;
+    int width,height;
     private AnalysePanel(){
+        width=WindowData.getInstance().getWidth();
+        height=WindowData.getInstance().getHeight();
         JTabbedPane tab = new JTabbedPane(JTabbedPane.TOP);
 
         //对象化面板
         traceBackChartPanelPanel= new TraceBackChartPanel();
         traceBackAnalysePanelPanel= new TraceBackAnalysePanel();
 
-        JPanel p3 = new JPanel();
-        p3.setLayout(null);
-
-        JButton button = new MyButton("312");
-        button.setBounds(adaptScreen(100,100,100,100));
-        p3.add(button);
+        detailOfTraceBack = new JPanel();
+        detailOfTraceBack.setLayout(null);
+        detailOfTraceBack.setBackground(WindowData.getInstance().getColor());
 
 
-        p3.setBackground(WindowData.getInstance().getColor());
-        JPanel p4 = new JPanel();
-        p4.setBackground(WindowData.getInstance().getColor());
+        traceBackWinRatePanel=new TraceBackWinRatePanel();
 
         //todo 画各种各样的图！
 
         tab.add(traceBackChartPanelPanel,"收益曲线");
         tab.add(traceBackAnalysePanelPanel,"收益周期统计");
-        tab.add(p3,"Panel3");
-        tab.add(p4,"Panel4");
+        tab.add(detailOfTraceBack,"交易详情");
+        tab.add(traceBackWinRatePanel,"赢率分布");
+
         tab.setBounds(adaptScreen(-2,60,1833,930));
         setLayout(null);
         add(tab);
@@ -73,7 +75,9 @@ public class AnalysePanel extends TemplatePanel {
         title.setBounds(adaptScreen(850,3,120,35));
         add(title);
     }
-
+    public void setTitle(String str){
+        title.setText(str);
+    }
 
     public static AnalysePanel getInstance(){
         if(analysePanel==null){
@@ -85,6 +89,25 @@ public class AnalysePanel extends TemplatePanel {
     public void createChart(){
         traceBackAnalysePanelPanel.createChart();
         traceBackChartPanelPanel.createChart();
+        traceBackWinRatePanel.createChart();
+
+        if(traceBackDetail!=null){
+            detailOfTraceBack.remove(traceBackDetail);
+            detailOfTraceBack.remove(label);
+        }
+        traceBackDetail=new TraceBackDetail();
+        traceBackDetail.setBounds(adaptScreen(200,50,1400,800));
+
+
+        label = new JLabel("");
+        label.setBounds(200 * width / 1920, (50+30*(traceBackDetail.jTable.getRowCount()+1)) * height / 1030, 1400 * width / 1920 , 600* height / 1030);
+        label.setBorder(BorderFactory.createEmptyBorder());
+        label.setBackground(ColorUtils.backgroundColor());
+        label.setForeground(Color.WHITE);
+        label.setOpaque(true);
+        detailOfTraceBack.add(label);
+
+        detailOfTraceBack.add(traceBackDetail);
     }
 
 

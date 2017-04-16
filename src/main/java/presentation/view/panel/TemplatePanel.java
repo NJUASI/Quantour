@@ -12,8 +12,8 @@ import java.awt.*;
  */
 public class TemplatePanel extends JPanel {
     WindowData windowData;
-    int width;
-    int height;
+    public int width;
+    public int height;
 
     /**
      * 父类构造器

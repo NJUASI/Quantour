@@ -19,7 +19,7 @@ import java.time.LocalDate;
  * Created by 61990 on 2017/4/15.
  */
 public class TraceBackNumVal  extends JScrollPane {
-    LocalDate date;
+
     private JTable jTable;
 
     WindowData windowData;
@@ -29,7 +29,6 @@ public class TraceBackNumVal  extends JScrollPane {
     int height;
 
     public TraceBackNumVal(){
-        date = WindowData.getInstance().getDate();
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();

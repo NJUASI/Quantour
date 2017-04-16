@@ -19,13 +19,13 @@ public class TraceBackChartPanel extends TemplatePanel {
     public TraceBackChartPanel(){
         setBackground(WindowData.getInstance().getColor());
         setLayout(null);
-        ChartPanel chartPanel=null;
         traceBackNumVal=null;
     }
 
     public void createChart(){
         if(chartPanel!=null){
             remove(chartPanel);
+            remove(traceBackNumVal);
         }
         try {
             chartPanel = new ChartPanel(new TraceBackChart(ChooseStrategyPanel.getInstance().getInfo()).createTracebackChart());

@@ -97,9 +97,8 @@ public class ChooseStrategyPanel extends TemplatePanel {
         comboBox=new JComboBox();
         comboBox.setBounds(adaptScreen(850,370,200,35));
         comboBox.addItem("沪深300");
-        comboBox.addItem("上证50");
-        comboBox.addItem("中证500");
-        comboBox.addItem("中证1000");
+        comboBox.addItem("创业板指");
+        comboBox.addItem("中小板指");
         comboBox.setEditable(false);
         comboBox.setToolTipText((String)comboBox.getItemAt(0));
         add(comboBox);
@@ -151,9 +150,11 @@ public class ChooseStrategyPanel extends TemplatePanel {
             }
         });
 
+        add(searchBt);
+
         JButton returnBt= new MyButton("查看上次");
         returnBt.setBounds(adaptScreen(1200,500,100,35));
-        returnBt.addMouseListener(new SearchListener());
+//        returnBt.addMouseListener(new SearchListener());
         returnBt.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -162,7 +163,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         });
 
 
-        add(searchBt);
+        add(returnBt);
 
 
     }
@@ -180,6 +181,15 @@ public class ChooseStrategyPanel extends TemplatePanel {
         }
         return chooseStrategyPanel;
     }
+
+    public String getStrategyType(){
+        if(radioButton1.isSelected()){
+            return "动量策略";
+        }else{
+            return "均值回归";
+        }
+
+    }
     /**
      * get ALL panel message
      *
@@ -194,7 +204,6 @@ public class ChooseStrategyPanel extends TemplatePanel {
         if(radioButton1.isSelected()){
             formative=strategyTypePanel.getMS();
             traceBackStrategy=TraceBackStrategy.MS;
-            System.out.println("动量");
         }else{
             formative=strategyTypePanel.getMR();
             traceBackStrategy=TraceBackStrategy.MR;

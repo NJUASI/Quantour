@@ -39,6 +39,8 @@ public class StrategyPanelController {
     }
 
     public void search() {
+        analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
+        //TODO 获得整个VO 分发
         TraceBackCriteriaVO vo=chooseStrategyPanel.getInfo();
         analysePanel.createChart();
     }

@@ -60,7 +60,7 @@ public class UserPanel extends TemplatePanel {
         try {
             favoritePanel=new FavoritePanel();
             favoritePanel.setBounds(adaptScreen(900,100,600,600));
-            label = new JLabel("");
+            label = new JLabel();
             label.setBounds(900 * width / 1920, (100+30*(favoritePanel.jTable.getRowCount()+1)) * height / 1030, 600 * width / 1920 , 600* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(ColorUtils.backgroundColor());

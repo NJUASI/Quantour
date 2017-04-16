@@ -1,6 +1,7 @@
 package presentation.view.panel;
 
 import org.jfree.chart.ChartPanel;
+import presentation.chart.candlestick.LineChart;
 import presentation.chart.compare.CompareChart1;
 import presentation.chart.compare.CompareChart2;
 import presentation.chart.compare.CompareChart3;
@@ -82,11 +83,16 @@ public class CompareChartPanel extends JPanel {
         chartPanel3.setVisible(true);
         p1.add(chartPanel3);
 
+//        LineChart lineChart=new LineChart();
+//       ChartPanel chartPanel3=lineChart.createChart();
+//        chartPanel3.setBounds(adaptScreen(800,80,600,600));
+//        chartPanel3.setVisible(true);
+//        p1.add(chartPanel3);
 
         try {
-            chart4 = new CompareChart4(vo.get(0).closes, null, vo.get(0).name, "", "收盘价", "");
+            chart4 = new CompareChart4(vo.get(0).closes, vo.get(1).closes, vo.get(0).name, vo.get(1).name, "收盘价", "");
             chartPanel4 = chart4.createChart(vo.get(0).code);
-            chartPanel4.setBounds(adaptScreen(0, 200, 860, 410));
+            chartPanel4.setBounds(adaptScreen(150, 50, 1400, 660));
             chartPanel4.setVisible(true);
             p2.add(chartPanel4);
 
@@ -95,16 +101,6 @@ public class CompareChartPanel extends JPanel {
         }
 
 
-        try {
-            chart5 = new CompareChart4(vo.get(1).closes, null, vo.get(1).name, "", "收盘价", "");
-            chartPanel5 = chart5.createChart(vo.get(1).code);
-            chartPanel5.setBounds(adaptScreen(860, 200, 860, 410));
-            chartPanel5.setVisible(true);
-            p2.add(chartPanel5);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         try {
             chart6 = new CompareChart4(vo.get(0).logarithmicYield, vo.get(1).logarithmicYield, vo.get(0).name, vo.get(1).name, "对数收益率", "对数收益率");

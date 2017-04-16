@@ -1,25 +1,19 @@
 package presentation.view.panel.iteration2;
 
-import service.StockService;
 import service.TraceBackService;
-import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
-import vo.StockVO;
 import vo.TraceBackCriteriaVO;
 import vo.TraceBackNumValVO;
 
 import javax.swing.table.AbstractTableModel;
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.util.List;
 
 /**
- * Created by 61990 on 2017/4/15.
+ * Created by 61990 on 2017/4/16.
  */
-public class TraceBackNumModel extends AbstractTableModel {
+public class TraceBackWinModel extends AbstractTableModel {
 
-    private final static int columns = 8;
+    private final static int columns = 3;
 
     private String[] columnNames;
     private Object[][] data;
@@ -27,23 +21,22 @@ public class TraceBackNumModel extends AbstractTableModel {
     TraceBackNumValVO traceBackNumValVO;
     TraceBackService traceBackService;
 
-    public TraceBackNumModel(TraceBackCriteriaVO vo) throws IOException {
+    public TraceBackWinModel(TraceBackCriteriaVO vo) throws IOException {
         traceBackService= new TraceBackServiceImpl();
         init(vo);
     }
 
     //初始化列表名称和数据
     private void init(TraceBackCriteriaVO vo) throws IOException {
-        columnNames = new String[]{"投资组合", "总收益", "年化收益","夏普比率","最大回撤率", "收益波动率",
-                "贝塔率", " 阿尔法比率"};
+        columnNames = new String[]{"周期", "超额收益", "1年内胜率"};
         try {
             traceBackNumValVO=traceBackService.getNumericalVal(vo);
         }catch (Exception e){
 
         }
 
-        data = new Object[3][columns];
-        for (int i = 0 ; i<3;i++){
+        data = new Object[13][columns];
+        for (int i = 0 ; i<13;i++){
             for(int j =0 ;j<columns;j++){
                 data[i][j]="-";
             }
