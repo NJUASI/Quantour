@@ -7,6 +7,7 @@ import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.ProgressBar;
 import presentation.view.tools.ui.MyTabUI;
 import presentation.view.tools.WindowData;
+import vo.TraceBackVO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,16 +87,16 @@ public class AnalysePanel extends TemplatePanel {
         return analysePanel;
     }
 
-    public void createChart(){
-        traceBackAnalysePanelPanel.createChart();
-        traceBackChartPanelPanel.createChart();
-        traceBackWinRatePanel.createChart();
+    public void createChart(TraceBackVO traceBackVO){
+        traceBackAnalysePanelPanel.createChart(traceBackVO.absoluteReturnPeriodVO,traceBackVO.relativeReturnPeriodVO);
+        traceBackChartPanelPanel.createChart(traceBackVO.traceBackNumValVO,traceBackVO.baseCumulativeReturn,traceBackVO.strategyCumulativeReturn);
+        traceBackWinRatePanel.createChart(traceBackVO.certainFormates,traceBackVO.certainHoldings);
 
         if(traceBackDetail!=null){
             detailOfTraceBack.remove(traceBackDetail);
             detailOfTraceBack.remove(label);
         }
-        traceBackDetail=new TraceBackDetail();
+        traceBackDetail=new TraceBackDetail(traceBackVO.holdingDetailVOS);
         traceBackDetail.setBounds(adaptScreen(200,50,1400,800));
 
 

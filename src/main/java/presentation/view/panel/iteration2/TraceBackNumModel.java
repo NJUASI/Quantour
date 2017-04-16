@@ -27,17 +27,17 @@ public class TraceBackNumModel extends AbstractTableModel {
     TraceBackNumValVO traceBackNumValVO;
     TraceBackService traceBackService;
 
-    public TraceBackNumModel(TraceBackCriteriaVO vo) throws IOException {
+    public TraceBackNumModel(TraceBackNumValVO vo) throws IOException {
         traceBackService= new TraceBackServiceImpl();
         init(vo);
     }
 
     //初始化列表名称和数据
-    private void init(TraceBackCriteriaVO vo) throws IOException {
+    private void init(TraceBackNumValVO vo) throws IOException {
         columnNames = new String[]{"投资组合", "总收益", "年化收益","夏普比率","最大回撤率", "收益波动率",
                 "贝塔率", " 阿尔法比率"};
         try {
-            traceBackNumValVO=traceBackService.getNumericalVal(vo);
+//            traceBackNumValVO=traceBackService.getNumericalVal(vo);
         }catch (Exception e){
 
         }

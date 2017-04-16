@@ -54,7 +54,7 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException {
+    public TraceBackChart(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
         traceBackService = new TraceBackServiceImpl();
 //        traceBackService = new TraceBackSeviceStub();
         this.readData(traceBackCriteriaVO);
@@ -190,7 +190,7 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException {
+    private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
         traceBackCriteriaVO1.baseStockName = "深发展A";
