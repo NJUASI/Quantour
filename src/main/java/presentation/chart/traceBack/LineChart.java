@@ -26,12 +26,18 @@ public class LineChart {
 
     public DefaultCategoryDataset createDataset() {
         // 标注类别
+
 //        String[] categories = new String[certainFormates.size()];
 //        Double rates[] = new Double[certainFormates.size()];
-//            Vector<Serie> series = new Vector<Serie>();
+//        Vector<Serie> series = new Vector<Serie>();
+//
 //        for(int i = 0 ; i < certainFormates.size() ; i++) {
 //            categories[i]=certainFormates.get(i).relativeCycle+"";
-//            rates[i]=certainFormates.get(i).winRate;
+//            if(type==1) {
+//                rates[i] = certainFormates.get(i).excessRate;
+//            }else{
+//                rates[i] = certainFormates.get(i).winRate;
+//            }
 //        }
 
         String[] categories = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
