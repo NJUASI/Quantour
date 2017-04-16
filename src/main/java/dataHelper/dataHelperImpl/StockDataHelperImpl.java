@@ -30,13 +30,11 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     private static final String separator = System.getProperty("file.separator");
 
-    private final static String stockRecordByCodePathPre = "stocks" + separator + "stock_records_by_code" + separator;
-    private final static String stockRecordByDatePathPre = "stocks" + separator + "stock_records_by_date" + separator;
-    private final static String stockRecordPathPost = ".txt";
+    private static final String stockRecordByCodePathPre = "stocks" + separator + "stock_records_by_code" + separator;
+    private static final String stockRecordByDatePathPre = "stocks" + separator + "stock_records_by_date" + separator;
+    private static final String stockRecordPathPost = ".txt";
 
     private BufferedReader br;
-
-    static int count = 0;
 
     /**
      * 获取指定股票所有数据
@@ -50,7 +48,7 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
-        System.out.println("Stock DataHelper------------getStockRecords " + stockCode);
+
 
         return getStockByPath(stockRecordByCodePathPre + stockCode + stockRecordPathPost);
     }
@@ -67,8 +65,6 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<StockPO> getStockRecords(LocalDate date) throws IOException {
-        System.out.println("Stock DataHelper------------getStockRecords " + date);
-
         return getStockByPath(stockRecordByDatePathPre + date.getYear() + separator + date.toString() + stockRecordPathPost);
     }
 
@@ -82,8 +78,6 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
-        System.out.println("Stock DataHelper------------getFirstAndLastDay " + stockCode);
-
         List<StockPO> allResult = getStockRecords(stockCode);
 
         List<LocalDate> result = new LinkedList<>();
@@ -101,14 +95,12 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
-        System.out.println("Stock DataHelper------------getDateWithoutData " + stockCode);
-
         List<LocalDate> dates = new LinkedList<>();
         LocalDate temp = getFirstAndLastDay(stockCode).get(0);
         LocalDate end = getFirstAndLastDay(stockCode).get(1);
 
         // 先加入所有目标可能的日期
-        while (!dateEquals(temp, end)) {
+        while (!temp.isEqual(end)) {
             dates.add(temp);
             temp = temp.plusDays(1);
         }
@@ -124,9 +116,6 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     @Override
     public List<LocalDate> getDateWithData() throws IOException {
-        System.out.println("Stock DataHelper------------getDateWithData ");
-
-
         List<LocalDate> dates = new LinkedList<>();
 
         String parent = null;
@@ -166,6 +155,10 @@ public class StockDataHelperImpl implements StockDataHelper {
         List<String> stockCodes = new ArrayList<>(codeName.keySet());
         List<String> stockNames = new ArrayList<>(codeName.values());
 
+        List<String> kkk = searchDataHelper.getAllBaseStockCodes();
+
+        stockCodes.removeAll(searchDataHelper.getAllBaseStockCodes());
+
         for (int i = 0; i < stockCodes.size(); i++) {
             String tempCode = StockCodeHelper.format(stockCodes.get(i));
 
@@ -176,7 +169,10 @@ public class StockDataHelperImpl implements StockDataHelper {
                 thisBlockType = BlockType.ZXB;
             } else if (tempCode.startsWith("300")) {
                 thisBlockType = BlockType.CYB;
-            } else throw new UnhandleBlockTypeException();
+            } else {
+                System.out.println("未处理股票板块：" + tempCode);
+                throw new UnhandleBlockTypeException();
+            }
 
             boolean isSt = stockNames.get(i).contains("ST");
             
@@ -238,11 +234,6 @@ public class StockDataHelperImpl implements StockDataHelper {
         return result;
     }
 
-
-    private boolean dateEquals(LocalDate date1, LocalDate date2) {
-        if (date1.getYear() == date2.getYear() && date1.getDayOfYear() == date2.getDayOfYear()) return true;
-        else return false;
-    }
 
     private LocalDate convertLocalDate(String formated) {
         // formated as 2011-01-18.txt

@@ -1,5 +1,7 @@
 package dataHelper.dataHelperImpl.DataSourceDataHelper;
 
+import utilities.StockCodeHelper;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -69,7 +71,7 @@ public class StockNameToCodeCreator {
                 String tempName = line.split("\t")[9].replace(" ", "");
                 String tempCode = fileNameForRead.substring(0, fileNameForRead.length() - 4);
 
-                this.key.add(tempName + "=" + tempCode);
+                this.key.add(tempName + "=" + StockCodeHelper.simplify(tempCode));
                 reader.close();
             } catch (IOException e) {
                 e.printStackTrace();

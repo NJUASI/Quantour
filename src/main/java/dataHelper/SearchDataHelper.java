@@ -9,9 +9,14 @@ import java.util.Map;
 public interface SearchDataHelper {
 
     /**
-     * @return 所有股票六位代码
+     * @return 所有股票简化代码
      */
     List<String> getAllStockCodes();
+
+    /**
+     * @return 所有股票指数简化代码
+     */
+    List<String> getAllBaseStockCodes();
 
     /**
      * @return 所有股票名称的首字母缩写及其名称，名称作为键值

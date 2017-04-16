@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -21,6 +22,18 @@ public class SearchDataHelperImplTest {
         searchDataHelper = new SearchDataHelperImpl();
     }
 
+    @Test
+    public void getAllStockCodes() throws Exception {
+        List<String> result  = searchDataHelper.getAllStockCodes();
+        assertEquals(791, result.size());
+    }
+
+    @Test
+    public void getAllBaseStockCodes() throws Exception {
+        List<String> result  = searchDataHelper.getAllBaseStockCodes();
+        assertEquals(7, result.size());
+    }
+
     @Ignore
     @Test
     public void getAllStocksFirstLetters() throws Exception {
@@ -33,6 +46,18 @@ public class SearchDataHelperImplTest {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             System.out.println("code:"+entry.getKey()+"  name:"+entry.getValue());
         }
+
+        assertEquals(798, map.entrySet().size());
+    }
+
+    @Test
+    public void getAllStocksName() throws Exception {
+        Map<String,String> map = searchDataHelper.getAllStocksName();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            System.out.println("key:"+entry.getKey()+"  value:"+entry.getValue());
+        }
+
+        assertEquals(798, map.entrySet().size());
     }
 
 }
