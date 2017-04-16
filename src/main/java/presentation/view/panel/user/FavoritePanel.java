@@ -20,29 +20,28 @@ import java.time.LocalDate;
  */
 public class FavoritePanel extends JScrollPane{
     LocalDate date;
-    private JTable jTable;
-
+    public JTable jTable;
     WindowData windowData;
 
     int width;
-
     int height;
+
+
 
     public FavoritePanel() throws IOException, PrivateStockNotFoundException {
         date = WindowData.getInstance().getDate();
-        //TODO 获得一个人的自选股  date  日期的股票信息
+
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
 
+
         setSize(600 * width / 1920, 600 * height / 1030);
 
-//        try {
             jTable = new JTable(new FavoriteTableModel(date));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
-//            jTable.setRowHeight (30);//设置每行的高度为30
-//            jTable.setRowMargin (5);//设置相邻两行单元格的距离
-//        table.removeColumn(table.getColumnModel().getColumn(columnIndex));// columnIndex是要删除的列序号
+            jTable.setRowHeight (30* height / 1030);//设置每行的高度为30
+
 
 
             for(int i =4;i<7;i++) {
@@ -68,7 +67,7 @@ public class FavoritePanel extends JScrollPane{
             header.setReorderingAllowed(false);
             header.setResizingAllowed(false);
             Dimension size = header.getPreferredSize();
-            size.height = 30;
+            size.height = 30* height / 1030;
             header.setPreferredSize(size);
             setForeground(ColorUtils.fontColor());
 
@@ -84,21 +83,15 @@ public class FavoritePanel extends JScrollPane{
                     }
                 }
             };
-//            TableColumn tc = jTable.getColumn("开盘指数");
 
-//            tc.setCellRenderer(cellRanderer);
-            //初始化table的渲染器
-//            DefaultTableCellRenderer cellRanderer = new DefaultTableCellRenderer();
-//            cellRanderer.setForeground(new Color(255,61,61));
             jTable.getColumnModel().getColumn(2).setCellRenderer(cellRanderer);
-//            DefaultTableCellRenderer cellRanderer1 = new DefaultTableCellRenderer();
-//            cellRanderer1.setForeground(new Color(15,195,81));
             jTable.getColumnModel().getColumn(3).setCellRenderer(cellRanderer);
 
             getVerticalScrollBar().setUI(new MyScrollBarUI());
             setBackground(ColorUtils.backgroundColor());
             setBorder(BorderFactory.createEmptyBorder());
             jTable.setBackground(WindowData.getInstance().getColor());
+
             setViewportView(jTable);
 
 //            JLabel label = new JLabel("1231231231");

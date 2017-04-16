@@ -3,6 +3,7 @@ package presentation.view.panel.user;
 import presentation.listener.userPanelListener.DeleteFavoriteListener;
 import presentation.listener.userPanelListener.DetailOfCodeListener;
 import presentation.view.panel.TemplatePanel;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.FileChoose;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
@@ -24,6 +25,7 @@ public class UserPanel extends TemplatePanel {
     public MessagePanel messagePanel;
     public FileImportPanel fileImportPanel;
     public FavoritePanel favoritePanel;
+    public JLabel label;
     public UserPanel(){
         width= WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
@@ -53,10 +55,18 @@ public class UserPanel extends TemplatePanel {
     public void refreshFavorite(){
         if (favoritePanel!=null){
             remove(favoritePanel);
+            remove(label);
         }
         try {
             favoritePanel=new FavoritePanel();
             favoritePanel.setBounds(adaptScreen(900,100,600,600));
+            label = new JLabel("");
+            label.setBounds(900 * width / 1920, (100+30*(favoritePanel.jTable.getRowCount()+1)) * height / 1030, 600 * width / 1920 , 600* height / 1030);
+            label.setBorder(BorderFactory.createEmptyBorder());
+            label.setBackground(ColorUtils.backgroundColor());
+            label.setForeground(Color.WHITE);
+            label.setOpaque(true);
+            add(label);
             add(favoritePanel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,6 +75,7 @@ public class UserPanel extends TemplatePanel {
             new PopUpFrame(e.getMessage());
             //TODO 高源后期添加
         }
+        label.repaint();
     }
     public static UserPanel getInstance(){
         if(userPanel==null){

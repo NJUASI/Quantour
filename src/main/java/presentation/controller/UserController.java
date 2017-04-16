@@ -1,6 +1,5 @@
 package presentation.controller;
 
-import presentation.view.panel.user.FavoritePanel;
 import presentation.view.panel.user.UserPanel;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;

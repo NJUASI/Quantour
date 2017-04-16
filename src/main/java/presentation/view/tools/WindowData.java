@@ -15,6 +15,7 @@ public class WindowData {
     private static Color bgColor;
     private static LocalDate date;
 
+
     /**
      * 设置屏幕高和宽度
      *
