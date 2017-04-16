@@ -3,7 +3,12 @@ package presentation.controller;
 import presentation.view.panel.iteration2.AnalysePanel;
 import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.panel.iteration2.StrategyPanel;
+import service.TraceBackService;
+import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
+import utilities.exceptions.*;
 import vo.TraceBackCriteriaVO;
+
+import java.io.IOException;
 
 /**
  * Created by 61990 on 2017/4/9.
@@ -15,6 +20,7 @@ public class StrategyPanelController {
     StrategyPanel strategyPanel;
     ChooseStrategyPanel chooseStrategyPanel;
     AnalysePanel analysePanel;
+    TraceBackService traceBackService;
     /**
      * The constant ourInstance.
      */
@@ -38,11 +44,14 @@ public class StrategyPanelController {
         analysePanel=AnalysePanel.getInstance();
     }
 
-    public void search() {
+    public void search() throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException {
+        traceBackService = new TraceBackServiceImpl();
         analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
         //TODO 获得整个VO 分发
         TraceBackCriteriaVO vo=chooseStrategyPanel.getInfo();
-        analysePanel.createChart();
+        vo.isCustomized=false; //TODO 后期需要删去
+         //TODO 后期需要改成其他对象，不是null
+        analysePanel.createChart(traceBackService.traceBack(vo,null));
     }
 
 }

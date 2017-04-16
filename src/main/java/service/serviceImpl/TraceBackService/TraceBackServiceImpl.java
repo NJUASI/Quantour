@@ -30,7 +30,7 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     @Override
-    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException {
+    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
         TraceBackVO traceBackVO = new TraceBackVO();
 
         //累计基准收益率
@@ -54,6 +54,10 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 //        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
 //        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
+
+        //TraceBackParameter 计算贝塔系数等
+//        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO,traceBackVO);
+//        return traceBackParameter.getTraceBackVO();
 
         return traceBackVO;
     }

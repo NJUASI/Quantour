@@ -8,6 +8,7 @@ import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
 import vo.TraceBackCriteriaVO;
+import vo.TraceBackNumValVO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -28,7 +29,7 @@ public class TraceBackNumVal  extends JScrollPane {
 
     int height;
 
-    public TraceBackNumVal(){
+    public TraceBackNumVal(TraceBackNumValVO traceBackNumValVO){
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
@@ -36,7 +37,7 @@ public class TraceBackNumVal  extends JScrollPane {
         setSize(1000 * width / 1920, 120 * height / 1030);
 
         try {
-            jTable = new JTable(new TraceBackNumModel(ChooseStrategyPanel.getInstance().getInfo()));
+            jTable = new JTable(new TraceBackNumModel(traceBackNumValVO));
             jTable.setBounds(0, 0, 1000 * width / 1920, 120 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择

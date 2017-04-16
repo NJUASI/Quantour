@@ -4,10 +4,12 @@ import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
+import vo.HoldingDetailVO;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.util.*;
 
 /**
  * Created by 61990 on 2017/4/16.
@@ -22,7 +24,7 @@ public class TraceBackDetail  extends JScrollPane {
 
     int height;
 
-    public TraceBackDetail(){
+    public TraceBackDetail(java.util.List<HoldingDetailVO> holdingDetailVOS){
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();

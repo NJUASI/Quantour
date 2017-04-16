@@ -3,26 +3,22 @@ package presentation.chart.traceBack;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.chart.tools.ChartUtils;
 import presentation.chart.tools.CompareTool;
 import presentation.chart.tools.Serie;
-import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.WindowData;
+import vo.ReturnPeriodVO;
 
-import java.awt.*;
 import java.util.Vector;
 
 /**
  * Created by 61990 on 2017/4/11.
  */
 public class HistogramChart {
-    public  HistogramChart(){
-
+    ReturnPeriodVO returnPeriodVO;
+    public  HistogramChart(ReturnPeriodVO returnPeriodVO){
+        this.returnPeriodVO=returnPeriodVO;
     }
     public DefaultCategoryDataset createDataset() {
         // 标注类别
@@ -31,7 +27,7 @@ public class HistogramChart {
         // 柱子名称：柱子所有的值集合
 
 //        ChooseStrategyPanel.getInstance().getInfo()
-
+//todo 更改数据
         String[] categories = { "1%", "2%", "3%", "4%","5%", "6%", "7%", "8%", "9%", "10%", "11%", ">12%" };
         Object[]  datas1= new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};
         Object[] datas2 = new Object[]{11,11,10,9,8,7,6,5,4,3,2,1};

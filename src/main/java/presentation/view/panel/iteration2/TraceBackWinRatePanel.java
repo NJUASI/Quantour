@@ -5,8 +5,10 @@ import presentation.chart.traceBack.LineChart;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
+import vo.ExcessAndWinRateDistVO;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Created by 61990 on 2017/4/16.
@@ -21,7 +23,7 @@ public class TraceBackWinRatePanel extends TemplatePanel {
         setLayout(null);
 
     }
-    public void createChart(){
+    public void createChart(List<ExcessAndWinRateDistVO> certainFormates, List<ExcessAndWinRateDistVO> certainHoldings){
         if(chartPanel1!=null){
             remove(chartPanel1);
             remove(chartPanel2);
