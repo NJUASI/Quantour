@@ -99,7 +99,14 @@ public class UserDataHelperImpl implements UserDataHelper {
      */
     @Override
     public boolean modify(UserPO userPO) {
+
         properties.put(userPO.getUserName(),userPO.getPassword());
+        File directory = new File(parent);//设定为当前文件夹
+        try {
+            properties.store(new FileWriter(directory.getCanonicalPath()+separator+"userInfo.properties"),"");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 

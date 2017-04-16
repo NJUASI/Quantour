@@ -309,7 +309,6 @@ public class KStringPanel extends TemplatePanel {
         try {
             chartPanel = candlestickChart.createAllPanel();
         } catch (ColorNotExistException e) {
-            System.out.println("该均线类型不存在"); //TODO 后期可能会更改
             e.printStackTrace();
         }
         chartPanel.setBounds(adaptScreen(130,100,1620,850));

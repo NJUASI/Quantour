@@ -34,7 +34,7 @@ public interface UserService{
      * @param userVO 修改后的用户信息
      * @return 是否修改成功
      */
-    public boolean modifyUser(UserVO userVO);
+    boolean modifyUser(UserVO userVO);
 
     /**
      * 查看用户信息
@@ -45,7 +45,7 @@ public interface UserService{
      * @param  userName 用户姓名
      * @return 用户信息
      */
-    public UserVO checkUserInfo(String userName);
+    UserVO checkUserInfo(String userName);
 
     /**
      * 用户登录

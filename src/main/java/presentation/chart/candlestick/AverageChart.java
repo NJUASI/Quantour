@@ -118,7 +118,6 @@ public class AverageChart {
         } catch (DateShortException e) {
             e.printStackTrace();
         } catch (DateNotWithinException e1) {
-            // TODO 高源：超出数据库内时间区间范围
             e1.printStackTrace();
         }
     }

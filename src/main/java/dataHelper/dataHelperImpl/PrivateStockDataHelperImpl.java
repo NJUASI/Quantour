@@ -106,7 +106,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
         List<String> stockCodes = null;
 
             stockCodes = this.getPrivateStockCode(userName);
-            if (stockCodes.contains(stockCode)) {
+            if (!stockCodes.contains(stockCode)) {
                 throw new PrivateStockNotExistException();
             }
 
