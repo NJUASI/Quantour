@@ -26,6 +26,7 @@ public class TraceBackWinTable extends JScrollPane {
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
+        setSize(300 * width / 1920, 800 * height / 1030);
 
         try {
             jTable = new JTable(new TraceBackWinModel(ChooseStrategyPanel.getInstance().getInfo()));
@@ -37,6 +38,7 @@ public class TraceBackWinTable extends JScrollPane {
             jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
 
             jTable.setRowHeight(30* height / 1030);
+
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
             jTable.setBackground(ColorUtils.backgroundColor());
             jTable.setForeground(ColorUtils.fontColor());
@@ -49,7 +51,7 @@ public class TraceBackWinTable extends JScrollPane {
             header.setReorderingAllowed(false);
             header.setResizingAllowed(false);
             Dimension size = header.getPreferredSize();
-            size.height = 31* height / 1030;
+            size.height = 34* height / 1030;
             header.setPreferredSize(size);
             setForeground(ColorUtils.fontColor());
 

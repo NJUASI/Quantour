@@ -37,7 +37,7 @@ public class TraceBackNumVal  extends JScrollPane {
 
         try {
             jTable = new JTable(new TraceBackNumModel(ChooseStrategyPanel.getInstance().getInfo()));
-            jTable.setBounds(0, 0, 1400 * width / 1920, 120 * height / 1030);
+            jTable.setBounds(0, 0, 1000 * width / 1920, 120 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

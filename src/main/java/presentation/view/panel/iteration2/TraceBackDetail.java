@@ -27,9 +27,10 @@ public class TraceBackDetail  extends JScrollPane {
         width = windowData.getWidth();
         height = windowData.getHeight();
 
+        setSize(1400 * width / 1920, 800 * height / 1030);
         try {
             jTable = new JTable(new TraceBackDetailModel(ChooseStrategyPanel.getInstance().getInfo()));
-            jTable.setBounds(0, 0, 1400 * width / 1920, 120 * height / 1030);
+            jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -49,7 +50,7 @@ public class TraceBackDetail  extends JScrollPane {
             header.setReorderingAllowed(false);
             header.setResizingAllowed(false);
             Dimension size = header.getPreferredSize();
-            size.height = 33* height / 1030;
+            size.height = 34* height / 1030;
             header.setPreferredSize(size);
             setForeground(ColorUtils.fontColor());
 
