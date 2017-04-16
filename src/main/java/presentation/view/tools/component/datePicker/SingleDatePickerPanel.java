@@ -52,7 +52,7 @@ public class SingleDatePickerPanel extends JFXPanel {
                                     @Override
                                     public void updateItem(LocalDate item, boolean empty) {
                                         super.updateItem(item, empty);
-                                        if (item.isBefore(LocalDate.of(2005,1,31))||item.isAfter(LocalDate.of(2014,4,29))
+                                        if (item.isBefore(LocalDate.of(2005,1,31))||item.isAfter(WindowData.getInstance().getDate())
                                                 ) {
                                             setDisable(true);
                                             setStyle("-fx-background-color: #424B54;"+

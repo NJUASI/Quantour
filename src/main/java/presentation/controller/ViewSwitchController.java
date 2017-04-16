@@ -59,6 +59,7 @@ public class ViewSwitchController{
 
                 case "stocksTablePanel":
                     cardPanel.add(StocksTablePanel.getInstance(),"stocksTablePanel");
+                    StocksTableController.getInstance().search();
                     break;
                 case "strategyPanel":
                     cardPanel.add(StrategyPanel.getInstance(),"strategyPanel");
