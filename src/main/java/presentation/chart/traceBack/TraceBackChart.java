@@ -35,8 +35,6 @@ public class TraceBackChart {
     //最低比例
     private double low = Double.MAX_VALUE;
 
-    //逻辑层对象
-    private TraceBackService traceBackService;
 
     //策略的数据集合
     private List<CumulativeReturnVO> strategyData;
@@ -54,10 +52,11 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
-        traceBackService = new TraceBackServiceImpl();
-//        traceBackService = new TraceBackSeviceStub();
-        this.readData(traceBackCriteriaVO);
+    public TraceBackChart(List<CumulativeReturnVO> strategyData,List<CumulativeReturnVO> baseData) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
+//        this.baseData = baseData;
+//        this.strategyData = strategyData;
+
+        this.readData();
     }
 
     /**
@@ -185,12 +184,12 @@ public class TraceBackChart {
     /**
      * 读取数据
      *
-     * @param traceBackCriteriaVO 回测信息载体
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
+    private void readData() throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
+        TraceBackService traceBackService = new TraceBackServiceImpl();
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
         traceBackCriteriaVO1.baseStockName = "深发展A";

@@ -2,11 +2,13 @@ package presentation.view.panel.iteration2;
 
 import service.TraceBackService;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
+import vo.HoldingDetailVO;
 import vo.TraceBackCriteriaVO;
 import vo.TraceBackNumValVO;
 
 import javax.swing.table.AbstractTableModel;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by 61990 on 2017/4/16.
@@ -18,23 +20,15 @@ public class TraceBackDetailModel  extends AbstractTableModel {
     private String[] columnNames;
     private Object[][] data;
 
-    TraceBackNumValVO traceBackNumValVO;
-    TraceBackService traceBackService;
 
-    public TraceBackDetailModel(TraceBackCriteriaVO vo) throws IOException {
-        traceBackService = new TraceBackServiceImpl();
-        init(vo);
+    public TraceBackDetailModel(List<HoldingDetailVO> holdingDetailVOS ) throws IOException {
+        init(holdingDetailVOS);
     }
 
     //初始化列表名称和数据
-    private void init(TraceBackCriteriaVO vo) throws IOException {
+    private void init(List<HoldingDetailVO> holdingDetailVOS) throws IOException {
         columnNames = new String[]{"周期详情", "开始日期", "结束日期", "股票持有只数", "策略收益",
                 "基准收益", " 超额收益" , "模拟投资"};
-        try {
-            traceBackNumValVO = traceBackService.getNumericalVal(vo);
-        } catch (Exception e) {
-
-        }
 
         data = new Object[10][columns];
         for (int i = 0; i < 10; i++) {
@@ -42,37 +36,19 @@ public class TraceBackDetailModel  extends AbstractTableModel {
                 data[i][j] = "-";
             }
         }
-//        data[0][0]="本投资";
-//        data[1][0]="";//TODO 基准收益的名字
-//        data[2][0]="相对收益";
-//
-//        data[0][1]=traceBackNumValVO.sumRate;
-//        data[1][1]=traceBackNumValVO.baseSumRate;
-//        data[2][1]=traceBackNumValVO.sumRate-traceBackNumValVO.baseSumRate;
-//
-//        data[0][2]=traceBackNumValVO.annualizedRateOfReturn;
-//        data[1][2]=traceBackNumValVO.baseAnnualizedRateOfReturn;
-//        data[2][2]=traceBackNumValVO.annualizedRateOfReturn-traceBackNumValVO.baseAnnualizedRateOfReturn;
-//
-//        data[0][3]=traceBackNumValVO.sharpeRatio;
-//        data[1][3]=traceBackNumValVO.baseSharpeRatio;
-//        data[2][3]=traceBackNumValVO.sharpeRatio-traceBackNumValVO.baseSharpeRatio;
-//
-//        data[0][4]=traceBackNumValVO.maxRetracementRatio;
-//        data[1][4]=traceBackNumValVO;TODO 获得基准收益率的最大回撤率
-//        data[2][4]=traceBackNumValVO.sharpeRatio-traceBackNumValVO.maxRetracementRatio;
-//
-//        data[0][5]=traceBackNumValVO.returnVolatility;
-//        data[1][5]=traceBackNumValVO.baseReturnVolatility;
-//        data[2][5]=traceBackNumValVO.returnVolatility-traceBackNumValVO.baseReturnVolatility;
-//
-//        data[0][6]=traceBackNumValVO.beta;
-////        data[1][6]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的beta
-////        data[2][6]=traceBackNumValVO.beta-traceBackNumValVO.baseReturnVolatility;
-//
-//        data[0][7]=traceBackNumValVO.alpha;
-////        data[1][7]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的alpha
-////        data[2][7]=traceBackNumValVO.alpha-traceBackNumValVO.baseReturnVolatility;
+
+//        data = new Object[holdingDetailVOS.size()][columns];
+//        for (int i = 0; i < holdingDetailVOS.size(); i++) {
+//            HoldingDetailVO holdingDetailVO = holdingDetailVOS.get(i);
+//            data[i][0] = holdingDetailVO.periodSerial;
+//            data[i][1] = holdingDetailVO.startDate;
+//            data[i][2] = holdingDetailVO.endDate;
+//            data[i][3] = holdingDetailVO.holdingNum;
+//            data[i][4] = holdingDetailVO.strategyReturn;
+//            data[i][5] = holdingDetailVO.baseReturn;
+//            data[i][6] = holdingDetailVO.excessReturn;
+//            data[i][7] = holdingDetailVO.remainInvestment;
+//        }
 
 //        NumberFormat ddf= NumberFormat.getNumberInstance() ;
 //            ddf.setMaximumFractionDigits(4);
