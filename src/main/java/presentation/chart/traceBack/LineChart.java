@@ -8,14 +8,16 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.chart.tools.ChartUtils;
 import presentation.chart.tools.Serie;
 import presentation.view.tools.ColorUtils;
+import vo.ExcessAndWinRateDistVO;
 
+import java.util.List;
 import java.util.Vector;
 
 /**
  * Created by 61990 on 2017/4/16.
  */
 public class LineChart {
-    public LineChart() {
+    public LineChart(List<ExcessAndWinRateDistVO> certainFormates) {
     }
 
     public DefaultCategoryDataset createDataset() {

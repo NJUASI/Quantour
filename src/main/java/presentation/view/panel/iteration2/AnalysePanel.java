@@ -42,7 +42,7 @@ public class AnalysePanel extends TemplatePanel {
 
         traceBackWinRatePanel=new TraceBackWinRatePanel();
 
-        //todo 画各种各样的图！
+
 
         tab.add(traceBackChartPanelPanel,"收益曲线");
         tab.add(traceBackAnalysePanelPanel,"收益周期统计");

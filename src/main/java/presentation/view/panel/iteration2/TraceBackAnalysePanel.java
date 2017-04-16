@@ -39,14 +39,14 @@ public class TraceBackAnalysePanel extends TemplatePanel {
         chartPanel2.setBounds(adaptScreen(900, 180, 600, 400));
         chartPanel2.setVisible(true);
         add(chartPanel2);
-        //TODO 更改数字
-        MyLabel label2=new MyLabel("相对收益分布图  正收益周期数："+1+"，负收益周期数:"+1+"，赢率"+2) ;
-        label2.setBounds(adaptScreen(250,100,600,35));
-        add(label2);
 
-        MyLabel label1=new MyLabel("绝对收益分布图  正收益周期数："+1+"，负收益周期数:"+1+"，赢率"+2) ;
-        label1.setBounds(adaptScreen(950,100,600,35));
-        add(label1);
+//        MyLabel label2=new MyLabel("相对收益分布图  正收益周期数："+returnPeriodVO.positivePeriodsNum+"，负收益周期数:"+returnPeriodVO.negativePeriodNum+"，赢率"+returnPeriodVO.winRate) ;
+//        label2.setBounds(adaptScreen(250,100,600,35));
+//        add(label2);
+//
+//        MyLabel label1=new MyLabel("绝对收益分布图  正收益周期数："+absoluteReturnPeriodVO.positivePeriodsNum+"，负收益周期数:"+absoluteReturnPeriodVO.negativePeriodNum+"，赢率"+absoluteReturnPeriodVO.winRate) ;
+//        label1.setBounds(adaptScreen(950,100,600,35));
+//        add(label1);
 
 
     }
