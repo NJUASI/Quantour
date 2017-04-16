@@ -1,6 +1,7 @@
 package presentation.view.panel;
 
 import presentation.controller.StocksTableController;
+import presentation.listener.navigationBarListener.UserListener;
 import presentation.listener.stocksTablePanelListener.AddFavoriteListener;
 import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
@@ -36,6 +37,7 @@ public class StocksTablePanel extends TemplatePanel {
     SingleDatePickerPanel datePickerPanel;
     public JLabel label;
     public JButton search;
+    public JLabel logo;
     /**
      * 股票列表面板构造器
      *
@@ -74,14 +76,23 @@ public class StocksTablePanel extends TemplatePanel {
         detailOfCode.addMouseListener(new DetailOfCodeListener());
         add(detailOfCode);
 
-        label = new MyLabel("当日无股票信息",JLabel.CENTER);
-        label.setBounds(0 * width / 1920, 120 * height / 1030, (1920-90) * width / 1920 , 800* height / 1030);
+        label = new JLabel("当日无股票信息",JLabel.CENTER);
+        label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,26* WindowData.getInstance().getWidth()/1920));
+        label.setBounds(0 * width / 1920, 100 * height / 1030, (1920-120) * width / 1920 , 850* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         label.setVisible(false);
         label.setBackground(ColorUtils.backgroundColor());
-        label.setForeground(ColorUtils.fontColor());
+        label.setForeground(Color.WHITE);
         label.setOpaque(true);
         add(label);
+
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
+        logo =new JLabel();
+        bgPicture.setImage(bgPicture.getImage());
+        logo.setIcon(bgPicture);
+        logo.addMouseListener(new UserListener());
+        logo.setBounds(850*width/1920-200,900*height/1920-200,400,400);
+        add(logo);
 
     }
 
@@ -108,8 +119,5 @@ public class StocksTablePanel extends TemplatePanel {
     public LocalDate getChooseDate(){
         return datePickerPanel.getDate();
     }
-
-
-
 
 }

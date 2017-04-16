@@ -67,7 +67,7 @@ public class CompareController {
             }
 
             comparePanel.setCompareCharetPanel(vo);
-
+            comparePanel.logo.setVisible(false);
         } catch (DateNotWithinException e) {
             e.printStackTrace();
             comparePanel.setWarnMessageOnCompareChartPanel("请重新选择时间范围");

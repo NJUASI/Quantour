@@ -102,12 +102,14 @@ public class StocksTableController {
             thermometerPanel=new ThermometerPanel(num,list.get(6).num);
             thermometerPanel.setLocation(1460 * width / 1920, 40 * height / 1030);
             stocksTablePanel.add(thermometerPanel);
+            stocksTablePanel.logo.setVisible(false);
             thermometerPanel.repaint();
 
-        }catch (NoSituationDataException e) {
-            stocksTablePanel.label.setVisible(true);
+        }catch (Exception e) {
             stocksTablePanel.remove(stocksTablePane);
             stocksTablePane.repaint();
+            stocksTablePanel.label.setVisible(true);
+            stocksTablePanel.label.repaint();
         }
 
 

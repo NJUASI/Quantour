@@ -1,6 +1,7 @@
 package presentation.view.panel;
 
 import presentation.listener.comparePanelListener.*;
+import presentation.listener.navigationBarListener.UserListener;
 import presentation.view.panel.associatePanel.AssociatePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.component.MyButton;
@@ -38,6 +39,8 @@ public class ComparePanel extends TemplatePanel {
     JTextField num2;
 
     JButton compare;
+
+    public JLabel logo;
 
     public AssociatePanel associatePanel;
 
@@ -133,6 +136,14 @@ public class ComparePanel extends TemplatePanel {
         add(compare);
 
         addFunction();
+
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
+        logo =new JLabel();
+        bgPicture.setImage(bgPicture.getImage());
+        logo.setIcon(bgPicture);
+        logo.addMouseListener(new UserListener());
+        logo.setBounds(850*width/1920-200,900*height/1920-200,400,400);
+        add(logo);
     }
 
     private void addRefreshListener() {

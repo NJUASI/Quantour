@@ -13,7 +13,10 @@ import javax.swing.*;
  */
 public class StrategyTypePanel extends TemplatePanel {
     MyLabel label1,label2,label3,label4,label5,label6,label7,label8;
-    JComboBox MScomboBox,MRcomboBox,holdingDate,holdingNum;
+    JComboBox MScomboBox,MRcomboBox;
+    JTextField holdingDate,holdingNum;
+
+
     public StrategyTypePanel(){
 
         setLayout(null);
@@ -37,6 +40,9 @@ public class StrategyTypePanel extends TemplatePanel {
         MScomboBox.addItem("10");
         MScomboBox.addItem("20");
         MScomboBox.addItem("30");
+        MScomboBox.addItem("60");
+        MScomboBox.addItem("120");
+
         MScomboBox.setEditable(false);
         MScomboBox.setToolTipText((String)MScomboBox.getItemAt(0));
         add(MScomboBox);
@@ -50,8 +56,10 @@ public class StrategyTypePanel extends TemplatePanel {
         MRcomboBox.setBounds(adaptScreen(180,50,85,35));
         MRcomboBox.addItem("5");
         MRcomboBox.addItem("10");
+        MRcomboBox.addItem("20");
         MRcomboBox.addItem("30");
         MRcomboBox.addItem("60");
+        MRcomboBox.addItem("120");
         MRcomboBox.setEditable(false);
         MRcomboBox.setToolTipText((String)MRcomboBox.getItemAt(0));
         MRcomboBox.setVisible(false);
@@ -64,33 +72,22 @@ public class StrategyTypePanel extends TemplatePanel {
         label5= new MyLabel("调仓周期");
         label5.setLocation(400* WindowData.getInstance().getWidth()/1920,0*WindowData.getInstance().getHeight()/1030);
         add(label5);
-        holdingDate=new JComboBox();
-        holdingDate.setBounds(adaptScreen(480,50,85,35));
-        holdingDate.addItem("5");
-        holdingDate.addItem("10");
-        holdingDate.addItem("20");
-        holdingDate.addItem("30");
-        holdingDate.setEditable(false);
-        holdingDate.setToolTipText((String)holdingDate.getItemAt(0));
+        holdingDate=new JTextField("5");
+        holdingDate.setBounds(adaptScreen(480,50,30,35));
         add(holdingDate);
-        label7= new MyLabel("天 ");
-        label7.setLocation(575* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
+        label7= new MyLabel("天 (输入请大于1)");
+        label7.setBounds(adaptScreen(525,50,140,35));
         add(label7);
 
         label6= new MyLabel("持有股票");
         label6.setLocation(700* WindowData.getInstance().getWidth()/1920,0*WindowData.getInstance().getHeight()/1030);
         add(label6);
-        holdingNum=new JComboBox();
-        holdingNum.setBounds(adaptScreen(780,50,85,35));
-        holdingNum.addItem("5");
-        holdingNum.addItem("10");
-        holdingNum.addItem("20");
-        holdingNum.addItem("30");
-        holdingNum.setEditable(false);
-        holdingNum.setToolTipText((String)holdingNum.getItemAt(0));
+        holdingNum=new JTextField("5");
+        holdingNum.setBounds(adaptScreen(780,50,30,35));
+
         add(holdingNum);
-        label8= new MyLabel("支 ");
-        label8.setLocation(875* WindowData.getInstance().getWidth()/1920,50*WindowData.getInstance().getHeight()/1030);
+        label8= new MyLabel("支 (输入请大于1)");
+        label8.setBounds(adaptScreen(825,50,140,35));
         add(label8);
 
     }
@@ -121,9 +118,9 @@ public class StrategyTypePanel extends TemplatePanel {
         return Integer.parseInt(MRcomboBox.getSelectedItem().toString());
     }
     public int getHoldingPeriod(){
-        return Integer.parseInt(holdingDate.getSelectedItem().toString());
+        return Integer.parseInt(holdingDate.getText());
     }
     public int getHoldingNum(){
-        return Integer.parseInt(holdingNum.getSelectedItem().toString());
+        return Integer.parseInt(holdingNum.getText());
     }
 }

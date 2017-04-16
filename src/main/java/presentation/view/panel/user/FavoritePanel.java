@@ -99,11 +99,11 @@ public class FavoritePanel extends JScrollPane{
             setBackground(ColorUtils.backgroundColor());
             setBorder(BorderFactory.createEmptyBorder());
             jTable.setBackground(WindowData.getInstance().getColor());
-//            setViewportView(jTable);
+            setViewportView(jTable);
 
-            JLabel label = new JLabel("1231231231");
-            label.setBounds(0,0,600,600);
-            add(label);
+//            JLabel label = new JLabel("1231231231");
+//            label.setBounds(0,0,600,600);
+//            add(label);
 
 
 //            StocksTablePanel.getInstance().label.setVisible(false);

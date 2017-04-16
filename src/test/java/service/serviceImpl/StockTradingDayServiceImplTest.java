@@ -33,18 +33,6 @@ public class StockTradingDayServiceImplTest {
     }
 
     @Test
-    public void getLastTradingDay() throws Exception {
-
-        LocalDate baseDate = LocalDate.of(2014,3,24);
-
-        LocalDate lastTradingDay = stockTradingDayService.getLastTradingDay(baseDate,"1");
-        assertEquals(baseDate,lastTradingDay);
-
-        LocalDate lastTradingDay1 = stockTradingDayService.getLastTradingDay(baseDate,"12");
-        assertEquals(LocalDate.of(2014,3,21),lastTradingDay1);
-    }
-
-    @Test
     public void getLastTradingDay1() throws Exception {
 
         LocalDate baseDate = LocalDate.of(2014,3,24);
@@ -61,51 +49,6 @@ public class StockTradingDayServiceImplTest {
 
         LocalDate tradingDayMinus = stockTradingDayService.getTradingDayMinus(baseDate,10,stockPool);
         assertEquals(LocalDate.of(2014,4,15),tradingDayMinus);
-    }
-
-    @Test
-    public void getNextTradingDay() throws Exception {
-
-        LocalDate baseDate = LocalDate.of(2014,3,22);
-
-        LocalDate nextDay = stockTradingDayService.getNextTradingDay(baseDate,"1");
-        assertEquals(LocalDate.of(2014,3,24),nextDay);
-
-        LocalDate nextDay1 = stockTradingDayService.getNextTradingDay(baseDate,"12");
-        assertEquals(LocalDate.of(2014,3,25),nextDay1);
-
-    }
-
-    @Test
-    public void getNextTradingDay1() throws Exception {
-
-        LocalDate baseDate = LocalDate.of(2014,3,22);
-
-        LocalDate nextDay = stockTradingDayService.getNextTradingDay(baseDate,stockPool);
-        assertEquals(LocalDate.of(2014,3,24),nextDay);
-
-    }
-
-    @Test
-    public void getTradingDayPlus() throws Exception {
-
-        LocalDate baseDate = LocalDate.of(2014,3,21);
-
-        LocalDate plusDay = stockTradingDayService.getTradingDayPlus(baseDate,2,stockPool);
-        assertEquals(LocalDate.of(2014,3,25),plusDay);
-
-    }
-
-    @Test
-    public void getTradingDays() throws Exception {
-
-        LocalDate start = LocalDate.of(2014,3,21);
-        LocalDate end = LocalDate.of(2014,3,25);
-
-        int days = stockTradingDayService.getTradingDays(start,end,stockPool);
-
-        assertEquals(3,days,1);
-
     }
 
 }
