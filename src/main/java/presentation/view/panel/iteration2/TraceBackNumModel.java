@@ -43,40 +43,45 @@ public class TraceBackNumModel extends AbstractTableModel {
         }
 
         data = new Object[3][columns];
-        data[0][0]="本投资";
-        data[1][0]="";//TODO 基准收益的名字
-        data[2][0]="相对收益";
-
-        data[0][1]=traceBackNumValVO.sumRate;
-        data[1][1]=traceBackNumValVO.baseSumRate;
-        data[2][1]=traceBackNumValVO.sumRate-traceBackNumValVO.baseSumRate;
-
-        data[0][2]=traceBackNumValVO.annualizedRateOfReturn;
-        data[1][2]=traceBackNumValVO.baseAnnualizedRateOfReturn;
-        data[2][2]=traceBackNumValVO.annualizedRateOfReturn-traceBackNumValVO.baseAnnualizedRateOfReturn;
-
-        data[0][3]=traceBackNumValVO.sharpeRatio;
-        data[1][3]=traceBackNumValVO.baseSharpeRatio;
-        data[2][3]=traceBackNumValVO.sharpeRatio-traceBackNumValVO.baseSharpeRatio;
-
-        data[0][4]=traceBackNumValVO.maxRetracementRatio;
+        for (int i = 0 ; i<3;i++){
+            for(int j =0 ;j<8;j++){
+                data[i][j]="-";
+            }
+        }
+//        data[0][0]="本投资";
+//        data[1][0]="";//TODO 基准收益的名字
+//        data[2][0]="相对收益";
+//
+//        data[0][1]=traceBackNumValVO.sumRate;
+//        data[1][1]=traceBackNumValVO.baseSumRate;
+//        data[2][1]=traceBackNumValVO.sumRate-traceBackNumValVO.baseSumRate;
+//
+//        data[0][2]=traceBackNumValVO.annualizedRateOfReturn;
+//        data[1][2]=traceBackNumValVO.baseAnnualizedRateOfReturn;
+//        data[2][2]=traceBackNumValVO.annualizedRateOfReturn-traceBackNumValVO.baseAnnualizedRateOfReturn;
+//
+//        data[0][3]=traceBackNumValVO.sharpeRatio;
+//        data[1][3]=traceBackNumValVO.baseSharpeRatio;
+//        data[2][3]=traceBackNumValVO.sharpeRatio-traceBackNumValVO.baseSharpeRatio;
+//
+//        data[0][4]=traceBackNumValVO.maxRetracementRatio;
 //        data[1][4]=traceBackNumValVO;TODO 获得基准收益率的最大回撤率
 //        data[2][4]=traceBackNumValVO.sharpeRatio-traceBackNumValVO.maxRetracementRatio;
+//
+//        data[0][5]=traceBackNumValVO.returnVolatility;
+//        data[1][5]=traceBackNumValVO.baseReturnVolatility;
+//        data[2][5]=traceBackNumValVO.returnVolatility-traceBackNumValVO.baseReturnVolatility;
+//
+//        data[0][6]=traceBackNumValVO.beta;
+////        data[1][6]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的beta
+////        data[2][6]=traceBackNumValVO.beta-traceBackNumValVO.baseReturnVolatility;
+//
+//        data[0][7]=traceBackNumValVO.alpha;
+////        data[1][7]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的alpha
+////        data[2][7]=traceBackNumValVO.alpha-traceBackNumValVO.baseReturnVolatility;
 
-        data[0][5]=traceBackNumValVO.returnVolatility;
-        data[1][5]=traceBackNumValVO.baseReturnVolatility;
-        data[2][5]=traceBackNumValVO.returnVolatility-traceBackNumValVO.baseReturnVolatility;
-
-        data[0][6]=traceBackNumValVO.beta;
-//        data[1][6]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的beta
-//        data[2][6]=traceBackNumValVO.beta-traceBackNumValVO.baseReturnVolatility;
-
-        data[0][7]=traceBackNumValVO.alpha;
-//        data[1][7]=traceBackNumValVO.baseReturnVolatility;//todo  获得基准的alpha
-//        data[2][7]=traceBackNumValVO.alpha-traceBackNumValVO.baseReturnVolatility;
-
-        NumberFormat ddf= NumberFormat.getNumberInstance() ;
-            ddf.setMaximumFractionDigits(4);
+//        NumberFormat ddf= NumberFormat.getNumberInstance() ;
+//            ddf.setMaximumFractionDigits(4);
 
     }
 

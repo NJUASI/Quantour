@@ -34,17 +34,18 @@ public class TraceBackNumVal  extends JScrollPane {
         width = windowData.getWidth();
         height = windowData.getHeight();
 
-        setSize(1000 * width / 1920, 130 * height / 1030);
+        setSize(1000 * width / 1920, 120 * height / 1030);
 
         try {
             jTable = new JTable(new TraceBackNumModel(ChooseStrategyPanel.getInstance().getInfo()));
-            jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
+            jTable.setBounds(0, 0, 1400 * width / 1920, 120 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             jTable.setSelectionBackground(ColorUtils.markColor());//设置所选择行的背景色
             jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
 
+            jTable.setRowHeight(30* height / 1030);
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
             jTable.setBackground(ColorUtils.backgroundColor());
             jTable.setForeground(ColorUtils.fontColor());
@@ -57,7 +58,7 @@ public class TraceBackNumVal  extends JScrollPane {
             header.setReorderingAllowed(false);
             header.setResizingAllowed(false);
             Dimension size = header.getPreferredSize();
-            size.height = 30;
+            size.height = 33* height / 1030;
             header.setPreferredSize(size);
             setForeground(ColorUtils.fontColor());
 
