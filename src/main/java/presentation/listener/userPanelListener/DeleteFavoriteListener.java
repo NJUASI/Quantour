@@ -14,7 +14,6 @@ import java.awt.event.MouseEvent;
 public class DeleteFavoriteListener extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e){
-        //TODO 高源什么都没有选择，你直接在界面判断并提示
         try {
             UserController.getInstance().deleteFavorite();
             new PopUpFrame("删除该自选股成功");
@@ -22,6 +21,8 @@ public class DeleteFavoriteListener extends MouseAdapter {
             new PopUpFrame(e1.getMessage());
         } catch (PrivateStockNotFoundException e1) {
             new PopUpFrame(e1.getMessage());
+        }  catch (Exception e2){
+            new PopUpFrame("没有自选股");
         }
     }
 }

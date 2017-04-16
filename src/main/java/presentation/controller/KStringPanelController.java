@@ -123,13 +123,13 @@ public class KStringPanelController {
                         e.printStackTrace();
                     } catch (DateShortException e) {
                         e.printStackTrace();
-                    } catch (NoMatchEnumException e) {
+                    }  catch (NoMatchEnumException e) {
                         e.printStackTrace();
                     }
                 }
 
                 kStringPanel.setChartPanel(candlestickChart);
-
+               kStringPanel.logo.setVisible(false);
             } catch (CodeNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
