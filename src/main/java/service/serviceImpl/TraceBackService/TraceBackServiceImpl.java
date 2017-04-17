@@ -60,11 +60,11 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
 
         //计算持仓详情的基准收益率和超额收益率
-        traceBackVO.holdingDetailVOS = calHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackCriteriaVO.holdingPeriod);
+//        traceBackVO.holdingDetailVOS = calHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackCriteriaVO.holdingPeriod);
         //计算绝对收益周期
-        traceBackVO.absoluteReturnPeriodVO = countAbsoluteReturnPeriod(traceBackVO.holdingDetailVOS);
+//        traceBackVO.absoluteReturnPeriodVO = countAbsoluteReturnPeriod(traceBackVO.holdingDetailVOS);
         //计算相对收益周期
-        traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
+//        traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
 
         //计算超额收益率/策略胜率，给定持有期/形成期
 //        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
@@ -462,19 +462,18 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 
-        //把回测区间内的第一个交易日的累计收益率设置为0
-        CumulativeReturnVO firstDay = new CumulativeReturnVO(list.get(0).date,0,false);
-        cumulativeReturnVOS.add(firstDay);
-
-        //累计收益率以第一个交易日的前一个交易日的收益率来对比计算
+        //累计收益率以第一个交易日前一天的收益率来对比计算
         double closeOfFirstDay = list.get(0).preClose;
 
-        for(int i = 1; i < list.size(); i++) {
+        for(int i = 0; i < list.size(); i++) {
             double sucClose = list.get(i).close;
             double cumulativeReturn = (sucClose - closeOfFirstDay) / closeOfFirstDay;
             //先将所有的最大回测点设为false
             cumulativeReturnVOS.add(new CumulativeReturnVO(list.get(i).date, cumulativeReturn, false));
         }
+
+        //将第一天的收益率设置为0
+        cumulativeReturnVOS.get(0).cumulativeReturn = 0;
 
         return cumulativeReturnVOS;
     }

@@ -109,4 +109,11 @@ public interface StockService{
      * @return List<String> 符合标准的股票池中所有股票的股票代码
      */
     List<String> getStockPool(StockPoolCriteriaVO stockPoolVO) throws IOException, UnhandleBlockTypeException;
+
+    /**
+     * 获取该股票代码对应的所有数据
+     * @param stockCode 股票代码
+     * @return
+     */
+    List<StockVO> getStockData(String stockCode) throws IOException;
 }
