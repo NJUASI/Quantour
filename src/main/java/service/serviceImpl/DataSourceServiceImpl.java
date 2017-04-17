@@ -36,8 +36,13 @@ public class DataSourceServiceImpl implements DataSourceService {
     }
 
     @Override
-    public boolean changeDataSourceState(DataSourceState newState) {
+    public boolean setDataSourceState(DataSourceState newState) {
         DataSourceStateKeeper.getInstance().setState(newState);
         return true;
+    }
+
+    @Override
+    public DataSourceState getDataSourceState() {
+        return DataSourceStateKeeper.getInstance().getState();
     }
 }

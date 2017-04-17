@@ -12,7 +12,6 @@ import vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -24,6 +23,17 @@ public class TraceBackServiceImpl implements TraceBackService {
     private StockDao stockDao;
 
     private AllTraceBackStrategy traceBackStrategy;
+
+    //基准累计收益率
+    private double baseStockCumulative;
+
+    //回测标准
+    private TraceBackCriteriaVO traceBackCriteriaVO;
+
+    //自选股票池
+    private List<String> baseStockPool;
+
+    private Map<String, List<StrategyStock>> baseStockData;
 
     /*
     需要重复计算的一些东西，故保存
@@ -42,14 +52,16 @@ public class TraceBackServiceImpl implements TraceBackService {
     public TraceBackServiceImpl() throws IOException {
         stockService = new StockServiceImpl();
         stockDao = new StockDaoImpl();
+
+        //将基准累计收益率初始化为1
+        baseStockCumulative = 1;
     }
 
     @Override
     public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
-        TraceBackVO traceBackVO = new TraceBackVO();
+        this.traceBackCriteriaVO = traceBackCriteriaVO;
 
-        // 累计基准收益率
-        traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO, stockPool);
+        TraceBackVO traceBackVO = new TraceBackVO();
 
         // 选取回测的股票池为自选股票池／板块股票池
         List<String> traceBackStockPool;
@@ -57,6 +69,9 @@ public class TraceBackServiceImpl implements TraceBackService {
         else traceBackStockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
 
         setUp(traceBackStockPool);
+
+        // 累计基准收益率
+        traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO, stockPool);
 
         //选择策略
         traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
@@ -360,12 +375,10 @@ public class TraceBackServiceImpl implements TraceBackService {
         if (!traceBackCriteriaVO.isCustomized) {
             return getCumulativeReturnOfOneStock(traceBackCriteriaVO.baseStockName, start, end);
         } else {
-            Map<String, List<StockVO>> stockMap = new TreeMap<>();
-            for (int i = 0; i < stockPool.size(); i++) {
-                stockMap.put(stockPool.get(i), stockService.getOneStockData(stockPool.get(i), start, end));
-            }
-
-            return getCustomizedCumulativeReturn(start, end, stockMap);
+            baseStockPool = stockPool;
+            allDatesWithData = stockDao.getDateWithData();
+            baseStockData = stockData;
+            return getCustomizedCumulativeReturn(start, end, stockData);
         }
     }
 
@@ -376,35 +389,46 @@ public class TraceBackServiceImpl implements TraceBackService {
      *
      * @param start 回测区间起始日期
      * @param end   回测区间结束日期
+     * @param stockMap
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
     @Override
-    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(LocalDate start, LocalDate end, Map<String, List<StockVO>> stockMap) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<CumulativeReturnVO>  getCustomizedCumulativeReturn(LocalDate start, LocalDate end, Map<String, List<StrategyStock>> stockMap) throws IOException, NoDataWithinException, DateNotWithinException {
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<>();
-        List<Map<LocalDate, CumulativeReturnVO>> everyCumulativeReturnVOs = new ArrayList<>();
 
-        //开始日期到结束日期的总天数
-        long span = start.until(end, ChronoUnit.DAYS) + 1;
+        LocalDate thisStart = traceBackCriteriaVO.startDate;
+        LocalDate thisEnd = traceBackCriteriaVO.endDate;
 
-        //将每一支股票的信息添加进列表
-        for (Map.Entry<String, List<StockVO>> entry : stockMap.entrySet()) {
-            everyCumulativeReturnVOs.add(getCumulativeReturnOfOneStockMap(entry.getValue()));
+        while(!allDatesWithData.contains(thisStart) || !allDatesWithData.contains(thisEnd)){
+            if(!allDatesWithData.contains(thisStart)){
+                thisStart = thisStart.plusDays(1);
+            }
+            if(!allDatesWithData.contains(thisEnd)){
+                thisEnd = thisEnd.minusDays(1);
+            }
         }
 
-        for (int i = 0; i < span; i++) {
+        LocalDate temp = thisStart;
+        while(temp.isBefore(thisEnd) || temp.isEqual(thisEnd)){
+            StrategyStock vo = null;
             double totalCumulativeReturn = 0;
-            int notSuspended = 0;
-
-            for (int j = 0; j < everyCumulativeReturnVOs.size(); j++) {
-                if (everyCumulativeReturnVOs.get(j).containsKey(start.plusDays(i))) {
-                    totalCumulativeReturn += everyCumulativeReturnVOs.get(j).get(start.plusDays(i)).cumulativeReturn;
-                    notSuspended += 1;
+            int notSuspend = 0;
+            for(int j = 0; j < baseStockPool.size(); j++){
+                vo = findStockCertainDay(baseStockPool.get(j), temp);
+                //当天有数据
+                if(null != vo){
+                    totalCumulativeReturn += (vo.close/vo.preClose - 1);
+                    notSuspend += 1;
                 }
             }
-            //未停牌的股票支数不为0,则说明当天有数据
-            if (notSuspended != 0) {
-                cumulativeReturnVOS.add(new CumulativeReturnVO(start.plusDays(i), totalCumulativeReturn / notSuspended, false));
+
+            //即该天有股票开盘
+            if(notSuspend != 0){
+                baseStockCumulative = baseStockCumulative * (1 + (totalCumulativeReturn / notSuspend));
+                cumulativeReturnVOS.add(new CumulativeReturnVO(vo.date, baseStockCumulative-1, false));
             }
+
+            temp = temp.plusDays(1);
         }
 
         //修改第一天的基准收益率为0
@@ -413,7 +437,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         return cumulativeReturnVOS;
     }
 
-    @Override
+
     public TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO) {
 
         TraceBackParameter parameter = null;
@@ -435,34 +459,11 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     /**
-     * 获取每一支股票的日期与累计收益率的map，日期作为键值
-     *
-     * @param list 日期范围内的一支股票的信息
-     * @return 每天日期所对应的股票的累计收益率
-     */
-    private Map<LocalDate, CumulativeReturnVO> getCumulativeReturnOfOneStockMap(List<StockVO> list) {
-        Map<LocalDate, CumulativeReturnVO> map = new TreeMap<LocalDate, CumulativeReturnVO>();
-
-        //累计收益率以第一个交易日的收益率来对比计算
-        //TODO 为什么以前一日计算的话， 差异就会和策略计算的变大
-        double closeOfFirstDay = list.get(0).close;
-
-        for (int i = 0; i < list.size(); i++) {
-            double sucClose = list.get(i).close;
-            double cumulativeReturn = (sucClose - closeOfFirstDay) / closeOfFirstDay;
-            //先将所有的最大回测点设为false
-            map.put(list.get(i).date, new CumulativeReturnVO(list.get(i).date, cumulativeReturn, false));
-        }
-
-        return map;
-    }
-
-
-    /**
+     * 当不是回测自选股时，计算一只基准股的累计收益率
      * @param stockName 单一股票的信息
      * @param start     起始日期
      * @param end       结束日期
-     * @return List<CumulativeReturnVO> 单一股票在时间区间内的累计收益率
+     * @return List<CumulativeReturnVO> 一只基准股的累计收益率
      */
     private List<CumulativeReturnVO> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) throws IOException {
 
@@ -496,4 +497,21 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
 
+    private StrategyStock findStockCertainDay(String stockCode, LocalDate date){
+        LocalDate thisDate = date;
+
+        List<StrategyStock> stockVOList = baseStockData.get(stockCode);
+        List<LocalDate> dates = new ArrayList<>();
+        for(int j = 0; j < stockVOList.size(); j++){
+            dates.add(stockVOList.get(j).date);
+        }
+
+        int dateIndex = dates.indexOf(thisDate);
+
+        //该股票当天没有数据
+        if(dateIndex == -1){
+            return null;
+        }
+        return stockVOList.get(dateIndex);
+    }
 }

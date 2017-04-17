@@ -36,5 +36,13 @@ public interface DataSourceService {
      * @updateTime 2017/4/15
      * @return 用户选择修改数据源来源
      */
-    boolean changeDataSourceState(DataSourceState newState);
+    boolean setDataSourceState(DataSourceState newState);
+
+    /**
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/15
+     * @return 界面查看当前数据源类型
+     */
+    DataSourceState getDataSourceState();
 }

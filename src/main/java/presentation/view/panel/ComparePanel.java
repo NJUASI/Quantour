@@ -27,23 +27,23 @@ public class ComparePanel extends TemplatePanel {
 
     //比较面板
     private static ComparePanel comparePanel;
-
+    //日期选择
     DoubleDatePickerPanel datePanel;
-
+    //股票1代码
     JTextField name1;
-
+    //股票2编号
     JTextField num1;
-
+    //股票1代码
     JTextField name2;
-
+    //股票2代码
     JTextField num2;
-
+    //比较按钮
     JButton compare;
-
+    //中间load图标
     public JLabel logo;
-
+    //联想面板1
     public AssociatePanel associatePanel;
-
+    //联想面板2
     public AssociatePanel associatePanel2;
 
     ChartService chartService;
@@ -145,7 +145,14 @@ public class ComparePanel extends TemplatePanel {
         logo.setBounds(850*width/1920-200,900*height/1920-200,400,400);
         add(logo);
     }
-
+    /**
+     * 改变时刷新联想
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     private void addRefreshListener() {
         name1.addMouseListener(new MouseAdapter() {
             @Override
@@ -178,12 +185,26 @@ public class ComparePanel extends TemplatePanel {
             }
         });
     }
-
+    /**
+     * 设置比较股票1
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     public void setCompare(String name,String num) {
         name1.setText(name);
         num1.setText(num);
     }
-
+    /**
+     * 设置日期
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     public void setDate(LocalDate start,LocalDate end) {
         datePanel.setDate(start,end);
     }

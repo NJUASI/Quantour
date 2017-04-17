@@ -15,13 +15,20 @@ import javax.swing.*;
  * Created by 61990 on 2017/3/8.
  */
 public class AssociatePanel extends JScrollPane {
-
+    //联想面板
     private static AssociatePanel associatePanel;
-
+    //内容
     ListModel<StockSearchVO> jListModel;
-
+    //列表
     JList list;
-
+    /**
+     * 构造器
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public AssociatePanel(){
 
 
@@ -37,17 +44,39 @@ public class AssociatePanel extends JScrollPane {
         setViewportView(list);
 
     }
-
+    /**
+     * 更新列表内容
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     public void updateJList(String str){
         jListModel =  new SearchComboBoxModel(str);
         list.setModel(jListModel);
     }
 
+    /**
+     * 获得选择的列表内容
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     public StockSearchVO getMessage(){
         int index=list.getSelectedIndex();
         return jListModel.getElementAt(index);
     }
-
+    /**
+     *获得单件
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     public static AssociatePanel getInstance(){
         if(associatePanel == null){
             associatePanel = new AssociatePanel();
@@ -84,6 +113,14 @@ public class AssociatePanel extends JScrollPane {
         list.addMouseListener(new ComparePanelChooseListener2());
     }
 
+    /**
+     *修饰list
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     private void setAssociate(){
         getVerticalScrollBar().setUI(new MyScrollBarUI());
         setBackground(ColorUtils.titleColor());

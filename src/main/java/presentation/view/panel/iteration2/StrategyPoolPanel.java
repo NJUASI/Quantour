@@ -169,4 +169,8 @@ public class StrategyPoolPanel  extends TemplatePanel {
         }
         return new StockPoolCriteriaVO(stType , mulit.getSelectedValues());
     }
+
+    public boolean getIsCustomized(){
+        return radioButton2.isSelected();
+    }
 }

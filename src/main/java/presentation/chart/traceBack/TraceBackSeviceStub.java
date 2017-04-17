@@ -1,6 +1,7 @@
 package presentation.chart.traceBack;
 
 import service.TraceBackService;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.NoDataWithinException;
 import vo.*;
@@ -28,7 +29,7 @@ public class TraceBackSeviceStub implements TraceBackService {
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
     @Override
-    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(LocalDate start, LocalDate end, Map<String, List<StockVO>> stockMap) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<CumulativeReturnVO> getCustomizedCumulativeReturn(LocalDate start, LocalDate end, Map<String, List<StrategyStock>> stockMap) throws IOException, NoDataWithinException, DateNotWithinException {
         return null;
     }
 
@@ -52,7 +53,6 @@ public class TraceBackSeviceStub implements TraceBackService {
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/28
      */
-    @Override
     public TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO) {
         return null;
     }

@@ -59,7 +59,7 @@ public class TraceBackCriteriaVO {
     public TraceBackCriteriaVO(){
 
     }
-    public TraceBackCriteriaVO(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteriaVO stockPoolVO, TraceBackStrategy strategyType, int holdingNum, String baseStockName) {
+    public TraceBackCriteriaVO(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteriaVO stockPoolVO, TraceBackStrategy strategyType, int holdingNum, String baseStockName, boolean isCustomized) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.formativePeriod = formativePeriod;
@@ -68,5 +68,6 @@ public class TraceBackCriteriaVO {
         this.strategyType = strategyType;
         this.holdingNum = holdingNum;
         this.baseStockName = baseStockName;
+        this.isCustomized = isCustomized;
     }
 }

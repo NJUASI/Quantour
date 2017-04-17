@@ -19,28 +19,31 @@ import java.util.List;
  * Created by 61990 on 2017/3/14.
  */
 public class CompareChartPanel extends JPanel {
-    CompareChart1 chart1;
+
     CompareChart2 chart2;
     CompareChart3 chart3;
-    CompareChart4 chart4, chart5, chart6;
-    ChartPanel chartPanel1, chartPanel3, chartPanel4, chartPanel2, chartPanel5, chartPanel6;
+    CompareChart4 chart4, chart6;
+    ChartPanel chartPanel3, chartPanel4, chartPanel2 , chartPanel6;
     WindowData windowData;
-    JPanel panel;
+
     int width;
     int height;
     public JTextField s;
 
+    /**
+     *生成比较面板所有内容
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/15
+     */
     public CompareChartPanel(List<StockComparisionVO> vo) {
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
         setBounds(adaptScreen(0, 130, 1830, 990));
         setLayout(null);
-//        panel=new JPanel(null);
-//        scrollPane=new JScrollPane();
-//        scrollPane.add(panel);
-//        panel.setBounds(0,0,1500,800);
-//        panel.setVisible(true);
         JTabbedPane tab = new JTabbedPane(JTabbedPane.TOP);
 
         //对象化面板
@@ -63,12 +66,6 @@ public class CompareChartPanel extends JPanel {
         tab.setBounds(adaptScreen(-2, 0, 1833, 990));
 
 
-//        chart1 = new CompareChart1(vo);
-//        chartPanel1 = chart1.createChart();
-//        chartPanel1.setBounds(adaptScreen(0,0,500,480));
-//        chartPanel1.setVisible(true);
-//        add(chartPanel1);
-
         chart2 = new CompareChart2(vo);
         chartPanel2 = chart2.createChart();
         chartPanel2.setBounds(adaptScreen(200, 80, 600, 600));
@@ -82,11 +79,7 @@ public class CompareChartPanel extends JPanel {
         chartPanel3.setVisible(true);
         p1.add(chartPanel3);
 
-//        WinRateChart winRateChart=new WinRateChart();
-//       ChartPanel chartPanel3=winRateChart.createChart();
-//        chartPanel3.setBounds(adaptScreen(800,80,600,600));
-//        chartPanel3.setVisible(true);
-//        p1.add(chartPanel3);
+
 
         try {
             chart4 = new CompareChart4(vo.get(0).closes, vo.get(1).closes, vo.get(0).name, vo.get(1).name, "收盘价", "");
