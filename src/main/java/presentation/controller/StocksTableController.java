@@ -3,6 +3,7 @@ package presentation.controller;
 import presentation.view.panel.*;
 import presentation.view.tools.StocksTablePane;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyTable;
 import service.StockService;
 import service.StockSituationService;
 import service.serviceImpl.StockService.StockServiceImpl;
@@ -44,7 +45,7 @@ public class StocksTableController {
     /**
      * The Stocks table.
      */
-    public StocksTablePane stocksTablePane;
+    public MyTable stocksTablePane;
     ThermometerPanel thermometerPanel;
     StockSituationService stockSituationService;
     StockService stockService;
@@ -89,7 +90,7 @@ public class StocksTableController {
         stockSituationService=new StockSituationServiceImpl();
         int num[]=null;
         try {
-            stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
+            stocksTablePane = new MyTable(stocksTablePanel.getChooseDate());
             stocksTablePane.setLocation(50 * width / 1920, 120 * height / 1030);
             if(stocksTablePane!=null) {
                 stocksTablePanel.add(stocksTablePane);

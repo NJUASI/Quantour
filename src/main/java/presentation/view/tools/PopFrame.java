@@ -5,8 +5,8 @@ import javax.swing.*;
 /**
  * Created by 61990 on 2017/4/16.
  */
-public class Frame extends JFrame {
-    Frame(){
+public class PopFrame extends JFrame {
+    public PopFrame(){
         setTitle("Quantourist");
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

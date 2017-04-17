@@ -9,7 +9,7 @@ import java.awt.*;
     public class LoadingPanel extends JPanel {
        public JLabel jLabel,label2;
         public boolean out=false;
-
+        Thread thread=new Thread();
         public LoadingPanel(){
             setLayout(null);
             setSize(400,200);
@@ -41,14 +41,14 @@ import java.awt.*;
                     label2.setText("正在回测....");
                     break;
             }
-            ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/prograss/prograss"+i+".png"));
+            ImageIcon bgPicture= new ImageIcon(thread.currentThread().getContextClassLoader().getResource("picture/prograss/prograss"+i+".png"));
             bgPicture.setImage(bgPicture.getImage());
             jLabel.setIcon(bgPicture);
             if(out){
                 break;
             }
             try {
-                Thread.sleep(113);
+                thread.sleep(113);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

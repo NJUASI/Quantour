@@ -2,13 +2,18 @@ package presentation.controller;
 
 import presentation.view.panel.iteration2.AnalysePanel;
 import presentation.view.panel.iteration2.ChooseStrategyPanel;
+import presentation.view.panel.iteration2.MultiComboBox;
 import presentation.view.panel.iteration2.StrategyPanel;
+import service.StockService;
 import service.TraceBackService;
+import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
+import utilities.IDReserve;
 import utilities.exceptions.*;
 import vo.TraceBackCriteriaVO;
 import vo.TraceBackVO;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,7 @@ public class StrategyPanelController {
     ChooseStrategyPanel chooseStrategyPanel;
     AnalysePanel analysePanel;
     TraceBackService traceBackService;
+    JLabel progressBar,message;
     /**
      * The constant ourInstance.
      */
@@ -48,7 +54,7 @@ public class StrategyPanelController {
     }
 
     public void search() throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException, InvalidInputException, DataSourceFirstDayException {
-//        chooseStrategyPanel.start();
+
 
         traceBackService = new TraceBackServiceImpl();
         analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
@@ -74,5 +80,14 @@ public class StrategyPanelController {
         analysePanel.createChart(traceBackVO);
 //        chooseStrategyPanel.end();
     }
+
+    public void deletePool() throws PrivateStockNotExistException, PrivateStockNotFoundException {
+        StockService stockService = new StockServiceImpl();
+
+        stockService.deletePrivateStock(IDReserve.getInstance().getUserID(), chooseStrategyPanel.strategyPoolPanel.stockPoolTable.getCode());
+        chooseStrategyPanel.refreshTabel();
+    }
+
+
 
 }

@@ -7,7 +7,7 @@ package presentation.view.tools;
  */
 public class TestMain {
     public static void main(String[] args){
-       new Frame();
+       new PopFrame();
 
     }
 }

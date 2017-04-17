@@ -3,20 +3,17 @@ package presentation.view.panel.iteration2;
 import presentation.controller.StrategySwitchController;
 import presentation.listener.strategyPanelListener.SearchListener;
 import presentation.view.panel.TemplatePanel;
-import presentation.view.tools.ColorUtils;
-import presentation.view.tools.LoadingPanel;
-import presentation.view.tools.UIManagerUtil;
+import presentation.view.tools.*;
 import presentation.view.tools.component.MyButton;
+import presentation.view.tools.component.PopupProgress;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
-import presentation.view.tools.WindowData;
 import utilities.enums.StType;
 import utilities.enums.TraceBackStrategy;
 import vo.StockPoolCriteriaVO;
 import vo.TraceBackCriteriaVO;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -30,11 +27,15 @@ public class ChooseStrategyPanel extends TemplatePanel {
     private static ChooseStrategyPanel chooseStrategyPanel;
     JRadioButton radioButton1,radioButton2;
     ButtonGroup group;
-    MultiComboBox mulit;
+
     DoubleDatePickerPanel datePanel;
     StrategyTypePanel strategyTypePanel;
-    JComboBox comboBox,STComboBox;
-    LoadingPanel loadingPanel;
+    public StrategyPoolPanel strategyPoolPanel;
+    JComboBox comboBox;
+    JLabel progressBar,message;
+     public LoadingPanel loadingPanel;
+     PopupProgress popupProgress;
+
     int width;
     int height;
     /**
@@ -56,35 +57,9 @@ public class ChooseStrategyPanel extends TemplatePanel {
         datePanel.setBounds(adaptScreen(200 , 370 , 520 , 37));
         add(datePanel);
         //股票池区域
-        MyLabel label1=new MyLabel("选股票池") ;
-        label1.setLocation(100*width/1920,100*height/1030);
-        add(label1);
-
-        JLabel lb= new MyLabel("板块",16);
-        lb.setBounds(adaptScreen(200,168,60,40));
-        add(lb);
-
-
-        Object[] value = new String[]{"全部", "主板","中小板" , "创业板" };
-        Object[] defaultValue = new String[]{ "主板","中小板" , "创业板" };
-        mulit = new MultiComboBox(value, defaultValue);
-        mulit.setBounds(adaptScreen(270,170,230,35));
-//        System.out.println(mulit.getSelectedValues()[0]);
-        add(mulit);
-
-        JLabel lb3= new MyLabel("ST");
-        lb3.setBounds(adaptScreen(570,168,20,40));
-        add(lb3);
-
-        STComboBox=new JComboBox();
-        STComboBox.setBounds(adaptScreen(620,170,140,35));
-        STComboBox.addItem("包含ST");
-        STComboBox.addItem("排除ST");
-        STComboBox.addItem("仅有ST");
-        STComboBox.setEditable(false);
-        STComboBox.setToolTipText((String)STComboBox.getItemAt(0));
-
-        add(STComboBox);
+        strategyPoolPanel=new StrategyPoolPanel();
+        strategyPoolPanel.setBounds(adaptScreen(0,0,1600,280));
+        add(strategyPoolPanel);
 
         //区间板块
         MyLabel label4=new MyLabel("回测区间") ;
@@ -144,6 +119,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
         JButton searchBt= new MyButton("开始回测");
         searchBt.setBounds(adaptScreen(1200,550,100,35));
+
         searchBt.addMouseListener(new SearchListener());
         searchBt.addMouseListener(new MouseAdapter() {
             @Override
@@ -166,7 +142,27 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
         add(returnBt);
 
+        loadingPanel=new LoadingPanel();
+        loadingPanel.setLocation(500*width/1920,400*height/1030);
+        add(loadingPanel);
+        loadingPanel.setVisible(false);
 
+    }
+
+    public void popup(){
+        progressBar = new JLabel();
+        progressBar.setBounds(1100*width/1920, 420*width/1030, 305, 42);
+        add(progressBar);
+        message = new JLabel();
+        message.setBounds(1200*width/1920, 350*width/1030, 305, 42);
+        add(message);
+        popupProgress=new PopupProgress(progressBar,message);
+        popupProgress.start();
+    }
+    public void popdown(){
+        popupProgress.stop();
+        remove(progressBar);
+        remove(message);
     }
     /**
      * 单件
@@ -191,16 +187,9 @@ public class ChooseStrategyPanel extends TemplatePanel {
         }
 
     }
-    public void start(){
-        loadingPanel=new LoadingPanel();
-        loadingPanel.setLocation(500*width/1920,400*height/1030);
-        add(loadingPanel);
-        loadingPanel.start();
-    }
-    public void  end(){
-        loadingPanel.out=true;
-        remove(loadingPanel);
-        loadingPanel=null;
+
+   public void refreshTabel(){
+        strategyPoolPanel.refreshTabel();
     }
     /**
      * get ALL panel message
@@ -222,20 +211,9 @@ public class ChooseStrategyPanel extends TemplatePanel {
         }
 
         return new TraceBackCriteriaVO(datePanel.getStartDate(),datePanel.getEndDate(),formative,strategyTypePanel.getHoldingPeriod(),
-                getPoolVO(),traceBackStrategy,strategyTypePanel.getHoldingNum(),getBasicStock());
+               strategyPoolPanel.getPoolVO(),traceBackStrategy,strategyTypePanel.getHoldingNum(),getBasicStock());
     }
-    private StockPoolCriteriaVO getPoolVO(){
-        StType stType = null;
 
-        if(STComboBox.getSelectedItem().equals("排除ST")){
-            stType=StType.EXCLUDE;
-        }else if(STComboBox.getSelectedItem().equals("包含ST")){
-            stType=StType.INCLUDE;
-        }else if(STComboBox.getSelectedItem().equals("仅有ST")){
-            stType=StType.ONLY;
-        }
-         return new StockPoolCriteriaVO(stType , mulit.getSelectedValues());
-    }
     private String getBasicStock(){
         return comboBox.getSelectedItem().toString();
     }
