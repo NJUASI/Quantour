@@ -196,12 +196,12 @@ public class TraceBackChart {
         TraceBackService traceBackService = new TraceBackServiceImpl();
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
-        traceBackCriteriaVO1.baseStockName = "深发展A";
+        traceBackCriteriaVO1.baseStockName = "沪深300";
         traceBackCriteriaVO1.startDate = LocalDate.of(2013,5,1);
         traceBackCriteriaVO1.endDate = LocalDate.of(2014,4,29);
         traceBackCriteriaVO1.strategyType = TraceBackStrategy.MR;
         traceBackCriteriaVO1.formativePeriod = 5;
-        traceBackCriteriaVO1.holdingNum = 10;
+        traceBackCriteriaVO1.holdingNum = 1;
         traceBackCriteriaVO1.holdingPeriod = 5;
         traceBackCriteriaVO1.isCustomized = false;
 

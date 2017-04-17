@@ -60,6 +60,10 @@ public class OriginalDataReader {
             String day = formalMonthDay(originalDay);
             parts[1] = year + "-" + month + "-" + day;
 
+            // 因为项目数据源有问题，这几天的数据其实是没有的，所以需要剔除
+            if (isWrongDate(parts[1])) continue;
+
+
             // 转化股票交易量单位为手（1手=100股）
             parts[6] = String.valueOf(Long.parseLong(parts[6]) / 100);
 
@@ -105,5 +109,13 @@ public class OriginalDataReader {
             return "0" + s;
         }
         return s;
+    }
+
+    private boolean isWrongDate(String dateString) {
+        if (dateString.equals("2010-02-15") || dateString.equals("2010-02-16") || dateString.equals("2010-02-17")
+                || dateString.equals("2010-02-18") || dateString.equals("2012-01-02") || dateString.equals("2012-01-03")) {
+            return true;
+        }
+        return false;
     }
 }

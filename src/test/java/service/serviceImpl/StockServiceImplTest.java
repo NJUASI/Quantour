@@ -4,9 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import service.StockService;
 import service.serviceImpl.StockService.StockServiceImpl;
+import utilities.enums.BlockType;
+import utilities.enums.StType;
+import vo.StockPoolCriteriaVO;
 import vo.StockVO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,4 +64,14 @@ public class StockServiceImplTest {
         assertEquals(8,stockVOS.size(),1);
     }
 
+    @Test
+    public void getStockPool() throws Exception {
+        List<String> stocksPool = new ArrayList<>();
+        List<BlockType> blockTypes = new ArrayList<>();
+        blockTypes.add(BlockType.ZB);
+        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.INCLUDE, blockTypes);
+        stocksPool = stockService.getStockPool(stockPoolCriteriaVO);
+
+        System.out.println();
+    }
 }

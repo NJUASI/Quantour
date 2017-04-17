@@ -138,10 +138,10 @@ public class StockDataHelperImpl implements StockDataHelper {
         String parent = null;
 
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
-            parent = Thread.currentThread().getContextClassLoader().getResource("stocks").getFile();
+            parent = Thread.currentThread().getContextClassLoader().getResource(isBaseStockParent).getFile();
             parent += separator + "stock_records_by_date";
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
-            parent = System.getProperty("user.dir") + separator + ".attachments" + separator + notBaseStockParent + separator + "stock_records_by_date";
+            parent = System.getProperty("user.dir") + separator + ".attachments" + separator + isBaseStockParent + separator + "stock_records_by_date";
         }
 
         String[] years = new File(parent).list();

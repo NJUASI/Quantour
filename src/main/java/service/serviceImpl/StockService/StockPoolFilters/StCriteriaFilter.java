@@ -1,6 +1,7 @@
 package service.serviceImpl.StockService.StockPoolFilters;
 
 import service.serviceImpl.StockService.StockPoolFilter;
+import utilities.enums.StType;
 import vo.StockPoolCriteriaVO;
 import vo.StockPoolVO;
 
@@ -26,23 +27,29 @@ public class StCriteriaFilter extends StockPoolFilter{
     public List<StockPoolVO> meetCriteria(List<StockPoolVO> stocks, StockPoolCriteriaVO vo) {
 
         //TODO 因为现在还不需要筛选出st，故先直接返回，不做筛选
-        return stocks;
-//        if(vo.stType == StType.EXCLUDE){
-//            for(int i = 0; i < stocks.size();){
-//                if (stocks.get(i).isSt){
-//                    stocks.remove(i);
-//                }
-//                i++;
-//            }
-//        }
-//        else if(vo.stType == StType.ONLY){
-//            for(int i = 0; i < stocks.size();){
-//                if(!stocks.get(i).isSt){
-//                    stocks.remove(i);
-//                }
-//                i++;
-//            }
-//        }
-//        return getNextFilter().meetCriteria(stocks,vo);
+
+        if(vo.stType == StType.EXCLUDE){
+            for(int i = 0; i < stocks.size();){
+                if (stocks.get(i).isSt){
+                    stocks.remove(i);
+                }
+                i++;
+            }
+        }
+        else if(vo.stType == StType.ONLY){
+            for(int i = 0; i < stocks.size();){
+                if(!stocks.get(i).isSt){
+                    stocks.remove(i);
+                }
+                i++;
+            }
+        }
+
+        if(getNextFilter() == null){
+            return stocks;
+        }
+        else {
+            return getNextFilter().meetCriteria(stocks, vo);
+        }
     }
 }

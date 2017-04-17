@@ -2,6 +2,7 @@ package service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
+import jdk.nashorn.internal.runtime.linker.LinkerCallSite;
 import service.StockService;
 import service.StockTradingDayService;
 import service.TraceBackService;
@@ -9,7 +10,6 @@ import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockTradingDayServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
-import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
@@ -42,8 +42,11 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     //所有形成期有数据的日期
     List<LocalDate> formativeDates = new ArrayList<>();
 
+    //所选股票池的代码和其在一定期间内的映射(包括开始日期前的形成期)
+    Map<String, List<StockVO>> stockMap = new TreeMap<>();
 
-    public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException {
+
+    public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, DateNotWithinException, NoDataWithinException {
         super(stockPoolCodes,traceBackCriteriaVO);
 
         stockService = new StockServiceImpl();
@@ -57,6 +60,14 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         //设置持有期和形成期有数据的日期
         setDates();
+
+        setStockMap();
+    }
+
+    private void setStockMap() throws IOException, NoDataWithinException, DateNotWithinException {
+        for(int i = 0; i < stockPoolCodes.size(); i++){
+            stockMap.put(stockPoolCodes.get(i), stockService.getOneStockData(stockPoolCodes.get(i), formativeDates.get(0), formativeDates.get(formativeDates.size()-1)));
+        }
     }
 
     /**
@@ -85,7 +96,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         List<String> holdingStocks = new ArrayList<String>();
 
         //回测区间,从用户所选区间里再选出第一个交易日和最后一个交易日
-        LocalDate start = holdingDates.get(0);
         LocalDate end = holdingDates.get(holdingDates.size()-1);
 
         int tradingDays = holdingDates.size();
@@ -118,6 +128,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             //形成期的起始日期
             LocalDate startOfFormative = formativeDates.get(formativeDates.indexOf(endOfFormative)-formativePeriod+1);
 
+            System.out.println("periodNum:  "+i);
 
             //持有期所持有的股票
             holdingStocks = pickStocks(formate(stockPoolCodes,startOfFormative,endOfFormative));
@@ -136,9 +147,22 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             LocalDate startOfHoldingMinusOne = formativeDates.get(formativeDates.indexOf(startOfHolding)-1);
 
             //保存每个持有期中，所持有股票的相对于持有期起始日期的累计收益率
-            List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(startOfHoldingMinusOne,endOfHolding,holdingStocks);
+
+            Map<String, List<StockVO>> holdingStockVOs = new TreeMap<>();
+            for(int j = 0; j < holdingStocks.size(); j++){
+                holdingStockVOs.put(holdingStocks.get(j), findStockVOsWithinDay(holdingStocks.get(j), startOfHoldingMinusOne, endOfHolding));
+            }
+
+            List<CumulativeReturnVO> dailyTotalCumulativeReturn = traceBackService.getCustomizedCumulativeReturn(startOfHoldingMinusOne,endOfHolding, holdingStockVOs);
 
             List<CumulativeReturnVO> cumulatives = computeHoldingPeriod(dailyTotalCumulativeReturn);
+
+            //可能当天就只有一天的数据
+            if(cumulatives.size() == 0){
+                continue;
+            }
+
+            //TODO
 
             double lastRate = cumulatives.get(cumulatives.size()-1).cumulativeReturn;
 
@@ -162,7 +186,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      * 形成期／N日均值，用于后续策略筛选
      *
      * @param stockCodes      股票列表
-     * @param periodStart     持有期起始日期
+     * @param periodStart     持有期起始日期;
      * @param formativePeriod 形成期长度（MS）／N日均值偏离度（MR）
      * @return 形成的
      */
@@ -180,7 +204,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         List<CumulativeReturnVO> cumulativeReturn = new ArrayList<CumulativeReturnVO>();
 
-        //从1开始计数，因为日期多往前算了一天
+        //因为往前多算了一天，就从1开始计数
         for(int i = 1; i < dailyTotalCumulativeReturn.size(); i++){
             LocalDate date = dailyTotalCumulativeReturn.get(i).currentDate;
             double rate = dailyTotalCumulativeReturn.get(i).cumulativeReturn;
@@ -278,18 +302,47 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      */
     private List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
 
-        List<FormativePeriodRateVO> formativePeriodRate = new ArrayList<FormativePeriodRateVO>();
+        List<FormativePeriodRateVO> formativePeriodRate = new ArrayList<>();
 
         for(int i = 0; i < stockCodes.size(); i++){
 
-            //TODO gcm 这里是否以形成期的前一天为基准，还是以形成期的第一天为基准
-            List<StockVO> stockVOS = stockService.getOneStockData(stockCodes.get(i), start, end);
+            List<StockVO> stockVOList = findStockVOsWithinDay(stockCodes.get(i), start, end);
+            //说明为该形成期没有数据
+            if(stockVOList.size() == 0){
+                continue;
+            }
 
-            double rate = (stockVOS.get(stockVOS.size()-1).close - stockVOS.get(0).close) / stockVOS.get(0).close;
+            double rate = (stockVOList.get(stockVOList.size()-1).close - stockVOList.get(0).close) / stockVOList.get(0).close;
 
-            formativePeriodRate.add(new FormativePeriodRateVO(stockVOS.get(0).code, rate));
+            formativePeriodRate.add(new FormativePeriodRateVO(stockVOList.get(0).code, rate));
         }
 
         return formativePeriodRate;
+    }
+
+    private List<StockVO> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){
+
+        LocalDate thisStart = start;
+        LocalDate thisEnd = end;
+
+        List<StockVO> stockVOList = stockMap.get(stockCode);
+        List<LocalDate> dates = new ArrayList<>();
+        for(int j = 0; j < stockVOList.size(); j++){
+            dates.add(stockVOList.get(j).date);
+        }
+
+        while(!dates.contains(thisStart) || !dates.contains(thisEnd)){
+            if(!dates.contains(thisStart)){
+                thisStart = thisStart.plusDays(1);
+            }
+            if(!dates.contains(thisEnd)){
+                thisEnd = thisEnd.minusDays(1);
+            }
+        }
+        int startIndex = dates.indexOf(thisStart);
+        int endIndex = dates.indexOf(thisEnd);
+
+        return stockVOList.subList(startIndex, endIndex+1);
+
     }
 }

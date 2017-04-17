@@ -6,7 +6,6 @@ import po.StockPO;
 import service.ChartService;
 import service.serviceImpl.ChartServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
-import utilities.enums.MovingAverageType;
 import utilities.exceptions.*;
 import vo.*;
 
@@ -23,7 +22,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
     private StockDao stockDao;
 
     // 默认1000元初始投资资本
-    private final double initMpney = 1000;
+    private final double initMoney = 1000;
     private double nowMoney;
 
     // 持股数，持有期，N日均值
@@ -48,7 +47,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         super(stockPoolCodes, traceBackCriteriaVO);
         chartService = new ChartServiceImpl();
         stockDao = new StockDaoImpl();
-        nowMoney = initMpney;
+        nowMoney = initMoney;
 
         holdingNum = traceBackCriteriaVO.holdingNum;
         holdingPeriod = traceBackCriteriaVO.holdingPeriod;
@@ -109,6 +108,13 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         LocalDate periodStart = withinDates.get(startIndex);
         LocalDate periodEnd = withinDates.get(endIndex);
         wantedStockCodes = pickStocks(formate(stockPoolCodes, periodStart, formativePeriod));
+
+
+        for (String s : wantedStockCodes) {
+            System.out.println("select: " + s);
+        }
+
+
         calculate(periodStart, periodEnd, periodSerial);
     }
 
@@ -135,7 +141,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
 
             // 前一交易日的均值（一定能够计算）
             List<MRStock> temp = thisStockData;
-            if (neededMRStockIndex + 1 >= formativePeriod){
+            if (neededMRStockIndex + 1 >= formativePeriod) {
                 // 之前的数据充足
                 temp = temp.subList(neededMRStockIndex - formativePeriod + 1, neededMRStockIndex + 1);
             }
@@ -179,7 +185,6 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         for (String s : wantedStockCodes) {
             List<MRStock> stocks = stockData.get(s);
             for (MRStock stock : stocks) {
-
                 if (isDateWithinWanted(periodStart, periodEnd, stock.date)) {
                     LocalDate thisDate = stock.date;
                     double profit = getProfit(stock);
@@ -198,19 +203,22 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         // 依次处理每一交易日
         for (Map.Entry<LocalDate, List<Double>> entry : forCalcu.entrySet()) {
             double thisYield = getYield(entry.getValue());
-            strategyCumulativeReturn.add(new CumulativeReturnVO(entry.getKey(), thisYield, false));
+
+            nowMoney *= (thisYield + 1);
+            double cumulativeYield = nowMoney / initMoney - 1;
+
+            strategyCumulativeReturn.add(new CumulativeReturnVO(entry.getKey(), cumulativeYield, false));
             tempYields.add(thisYield);
         }
 
-        // 对这整个周期进行处理
-        double yieldSum = 0;
+        // 对这整个周期进行持仓周期处理
+        double yieldMul = 1;
         for (double tempYield : tempYields) {
-            yieldSum += tempYield;
+            yieldMul *= (tempYield + 1);
         }
-        nowMoney *= (yieldSum + 1);
-        holdingDetailVOS.add(new HoldingDetailVO(periodSerial, periodStart, periodEnd, holdingNum, yieldSum, nowMoney));
-    }
 
+        holdingDetailVOS.add(new HoldingDetailVO(periodSerial, periodStart, periodEnd, holdingNum, yieldMul, nowMoney));
+    }
 
 
     private LocalDate getClosestWithinDate(LocalDate thisDate, boolean biggerThanThisDate) {

@@ -2,6 +2,8 @@ package service.serviceImpl.TraceBackService;
 
 import service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversion.MeanReversionStrategy;
 import service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum.MomentumStrategy;
+import utilities.exceptions.DateNotWithinException;
+import utilities.exceptions.NoDataWithinException;
 import vo.TraceBackCriteriaVO;
 
 import java.io.IOException;
@@ -12,7 +14,7 @@ import java.util.List;
  */
 public class TraceBackStrategyFactory {
 
-    public static AllTraceBackStrategy createTraceBackStrategy(List<String> stockCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException {
+    public static AllTraceBackStrategy createTraceBackStrategy(List<String> stockCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, DateNotWithinException, NoDataWithinException {
         switch (traceBackCriteriaVO.strategyType) {
             case MS:
                 return new MomentumStrategy(stockCodes,traceBackCriteriaVO);
