@@ -35,6 +35,14 @@ public class TitlePanel extends TemplatePanel {
     //自动补全菜单
     SearchPopupMenu popupMenu;
 
+    /**
+     * 标题栏构造器
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     TitlePanel() {
         setLayout(null);
         setBounds(adaptScreen(90, 0, 1900, 40));
@@ -136,14 +144,28 @@ public class TitlePanel extends TemplatePanel {
             }
         });
     }
-
+    /**
+     * 获得单件
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static TitlePanel getInstance(){
         if(titlePanel==null){
             titlePanel=new TitlePanel();
         }
         return titlePanel;
     }
-
+    /**
+     * 设置标题
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public void setTitle(String str){
         label.setText(str);
     }

@@ -119,9 +119,9 @@ public class StrategyPoolPanel  extends TemplatePanel {
             stockPoolTable.setBounds(adaptScreen(450,50,200,220));
 
             label = new JLabel();
-            label.setBounds(450 * width / 1920, (30*(stockPoolTable.jTable.getRowCount()+1)) +50* height / 1030, 200* width / 1920 , 220* height / 1030-(30*(stockPoolTable.jTable.getRowCount()+1)));
+            label.setBounds(450 * width / 1920, (30*(stockPoolTable.jTable.getRowCount()+1)) +50* height / 1030, 200* width / 1920 , 220* height / 1030-(30*(stockPoolTable.jTable.getRowCount())));
             label.setBorder(BorderFactory.createEmptyBorder());
-            label.setBackground(ColorUtils.backgroundColor());
+            label.setBackground(new Color(32,36,39));
             label.setForeground(Color.WHITE);
             label.setOpaque(true);
             add(label);
@@ -129,6 +129,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
             add(stockPoolTable);
             if(radioButton1.isSelected()){
                 stockPoolTable.setVisible(false);
+                label.setVisible(false);
             }
         } catch (IOException e) {
             e.printStackTrace();

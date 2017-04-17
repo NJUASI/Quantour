@@ -32,9 +32,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
     StrategyTypePanel strategyTypePanel;
     public StrategyPoolPanel strategyPoolPanel;
     JComboBox comboBox;
-    JLabel progressBar,message;
-     public LoadingPanel loadingPanel;
-     PopupProgress popupProgress;
+    JLabel progressBar;
 
     int width;
     int height;

@@ -195,6 +195,14 @@ public class NavigationBar extends TemplatePanel {
         }
         return navigationBar;
     }
+    /**
+     * 点击i时，button的图片的改变
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public void whileClicked(int i){
         switch (i){
             case 0:

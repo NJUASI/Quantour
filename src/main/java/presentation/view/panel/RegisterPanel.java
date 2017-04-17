@@ -78,14 +78,6 @@ public class RegisterPanel extends TemplatePanel {
         password2.setVisible(true);
         add(password2);
 
-        //the Button setting of opening logIn panel
-//        openLogin = new JButton("登录");
-//        openLogin.setBounds(adaptScreen(470,610,80,40));
-//        openLogin.setForeground(Color.BLACK);
-//        openLogin.setFont(new Font("",Font.CENTER_BASELINE,15*width/1920));
-//        openLogin.setContentAreaFilled(false);
-//        openLogin.addMouseListener(new OpenLoginListener());
-//        add(openLogin);
 
         //the Button setting of register
         register =new JButton("注册");
@@ -138,13 +130,28 @@ public class RegisterPanel extends TemplatePanel {
         add(min);
     }
 
+    /**
+     * 获得单件
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static RegisterPanel getInstance(){
         if(registerPanel == null){
             registerPanel = new RegisterPanel();
         }
         return registerPanel;
     }
-
+    /**
+     * 设置用户名
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public void setUserName(String userName) {
         admin.setText(userName);
     }
@@ -156,15 +163,36 @@ public class RegisterPanel extends TemplatePanel {
     public void setPassword2(String password2) {
         this.password2.setText(password2);
     }
-
+    /**
+     * 获得注册用户
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public String getUserName() {
         return admin.getText();
     }
-
+    /**
+     * 获得注册密码
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public String getPassword() {
         return password.getText();
     }
-
+    /**
+     * 获得注册确认密码
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public String getPassword2() {
         return password2.getText();
     }
