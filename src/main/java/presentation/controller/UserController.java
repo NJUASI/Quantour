@@ -93,20 +93,16 @@ public class UserController {
     }
 
     public void setUpdateMessage(){
-        System.out.println("44444");
         try {
             dataSourceService = new DataSourceServiceImpl();
             DataSourceInfoVO vo = dataSourceService.getMyDataSource();
-            System.out.println("2222222");
             if(vo!=null) {
                 userPanel.fileImportPanel.setUploadInfo("由" + vo.userName + "上传于" + vo.uploadTime);
             }else{
                 userPanel.fileImportPanel.setUploadInfo("未上传本地数据");
                 userPanel.fileImportPanel.notFoundDate();
-                System.out.println("11");
                 dataSourceService.changeDataSourceState(DataSourceState.ORIGINAL);
             }
-            System.out.println("111122");
         } catch (IOException e) {
             e.printStackTrace();
         }

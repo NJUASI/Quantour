@@ -18,7 +18,7 @@ public class DataSourceInfoPO {
     // 上传用户
     private String userName;
 
-    public DataSourceInfoPO(Timestamp uploadTime, String filePath, String userName) {
+    public DataSourceInfoPO(String filePath, Timestamp uploadTime, String userName) {
         this.filePath = filePath;
         this.uploadTime = uploadTime;
         this.userName = userName;

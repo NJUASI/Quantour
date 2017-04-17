@@ -214,7 +214,7 @@ public class TraceBackChart {
         List<BlockType> list = new ArrayList<>();
         list.add(BlockType.ZB);
         list.add(BlockType.CYB);
-        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.EXCLUDE,list);
+//        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.EXCLUDE,list);
         traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
 
 

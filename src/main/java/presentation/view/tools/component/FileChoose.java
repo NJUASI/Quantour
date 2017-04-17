@@ -36,8 +36,7 @@ public class FileChoose extends MouseAdapter {
                 JOptionPane.showMessageDialog(null, "选择合适的文件");
             } else if (file.isFile()) {
                 System.out.println(file.getAbsolutePath());
-//                UserController.getInstance().importDate(file.getAbsolutePath());
-//                UserController.getInstance().setUpdateMessage();
+                UserController.getInstance().importDate(file.getAbsolutePath());
             }
         } catch (NullPointerException e1) {
             new PopUpFrame(e1.getMessage());

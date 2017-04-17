@@ -73,15 +73,17 @@ public class FileImportPanel extends TemplatePanel {
         importData.setBounds(adaptScreen(80,290,120,25));
 
 
-        importData.addMouseListener(new MouseAdapter() {
+        importData.addMouseListener(new FileChoose());
+        add(importData);
+
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseEntered(MouseEvent e) {
+
                 UserController.getInstance().setUpdateMessage();
             }
         });
-        add(importData);
 
-//        notFoundDate();
 
     }
 
