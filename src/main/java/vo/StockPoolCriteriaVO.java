@@ -12,11 +12,6 @@ import java.util.List;
  */
 public class StockPoolCriteriaVO {
 
-    public StockPoolCriteriaVO(StType stType, List<BlockType> blockTypes) {
-        this.stType = stType;
-        this.blockTypes = blockTypes;
-    }
-
     /**
      * 是否包含st
      */
@@ -26,6 +21,11 @@ public class StockPoolCriteriaVO {
      * 基准对比股票代码,可根据此确定股票的板块
      */
     public List<BlockType> blockTypes;
+
+    public StockPoolCriteriaVO(StType stType, List<BlockType> blockTypes) {
+        this.stType = stType;
+        this.blockTypes = blockTypes;
+    }
 
 
 }
