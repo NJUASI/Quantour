@@ -4,6 +4,7 @@ import presentation.controller.KStringPanelController;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.io.IOException;
 
 /**
  * Created by Harvey on 2017/3/25.
@@ -44,6 +45,10 @@ public class StockNameDocListener implements DocumentListener{
     }
 
     private void callController(){
-        KStringPanelController.getInstance().stockNameChange();
+        try {
+            KStringPanelController.getInstance().stockNameChange();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -5,6 +5,7 @@ import service.serviceImpl.StockService.StockServiceImpl;
 import vo.StockSearchVO;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class SearchComboBoxModel extends DefaultComboBoxModel<StockSearchVO>{
 
-    public SearchComboBoxModel(String searchString) {
+    public SearchComboBoxModel(String searchString) throws IOException {
 
         StockService stockService = new StockServiceImpl();
 

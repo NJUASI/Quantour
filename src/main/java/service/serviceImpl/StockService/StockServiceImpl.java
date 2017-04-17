@@ -3,6 +3,7 @@ package service.serviceImpl.StockService;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
+import po.StockSearchPO;
 import service.StockService;
 import service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
 import service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
@@ -130,7 +131,7 @@ public class StockServiceImpl implements StockService {
      * @updateTime 2017/3/14
      */
     @Override
-    public List<StockSearchVO> searchStock(String searchString){
+    public List<StockSearchVO> searchStock(String searchString) throws IOException {
 
         List<StockSearchVO> stockSearchVOs = new ArrayList<StockSearchVO>();
 
@@ -140,36 +141,34 @@ public class StockServiceImpl implements StockService {
             Map<String,String> codeAndName = stockDao.getAllStocksCode();
             Set<String> codes = codeAndName.keySet();
             for (String code:codes) {
-                if(code.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(StockCodeHelper.format(code),codeAndName.get(code));
+                if (code.startsWith(searchString)) {
+                    StockSearchVO vo = new StockSearchVO(StockCodeHelper.format(code), codeAndName.get(code));
                     stockSearchVOs.add(vo);
                 }
             }
         }
 
         //通过名称匹配股票
-        else{
-            Map<String,String> namesAndCode = stockDao.getAllStocksName();
+        else {
+            Map<String, String> namesAndCode = stockDao.getAllStocksName();
             Set<String> names = namesAndCode.keySet();
-            for(String name:names){
-                if(name.startsWith(searchString)){
-                    StockSearchVO vo = new StockSearchVO(StockCodeHelper.format(namesAndCode.get(name)),name);
+            for (String name : names) {
+                if (name.contains(searchString)) {
+                    StockSearchVO vo = new StockSearchVO(StockCodeHelper.format(namesAndCode.get(name)), name);
                     stockSearchVOs.add(vo);
                 }
             }
         }
 
         //通过匹配股票的首字母来查询
-//        else if(searchString.matches("[a-zA-Z]+")){
-//            Map<String,String> firstLettersAndNames = stockDao.getAllStocksFirstLetters();
-//            Set<String> firstLetters = firstLettersAndNames.keySet();
-//            List<String> names = new ArrayList<String>();
-//            for(String letters: firstLetters){
-//               if(letters.startsWith(searchString)){
-//                   names.add(firstLettersAndNames.get(letters));
-//               }
-//            }
-//        }
+        if(searchString.matches("[a-zA-Z]+")){
+            List<StockSearchPO> firstLetters = stockDao.getAllStocksFirstLetters();
+            for (StockSearchPO po : firstLetters) {
+                if (po.getFirstLetters().contains(searchString)){
+                    stockSearchVOs.add(new StockSearchVO(po));
+                }
+            }
+        }
         return  stockSearchVOs;
     }
 

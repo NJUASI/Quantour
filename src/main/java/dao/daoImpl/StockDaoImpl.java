@@ -9,6 +9,7 @@ import dataHelper.dataHelperImpl.SearchDataHelperImpl;
 import dataHelper.dataHelperImpl.StockDataHelperImpl;
 import po.PrivateStockPO;
 import po.StockPO;
+import po.StockSearchPO;
 import sun.rmi.server.LoaderHandler;
 import sun.util.resources.sl.LocaleNames_sl;
 import utilities.StockCodeHelper;
@@ -322,7 +323,7 @@ public class StockDaoImpl implements StockDao {
      * @return the all stocks first letters
      */
     @Override
-    public Map<String, String> getAllStocksFirstLetters() {
+    public List<StockSearchPO> getAllStocksFirstLetters() throws IOException {
         return searchDataHelper.getAllStocksFirstLetters();
     }
 

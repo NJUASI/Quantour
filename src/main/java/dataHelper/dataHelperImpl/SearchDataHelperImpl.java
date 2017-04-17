@@ -1,6 +1,7 @@
 package dataHelper.dataHelperImpl;
 
 import dataHelper.SearchDataHelper;
+import po.StockSearchPO;
 import utilities.DataSourceStateKeeper;
 import utilities.enums.DataSourceState;
 
@@ -51,23 +52,22 @@ public class SearchDataHelperImpl implements SearchDataHelper {
     }
 
     /**
-     * @return 所有股票名称的首字母缩写及其名称，名称作为键值
-     * <p>
-     * TODO gcm未实现
+     * @return 所有股票名称的首字母缩写及其名称、代码
      */
     @Override
-    public Map<String, String> getAllStocksFirstLetters() {
-        Map<String, String> shortPinyinAndNames = new TreeMap<String, String>();
+    public List<StockSearchPO> getAllStocksFirstLetters() throws IOException {
+        List<StockSearchPO> result = new LinkedList<>();
 
-        propertiesload("stocks" + separator + "shortPinyin.properties");
-        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-            shortPinyinAndNames.put((String) entry.getValue(), (String) entry.getKey());
-        }
-        propertiesload("base_stocks" + separator + "shortPinyin.properties");
-        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-            shortPinyinAndNames.put((String) entry.getValue(), (String) entry.getKey());
-        }
-        return shortPinyinAndNames;
+        final String separator = System.getProperty("file.separator");
+        final String isBaseParent = System.getProperty("user.dir") + separator + ".attachments" + separator + "base_stocks" + separator + "stockName-code" + separator + "shortPinyin.txt";
+        final String notBaseParent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + "stockName-code" + separator + "shortPinyin.txt";
+
+        BufferedReader br1 = new BufferedReader(new InputStreamReader(new FileInputStream(isBaseParent), "UTF-8"));
+        BufferedReader br2 = new BufferedReader(new InputStreamReader(new FileInputStream(notBaseParent), "UTF-8"));
+
+        result.addAll(readBR(br1));
+        result.addAll(readBR(br2));
+        return result;
     }
 
     /**
@@ -130,4 +130,18 @@ public class SearchDataHelperImpl implements SearchDataHelper {
             e.printStackTrace();
         }
     }
+
+    private List<StockSearchPO> readBR(BufferedReader br) throws IOException {
+        List<StockSearchPO> result = new LinkedList<>();
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split("\t");
+            result.add(new StockSearchPO(parts[1], parts[2], parts[0]));
+        }
+
+        return result;
+    }
+
+
 }

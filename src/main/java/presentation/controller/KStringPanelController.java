@@ -69,7 +69,7 @@ public class KStringPanelController {
     /**
      * Stock name change. 实时根据股票名称框的信息联想股票
      */
-    public void stockNameChange() {
+    public void stockNameChange() throws IOException {
         kStringPanel.associatePanelSetting();
         kStringPanel.updateAssociateJList(kStringPanel.getStockName());
     }
@@ -77,7 +77,7 @@ public class KStringPanelController {
     /**
      * Stock code change. 实时根据股票代码框的信息联想股票
      */
-    public void stockCodeChange() {
+    public void stockCodeChange() throws IOException {
         kStringPanel.associatePanelSetting();
         kStringPanel.updateAssociateJList(kStringPanel.getStockCode());
     }

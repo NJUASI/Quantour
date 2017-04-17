@@ -4,6 +4,7 @@ import dataHelper.SearchDataHelper;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import po.StockSearchPO;
 
 import java.util.List;
 import java.util.Map;
@@ -34,10 +35,10 @@ public class SearchDataHelperImplTest {
         assertEquals(7, result.size());
     }
 
-    @Ignore
     @Test
     public void getAllStocksFirstLetters() throws Exception {
-        //TODO 龚尘淼 还未实现
+        List<StockSearchPO> result = searchDataHelper.getAllStocksFirstLetters();
+        assertEquals(798, result.size());
     }
 
     @Test
