@@ -32,7 +32,7 @@ public class UserPanel extends TemplatePanel {
 
 
         fileImportPanel=new FileImportPanel();
-        fileImportPanel.setBounds(adaptScreen(1400,100,380,400));
+        fileImportPanel.setBounds(adaptScreen(1400,100,420,400));
         add(fileImportPanel);
 
         messagePanel=new MessagePanel();

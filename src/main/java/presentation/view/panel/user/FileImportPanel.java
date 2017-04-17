@@ -98,7 +98,7 @@ public class FileImportPanel extends TemplatePanel {
         }
         information=new MyLabel(message);
         information.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        information.setBounds(adaptScreen(90,175,250,40));
+        information.setBounds(adaptScreen(90,175,400,40));
         add(information);
         information.setVisible(true);
         information.repaint();
