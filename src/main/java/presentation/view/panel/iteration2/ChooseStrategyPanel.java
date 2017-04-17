@@ -76,6 +76,10 @@ public class ChooseStrategyPanel extends TemplatePanel {
         comboBox.addItem("沪深300");
         comboBox.addItem("创业板指");
         comboBox.addItem("中小板指");
+        comboBox.addItem("中证100");
+        comboBox.addItem("中证500");
+        comboBox.addItem("中证1000");
+        comboBox.addItem("中证红利");
         comboBox.setEditable(false);
         comboBox.setToolTipText((String)comboBox.getItemAt(0));
         add(comboBox);
