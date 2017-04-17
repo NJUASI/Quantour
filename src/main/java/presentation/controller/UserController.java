@@ -10,6 +10,7 @@ import service.UserService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.UserServiceImpl;
 import utilities.IDReserve;
+import utilities.exceptions.PasswordInputException;
 import utilities.exceptions.PrivateStockNotExistException;
 import utilities.exceptions.PrivateStockNotFoundException;
 import vo.UserVO;
@@ -70,7 +71,7 @@ public class UserController {
         new ProgressBar(progressBar).start();
     }
 
-    public void modifyPassword() {
+    public void modifyPassword() throws PasswordInputException {
         userService = new UserServiceImpl();
         String newPassword = userPanel.messagePanel.getPassword();
         if (newPassword != null) {

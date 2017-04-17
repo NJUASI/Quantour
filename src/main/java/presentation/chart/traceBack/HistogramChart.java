@@ -62,6 +62,7 @@ public class HistogramChart {
         ChartPanel chartPanel = new ChartPanel(chart);
 
         chartPanel.setBackground(ColorUtils.backgroundColor());
+        chartPanel.setPopupMenu(null);
         return chartPanel;
     }
 }

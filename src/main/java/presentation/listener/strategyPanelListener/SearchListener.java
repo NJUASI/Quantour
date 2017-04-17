@@ -32,6 +32,10 @@ public class SearchListener extends MouseAdapter {
             e1.printStackTrace();
         } catch (UnhandleBlockTypeException e1) {
             e1.printStackTrace();
+        } catch (InvalidInputException e1) {
+            e1.printStackTrace();
+        } catch (DataSourceFirstDayException e1) {
+            e1.printStackTrace();
         }
     }
 }

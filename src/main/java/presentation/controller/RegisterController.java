@@ -2,9 +2,12 @@ package presentation.controller;
 
 import presentation.view.frame.RegisterFrame;
 import presentation.view.panel.RegisterPanel;
+import presentation.view.tools.PopUpFrame;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
 import utilities.exceptions.DuplicatedNameException;
+import utilities.exceptions.InvalidInputException;
+import utilities.exceptions.PasswordInputException;
 import utilities.exceptions.PasswordNotSameException;
 import vo.UserVO;
 
@@ -53,13 +56,18 @@ public class RegisterController {
             if (userService.registerUser(new UserVO(userName, password), password2)) {
                 RegisterFrame.getInstance().refresh();
                 RegisterFrame.getInstance().setVisible(false);
+                new PopUpFrame("注册成功");
             }
         } catch (DuplicatedNameException e) {
-            e.printStackTrace();
+            new PopUpFrame("该账户已被注册");
         } catch (PasswordNotSameException e) {
-            e.printStackTrace();
+            new PopUpFrame("密码不一致，请检查输入");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InvalidInputException e) {
+            new PopUpFrame(e.getMessage());
+        } catch (PasswordInputException e) {
+            new PopUpFrame(e.getMessage());
         }
     }
 

@@ -8,9 +8,7 @@ import presentation.view.tools.PopUpFrame;
 import service.UserService;
 import service.serviceImpl.UserServiceImpl;
 import utilities.IDReserve;
-import utilities.exceptions.DuplicateLoginException;
-import utilities.exceptions.PasswordWrongException;
-import utilities.exceptions.UserNotExistException;
+import utilities.exceptions.*;
 
 import javax.swing.*;
 
@@ -71,6 +69,10 @@ public class LoginController{
             new PopUpFrame("用户名不存在");
         } catch (PasswordWrongException e) {
             new PopUpFrame("密码错误");
+        } catch (InvalidInputException e) {
+            new PopUpFrame(e.getMessage());
+        } catch (PasswordInputException e) {
+            new PopUpFrame(e.getMessage());
         }
         return false;
     }

@@ -1,8 +1,12 @@
 package service.serviceImpl.TraceBackService;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import service.StockService;
+import service.StockTradingDayService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
+import service.serviceImpl.StockTradingDayServiceImpl;
+import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.*;
 import vo.*;
 
@@ -313,15 +317,20 @@ public class TraceBackServiceImpl implements TraceBackService {
             return getCumulativeReturnOfOneStock(traceBackCriteriaVO.baseStockName, start, end);
         }
         else{
-
-            Map<String, List<StockVO>> stockMap = new TreeMap<>();
-            for(int i = 0; i < stockPool.size(); i++){
-                stockMap.put(stockPool.get(i), stockService.getOneStockData(stockPool.get(i), start, end));
-            }
-
-            return getCustomizedCumulativeReturn(start, end, stockMap);
+            return getCustomizedCumulativeReturn(start, end, stockPool);
         }
     }
+
+    @Override
+    public List<CumulativeReturnVO> getStrategyCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<CumulativeReturnVO> getBaseCumulativeReturn(LocalDate start, LocalDate end, String stockName) throws IOException, NoDataWithinException, DateNotWithinException {
+        return null;
+    }
+
 
     //TODO gcm 看看自选股和非自选股可否分开两个类，帮忙看
     /**
@@ -329,7 +338,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      *
      * @param start 回测区间起始日期
      * @param end 回测区间结束日期
-     * @param stockMap
+     * @param stockCodes 所有自选股的代码
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
     @Override
@@ -347,6 +356,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         for(Map.Entry<String, List<StockVO>> entry : stockMap.entrySet()){
             everyCumulativeReturnVOs.add(getCumulativeReturnOfOneStockMap(entry.getValue()));
         }
+
 
         for(int i = 1; i < span; i++){
 
@@ -392,9 +402,10 @@ public class TraceBackServiceImpl implements TraceBackService {
     /**
      * 获取每一支股票的日期与累计收益率的map，日期作为键值
      * @param list 日期范围内的一支股票的信息
+     * @param span 日期范围
      * @return 每天日期所对应的股票的累计收益率
      */
-    private Map<LocalDate,CumulativeReturnVO> getCumulativeReturnOfOneStockMap(List<StockVO> list) {
+    private Map<LocalDate,CumulativeReturnVO> getCumulativeReturnOfOneStockMap(List<StockVO> list, int span) {
         Map<LocalDate,CumulativeReturnVO> map = new TreeMap<LocalDate,CumulativeReturnVO>();
 
         //TODO gcm 将第一天的数据加入进去,查询果仁网，看第一天的日期是以交易日为准，还是以用户的选择为准

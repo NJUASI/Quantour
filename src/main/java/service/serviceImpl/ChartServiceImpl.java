@@ -123,7 +123,7 @@ public class ChartServiceImpl implements ChartService {
             tempList.addAll(poList);
 
             //放入天数和其所对应的均值点的数据
-            aveDataMap.put(MovingAverageType.getEnum(thisMARepre), calculate(tempList, thisMARepre));
+            aveDataMap.put(MATypes.get(i), calculate(tempList, thisMARepre));
         }
         return aveDataMap;
     }

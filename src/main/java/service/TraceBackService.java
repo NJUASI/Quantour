@@ -22,7 +22,7 @@ public interface TraceBackService {
      * @param stockPool 自选股的代码列表
      * @return 回测所要展示的数据
      */
-    TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException;
+    TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException, InvalidInputException;
 
     /**
      * 获取基准累计收益率，自选股票池

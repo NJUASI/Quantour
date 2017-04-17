@@ -23,7 +23,7 @@ public interface UserService{
      * @return 是否注册成功
      * @throws DuplicatedNameException 用户名重复
      */
-    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException;
+    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException, PasswordInputException, InvalidInputException;
 
     /**
      * 修改用户信息
@@ -34,7 +34,7 @@ public interface UserService{
      * @param userVO 修改后的用户信息
      * @return 是否修改成功
      */
-    boolean modifyUser(UserVO userVO);
+    boolean modifyUser(UserVO userVO) throws PasswordInputException;
 
     /**
      * 查看用户信息
@@ -56,7 +56,7 @@ public interface UserService{
      * @param userName 用户名称
      * @return 是否登录成功
      */
-    boolean logIn(String userName,String password) throws DuplicateLoginException, UserNotExistException, PasswordWrongException;
+    boolean logIn(String userName,String password) throws DuplicateLoginException, UserNotExistException, PasswordWrongException, PasswordInputException, InvalidInputException;
 
     /**
      * 用户登出

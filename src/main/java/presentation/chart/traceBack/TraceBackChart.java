@@ -52,7 +52,7 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(List<CumulativeReturnVO> strategyData,List<CumulativeReturnVO> baseData) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
+    public TraceBackChart(List<CumulativeReturnVO> strategyData,List<CumulativeReturnVO> baseData) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
 //        this.baseData = baseData;
 //        this.strategyData = strategyData;
 
@@ -188,27 +188,33 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/11
      */
-    private void readData() throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException {
+    private void readData() throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
         TraceBackService traceBackService = new TraceBackServiceImpl();
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
         traceBackCriteriaVO1.baseStockName = "深发展A";
-        traceBackCriteriaVO1.startDate = LocalDate.of(2013,12,1);
+        traceBackCriteriaVO1.startDate = LocalDate.of(2013,5,1);
         traceBackCriteriaVO1.endDate = LocalDate.of(2014,4,29);
-        traceBackCriteriaVO1.strategyType = TraceBackStrategy.MS;
+        traceBackCriteriaVO1.strategyType = TraceBackStrategy.MR;
         traceBackCriteriaVO1.formativePeriod = 5;
-        traceBackCriteriaVO1.holdingNum = 5;
-        traceBackCriteriaVO1.holdingPeriod = 1;
+        traceBackCriteriaVO1.holdingNum = 10;
+        traceBackCriteriaVO1.holdingPeriod = 5;
         traceBackCriteriaVO1.isCustomized = false;
 
         List<String> stockPool = new ArrayList<>();
         stockPool.add("000001");
-//        stockPool.add("000010");
-//        stockPool.add("000004");
+        stockPool.add("000022");
+        stockPool.add("000010");
+        stockPool.add("000004");
 
         long startTime = System.currentTimeMillis();
         System.out.println(startTime);
-        TraceBackVO traceBackVO = traceBackService.traceBack(traceBackCriteriaVO1,stockPool);
+        TraceBackVO traceBackVO = null;
+        try {
+            traceBackVO = traceBackService.traceBack(traceBackCriteriaVO1,stockPool);
+        } catch (InvalidInputException e) {
+            e.printStackTrace();
+        }
         System.out.println(System.currentTimeMillis()-startTime);
         System.out.println("enter");
         this.strategyData = traceBackVO.strategyCumulativeReturn;

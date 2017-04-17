@@ -68,7 +68,7 @@ public class LoginPanel extends TemplatePanel {
         label2.setLocation(35*width/1920,255*height/1030);
         add(label2);
 
-        password = new JPasswordField("123456");
+        password = new JPasswordField("qwertyuiop123456");
         password.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         password.setBounds(adaptScreen(90, 255, 260, 38));
         password.setVisible(true);

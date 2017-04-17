@@ -20,8 +20,9 @@ public class DetailOfCodeListener extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        CodeReserve.getInstance().setCode(UserPanel.getInstance().favoritePanel.getCode(),UserPanel.getInstance().favoritePanel.getName());
+
         ViewSwitchController.getInstance().viewSwitch("kStringPanel");
+        CodeReserve.getInstance().setCode(UserPanel.getInstance().favoritePanel.getCode(),UserPanel.getInstance().favoritePanel.getName());
         StocksTableController.getInstance().checkDetail();
     }
 }

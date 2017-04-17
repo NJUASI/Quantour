@@ -1,7 +1,7 @@
 package presentation.view.panel.user;
 
 import presentation.view.panel.TemplatePanel;
-import presentation.view.tools.FileChoose;
+import presentation.view.tools.component.FileChoose;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;

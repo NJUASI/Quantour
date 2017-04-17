@@ -42,7 +42,7 @@ public class StocksTablePane extends JScrollPane {
             }
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            jTable.setSelectionBackground(ColorUtils.markColor());//设置所选择行的背景色
+            jTable.setSelectionBackground(ColorUtils.tableSelectedColor());//设置所选择行的背景色
             jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
 
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线

@@ -60,7 +60,7 @@ public class TraceBackListener implements ChartMouseListener {
         LocalDate localDate = this.calculate(mouseX,1500);
         markerX.setLabel(localDate.toString());
         markerX.setLabelPaint(ColorUtils.fontColor());
-        markerX.setLabelBackgroundColor(ColorUtils.makerLabelColor());
+        markerX.setLabelBackgroundColor(ColorUtils.markLabelColor());
         markerX.setLabelFont(new Font("宋体", Font.PLAIN, 12));
         markerX.setLabelAnchor(RectangleAnchor.BOTTOM);
 
@@ -72,7 +72,7 @@ public class TraceBackListener implements ChartMouseListener {
 
     private void setMyStoke() {
         float dashes[] = {21,9,3,9};
-        markerX.setPaint(ColorUtils.makerLineColor());
+        markerX.setPaint(ColorUtils.markLineColor());
         markerX.setStroke(new BasicStroke(0.9f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 8.f, dashes, 10));
 
     }

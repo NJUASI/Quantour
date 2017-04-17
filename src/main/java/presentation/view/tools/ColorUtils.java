@@ -7,46 +7,64 @@ import java.awt.*;
  */
 public class ColorUtils {
 
+    // 字体颜色
     public static Color fontColor(){
-        return new Color(201,208,214);
+        return new Color(186,193,206);
     }
 
+    // 背景颜色
     public static Color backgroundColor(){
-        return new Color(32,36,39);
+        return new Color(27,29,33);
     }
 
+    // 页面标题颜色
+    public static Color titleColor(){return new Color(56,62,71);}
+
+    // 图表的背景线格颜色
     public static Color lineColor(){
         return new Color(44, 50, 54);
     }
 
+    // 表格的分割线
+    public static Color divideColor(){
+        return  new Color(16,17,18);
+    }
+
+    // 表格中的选中颜色
+    public static  Color tableSelectedColor(){return new Color(37,58,84);}
+
+    // 涨红
     public static Color upColor(){
-        return new Color(255, 61, 61);
+        return new Color(252, 47, 7);
     }
 
+    // 跌绿
     public static Color downColor(){
-        return new Color(15, 195, 81);
+        return new Color(57, 199, 125);
     }
 
+    //
     public static Color linkColor(){
         return new Color(8, 55, 114);
     }
 
-    public static Color makerLineColor(){
+    // 图表的十字线颜色
+    public static Color markLineColor(){
         return new Color(82,98,113);
     }
 
-    public static Color makerLabelColor(){
+    // 图表的十字线交叉口日期北京颜色
+    public static Color markLabelColor(){
         return new Color(87,107,131);
     }
 
-    public static Color divideColor(){
-        return  new Color(19,22,24);
-    }
+    // 文字框未选中
+    public static  Color fieldUnselectedColor(){return new Color(56,63,69);}
 
-    public static Color titleColor(){return new Color(40,50,55);}
+    // 文字框进入
+    public static  Color fieldEnterColor(){return new Color(82,89,101);}
 
-    public static  Color fieldColor(){return new Color(56,63,69);}
-
-    public static  Color markColor(){return new Color(37,58,84);}
+    // 文字框选中
+    public static  Color fieldSelectedColor(){return new Color(107,115,129);}
 
 }

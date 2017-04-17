@@ -82,8 +82,8 @@ public class CompareChartPanel extends JPanel {
         chartPanel3.setVisible(true);
         p1.add(chartPanel3);
 
-//        LineChart lineChart=new LineChart();
-//       ChartPanel chartPanel3=lineChart.createChart();
+//        WinRateChart winRateChart=new WinRateChart();
+//       ChartPanel chartPanel3=winRateChart.createChart();
 //        chartPanel3.setBounds(adaptScreen(800,80,600,600));
 //        chartPanel3.setVisible(true);
 //        p1.add(chartPanel3);

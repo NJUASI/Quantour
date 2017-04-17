@@ -4,7 +4,6 @@ import presentation.listener.userPanelListener.DeleteFavoriteListener;
 import presentation.listener.userPanelListener.DetailOfCodeListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
-import presentation.view.tools.FileChoose;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.component.MyButton;
@@ -75,7 +74,7 @@ public class UserPanel extends TemplatePanel {
             new PopUpFrame(e.getMessage());
             //TODO 高源后期添加
         }
-        label.repaint();
+//        label.repaint();
     }
     public static UserPanel getInstance(){
         if(userPanel==null){
