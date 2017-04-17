@@ -3,20 +3,27 @@ package presentation.controller;
 import presentation.view.panel.user.UserPanel;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.component.ProgressBar;
+import service.DataSourceService;
 import service.StockService;
 import service.StockSituationService;
 import service.UserService;
+import service.serviceImpl.DataSourceServiceImpl;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.UserServiceImpl;
 import utilities.IDReserve;
+import utilities.enums.DataSourceState;
+import utilities.exceptions.NotCSVException;
 import utilities.exceptions.PasswordInputException;
 import utilities.exceptions.PrivateStockNotExistException;
 import utilities.exceptions.PrivateStockNotFoundException;
+import vo.DataSourceInfoVO;
 import vo.UserVO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by 61990 on 2017/4/13.
@@ -35,9 +42,10 @@ public class UserController {
 
 
     JProgressBar progressBar;
-    StockSituationService stockSituationService;
     StockService stockService;
     UserService userService;
+    DataSourceService dataSourceService;
+    JLabel label;
     /**
      * Instantiates a new User controller.
      */
@@ -60,15 +68,46 @@ public class UserController {
 
     public void importDate(String filePath) {
 
-        if (progressBar != null) {
-            userPanel.fileImportPanel.remove(progressBar);
+
+        try {
+            dataSourceService = new DataSourceServiceImpl();
+            dataSourceService.upload(filePath);
+
+            if (progressBar != null) {
+                userPanel.fileImportPanel.remove(progressBar);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            new PopUpFrame(e.getMessage());
+
+        } catch (NotCSVException e) {
+            e.printStackTrace();
+            new PopUpFrame(e.getMessage());
         }
-        progressBar = new JProgressBar();
-        progressBar.setStringPainted(true);  //显示提示信息
-        progressBar.setIndeterminate(false);
-        progressBar.setBounds(adaptScreen(60, 340, 200, 35));
-        userPanel.fileImportPanel.add(progressBar);
-        new ProgressBar(progressBar).start();
+        setUpdateMessage();
+        userPanel.fileImportPanel.hideLabel();
+    }
+
+    public void setUpdateMessage(){
+        try {
+            dataSourceService = new DataSourceServiceImpl();
+            DataSourceInfoVO vo = dataSourceService.getMyDataSource();
+            if(vo!=null) {
+                userPanel.fileImportPanel.setUploadInfo("由" + vo.userName + "上传于" + vo.uploadTime);
+            }else{
+                userPanel.fileImportPanel.setUploadInfo("未上传本地数据");
+                userPanel.fileImportPanel.notFoundDate();
+                dataSourceService.changeDataSourceState(DataSourceState.ORIGINAL);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changePath(DataSourceState dataSourceState){
+        dataSourceService = new DataSourceServiceImpl();
+        dataSourceService.changeDataSourceState(dataSourceState);
     }
 
     public void modifyPassword() throws PasswordInputException {
@@ -102,5 +141,4 @@ public class UserController {
         int h=WindowData.getInstance().getHeight();
         return new Rectangle(w*x/1920,h*y/1030,w*width/1920,h*height/1030);
     }
-
 }

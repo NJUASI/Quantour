@@ -18,6 +18,7 @@ public class MyLabel extends JLabel {
         width= WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
         setForeground(ColorUtils.fontColor());
+        if(str!=null){
         if(str.length()==2){
             setSize(60,35);
         }else if(str.length()==3){
@@ -26,6 +27,7 @@ public class MyLabel extends JLabel {
             setSize(100,35);
         }else{
 
+        }
         }
     }
     public MyLabel(String str, int font){

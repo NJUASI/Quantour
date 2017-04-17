@@ -8,9 +8,7 @@ import java.awt.*;
 public class ColorUtils {
 
     // 字体颜色
-    public static Color fontColor(){
-        return new Color(186,193,206);
-    }
+    public static Color fontColor(){return new Color(186,193,206);}
 
     // 背景颜色
     public static Color backgroundColor(){

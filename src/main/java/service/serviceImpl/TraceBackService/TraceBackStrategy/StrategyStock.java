@@ -1,4 +1,4 @@
-package service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversion;
+package service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import po.StockPO;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
  *
  * 暂时性保存均值回归策略所需的股票数据
  */
-public class MRStock {
+public class StrategyStock {
 
     // 日期(月/日/年)
     public LocalDate date;
@@ -23,7 +23,7 @@ public class MRStock {
     // 复权后的收盘指数
     public double adjClose;
 
-    public MRStock(StockPO po) {
+    public StrategyStock(StockPO po) {
         this.date = po.getDate();
         this.close = po.getClose();
         this.preClose = po.getPreClose();

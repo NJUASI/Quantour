@@ -29,7 +29,8 @@ public class StrategyPanelController {
     ChooseStrategyPanel chooseStrategyPanel;
     AnalysePanel analysePanel;
     TraceBackService traceBackService;
-    JLabel progressBar,message;
+    StockService stockService;
+    JLabel progressBar, message;
     /**
      * The constant ourInstance.
      */
@@ -49,36 +50,39 @@ public class StrategyPanelController {
      */
     private StrategyPanelController() {
         strategyPanel = StrategyPanel.getInstance();
-        chooseStrategyPanel=ChooseStrategyPanel.getInstance();
-        analysePanel=AnalysePanel.getInstance();
+        chooseStrategyPanel = ChooseStrategyPanel.getInstance();
+        analysePanel = AnalysePanel.getInstance();
     }
 
-    public void search() throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException, InvalidInputException, DataSourceFirstDayException {
-
+    public void search() throws DateNotWithinException, NoMatchEnumException, IOException,
+            NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException,
+            InvalidInputException, DataSourceFirstDayException, PrivateStockNotFoundException {
 
         traceBackService = new TraceBackServiceImpl();
+        stockService = new StockServiceImpl();
         analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
 
+        TraceBackCriteriaVO vo = chooseStrategyPanel.getInfo();
 
-        TraceBackCriteriaVO vo=chooseStrategyPanel.getInfo();
+        List<String> stockPool = stockService.getPrivateStockCodes(IDReserve.getInstance().getUserID());
 
-        vo.isCustomized=false; //TODO 后期需要删去
-         //TODO 后期需要改成其他对象，不是null
-        List<String> stockPool = new ArrayList<>();
-        stockPool.add("000001");
+        analysePanel.createChart(traceBackService.traceBack(vo, stockPool));
 
-        TraceBackVO traceBackVO = new TraceBackVO();
-        traceBackVO.holdingDetailVOS=null;
-        traceBackVO.certainHoldings=null;
-        traceBackVO.certainFormates=null;
-        traceBackVO.strategyCumulativeReturn=null;
-        traceBackVO.baseCumulativeReturn=null;
-        traceBackVO.traceBackNumValVO=null;
-        traceBackVO.relativeReturnPeriodVO=null;
-        traceBackVO.absoluteReturnPeriodVO=null;
-//        analysePanel.createChart(traceBackService.traceBack(vo,stockPool));
-        analysePanel.createChart(traceBackVO);
-//        chooseStrategyPanel.end();
+        //        vo.isCustomized=false; //TODO 后期需要删去
+//         //TODO 后期需要改成其他对象，不是null
+
+//        stockPool.add("000001");
+//
+//        TraceBackVO traceBackVO = new TraceBackVO();
+//        traceBackVO.holdingDetailVOS=null;
+//        traceBackVO.certainHoldings=null;
+//        traceBackVO.certainFormates=null;
+//        traceBackVO.strategyCumulativeReturn=null;
+//        traceBackVO.baseCumulativeReturn=null;
+//        traceBackVO.traceBackNumValVO=null;
+//        traceBackVO.relativeReturnPeriodVO=null;
+//        traceBackVO.absoluteReturnPeriodVO=null;
+//        analysePanel.createChart(traceBackVO);
     }
 
     public void deletePool() throws PrivateStockNotExistException, PrivateStockNotFoundException {
@@ -87,7 +91,6 @@ public class StrategyPanelController {
         stockService.deletePrivateStock(IDReserve.getInstance().getUserID(), chooseStrategyPanel.strategyPoolPanel.stockPoolTable.getCode());
         chooseStrategyPanel.refreshTabel();
     }
-
 
 
 }

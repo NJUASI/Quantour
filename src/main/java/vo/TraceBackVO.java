@@ -10,7 +10,6 @@ public class TraceBackVO {
     /**
      * 基准累计收益率
      */
-
     public List<CumulativeReturnVO> baseCumulativeReturn;
 
     /**
@@ -44,8 +43,8 @@ public class TraceBackVO {
     public List<ExcessAndWinRateDistVO> certainFormates;
 
     /**
-     * 给定持有期的超额收益率和策略胜率的分部信息
+     * 给定持有期的超额收益率和策略胜率的分布信息
      */
-    public List<ExcessAndWinRateDistVO>  certainHoldings;
+    public List<ExcessAndWinRateDistVO> certainHoldings;
 
 }

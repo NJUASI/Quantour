@@ -3,10 +3,13 @@ package service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import service.StockService;
+import service.StockTradingDayService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
+import service.serviceImpl.StockTradingDayServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import utilities.exceptions.CodeNotFoundException;
 import utilities.exceptions.DateNotWithinException;
 import utilities.exceptions.DateShortException;
@@ -25,6 +28,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     StockService stockService;
     TraceBackService traceBackService;
     StockDao stockDao;
+    StockTradingDayService stockTradingDayService;
 
     //初始投资
     double initInvestment;
@@ -32,45 +36,20 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     //累计收益率
     double curCumulativeReturn;
 
-    //所有有数据的日期
-    List<LocalDate> allDatesWithData = new ArrayList<>();
 
-    //所选股票池的代码和它的所有信息的映射
-    Map<String, List<StockVO>> stockMap = new TreeMap<>();
-
-
-    public MomentumStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, DateNotWithinException, NoDataWithinException {
-        super(stockPoolCodes,traceBackCriteriaVO);
+    public MomentumStrategy(List<String> traceBackStockPool, TraceBackCriteriaVO traceBackCriteriaVO, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) throws IOException {
+        super(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
         stockService = new StockServiceImpl();
         stockDao = new StockDaoImpl();
         traceBackService = new TraceBackServiceImpl();
+        stockTradingDayService = new StockTradingDayServiceImpl();
 
         //初始为千元投资
         initInvestment = 1000;
 
         //累计收益率初始化为1
         curCumulativeReturn = 1;
-
-
-        setStockMap();
-        //设置持有期和形成期有数据的日期
-        setDates();
-
-    }
-
-    private void setStockMap() throws IOException, NoDataWithinException, DateNotWithinException {
-        for(int i = 0; i < stockPoolCodes.size(); i++){
-            stockMap.put(stockPoolCodes.get(i), stockService.getStockData(stockPoolCodes.get(i)));
-        }
-    }
-
-    /**
-     * 设置持有其和形成期有数据的日期
-     */
-    private void setDates() throws IOException {
-        //获取所有有数据的日期
-        allDatesWithData = stockDao.getDateWithData();
     }
 
     /**
@@ -80,8 +59,9 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      */
     @Override
     public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException {
+        List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<>();
+        List<HoldingDetailVO> holdingDetailVOS = new ArrayList<>();
 
-        List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 
         //区间第一个交易日在allDatesWithData中的位置
         int startIndex = -1;
@@ -142,7 +122,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             System.out.println("periodNum:  "+i);
 
             //持有期所持有的股票
-            holdingStocks = pickStocks(formate(stockPoolCodes,startOfFormative,endOfFormative));
+            holdingStocks = pickStocks(formate(traceBackStockPool,startOfFormative,endOfFormative));
 
             //持有期的结束日期
             LocalDate endOfHolding = null;
@@ -163,7 +143,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
                 double totalCumulativeReturn = 0;
                 int notSuspend = 0;
                 for(int j = 0; j < holdingStocks.size(); j++){
-                    StockVO vo = findStockCertainDay(holdingStocks.get(j), temp);
+                    StrategyStock vo = findStockCertainDay(holdingStocks.get(j), temp);
                     //当天有数据
                     if(vo != null){
                         totalCumulativeReturn += (vo.close/vo.preClose - 1);
@@ -268,7 +248,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         for(int i = 0; i < stockCodes.size(); i++){
 
-            List<StockVO> stockVOList = findStockVOsWithinDay(stockCodes.get(i), start, end);
+            List<StrategyStock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), start, end);
             //说明为该形成期没有数据
             if(stockVOList.size() == 0){
                 continue;
@@ -276,18 +256,18 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
             double rate = (stockVOList.get(stockVOList.size()-1).close - stockVOList.get(0).close) / stockVOList.get(0).close;
 
-            formativePeriodRate.add(new FormativePeriodRateVO(stockVOList.get(0).code, rate));
+            formativePeriodRate.add(new FormativePeriodRateVO(stockCodes.get(i), rate));
         }
 
         return formativePeriodRate;
     }
 
-    private List<StockVO> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){
+    private List<StrategyStock> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){
 
         LocalDate thisStart = start;
         LocalDate thisEnd = end;
 
-        List<StockVO> stockVOList = stockMap.get(stockCode);
+        List<StrategyStock> stockVOList = stockData.get(stockCode);
         List<LocalDate> dates = new ArrayList<>();
         for(int j = 0; j < stockVOList.size(); j++){
             dates.add(stockVOList.get(j).date);
@@ -308,10 +288,10 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
     }
 
-    private StockVO findStockCertainDay(String stockCode, LocalDate date){
+    private StrategyStock findStockCertainDay(String stockCode, LocalDate date){
         LocalDate thisDate = date;
 
-        List<StockVO> stockVOList = stockMap.get(stockCode);
+        List<StrategyStock> stockVOList = stockData.get(stockCode);
         List<LocalDate> dates = new ArrayList<>();
         for(int j = 0; j < stockVOList.size(); j++){
             dates.add(stockVOList.get(j).date);

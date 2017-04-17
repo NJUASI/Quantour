@@ -29,6 +29,10 @@ public class UIManagerUtil {
 
         UIManager.put("ToolTip.foreground",ColorUtils.fontColor());
 
+        UIManager.put("OptionPane.background",ColorUtils.backgroundColor());
+        UIManager.put("OptionPane.foreground",ColorUtils.fontColor());
+        UIManager.put("OptionPane.messageForeground",ColorUtils.fontColor());
+
 //        UIManager.put("FileChooser.noPlacesBar", Boolean.TRUE);
     }
 }

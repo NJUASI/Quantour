@@ -79,6 +79,20 @@ public class StockServiceImpl implements StockService {
     }
 
     /**
+     * 获取用户的自选股票池
+     *
+     * @param userName 用户名称
+     * @return 指定用户的自选股
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/17
+     */
+    @Override
+    public List<String> getPrivateStockCodes(String userName) throws PrivateStockNotFoundException {
+        return stockDao.getPrivateStockCodes(userName);
+    }
+
+    /**
      * 用户添加自选股
      * @auther Harvey
      * @lastUpdatedBy Harvey

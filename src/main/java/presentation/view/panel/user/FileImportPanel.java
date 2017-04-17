@@ -1,5 +1,8 @@
 package presentation.view.panel.user;
 
+import presentation.controller.UserController;
+import presentation.listener.userPanelListener.ChangeLocalPath;
+import presentation.listener.userPanelListener.ChangeNetPath;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.component.FileChoose;
 import presentation.view.tools.WindowData;
@@ -20,16 +23,17 @@ public class FileImportPanel extends TemplatePanel {
     MyLabel information;
     JRadioButton radioButton1,radioButton2;
     ButtonGroup group;
+    JLabel label;
     public FileImportPanel() {
         width = WindowData.getInstance().getWidth();
         height = WindowData.getInstance().getHeight();
 
-        Color color=new Color(30,0,30);
+        Color color=new Color(32,36,39);
 
         setBackground(color);
 
         MyLabel name = new MyLabel("选择数据源",17);
-        name.setBounds(adaptScreen(30, 50, 100, 35));
+        name.setBounds(adaptScreen(32, 50, 100, 35));
         add(name);
 
         radioButton1 = new JRadioButton("云端数据源");
@@ -38,29 +42,16 @@ public class FileImportPanel extends TemplatePanel {
         radioButton1.setBackground(color);
         radioButton1.setForeground(Color.WHITE);
         radioButton1.setSelected(true);
-        radioButton1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //TODO 改变文件读取路径
-            }
-        });
+        radioButton1.addMouseListener(new ChangeNetPath());
 
         radioButton2 = new JRadioButton("本地数据源");
         radioButton2.setBounds(adaptScreen(50,145,150,40));
         radioButton2.setBackground(color);
         radioButton2.setForeground(Color.WHITE);
-        radioButton2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //TODO 改变文件读取路径
-            }
-        });
+        radioButton2.addMouseListener(new ChangeLocalPath());
         add(radioButton2);
 
-        information=new MyLabel("由fff上传于2003-1-12");
-        information.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        information.setBounds(adaptScreen(90,175,250,40));
-        add(information);
+
 
         group = new ButtonGroup();// 创建单选按钮组
         group.add(radioButton1);// 将radioButton1增加到单选按钮组中
@@ -73,11 +64,50 @@ public class FileImportPanel extends TemplatePanel {
         JButton importData= new MyButton("导入数据");
         importData.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         importData.setBounds(adaptScreen(80,290,120,25));
+
+
         importData.addMouseListener(new FileChoose());
         add(importData);
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+                UserController.getInstance().setUpdateMessage();
+            }
+        });
+
+
+    }
+    public void popLabel(){
+        label= new MyLabel("正在上传....");
+        label.setBounds(adaptScreen(60, 340, 200, 35));
+        add(label);
+        label.repaint();
+        repaint();
+    }
+
+    public void hideLabel(){
+        remove(label);
+        repaint();
     }
 
     public void setUploadInfo(String message){
-        information.setText(message);
+        if(information!=null){
+            remove(information);
+        }
+        information=new MyLabel(message);
+        information.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
+        information.setBounds(adaptScreen(90,175,250,40));
+        add(information);
+        information.setVisible(true);
+        information.repaint();
+        repaint();
+    }
+
+    public void notFoundDate(){
+        radioButton1.setSelected(true);
+        radioButton2.setSelected(false);
+        radioButton2.setEnabled(false);
     }
 }

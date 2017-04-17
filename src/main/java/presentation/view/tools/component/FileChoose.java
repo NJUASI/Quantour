@@ -4,6 +4,8 @@ import presentation.controller.LoginController;
 import presentation.controller.StocksTableController;
 import presentation.controller.UserController;
 import presentation.view.panel.StocksTablePanel;
+import presentation.view.panel.user.UserPanel;
+import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.UIManagerUtil;
 
 import javax.swing.*;
@@ -24,7 +26,7 @@ public class FileChoose extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-
+        UserPanel.getInstance().fileImportPanel.popLabel();
         UIManagerUtil.set();
         JFileChooser jfc = new JFileChooser();
         jfc.setFileSelectionMode(JFileChooser.OPEN_DIALOG);
@@ -34,11 +36,10 @@ public class FileChoose extends MouseAdapter {
             if (file.isDirectory()) {
                 JOptionPane.showMessageDialog(null, "选择合适的文件");
             } else if (file.isFile()) {
-                System.out.println(file.getAbsolutePath());
                 UserController.getInstance().importDate(file.getAbsolutePath());
             }
         } catch (NullPointerException e1) {
-
+            new PopUpFrame(e1.getMessage());
         }
     }
 }

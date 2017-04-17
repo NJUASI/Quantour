@@ -29,7 +29,10 @@ public class DataSourceServiceImpl implements DataSourceService {
 
     @Override
     public DataSourceInfoVO getMyDataSource() throws IOException {
-        return new DataSourceInfoVO(dao.getMyDataSource());
+        if (dao.getMyDataSource() != null) {
+            return new DataSourceInfoVO(dao.getMyDataSource());
+        }
+        return null;
     }
 
     @Override

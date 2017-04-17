@@ -1,46 +1,49 @@
 package service.serviceImpl.TraceBackService;
 
+import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import utilities.exceptions.*;
 import vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by harvey on 17-4-3.
  */
 public abstract class AllTraceBackStrategy {
 
-    /*
-    成员变量
-     */
     /**
      * 目标股票池
      */
-    public List<String> stockPoolCodes;
+    public List<String> traceBackStockPool;
 
     /**
      * 回测标准
      */
-    public TraceBackCriteriaVO traceBackCriteriaVO;
+    protected TraceBackCriteriaVO traceBackCriteriaVO;
 
 
     /*
-    在traceBack之后需要初始化的东西
+    需要重复计算的一些东西，故保存
      */
     /**
-     * 历史持仓详情
+     * 所有有股票数据的交易日
      */
-    public List<HoldingDetailVO> holdingDetailVOS;
+    protected List<LocalDate> allDatesWithData;
+
+    /**
+     * 所有股票池中的股票数据
+     */
+    protected Map<String, List<StrategyStock>> stockData;
 
 
-    public AllTraceBackStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) {
-        this.stockPoolCodes = stockPoolCodes;
+    public AllTraceBackStrategy(List<String> traceBackStockPool, TraceBackCriteriaVO traceBackCriteriaVO, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+        this.traceBackStockPool = traceBackStockPool;
         this.traceBackCriteriaVO = traceBackCriteriaVO;
-
-        holdingDetailVOS = new ArrayList<>();
+        this.allDatesWithData = allDatesWithData;
+        this.stockData = stockData;
     }
 
     /**
@@ -49,7 +52,6 @@ public abstract class AllTraceBackStrategy {
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
     public abstract TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException;
-
 
 
     /**
@@ -72,8 +74,9 @@ public abstract class AllTraceBackStrategy {
 
     /**
      * 计算
-     *  @param periodStart 持有期起始日期
-     * @param periodEnd 持有期结束日期
+     *
+     * @param periodStart  持有期起始日期
+     * @param periodEnd    持有期结束日期
      * @param periodSerial 周期序号
      */
     protected abstract void calculate(LocalDate periodStart, LocalDate periodEnd, int periodSerial) throws DateNotWithinException, NoDataWithinException, IOException;
@@ -100,7 +103,7 @@ public abstract class AllTraceBackStrategy {
         double max = 0;
 
         for (int i = 0; i < cumulativeReturnVOS.size(); i++) {
-            for (int j = i+1; j < cumulativeReturnVOS.size(); j++) {
+            for (int j = i + 1; j < cumulativeReturnVOS.size(); j++) {
                 double diff = cumulativeReturnVOS.get(i).cumulativeReturn - cumulativeReturnVOS.get(j).cumulativeReturn;
                 if (max < diff) {
                     //重新设置最大回撤点

@@ -78,6 +78,7 @@ public class AnalysePanel extends TemplatePanel {
         title.setBounds(adaptScreen(850,3,120,35));
         add(title);
     }
+
     public void setTitle(String str){
         title.setText(str);
     }
@@ -98,9 +99,9 @@ public class AnalysePanel extends TemplatePanel {
             detailOfTraceBack.remove(traceBackDetail);
             detailOfTraceBack.remove(label);
         }
+
         traceBackDetail=new TraceBackDetail(traceBackVO.holdingDetailVOS);
         traceBackDetail.setBounds(adaptScreen(200,50,1400,800));
-
 
         label = new JLabel("");
         label.setBounds(200 * width / 1920, 30*(traceBackDetail.jTable.getRowCount()+1)+50 * height / 1030, 1400 * width / 1920 , 600* height / 1030);
@@ -112,6 +113,4 @@ public class AnalysePanel extends TemplatePanel {
 
         detailOfTraceBack.add(traceBackDetail);
     }
-
-
 }
