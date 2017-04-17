@@ -34,8 +34,8 @@ public class TraceBackServiceImpl implements TraceBackService {
     public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException, InvalidInputException {
 
         Detector detector = new Detector();
-        detector.cycleDetector(String.valueOf(traceBackCriteriaVO.holdingNum),String.valueOf(50));
-        detector.cycleDetector(String.valueOf(traceBackCriteriaVO.holdingPeriod),String.valueOf(250));
+        detector.cycleDetector(String.valueOf(traceBackCriteriaVO.holdingNum),String.valueOf(1));
+        detector.cycleDetector(String.valueOf(traceBackCriteriaVO.holdingPeriod),String.valueOf(2));
 
 
         TraceBackVO traceBackVO = new TraceBackVO();

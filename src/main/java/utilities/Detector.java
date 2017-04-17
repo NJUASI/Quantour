@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class Detector {
 
 	private String expression; //存放正则表达式
-	
+
 	/**
 	 * @author Byron Dong
 	 * @lastChangedBy Byron Dong
@@ -59,7 +59,7 @@ public class Detector {
      * @return boolean 是否符合要求规范
      */
     public boolean cycleDetector(String express,String length) throws InvalidInputException {
-        expression = "[1-"+length+"]";
+        expression = "[1-9]\\d{0,"+length+"}+";
 
         if(!this.getResultOfDetector(express)){
             throw new InvalidInputException(); 	//统一检测填写信息内容中的不合法标识符
