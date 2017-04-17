@@ -1,12 +1,16 @@
 package service.serviceImpl.TraceBackService;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
+import dao.StockDao;
+import dao.daoImpl.StockDaoImpl;
+import po.StockPO;
 import service.StockService;
 import service.StockTradingDayService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockPoolFilter;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.StockTradingDayServiceImpl;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.*;
 import vo.*;
@@ -15,10 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by harvey on 17-3-28.
@@ -27,34 +28,48 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     private StockService stockService;
 
-    private  AllTraceBackStrategy traceBackStrategy;
+    private StockDao stockDao;
+
+    private AllTraceBackStrategy traceBackStrategy;
 
 
-    public TraceBackServiceImpl() {
+    /*
+    需要重复计算的一些东西，故保存
+     */
+    /**
+     * 所有有股票数据的交易日
+     */
+    protected List<LocalDate> allDatesWithData;
+
+    /**
+     * 所有股票池中的股票数据
+     */
+    protected Map<String, List<StrategyStock>> stockData;
+
+
+    public TraceBackServiceImpl() throws IOException {
         stockService = new StockServiceImpl();
+        stockDao = new StockDaoImpl();
     }
 
     @Override
     public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
-
         TraceBackVO traceBackVO = new TraceBackVO();
 
-        //累计基准收益率
+        // 累计基准收益率
         traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO, stockPool);
 
-        // 选取回测的股票池
-        List<String> traceBackStockPool = null;
-        //自定义股票池
-        if(traceBackCriteriaVO.isCustomized){
-            traceBackStockPool = stockPool;
-        }
-        else {
-            traceBackStockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
-        }
+        // 选取回测的股票池为自选股票池／板块股票池
+        List<String> traceBackStockPool;
+        if(traceBackCriteriaVO.isCustomized)traceBackStockPool = stockPool;
+        else traceBackStockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
+
+        setUp(traceBackStockPool);
 
 
         //选择策略
-        traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool,traceBackCriteriaVO);
+        traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
+
         //策略回测
         TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack();
         traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
@@ -75,6 +90,25 @@ public class TraceBackServiceImpl implements TraceBackService {
 //        return traceBackParameter.getTraceBackVO();
 
         return traceBackVO;
+    }
+
+    private void setUp(List<String> traceBackStockPool) throws IOException {
+        allDatesWithData = stockDao.getDateWithData();
+
+        stockData = new HashMap<>();
+        for (String thisStockCode : traceBackStockPool) {
+            List<StockPO> tempPOS = stockDao.getStockData(thisStockCode);
+            stockData.put(thisStockCode, convertStockPOS(tempPOS));
+        }
+
+    }
+
+    private List<StrategyStock> convertStockPOS(List<StockPO> pos) {
+        List<StrategyStock> result = new LinkedList<>();
+        for (StockPO thisPO : pos) {
+            result.add(new StrategyStock(thisPO));
+        }
+        return result;
     }
 
     /**
@@ -142,7 +176,7 @@ public class TraceBackServiceImpl implements TraceBackService {
             }
 
             //选择策略
-            AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool,traceBackCriteriaVO);
+            AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
             //策略回测
             TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack();
             traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
