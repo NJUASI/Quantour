@@ -4,6 +4,7 @@ package presentation.view.panel.iteration2.traceBackPanel;
 
 import org.jfree.chart.ChartPanel;
 import presentation.chart.traceBack.TraceBackChart;
+import presentation.listener.chartMouseListener.TraceBackListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.WindowData;
 import vo.CumulativeReturnVO;
@@ -33,6 +34,8 @@ public class TraceBackChartPanel extends TemplatePanel {
             chartPanel.setBounds(adaptScreen(100, 210, 1500, 600));
             chartPanel.setVisible(true);
             chartPanel.setPopupMenu(null);
+            chartPanel.setMouseZoomable(false);
+            chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));
             add(chartPanel);
 
             traceBackNumVal=new TraceBackNumVal(traceBackNumValVO);

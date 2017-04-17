@@ -138,8 +138,6 @@ public class TraceBackChart {
         TimeSeries base = new TimeSeries("基准");
         traceBackPoint = new ArrayList<>();
 
-        System.out.println("S:"+strategyData.size()+" "+"B: "+baseData.size());
-
         for(int i=0;i<this.strategyData.size();i++){
             CumulativeReturnVO strategyVO = strategyData.get(i);
             LocalDate strategyDate = strategyVO.currentDate;
@@ -212,6 +210,13 @@ public class TraceBackChart {
         blockTypes.add(BlockType.ALL);
         StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.INCLUDE, blockTypes);
         traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
+
+        List<BlockType> list = new ArrayList<>();
+        list.add(BlockType.ZB);
+        list.add(BlockType.CYB);
+        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.EXCLUDE,list);
+        traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
+
 
         List<String> stockPool = new ArrayList<>();
         stockPool.add("000300");

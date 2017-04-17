@@ -62,7 +62,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         add(strategyPoolPanel);
 
         //区间板块
-        MyLabel label4=new MyLabel("回测区间") ;
+        MyLabel label4=new MyLabel("回测区间",20) ;
         label4.setLocation(100*width/1920,300*height/1030);
         add(label4);
 
@@ -80,7 +80,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         comboBox.setToolTipText((String)comboBox.getItemAt(0));
         add(comboBox);
         //选择策略
-        MyLabel label3=new MyLabel("选择策略") ;
+        MyLabel label3=new MyLabel("选择策略",20) ;
         label3.setLocation(100*width/1920,500*height/1030);
         add(label3);
 
@@ -151,10 +151,10 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
     public void popup(){
         progressBar = new JLabel();
-        progressBar.setBounds(1100*width/1920, 420*width/1030, 305, 42);
+        progressBar.setBounds(1100*width/1920, 420*height/1030, 305, 42);
         add(progressBar);
         message = new JLabel();
-        message.setBounds(1200*width/1920, 350*width/1030, 305, 42);
+        message.setBounds(1200*width/1920, 350*height/1030, 305, 42);
         add(message);
         popupProgress=new PopupProgress(progressBar,message);
         popupProgress.start();

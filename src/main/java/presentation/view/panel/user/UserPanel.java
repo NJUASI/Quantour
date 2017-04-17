@@ -31,7 +31,7 @@ public class UserPanel extends TemplatePanel {
 
 
         fileImportPanel=new FileImportPanel();
-        fileImportPanel.setBounds(adaptScreen(500,100,310,400));
+        fileImportPanel.setBounds(adaptScreen(1300,100,310,400));
         add(fileImportPanel);
 
         messagePanel=new MessagePanel();
@@ -39,12 +39,12 @@ public class UserPanel extends TemplatePanel {
         add(messagePanel);
 
         JButton delete= new MyButton("删除");
-        delete.setBounds(adaptScreen(1250,50,110,35));
+        delete.setBounds(adaptScreen(850,50,110,35));
         delete.addMouseListener(new DeleteFavoriteListener());
         add(delete);
 
         JButton search= new MyButton("查看");
-        search.setBounds(adaptScreen(1050,50,110,35));
+        search.setBounds(adaptScreen(650,50,110,35));
         search.addMouseListener(new DetailOfCodeListener());
         add(search);
 
@@ -58,9 +58,9 @@ public class UserPanel extends TemplatePanel {
         }
         try {
             favoritePanel=new FavoritePanel();
-            favoritePanel.setBounds(adaptScreen(900,100,600,600));
+            favoritePanel.setBounds(adaptScreen(450,100,800,600));
             label = new JLabel();
-            label.setBounds(900 * width / 1920, (100+30*(favoritePanel.jTable.getRowCount()+1)) * height / 1030, 600 * width / 1920 , 600* height / 1030);
+            label.setBounds(450 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, 800 * width / 1920 , 600* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(ColorUtils.backgroundColor());
             label.setForeground(Color.WHITE);

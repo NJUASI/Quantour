@@ -14,7 +14,6 @@ public class SearchTextField extends JTextField {
 
     public SearchTextField() {
 
-        //TODO
         icon = ButtonImageLoad.loadWindowBt("min1");
 
         //设置文本输入距左边20

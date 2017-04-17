@@ -12,6 +12,7 @@ import presentation.view.tools.ColorUtils;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +24,20 @@ import java.util.List;
 public class TraceBackListener implements ChartMouseListener {
 
     ChartPanel chartPanel;
+
     Rectangle2D rectangle2D;
-    ValueMarker markerX = null;
-    List<LocalDate> date;
+
+    ValueMarker markerY = null;
 
 
     public TraceBackListener(ChartPanel chartPanel) {
         this.chartPanel = chartPanel;
-        this.setDate();
     }
 
     @Override
-    public void chartMouseClicked(ChartMouseEvent event) {}
+    public void chartMouseClicked(ChartMouseEvent event) {
+
+    }
 
     @Override
     public void chartMouseMoved(ChartMouseEvent event) {
@@ -42,57 +45,48 @@ public class TraceBackListener implements ChartMouseListener {
         XYPlot xyplot = chart.getXYPlot();
 
 
-        if (markerX != null) {
+        if(markerY!=null){
             xyplot.clearDomainMarkers();
+            xyplot.clearRangeMarkers();
         }
 
-        int mouseX = event.getTrigger().getX();
-        int mouseY = event.getTrigger().getY();
-        Point2D point2D = this.chartPanel.translateScreenToJava2D(new java.awt.Point(mouseX, mouseY));
+        int mouseX =event.getTrigger().getX();
+        int mouseY =event.getTrigger().getY();
+        Point2D point2D = this.chartPanel.translateScreenToJava2D(new Point(mouseX, mouseY));
         ChartRenderingInfo info = this.chartPanel.getChartRenderingInfo();
         rectangle2D = chartPanel.getScreenDataArea();
         double yValue = xyplot.getRangeAxis().java2DToValue(point2D.getY(), info.getPlotInfo().getDataArea(), RectangleEdge.RIGHT);
         double xValue = xyplot.getDomainAxis().java2DToValue(point2D.getX(), info.getPlotInfo().getDataArea(), RectangleEdge.BOTTOM);
 
-        System.out.println("X: "+mouseX+" "+"Y: "+mouseY);
-        System.out.println("xValue: "+xValue+" "+"yValue: "+yValue);
-        markerX = new ValueMarker(xValue);  // position is the value on the axis
-        LocalDate localDate = this.calculate(mouseX,1500);
-        markerX.setLabel(localDate.toString());
-        markerX.setLabelPaint(ColorUtils.fontColor());
-        markerX.setLabelBackgroundColor(ColorUtils.markLabelColor());
-        markerX.setLabelFont(new Font("宋体", Font.PLAIN, 12));
-        markerX.setLabelAnchor(RectangleAnchor.BOTTOM);
+        markerY = new ValueMarker(yValue);  // position is the value on the axis
 
+        this.setYMaker(markerY,yValue);
 
         this.setMyStoke();
-        xyplot.addDomainMarker(markerX);
+        xyplot.addRangeMarker(markerY);
 
     }
 
-    private void setMyStoke() {
+    private void setMyStoke(){
         float dashes[] = {21,9,3,9};
-        markerX.setPaint(ColorUtils.markLineColor());
-        markerX.setStroke(new BasicStroke(0.9f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 8.f, dashes, 10));
+        markerY.setPaint(ColorUtils.markLineColor());
+        markerY.setStroke(new BasicStroke(0.001f,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,8.f,dashes,10));
 
     }
 
-    private LocalDate calculate(int mousex,int size){
-        int dateSize = this.date.size();
-        double times = size/dateSize;
+    private void setYMaker(ValueMarker valueMarker,double value){
+        this.setTheme(valueMarker);
+        DecimalFormat df=new DecimalFormat("##.00%");
+        valueMarker.setLabel(df.format(value));
+        valueMarker.setLabelAnchor(RectangleAnchor.CENTER);
 
-        for(int i=0;i<date.size();i++){
-            if(mousex>=i*times&&mousex<=(i+1)*times){
-                return this.date.get(i);
-            }
-        }
-        return null;
     }
 
-    private void setDate(){
-        this.date =  new ArrayList<>();
-        for(int i=1;i<32;i++){
-            this.date.add(LocalDate.of(2014,7,i));
-        }
+    private void setTheme(ValueMarker valueMarker){
+        valueMarker.setLabelPaint(ColorUtils.fontColor());
+        valueMarker.setOutlinePaint(ColorUtils.fontColor());
+        valueMarker.setLabelBackgroundColor(ColorUtils.markLabelColor());
+        valueMarker.setLabelFont(new Font("宋体", Font.PLAIN, 12));
     }
+
 }
