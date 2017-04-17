@@ -2,7 +2,6 @@ package dataHelper.dataHelperImpl;
 
 import dataHelper.SearchDataHelper;
 import utilities.DataSourceStateKeeper;
-import utilities.StockCodeHelper;
 import utilities.enums.DataSourceState;
 
 import java.io.BufferedReader;
@@ -17,12 +16,13 @@ import java.util.*;
 public class SearchDataHelperImpl implements SearchDataHelper {
 
     private final static String separator = System.getProperty("file.separator");
-    private final static String nameCodePathPre = "stocks" + separator + "stockName-code" + separator;
+    private final static String nameCodePathPre1 = "stocks" + separator + "stockName-code" + separator;
+    private final static String nameCodePathPre2 = "base_stocks" + separator + "stockName-code" + separator;
 
     /**
      * The Properties.
      */
-    private Properties properties = new Properties();
+    private Properties properties;
 
 
     /**
@@ -30,23 +30,42 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public List<String> getAllStockCodes() {
-        propertiesload(nameCodePathPre + "stockName-code.properties");
         List<String> result = new LinkedList<>();
-        for(Map.Entry<Object,Object> entry:properties.entrySet()){
-            result.add(StockCodeHelper.format((String)entry.getValue()));
+
+        propertiesload(nameCodePathPre1 + "stockName-code.properties");
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            result.add((String) entry.getValue());
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getAllBaseStockCodes() {
+        List<String> result = new LinkedList<>();
+
+        propertiesload(nameCodePathPre2 + "stockName-code.properties");
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            result.add((String) entry.getValue());
         }
         return result;
     }
 
     /**
      * @return 所有股票名称的首字母缩写及其名称，名称作为键值
+     * <p>
+     * TODO gcm未实现
      */
     @Override
     public Map<String, String> getAllStocksFirstLetters() {
+        Map<String, String> shortPinyinAndNames = new TreeMap<String, String>();
+
         propertiesload("stocks" + separator + "shortPinyin.properties");
-        Map<String,String> shortPinyinAndNames = new TreeMap<String,String>();
-        for(Map.Entry<Object,Object> entry:properties.entrySet()){
-            shortPinyinAndNames.put((String)entry.getValue(),(String)entry.getKey());
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            shortPinyinAndNames.put((String) entry.getValue(), (String) entry.getKey());
+        }
+        propertiesload("base_stocks" + separator + "shortPinyin.properties");
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            shortPinyinAndNames.put((String) entry.getValue(), (String) entry.getKey());
         }
         return shortPinyinAndNames;
     }
@@ -56,10 +75,15 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksCode() {
-        propertiesload(nameCodePathPre + "stockName-code.properties");
-        Map<String,String> codesAndNames = new TreeMap<String,String>();
-        for(Map.Entry<Object,Object> entry:properties.entrySet()){
-            codesAndNames.put((String)entry.getValue(),(String)entry.getKey());
+        Map<String, String> codesAndNames = new TreeMap<String, String>();
+
+        propertiesload(nameCodePathPre1 + "stockName-code.properties");
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            codesAndNames.put((String) entry.getValue(), (String) entry.getKey());
+        }
+        propertiesload(nameCodePathPre2 + "stockName-code.properties");
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            codesAndNames.put((String) entry.getValue(), (String) entry.getKey());
         }
         return codesAndNames;
     }
@@ -69,10 +93,15 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksName() {
-        propertiesload(nameCodePathPre + "stockName-code.properties");
-        Map<String,String> namesAndCode = new TreeMap<String,String>();
-        for(Map.Entry<Object,Object> entry:properties.entrySet()){
-            namesAndCode.put((String)entry.getKey(),(String)entry.getValue());
+        Map<String, String> namesAndCode = new TreeMap<String, String>();
+
+        propertiesload(nameCodePathPre1 + "stockName-code.properties");
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            namesAndCode.put((String) entry.getKey(), (String) entry.getValue());
+        }
+        propertiesload(nameCodePathPre2 + "stockName-code.properties");
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            namesAndCode.put((String) entry.getKey(), (String) entry.getValue());
         }
         return namesAndCode;
     }
@@ -86,6 +115,7 @@ public class SearchDataHelperImpl implements SearchDataHelper {
      */
     private void propertiesload(String path) {
         try {
+            properties = new Properties();
             if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
                 System.out.println(DataSourceState.ORIGINAL);
                 System.out.println(Thread.currentThread().getContextClassLoader().getResourceAsStream(path));

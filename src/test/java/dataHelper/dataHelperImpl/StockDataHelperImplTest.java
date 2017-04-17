@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * StockDataHelperImpl Tester.
@@ -67,6 +68,11 @@ public class StockDataHelperImplTest {
         List<StockPO> result = stockDataHelper.getStockRecords("300187");
         assertEquals(711, result.size());
     }
+    @Test
+    public void testGetStockStockCode05() throws Exception {
+        List<StockPO> result = stockDataHelper.getStockRecords("000852");
+        assertEquals(2240, result.size());
+    }
 
     /**
      * Method: getStockRecords(LocalDate date)
@@ -74,6 +80,8 @@ public class StockDataHelperImplTest {
     @Test
     public void testGetStockRecordsDate01() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords(LocalDate.of(2008, 4, 7));
+
+        assertEquals(255, result.size());
 
         // expected:
         // 1496	2008-04-07	12.5	13.2	12.31	13.2	18026	12.87	000019	深深宝Ａ	SZ	12	11.7
@@ -94,6 +102,8 @@ public class StockDataHelperImplTest {
     @Test
     public void testGetStockRecordsDate02() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords(LocalDate.of(2011, 2, 25));
+
+        assertEquals(699, result.size());
 
         // expected:
         // 813	2011-02-25	9.33	9.39	9	9.23	93635	9.15	000023	深天地Ａ	SZ	9.47	9.39
