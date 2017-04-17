@@ -21,7 +21,7 @@ public class StrategyTypePanel extends TemplatePanel {
     public StrategyTypePanel(){
 
         setLayout(null);
-        setBounds(adaptScreen(430,580,600,200));
+        setBounds(adaptScreen(430,580+150,600,200));
         setBackground(new Color(35,39,44));
 
 

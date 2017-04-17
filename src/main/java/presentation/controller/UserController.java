@@ -67,13 +67,7 @@ public class UserController {
      */
 
     public void importDate(String filePath) {
-        label= new MyLabel("正在上传....");
-        progressBar.setStringPainted(true);  //显示提示信息
-        progressBar.setIndeterminate(false);
-        progressBar.setBounds(adaptScreen(60, 340, 200, 35));
-        userPanel.fileImportPanel.add(progressBar);
-        progressBar.repaint();
-        userPanel.fileImportPanel.repaint();
+
 
         try {
             dataSourceService = new DataSourceServiceImpl();
@@ -92,8 +86,7 @@ public class UserController {
             new PopUpFrame(e.getMessage());
         }
         setUpdateMessage();
-        userPanel.fileImportPanel.remove(progressBar);
-        userPanel.fileImportPanel.repaint();
+        userPanel.fileImportPanel.hideLabel();
     }
 
     public void setUpdateMessage(){

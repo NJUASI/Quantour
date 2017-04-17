@@ -28,7 +28,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
     JRadioButton radioButton1,radioButton2;
     ButtonGroup group;
     MultiComboBox mulit;
-    JLabel lb,lb3;
+    JLabel lb,lb3,label;
     JComboBox STComboBox;
     JButton delete;
     public StockPoolTable stockPoolTable;
@@ -36,12 +36,13 @@ public class StrategyPoolPanel  extends TemplatePanel {
     public StrategyPoolPanel(){
         Color bgColor = new Color(32,36,39);
         setLayout(null);
-        setBounds(adaptScreen(0,0,1200,280));
+        setBounds(adaptScreen(0,0,1200,315));
         setBackground(bgColor);
 
         radioButton1 = new JRadioButton("按板块选");// 创建单选按钮
         radioButton1.setBounds(adaptScreen(250,80,150,40));
         add(radioButton1);
+
         radioButton1.setBackground(bgColor);
         radioButton1.setForeground(Color.WHITE);
         radioButton1.setSelected(true);
@@ -109,12 +110,21 @@ public class StrategyPoolPanel  extends TemplatePanel {
         openPool1();
     }
     public void refreshTabel(){
-        if (stockPoolTable!=null){
+        if (stockPoolTable!=null) {
             remove(stockPoolTable);
+            remove(label);
         }
         try {
             stockPoolTable=new StockPoolTable();
             stockPoolTable.setBounds(adaptScreen(450,50,200,220));
+
+            label = new JLabel();
+            label.setBounds(450 * width / 1920, (30*(stockPoolTable.jTable.getRowCount()+1)) +50* height / 1030, 200* width / 1920 , 220* height / 1030-(30*(stockPoolTable.jTable.getRowCount()+1)));
+            label.setBorder(BorderFactory.createEmptyBorder());
+            label.setBackground(ColorUtils.backgroundColor());
+            label.setForeground(Color.WHITE);
+            label.setOpaque(true);
+            add(label);
 
             add(stockPoolTable);
             if(radioButton1.isSelected()){

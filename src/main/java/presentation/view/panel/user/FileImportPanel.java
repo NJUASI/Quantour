@@ -23,6 +23,7 @@ public class FileImportPanel extends TemplatePanel {
     MyLabel information;
     JRadioButton radioButton1,radioButton2;
     ButtonGroup group;
+    JLabel label;
     public FileImportPanel() {
         width = WindowData.getInstance().getWidth();
         height = WindowData.getInstance().getHeight();
@@ -77,6 +78,18 @@ public class FileImportPanel extends TemplatePanel {
         });
 
 
+    }
+    public void popLabel(){
+        label= new MyLabel("正在上传....");
+        label.setBounds(adaptScreen(60, 340, 200, 35));
+        add(label);
+        label.repaint();
+        repaint();
+    }
+
+    public void hideLabel(){
+        remove(label);
+        repaint();
     }
 
     public void setUploadInfo(String message){

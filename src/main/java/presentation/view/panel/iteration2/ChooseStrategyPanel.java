@@ -54,7 +54,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         setBounds(adaptScreen(0,0,1830,990));
 
         datePanel = new DoubleDatePickerPanel();
-        datePanel.setBounds(adaptScreen(200 , 370 , 520 , 37));
+        datePanel.setBounds(adaptScreen(200 , 370+90 , 520 , 37));
         add(datePanel);
         //股票池区域
         strategyPoolPanel=new StrategyPoolPanel();
@@ -62,16 +62,16 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
         //区间板块
         MyLabel label4=new MyLabel("回测区间",20) ;
-        label4.setLocation(100*width/1920,300*height/1030);
+        label4.setLocation(100*width/1920,350*height/1030);
         add(label4);
 
 
         JLabel lb1= new MyLabel("收益基准");
-        lb1.setBounds(adaptScreen(760,368,80,40));
+        lb1.setBounds(adaptScreen(760,368+90,80,40));
         add(lb1);
 
         comboBox=new JComboBox();
-        comboBox.setBounds(adaptScreen(850,370,200,35));
+        comboBox.setBounds(adaptScreen(850,370+90,200,35));
         comboBox.addItem("沪深300");
         comboBox.addItem("创业板指");
         comboBox.addItem("中小板指");
@@ -84,11 +84,11 @@ public class ChooseStrategyPanel extends TemplatePanel {
         add(comboBox);
         //选择策略
         MyLabel label3=new MyLabel("选择策略",20) ;
-        label3.setLocation(100*width/1920,500*height/1030);
+        label3.setLocation(100*width/1920,(500+150)*height/1030);
         add(label3);
 
         radioButton1 = new JRadioButton("动量策略");// 创建单选按钮
-        radioButton1.setBounds(adaptScreen(250,550,150,40));
+        radioButton1.setBounds(adaptScreen(250,550+150,150,40));
         add(radioButton1);// 策略1按钮
         radioButton1.setBackground(new Color(35,39,44));
         radioButton1.setForeground(Color.WHITE);
@@ -101,7 +101,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         });
 
         radioButton2 = new JRadioButton("均值回归");// 创建单选按钮
-        radioButton2.setBounds(adaptScreen(250,590,150,40));
+        radioButton2.setBounds(adaptScreen(250,590+150,150,40));
         radioButton2.setBackground(new Color(35,39,44));
         radioButton2.setForeground(Color.WHITE);
         radioButton2.addMouseListener(new MouseAdapter() {
@@ -146,13 +146,13 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
 
         MyLabel block2=new MyLabel("") ;
-        block2.setBounds(adaptScreen(0,490,1200,1000));
+        block2.setBounds(adaptScreen(0,315*2,1200,405));
         block2.setBackground(new Color(35,39,44));
         block2.setOpaque(true);
         add(block2);
 
         MyLabel block1=new MyLabel("") ;
-        block1.setBounds(adaptScreen(0,280,1200,1000));
+        block1.setBounds(adaptScreen(0,315,1200,315));
         block1.setBackground(new Color(30,33,36));
         block1.setOpaque(true);
         add(block1);

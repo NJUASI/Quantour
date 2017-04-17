@@ -4,6 +4,7 @@ import presentation.controller.LoginController;
 import presentation.controller.StocksTableController;
 import presentation.controller.UserController;
 import presentation.view.panel.StocksTablePanel;
+import presentation.view.panel.user.UserPanel;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.UIManagerUtil;
 
@@ -25,7 +26,7 @@ public class FileChoose extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-
+        UserPanel.getInstance().fileImportPanel.popLabel();
         UIManagerUtil.set();
         JFileChooser jfc = new JFileChooser();
         jfc.setFileSelectionMode(JFileChooser.OPEN_DIALOG);

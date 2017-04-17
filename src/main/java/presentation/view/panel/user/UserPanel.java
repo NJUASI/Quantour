@@ -71,12 +71,11 @@ public class UserPanel extends TemplatePanel {
         }
         try {
             favoritePanel=new FavoritePanel();
-            favoritePanel.setBounds(adaptScreen(450,100,800,800));
+            favoritePanel.setBounds(adaptScreen(420,100,1300-420,800));
             label = new JLabel();
-            label.setBounds(450 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, 800 * width / 1920 , 600* height / 1030);
+            label.setBounds(420 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, 1300-420 * width / 1920 , 600* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(ColorUtils.backgroundColor());
-            label.setForeground(Color.WHITE);
             label.setOpaque(true);
             add(label);
             add(favoritePanel);
