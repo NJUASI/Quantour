@@ -4,6 +4,7 @@ import presentation.controller.LoginController;
 import presentation.controller.StocksTableController;
 import presentation.controller.UserController;
 import presentation.view.panel.StocksTablePanel;
+import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.UIManagerUtil;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class FileChoose extends MouseAdapter {
                 UserController.getInstance().importDate(file.getAbsolutePath());
             }
         } catch (NullPointerException e1) {
-
+            new PopUpFrame(e1.getMessage());
         }
     }
 }

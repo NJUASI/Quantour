@@ -85,7 +85,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         add(label3);
 
         radioButton1 = new JRadioButton("动量策略");// 创建单选按钮
-        radioButton1.setBounds(adaptScreen(200,550,150,40));
+        radioButton1.setBounds(adaptScreen(250,550,150,40));
         add(radioButton1);// 策略1按钮
         radioButton1.setBackground(WindowData.getInstance().getColor());
         radioButton1.setForeground(Color.WHITE);
@@ -98,7 +98,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         });
 
         radioButton2 = new JRadioButton("均值回归");// 创建单选按钮
-        radioButton2.setBounds(adaptScreen(400,550,150,40));
+        radioButton2.setBounds(adaptScreen(250,590,150,40));
         radioButton2.setBackground(WindowData.getInstance().getColor());
         radioButton2.setForeground(Color.WHITE);
         radioButton2.addMouseListener(new MouseAdapter() {
@@ -141,11 +141,6 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
 
         add(returnBt);
-
-        loadingPanel=new LoadingPanel();
-        loadingPanel.setLocation(500*width/1920,400*height/1030);
-        add(loadingPanel);
-        loadingPanel.setVisible(false);
 
     }
 
