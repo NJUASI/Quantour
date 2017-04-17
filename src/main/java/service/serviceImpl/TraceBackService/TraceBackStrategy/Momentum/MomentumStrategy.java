@@ -3,10 +3,8 @@ package service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import service.StockService;
-import service.StockTradingDayService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
-import service.serviceImpl.StockTradingDayServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
 import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
@@ -28,7 +26,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     StockService stockService;
     TraceBackService traceBackService;
     StockDao stockDao;
-    StockTradingDayService stockTradingDayService;
 
     //初始投资
     double initInvestment;
@@ -43,7 +40,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         stockService = new StockServiceImpl();
         stockDao = new StockDaoImpl();
         traceBackService = new TraceBackServiceImpl();
-        stockTradingDayService = new StockTradingDayServiceImpl();
 
         //初始为千元投资
         initInvestment = 1000;
@@ -140,10 +136,11 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             double preCumulativeReturn = curCumulativeReturn;
             LocalDate temp = startOfHolding;
             while(temp.isBefore(endOfHolding) || temp.isEqual(endOfHolding)){
+                StrategyStock vo = null;
                 double totalCumulativeReturn = 0;
                 int notSuspend = 0;
                 for(int j = 0; j < holdingStocks.size(); j++){
-                    StrategyStock vo = findStockCertainDay(holdingStocks.get(j), temp);
+                    vo = findStockCertainDay(holdingStocks.get(j), temp);
                     //当天有数据
                     if(vo != null){
                         totalCumulativeReturn += (vo.close/vo.preClose - 1);
@@ -154,9 +151,8 @@ public class MomentumStrategy extends AllTraceBackStrategy {
                 //即该天相对于前一天的总累计收益率不为0
                 if(totalCumulativeReturn != 0){
                     curCumulativeReturn = curCumulativeReturn * (1 + (totalCumulativeReturn / notSuspend));
+                    cumulativeReturnVOS.add(new CumulativeReturnVO(vo.date, curCumulativeReturn-1, false));
                 }
-
-                cumulativeReturnVOS.add(new CumulativeReturnVO(temp, curCumulativeReturn-1, false));
 
                 temp = temp.plusDays(1);
             }
@@ -297,9 +293,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             dates.add(stockVOList.get(j).date);
         }
 
-        while(!dates.contains(thisDate)){
-            thisDate = thisDate.plusDays(1);
-        }
         int dateIndex = dates.indexOf(thisDate);
 
         //该股票当天没有数据

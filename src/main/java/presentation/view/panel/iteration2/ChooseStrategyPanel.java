@@ -227,7 +227,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         }
 
         return new TraceBackCriteriaVO(datePanel.getStartDate(),datePanel.getEndDate(),formative,strategyTypePanel.getHoldingPeriod(),
-               strategyPoolPanel.getPoolVO(),traceBackStrategy,strategyTypePanel.getHoldingNum(),getBasicStock());
+               strategyPoolPanel.getPoolVO(),traceBackStrategy,strategyTypePanel.getHoldingNum(),getBasicStock(), strategyPoolPanel.getIsCustomized());
     }
 
     private String getBasicStock(){

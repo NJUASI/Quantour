@@ -52,7 +52,7 @@ public class MeanReversionStrategyTest {
 
         StockPoolCriteriaVO vo = new StockPoolCriteriaVO(StType.INCLUDE, blockTypeList);
         TraceBackCriteriaVO criteriaVO = new TraceBackCriteriaVO(LocalDate.of(2014, 1,1), LocalDate.of(2014, 4,29),
-                5, 10, vo, TraceBackStrategy.MR, 100, null);
+                5, 10, vo, TraceBackStrategy.MR, 100, null, false);
 
         setDates();
         setStockData(stockPool);

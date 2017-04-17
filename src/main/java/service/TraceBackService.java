@@ -1,5 +1,6 @@
 package service;
 
+import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import utilities.exceptions.*;
 import vo.*;
 
@@ -31,20 +32,6 @@ public interface TraceBackService {
      * @param stockMap
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
-    List<CumulativeReturnVO> getCustomizedCumulativeReturn(LocalDate start, LocalDate end, Map<String, List<StockVO>> stockMap) throws IOException, NoDataWithinException, DateNotWithinException;
-
-    /**
-     * 计算回测中用列表列出的数值型数据，如阿尔法，beta
-     *
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/28
-     * @param traceBackCriteriaVO 用户所选回测条件
-     * @return TraceBackNumValVO 所需的所有数值型数据保存对象
-     */
-    TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO);
-
-
-
+    List<CumulativeReturnVO> getCustomizedCumulativeReturn(LocalDate start, LocalDate end, Map<String, List<StrategyStock>> stockMap) throws IOException, NoDataWithinException, DateNotWithinException;
 
 }
