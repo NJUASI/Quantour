@@ -63,6 +63,9 @@ public class TraceBackServiceImpl implements TraceBackService {
     @Override
     public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
 
+        long enter = System.currentTimeMillis();
+        System.out.println(enter);
+
         this.traceBackCriteriaVO = traceBackCriteriaVO;
 
         TraceBackVO traceBackVO = new TraceBackVO();
@@ -104,9 +107,16 @@ public class TraceBackServiceImpl implements TraceBackService {
         // 计算相对收益周期
         traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
 
+        System.out.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
+
         // 计算超额收益率/策略胜率，给定持有期/形成期
         traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
+
+        System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
+
         traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
+
+        System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等 b
         //TODO 龚尘淼 这里stockData里面似乎都是空的，请看TraceBackParameter的initStrategy方法
