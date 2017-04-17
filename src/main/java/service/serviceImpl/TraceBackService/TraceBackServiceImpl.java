@@ -110,7 +110,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         // TraceBackParameter 计算贝塔系数等 b
         //TODO 龚尘淼 这里stockData里面似乎都是空的，请看TraceBackParameter的initStrategy方法
-        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO,stockData);
+        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO,stockData, traceBackStockPool);
         return traceBackParameter.getTraceBackVO();
 
 //        return traceBackVO;

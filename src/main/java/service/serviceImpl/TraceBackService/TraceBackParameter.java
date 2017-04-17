@@ -54,6 +54,9 @@ public class TraceBackParameter {
     //股票池中所有信息
     protected Map<String, List<StrategyStock>> stockData;
 
+    //需要计算数据的所有股票代码
+    private List<String> codes;
+
     /**
      * 对回测所需要显示参数的初始化
      *
@@ -61,12 +64,13 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO,Map<String, List<StrategyStock>> stockData) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException, UnhandleBlockTypeException {
+    public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO,Map<String, List<StrategyStock>> stockData, List<String> codes) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException, UnhandleBlockTypeException {
         this.stockService = new StockServiceImpl();
         this.stockData = stockData;
         traceBackNumValVO = new TraceBackNumValVO();
         this.traceBackVO = traceBackVO;
-        this.initStrategy(traceBackCriteriaVO);
+        this.codes = codes;
+        this.initStrategy();
         this.initBase(traceBackCriteriaVO);
         this.traceBackVO.traceBackNumValVO = this.traceBackNumValVO;
     }
@@ -110,13 +114,12 @@ public class TraceBackParameter {
     /**
      * 初始化策略的参数信息
      *
-     * @param traceBackCriteriaVO
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    private void initStrategy(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, UnhandleBlockTypeException {
-        List<String> codes = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
+    private void initStrategy() throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, UnhandleBlockTypeException {
+
         List<List<StrategyStock>> list = new ArrayList<>();
 
         for (String code : codes) {
