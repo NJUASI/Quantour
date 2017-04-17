@@ -10,7 +10,6 @@ public class TraceBackVO {
     /**
      * 基准累计收益率
      */
-
     public List<CumulativeReturnVO> baseCumulativeReturn;
 
     /**
