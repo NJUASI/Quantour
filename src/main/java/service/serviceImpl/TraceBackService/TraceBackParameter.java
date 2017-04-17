@@ -70,8 +70,8 @@ public class TraceBackParameter {
         traceBackNumValVO = new TraceBackNumValVO();
         this.traceBackVO = traceBackVO;
         this.codes = codes;
-        this.initStrategy();
         this.initBase(traceBackCriteriaVO);
+        this.initStrategy();
         this.traceBackVO.traceBackNumValVO = this.traceBackNumValVO;
     }
 
