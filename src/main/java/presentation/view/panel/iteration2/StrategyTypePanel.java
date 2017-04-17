@@ -7,6 +7,7 @@ import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.WindowData;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by day on 17/3/29.
@@ -21,7 +22,7 @@ public class StrategyTypePanel extends TemplatePanel {
 
         setLayout(null);
         setBounds(adaptScreen(430,580,600,200));
-        setBackground(WindowData.getInstance().getColor());
+        setBackground(new Color(35,39,44));
 
 
         label1= new MyLabel("形成期");

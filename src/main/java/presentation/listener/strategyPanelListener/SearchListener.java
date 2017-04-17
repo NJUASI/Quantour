@@ -26,6 +26,7 @@ public class SearchListener extends MouseAdapter {
     public void mouseClicked(MouseEvent e) {
         try {
             StrategyPanelController.getInstance().search();
+            ChooseStrategyPanel.getInstance().popdown();
         } catch (DateNotWithinException e1) {
             e1.printStackTrace();
         } catch (NoMatchEnumException e1) {

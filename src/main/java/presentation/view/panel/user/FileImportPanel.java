@@ -25,12 +25,12 @@ public class FileImportPanel extends TemplatePanel {
         width = WindowData.getInstance().getWidth();
         height = WindowData.getInstance().getHeight();
 
-        Color color=new Color(30,0,30);
+        Color color=new Color(32,36,39);
 
         setBackground(color);
 
         MyLabel name = new MyLabel("选择数据源",17);
-        name.setBounds(adaptScreen(30, 50, 100, 35));
+        name.setBounds(adaptScreen(32, 50, 100, 35));
         add(name);
 
         radioButton1 = new JRadioButton("云端数据源");

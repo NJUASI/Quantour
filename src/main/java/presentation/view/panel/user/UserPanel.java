@@ -7,6 +7,7 @@ import presentation.view.tools.ColorUtils;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.component.MyButton;
+import presentation.view.tools.component.MyLabel;
 import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
@@ -31,24 +32,36 @@ public class UserPanel extends TemplatePanel {
 
 
         fileImportPanel=new FileImportPanel();
-        fileImportPanel.setBounds(adaptScreen(1300,100,310,400));
+        fileImportPanel.setBounds(adaptScreen(1400,100,380,400));
         add(fileImportPanel);
 
         messagePanel=new MessagePanel();
-        messagePanel.setBounds(adaptScreen(100,100,310,400));
+        messagePanel.setBounds(adaptScreen(80,100,310,400));
         add(messagePanel);
 
         JButton delete= new MyButton("删除");
-        delete.setBounds(adaptScreen(850,50,110,35));
+        delete.setBounds(adaptScreen(850,40,110,35));
         delete.addMouseListener(new DeleteFavoriteListener());
         add(delete);
 
         JButton search= new MyButton("查看");
-        search.setBounds(adaptScreen(650,50,110,35));
+        search.setBounds(adaptScreen(650,40,110,35));
         search.addMouseListener(new DetailOfCodeListener());
         add(search);
 
         refreshFavorite();
+
+        MyLabel block1=new MyLabel("",16) ;
+        block1.setBounds(adaptScreen(0,0,420,1000));
+        block1.setBackground(new Color(32,36,39));
+        block1.setOpaque(true);
+        add(block1);
+
+        MyLabel block2=new MyLabel("",16) ;
+        block2.setBounds(adaptScreen(1300,0,620,1000));
+        block2.setBackground(new Color(32,36,39));
+        block2.setOpaque(true);
+        add(block2);
     }
 
     public void refreshFavorite(){
@@ -58,7 +71,7 @@ public class UserPanel extends TemplatePanel {
         }
         try {
             favoritePanel=new FavoritePanel();
-            favoritePanel.setBounds(adaptScreen(450,100,800,600));
+            favoritePanel.setBounds(adaptScreen(450,100,800,800));
             label = new JLabel();
             label.setBounds(450 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, 800 * width / 1920 , 600* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
