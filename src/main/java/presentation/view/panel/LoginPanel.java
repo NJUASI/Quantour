@@ -138,26 +138,61 @@ public class LoginPanel extends TemplatePanel {
         });
         add(min);
     }
-
+    /**
+     * 获得单件
+     *
+     * @param
+     * @return 登录面板
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static LoginPanel getInstance() {
         if(loginPanel == null){
             loginPanel = new LoginPanel();
         }
         return loginPanel;
     }
-
+    /**
+     * 获得用户名
+     *
+     * @param
+     * @return  用户名
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public String getUsername() {
         return admin.getText();
     }
-
+    /**
+     * 获得密码
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public String getPassword() {
         return password.getText();
     }
-
+    /**
+     * 设置用户名
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public void setUsername(String userName) {
         admin.setText(userName);
     }
-
+    /**
+     * 设置密码
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public void setPassword(String password) {
         this.password.setText(password);
     }

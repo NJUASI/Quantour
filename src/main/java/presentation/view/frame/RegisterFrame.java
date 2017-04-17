@@ -13,18 +13,31 @@ import java.awt.event.WindowEvent;
  * Created by 61990 on 2017/3/16.
  */
 public class RegisterFrame extends JFrame {
+    //注册窗口
     private static RegisterFrame registerFrame;
+
+    //注册界面
     RegisterPanel registerPanel;
+    /**
+     * 构造器
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public RegisterFrame(){
-//        try {
-//            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
-//            UIManager.put("RootPane.setupButtonVisible", false);
-//            BeautyEyeLNFHelper.launchBeautyEyeLNF();
-//        } catch (Exception e) {
-//
-//        }
+
         createWindow();
     }
+    /**
+     * 生成窗口
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     void createWindow() {
 
         setTitle("注册");
@@ -55,12 +68,28 @@ public class RegisterFrame extends JFrame {
 
     }
 
+    /**
+     * 获得单件
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static RegisterFrame getInstance(){
         if(registerFrame==null) {
             registerFrame = new RegisterFrame();
         }
         return registerFrame;
     }
+    /**
+     * 设置窗口不可见
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public void refresh(){
         setVisible(false);
     }

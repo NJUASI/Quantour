@@ -15,9 +15,17 @@ import java.awt.*;
 public class LoginFrame extends JFrame {
 
     LoginPanel loginPanel;
-
+    //单例
     private static LoginFrame loginFrame;
 
+    /**
+     * 构造器
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public LoginFrame() {
 
         //osLookAndDecorated
@@ -25,7 +33,14 @@ public class LoginFrame extends JFrame {
 
         createWindow();
     }
-
+    /**
+     * 生成登录框
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     void createWindow() {
 
         setTitle("登录");
@@ -61,13 +76,28 @@ public class LoginFrame extends JFrame {
         new DoubleDatePickerPanel();
     }
 
+    /**
+     * 获得单例
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public static LoginFrame getInstance(){
         if(loginFrame==null) {
             loginFrame = new LoginFrame();
         }
         return loginFrame;
     }
-
+    /**
+     * 设置不可见
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     public void refresh(){
         setVisible(false);
     }

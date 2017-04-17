@@ -34,7 +34,7 @@ public class ThermometerPanel extends TemplatePanel {
      */
     public ThermometerPanel(int[] num, double volume) {
         setSize(new Dimension(360*WindowData.getInstance().getWidth()/1920,600*WindowData.getInstance().getHeight()/1030));
-//        setBackground(Color.BLACK);
+
 
         label11=new MyLabel(num[0]+"");
         label11.setBounds(adaptScreen(80,55+move,50,30));
@@ -114,29 +114,15 @@ public class ThermometerPanel extends TemplatePanel {
         createPanel();
 
     }
-//
-//
-//    public static void main(String[] args) {
-//        BeautyEyeUtil.beautyEye();
-//        JFrame j= new JFrame();
-//        j.setTitle("Quantourist");
-//        j.setLayout(null);
-//
-//        WindowData.setWindowData(1920, 1030);//save the window's data
-//
-//        int width=WindowData.getInstance().getWidth();
-//        int height=WindowData.getInstance().getHeight();
-//        j.setSize(width,height);
-//
-//
-////        setUndecorated(true);
-//       j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        j.setVisible(true);
-//        j.setResizable(false);
-////        j.add(new ThermometerPanel(new int[]{1,2,3,4,5,6}));
-//    }
 
+    /**
+     * 生成温度计面板
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/5
+     */
     void createPanel(){
 
         MyLabel label=new MyLabel("市场温度计",24) ;
