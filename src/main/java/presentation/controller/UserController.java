@@ -3,6 +3,7 @@ package presentation.controller;
 import presentation.view.panel.user.UserPanel;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.component.ProgressBar;
 import service.DataSourceService;
 import service.StockService;
@@ -44,6 +45,7 @@ public class UserController {
     StockService stockService;
     UserService userService;
     DataSourceService dataSourceService;
+    JLabel label;
     /**
      * Instantiates a new User controller.
      */
@@ -65,6 +67,14 @@ public class UserController {
      */
 
     public void importDate(String filePath) {
+        label= new MyLabel("正在上传....");
+        progressBar.setStringPainted(true);  //显示提示信息
+        progressBar.setIndeterminate(false);
+        progressBar.setBounds(adaptScreen(60, 340, 200, 35));
+        userPanel.fileImportPanel.add(progressBar);
+        progressBar.repaint();
+        userPanel.fileImportPanel.repaint();
+
         try {
             dataSourceService = new DataSourceServiceImpl();
             dataSourceService.upload(filePath);
@@ -72,24 +82,19 @@ public class UserController {
             if (progressBar != null) {
                 userPanel.fileImportPanel.remove(progressBar);
             }
-            progressBar = new JProgressBar();
-            progressBar.setStringPainted(true);  //显示提示信息
-            progressBar.setIndeterminate(false);
-            progressBar.setBounds(adaptScreen(60, 340, 200, 35));
-            userPanel.fileImportPanel.add(progressBar);
-            new ProgressBar(progressBar).start();
 
-            setUpdateMessage();
 
         } catch (IOException e) {
             e.printStackTrace();
             new PopUpFrame(e.getMessage());
-            setUpdateMessage();
+
         } catch (NotCSVException e) {
             e.printStackTrace();
             new PopUpFrame(e.getMessage());
-            setUpdateMessage();
         }
+        setUpdateMessage();
+        userPanel.fileImportPanel.remove(progressBar);
+        userPanel.fileImportPanel.repaint();
     }
 
     public void setUpdateMessage(){
@@ -108,6 +113,10 @@ public class UserController {
         }
     }
 
+    public void changePath(DataSourceState dataSourceState){
+        dataSourceService = new DataSourceServiceImpl();
+        dataSourceService.changeDataSourceState(dataSourceState);
+    }
 
     public void modifyPassword() throws PasswordInputException {
         userService = new UserServiceImpl();
@@ -140,5 +149,4 @@ public class UserController {
         int h=WindowData.getInstance().getHeight();
         return new Rectangle(w*x/1920,h*y/1030,w*width/1920,h*height/1030);
     }
-
 }
