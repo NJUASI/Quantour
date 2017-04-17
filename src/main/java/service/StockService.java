@@ -45,6 +45,17 @@ public interface StockService{
     List<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException;
 
     /**
+     * 获取用户的自选股票池
+     *
+     * @author  Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/17
+     * @param userName 用户名称
+     * @return 指定用户的自选股
+     */
+    List<String> getPrivateStockCodes(String userName) throws PrivateStockNotFoundException;
+
+    /**
      * 用户添加自选股
      * @auther Harvey
      * @lastUpdatedBy Harvey

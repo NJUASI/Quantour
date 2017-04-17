@@ -55,31 +55,31 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(List<CumulativeReturnVO> strategyData,List<CumulativeReturnVO> baseData) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
-//        this.baseData = baseData;
-//        this.strategyData = strategyData;
+    public TraceBackChart(List<CumulativeReturnVO> strategyData, List<CumulativeReturnVO> baseData) {
+        this.baseData = baseData;
+        this.strategyData = strategyData;
 
-        this.readData();
+//        this.readData();
     }
 
     /**
      * 创建回测图对象
      *
+     * @return JFreeChart TraceBackChart对象
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
-     * @return  JFreeChart TraceBackChart对象
      */
-    public JFreeChart createTracebackChart(){
+    public JFreeChart createTracebackChart() {
         CandlestickChartTool.setChartTheme();
         TraceBackChartTool tool = new TraceBackChartTool();
-        JFreeChart traceBackChart = ChartFactory.createTimeSeriesChart("","","",this.getTracebackDataset());
+        JFreeChart traceBackChart = ChartFactory.createTimeSeriesChart("", "", "", this.getTracebackDataset());
 
         XYPlot plot = traceBackChart.getXYPlot();
-        plot.setRenderer(tool.getRender(traceBackPoint.get(0),traceBackPoint.get(1)));
+        plot.setRenderer(tool.getRender(traceBackPoint.get(0), traceBackPoint.get(1)));
         plot.setDomainAxis(tool.getX(baseData.get(0).currentDate,
-                baseData.get(baseData.size()-1).currentDate));
-        plot.setRangeAxis(tool.getY(high,low));
+                baseData.get(baseData.size() - 1).currentDate));
+        plot.setRangeAxis(tool.getY(high, low));
 
         this.setPlot(plot);
         this.setTraceBackChart(traceBackChart);
@@ -90,12 +90,12 @@ public class TraceBackChart {
     /**
      * 修饰h回测图图
      *
+     * @param chart 图表对象
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
-     * @param chart 图表对象
      */
-    private void setTraceBackChart(JFreeChart chart){
+    private void setTraceBackChart(JFreeChart chart) {
         chart.setBackgroundPaint(ColorUtils.backgroundColor());
         chart.getLegend().setItemPaint(ColorUtils.fontColor());
         chart.getLegend().setBackgroundPaint(ColorUtils.backgroundColor());
@@ -108,13 +108,13 @@ public class TraceBackChart {
     /**
      * 修饰画板
      *
+     * @param plot 画板对象
+     * @return XYPlot 修饰后的对象
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
-     * @param plot 画板对象
-     * @return XYPlot 修饰后的对象
      */
-    private void setPlot(XYPlot plot){
+    private void setPlot(XYPlot plot) {
         plot.setDomainGridlinesVisible(true);
         plot.setRangeGridlinesVisible(true);
         plot.setDomainGridlinePaint(ColorUtils.lineColor());
@@ -131,28 +131,26 @@ public class TraceBackChart {
      * @updateTime 2017/3/30
      * @Return TimeSeriesCollection 数据集合
      */
-    private TimeSeriesCollection getTracebackDataset(){
+    private TimeSeriesCollection getTracebackDataset() {
 
         TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
-        TimeSeries strategy =  new TimeSeries("策略");
+        TimeSeries strategy = new TimeSeries("策略");
         TimeSeries base = new TimeSeries("基准");
         traceBackPoint = new ArrayList<>();
 
-        for(int i=0;i<this.strategyData.size();i++){
+        for (int i = 0; i < this.strategyData.size(); i++) {
             CumulativeReturnVO strategyVO = strategyData.get(i);
+            CumulativeReturnVO baseVO = baseData.get(i);
             LocalDate strategyDate = strategyVO.currentDate;
+            LocalDate baseDate = baseVO.currentDate;
 
-            if(strategyVO.isTraceBack){
+            if (strategyVO.isTraceBack) {
                 traceBackPoint.add(i);
             }
 
-            strategy.add(new Day(strategyDate.getDayOfMonth(),strategyDate.getMonthValue(),strategyDate.getYear()),
+            strategy.add(new Day(strategyDate.getDayOfMonth(), strategyDate.getMonthValue(), strategyDate.getYear()),
                     strategyVO.cumulativeReturn);
-        }
-
-        for(CumulativeReturnVO baseVO: baseData){
-            LocalDate baseDate = baseVO.currentDate;
-            base.add(new Day(baseDate.getDayOfMonth(),baseDate.getMonthValue(),baseDate.getYear()),
+            base.add(new Day(baseDate.getDayOfMonth(), baseDate.getMonthValue(), baseDate.getYear()),
                     baseVO.cumulativeReturn);
         }
 
@@ -166,17 +164,17 @@ public class TraceBackChart {
     /**
      * 获取数据的最高值和最低值(历史)
      *
+     * @param timeSeriesCollection 数据集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
-     * @param timeSeriesCollection 数据集合
      */
-    private void setHighAndLow(TimeSeriesCollection timeSeriesCollection){
+    private void setHighAndLow(TimeSeriesCollection timeSeriesCollection) {
         int seriesCount = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
         for (int i = 0; i < seriesCount; i++) {
             int itemCount = timeSeriesCollection.getItemCount(i);//每一个序列有多少个数据项
             for (int j = 0; j < itemCount; j++) {
-                if (high < timeSeriesCollection.getYValue(i,j)) {//取第i个序列中的第j个数据项的最大值
+                if (high < timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的最大值
                     high = timeSeriesCollection.getYValue(i, j);
                 }
                 if (low > timeSeriesCollection.getYValue(i, j)) {
@@ -198,8 +196,8 @@ public class TraceBackChart {
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
         traceBackCriteriaVO1.baseStockName = "沪深300";
-        traceBackCriteriaVO1.startDate = LocalDate.of(2013,5,1);
-        traceBackCriteriaVO1.endDate = LocalDate.of(2014,4,29);
+        traceBackCriteriaVO1.startDate = LocalDate.of(2013, 5, 1);
+        traceBackCriteriaVO1.endDate = LocalDate.of(2014, 4, 29);
         traceBackCriteriaVO1.strategyType = TraceBackStrategy.MR;
         traceBackCriteriaVO1.formativePeriod = 5;
         traceBackCriteriaVO1.holdingNum = 1;
@@ -209,7 +207,7 @@ public class TraceBackChart {
         List<BlockType> list = new ArrayList<>();
         list.add(BlockType.ZB);
         list.add(BlockType.CYB);
-        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.EXCLUDE,list);
+        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.EXCLUDE, list);
         traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
 
 
@@ -223,11 +221,11 @@ public class TraceBackChart {
         System.out.println(startTime);
         TraceBackVO traceBackVO = null;
         try {
-            traceBackVO = traceBackService.traceBack(traceBackCriteriaVO1,stockPool);
+            traceBackVO = traceBackService.traceBack(traceBackCriteriaVO1, stockPool);
         } catch (InvalidInputException e) {
             e.printStackTrace();
         }
-        System.out.println(System.currentTimeMillis()-startTime);
+        System.out.println(System.currentTimeMillis() - startTime);
         System.out.println("enter");
         this.strategyData = traceBackVO.strategyCumulativeReturn;
         this.baseData = traceBackVO.baseCumulativeReturn;

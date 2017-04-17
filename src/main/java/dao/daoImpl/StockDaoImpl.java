@@ -244,6 +244,20 @@ public class StockDaoImpl implements StockDao {
     }
 
     /**
+     * 获取用户的自选股票池
+     *
+     * @param userName 用户名称
+     * @return 指定用户的自选股
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/17
+     */
+    @Override
+    public List<String> getPrivateStockCodes(String userName) throws PrivateStockNotFoundException {
+        return privateStockDataHelper.getPrivateStockCode(userName);
+    }
+
+    /**
      * 添加用户自选股
      *
      * @author Harvey

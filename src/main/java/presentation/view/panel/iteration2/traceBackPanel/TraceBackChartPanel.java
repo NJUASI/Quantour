@@ -1,7 +1,6 @@
 package presentation.view.panel.iteration2.traceBackPanel;
 
 
-
 import org.jfree.chart.ChartPanel;
 import presentation.chart.traceBack.TraceBackChart;
 import presentation.listener.chartMouseListener.TraceBackListener;
@@ -18,31 +17,30 @@ import java.util.List;
 public class TraceBackChartPanel extends TemplatePanel {
     ChartPanel chartPanel;
     TraceBackNumVal traceBackNumVal;
-    public TraceBackChartPanel(){
+
+    public TraceBackChartPanel() {
         setBackground(WindowData.getInstance().getColor());
         setLayout(null);
-        traceBackNumVal=null;
+        traceBackNumVal = null;
     }
 
-    public void createChart(TraceBackNumValVO traceBackNumValVO, List<CumulativeReturnVO> baseCumulativeReturn, List<CumulativeReturnVO> strategyCumulativeReturn){
-        if(chartPanel!=null){
+    public void createChart(TraceBackNumValVO traceBackNumValVO, List<CumulativeReturnVO> baseCumulativeReturn, List<CumulativeReturnVO> strategyCumulativeReturn) {
+        if (chartPanel != null) {
             remove(chartPanel);
             remove(traceBackNumVal);
         }
-        try {
-            chartPanel = new ChartPanel(new TraceBackChart(strategyCumulativeReturn,baseCumulativeReturn).createTracebackChart());
-            chartPanel.setBounds(adaptScreen(100, 210, 1500, 600));
-            chartPanel.setVisible(true);
-            chartPanel.setPopupMenu(null);
-            chartPanel.setMouseZoomable(false);
-            chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));
-            add(chartPanel);
 
-            traceBackNumVal=new TraceBackNumVal(traceBackNumValVO);
-            traceBackNumVal.setBounds(adaptScreen(200,50,1400,120));
-            add(traceBackNumVal);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        chartPanel = new ChartPanel(new TraceBackChart(strategyCumulativeReturn, baseCumulativeReturn).createTracebackChart());
+        chartPanel.setBounds(adaptScreen(100, 210, 1500, 600));
+        chartPanel.setVisible(true);
+        chartPanel.setPopupMenu(null);
+        chartPanel.setMouseZoomable(false);
+        chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));
+        add(chartPanel);
+
+        traceBackNumVal = new TraceBackNumVal(traceBackNumValVO);
+        traceBackNumVal.setBounds(adaptScreen(200, 50, 1400, 120));
+        add(traceBackNumVal);
+
     }
 }
