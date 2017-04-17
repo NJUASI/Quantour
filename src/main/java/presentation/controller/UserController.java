@@ -86,9 +86,6 @@ public class UserController {
         stockService = new StockServiceImpl();
 
         stockService.deletePrivateStock(IDReserve.getInstance().getUserID(), userPanel.favoritePanel.getCode());
-
-        userPanel.remove(userPanel.favoritePanel);
-
         userPanel.refreshFavorite();
     }
 

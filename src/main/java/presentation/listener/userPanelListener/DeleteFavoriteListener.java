@@ -1,6 +1,7 @@
 package presentation.listener.userPanelListener;
 
 import presentation.controller.UserController;
+import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.tools.PopUpFrame;
 import utilities.exceptions.PrivateStockNotExistException;
 import utilities.exceptions.PrivateStockNotFoundException;
@@ -16,6 +17,7 @@ public class DeleteFavoriteListener extends MouseAdapter {
     public void mouseClicked(MouseEvent e){
         try {
             UserController.getInstance().deleteFavorite();
+            ChooseStrategyPanel.getInstance().refreshTabel();
         } catch (PrivateStockNotExistException e1) {
             new PopUpFrame(e1.getMessage());
         } catch (PrivateStockNotFoundException e1) {

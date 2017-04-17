@@ -1,6 +1,7 @@
 package presentation.listener.stocksTablePanelListener;
 
 import presentation.controller.StocksTableController;
+import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.panel.user.UserPanel;
 import presentation.view.tools.PopUpFrame;
 import utilities.exceptions.PrivateStockExistedException;
@@ -19,6 +20,7 @@ public class AddFavoriteListener extends MouseAdapter {
         try {
             StocksTableController.getInstance().addFavorite();
             UserPanel.getInstance().refreshFavorite();
+            ChooseStrategyPanel.getInstance().refreshTabel();
             new PopUpFrame("添加自选股成功！");
         } catch (PrivateStockExistedException e1) {
             new PopUpFrame(e1.getMessage());

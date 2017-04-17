@@ -202,7 +202,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
             tempYields.add(thisYield);
         }
 
-        // 对这整个周期进行处理
+        // 对这整个周期进行处理 TODO sum有问题
         double yieldSum = 0;
         for (double tempYield : tempYields) {
             yieldSum += tempYield;

@@ -5,6 +5,7 @@ import dao.daoImpl.DataSourceDaoImpl;
 import service.DataSourceService;
 import utilities.DataSourceStateKeeper;
 import utilities.enums.DataSourceState;
+import utilities.exceptions.NotCSVException;
 import vo.DataSourceInfoVO;
 
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class DataSourceServiceImpl implements DataSourceService {
     }
 
     @Override
-    public boolean upload(String filePath) throws IOException {
+    public boolean upload(String filePath) throws IOException, NotCSVException {
+        if (!filePath.endsWith(".csv")) throw new NotCSVException();
         return dao.upload(filePath);
     }
 
