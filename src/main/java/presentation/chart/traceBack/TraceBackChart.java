@@ -12,9 +12,12 @@ import presentation.chart.tools.TraceBackChartTool;
 import presentation.view.tools.ColorUtils;
 import service.TraceBackService;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
+import utilities.enums.BlockType;
+import utilities.enums.StType;
 import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.*;
 import vo.CumulativeReturnVO;
+import vo.StockPoolCriteriaVO;
 import vo.TraceBackCriteriaVO;
 import vo.TraceBackVO;
 
@@ -135,6 +138,9 @@ public class TraceBackChart {
         TimeSeries base = new TimeSeries("基准");
         traceBackPoint = new ArrayList<>();
 
+        System.out.println(strategyData.size());
+        System.out.println(baseData.size());
+
         for(int i=0;i<this.strategyData.size();i++){
             CumulativeReturnVO strategyVO = strategyData.get(i);
             CumulativeReturnVO baseVO = baseData.get(i);
@@ -193,19 +199,24 @@ public class TraceBackChart {
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
         traceBackCriteriaVO1.baseStockName = "深发展A";
-        traceBackCriteriaVO1.startDate = LocalDate.of(2013,5,1);
+        traceBackCriteriaVO1.startDate = LocalDate.of(2013,10,20);
         traceBackCriteriaVO1.endDate = LocalDate.of(2014,4,29);
-        traceBackCriteriaVO1.strategyType = TraceBackStrategy.MR;
+        traceBackCriteriaVO1.strategyType = TraceBackStrategy.MS;
         traceBackCriteriaVO1.formativePeriod = 5;
         traceBackCriteriaVO1.holdingNum = 10;
         traceBackCriteriaVO1.holdingPeriod = 5;
-        traceBackCriteriaVO1.isCustomized = false;
+        traceBackCriteriaVO1.isCustomized = true;
+
+        List<BlockType> blockTypes = new ArrayList<>();
+        blockTypes.add(BlockType.ALL);
+        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.INCLUDE, blockTypes);
+        traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
 
         List<String> stockPool = new ArrayList<>();
         stockPool.add("000001");
-        stockPool.add("000022");
+//        stockPool.add("000022");
         stockPool.add("000010");
-        stockPool.add("000004");
+//        stockPool.add("000004");
 
         long startTime = System.currentTimeMillis();
         System.out.println(startTime);
@@ -217,6 +228,7 @@ public class TraceBackChart {
         }
         System.out.println(System.currentTimeMillis()-startTime);
         System.out.println("enter");
+
         this.strategyData = traceBackVO.strategyCumulativeReturn;
         this.baseData = traceBackVO.baseCumulativeReturn;
     }

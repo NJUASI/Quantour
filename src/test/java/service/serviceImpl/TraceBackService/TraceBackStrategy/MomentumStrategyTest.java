@@ -39,6 +39,7 @@ public class MomentumStrategyTest {
         traceBackCriteriaVO.holdingPeriod = 5;
         traceBackCriteriaVO.startDate = LocalDate.of(2014,2,14);
         traceBackCriteriaVO.endDate = LocalDate.of(2014,4,29);
+        traceBackCriteriaVO.isCustomized = true;
 
         allTraceBackStrategy = new MomentumStrategy(stockCodes, traceBackCriteriaVO);
     }

@@ -74,7 +74,7 @@ public interface StockService{
      * @param searchString 代码或股票首字母或股票名称
      * @return 符合条件的股票简要信息
      */
-    public List<StockSearchVO> searchStock(String searchString);
+    List<StockSearchVO> searchStock(String searchString);
 
     /**
      * 根据股票代码，起始日期，结束日期，获得该股票在此期间的数据
@@ -109,13 +109,4 @@ public interface StockService{
      * @return List<String> 符合标准的股票池中所有股票的股票代码
      */
     List<String> getStockPool(StockPoolCriteriaVO stockPoolVO) throws IOException, UnhandleBlockTypeException;
-
-
-    /**
-     * 查找当前日期，股票的信息
-     * @param stockCode 股票代码
-     * @param date 当前日期
-     * @return
-     */
-    StockVO getOneStockDataOneDay(String stockCode, LocalDate date) throws IOException;
 }

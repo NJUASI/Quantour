@@ -28,11 +28,10 @@ public class BlockCriteriaFilter extends StockPoolFilter {
         // 选择ALL时放且只放在第一个位置
         if(vo.blockTypes.get(0) !=  BlockType.ALL){
             for(int i = 0; i < stocks.size();){
-                for (BlockType bt : vo.blockTypes) {
-                    if(stocks.get(i).blockType == bt){
-                        i++;
-                        continue;
-                    }
+                if(vo.blockTypes.contains(stocks.get(i).blockType)){
+
+                    i++;
+                    continue;
                 }
 
                 // 此股票没有在期望的板块中
@@ -40,6 +39,12 @@ public class BlockCriteriaFilter extends StockPoolFilter {
 
             }
         }
-        return getNextFilter().meetCriteria(stocks,vo);
+
+        if(getNextFilter() == null){
+            return stocks;
+        }
+        else {
+            return getNextFilter().meetCriteria(stocks, vo);
+        }
     }
 }
