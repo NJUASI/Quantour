@@ -17,6 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -291,11 +292,11 @@ public class ComparePanel extends TemplatePanel {
         return name2.getText();
     }
 
-    public void updateJList1(String searchString) {
+    public void updateJList1(String searchString) throws IOException {
         associatePanel.updateJList(searchString);
     }
 
-    public void updateJList2(String searchString){
+    public void updateJList2(String searchString) throws IOException {
         associatePanel2.updateJList(searchString);
     }
 

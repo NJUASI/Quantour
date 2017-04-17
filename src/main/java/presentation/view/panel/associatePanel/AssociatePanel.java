@@ -10,6 +10,7 @@ import presentation.view.tools.WindowData;
 import vo.StockSearchVO;
 
 import javax.swing.*;
+import java.io.IOException;
 
 /**
  * Created by 61990 on 2017/3/8.
@@ -52,7 +53,7 @@ public class AssociatePanel extends JScrollPane {
      * @author 61990
      * @updateTime 2017/3/15
      */
-    public void updateJList(String str){
+    public void updateJList(String str) throws IOException {
         jListModel =  new SearchComboBoxModel(str);
         list.setModel(jListModel);
     }

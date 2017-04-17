@@ -1,5 +1,6 @@
 package vo;
 
+import po.StockSearchPO;
 import utilities.enums.Market;
 
 /**
@@ -15,17 +16,13 @@ public class StockSearchVO {
     // 股票名称
     public String name;
 
-    // 市场名称
-    public Market market;
-
     // 汉字首字母名称
     public String firstLetters;
 
-    public StockSearchVO(String code, String name, Market market, String firstLetters) {
-        this.code = code;
-        this.name = name;
-        this.market = market;
-        this.firstLetters = firstLetters;
+    public StockSearchVO(StockSearchPO po) {
+        this.code = po.getCode();
+        this.name = po.getName();
+        this.firstLetters = po.getFirstLetters();
     }
 
     public StockSearchVO(String code, String name) {

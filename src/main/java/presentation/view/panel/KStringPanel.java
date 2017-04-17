@@ -26,6 +26,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 
 
@@ -303,7 +304,7 @@ public class KStringPanel extends TemplatePanel {
         setAssociatePanelBounds();
     }
 
-    public void updateAssociateJList(String searchString) {
+    public void updateAssociateJList(String searchString) throws IOException {
         associatePanel.updateJList(searchString);
     }
 

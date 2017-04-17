@@ -4,6 +4,7 @@ import presentation.controller.CompareController;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.io.IOException;
 
 /**
  * Created by Harvey on 2017/3/26.
@@ -43,6 +44,10 @@ public class Num2ChangeListener implements DocumentListener {
     }
 
     private void callController(){
-        CompareController.getInstance().num2Change();
+        try {
+            CompareController.getInstance().num2Change();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

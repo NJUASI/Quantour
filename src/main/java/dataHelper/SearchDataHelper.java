@@ -1,5 +1,8 @@
 package dataHelper;
 
+import po.StockSearchPO;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +22,9 @@ public interface SearchDataHelper {
     List<String> getAllBaseStockCodes();
 
     /**
-     * @return 所有股票名称的首字母缩写及其名称，名称作为键值
+     * @return 所有股票名称的首字母缩写及其名称、代码
      */
-    Map<String,String> getAllStocksFirstLetters();
+    List<StockSearchPO> getAllStocksFirstLetters() throws IOException;
 
     /**
      * @return 返回所有股票的代码及其名称，代码作为键值
