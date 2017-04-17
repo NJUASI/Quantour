@@ -196,7 +196,7 @@ public class TraceBackChart {
         TraceBackService traceBackService = new TraceBackServiceImpl();
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
-        traceBackCriteriaVO1.baseStockName = "深发展A";
+        traceBackCriteriaVO1.baseStockName = "深发展Ａ";
         traceBackCriteriaVO1.startDate = LocalDate.of(2013,5,1);
         traceBackCriteriaVO1.endDate = LocalDate.of(2014,4,29);
         traceBackCriteriaVO1.strategyType = TraceBackStrategy.MR;
