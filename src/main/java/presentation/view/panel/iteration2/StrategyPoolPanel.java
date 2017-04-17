@@ -34,15 +34,15 @@ public class StrategyPoolPanel  extends TemplatePanel {
     public StockPoolTable stockPoolTable;
 
     public StrategyPoolPanel(){
-
+        Color bgColor = new Color(32,36,39);
         setLayout(null);
-        setBounds(adaptScreen(100,130,1400,240));
-        setBackground(WindowData.getInstance().getColor());
+        setBounds(adaptScreen(0,0,1200,280));
+        setBackground(bgColor);
 
         radioButton1 = new JRadioButton("按板块选");// 创建单选按钮
-        radioButton1.setBounds(adaptScreen(250,100,150,40));
+        radioButton1.setBounds(adaptScreen(250,80,150,40));
         add(radioButton1);
-        radioButton1.setBackground(WindowData.getInstance().getColor());
+        radioButton1.setBackground(bgColor);
         radioButton1.setForeground(Color.WHITE);
         radioButton1.setSelected(true);
         radioButton1.addMouseListener(new MouseAdapter() {
@@ -53,8 +53,8 @@ public class StrategyPoolPanel  extends TemplatePanel {
         });
 
         radioButton2 = new JRadioButton("自选股池");// 创建单选按钮
-        radioButton2.setBounds(adaptScreen(250,140,150,40));
-        radioButton2.setBackground(WindowData.getInstance().getColor());
+        radioButton2.setBounds(adaptScreen(250,120,150,40));
+        radioButton2.setBackground(bgColor);
         radioButton2.setForeground(Color.WHITE);
         radioButton2.addMouseListener(new MouseAdapter() {
             @Override
@@ -70,7 +70,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
 
 
         MyLabel label1=new MyLabel("选股票池",20) ;
-        label1.setLocation(100*width/1920,50*height/1030);
+        label1.setLocation(100*width/1920,30*height/1030);
         add(label1);
 
          lb= new MyLabel("板块",16);
@@ -101,7 +101,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         add(STComboBox);
 
         delete= new MyButton("删除");
-        delete.setBounds(adaptScreen(690,140,70,35));
+        delete.setBounds(adaptScreen(700,120,70,35));
         delete.addMouseListener(new DeletePoolListener());
         add(delete);
 
@@ -114,7 +114,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         }
         try {
             stockPoolTable=new StockPoolTable();
-            stockPoolTable.setBounds(adaptScreen(450,90,200,180));
+            stockPoolTable.setBounds(adaptScreen(450,50,200,220));
 
             add(stockPoolTable);
             if(radioButton1.isSelected()){

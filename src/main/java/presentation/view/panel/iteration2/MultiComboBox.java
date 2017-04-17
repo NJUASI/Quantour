@@ -60,7 +60,7 @@ public class MultiComboBox extends TemplatePanel {
     private void initComponent() {
         //暂时使用该布局,后续自己写个布局
         setLayout(null);
-        setBackground(ColorUtils.backgroundColor());
+        setBackground(new Color(32,36,39));
 
 
         popup = new MultiPopup(values, defaultValues);

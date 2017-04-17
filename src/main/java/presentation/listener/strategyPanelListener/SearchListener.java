@@ -45,5 +45,6 @@ public class SearchListener extends MouseAdapter {
         } catch (DataSourceFirstDayException e1) {
             e1.printStackTrace();
         }
+        ChooseStrategyPanel.getInstance().popdown();
     }
 }
