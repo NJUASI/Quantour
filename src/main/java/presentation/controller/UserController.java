@@ -3,11 +3,8 @@ package presentation.controller;
 import presentation.view.panel.user.UserPanel;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
-import presentation.view.tools.component.MyLabel;
-import presentation.view.tools.component.ProgressBar;
 import service.DataSourceService;
 import service.StockService;
-import service.StockSituationService;
 import service.UserService;
 import service.serviceImpl.DataSourceServiceImpl;
 import service.serviceImpl.StockService.StockServiceImpl;
@@ -98,7 +95,7 @@ public class UserController {
             }else{
                 userPanel.fileImportPanel.setUploadInfo("未上传本地数据");
                 userPanel.fileImportPanel.notFoundDate();
-                dataSourceService.changeDataSourceState(DataSourceState.ORIGINAL);
+                dataSourceService.setDataSourceState(DataSourceState.ORIGINAL);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,7 +104,7 @@ public class UserController {
 
     public void changePath(DataSourceState dataSourceState){
         dataSourceService = new DataSourceServiceImpl();
-        dataSourceService.changeDataSourceState(dataSourceState);
+        dataSourceService.setDataSourceState(dataSourceState);
     }
 
     public void modifyPassword() throws PasswordInputException {
