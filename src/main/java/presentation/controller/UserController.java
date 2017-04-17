@@ -83,7 +83,6 @@ public class UserController {
                 userPanel.fileImportPanel.remove(progressBar);
             }
 
-
         } catch (IOException e) {
             e.printStackTrace();
             new PopUpFrame(e.getMessage());

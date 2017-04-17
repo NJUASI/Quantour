@@ -44,6 +44,8 @@ public class SearchListener extends MouseAdapter {
             e1.printStackTrace();
         } catch (DataSourceFirstDayException e1) {
             e1.printStackTrace();
+        } catch (PrivateStockNotFoundException e1) {
+            e1.printStackTrace();
         }
         ChooseStrategyPanel.getInstance().popdown();
     }

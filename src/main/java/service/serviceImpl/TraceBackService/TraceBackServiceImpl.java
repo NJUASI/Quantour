@@ -66,7 +66,6 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         setUp(traceBackStockPool);
 
-
         //选择策略
         traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
@@ -74,22 +73,22 @@ public class TraceBackServiceImpl implements TraceBackService {
         TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack();
         traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
 
-        //计算持仓详情的基准收益率和超额收益率
-//        traceBackVO.holdingDetailVOS = calHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackCriteriaVO.holdingPeriod);
-        //计算绝对收益周期
-//        traceBackVO.absoluteReturnPeriodVO = countAbsoluteReturnPeriod(traceBackVO.holdingDetailVOS);
-        //计算相对收益周期
-//        traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
+//        计算持仓详情的基准收益率和超额收益率
+        traceBackVO.holdingDetailVOS = calHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackCriteriaVO.holdingPeriod);
+//        计算绝对收益周期
+        traceBackVO.absoluteReturnPeriodVO = countAbsoluteReturnPeriod(traceBackVO.holdingDetailVOS);
+//        计算相对收益周期
+        traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
 
-        //计算超额收益率/策略胜率，给定持有期/形成期
-//        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
-//        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
+//        计算超额收益率/策略胜率，给定持有期/形成期
+        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
+        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
 
-        //TraceBackParameter 计算贝塔系数等
-//        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO,traceBackVO);
-//        return traceBackParameter.getTraceBackVO();
+//        TraceBackParameter 计算贝塔系数等
+        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO,traceBackVO);
+        return traceBackParameter.getTraceBackVO();
 
-        return traceBackVO;
+//        return traceBackVO;
     }
 
     private void setUp(List<String> traceBackStockPool) throws IOException {

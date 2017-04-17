@@ -99,6 +99,7 @@ public class AnalysePanel extends TemplatePanel {
             detailOfTraceBack.remove(traceBackDetail);
             detailOfTraceBack.remove(label);
         }
+
         traceBackDetail=new TraceBackDetail(traceBackVO.holdingDetailVOS);
         traceBackDetail.setBounds(adaptScreen(200,50,1400,800));
 

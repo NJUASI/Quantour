@@ -59,6 +59,7 @@ public class StrategyPanelController {
             InvalidInputException, DataSourceFirstDayException, PrivateStockNotFoundException {
 
         traceBackService = new TraceBackServiceImpl();
+        stockService = new StockServiceImpl();
         analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
 
         TraceBackCriteriaVO vo = chooseStrategyPanel.getInfo();
