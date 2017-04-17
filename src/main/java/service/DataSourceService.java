@@ -1,6 +1,7 @@
 package service;
 
 import utilities.enums.DataSourceState;
+import utilities.exceptions.NotCSVException;
 import vo.DataSourceInfoVO;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public interface DataSourceService {
      * @param filePath 要上传的文件路径
      * @return 上传成功
      */
-    boolean upload(String filePath) throws IOException;
+    boolean upload(String filePath) throws IOException, NotCSVException;
 
     /**
      * @auther cuihua
