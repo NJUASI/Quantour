@@ -2,7 +2,6 @@ package service.serviceImpl.TraceBackService.TraceBackStrategy.MeanReversion;
 
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
-import po.StockPO;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import utilities.exceptions.*;
@@ -49,15 +48,19 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
 
 
     @Override
-    public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException {
-        int allStartIndex = allDatesWithData.indexOf(getClosestWithinDate(traceBackCriteriaVO.startDate, true));
-        int allEndIndex = allDatesWithData.indexOf(getClosestWithinDate(traceBackCriteriaVO.endDate, false));
+    public TraceBackStrategyVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException {
+
+        //形成期或持有期会有变化
+        this.traceBackCriteriaVO = traceBackCriteriaVO;
+
+        int allStartIndex = allDatesWithData.indexOf(getClosestWithinDate(this.traceBackCriteriaVO.startDate, true));
+        int allEndIndex = allDatesWithData.indexOf(getClosestWithinDate(this.traceBackCriteriaVO.endDate, false));
 
         int cycles = (allEndIndex - allStartIndex + 1) / holdingPeriod;
 
         // 回测时间太短，不足一个持有期
         if (cycles == 0) {
-            calculate(traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate, 0);
+            calculate(this.traceBackCriteriaVO.startDate, this.traceBackCriteriaVO.endDate, 0);
             return new TraceBackStrategyVO(strategyCumulativeReturn, holdingDetailVOS);
         }
 

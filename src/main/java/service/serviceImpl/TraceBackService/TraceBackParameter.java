@@ -2,6 +2,7 @@ package service.serviceImpl.TraceBackService;
 
 import service.StockService;
 import service.serviceImpl.StockService.StockServiceImpl;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import utilities.exceptions.*;
 import vo.*;
 
@@ -50,6 +51,9 @@ public class TraceBackParameter {
     //基准的每日收益列表
     private List<DailyRateVO> baseRate;
 
+    //股票池中所有信息
+    protected Map<String, List<StrategyStock>> stockData;
+
     /**
      * 对回测所需要显示参数的初始化
      *
@@ -57,8 +61,9 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException, UnhandleBlockTypeException {
+    public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO,Map<String, List<StrategyStock>> stockData) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException, UnhandleBlockTypeException {
         this.stockService = new StockServiceImpl();
+        this.stockData = stockData;
         traceBackNumValVO = new TraceBackNumValVO();
         this.traceBackVO = traceBackVO;
         this.initStrategy(traceBackCriteriaVO);
@@ -112,12 +117,14 @@ public class TraceBackParameter {
      */
     private void initStrategy(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, UnhandleBlockTypeException {
         List<String> codes = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
-        List<List<StockVO>> list = new ArrayList<>();
+        List<List<StrategyStock>> list = new ArrayList<>();
 
         for (String code : codes) {
-            list.add(stockService.getOneStockData(code, traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate));
+            //TODO 龚尘淼看这里，根据股票池里面的code，从stockData里面获取数据，打印出来全是null
+            System.out.println(code+"--"+stockData.get(code));
+            list.add(stockData.get(code));
         }
-        strategyRate = this.calStrategyDailyRate(list);
+        strategyRate = this.calStrategyDailyRateAll(list);
 
         //计算策略的总收益率
         traceBackNumValVO.sumRate = this.calSumRate(traceBackVO.holdingDetailVOS);
@@ -149,7 +156,7 @@ public class TraceBackParameter {
      * @updateTime 2017/4/9
      */
     private void initBase(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException {
-        baseRate = this.calDailyRate(stockService.getBaseStockData(traceBackCriteriaVO.baseStockName,
+        baseRate = this.calBaseDailyRate(stockService.getBaseStockData(traceBackCriteriaVO.baseStockName,
                 traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate));
 
         //计算基准的总收益率
@@ -330,7 +337,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/14
      */
-    private List<DailyRateVO> calStrategyDailyRate(List<List<StockVO>> list) {
+    private List<DailyRateVO> calStrategyDailyRateAll(List<List<StrategyStock>> list) {
         Map<LocalDate,DailyRateVO> map = this.convert(list);
         List<DailyRateVO> result = new ArrayList<>();
 
@@ -344,7 +351,7 @@ public class TraceBackParameter {
     }
 
     /**
-     * 获取日收益列表
+     * 获取策略日收益列表
      *
      * @param list 股票信息列表
      * @return List<DailyRateVO> 策略的日收益列表
@@ -352,14 +359,37 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/10
      */
-    private List<DailyRateVO> calDailyRate(List<StockVO> list) {
+    private List<DailyRateVO> calStrategyDailyRate(List<StrategyStock> list) {
+        List<DailyRateVO> result = new ArrayList<>();
+
+        for (StrategyStock strategyStock : list) {
+            if (strategyStock.preClose == -1) {
+                result.add(new DailyRateVO(0.0, strategyStock.date));
+            } else {
+                double rate = (strategyStock.close - strategyStock.preClose) / strategyStock.preClose;
+                result.add(new DailyRateVO(rate, strategyStock.date));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 获取基准日收益列表
+     *
+     * @param list 股票信息列表
+     * @return List<DailyRateVO> 基准的日收益列表
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/10
+     */
+    private List<DailyRateVO> calBaseDailyRate(List<StockVO> list) {
         List<DailyRateVO> result = new ArrayList<>();
 
         for (StockVO stockVO : list) {
             if (stockVO.preClose == -1) {
                 result.add(new DailyRateVO(0.0, stockVO.date));
             } else {
-                double rate = (stockVO.close - stockVO.open) / stockVO.preClose;
+                double rate = (stockVO.close - stockVO.preClose) / stockVO.preClose;
                 result.add(new DailyRateVO(rate, stockVO.date));
             }
         }
@@ -375,12 +405,12 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/14
      */
-    private Map<LocalDate, DailyRateVO> convert(List<List<StockVO>> list) {
+    private Map<LocalDate, DailyRateVO> convert(List<List<StrategyStock>> list) {
 
         Map<LocalDate, DailyRateVO> map = new HashMap<LocalDate, DailyRateVO>();
 
-        for (List<StockVO> stock : list) {
-            List<DailyRateVO> temp = this.calDailyRate(stock);
+        for (List<StrategyStock> stock : list) {
+            List<DailyRateVO> temp = this.calStrategyDailyRate(stock);
             for (DailyRateVO dailyRateVO : temp) {
                 if (map.containsKey(dailyRateVO.date)) {
                     DailyRateVO dailyRateVO1 = map.get(dailyRateVO.date);
@@ -394,4 +424,5 @@ public class TraceBackParameter {
         }
         return map;
     }
+
 }

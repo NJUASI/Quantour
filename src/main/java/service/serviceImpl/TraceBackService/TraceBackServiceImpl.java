@@ -30,9 +30,10 @@ public class TraceBackServiceImpl implements TraceBackService {
     //回测标准
     private TraceBackCriteriaVO traceBackCriteriaVO;
 
-    //自选股票池
+    //自选股票池，用户回测自选股票池时才对此成员变量赋值
     private List<String> baseStockPool;
 
+    //自选股票池的所有数据
     private Map<String, List<StrategyStock>> baseStockData;
 
     /*
@@ -55,29 +56,43 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         //将基准累计收益率初始化为1
         baseStockCumulative = 1;
+        //获取所有数据的日期
+        allDatesWithData = stockDao.getDateWithData();
     }
 
     @Override
     public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
+
         this.traceBackCriteriaVO = traceBackCriteriaVO;
 
         TraceBackVO traceBackVO = new TraceBackVO();
 
         // 选取回测的股票池为自选股票池／板块股票池
         List<String> traceBackStockPool;
-        if (traceBackCriteriaVO.isCustomized) traceBackStockPool = stockPool;
-        else traceBackStockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
 
-        setUp(traceBackStockPool);
+        //是自选股票池
+        if (traceBackCriteriaVO.isCustomized){
+            traceBackStockPool = stockPool;
+            //给基准股票池赋值，即为自选股票池
+            baseStockPool = stockPool;
+            setUp(traceBackStockPool);
+            //获取所有自选股的所有数据
+            baseStockData = stockData;
+        }
+        //不是自选股票池
+        else {
+            traceBackStockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
+            setUp(traceBackStockPool);
+        }
 
         // 累计基准收益率
-        traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO, stockPool);
+        traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO);
 
         //选择策略
         traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
         //策略回测
-        TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack();
+        TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack(traceBackCriteriaVO);
         traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
 
         // 计算持仓详情的基准收益率和超额收益率
@@ -93,15 +108,15 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
         traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
 
-        // TraceBackParameter 计算贝塔系数等
-        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO);
+        // TraceBackParameter 计算贝塔系数等 b
+        //TODO 龚尘淼 这里stockData里面似乎都是空的，请看TraceBackParameter的initStrategy方法
+        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO,stockData);
         return traceBackParameter.getTraceBackVO();
 
 //        return traceBackVO;
     }
 
     private void setUp(List<String> traceBackStockPool) throws IOException {
-        allDatesWithData = stockDao.getDateWithData();
 
         stockData = new HashMap<>();
         for (String thisStockCode : traceBackStockPool) {
@@ -173,21 +188,10 @@ public class TraceBackServiceImpl implements TraceBackService {
             TraceBackVO traceBackVO = new TraceBackVO();
 
             //累计基准收益率
-            traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO, stockPool);
+            traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO);
 
-            // 选取回测的股票池
-            List<String> traceBackStockPool = null;
-            //自定义股票池
-            if (traceBackCriteriaVO.isCustomized) {
-                traceBackStockPool = stockPool;
-            } else {
-                traceBackStockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
-            }
-
-            //选择策略
-            AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
             //策略回测
-            TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack();
+            TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack(traceBackCriteriaVO);
             traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
 
             //计算持仓详情的基准收益率和超额收益率
@@ -361,23 +365,19 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     /**
      * @param traceBackCriteriaVO 回测标准
-     * @param stockPool           自选股票池的所有股票的代号
      * @return
      * @throws IOException
      * @throws NoDataWithinException
      * @throws DateNotWithinException
      */
-    private List<CumulativeReturnVO> getBase(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException {
+    private List<CumulativeReturnVO> getBase(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
         LocalDate start = traceBackCriteriaVO.startDate;
         LocalDate end = traceBackCriteriaVO.endDate;
 
         if (!traceBackCriteriaVO.isCustomized) {
             return getCumulativeReturnOfOneStock(traceBackCriteriaVO.baseStockName, start, end);
         } else {
-            baseStockPool = stockPool;
-            allDatesWithData = stockDao.getDateWithData();
-            baseStockData = stockData;
-            return getCustomizedCumulativeReturn(start, end, stockData);
+            return getCustomizedCumulativeReturn(start, end, baseStockData);
         }
     }
 
