@@ -41,7 +41,7 @@ public class StocksTablePane extends JScrollPane {
                 jTable.getColumnModel().getColumn(i).setPreferredWidth(50*width/1920);
             }
             jTable.setRowSelectionAllowed(true);//设置可否被选择
-            jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             jTable.setSelectionBackground(ColorUtils.tableSelectedColor());//设置所选择行的背景色
             jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
 
