@@ -135,11 +135,11 @@ public class TraceBackChart {
         TimeSeries base = new TimeSeries("基准");
         traceBackPoint = new ArrayList<>();
 
+        System.out.println("S:"+strategyData.size()+" "+"B: "+baseData.size());
+
         for(int i=0;i<this.strategyData.size();i++){
             CumulativeReturnVO strategyVO = strategyData.get(i);
-            CumulativeReturnVO baseVO = baseData.get(i);
             LocalDate strategyDate = strategyVO.currentDate;
-            LocalDate baseDate = baseVO.currentDate;
 
             if(strategyVO.isTraceBack){
                 traceBackPoint.add(i);
@@ -147,6 +147,10 @@ public class TraceBackChart {
 
             strategy.add(new Day(strategyDate.getDayOfMonth(),strategyDate.getMonthValue(),strategyDate.getYear()),
                     strategyVO.cumulativeReturn);
+        }
+
+        for(CumulativeReturnVO baseVO: baseData){
+            LocalDate baseDate = baseVO.currentDate;
             base.add(new Day(baseDate.getDayOfMonth(),baseDate.getMonthValue(),baseDate.getYear()),
                     baseVO.cumulativeReturn);
         }
