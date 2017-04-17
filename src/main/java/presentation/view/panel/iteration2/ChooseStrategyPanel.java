@@ -151,10 +151,10 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
     public void popup(){
         progressBar = new JLabel();
-        progressBar.setBounds(1100*width/1920, 420*width/1030, 305, 42);
+        progressBar.setBounds(1100*width/1920, 420*height/1030, 305, 42);
         add(progressBar);
         message = new JLabel();
-        message.setBounds(1200*width/1920, 350*width/1030, 305, 42);
+        message.setBounds(1200*width/1920, 350*height/1030, 305, 42);
         add(message);
         popupProgress=new PopupProgress(progressBar,message);
         popupProgress.start();

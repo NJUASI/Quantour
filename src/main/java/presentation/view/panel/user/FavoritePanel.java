@@ -38,7 +38,7 @@ public class FavoritePanel extends JScrollPane{
 
             jTable = new JTable(new FavoriteTableModel(date));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);
-            jTable.setRowHeight (30* height / 1030);//设置每行的高度为30
+            jTable.setRowHeight (30);//设置每行的高度为30
 
 
 
@@ -65,7 +65,7 @@ public class FavoritePanel extends JScrollPane{
             header.setReorderingAllowed(false);
             header.setResizingAllowed(false);
             Dimension size = header.getPreferredSize();
-            size.height = 33* height / 1030;
+            size.height = 30;
             header.setPreferredSize(size);
             setForeground(ColorUtils.fontColor());
 
