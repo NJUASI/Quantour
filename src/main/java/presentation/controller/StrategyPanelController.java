@@ -87,7 +87,6 @@ public class StrategyPanelController {
 
     public void deletePool() throws PrivateStockNotExistException, PrivateStockNotFoundException {
         StockService stockService = new StockServiceImpl();
-
         stockService.deletePrivateStock(IDReserve.getInstance().getUserID(), chooseStrategyPanel.strategyPoolPanel.stockPoolTable.getCode());
         chooseStrategyPanel.refreshTabel();
     }

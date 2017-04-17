@@ -330,11 +330,12 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @return 补充了基准收益率和超额收益率的完整的HoldingDetailVO列表
      */
     private List<HoldingDetailVO> calcuHoldingDetail(List<HoldingDetailVO> holdingDetailVOS, List<CumulativeReturnVO> baseCumulativeReturn, int holdingPeriod) {
-        final double initInvestment = 1000;
-        double remainInvestment = initInvestment;
 
         int holdingSerial = 0;
 
+        //保存之前一个周期的最后一天的累计收益率, 初始值为1
+        double curCumulativeReturn = 1;
+        double preCumulativeReturn = 1;
         for (int i = 0; i < baseCumulativeReturn.size(); i += holdingPeriod) {
             double lastRate;
             if ((i + holdingPeriod - 1) < baseCumulativeReturn.size()) {
@@ -345,13 +346,11 @@ public class TraceBackServiceImpl implements TraceBackService {
                 lastRate = baseCumulativeReturn.get(baseCumulativeReturn.size() - 1).cumulativeReturn;
             }
 
-            // 保存之前的投资资金，并更新现有资金
-            double preRemainInvestment = remainInvestment;
-            remainInvestment = initInvestment * (1 + lastRate);
-
             // 当前持仓期的基准收益率
-            double baseReturn = (remainInvestment - preRemainInvestment) / preRemainInvestment;
+            curCumulativeReturn = 1+lastRate;
+            double baseReturn = curCumulativeReturn / preCumulativeReturn - 1;
             holdingDetailVOS.get(holdingSerial).baseReturn = baseReturn;
+            preCumulativeReturn = curCumulativeReturn;
 
             // 超额收益率
             holdingDetailVOS.get(holdingSerial).excessReturn = holdingDetailVOS.get(holdingSerial).strategyReturn - baseReturn;

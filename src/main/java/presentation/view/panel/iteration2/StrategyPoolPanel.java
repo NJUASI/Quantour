@@ -106,8 +106,9 @@ public class StrategyPoolPanel  extends TemplatePanel {
         delete.addMouseListener(new DeletePoolListener());
         add(delete);
 
-        refreshTabel();
         openPool1();
+        refreshTabel();
+
     }
     public void refreshTabel(){
         if (stockPoolTable!=null) {
@@ -119,18 +120,18 @@ public class StrategyPoolPanel  extends TemplatePanel {
             stockPoolTable.setBounds(adaptScreen(450,50,200,220));
 
             label = new JLabel();
-            label.setBounds(450 * width / 1920, (30*(stockPoolTable.jTable.getRowCount()+1)) +50* height / 1030, 200* width / 1920 , 220* height / 1030-(30*(stockPoolTable.jTable.getRowCount())));
+            label.setBounds(450 * width / 1920, (30*(stockPoolTable.jTable.getRowCount()+1)) +50* height / 1030, 200* width / 1920 , 220* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(new Color(32,36,39));
             label.setForeground(Color.WHITE);
             label.setOpaque(true);
+            label.setVisible(true);
             add(label);
-
             add(stockPoolTable);
             if(radioButton1.isSelected()){
                 stockPoolTable.setVisible(false);
-                label.setVisible(false);
             }
+            repaint();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (PrivateStockNotFoundException e) {
@@ -144,7 +145,6 @@ public class StrategyPoolPanel  extends TemplatePanel {
         lb.setVisible(true);
         lb3.setVisible(true);
         STComboBox.setVisible(true);
-        stockPoolTable.setVisible(false);
         delete.setVisible(false);
     }
 //
@@ -155,6 +155,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         STComboBox.setVisible(false);
         stockPoolTable.setVisible(true);
         delete.setVisible(true);
+        label.setVisible(true);
     }
 
     public StockPoolCriteriaVO getPoolVO(){
