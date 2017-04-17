@@ -249,7 +249,7 @@ public class KStringPanel extends TemplatePanel {
     
     //获取股票代码
     public String getStockCode(){
-        return num.getText();
+        return num.getText().split(" ")[0];
     }
 
     //获取股票名称
