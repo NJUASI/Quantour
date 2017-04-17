@@ -3,10 +3,8 @@ package service.serviceImpl.TraceBackService.TraceBackStrategy.Momentum;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import service.StockService;
-import service.StockTradingDayService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
-import service.serviceImpl.StockTradingDayServiceImpl;
 import service.serviceImpl.TraceBackService.AllTraceBackStrategy;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
 import utilities.exceptions.CodeNotFoundException;
@@ -27,7 +25,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     StockService stockService;
     TraceBackService traceBackService;
     StockDao stockDao;
-    StockTradingDayService stockTradingDayService;
 
     //初始投资
     double initInvestment;
@@ -48,7 +45,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         stockService = new StockServiceImpl();
         stockDao = new StockDaoImpl();
         traceBackService = new TraceBackServiceImpl();
-        stockTradingDayService = new StockTradingDayServiceImpl();
 
         //初始为千元投资
         initInvestment = 1000;
@@ -73,7 +69,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      * 设置持有其和形成期有数据的日期
      */
     private void setDates() throws IOException {
-
         //获取所有有数据的日期
         allDatesWithData = stockDao.getDateWithData();
     }

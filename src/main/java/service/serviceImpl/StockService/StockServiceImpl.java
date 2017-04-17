@@ -4,10 +4,8 @@ import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
 import po.StockPO;
 import service.StockService;
-import service.StockTradingDayService;
 import service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
 import service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
-import service.serviceImpl.StockTradingDayServiceImpl;
 import utilities.StockCodeHelper;
 import utilities.exceptions.*;
 import vo.StockPoolCriteriaVO;
@@ -31,13 +29,10 @@ public class StockServiceImpl implements StockService {
 
     StockDao stockDao;
     private StockPoolFilter stockPoolFilter;
-    StockTradingDayService stockTradingDayService;
-
 
     public StockServiceImpl() {
         stockDao = new StockDaoImpl();
         stockPoolFilter = new StockPoolFilter();
-        stockTradingDayService = new StockTradingDayServiceImpl();
     }
 
     /**

@@ -2,11 +2,9 @@ package service.serviceImpl.TraceBackService;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import service.StockService;
-import service.StockTradingDayService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockPoolFilter;
 import service.serviceImpl.StockService.StockServiceImpl;
-import service.serviceImpl.StockTradingDayServiceImpl;
 import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.*;
 import vo.*;
