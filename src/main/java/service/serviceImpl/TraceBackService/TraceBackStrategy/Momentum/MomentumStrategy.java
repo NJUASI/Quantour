@@ -45,9 +45,14 @@ public class MomentumStrategy extends AllTraceBackStrategy {
      * 根据目标股票池及所给的标准，返回策略的累计收益率
      *
      * @return List<CumulativeReturnVO> 策略的累计收益率
+     * @param traceBackCriteriaVO
      */
     @Override
-    public TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException {
+    public TraceBackStrategyVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
+
+        //形成期或持有期发生变化
+        this.traceBackCriteriaVO = traceBackCriteriaVO;
+
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<>();
         List<HoldingDetailVO> holdingDetailVOS = new ArrayList<>();
 
@@ -57,8 +62,8 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         //区间最后一个交易日在allDatesWithData中的位置
         int endIndex = -1;
 
-        LocalDate thisStart = traceBackCriteriaVO.startDate;
-        LocalDate thisEnd = traceBackCriteriaVO.endDate;
+        LocalDate thisStart = this.traceBackCriteriaVO.startDate;
+        LocalDate thisEnd = this.traceBackCriteriaVO.endDate;
 
         while(!allDatesWithData.contains(thisStart) || !allDatesWithData.contains(thisEnd)){
             if(!allDatesWithData.contains(thisStart)){
@@ -81,10 +86,10 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         int tradingDays = endIndex - startIndex + 1;
 
         //形成期
-        int formativePeriod = traceBackCriteriaVO.formativePeriod;
+        int formativePeriod = this.traceBackCriteriaVO.formativePeriod;
 
         //持有期
-        int holdingPeriod = traceBackCriteriaVO.holdingPeriod;
+        int holdingPeriod = this.traceBackCriteriaVO.holdingPeriod;
 
         //周期数
         int periodNum = 0;

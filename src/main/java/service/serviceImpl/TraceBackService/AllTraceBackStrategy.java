@@ -50,8 +50,9 @@ public abstract class AllTraceBackStrategy {
      * 根据目标股票池及所给的标准，返回策略的累计收益率
      *
      * @return List<CumulativeReturnVO> 策略的累计收益率
+     * @param traceBackCriteriaVO
      */
-    public abstract TraceBackStrategyVO traceBack() throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException;
+    public abstract TraceBackStrategyVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException;
 
 
     /**
