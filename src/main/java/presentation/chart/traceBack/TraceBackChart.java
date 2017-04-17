@@ -198,31 +198,31 @@ public class TraceBackChart {
         TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
         //设置TraceBackCriteriaVO
         traceBackCriteriaVO1.baseStockName = "沪深300";
-        traceBackCriteriaVO1.startDate = LocalDate.of(2014,4,13);
+        traceBackCriteriaVO1.startDate = LocalDate.of(2013,5,1);
         traceBackCriteriaVO1.endDate = LocalDate.of(2014,4,29);
-        traceBackCriteriaVO1.strategyType = TraceBackStrategy.MS;
+        traceBackCriteriaVO1.strategyType = TraceBackStrategy.MR;
         traceBackCriteriaVO1.formativePeriod = 5;
-        traceBackCriteriaVO1.holdingNum = 10;
+        traceBackCriteriaVO1.holdingNum = 1;
         traceBackCriteriaVO1.holdingPeriod = 5;
-        traceBackCriteriaVO1.isCustomized = true;
+        traceBackCriteriaVO1.isCustomized = false;
 
-        List<BlockType> blockTypes = new ArrayList<>();
-        blockTypes.add(BlockType.ALL);
-        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.INCLUDE, blockTypes);
-        traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
+//        List<BlockType> blockTypes = new ArrayList<>();
+//        blockTypes.add(BlockType.ALL);
+//        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.INCLUDE, blockTypes);
+//        traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
 
         List<BlockType> list = new ArrayList<>();
         list.add(BlockType.ZB);
         list.add(BlockType.CYB);
-//        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.EXCLUDE,list);
+        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.EXCLUDE,list);
         traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
 
 
         List<String> stockPool = new ArrayList<>();
-        stockPool.add("000300");
-//        stockPool.add("000022");
-//        stockPool.add("000010");
-//        stockPool.add("000004");
+        stockPool.add("000001");
+        stockPool.add("000022");
+        stockPool.add("000010");
+        stockPool.add("000004");
 
         long startTime = System.currentTimeMillis();
         System.out.println(startTime);

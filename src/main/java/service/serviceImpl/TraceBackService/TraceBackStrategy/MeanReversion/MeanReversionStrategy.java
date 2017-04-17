@@ -18,7 +18,6 @@ import java.util.*;
  */
 public class MeanReversionStrategy extends AllTraceBackStrategy {
 
-    private ChartService chartService;
     private StockDao stockDao;
 
     // 默认1000元初始投资资本
@@ -45,7 +44,6 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
 
     public MeanReversionStrategy(List<String> stockPoolCodes, TraceBackCriteriaVO traceBackCriteriaVO) throws IOException {
         super(stockPoolCodes, traceBackCriteriaVO);
-        chartService = new ChartServiceImpl();
         stockDao = new StockDaoImpl();
         nowMoney = initMoney;
 
@@ -109,11 +107,9 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         LocalDate periodEnd = withinDates.get(endIndex);
         wantedStockCodes = pickStocks(formate(stockPoolCodes, periodStart, formativePeriod));
 
-
         for (String s : wantedStockCodes) {
             System.out.println("select: " + s);
         }
-
 
         calculate(periodStart, periodEnd, periodSerial);
     }
