@@ -1,5 +1,6 @@
 package presentation.view.panel.user;
 
+import presentation.controller.UserController;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.component.FileChoose;
 import presentation.view.tools.WindowData;
@@ -57,10 +58,7 @@ public class FileImportPanel extends TemplatePanel {
         });
         add(radioButton2);
 
-        information=new MyLabel("由fff上传于2003-1-12");
-        information.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        information.setBounds(adaptScreen(90,175,250,40));
-        add(information);
+
 
         group = new ButtonGroup();// 创建单选按钮组
         group.add(radioButton1);// 将radioButton1增加到单选按钮组中
@@ -73,11 +71,36 @@ public class FileImportPanel extends TemplatePanel {
         JButton importData= new MyButton("导入数据");
         importData.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
         importData.setBounds(adaptScreen(80,290,120,25));
-        importData.addMouseListener(new FileChoose());
+
+
+        importData.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                UserController.getInstance().setUpdateMessage();
+            }
+        });
         add(importData);
+
+//        notFoundDate();
+
     }
 
     public void setUploadInfo(String message){
-        information.setText(message);
+        if(information!=null){
+            remove(information);
+        }
+        information=new MyLabel(message);
+        information.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
+        information.setBounds(adaptScreen(90,175,250,40));
+        add(information);
+        information.setVisible(true);
+        information.repaint();
+        repaint();
+    }
+
+    public void notFoundDate(){
+        radioButton1.setSelected(true);
+        radioButton2.setSelected(false);
+        radioButton2.setEnabled(false);
     }
 }

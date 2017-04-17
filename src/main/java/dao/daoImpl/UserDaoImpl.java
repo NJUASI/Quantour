@@ -125,4 +125,5 @@ public class UserDaoImpl implements UserDao {
     public Set<Object> getLoginUserNames() {
         return logDataHelper.getLoginUserNames();
     }
+
 }
