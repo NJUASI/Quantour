@@ -93,8 +93,9 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
         traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
 
-        // TraceBackParameter 计算贝塔系数等
-        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO);
+        // TraceBackParameter 计算贝塔系数等 b
+        //TODO 龚尘淼 这里stockData里面似乎都是空的，请看TraceBackParameter的initStrategy方法
+        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO,stockData);
         return traceBackParameter.getTraceBackVO();
 
 //        return traceBackVO;
