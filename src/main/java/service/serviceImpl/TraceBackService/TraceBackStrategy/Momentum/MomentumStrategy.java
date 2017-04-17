@@ -30,10 +30,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
     //初始投资
     double initInvestment;
 
-    //累计收益率
-    double curCumulativeReturn;
-
-
     public MomentumStrategy(List<String> traceBackStockPool, TraceBackCriteriaVO traceBackCriteriaVO, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) throws IOException {
         super(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
@@ -43,9 +39,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         //初始为千元投资
         initInvestment = 1000;
-
-        //累计收益率初始化为1
-        curCumulativeReturn = 1;
     }
 
     /**
@@ -133,6 +126,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             //计算一个持仓期中每天相对于回测区间第一天的累计收益率 以及每个持仓期详情
 
             //保存先前一个周期最后一天的累计收益率
+            double curCumulativeReturn = 1;
             double preCumulativeReturn = curCumulativeReturn;
             LocalDate temp = startOfHolding;
             while(temp.isBefore(endOfHolding) || temp.isEqual(endOfHolding)){
