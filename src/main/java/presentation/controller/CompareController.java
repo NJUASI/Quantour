@@ -119,17 +119,17 @@ public class CompareController {
     /**
      * Name 1 change. Group1的股票名称改变，更新associatePanel1
      */
-    public void name1Change() throws IOException {
-        comparePanel.updateJList1(comparePanel.getStockName1());
-        comparePanel.setAssociatePanel();
-    }
+//    public void name1Change() {
+//        comparePanel.updateJList1(comparePanel.getStockName1());
+//        comparePanel.setAssociatePanel();
+//    }
 
     /**
      * Name 2 change. Group2的股票名称改变，更新associatePanel2
      */
-    public void name2Change() throws IOException {
-        comparePanel.updateJList2(comparePanel.getStockName2());
-        comparePanel.setAssociatePanel2();
-    }
+//    public void name2Change() {
+//        comparePanel.updateJList2(comparePanel.getStockName2());
+//        comparePanel.setAssociatePanel2();
+//    }
 
 }

@@ -52,14 +52,14 @@ public class UserPanel extends TemplatePanel {
         refreshFavorite();
 
         MyLabel block1=new MyLabel("",16) ;
-        block1.setBounds(adaptScreen(0,0,420,1000));
-        block1.setBackground(new Color(32,36,39));
+        block1.setBounds(adaptScreen(417,0,3,1000));
+        block1.setBackground(new Color(16,17,18));
         block1.setOpaque(true);
         add(block1);
 
         MyLabel block2=new MyLabel("",16) ;
-        block2.setBounds(adaptScreen(1300,0,620,1000));
-        block2.setBackground(new Color(32,36,39));
+        block2.setBounds(adaptScreen(1300,0,3,1000));
+        block2.setBackground(new Color(16,17,18));
         block2.setOpaque(true);
         add(block2);
     }

@@ -107,29 +107,20 @@ public class ComparePanel extends TemplatePanel {
         addRefreshListener();
 
         MyLabel label=new MyLabel("股票1") ;
-        label.setBounds(adaptScreen(700,40,65,35));
+        label.setBounds(adaptScreen(700,50,65,35));
         add(label);
         MyLabel label1=new MyLabel("股票2") ;
-        label1.setBounds(adaptScreen(700,80,65,35));
+        label1.setBounds(adaptScreen(910,50,65,35));
         add(label1);
-        MyLabel label2=new MyLabel("代码") ;
-        label2.setLocation(810*width/1920,5*height/1030);
-        add(label2);
-        MyLabel label3=new MyLabel("名称") ;
-        label3.setLocation(960*width/1920,5*height/1030);
-        add(label3);
 
-        name1.setBounds(adaptScreen(910, 40, 150, 35));
-        add(name1);
 
-        num1.setBounds(adaptScreen(750, 40, 150, 35));
+
+
+        num1.setBounds(adaptScreen(750, 50, 150, 35));
         add(num1);
 
 
-        name2.setBounds(adaptScreen(910, 80, 150, 35));
-        add(name2);
-
-        num2.setBounds(adaptScreen(750, 80, 150, 35));
+        num2.setBounds(adaptScreen(750+210, 50, 150, 35));
         add(num2);
 
         setBackground(ColorUtils.backgroundColor());
@@ -195,7 +186,7 @@ public class ComparePanel extends TemplatePanel {
      * @updateTime 2017/3/15
      */
     public void setCompare(String name,String num) {
-        name1.setText(name);
+//        name1.setText(name);
         num1.setText(num);
     }
     /**
@@ -261,15 +252,15 @@ public class ComparePanel extends TemplatePanel {
 
     //向num、name中设置信息
     public void addMessageToGroup1(String name, String code) {
-        name1.setText(name);
-        num1.setText(code);
+//        name1.setText(name);
+        num1.setText(code+" "+name);
         associatePanel.setVisible(false);
         num1.requestFocus();
     }
 
     public void addMessageToGroup2(String name, String code) {
-        name2.setText(name);
-        num2.setText(code);
+//        name2.setText(name);
+        num2.setText(code+" "+name);
         associatePanel2.setVisible(false);
         num2.requestFocus();
     }
@@ -277,11 +268,11 @@ public class ComparePanel extends TemplatePanel {
 
     //获取num、name的值
     public String getNum1() {
-        return num1.getText();
+        return num1.getText().split(" ")[0];
     }
 
     public String getNum2() {
-        return num2.getText();
+        return num2.getText().split(" ")[0];
     }
 
     public String getStockName1(){
@@ -302,12 +293,17 @@ public class ComparePanel extends TemplatePanel {
 
     public void setAssociatePanel(){
         associatePanel.setVisible(true);
-        associatePanel.setBounds(adaptScreen(750, 75, 300, 300));
+        associatePanel.setBounds(adaptScreen(750, 86, 200, 200));
     }
 
     public void setAssociatePanel2(){
         associatePanel2.setVisible(true);
-        associatePanel2.setBounds(adaptScreen(750, 115, 300, 300));
+        associatePanel2.setBounds(adaptScreen(750+210, 86, 200, 200));
+    }
+
+    public void setAssociatePanelUnvisible(){
+        associatePanel.setVisible(false);
+        associatePanel.setVisible(false);
     }
 
     public CompareChartPanel getCompareChartPanel() {
