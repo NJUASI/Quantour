@@ -103,6 +103,9 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             periodNum = tradingDays/holdingPeriod + 1;
         }
 
+        //保存先前一个周期最后一天的累计收益率
+        double curPeriodCumulativeReturn = 1;
+        double prePeriodCumulativeReturn = curPeriodCumulativeReturn;
         for (int i = 0; i < periodNum; i++ ){
 
             //持有期的开始日期
@@ -129,12 +132,11 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             }
 
             //计算一个持仓期中每天相对于回测区间第一天的累计收益率 以及每个持仓期详情
-
-            //保存先前一个周期最后一天的累计收益率
-            double curCumulativeReturn = 1;
-            double preCumulativeReturn = curCumulativeReturn;
             LocalDate temp = startOfHolding;
             while(temp.isBefore(endOfHolding) || temp.isEqual(endOfHolding)){
+
+                System.out.println("enter");
+
                 StrategyStock vo = null;
                 double totalCumulativeReturn = 0;
                 int notSuspend = 0;
@@ -148,16 +150,16 @@ public class MomentumStrategy extends AllTraceBackStrategy {
                 }
 
                 //即该天相对于前一天的总累计收益率不为0
-                if(totalCumulativeReturn != 0){
-                    curCumulativeReturn = curCumulativeReturn * (1 + (totalCumulativeReturn / notSuspend));
-                    cumulativeReturnVOS.add(new CumulativeReturnVO(vo.date, curCumulativeReturn-1, false));
+                if(notSuspend != 0){
+                    curPeriodCumulativeReturn = curPeriodCumulativeReturn * (1 + (totalCumulativeReturn / notSuspend));
+                    cumulativeReturnVOS.add(new CumulativeReturnVO(vo.date, curPeriodCumulativeReturn-1, false));
                 }
 
                 temp = temp.plusDays(1);
             }
 
-            double thisPeriodReturn = curCumulativeReturn / preCumulativeReturn - 1;
-            holdingDetailVOS.add(new HoldingDetailVO(periodNum+1, startOfHolding, endOfHolding, holdingStocks.size(), thisPeriodReturn, curCumulativeReturn*initInvestment));
+            double thisPeriodReturn = curPeriodCumulativeReturn / prePeriodCumulativeReturn - 1;
+            holdingDetailVOS.add(new HoldingDetailVO(periodNum+1, startOfHolding, endOfHolding, holdingStocks.size(), thisPeriodReturn, curPeriodCumulativeReturn*initInvestment));
 
         }
 

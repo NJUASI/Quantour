@@ -29,9 +29,8 @@ public interface TraceBackService {
      * 获取基准累计收益率，自选股票池
      * @param start 回测区间起始日期
      * @param end 回测区间结束日期
-     * @param stockMap
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
-    List<CumulativeReturnVO> getCustomizedCumulativeReturn(LocalDate start, LocalDate end, Map<String, List<StrategyStock>> stockMap) throws IOException, NoDataWithinException, DateNotWithinException;
+    List<CumulativeReturnVO> getCustomizedCumulativeReturn(LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException;
 
 }

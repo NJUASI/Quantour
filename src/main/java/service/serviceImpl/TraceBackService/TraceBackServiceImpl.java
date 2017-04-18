@@ -24,9 +24,6 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     private AllTraceBackStrategy traceBackStrategy;
 
-    //基准累计收益率
-    private double baseStockCumulative;
-
     //回测标准
     private TraceBackCriteriaVO traceBackCriteriaVO;
 
@@ -54,8 +51,6 @@ public class TraceBackServiceImpl implements TraceBackService {
         stockService = new StockServiceImpl();
         stockDao = new StockDaoImpl();
 
-        //将基准累计收益率初始化为1
-        baseStockCumulative = 1;
         //获取所有数据的日期
         allDatesWithData = stockDao.getDateWithData();
     }
@@ -387,7 +382,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         if (!traceBackCriteriaVO.isCustomized) {
             return getCumulativeReturnOfOneStock(traceBackCriteriaVO.baseStockName, start, end);
         } else {
-            return getCustomizedCumulativeReturn(start, end, baseStockData);
+            return getCustomizedCumulativeReturn(start, end);
         }
     }
 
@@ -398,11 +393,10 @@ public class TraceBackServiceImpl implements TraceBackService {
      *
      * @param start 回测区间起始日期
      * @param end   回测区间结束日期
-     * @param stockMap
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
     @Override
-    public List<CumulativeReturnVO>  getCustomizedCumulativeReturn(LocalDate start, LocalDate end, Map<String, List<StrategyStock>> stockMap) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<CumulativeReturnVO>  getCustomizedCumulativeReturn(LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<>();
 
         LocalDate thisStart = traceBackCriteriaVO.startDate;
@@ -418,6 +412,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         }
 
         LocalDate temp = thisStart;
+        double baseStockCumulative = 1;
         while(temp.isBefore(thisEnd) || temp.isEqual(thisEnd)){
             StrategyStock vo = null;
             double totalCumulativeReturn = 0;
