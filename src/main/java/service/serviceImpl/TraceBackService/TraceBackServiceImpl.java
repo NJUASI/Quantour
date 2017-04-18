@@ -183,6 +183,11 @@ public class TraceBackServiceImpl implements TraceBackService {
             ExcessAndWinRateDistVO excessAndWinRateDistVO = new ExcessAndWinRateDistVO();
             //给定形成期
             if (certainFormate) {
+                //持有期太大，不能形成一个周期
+                if((initHoldingPeriod * i) > baseCumulativeReturn.size() )
+                {
+                    break;
+                }
                 //新的持有期
                 traceBackCriteriaVO.holdingPeriod = initHoldingPeriod * i;
             }
