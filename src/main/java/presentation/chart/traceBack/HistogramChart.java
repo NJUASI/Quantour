@@ -60,7 +60,7 @@ public class HistogramChart {
                 int sum = (int)data[11];
                 sum = sum+map.get(key);
                 data[11] = sum;
-            } else{
+            } else if(index>=1){
                 data[index] = map.get(key);
             }
         }
