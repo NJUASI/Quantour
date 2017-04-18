@@ -130,11 +130,11 @@ public class ThermometerPanel extends TemplatePanel {
         label.setHorizontalAlignment(SwingConstants.CENTER);
         add(label);
 
-        MyLabel lb5=new MyLabel("",16) ;
-        lb5.setBounds(adaptScreen(0,80,400,3));
-        lb5.setBackground(new Color(16,17,18));
-        lb5.setOpaque(true);
-        add(lb5);
+//        MyLabel lb5=new MyLabel("",16) ;
+//        lb5.setBounds(adaptScreen(0,80,400,3));
+//        lb5.setBackground(new Color(16,17,18));
+//        lb5.setOpaque(true);
+//        add(lb5);
 
         MyLabel lb=new MyLabel("总成交量",16) ;
         lb.setBounds(adaptScreen(30,move-20,80,30));

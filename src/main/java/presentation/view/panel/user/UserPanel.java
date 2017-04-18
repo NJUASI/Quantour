@@ -52,14 +52,14 @@ public class UserPanel extends TemplatePanel {
         refreshFavorite();
 
         MyLabel block1=new MyLabel("",16) ;
-        block1.setBounds(adaptScreen(417,0,3,1000));
-        block1.setBackground(new Color(16,17,18));
+        block1.setBounds(adaptScreen(0,0,420,1000));
+        block1.setBackground(new Color(32,36,39));
         block1.setOpaque(true);
         add(block1);
 
         MyLabel block2=new MyLabel("",16) ;
-        block2.setBounds(adaptScreen(1300,0,3,1000));
-        block2.setBackground(new Color(16,17,18));
+        block2.setBounds(adaptScreen(1300,0,620,1000));
+        block2.setBackground(new Color(32,36,39));
         block2.setOpaque(true);
         add(block2);
     }
@@ -73,7 +73,7 @@ public class UserPanel extends TemplatePanel {
             favoritePanel=new FavoritePanel();
             favoritePanel.setBounds(adaptScreen(420,100,1300-420,800));
             label = new JLabel();
-            label.setBounds(420 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, (1300-420) * width / 1920 , 900* height / 1030);
+            label.setBounds(420 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, (1300-4) * width / 1920 , 900* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(ColorUtils.backgroundColor());
             label.setOpaque(true);
@@ -87,6 +87,7 @@ public class UserPanel extends TemplatePanel {
             new PopUpFrame(e.getMessage());
             //TODO 高源后期添加
         }
+//        label.repaint();
     }
     public static UserPanel getInstance(){
         if(userPanel==null){

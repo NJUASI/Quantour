@@ -297,7 +297,7 @@ public class KStringPanel extends TemplatePanel {
     }
 
     public void setAssociatePanelBounds(){
-        associatePanel.setBounds(adaptScreen(750, 86, 300, 200));
+        associatePanel.setBounds(adaptScreen(750, 86, 200, 200));
     }
 
     public void associatePanelSetting() {

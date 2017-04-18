@@ -28,7 +28,7 @@ public class FileImportPanel extends TemplatePanel {
         width = WindowData.getInstance().getWidth();
         height = WindowData.getInstance().getHeight();
 
-        Color color=new Color(27,29,33);
+        Color color=new Color(32,36,39);
 
         setBackground(color);
 

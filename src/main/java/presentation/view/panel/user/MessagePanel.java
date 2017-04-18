@@ -27,7 +27,7 @@ public class MessagePanel extends TemplatePanel{
         width= WindowData.getInstance().getWidth();
         height= WindowData.getInstance().getHeight();
 
-        setBackground(new Color(27,29,33));
+        setBackground(new Color(32,36,39));
 
         JLabel logo =new JLabel();
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
