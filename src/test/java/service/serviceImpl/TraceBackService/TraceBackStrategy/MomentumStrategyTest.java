@@ -62,8 +62,7 @@ public class MomentumStrategyTest {
     @Test
     public void traceBack() throws Exception {
 
-        TraceBackStrategyVO traceBackStrategyVO = allTraceBackStrategy.traceBack(traceBackCriteriaVO);
-        List<CumulativeReturnVO> cumulativeReturnVOS = traceBackStrategyVO.strategyCumulativeReturn;
+        List<CumulativeReturnVO> cumulativeReturnVOS = allTraceBackStrategy.traceBack(traceBackCriteriaVO);;
         assertEquals(-0.02,cumulativeReturnVOS.get(1).cumulativeReturn,0.01);
 
 

@@ -88,8 +88,8 @@ public class MeanReversionStrategyTest {
      */
     @Test
     public void testTraceBack() throws Exception {
-        TraceBackStrategyVO vo = strategy.traceBack(new TraceBackCriteriaVO());
-        assertEquals(8, vo.holdingDetailVOS.size());
+        List<CumulativeReturnVO> vos = strategy.traceBack(new TraceBackCriteriaVO());
+        assertEquals(78, vos.size());
     }
 
     /**
