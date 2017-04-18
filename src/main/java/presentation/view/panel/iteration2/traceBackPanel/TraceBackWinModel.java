@@ -1,6 +1,7 @@
 package presentation.view.panel.iteration2.traceBackPanel;
 
 import presentation.view.tools.MyTabelModel;
+import utilities.NumberFormat;
 import vo.ExcessAndWinRateDistVO;
 
 import java.io.IOException;
@@ -25,8 +26,8 @@ public class TraceBackWinModel extends MyTabelModel {
         data = new Object[vo.size()][columns];
         for (int i = 0 ; i<vo.size();i++){
             data[i][0]=vo.get(i).relativeCycle;
-            data[i][1]=vo.get(i).excessRate;
-            data[i][2]=vo.get(i).winRate;
+            data[i][1]= NumberFormat.percentFormat(vo.get(i).excessRate,2);
+            data[i][2]=NumberFormat.percentFormat(vo.get(i).winRate,2);
         }
     }
 

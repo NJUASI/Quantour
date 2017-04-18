@@ -8,6 +8,7 @@ import presentation.view.tools.ui.MyScrollBarUI;
 import vo.ExcessAndWinRateDistVO;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
@@ -48,6 +49,10 @@ public class TraceBackWinTable extends JScrollPane {
             jTable.setRowSelectionInterval(0, 0);
             jTable.setGridColor(ColorUtils.divideColor());
             jTable.setBorder(BorderFactory.createEmptyBorder());
+
+            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();//单元格渲染器
+            tcr.setHorizontalAlignment(JLabel.CENTER);
+            jTable.setDefaultRenderer(Object.class,tcr);
 
             JTableHeader header = jTable.getTableHeader();
             header.setDefaultRenderer(new MyTableHeaderRender(header.getDefaultRenderer()));

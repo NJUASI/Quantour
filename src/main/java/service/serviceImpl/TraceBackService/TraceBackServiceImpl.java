@@ -109,20 +109,18 @@ public class TraceBackServiceImpl implements TraceBackService {
         System.out.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // 计算超额收益率/策略胜率，给定持有期/形成期
-//        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
+        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
 
         System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
 
-//        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
+        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
 
         System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等 b
-        //TODO 龚尘淼 这里stockData里面似乎都是空的，请看TraceBackParameter的initStrategy方法
         TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO,stockData, traceBackStockPool);
         return traceBackParameter.getTraceBackVO();
 
-//        return traceBackVO;
     }
 
     private void setUp(List<String> traceBackStockPool) throws IOException {

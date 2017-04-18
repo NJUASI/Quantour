@@ -9,6 +9,7 @@ import presentation.view.tools.component.MyLabel;
 import vo.ExcessAndWinRateDistVO;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -120,7 +121,6 @@ public class TraceBackWinRatePanel extends TemplatePanel {
 
             traceBackWinTable2=new TraceBackWinTable(certainHoldings);
             traceBackWinTable2.setBounds(adaptScreen(250,120,300,800));
-
 
             add(traceBackWinTable2);
 

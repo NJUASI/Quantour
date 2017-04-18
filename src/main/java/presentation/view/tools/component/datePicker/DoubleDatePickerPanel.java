@@ -15,7 +15,12 @@ import presentation.view.tools.WindowData;
 
 import javax.swing.*;
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by 61990 on 2017/3/7.
@@ -127,8 +132,8 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                             @Override
                             public void updateItem(LocalDate item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if (item.isBefore(LocalDate.of(2005,1,31))||item.isAfter(endDate.getValue())
-                                        ) {
+                                if (item.isBefore(LocalDate.of(2005,1,31))||
+                                        item.isAfter(endDate.getValue())||isSaturdayOrSunday(item)) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #424B54;"+
                                             "-fx-text-fill: #1C2023");
@@ -148,8 +153,8 @@ public class DoubleDatePickerPanel  extends JFXPanel {
                             @Override
                             public void updateItem(LocalDate item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if (item.isBefore(startDate.getValue().plusDays(1))||item.isAfter(WindowData.getInstance().getDate())
-                                        ) {
+                                if (item.isBefore(startDate.getValue().plusDays(1))||
+                                        item.isAfter(WindowData.getInstance().getDate())||isSaturdayOrSunday(item)) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #424B54;"+
                                             "-fx-text-fill: #1C2023");
@@ -190,5 +195,20 @@ public class DoubleDatePickerPanel  extends JFXPanel {
     public void setDate(LocalDate date) {
         startDate.setValue(date);
         endDate.setValue(date);
+    }
+
+    private boolean isSaturdayOrSunday(LocalDate localDate){
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = format1.parse(localDate.toString());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+
+            if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY||cal.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY) {
+                return true;
+            } else {return false;}
+        } catch (ParseException e) {
+            return false;
+        }
     }
 }
