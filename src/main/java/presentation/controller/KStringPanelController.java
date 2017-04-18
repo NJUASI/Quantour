@@ -69,9 +69,9 @@ public class KStringPanelController {
     /**
      * Stock name change. 实时根据股票名称框的信息联想股票
      */
-    public void stockNameChange() throws IOException {
-        kStringPanel.associatePanelSetting();
-        kStringPanel.updateAssociateJList(kStringPanel.getStockName());
+    public void stockNameChange() {
+//        kStringPanel.associatePanelSetting();
+//        kStringPanel.updateAssociateJList(kStringPanel.getStockName());
     }
 
     /**

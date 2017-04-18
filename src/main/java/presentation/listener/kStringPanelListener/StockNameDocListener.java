@@ -45,10 +45,10 @@ public class StockNameDocListener implements DocumentListener{
     }
 
     private void callController(){
-        try {
-            KStringPanelController.getInstance().stockNameChange();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            KStringPanelController.getInstance().stockNameChange();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }

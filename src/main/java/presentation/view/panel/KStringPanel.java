@@ -19,6 +19,7 @@ import presentation.view.tools.component.MyTextField;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
 
+import utilities.CodeReserve;
 import utilities.exceptions.ColorNotExistException;
 import vo.StockSearchVO;
 
@@ -112,12 +113,7 @@ public class KStringPanel extends TemplatePanel {
         MyLabel label1=new MyLabel("股票") ;
         label1.setLocation(700*width/1920,50*height/1030);
         add(label1);
-        MyLabel label2=new MyLabel("代码") ;
-        label2.setLocation(810*width/1920,15*height/1030);
-        add(label2);
-        MyLabel label3=new MyLabel("名称") ;
-        label3.setLocation(960*width/1920,15*height/1030);
-        add(label3);
+
         
         //股票代码框
         num.setBounds(adaptScreen(750, 50, 150, 35));
@@ -132,6 +128,7 @@ public class KStringPanel extends TemplatePanel {
         //股票名称框
         searchTextField.setBounds(adaptScreen(910, 50, 150, 35));
         add(searchTextField);
+        searchTextField.setVisible(false);
         searchTextField.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -149,7 +146,7 @@ public class KStringPanel extends TemplatePanel {
         });
 
         //搜索按钮
-        searchAll.setBounds(adaptScreen(1130, 50, 100, 35));
+        searchAll.setBounds(adaptScreen(1000, 50, 100, 35));
         searchAll.addMouseListener(new SearchAllListener());
         add(searchAll);
 
@@ -184,9 +181,11 @@ public class KStringPanel extends TemplatePanel {
                 setAssociatePanelUnvisible();
                 ViewSwitchController.getInstance().viewSwitch("comparePanel");
                 NavigationBar.getInstance().whileClicked(3);
-                ComparePanel.getInstance().setCompare(searchTextField.getText(),num.getText());
+                ComparePanel.getInstance().setCompare(" ",num.getText());
                 ComparePanel.getInstance().setDate(datePanel.getStartDate(),datePanel.getEndDate());
+                setAssociatePanelUnvisible();
                 ComparePanel.getInstance().count=0;
+                ComparePanel.getInstance().setAssociatePanelUnvisible();
             }
         });
         add(compare);
@@ -243,8 +242,10 @@ public class KStringPanel extends TemplatePanel {
 
     //更新股票名称框和代码框
     public void addMessage(String name, String num){
+        String str=num+" "+name;
+        System.out.println(str);
+        this.num.setText(str);
         this.searchTextField.setText(name);
-        this.num.setText(num);
         associatePanel.setVisible(false);
     }
     
@@ -254,9 +255,9 @@ public class KStringPanel extends TemplatePanel {
     }
 
     //获取股票名称
-    public String getStockName(){
-        return searchTextField.getText();
-    }
+//    public String getStockName(){
+//        return searchTextField.getText();
+//    }
 
     //对联想面板的操作
     public void setAssociatePanelUnvisible(){

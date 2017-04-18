@@ -44,10 +44,6 @@ public class Name1ChangeListener implements DocumentListener {
     }
 
     private void callController(){
-        try {
-            CompareController.getInstance().name1Change();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        CompareController.getInstance().name1Change();
     }
 }

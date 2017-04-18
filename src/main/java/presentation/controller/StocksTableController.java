@@ -122,7 +122,8 @@ public class StocksTableController {
         try {
             KStringPanel.getInstance().count=1;
             kStringPanel = KStringPanel.getInstance();
-            kStringPanel.addMessage("", "");
+//            kStringPanel.addMessage("", "");
+            ViewSwitchController.getInstance().viewSwitch("kStringPanel");
             kStringPanel.datePanel.setDate(stocksTablePanel.getChooseDate());
             NavigationBar.getInstance().whileClicked(2);
             kStringPanel.addMessage(CodeReserve.getInstance().getName(), CodeReserve.getInstance().getCode());
