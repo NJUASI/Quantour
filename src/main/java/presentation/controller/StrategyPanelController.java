@@ -30,7 +30,8 @@ public class StrategyPanelController {
     AnalysePanel analysePanel;
     TraceBackService traceBackService;
     StockService stockService;
-    JLabel progressBar, message;
+    TraceBackVO traceBackVO ;
+    Thread thread;
     /**
      * The constant ourInstance.
      */
@@ -54,19 +55,20 @@ public class StrategyPanelController {
         analysePanel = AnalysePanel.getInstance();
     }
 
-    public void search() throws DateNotWithinException, NoMatchEnumException, IOException,
+    public TraceBackVO search() throws DateNotWithinException, NoMatchEnumException, IOException,
             NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException,
             InvalidInputException, DataSourceFirstDayException, PrivateStockNotFoundException {
 
         traceBackService = new TraceBackServiceImpl();
         stockService = new StockServiceImpl();
-        analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
 
         TraceBackCriteriaVO vo = chooseStrategyPanel.getInfo();
 
         List<String> stockPool = stockService.getPrivateStockCodes(IDReserve.getInstance().getUserID());
 
-        analysePanel.createChart(traceBackService.traceBack(vo, stockPool));
+        return traceBackService.traceBack(vo, stockPool);
+
+
 
         //        vo.isCustomized=false; //TODO 后期需要删去
 //         //TODO 后期需要改成其他对象，不是null
@@ -83,6 +85,41 @@ public class StrategyPanelController {
 //        traceBackVO.relativeReturnPeriodVO=null;
 //        traceBackVO.absoluteReturnPeriodVO=null;
 //        analysePanel.createChart(traceBackVO);
+    }
+
+    public void runThread() {
+       thread = new Thread(() -> {
+            ChooseStrategyPanel.getInstance().popup();
+            try {
+                traceBackVO = search();
+            } catch (DateNotWithinException e1) {
+                e1.printStackTrace();
+            } catch (NoMatchEnumException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (NoDataWithinException e1) {
+                e1.printStackTrace();
+            } catch (CodeNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (DateShortException e1) {
+                e1.printStackTrace();
+            } catch (UnhandleBlockTypeException e1) {
+                e1.printStackTrace();
+            } catch (InvalidInputException e1) {
+                e1.printStackTrace();
+            } catch (DataSourceFirstDayException e1) {
+                e1.printStackTrace();
+            } catch (PrivateStockNotFoundException e1) {
+                e1.printStackTrace();
+            }
+            ChooseStrategyPanel.getInstance().popdown();
+            AnalysePanel.getInstance().createChart(traceBackVO);
+            StrategySwitchController.getInstance().viewSwitch("analysePanel");
+            analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
+            thread.stop();
+        });
+       thread.start();
     }
 
     public void deletePool() throws PrivateStockNotExistException, PrivateStockNotFoundException {

@@ -26,7 +26,6 @@ public class FileChoose extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        UserPanel.getInstance().fileImportPanel.popLabel();
         UIManagerUtil.set();
         JFileChooser jfc = new JFileChooser();
         jfc.setFileSelectionMode(JFileChooser.OPEN_DIALOG);

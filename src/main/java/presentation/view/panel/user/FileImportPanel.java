@@ -24,6 +24,7 @@ public class FileImportPanel extends TemplatePanel {
     JRadioButton radioButton1,radioButton2;
     ButtonGroup group;
     JLabel label;
+    Thread thread;
     public FileImportPanel() {
         width = WindowData.getInstance().getWidth();
         height = WindowData.getInstance().getHeight();
@@ -80,14 +81,41 @@ public class FileImportPanel extends TemplatePanel {
 
     }
     public void popLabel(){
-        label= new MyLabel("正在上传....");
+        label= new MyLabel("正在上传.");
         label.setBounds(adaptScreen(60+100, 340, 200, 35));
         add(label);
+        thread=new Thread(() ->{
+            int num =0;
+            while (true){
+                try{
+                    Thread.sleep(400);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                switch (num){
+                    case 0:
+                        label.setText("正在上传..");
+                        break;
+                    case 1:
+                        label.setText("正在上传....");
+                        break;
+                    case 2:
+                        label.setText("正在上传....");
+                        break;
+                    case 3:
+                        label.setText("正在上传..");
+                        break;
+                }
+                num=(num+1)%4;
+            }
+        });
+        thread.start();
         label.repaint();
         repaint();
     }
 
     public void hideLabel(){
+        thread.stop();
         remove(label);
         repaint();
     }

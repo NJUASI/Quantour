@@ -104,7 +104,7 @@ public class AnalysePanel extends TemplatePanel {
         traceBackDetail.setBounds(adaptScreen(200,50,1400,800));
 
         label = new JLabel("");
-        label.setBounds(200 * width / 1920, 30*(traceBackDetail.jTable.getRowCount()+1)+50 * height / 1030, 1400 * width / 1920 , 600* height / 1030);
+        label.setBounds(200 * width / 1920, 30*(traceBackDetail.jTable.getRowCount()+1)+50 * height / 1030, 1400 * width / 1920 , 900* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
         label.setBackground(ColorUtils.backgroundColor());
         label.setForeground(Color.WHITE);

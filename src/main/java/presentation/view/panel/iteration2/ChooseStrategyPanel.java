@@ -1,5 +1,6 @@
 package presentation.view.panel.iteration2;
 
+import presentation.controller.StrategyPanelController;
 import presentation.controller.StrategySwitchController;
 import presentation.listener.strategyPanelListener.SearchListener;
 import presentation.view.panel.TemplatePanel;
@@ -10,6 +11,7 @@ import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
 import utilities.enums.StType;
 import utilities.enums.TraceBackStrategy;
+import utilities.exceptions.*;
 import vo.StockPoolCriteriaVO;
 import vo.TraceBackCriteriaVO;
 
@@ -17,6 +19,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 /**
  * Created by day on 17/3/28.
@@ -33,7 +36,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
     public StrategyPoolPanel strategyPoolPanel;
     JComboBox comboBox;
     JLabel progressBar;
-
+    Thread thread;
     int width;
     int height;
     /**
@@ -122,12 +125,12 @@ public class ChooseStrategyPanel extends TemplatePanel {
         searchBt.setBounds(adaptScreen(1300,550,100,35));
 
         searchBt.addMouseListener(new SearchListener());
-        searchBt.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                StrategySwitchController.getInstance().viewSwitch("analysePanel");
-            }
-        });
+//        searchBt.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                StrategySwitchController.getInstance().viewSwitch("analysePanel");
+//            }
+//        });
 
         add(searchBt);
 
@@ -160,7 +163,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         progressBar = new MyLabel("正在回测..");
         progressBar.setBounds(adaptScreen(1300, 400, 100, 30));
         add(progressBar);
-        new Thread(() ->{
+        thread=new Thread(() ->{
             int num =0;
             while (true){
                 try{
@@ -184,7 +187,8 @@ public class ChooseStrategyPanel extends TemplatePanel {
                 }
                 num=(num+1)%4;
             }
-        }).start();
+        });
+        thread.start();
         progressBar.repaint();
         repaint();
 //        progressBar = new JLabel();
@@ -200,6 +204,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
 //        popupProgress.stop();
 //        remove(progressBar);
 //        remove(message);
+        thread.stop();
         remove(progressBar);
         repaint();
     }
@@ -230,6 +235,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
    public void refreshTabel(){
         strategyPoolPanel.refreshTabel();
     }
+
     /**
      * get ALL panel message
      *

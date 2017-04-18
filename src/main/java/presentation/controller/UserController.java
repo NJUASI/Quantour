@@ -42,7 +42,7 @@ public class UserController {
     StockService stockService;
     UserService userService;
     DataSourceService dataSourceService;
-    JLabel label;
+    Thread thread;
     /**
      * Instantiates a new User controller.
      */
@@ -64,26 +64,29 @@ public class UserController {
      */
 
     public void importDate(String filePath) {
+        thread = new Thread(() -> {
+            userPanel.fileImportPanel.popLabel();
+            try {
+                dataSourceService = new DataSourceServiceImpl();
+                dataSourceService.upload(filePath);
 
+                if (progressBar != null) {
+                    userPanel.fileImportPanel.remove(progressBar);
+                }
 
-        try {
-            dataSourceService = new DataSourceServiceImpl();
-            dataSourceService.upload(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+                new PopUpFrame(e.getMessage());
 
-            if (progressBar != null) {
-                userPanel.fileImportPanel.remove(progressBar);
+            } catch (NotCSVException e) {
+                e.printStackTrace();
+                new PopUpFrame(e.getMessage());
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            new PopUpFrame(e.getMessage());
-
-        } catch (NotCSVException e) {
-            e.printStackTrace();
-            new PopUpFrame(e.getMessage());
-        }
-        setUpdateMessage();
-        userPanel.fileImportPanel.hideLabel();
+            setUpdateMessage();
+            userPanel.fileImportPanel.hideLabel();
+            thread.stop();
+        });
+        thread.start();
     }
 
     public void setUpdateMessage(){
