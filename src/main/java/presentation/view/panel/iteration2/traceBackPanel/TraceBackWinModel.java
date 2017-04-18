@@ -28,14 +28,6 @@ public class TraceBackWinModel extends MyTabelModel {
             data[i][1]=vo.get(i).excessRate;
             data[i][2]=vo.get(i).winRate;
         }
-
-//        data = new Object[13][columns];
-//        for (int i = 0 ; i<13;i++){
-//            for(int j =0 ;j<columns;j++){
-//                data[i][j]="-";
-//            }
-//        }
-
     }
 
 }

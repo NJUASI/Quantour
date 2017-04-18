@@ -8,10 +8,7 @@ import vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Byron Dong on 2017/4/9.
@@ -57,6 +54,9 @@ public class TraceBackParameter {
     //需要计算数据的所有股票代码
     private List<String> codes;
 
+    //数据信息
+    private TraceBackCriteriaVO traceBackCriteriaVO;
+
     /**
      * 对回测所需要显示参数的初始化
      *
@@ -64,13 +64,17 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO,Map<String, List<StrategyStock>> stockData, List<String> codes) throws CodeNotFoundException, IOException, DateNotWithinException, NoDataWithinException, DateShortException, UnhandleBlockTypeException {
+    public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO,
+                              Map<String, List<StrategyStock>> stockData, List<String> codes) throws CodeNotFoundException,
+            IOException, DateNotWithinException, NoDataWithinException, DateShortException, UnhandleBlockTypeException {
         this.stockService = new StockServiceImpl();
         this.stockData = stockData;
-        traceBackNumValVO = new TraceBackNumValVO();
         this.traceBackVO = traceBackVO;
+        this.traceBackCriteriaVO = traceBackCriteriaVO;
+        traceBackNumValVO = new TraceBackNumValVO();
         this.codes = codes;
-        this.initBase(traceBackCriteriaVO);
+
+        this.initBase();
         this.initStrategy();
         this.traceBackVO.traceBackNumValVO = this.traceBackNumValVO;
     }
@@ -123,14 +127,12 @@ public class TraceBackParameter {
         List<List<StrategyStock>> list = new ArrayList<>();
 
         for (String code : codes) {
-            //TODO 龚尘淼看这里，根据股票池里面的code，从stockData里面获取数据，打印出来全是null
-            System.out.println(code+"--"+stockData.get(code));
             list.add(stockData.get(code));
         }
         strategyRate = this.calStrategyDailyRateAll(list);
 
         //计算策略的总收益率
-        traceBackNumValVO.sumRate = this.calSumRate(traceBackVO.holdingDetailVOS);
+        traceBackNumValVO.sumRate = this.calStrategySumRate();
         //计算策略的日收益率均值
         this.meanStrategy = this.calMeanOfDaily(strategyRate);
         //计算策略的日收益率标准差
@@ -153,17 +155,16 @@ public class TraceBackParameter {
     /**
      * 初始化基准的参数信息
      *
-     * @param traceBackCriteriaVO
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    private void initBase(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException {
+    private void initBase() throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException {
         baseRate = this.calBaseDailyRate(stockService.getBaseStockData(traceBackCriteriaVO.baseStockName,
                 traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate));
 
         //计算基准的总收益率
-        traceBackNumValVO.baseSumRate = this.calSumRateBase(traceBackVO.holdingDetailVOS);
+        traceBackNumValVO.baseSumRate = this.calBaseSumRate();
         //计算基准的日收益率均值
         this.meanBase = this.calMeanOfDaily(baseRate);
         //计算基准的日收益率标准差
@@ -302,33 +303,29 @@ public class TraceBackParameter {
     /**
      * 计算策略总收益
      *
-     * @param holdingDetailVOS 包含持仓周期的基准收益
      * @return double 总收益
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/10
      */
-    private double calSumRate(List<HoldingDetailVO> holdingDetailVOS) {
-        double result = (holdingDetailVOS.get(holdingDetailVOS.size() - 1).remainInvestment /
-                holdingDetailVOS.get(0).remainInvestment) - 1;
-        return result;
+    private double calStrategySumRate() {
+        List<CumulativeReturnVO> list = traceBackVO.strategyCumulativeReturn;
+        CumulativeReturnVO last = list.get(list.size() - 1);
+        return last.cumulativeReturn;
     }
 
     /**
      * 计算基准总收益
      *
-     * @param holdingDetailVOS 包含持仓周期的基准收益
      * @return double 总收益
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    private double calSumRateBase(List<HoldingDetailVO> holdingDetailVOS) {
-        double result = 1.0;
-        for (HoldingDetailVO holdingDetailVO : holdingDetailVOS) {
-            result = result * (1 + holdingDetailVO.baseReturn);
-        }
-        return result - 1;
+    private double calBaseSumRate() {
+        List<CumulativeReturnVO> list = traceBackVO.baseCumulativeReturn;
+        CumulativeReturnVO last = list.get(list.size() - 1);
+        return last.cumulativeReturn;
     }
 
     /**
@@ -341,12 +338,13 @@ public class TraceBackParameter {
      * @updateTime 2017/4/14
      */
     private List<DailyRateVO> calStrategyDailyRateAll(List<List<StrategyStock>> list) {
-        Map<LocalDate,DailyRateVO> map = this.convert(list);
+        Map<LocalDate, DailyRateVO> map = this.convert(list);
         List<DailyRateVO> result = new ArrayList<>();
 
-        for(LocalDate date : map.keySet()){
+        for (LocalDate date : map.keySet()) {
+            if(!isDateWithin(date)){continue;}
             DailyRateVO dailyRateVO = map.get(date);
-            dailyRateVO.rate = dailyRateVO.rate/dailyRateVO.count;
+            dailyRateVO.rate = dailyRateVO.rate / dailyRateVO.count;
             result.add(dailyRateVO);
         }
 
@@ -410,7 +408,7 @@ public class TraceBackParameter {
      */
     private Map<LocalDate, DailyRateVO> convert(List<List<StrategyStock>> list) {
 
-        Map<LocalDate, DailyRateVO> map = new HashMap<LocalDate, DailyRateVO>();
+        Map<LocalDate, DailyRateVO> map = new TreeMap<>();
 
         for (List<StrategyStock> stock : list) {
             List<DailyRateVO> temp = this.calStrategyDailyRate(stock);
@@ -428,4 +426,16 @@ public class TraceBackParameter {
         return map;
     }
 
+    private boolean isDateWithin(LocalDate localDate) {
+
+        if (localDate.isEqual(traceBackCriteriaVO.startDate) || localDate.isEqual(traceBackCriteriaVO.endDate)) {
+            return true;
+        }
+
+        if (localDate.isBefore(traceBackCriteriaVO.endDate) && localDate.isAfter(traceBackCriteriaVO.startDate)) {
+            return true;
+        }
+
+        return false;
+    }
 }

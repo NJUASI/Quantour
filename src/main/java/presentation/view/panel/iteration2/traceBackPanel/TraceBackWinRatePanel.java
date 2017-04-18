@@ -5,6 +5,7 @@ import presentation.chart.traceBack.WinRateChart;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
+import presentation.view.tools.component.MyLabel;
 import vo.ExcessAndWinRateDistVO;
 
 import javax.swing.*;
@@ -59,6 +60,13 @@ public class TraceBackWinRatePanel extends TemplatePanel {
         group.add(radioButton1);// 将radioButton1增加到单选按钮组中
         group.add(radioButton2);// 将radioButton2增加到单选按钮组中
 
+        MyLabel label1=new MyLabel("超额收益",20) ;
+        label1.setLocation(700*width/1920,40*height/1030);
+        add(label1);
+        MyLabel label2=new MyLabel("赢率",20) ;
+        label2.setLocation(700*width/1920,450*height/1030);
+        add(label2);
+
 
     }
     public void createChart(List<ExcessAndWinRateDistVO> certainFormates, List<ExcessAndWinRateDistVO> certainHoldings){
@@ -75,13 +83,13 @@ public class TraceBackWinRatePanel extends TemplatePanel {
         try {
             winRateChart1=new WinRateChart(certainFormates,1);
             chartPanel1=winRateChart1.createChart();
-            chartPanel1.setBounds(adaptScreen(700,30,800,400));
+            chartPanel1.setBounds(adaptScreen(700,80,800,350));
             chartPanel1.setVisible(true);
             add(chartPanel1);
 
             winRateChart2=new WinRateChart(certainFormates,2);
             chartPanel2=winRateChart2.createChart();
-            chartPanel2.setBounds(adaptScreen(700,450,800,400));
+            chartPanel2.setBounds(adaptScreen(700,490,800,350));
             chartPanel2.setVisible(true);
             add(chartPanel2);
 
@@ -100,13 +108,13 @@ public class TraceBackWinRatePanel extends TemplatePanel {
 
             winRateChart3=new WinRateChart(certainHoldings,1);
             chartPanel3=winRateChart3.createChart();
-            chartPanel3.setBounds(adaptScreen(700,30,800,400));
+            chartPanel3.setBounds(adaptScreen(700,80,800,350));
             chartPanel3.setVisible(true);
             add(chartPanel3);
 
             winRateChart4=new WinRateChart(certainHoldings,2);
             chartPanel4=winRateChart4.createChart();
-            chartPanel4.setBounds(adaptScreen(700,450,800,400));
+            chartPanel4.setBounds(adaptScreen(700,490,800,350));
             chartPanel4.setVisible(true);
             add(chartPanel4);
 
