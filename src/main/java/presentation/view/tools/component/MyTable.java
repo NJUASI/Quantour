@@ -25,7 +25,7 @@ public class MyTable extends JScrollPane {
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
-        setSize(1400 * width / 1920, 800 * height / 1030);
+        setSize(1300 * width / 1920, 750 * height / 1030);
         try {
             jTable = new JTable(new StocksTableModel(date));
             jTable.setBounds(0, 0, 1400 * width / 1920, 800 * height / 1030);

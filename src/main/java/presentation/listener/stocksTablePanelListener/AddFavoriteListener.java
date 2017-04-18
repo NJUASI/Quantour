@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
 public class AddFavoriteListener extends MouseAdapter {
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         try {
             StocksTableController.getInstance().addFavorite();
             UserPanel.getInstance().refreshFavorite();

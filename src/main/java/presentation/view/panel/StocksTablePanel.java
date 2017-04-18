@@ -69,7 +69,12 @@ public class StocksTablePanel extends TemplatePanel {
         importData.addMouseListener(new AddFavoriteListener());
         add(importData);
 
-
+        MyLabel title=new MyLabel("   市 场 行 情",23) ;
+        title.setBounds(adaptScreen(60,160-40,1300,35));
+        title.setBackground(ColorUtils.titleBgColor());
+        title.setOpaque(true);
+//        title.setHorizontalAlignment(SwingConstants.CENTER);
+        add(title);
 
         JButton detailOfCode = new MyButton("查看详情");
         detailOfCode.setBounds(adaptScreen(900,50,110,35));

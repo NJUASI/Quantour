@@ -27,28 +27,29 @@ public class MessagePanel extends TemplatePanel{
         width= WindowData.getInstance().getWidth();
         height= WindowData.getInstance().getHeight();
 
-        setBackground(new Color(32,36,39));
+        setBackground(new Color(27+6,29+6,33+6));
+
 
         JLabel logo =new JLabel();
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
         bgPicture.setImage(bgPicture.getImage().getScaledInstance(80*width/1920, 80*height/1130, Image.SCALE_DEFAULT ));
         logo.setIcon(bgPicture);
         logo.addMouseListener(new UserListener());
-        logo.setBounds(adaptScreen(120,50,80,80));
+        logo.setBounds(adaptScreen(130,50,80,80));
         add(logo);
 
         MyLabel name = new MyLabel("账户",17);
-        name.setBounds(adaptScreen(30, 150, 50, 35));
+        name.setBounds(adaptScreen(40, 150, 50, 35));
         add(name);
 
         key = new MyLabel("密码",17);
-        key.setBounds(adaptScreen(30, 200, 50, 35));
+        key.setBounds(adaptScreen(40, 200, 50, 35));
         add(key);
 
         setMessage();
 
         modify = new MyButton("修改密码");
-        modify.setBounds(adaptScreen(170,255,100 ,25));
+        modify.setBounds(adaptScreen(120,275,100 ,25));
         modify.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -60,30 +61,30 @@ public class MessagePanel extends TemplatePanel{
 
 
         message1 = new MyLabel("新密码",17);
-        message1.setBounds(adaptScreen(30, 200, 80, 35));
+        message1.setBounds(adaptScreen(40, 200, 80, 35));
         add(message1);
 
         message2 = new MyLabel("确认密码",17);
-        message2.setBounds(adaptScreen(30, 250, 80, 35));
+        message2.setBounds(adaptScreen(40, 250, 80, 35));
         add(message2);
 
         password1 =new JPasswordField();
         password1.setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,14* WindowData.getInstance().getWidth()/1920));
-        password1.setBounds(adaptScreen(120,200,160,35));
+        password1.setBounds(adaptScreen(130,200,160,35));
         add(password1);
 
         password2=new JPasswordField();
         password2.setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,14* WindowData.getInstance().getWidth()/1920));
-        password2.setBounds(adaptScreen(120,250,160,35));
+        password2.setBounds(adaptScreen(130,250,160,35));
         add(password2);
 
         sure = new MyButton("确认");
-        sure.setBounds(adaptScreen(160,305,60 ,30));
+        sure.setBounds(adaptScreen(120,325,60 ,30));
         sure.addMouseListener(new ModifyPasswordListener());
         add(sure);
 
         cancel= new MyButton("取消");
-        cancel.setBounds(adaptScreen(230,305,60 ,30));
+        cancel.setBounds(adaptScreen(190,325,60 ,30));
         cancel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -96,11 +97,11 @@ public class MessagePanel extends TemplatePanel{
     }
     public  void setMessage(){
         userNum = new MyLabel(IDReserve.getInstance().getUserID(),17);
-        userNum.setBounds(adaptScreen(100,150,100,35));
+        userNum.setBounds(adaptScreen(110,150,100,35));
         add(userNum);
 
         password = new MyLabel("********",17);
-        password.setBounds(adaptScreen(100,200,100,35));
+        password.setBounds(adaptScreen(110,200,100,35));
         add(password);
     }
     public void modifyPassword(){

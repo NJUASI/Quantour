@@ -107,11 +107,16 @@ public class ThermometerPanel extends TemplatePanel {
         add(label32);
 
 
-        MyLabel lb=new MyLabel(volume+"",16) ;
+        MyLabel lb=new MyLabel((int)volume+"",16) ;
         lb.setBounds(adaptScreen(120,move-20,180,30));
         add(lb);
 
         createPanel();
+        MyLabel lb5=new MyLabel("",16) ;
+        lb5.setBounds(adaptScreen(0,75,400,510));
+        lb5.setBackground(new Color(16,17,18));
+        lb5.setOpaque(true);
+        add(lb5);
 
     }
 
@@ -126,15 +131,12 @@ public class ThermometerPanel extends TemplatePanel {
     void createPanel(){
 
         MyLabel label=new MyLabel("市场温度计",24) ;
-        label.setBounds(adaptScreen(0,20,360,40));
+        label.setBounds(adaptScreen(0,40,360,35));
+        label.setBackground(ColorUtils.titleBgColor());
+        label.setOpaque(true);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         add(label);
 
-//        MyLabel lb5=new MyLabel("",16) ;
-//        lb5.setBounds(adaptScreen(0,80,400,3));
-//        lb5.setBackground(new Color(16,17,18));
-//        lb5.setOpaque(true);
-//        add(lb5);
 
         MyLabel lb=new MyLabel("总成交量",16) ;
         lb.setBounds(adaptScreen(30,move-20,80,30));

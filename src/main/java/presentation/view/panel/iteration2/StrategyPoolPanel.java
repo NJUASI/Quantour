@@ -34,13 +34,13 @@ public class StrategyPoolPanel  extends TemplatePanel {
     public StockPoolTable stockPoolTable;
 
     public StrategyPoolPanel(){
-        Color bgColor = new Color(32,36,39);
+        Color bgColor = new Color(35,39,44);
         setLayout(null);
-        setBounds(adaptScreen(0,0,1200,315));
+        setBounds(adaptScreen(60,60,1200,315-90));
         setBackground(bgColor);
 
         radioButton1 = new JRadioButton("按板块选");// 创建单选按钮
-        radioButton1.setBounds(adaptScreen(250,80,150,40));
+        radioButton1.setBounds(adaptScreen(200,40,150,40));
         add(radioButton1);
 
         radioButton1.setBackground(bgColor);
@@ -54,7 +54,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         });
 
         radioButton2 = new JRadioButton("自选股池");// 创建单选按钮
-        radioButton2.setBounds(adaptScreen(250,120,150,40));
+        radioButton2.setBounds(adaptScreen(200,80,150,40));
         radioButton2.setBackground(bgColor);
         radioButton2.setForeground(Color.WHITE);
         radioButton2.addMouseListener(new MouseAdapter() {
@@ -70,29 +70,29 @@ public class StrategyPoolPanel  extends TemplatePanel {
         group.add(radioButton2);// 将radioButton2增加到单选按钮组中
 
 
-        MyLabel label1=new MyLabel("选股票池",20) ;
-        label1.setLocation(100*width/1920,30*height/1030);
-        add(label1);
+//        MyLabel label1=new MyLabel("选股票池",20) ;
+//        label1.setLocation(40*width/1920,30*height/1030);
+//        add(label1);
 
          lb= new MyLabel("板块",16);
-        lb.setBounds(adaptScreen(430,130,60,40));
+        lb.setBounds(adaptScreen(410,80,60,40));
         add(lb);
 
 
         Object[] value = new String[]{"全部", "主板","中小板" , "创业板" };
         Object[] defaultValue = new String[]{ "主板","中小板" , "创业板" };
         mulit = new MultiComboBox(value, defaultValue);
-        mulit.setBounds(adaptScreen(500,130,230,35));
+        mulit.setBounds(adaptScreen(500,80,230,35));
         add(mulit);
 
         lb3= new MyLabel("ST");
-        lb3.setBounds(adaptScreen(430,180,20,40));
+        lb3.setBounds(adaptScreen(410,130,20,40));
         add(lb3);
 
 
 
         STComboBox=new JComboBox();
-        STComboBox.setBounds(adaptScreen(500,180,140,35));
+        STComboBox.setBounds(adaptScreen(500,130,140,35));
         STComboBox.addItem("包含ST");
         STComboBox.addItem("排除ST");
         STComboBox.addItem("仅有ST");
@@ -102,7 +102,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         add(STComboBox);
 
         delete= new MyButton("删除");
-        delete.setBounds(adaptScreen(700,120,70,35));
+        delete.setBounds(adaptScreen(650,120,70,35));
         delete.addMouseListener(new DeletePoolListener());
         add(delete);
 
@@ -117,10 +117,10 @@ public class StrategyPoolPanel  extends TemplatePanel {
         }
         try {
             stockPoolTable=new StockPoolTable();
-            stockPoolTable.setBounds(adaptScreen(450,50,200,220));
+            stockPoolTable.setBounds(adaptScreen(420,20,200,200));
 
             label = new JLabel();
-            label.setBounds(450 * width / 1920, (50+30*(stockPoolTable.jTable.getRowCount()+1)) * height / 1030, 200* width / 1920 , 220* height / 1030);
+            label.setBounds(420 * width / 1920, (20+30*(stockPoolTable.jTable.getRowCount()+1)) * height / 1030, 200* width / 1920 , 200* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(new Color(32,36,39));
             label.setForeground(Color.WHITE);

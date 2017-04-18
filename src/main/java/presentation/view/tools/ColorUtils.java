@@ -7,6 +7,9 @@ import java.awt.*;
  */
 public class ColorUtils {
 
+    //标题背景
+
+    public static Color titleBgColor(){return new Color(84,96,107);}
     // 字体颜色
     public static Color fontColor(){return new Color(186,193,206);}
 

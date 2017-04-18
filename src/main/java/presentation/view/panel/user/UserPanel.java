@@ -31,37 +31,90 @@ public class UserPanel extends TemplatePanel {
         height=WindowData.getInstance().getHeight();
 
 
+        MyLabel user=new MyLabel("   用  户",18) ;
+        user.setBounds(adaptScreen(60,40,330,40));
+        user.setBackground(ColorUtils.titleBgColor());
+        user.setOpaque(true);
+        add(user);
+
+        MyLabel table=new MyLabel("   自 选 股 票 池",18) ;
+        table.setBounds(adaptScreen(450,40,1300-480,40));
+        table.setBackground(ColorUtils.titleBgColor());
+        table.setOpaque(true);
+        add(table);
+
+        MyLabel source=new MyLabel("   数  据  源",18) ;
+        source.setBounds(adaptScreen(1330,40,420,40));
+        source.setBackground(ColorUtils.titleBgColor());
+        source.setOpaque(true);
+        add(source);
+
         fileImportPanel=new FileImportPanel();
-        fileImportPanel.setBounds(adaptScreen(1300,100,600,1000));
+        fileImportPanel.setBounds(adaptScreen(1330,100,420,810));
         add(fileImportPanel);
 
         messagePanel=new MessagePanel();
-        messagePanel.setBounds(adaptScreen(80,100,310,400));
+        messagePanel.setBounds(adaptScreen(60,100,310,400));
         add(messagePanel);
 
         JButton delete= new MyButton("删除");
-        delete.setBounds(adaptScreen(850,40,110,35));
+        delete.setBounds(adaptScreen(900,820,110,35));
         delete.addMouseListener(new DeleteFavoriteListener());
         add(delete);
 
         JButton search= new MyButton("查看");
-        search.setBounds(adaptScreen(650,40,110,35));
+        search.setBounds(adaptScreen(700,820,110,35));
         search.addMouseListener(new DetailOfCodeListener());
         add(search);
 
         refreshFavorite();
 
         MyLabel block1=new MyLabel("",16) ;
-        block1.setBounds(adaptScreen(0,0,420,1000));
-        block1.setBackground(new Color(32,36,39));
+        block1.setBounds(adaptScreen(60,60,420-90,850));
+        block1.setBackground(new Color(27+6,29+6,33+6));
         block1.setOpaque(true);
         add(block1);
+        MyLabel middle1=new MyLabel("",16) ;
+        middle1.setBounds(adaptScreen(390,60,60,850));
+        middle1.setBackground(new Color(27-6,29-6,33-6));
+        middle1.setOpaque(true);
+        add(middle1);
 
         MyLabel block2=new MyLabel("",16) ;
-        block2.setBounds(adaptScreen(1300,0,620,1000));
-        block2.setBackground(new Color(32,36,39));
+        block2.setBounds(adaptScreen(1330,60,420,850));
+        block2.setBackground(new Color(27+6,29+6,33+6));
         block2.setOpaque(true);
         add(block2);
+
+        MyLabel block3=new MyLabel("",16) ;
+        block3.setBounds(adaptScreen(0,0,1920,60));
+        block3.setBackground(new Color(27-6,29-6,33-6));
+        block3.setOpaque(true);
+        add(block3);
+
+        MyLabel block4=new MyLabel("",16) ;
+        block4.setBounds(adaptScreen(1750,0,60,1030));
+        block4.setBackground(new Color(27-6,29-6,33-6));
+        block4.setOpaque(true);
+        add(block4);
+
+        MyLabel block5=new MyLabel("",16) ;
+        block5.setBounds(adaptScreen(0,910,1920,60));
+        block5.setBackground(new Color(27-6,29-6,33-6));
+        block5.setOpaque(true);
+        add(block5);
+
+        MyLabel block6=new MyLabel("",16) ;
+        block6.setBounds(adaptScreen(0,0,60,1030));
+        block6.setBackground(new Color(27-6,29-6,33-6));
+        block6.setOpaque(true);
+        add(block6);
+
+        MyLabel middle2=new MyLabel("",16) ;
+        middle2.setBounds(adaptScreen(450+1300-480,0,60,1030));
+        middle2.setBackground(new Color(27-6,29-6,33-6));
+        middle2.setOpaque(true);
+        add(middle2);
     }
 
     public void refreshFavorite(){
@@ -71,14 +124,15 @@ public class UserPanel extends TemplatePanel {
         }
         try {
             favoritePanel=new FavoritePanel();
-            favoritePanel.setBounds(adaptScreen(420,100,1300-420,800));
+            favoritePanel.setBounds(adaptScreen(450,100,1300-480,660));
             label = new JLabel();
-            label.setBounds(420 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, 1300-420 * width / 1920 , 900* height / 1030);
+            label.setBounds(450 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, 1300-480 * width / 1920 , 660* height / 1030-(30*(favoritePanel.jTable.getRowCount()+1)) );
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(ColorUtils.backgroundColor());
             label.setOpaque(true);
             add(label);
             add(favoritePanel);
+            repaint();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (PrivateStockNotFoundException e) {

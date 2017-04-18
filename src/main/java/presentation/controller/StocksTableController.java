@@ -91,7 +91,7 @@ public class StocksTableController {
         int num[]=null;
         try {
             stocksTablePane = new MyTable(stocksTablePanel.getChooseDate());
-            stocksTablePane.setLocation(50 * width / 1920, 120 * height / 1030);
+            stocksTablePane.setLocation(60 * width / 1920, 155 * height / 1030);
             if(stocksTablePane!=null) {
                 stocksTablePanel.add(stocksTablePane);
                 stocksTablePane.repaint();
@@ -99,7 +99,7 @@ public class StocksTableController {
             list  = stockSituationService.getStockStituationData(stocksTablePanel.getChooseDate());
              num=new int[]{ list.get(0).num,list.get(1).num,list.get(2).num,list.get(3).num,list.get(4).num,list.get(5).num};
             thermometerPanel=new ThermometerPanel(num,list.get(6).num);
-            thermometerPanel.setLocation(1460 * width / 1920, 40 * height / 1030);
+            thermometerPanel.setLocation(1400 * width / 1920, 80 * height / 1030);
             stocksTablePanel.add(thermometerPanel);
             stocksTablePanel.logo.setVisible(false);
             thermometerPanel.repaint();
