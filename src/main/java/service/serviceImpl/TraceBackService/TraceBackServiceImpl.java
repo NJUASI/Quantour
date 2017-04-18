@@ -7,6 +7,7 @@ import service.StockService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
+import utilities.StrategyStockList;
 import utilities.exceptions.*;
 import vo.*;
 
@@ -133,7 +134,7 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     private List<StrategyStock> convertStockPOS(List<StockPO> pos) {
-        List<StrategyStock> result = new LinkedList<>();
+        StrategyStockList result = new StrategyStockList();
         for (StockPO thisPO : pos) {
             result.add(new StrategyStock(thisPO));
         }
@@ -443,9 +444,10 @@ public class TraceBackServiceImpl implements TraceBackService {
             double totalCumulativeReturn = 0;
             int notSuspend = 0;
             for(int j = 0; j < baseStockPool.size(); j++){
-                vo = findStockCertainDay(baseStockPool.get(j), temp);
+                int index = baseStockData.get(baseStockPool.get(j)).indexOf(temp);
                 //当天有数据
-                if(null != vo){
+                if(-1 != index){
+                    vo = baseStockData.get(baseStockPool.get(j)).get(index);
                     totalCumulativeReturn += (vo.close/vo.preClose - 1);
                     notSuspend += 1;
                 }
@@ -502,30 +504,6 @@ public class TraceBackServiceImpl implements TraceBackService {
         cumulativeReturnVOS.get(0).cumulativeReturn = 0;
 
         return cumulativeReturnVOS;
-    }
-
-
-    private StrategyStock findStockCertainDay(String stockCode, LocalDate date){
-
-        LocalDate thisDate = date;
-
-        List<StrategyStock> stockVOList = baseStockData.get(stockCode);
-        List<LocalDate> dates = new ArrayList<>();
-        for(int i = 0; i < stockVOList.size(); i++){
-            dates.add(stockVOList.get(i).date);
-        }
-
-        for(int j = 0; j < stockVOList.size(); j++){
-            dates.add(stockVOList.get(j).date);
-        }
-
-        int dateIndex = dates.indexOf(thisDate);
-
-        //该股票当天没有数据
-        if(dateIndex == -1){
-            return null;
-        }
-        return stockVOList.get(dateIndex);
     }
 
     /**

@@ -32,17 +32,6 @@ public class StockDaoImplTest {
     public void after() throws Exception {
     }
 
-    @Test
-    public void testGetLastTradingDay() throws Exception {
-
-        LocalDate start = LocalDate.of(2014,4,19);
-        String stockCode = "000001";
-
-        LocalDate lastTradingDay = stockDao.getLastTradingDay(start,stockCode);
-
-        assertEquals(LocalDate.of(2014,4,18), lastTradingDay);
-    }
-
     /**
      * Method: getStockData(String stockCode, LocalDate date)
      */

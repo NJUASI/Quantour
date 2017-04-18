@@ -5,6 +5,7 @@ import dataHelper.StockDataHelper;
 import po.StockPO;
 import utilities.DataSourceStateKeeper;
 import utilities.LocalDateComparator;
+import utilities.LocalDateList;
 import utilities.StockCodeHelper;
 import utilities.enums.BlockType;
 import utilities.enums.DataSourceState;
@@ -133,7 +134,7 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     @Override
     public List<LocalDate> getDateWithData() throws IOException {
-        List<LocalDate> dates = new LinkedList<>();
+        List<LocalDate> dates = new LocalDateList();
 
         String parent = null;
 
