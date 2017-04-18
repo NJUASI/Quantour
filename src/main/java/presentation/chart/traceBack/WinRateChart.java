@@ -37,8 +37,10 @@ public class WinRateChart {
             categories[i] = certainFormates.get(i).relativeCycle + "";
             if (type == 1) {
                 rates[i] = certainFormates.get(i).excessRate;
+
             } else {
                 rates[i] = certainFormates.get(i).winRate;
+                System.out.println("                                       "+rates[i]);
             }
         }
 
