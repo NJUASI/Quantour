@@ -3,6 +3,7 @@ package presentation.view.panel.iteration2.traceBackPanel;
 import presentation.view.tools.MyTabelModel;
 import service.TraceBackService;
 import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
+import utilities.NumberFormat;
 import vo.HoldingDetailVO;
 import vo.TraceBackCriteriaVO;
 import vo.TraceBackNumValVO;
@@ -42,10 +43,10 @@ public class TraceBackDetailModel extends MyTabelModel {
             data[i][1] = holdingDetailVO.startDate;
             data[i][2] = holdingDetailVO.endDate;
             data[i][3] = holdingDetailVO.holdingNum;
-            data[i][4] = holdingDetailVO.strategyReturn;
-            data[i][5] = holdingDetailVO.baseReturn;
-            data[i][6] = holdingDetailVO.excessReturn;
-            data[i][7] = holdingDetailVO.remainInvestment;
+            data[i][4] = NumberFormat.percentFormat(holdingDetailVO.strategyReturn,2);
+            data[i][5] = NumberFormat.percentFormat(holdingDetailVO.baseReturn,2);
+            data[i][6] = NumberFormat.percentFormat(holdingDetailVO.excessReturn,2);
+            data[i][7] = NumberFormat.decimaFormat(holdingDetailVO.remainInvestment,2);
         }
 
 

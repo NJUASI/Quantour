@@ -39,7 +39,7 @@ public class TraceBackChartPanel extends TemplatePanel {
         add(chartPanel);
 
         traceBackNumVal = new TraceBackNumVal(traceBackNumValVO);
-        traceBackNumVal.setBounds(adaptScreen(200, 50, 1400, 120));
+        traceBackNumVal.setBounds(adaptScreen(200, 40, 1400, 120*1030/height));
         add(traceBackNumVal);
 
     }

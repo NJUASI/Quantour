@@ -7,8 +7,10 @@ import presentation.view.tools.ui.MyScrollBarUI;
 import vo.TraceBackNumValVO;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by 61990 on 2017/4/15.
@@ -30,14 +32,21 @@ public class TraceBackNumVal  extends JScrollPane {
 
         setSize(1000 * width / 1920, 120 * height / 1030);
 
+//        try {
         try {
             jTable = new JTable(new TraceBackNumModel(traceBackNumValVO));
-            jTable.setBounds(0, 0, 1000 * width / 1920, 120 * height / 1030);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        jTable.setBounds(0, 0, 1000 * width / 1920, 120 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             jTable.setSelectionBackground(ColorUtils.fieldUnselectedColor());//设置所选择行的背景色
             jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
+            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();//单元格渲染器
+            tcr.setHorizontalAlignment(JLabel.CENTER);
+            jTable.setDefaultRenderer(Object.class,tcr);
 
             jTable.setRowHeight(30);
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
@@ -63,9 +72,9 @@ public class TraceBackNumVal  extends JScrollPane {
 
 //            StocksTablePanel.getInstance().label.setVisible(false);
 //            jTable.repaint();
-        } catch (Exception e) {
+//        } catch (Exception e) {
 //            StocksTablePanel.getInstance().label.setVisible(true);
-        }
+//        }
     }
 }
 

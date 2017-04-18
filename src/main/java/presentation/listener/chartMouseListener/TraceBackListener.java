@@ -76,7 +76,7 @@ public class TraceBackListener implements ChartMouseListener {
 
     private void setYMaker(ValueMarker valueMarker,double value){
         this.setTheme(valueMarker);
-        DecimalFormat df=new DecimalFormat("##.00%");
+        DecimalFormat df=new DecimalFormat("#0.00%");
         valueMarker.setLabel(df.format(value));
         valueMarker.setLabelAnchor(RectangleAnchor.CENTER);
 

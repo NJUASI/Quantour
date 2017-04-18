@@ -228,7 +228,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
                strategyPoolPanel.getPoolVO(),traceBackStrategy,strategyTypePanel.getHoldingNum(),getBasicStock(), strategyPoolPanel.getIsCustomized());
     }
 
-    private String getBasicStock(){
+    public String getBasicStock(){
         return comboBox.getSelectedItem().toString();
     }
 
