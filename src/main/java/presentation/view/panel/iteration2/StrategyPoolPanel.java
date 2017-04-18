@@ -146,6 +146,10 @@ public class StrategyPoolPanel  extends TemplatePanel {
         lb3.setVisible(true);
         STComboBox.setVisible(true);
         delete.setVisible(false);
+        if(stockPoolTable!=null) {
+            stockPoolTable.setVisible(false);
+            label.setVisible(false);
+        }
     }
 //
     public void openPool2(){

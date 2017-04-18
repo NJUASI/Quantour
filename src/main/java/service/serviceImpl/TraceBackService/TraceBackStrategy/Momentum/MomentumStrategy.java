@@ -56,7 +56,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         for(int i = 0; i < stockCodes.size(); i++){
             List<StrategyStock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
             //说明为该形成期没有数据
-            if(stockVOList.size() == 0){
+            if(null == stockVOList){
                 continue;
             }
 
@@ -114,6 +114,7 @@ public class MomentumStrategy extends AllTraceBackStrategy {
         LocalDate thisEnd = end;
 
         List<StrategyStock> stockVOList = stockData.get(stockCode);
+
         List<LocalDate> dates = new ArrayList<>();
         for(int j = 0; j < stockVOList.size(); j++){
             dates.add(stockVOList.get(j).date);
@@ -126,9 +127,17 @@ public class MomentumStrategy extends AllTraceBackStrategy {
             if(!dates.contains(thisEnd)){
                 thisEnd = thisEnd.minusDays(1);
             }
+            if(thisStart.isAfter(thisEnd)){
+                break;
+            }
         }
         int startIndex = dates.indexOf(thisStart);
         int endIndex = dates.indexOf(thisEnd);
+
+        //没有数据
+        if(startIndex == -1){
+            return null;
+        }
 
         return stockVOList.subList(startIndex, endIndex+1);
 

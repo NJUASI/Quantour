@@ -1,12 +1,15 @@
 package service.serviceImpl.TraceBackService;
 
+import com.csvreader.CsvReader;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
+import org.jfree.data.io.CSV;
 import po.StockPO;
 import service.StockService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
+import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.*;
 import vo.*;
 
@@ -22,16 +25,18 @@ public class TraceBackServiceImpl implements TraceBackService {
     private StockService stockService;
     private StockDao stockDao;
 
-    private AllTraceBackStrategy traceBackStrategy;
-
     //回测标准
     private TraceBackCriteriaVO traceBackCriteriaVO;
 
     //自选股票池，用户回测自选股票池时才对此成员变量赋值
     private List<String> baseStockPool;
 
+    private List<String> traceBackStockPool;
+
     //自选股票池的所有数据
     private Map<String, List<StrategyStock>> baseStockData;
+
+    private List<CumulativeReturnVO> baseCumulativeReturn;
 
     /*
     需要重复计算的一些东西，故保存
@@ -66,7 +71,6 @@ public class TraceBackServiceImpl implements TraceBackService {
         TraceBackVO traceBackVO = new TraceBackVO();
 
         // 选取回测的股票池为自选股票池／板块股票池
-        List<String> traceBackStockPool;
 
         //是自选股票池
         if (traceBackCriteriaVO.isCustomized){
@@ -84,10 +88,11 @@ public class TraceBackServiceImpl implements TraceBackService {
         }
 
         // 累计基准收益率
-        traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO);
+        baseCumulativeReturn = getBase(traceBackCriteriaVO);
+        traceBackVO.baseCumulativeReturn = baseCumulativeReturn;
 
         //选择策略
-        traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
+        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
         //策略回测
         traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);
@@ -191,14 +196,14 @@ public class TraceBackServiceImpl implements TraceBackService {
 
             TraceBackVO traceBackVO = new TraceBackVO();
 
-            //累计基准收益率
-            traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO);
+            //累计基准收益率,直接赋值即可，不用再次计算
+            traceBackVO.baseCumulativeReturn = baseCumulativeReturn;
+
+            AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool,traceBackCriteriaVO,allDatesWithData,stockData);
 
             //策略回测
             traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);
 
-            //计算持仓详情的基准收益率和超额收益率
-//            traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(, traceBackCriteriaVO, allDatesWithData, stockData);
             traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
             //计算相对收益周期
             traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);

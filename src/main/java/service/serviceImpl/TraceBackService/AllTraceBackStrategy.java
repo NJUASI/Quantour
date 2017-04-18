@@ -107,8 +107,8 @@ public abstract class AllTraceBackStrategy {
 
         // 回测时间太短，不足一个持有期
         if (cycles == 0) {
-            cycleCalcu(allStartIndex, allEndIndex, 0);
-            return strategyCumulativeReturn;
+            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles));
+            return maxRetracement(strategyCumulativeReturn);
         }
 
         // 至少一个持有期，整个周期的计算
