@@ -138,6 +138,8 @@ public class TraceBackChart {
         TimeSeries base = new TimeSeries("基准");
         traceBackPoint = new ArrayList<>();
 
+        System.out.println(strategyData.size());
+        System.out.println(baseData.size());
         for (int i = 0; i < this.strategyData.size(); i++) {
             CumulativeReturnVO strategyVO = strategyData.get(i);
             CumulativeReturnVO baseVO = baseData.get(i);

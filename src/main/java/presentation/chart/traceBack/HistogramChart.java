@@ -31,21 +31,25 @@ public class HistogramChart {
         Map<Double, Integer> negativeNums = returnPeriodVO.negativeNums;
 
         String[] categories = {"1%", "2%", "3%", "4%", "5%", "6%", "7%", "8%", "9%", "10%", "11%", ">12%"};
-        Object[] datas1 = new Object[]{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0};
-        Object[] datas2 = new Object[]{0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0};
+//        Object[] datas1 = new Object[]{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0};
+//        Object[] datas2 = new Object[]{0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0};
+        Vector<Object> data1 = new Vector<>();
+        Vector<Object> data2 = new Vector<>();
 
         for(Double key : positiveNums.keySet()){
-            int temp = key.intValue();
-            datas1[temp - 1] = returnPeriodVO.positiveNums.get(key);
+            data1.add(returnPeriodVO.positiveNums.get(key));
+//            int temp = key.intValue();
+//            datas1[temp - 1] = returnPeriodVO.positiveNums.get(key);
         }
 
         for(Double key : negativeNums.keySet()){
-            int temp = key.intValue();
-            datas2[temp - 1] = returnPeriodVO.negativeNums.get(key);
+            data2.add(returnPeriodVO.negativeNums.get(key));
+//            int temp = key.intValue();
+//            datas2[temp - 1] = returnPeriodVO.negativeNums.get(key);
         }
 
-        series.add(new Serie("正收益次数", datas1));
-        series.add(new Serie("负收益次数", datas2));
+        series.add(new Serie("正收益次数", data1));
+        series.add(new Serie("负收益次数", data2));
 
 
         DefaultCategoryDataset dataset = ChartUtils.createDefaultCategoryDataset(series, categories);
