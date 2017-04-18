@@ -94,7 +94,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
 
         // 计算持仓详情的基准收益率和超额收益率
-        traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackCriteriaVO.holdingPeriod);
+        traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
 
         // 计算绝对收益周期
         traceBackVO.absoluteReturnPeriodVO = countAbsoluteReturnPeriod(traceBackVO.holdingDetailVOS);
@@ -200,7 +200,7 @@ public class TraceBackServiceImpl implements TraceBackService {
             traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
 
             //计算持仓详情的基准收益率和超额收益率
-            traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackCriteriaVO.holdingPeriod);
+            traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
             //计算相对收益周期
             traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
 
@@ -337,33 +337,57 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @param holdingPeriod        持有期长度
      * @return 补充了基准收益率和超额收益率的完整的HoldingDetailVO列表
      */
-    private List<HoldingDetailVO> calcuHoldingDetail(List<HoldingDetailVO> holdingDetailVOS, List<CumulativeReturnVO> baseCumulativeReturn, int holdingPeriod) {
+    private List<HoldingDetailVO> calcuHoldingDetail(List<HoldingDetailVO> holdingDetailVOS, List<CumulativeReturnVO> baseCumulativeReturn, List<CumulativeReturnVO> strategyCumulativeReturn,int holdingPeriod) {
 
-        int holdingSerial = 0;
+        double investment = 1000;
 
-        //保存之前一个周期的最后一天的累计收益率, 初始值为1
-        double curCumulativeReturn = 1;
-        double preCumulativeReturn = 1;
+        int holdingSerial = 1;
+
+        //保存之前一个周期的最后一天的基准累计收益率, 初始值为1
+        double curBaseCumulativeReturn = 1;
+        double preBaseCumulativeReturn = 1;
+        //最后一天的策略累计收益率, 初始值为1
+        double curStrategyCumulativeReturn = 1;
+        double preStrategyCumulativeReturn = 1;
+
         for (int i = 0; i < baseCumulativeReturn.size(); i += holdingPeriod) {
-            double lastRate;
+            double lastBaseRate;
+            double lastStrategyRate;
+            int periodIndex = 0;
             if ((i + holdingPeriod - 1) < baseCumulativeReturn.size()) {
-                // 一个持仓周期最后一天的基准累计收益率
-                lastRate = baseCumulativeReturn.get(i + holdingPeriod - 1).cumulativeReturn;
+                //满持仓周期数
+                periodIndex = i + holdingPeriod -1;
             } else {
-                // 最后一个周期可能不满持仓周期数
-                lastRate = baseCumulativeReturn.get(baseCumulativeReturn.size() - 1).cumulativeReturn;
+                //不满持仓周期数
+                periodIndex = baseCumulativeReturn.size() - 1;
             }
+            lastBaseRate = baseCumulativeReturn.get(periodIndex).cumulativeReturn;
+            lastStrategyRate = strategyCumulativeReturn.get(periodIndex).cumulativeReturn;
 
             // 当前持仓期的基准收益率
-            curCumulativeReturn = 1+lastRate;
-            double baseReturn = curCumulativeReturn / preCumulativeReturn - 1;
-            holdingDetailVOS.get(holdingSerial).baseReturn = baseReturn;
-            preCumulativeReturn = curCumulativeReturn;
-
+            curBaseCumulativeReturn = 1+lastBaseRate;
+            curStrategyCumulativeReturn = 1+lastStrategyRate;
+            double baseReturn = curBaseCumulativeReturn / preBaseCumulativeReturn - 1;
+            double strategyReturn = curStrategyCumulativeReturn / preStrategyCumulativeReturn - 1;
             // 超额收益率
-            holdingDetailVOS.get(holdingSerial).excessReturn = holdingDetailVOS.get(holdingSerial).strategyReturn - baseReturn;
+            double excessReturn = strategyReturn - baseReturn;
+
+            HoldingDetailVO holdingDetailVO = new HoldingDetailVO();
+
+            holdingDetailVO.periodSerial = holdingSerial;
+            holdingDetailVO.baseReturn = baseReturn;
+            holdingDetailVO.strategyReturn = strategyReturn;
+            holdingDetailVO.excessReturn = excessReturn;
+            holdingDetailVO.startDate = baseCumulativeReturn.get(i).currentDate;
+            holdingDetailVO.endDate = baseCumulativeReturn.get(periodIndex).currentDate;
+            holdingDetailVO.remainInvestment = investment * (1 + lastStrategyRate);
+
+            preBaseCumulativeReturn = curBaseCumulativeReturn;
+            preStrategyCumulativeReturn = curStrategyCumulativeReturn;
 
             holdingSerial++;
+
+            holdingDetailVOS.add(holdingDetailVO);
         }
         return holdingDetailVOS;
     }

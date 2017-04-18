@@ -105,7 +105,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
         //保存先前一个周期最后一天的累计收益率
         double curPeriodCumulativeReturn = 1;
-        double prePeriodCumulativeReturn = curPeriodCumulativeReturn;
         for (int i = 0; i < periodNum; i++ ){
 
             //持有期的开始日期
@@ -157,9 +156,6 @@ public class MomentumStrategy extends AllTraceBackStrategy {
 
                 temp = temp.plusDays(1);
             }
-
-            double thisPeriodReturn = curPeriodCumulativeReturn / prePeriodCumulativeReturn - 1;
-            holdingDetailVOS.add(new HoldingDetailVO(periodNum+1, startOfHolding, endOfHolding, holdingStocks.size(), thisPeriodReturn, curPeriodCumulativeReturn*initInvestment));
 
         }
 
