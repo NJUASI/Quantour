@@ -18,84 +18,10 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
 
     private StockDao stockDao;
 
-    // 默认1000元初始投资资本
-    private final double initMoney = 1000;
-    private double nowMoney;
-
-    // 持股数，持有期，N日均值
-    private final int holdingNum, holdingPeriod, formativePeriod;
-
-
-    // 挑选出的持有期N支股票
-    private List<String> wantedStockCodes;
-
-    // 保存相应要返回的数据
-    List<CumulativeReturnVO> strategyCumulativeReturn;
-    List<HoldingDetailVO> holdingDetailVOS;
 
     public MeanReversionStrategy(List<String> traceBackStockPool, TraceBackCriteriaVO traceBackCriteriaVO, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) throws IOException {
         super(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
         stockDao = new StockDaoImpl();
-        nowMoney = initMoney;
-
-        holdingNum = traceBackCriteriaVO.holdingNum;
-        holdingPeriod = traceBackCriteriaVO.holdingPeriod;
-        formativePeriod = traceBackCriteriaVO.formativePeriod;
-
-        strategyCumulativeReturn = new LinkedList<>();
-        holdingDetailVOS = new LinkedList<>();
-    }
-
-
-    @Override
-    public TraceBackStrategyVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException {
-
-        //形成期或持有期会有变化
-        this.traceBackCriteriaVO = traceBackCriteriaVO;
-
-        int allStartIndex = allDatesWithData.indexOf(getClosestWithinDate(this.traceBackCriteriaVO.startDate, true));
-        int allEndIndex = allDatesWithData.indexOf(getClosestWithinDate(this.traceBackCriteriaVO.endDate, false));
-
-        int cycles = (allEndIndex - allStartIndex + 1) / holdingPeriod;
-
-        // 回测时间太短，不足一个持有期
-        if (cycles == 0) {
-            calculate(this.traceBackCriteriaVO.startDate, this.traceBackCriteriaVO.endDate, 0);
-            return new TraceBackStrategyVO(strategyCumulativeReturn, holdingDetailVOS);
-        }
-
-        // 至少一个持有期，整个周期的计算
-        for (int i = 0; i < cycles; i++) {
-            int startIndex = allStartIndex + i * holdingPeriod;
-            int endIndex = startIndex + holdingPeriod - 1;
-            cycleCalcu(startIndex, endIndex, i);
-        }
-
-        // 最后一个不足周期的计算
-        if ((allEndIndex - allStartIndex + 1) % holdingPeriod != 0) {
-            int startIndex = allStartIndex + cycles * holdingPeriod;
-            int endIndex = allEndIndex;
-            cycleCalcu(startIndex, endIndex, cycles);
-        }
-
-        // 根据果仁网，第一天数据设置为0
-        strategyCumulativeReturn.get(0).cumulativeReturn = 0;
-
-        return new TraceBackStrategyVO(maxRetracement(strategyCumulativeReturn), holdingDetailVOS);
-    }
-
-    private void cycleCalcu(int startIndex, int endIndex, int periodSerial) throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, DataSourceFirstDayException {
-        System.out.println("calculate cycle: " + periodSerial);
-
-        LocalDate periodStart = allDatesWithData.get(startIndex);
-        LocalDate periodEnd = allDatesWithData.get(endIndex);
-        wantedStockCodes = pickStocks(formate(traceBackStockPool, periodStart, formativePeriod));
-
-        for (String s : wantedStockCodes) {
-            System.out.println("select: " + s);
-        }
-
-        calculate(periodStart, periodEnd, periodSerial);
     }
 
     @Override
@@ -156,95 +82,12 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         return new LinkedList<>(result.keySet());
     }
 
-    @Override
-    protected void calculate(LocalDate periodStart, LocalDate periodEnd, int periodSerial) throws DateNotWithinException, NoDataWithinException, IOException {
-        Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
-        List<Double> tempYields = new LinkedList<>();
-
-        // 对阶段内的每只股票进行数据读取
-        for (String s : wantedStockCodes) {
-            List<StrategyStock> ss = stockData.get(s);
-            for (StrategyStock stock : ss) {
-                if (isDateWithinWanted(periodStart, periodEnd, stock.date)) {
-                    LocalDate thisDate = stock.date;
-                    double profit = getProfit(stock);
-
-                    if (forCalcu.keySet().contains(thisDate)) {
-                        forCalcu.get(thisDate).add(profit);
-                    } else {
-                        List<Double> values = new LinkedList<>();
-                        values.add(profit);
-                        forCalcu.put(thisDate, values);
-                    }
-                }
-            }
-        }
-
-        // 依次处理每一交易日
-        for (Map.Entry<LocalDate, List<Double>> entry : forCalcu.entrySet()) {
-            double thisYield = getYield(entry.getValue());
-
-            nowMoney *= (thisYield + 1);
-            double cumulativeYield = nowMoney / initMoney - 1;
-
-            strategyCumulativeReturn.add(new CumulativeReturnVO(entry.getKey(), cumulativeYield, false));
-            tempYields.add(thisYield);
-        }
-
-        // 对这整个周期进行持仓周期处理
-        double yieldMul = 1;
-        for (double tempYield : tempYields) {
-            yieldMul *= (tempYield + 1);
-        }
-
-        holdingDetailVOS.add(new HoldingDetailVO(periodSerial, periodStart, periodEnd, holdingNum, yieldMul, nowMoney));
-    }
-
-
-    private LocalDate getClosestWithinDate(LocalDate thisDate, boolean biggerThanThisDate) {
-        int index = allDatesWithData.indexOf(thisDate);
-        if (index != -1) return thisDate;
-        else {
-            if (biggerThanThisDate) {
-                for (LocalDate temp : allDatesWithData) {
-                    if (temp.isBefore(thisDate)) continue;
-                    return temp;
-                }
-            } else {
-                LocalDate result = null;
-                for (LocalDate temp : allDatesWithData) {
-                    if (temp.isBefore(thisDate)) {
-                        result = temp;
-                    } else if (temp.isAfter(thisDate)) {
-                        return result;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
     private String getMin(Map<String, Double> result) {
         String min = result.keySet().iterator().next();
         for (Map.Entry<String, Double> entry : result.entrySet()) {
             if (entry.getValue() < result.get(min)) min = entry.getKey();
         }
         return min;
-    }
-
-
-    // 计算单只股票在单日对此日造成的收益率影响
-    private double getProfit(StrategyStock stock) {
-        return stock.close / stock.preClose - 1;
-    }
-
-    // 计算value的平均值
-    private double getYield(List<Double> value) {
-        double sum = 0;
-        for (double temp : value) {
-            sum += temp;
-        }
-        return sum / value.size();
     }
 
 
@@ -275,15 +118,5 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
             sum += stock.close;
         }
         return sum / dataList.size();
-    }
-
-    private boolean isDateWithinWanted(LocalDate start, LocalDate end, LocalDate now) {
-        if (now.isEqual(start) || now.isEqual(end)) {
-            return true;
-        }
-        if (now.isAfter(start) && now.isBefore(end)) {
-            return true;
-        }
-        return false;
     }
 }

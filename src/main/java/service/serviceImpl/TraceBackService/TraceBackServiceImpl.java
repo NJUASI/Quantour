@@ -90,11 +90,10 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
         //策略回测
-        TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack(traceBackCriteriaVO);
-        traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
+        traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);
 
         // 计算持仓详情的基准收益率和超额收益率
-        traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
+        traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
 
         // 计算绝对收益周期
         traceBackVO.absoluteReturnPeriodVO = countAbsoluteReturnPeriod(traceBackVO.holdingDetailVOS);
@@ -196,11 +195,11 @@ public class TraceBackServiceImpl implements TraceBackService {
             traceBackVO.baseCumulativeReturn = getBase(traceBackCriteriaVO);
 
             //策略回测
-            TraceBackStrategyVO traceBackStrategyVO = traceBackStrategy.traceBack(traceBackCriteriaVO);
-            traceBackVO.strategyCumulativeReturn = traceBackStrategyVO.strategyCumulativeReturn;
+            traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);
 
             //计算持仓详情的基准收益率和超额收益率
-            traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackStrategyVO.holdingDetailVOS, traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
+//            traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(, traceBackCriteriaVO, allDatesWithData, stockData);
+            traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
             //计算相对收益周期
             traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
 
@@ -332,12 +331,12 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     /**
-     * @param holdingDetailVOS     只有策略收益率的持仓详情
      * @param baseCumulativeReturn 累计基准收益率
      * @param holdingPeriod        持有期长度
-     * @return 补充了基准收益率和超额收益率的完整的HoldingDetailVO列表
+     * @return 根据基准收益率和超额收益率的完整的HoldingDetailVO列表
      */
-    private List<HoldingDetailVO> calcuHoldingDetail(List<HoldingDetailVO> holdingDetailVOS, List<CumulativeReturnVO> baseCumulativeReturn, List<CumulativeReturnVO> strategyCumulativeReturn,int holdingPeriod) {
+    private List<HoldingDetailVO> calcuHoldingDetail(List<CumulativeReturnVO> baseCumulativeReturn, List<CumulativeReturnVO> strategyCumulativeReturn,int holdingPeriod) {
+        List<HoldingDetailVO> holdingDetailVOS = new LinkedList<>();
 
         double investment = 1000;
 
