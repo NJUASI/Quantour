@@ -4,6 +4,7 @@ package presentation.view.panel.iteration2.traceBackPanel;
 import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.tools.MyTabelModel;
 import utilities.NumberFormat;
+import vo.MaxTraceBackVO;
 import vo.TraceBackNumValVO;
 
 
@@ -18,23 +19,18 @@ public class TraceBackNumModel extends MyTabelModel {
 
     private final static int columns = 8;
 
-    public TraceBackNumModel(TraceBackNumValVO vo) throws IOException {
-        init(vo);
+    public TraceBackNumModel(TraceBackNumValVO vo, MaxTraceBackVO maxTraceBackVO) throws IOException {
+        init(vo,maxTraceBackVO);
     }
 
     //初始化列表名称和数据
-    private void init(TraceBackNumValVO traceBackNumValVO) throws IOException {
+    private void init(TraceBackNumValVO traceBackNumValVO,MaxTraceBackVO maxTraceBackVO) throws IOException {
         columnNames = new String[]{"投资组合", "总收益", "年化收益","夏普比率","最大回撤率", "收益波动率",
                 "贝塔率", " 阿尔法比率"};
 
         data = new Object[3][columns];
-//        for (int i = 0 ; i<3;i++){
-//            for(int j =0 ;j<columns;j++){
-//                data[i][j]="-";
-//            }
-//        }
         data[0][0]="本策略";
-        data[1][0]= ChooseStrategyPanel.getInstance().getBasicStock();//TODO 基准收益的名字
+        data[1][0]= ChooseStrategyPanel.getInstance().getBasicStock();
         data[2][0]="相对收益";
 //
         //总收益
@@ -52,14 +48,10 @@ public class TraceBackNumModel extends MyTabelModel {
         data[1][3]=NumberFormat.decimaFormat(traceBackNumValVO.baseSharpeRatio,4);
         data[2][3]=NumberFormat.decimaFormat(traceBackNumValVO.sharpeRatio-traceBackNumValVO.baseSharpeRatio,4);
 
-//        最大回测（好像还没有）
-        data[0][4]=traceBackNumValVO.maxRetracementRatio;
-//        data[1][4]=traceBackNumValVO.;//TODO 获得基准收益率的最大回撤率
-//        data[2][4]=traceBackNumValVO.sharpeRatio-traceBackNumValVO.maxRetracementRatio;
-
-//        data[0][4]="-";
-        data[1][4]="-";//TODO 获得基准收益率的最大回撤率
-        data[2][4]="-";
+//        最大回测
+        data[0][4]=NumberFormat.percentFormat(maxTraceBackVO.maxStrategyTraceBackRate,2);
+        data[1][4]=NumberFormat.percentFormat(maxTraceBackVO.maxBaseTraceBackRate,2);
+        data[2][4]=NumberFormat.percentFormat(maxTraceBackVO.maxStrategyTraceBackRate-maxTraceBackVO.maxBaseTraceBackRate,2);
 
         //年化波动率
         data[0][5]=NumberFormat.percentFormat(traceBackNumValVO.returnVolatility,2);

@@ -7,6 +7,7 @@ import presentation.listener.chartMouseListener.TraceBackListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.WindowData;
 import vo.CumulativeReturnVO;
+import vo.MaxTraceBackVO;
 import vo.TraceBackNumValVO;
 
 import java.util.List;
@@ -24,13 +25,14 @@ public class TraceBackChartPanel extends TemplatePanel {
         traceBackNumVal = null;
     }
 
-    public void createChart(TraceBackNumValVO traceBackNumValVO, List<CumulativeReturnVO> baseCumulativeReturn, List<CumulativeReturnVO> strategyCumulativeReturn) {
+    public void createChart(TraceBackNumValVO traceBackNumValVO, List<CumulativeReturnVO> baseCumulativeReturn,
+                            List<CumulativeReturnVO> strategyCumulativeReturn, MaxTraceBackVO maxTraceBackVO) {
         if (chartPanel != null) {
             remove(chartPanel);
             remove(traceBackNumVal);
         }
 
-        chartPanel = new ChartPanel(new TraceBackChart(strategyCumulativeReturn, baseCumulativeReturn).createTracebackChart());
+        chartPanel = new ChartPanel(new TraceBackChart(strategyCumulativeReturn, baseCumulativeReturn,maxTraceBackVO).createTracebackChart());
         chartPanel.setBounds(adaptScreen(100, 210, 1500, 600));
         chartPanel.setVisible(true);
         chartPanel.setPopupMenu(null);
@@ -38,7 +40,7 @@ public class TraceBackChartPanel extends TemplatePanel {
         chartPanel.addChartMouseListener(new TraceBackListener(chartPanel));
         add(chartPanel);
 
-        traceBackNumVal = new TraceBackNumVal(traceBackNumValVO);
+        traceBackNumVal = new TraceBackNumVal(traceBackNumValVO,maxTraceBackVO);
         traceBackNumVal.setBounds(adaptScreen(200, 40, 1400, 120*1030/height));
         add(traceBackNumVal);
 

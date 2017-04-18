@@ -92,7 +92,7 @@ public class AnalysePanel extends TemplatePanel {
 
     public void createChart(TraceBackVO traceBackVO){
         traceBackAnalysePanelPanel.createChart(traceBackVO.absoluteReturnPeriodVO,traceBackVO.relativeReturnPeriodVO);
-        traceBackChartPanelPanel.createChart(traceBackVO.traceBackNumValVO,traceBackVO.baseCumulativeReturn,traceBackVO.strategyCumulativeReturn);
+        traceBackChartPanelPanel.createChart(traceBackVO.traceBackNumValVO,traceBackVO.baseCumulativeReturn,traceBackVO.strategyCumulativeReturn,traceBackVO.maxTraceBackVO);
         traceBackWinRatePanel.createChart(traceBackVO.certainFormates,traceBackVO.certainHoldings);
 
         if(traceBackDetail!=null){

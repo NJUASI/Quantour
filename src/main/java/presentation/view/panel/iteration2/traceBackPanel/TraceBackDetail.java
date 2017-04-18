@@ -5,6 +5,7 @@ import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
 import vo.HoldingDetailVO;
+import vo.MaxTraceBackVO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
