@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * StockDataHelperImpl Tester.
@@ -42,9 +41,9 @@ public class StockDataHelperImplTest {
     @Test
     public void testGetStockStockCode01() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("000001");
-        assertEquals(2100, result.size());
+        assertEquals(2094, result.size());
 
-        StockPO thisStock = result.get(0);
+        StockPO thisStock = result.get(2093);
         assertEquals(LocalDate.of(2014, 4, 29), thisStock.getDate());
         assertEquals(11.25, thisStock.getHigh(), 0);
         assertEquals(10.92, thisStock.getLow(), 0);
@@ -56,17 +55,17 @@ public class StockDataHelperImplTest {
     @Test
     public void testGetStockStockCode02() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("002044");
-        assertEquals(2117, result.size());
+        assertEquals(2113, result.size());
     }
     @Test
     public void testGetStockStockCode03() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("300010");
-        assertEquals(933, result.size());
+        assertEquals(927, result.size());
     }
     @Test
     public void testGetStockStockCode04() throws Exception {
         List<StockPO> result = stockDataHelper.getStockRecords("300187");
-        assertEquals(711, result.size());
+        assertEquals(709, result.size());
     }
     @Test
     public void testGetStockStockCode05() throws Exception {
@@ -141,7 +140,7 @@ public class StockDataHelperImplTest {
     @Test
     public void testGetDateWithoutData() throws IOException {
         List<LocalDate> result = stockDataHelper.getDateWithoutData("000017");
-        assertEquals(2207, result.size());
+        assertEquals(2209, result.size());
     }
 
     /**
@@ -150,7 +149,7 @@ public class StockDataHelperImplTest {
     @Test
     public void testGetDateWithData() throws IOException {
         List<LocalDate> result = stockDataHelper.getDateWithData();
-        assertEquals(2246, result.size());
+        assertEquals(2240, result.size());
     }
 
     /**

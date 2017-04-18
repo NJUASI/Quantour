@@ -50,16 +50,16 @@ public class DuplicationAdder {
     }
 
     private boolean addDuplication(String name) throws IOException {
+        // 数据源中第一条数据
         previousRecord = readLine(name);
+        result.append(previousRecord + "\t" + "-1" + "\t" + "-1" + "\t" + lineSeparator);
 
         while ((currentRecord = readLine(name)) != null) {
-            String[] parts = currentRecord.split("\t");
-            result.append(previousRecord + "\t" + parts[5] + "\t" + parts[7] + "\t" + lineSeparator);
+            String[] parts = previousRecord.split("\t");
+            result.append(currentRecord + "\t" + parts[5] + "\t" + parts[7] + "\t" + lineSeparator);
             previousRecord = currentRecord;
         }
 
-        // 最后一条数据，以-1表示不存在比此更早的数据源
-        result.append(previousRecord + "\t" + "-1" + "\t" + "-1" + "\t" + lineSeparator);
 
         bw = new BufferedWriter(new FileWriter(sourceFilePath + fileSeparator + code, false));
         bw.write(result.toString());

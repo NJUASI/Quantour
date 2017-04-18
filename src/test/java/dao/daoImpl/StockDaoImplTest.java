@@ -173,7 +173,7 @@ public class StockDaoImplTest {
     @Test
     public void getStockData3_1() throws Exception {
         List<StockPO> result = stockDao.getStockData("000001");
-        assertEquals(2100, result.size());
+        assertEquals(2094, result.size());
 
         StockPO testPO = result.get(10);
 
@@ -200,9 +200,9 @@ public class StockDaoImplTest {
     @Test
     public void getStockData3_2() throws Exception {
         List<StockPO> result = stockDao.getStockData("002077");
-        assertEquals(1768, result.size());
+        assertEquals(1762, result.size());
 
-        StockPO testPO = result.get(1767);
+        StockPO testPO = result.get(1761);
 
         // expected:
         // 0	2014-04-29	6.09	6.19	6.02	6.19	11719	6.19	2077	大港股份	SZ	6.09	6.09
@@ -230,7 +230,7 @@ public class StockDaoImplTest {
     @Test
     public void getStockData4_1() throws Exception {
         List<StockPO> result = stockDao.getStockData(LocalDate.of(2009, 4, 7));
-        assertEquals(311, result.size());
+        assertEquals(317, result.size());
 
         StockPO testPO = result.get(69);
 
@@ -255,7 +255,7 @@ public class StockDaoImplTest {
     @Test
     public void getStockData4_2() throws Exception {
         List<StockPO> result = stockDao.getStockData(LocalDate.of(2008, 8, 8));
-        assertEquals(299, result.size());
+        assertEquals(305, result.size());
 
         StockPO testPO = result.get(233);
 
@@ -283,7 +283,7 @@ public class StockDaoImplTest {
     @Test
     public void testGetDateWithoutData_11() throws Exception {
         List<LocalDate> result = stockDao.getDateWithoutData("000017");
-        assertEquals(2207, result.size());
+        assertEquals(2209, result.size());
     }
 
     /**

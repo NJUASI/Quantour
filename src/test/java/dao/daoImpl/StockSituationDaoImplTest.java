@@ -32,15 +32,15 @@ public class StockSituationDaoImplTest {
      */
     @Test
     public void getStockSituation_1() throws Exception {
-        StockSituationPO thisStockSituationPO = this.stockSituationDao.getStockSituation(LocalDate.of(2009, 1, 9));
+        StockSituationPO thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2009, 1, 9));
 
-        assertEquals("26794465", thisStockSituationPO.getVolume());
-        assertEquals(95, thisStockSituationPO.getLimitUpNum());
-        assertEquals(0, thisStockSituationPO.getLimitDownNum());
-        assertEquals(108, thisStockSituationPO.getSurgingNum());
-        assertEquals(0, thisStockSituationPO.getSlumpingNum());
-        assertEquals(108, thisStockSituationPO.getClimbingNum());
-        assertEquals(0, thisStockSituationPO.getSlipingNum());
+        assertEquals("26794465", thisStockSituation.getVolume());
+        assertEquals(5, thisStockSituation.getLimitUpNum());
+        assertEquals(0, thisStockSituation.getLimitDownNum());
+        assertEquals(104, thisStockSituation.getSurgingNum());
+        assertEquals(0, thisStockSituation.getSlumpingNum());
+        assertEquals(108, thisStockSituation.getClimbingNum());
+        assertEquals(0, thisStockSituation.getSlipingNum());
     }
 
     @Test
@@ -48,12 +48,12 @@ public class StockSituationDaoImplTest {
         StockSituationPO thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2014, 4, 29));
 
         assertEquals("27844947", thisStockSituation.getVolume());
-        assertEquals(5, thisStockSituation.getLimitUpNum());
-        assertEquals(0, thisStockSituation.getLimitDownNum());
-        assertEquals(31, thisStockSituation.getSurgingNum());
-        assertEquals(15, thisStockSituation.getSlumpingNum());
-        assertEquals(31, thisStockSituation.getClimbingNum());
-        assertEquals(15, thisStockSituation.getSlipingNum());
+        assertEquals(4, thisStockSituation.getLimitUpNum());
+        assertEquals(3, thisStockSituation.getLimitDownNum());
+        assertEquals(32, thisStockSituation.getSurgingNum());
+        assertEquals(18, thisStockSituation.getSlumpingNum());
+        assertEquals(38, thisStockSituation.getClimbingNum());
+        assertEquals(2, thisStockSituation.getSlipingNum());
 
     }
 
@@ -62,10 +62,10 @@ public class StockSituationDaoImplTest {
         StockSituationPO thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2005, 12, 30));
 
         assertEquals("5187455", thisStockSituation.getVolume());
-        assertEquals(2, thisStockSituation.getLimitUpNum());
+        assertEquals(0, thisStockSituation.getLimitUpNum());
         assertEquals(0, thisStockSituation.getLimitDownNum());
         assertEquals(2, thisStockSituation.getSurgingNum());
-        assertEquals(0, thisStockSituation.getSlumpingNum());
+        assertEquals(1, thisStockSituation.getSlumpingNum());
         assertEquals(1, thisStockSituation.getClimbingNum());
         assertEquals(1, thisStockSituation.getSlipingNum());
     }
@@ -75,12 +75,12 @@ public class StockSituationDaoImplTest {
         StockSituationPO thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2013, 6, 7));
 
         assertEquals("42804884", thisStockSituation.getVolume());
-        assertEquals(7, thisStockSituation.getLimitUpNum());
-        assertEquals(0, thisStockSituation.getLimitDownNum());
-        assertEquals(12, thisStockSituation.getSurgingNum());
-        assertEquals(33, thisStockSituation.getSlumpingNum());
-        assertEquals(8, thisStockSituation.getClimbingNum());
-        assertEquals(37, thisStockSituation.getSlipingNum());
+        assertEquals(4, thisStockSituation.getLimitUpNum());
+        assertEquals(1, thisStockSituation.getLimitDownNum());
+        assertEquals(15, thisStockSituation.getSurgingNum());
+        assertEquals(45, thisStockSituation.getSlumpingNum());
+        assertEquals(9, thisStockSituation.getClimbingNum());
+        assertEquals(35, thisStockSituation.getSlipingNum());
     }
 
 

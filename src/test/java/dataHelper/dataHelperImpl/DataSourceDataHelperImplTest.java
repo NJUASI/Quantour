@@ -1,6 +1,7 @@
 package dataHelper.dataHelperImpl;
 
 import dataHelper.DataSourceDataHelper;
+import dataHelper.dataHelperImpl.DataSourceDataHelper.BaseStockHelper;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -38,12 +39,16 @@ public class DataSourceDataHelperImplTest {
 //        }
 //
 //
-//        DataSourceDataHelper helper = new DataSourceDataHelperImpl();
-//        try {
-//            helper.upload("/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        DataSourceDataHelper helper = new DataSourceDataHelperImpl();
+        try {
+            helper.upload("/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+//        BaseStockHelper helper = new BaseStockHelper();
+//        helper.uploadBaseStocks();
     }
 
     /**
