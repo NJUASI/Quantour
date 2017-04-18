@@ -48,9 +48,9 @@ public class TraceBackNumModel extends MyTabelModel {
         data[2][2]=NumberFormat.percentFormat(traceBackNumValVO.annualizedRateOfReturn-traceBackNumValVO.baseAnnualizedRateOfReturn,2);
 
         //夏普比率
-        data[0][3]=NumberFormat.decimaFormat(traceBackNumValVO.sharpeRatio,2);
-        data[1][3]=NumberFormat.decimaFormat(traceBackNumValVO.baseSharpeRatio,2);
-        data[2][3]=NumberFormat.decimaFormat(traceBackNumValVO.sharpeRatio-traceBackNumValVO.baseSharpeRatio,2);
+        data[0][3]=NumberFormat.decimaFormat(traceBackNumValVO.sharpeRatio,4);
+        data[1][3]=NumberFormat.decimaFormat(traceBackNumValVO.baseSharpeRatio,4);
+        data[2][3]=NumberFormat.decimaFormat(traceBackNumValVO.sharpeRatio-traceBackNumValVO.baseSharpeRatio,4);
 
 //        最大回测（好像还没有）
         data[0][4]=traceBackNumValVO.maxRetracementRatio;
@@ -67,14 +67,14 @@ public class TraceBackNumModel extends MyTabelModel {
         data[2][5]=NumberFormat.percentFormat(traceBackNumValVO.returnVolatility-traceBackNumValVO.baseReturnVolatility,2);
 
         //贝塔
-        data[0][6]=NumberFormat.decimaFormat(traceBackNumValVO.beta,2);
+        data[0][6]=NumberFormat.decimaFormat(traceBackNumValVO.beta,4);
         data[1][6]="-";//todo  获得基准的beta 基准没有beta
-        data[2][6]=NumberFormat.decimaFormat(traceBackNumValVO.beta-traceBackNumValVO.baseReturnVolatility,2);
+        data[2][6]=NumberFormat.decimaFormat(traceBackNumValVO.beta-traceBackNumValVO.baseReturnVolatility,4);
 
         //阿尔法
-        data[0][7]=NumberFormat.decimaFormat(traceBackNumValVO.alpha,2);
+        data[0][7]=NumberFormat.decimaFormat(traceBackNumValVO.alpha,4);
         data[1][7]="-";//todo  获得基准的alpha 基准没有阿尔法
-        data[2][7]=NumberFormat.decimaFormat(traceBackNumValVO.alpha-traceBackNumValVO.baseReturnVolatility,2);
+        data[2][7]=NumberFormat.decimaFormat(traceBackNumValVO.alpha-traceBackNumValVO.baseReturnVolatility,4);
 
     }
 
