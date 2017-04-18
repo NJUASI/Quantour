@@ -97,7 +97,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
     private double calculateAve(List<StrategyStock> dataList) {
         double sum = 0;
         for (StrategyStock stock : dataList) {
-            sum += stock.close;
+            sum += stock.adjClose;
         }
         return sum / dataList.size();
     }

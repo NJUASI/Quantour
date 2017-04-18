@@ -16,10 +16,7 @@ import utilities.enums.BlockType;
 import utilities.enums.StType;
 import utilities.enums.TraceBackStrategy;
 import utilities.exceptions.*;
-import vo.CumulativeReturnVO;
-import vo.StockPoolCriteriaVO;
-import vo.TraceBackCriteriaVO;
-import vo.TraceBackVO;
+import vo.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -38,7 +35,6 @@ public class TraceBackChart {
     //最低比例
     private double low = Double.MAX_VALUE;
 
-
     //策略的数据集合
     private List<CumulativeReturnVO> strategyData;
 
@@ -55,11 +51,12 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public TraceBackChart(List<CumulativeReturnVO> strategyData, List<CumulativeReturnVO> baseData) {
+    public TraceBackChart(List<CumulativeReturnVO> strategyData, List<CumulativeReturnVO> baseData, MaxTraceBackVO maxTraceBackVO) {
         this.baseData = baseData;
         this.strategyData = strategyData;
-
-//        this.readData();
+        traceBackPoint = new ArrayList<>();
+        traceBackPoint.add(maxTraceBackVO.maxStartIndex);
+        traceBackPoint.add(maxTraceBackVO.maxEndIndex);
     }
 
     /**
@@ -136,19 +133,12 @@ public class TraceBackChart {
         TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
         TimeSeries strategy = new TimeSeries("策略");
         TimeSeries base = new TimeSeries("基准");
-        traceBackPoint = new ArrayList<>();
 
-        System.out.println(strategyData.size());
-        System.out.println(baseData.size());
         for (int i = 0; i < this.strategyData.size(); i++) {
             CumulativeReturnVO strategyVO = strategyData.get(i);
             CumulativeReturnVO baseVO = baseData.get(i);
             LocalDate strategyDate = strategyVO.currentDate;
             LocalDate baseDate = baseVO.currentDate;
-
-            if (strategyVO.isTraceBack) {
-                traceBackPoint.add(i);
-            }
 
             strategy.add(new Day(strategyDate.getDayOfMonth(), strategyDate.getMonthValue(), strategyDate.getYear()),
                     strategyVO.cumulativeReturn);
@@ -184,52 +174,5 @@ public class TraceBackChart {
                 }
             }
         }
-    }
-
-    /**
-     * 读取数据
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/11
-     */
-    private void readData() throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
-        TraceBackService traceBackService = new TraceBackServiceImpl();
-        TraceBackCriteriaVO traceBackCriteriaVO1 = new TraceBackCriteriaVO();
-        //设置TraceBackCriteriaVO
-        traceBackCriteriaVO1.baseStockName = "沪深300";
-        traceBackCriteriaVO1.startDate = LocalDate.of(2013, 5, 1);
-        traceBackCriteriaVO1.endDate = LocalDate.of(2014, 4, 29);
-        traceBackCriteriaVO1.strategyType = TraceBackStrategy.MR;
-        traceBackCriteriaVO1.formativePeriod = 5;
-        traceBackCriteriaVO1.holdingNum = 1;
-        traceBackCriteriaVO1.holdingPeriod = 5;
-        traceBackCriteriaVO1.isCustomized = false;
-
-        List<BlockType> list = new ArrayList<>();
-        list.add(BlockType.ZB);
-        list.add(BlockType.CYB);
-        StockPoolCriteriaVO stockPoolCriteriaVO = new StockPoolCriteriaVO(StType.EXCLUDE, list);
-        traceBackCriteriaVO1.stockPoolVO = stockPoolCriteriaVO;
-
-
-        List<String> stockPool = new ArrayList<>();
-        stockPool.add("000001");
-        stockPool.add("000022");
-        stockPool.add("000010");
-        stockPool.add("000004");
-
-        long startTime = System.currentTimeMillis();
-        System.out.println(startTime);
-        TraceBackVO traceBackVO = null;
-        try {
-            traceBackVO = traceBackService.traceBack(traceBackCriteriaVO1, stockPool);
-        } catch (InvalidInputException e) {
-            e.printStackTrace();
-        }
-        System.out.println(System.currentTimeMillis() - startTime);
-        System.out.println("enter");
-        this.strategyData = traceBackVO.strategyCumulativeReturn;
-        this.baseData = traceBackVO.baseCumulativeReturn;
     }
 }

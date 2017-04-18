@@ -79,7 +79,7 @@ public class OriginalDataReader {
                 codeDesFilePath = codeDesFileParentPath + fileSeparator + desCode + post;
             }
 
-            temp.append(parts[0] + "\t" + parts[1] + "\t" + parts[2] + "\t" + parts[3] + "\t" + parts[4] + "\t" + parts[5] + "\t" + parts[6]
+            temp.insert(0, parts[0] + "\t" + parts[1] + "\t" + parts[2] + "\t" + parts[3] + "\t" + parts[4] + "\t" + parts[5] + "\t" + parts[6]
                     + "\t" + parts[7] + "\t" + parts[8] + "\t" + parts[9] + "\t" + parts[10] + lineSeparator);
         }
 

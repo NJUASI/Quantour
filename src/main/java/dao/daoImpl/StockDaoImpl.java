@@ -10,12 +10,8 @@ import dataHelper.dataHelperImpl.StockDataHelperImpl;
 import po.PrivateStockPO;
 import po.StockPO;
 import po.StockSearchPO;
-import sun.rmi.server.LoaderHandler;
-import sun.util.resources.sl.LocaleNames_sl;
-import utilities.StockCodeHelper;
 import utilities.exceptions.*;
 import vo.StockPoolVO;
-import vo.StockVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -105,7 +101,7 @@ public class StockDaoImpl implements StockDao {
             throw new NoDataWithinException(stockCode);
         }
 
-        return reverse(result);
+        return result;
     }
 
     /**
@@ -120,7 +116,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPO> getStockData(String stockCode) throws IOException {
-        return reverse(stockHelper.getStockRecords(stockCode));
+        return stockHelper.getStockRecords(stockCode);
     }
 
     /**
@@ -389,22 +385,4 @@ public class StockDaoImpl implements StockDao {
         if (start.isBefore(sourceStart) || end.isAfter(sourceEnd)) return false;
         else return true;
     }
-
-    /**
-     * 转置从dataHelper处来的数据库中的日期倒序数据
-     *
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/9
-     * @param dataList 需被倒置的股票数据
-     * @return 正常日期顺序的股票数据信息
-     */
-    private List<StockPO> reverse(List<StockPO> dataList) {
-        List<StockPO> reversedList = new ArrayList<StockPO>();
-        for (int i = 0; i < dataList.size(); i++) {
-            reversedList.add(0, dataList.get(i));
-        }
-        return reversedList;
-    }
-
 }

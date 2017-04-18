@@ -99,8 +99,8 @@ public class StockDataHelperImpl implements StockDataHelper {
         List<StockPO> allResult = getStockRecords(stockCode);
 
         List<LocalDate> result = new LinkedList<>();
-        result.add(allResult.get(allResult.size()-1).getDate());
         result.add(allResult.get(0).getDate());
+        result.add(allResult.get(allResult.size()-1).getDate());
         return result;
     }
 
@@ -113,9 +113,12 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
+        List<StockPO> result = getStockRecords(stockCode);
+
         List<LocalDate> dates = new LinkedList<>();
-        LocalDate temp = getFirstAndLastDay(stockCode).get(0);
-        LocalDate end = getFirstAndLastDay(stockCode).get(1);
+
+        LocalDate temp = result.get(0).getDate();
+        LocalDate end = result.get(result.size() - 1).getDate();
 
         // 先加入所有目标可能的日期
         while (!temp.isEqual(end)) {
@@ -124,7 +127,6 @@ public class StockDataHelperImpl implements StockDataHelper {
         }
 
         // 再剔除有数据的日期
-        List<StockPO> result = getStockRecords(stockCode);
         for (StockPO stock : result) {
             dates.remove(stock.getDate());
         }
@@ -190,7 +192,7 @@ public class StockDataHelperImpl implements StockDataHelper {
             }
 
             boolean isSt = stockNames.get(i).contains("ST");
-            
+
             result.add(new StockPoolVO(tempCode, thisBlockType ,isSt));
         }
 
