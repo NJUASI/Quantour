@@ -157,9 +157,34 @@ public class ChooseStrategyPanel extends TemplatePanel {
     }
 
     public void popup(){
-        progressBar = new MyLabel("正在回测……");
+        progressBar = new MyLabel("正在回测..");
         progressBar.setBounds(adaptScreen(1300, 400, 100, 30));
         add(progressBar);
+        new Thread(() ->{
+            int num =0;
+            while (true){
+                try{
+                    Thread.sleep(400);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                switch (num){
+                    case 0:
+                        progressBar.setText("正在回测...");
+                        break;
+                    case 1:
+                        progressBar.setText("正在回测....");
+                        break;
+                    case 2:
+                        progressBar.setText("正在回测.....");
+                        break;
+                    case 3:
+                        progressBar.setText("正在回测..");
+                        break;
+                }
+                num=(num+1)%4;
+            }
+        }).start();
         progressBar.repaint();
         repaint();
 //        progressBar = new JLabel();

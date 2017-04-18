@@ -73,13 +73,12 @@ public class UserPanel extends TemplatePanel {
             favoritePanel=new FavoritePanel();
             favoritePanel.setBounds(adaptScreen(420,100,1300-420,800));
             label = new JLabel();
-            label.setBounds(420 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, (1300-4) * width / 1920 , 900* height / 1030);
+            label.setBounds(420 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, 1300-420 * width / 1920 , 900* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(ColorUtils.backgroundColor());
             label.setOpaque(true);
             add(label);
             add(favoritePanel);
-            repaint();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (PrivateStockNotFoundException e) {
