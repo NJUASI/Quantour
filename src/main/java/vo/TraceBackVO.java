@@ -47,4 +47,9 @@ public class TraceBackVO {
      */
     public List<ExcessAndWinRateDistVO> certainHoldings;
 
+    /**
+     * 保存最大回撤率的数据
+     */
+    public MaxTraceBackVO maxTraceBackVO;
+
 }

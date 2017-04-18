@@ -108,7 +108,7 @@ public abstract class AllTraceBackStrategy {
         // 回测时间太短，不足一个持有期
         if (cycles == 0) {
             strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles));
-            return maxRetracement(strategyCumulativeReturn);
+            return strategyCumulativeReturn;
         }
 
         // 至少一个持有期，整个周期的计算
@@ -128,46 +128,7 @@ public abstract class AllTraceBackStrategy {
         // 根据果仁网，第一天数据设置为0
         strategyCumulativeReturn.get(0).cumulativeReturn = 0;
 
-        return maxRetracement(strategyCumulativeReturn);
-    }
-
-    /**
-     * 计算最大回撤点
-     *
-     * @param cumulativeReturnVOS 未计算最大回测的累计收益率
-     * @return List<CumulativeReturnVO> 标记了两个最大回撤点的累计收益率，标记点的isTraceBack为true
-     */
-    public List<CumulativeReturnVO> maxRetracement(List<CumulativeReturnVO> cumulativeReturnVOS) {
-
-        //TODO gcm 用了两个循环，不知道怎么改进算法，你们可以帮下忙
-
-        //回撤点的峰值在list中的位置
-        int top = 0;
-        //回撤点的谷值在list中的位置
-        int down = 0;
-
-        //将第一个位置默认为最大回撤值点
-        cumulativeReturnVOS.get(0).isTraceBack = true;
-
-        double max = 0;
-
-        for (int i = 0; i < cumulativeReturnVOS.size(); i++) {
-            for (int j = i + 1; j < cumulativeReturnVOS.size(); j++) {
-                double diff = cumulativeReturnVOS.get(i).cumulativeReturn - cumulativeReturnVOS.get(j).cumulativeReturn;
-                if (max < diff) {
-                    //重新设置最大回撤点
-                    cumulativeReturnVOS.get(top).isTraceBack = false;
-                    cumulativeReturnVOS.get(down).isTraceBack = false;
-                    top = i;
-                    down = j;
-                    cumulativeReturnVOS.get(top).isTraceBack = true;
-                    cumulativeReturnVOS.get(down).isTraceBack = true;
-                    max = diff;
-                }
-            }
-        }
-
-        return cumulativeReturnVOS;
+        return strategyCumulativeReturn;
     }
 
     private void setTraceBackInfo(TraceBackCriteriaVO traceBackCriteriaVO) {
