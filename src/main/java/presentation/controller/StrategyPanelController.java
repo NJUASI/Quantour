@@ -65,27 +65,10 @@ public class StrategyPanelController {
 
         TraceBackCriteriaVO vo = chooseStrategyPanel.getInfo();
 
-        List<String> stockPool = stockService.getPrivateStockCodes(IDReserve.getInstance().getUserID());
+        List<String> stockPool = PrivateStockPool.getInstance().getPrivatePoolCodes();
 
         return traceBackService.traceBack(vo, stockPool);
 
-
-
-        //        vo.isCustomized=false; //TODO 后期需要删去
-//         //TODO 后期需要改成其他对象，不是null
-
-//        stockPool.add("000001");
-//
-//        TraceBackVO traceBackVO = new TraceBackVO();
-//        traceBackVO.holdingDetailVOS=null;
-//        traceBackVO.certainHoldings=null;
-//        traceBackVO.certainFormates=null;
-//        traceBackVO.strategyCumulativeReturn=null;
-//        traceBackVO.baseCumulativeReturn=null;
-//        traceBackVO.traceBackNumValVO=null;
-//        traceBackVO.relativeReturnPeriodVO=null;
-//        traceBackVO.absoluteReturnPeriodVO=null;
-//        analysePanel.createChart(traceBackVO);
     }
 
     public void runThread() {

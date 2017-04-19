@@ -1,10 +1,7 @@
 package presentation.view.panel.iteration2.stockPool;
 
-import presentation.view.tools.WindowData;
-import service.StockService;
-import service.serviceImpl.StockService.StockServiceImpl;
-import utilities.IDReserve;
-import utilities.exceptions.PrivatePoolIsNullException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -49,5 +46,13 @@ public class PrivateStockPool {
         for(Map.Entry<String, String> entry : map.entrySet()){
             privatePool.remove(entry.getKey());
         }
+    }
+
+    public List<String> getPrivatePoolCodes() {
+        List<String> codes = new ArrayList<>();
+        for(Map.Entry<String, String> entry : privatePool.entrySet()){
+            codes.add(entry.getKey());
+        }
+        return codes;
     }
 }

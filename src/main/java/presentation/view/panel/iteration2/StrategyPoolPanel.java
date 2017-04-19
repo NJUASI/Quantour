@@ -2,7 +2,9 @@ package presentation.view.panel.iteration2;
 
 import presentation.listener.strategyPanelListener.DeletePoolListener;
 import presentation.view.panel.TemplatePanel;
+import presentation.view.panel.iteration2.stockPool.PrivateStockPool;
 import presentation.view.panel.iteration2.stockPool.StockPoolTable;
+import presentation.view.tools.DraggedTrasferable;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;
@@ -12,10 +14,17 @@ import utilities.exceptions.PrivateStockNotFoundException;
 import vo.StockPoolCriteriaVO;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragGestureEvent;
+import java.awt.dnd.DragGestureListener;
+import java.awt.dnd.DragSource;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by 61990 on 2017/4/17.
@@ -117,24 +126,48 @@ public class StrategyPoolPanel  extends TemplatePanel {
             remove(message);
         }
 
-            stockPoolTable = new StockPoolTable();
-            stockPoolTable.setBounds(adaptScreen(420, 20, 300, 200));
+        stockPoolTable = new StockPoolTable();
+        //源
+        DragSource dragSource = DragSource.getDefaultDragSource();
+        dragSource.createDefaultDragGestureRecognizer(stockPoolTable.jTable, DnDConstants.ACTION_COPY_OR_MOVE, new DragGestureListener() {
+            public void dragGestureRecognized(DragGestureEvent event)
+            {
+                //当前选择中单元格的内容
+                TableModel tableModel = stockPoolTable.jTable.getModel();
+                int[] rows = stockPoolTable.jTable.getSelectedRows();
+                Map<String,String> map = new TreeMap<>();
+                for(int i = 0; i < rows.length; i++){
+                    map.put((String)tableModel.getValueAt(rows[i],0),(String) tableModel.getValueAt(rows[i],1));
+                }
+                DraggedTrasferable transferable = new DraggedTrasferable(map);
 
-            label = new JLabel();
-            label.setBounds(420 * width / 1920, (20 + 30 * (stockPoolTable.jTable.getRowCount() + 1)) * height / 1030, 300 * width / 1920, 200 * height / 1030);
-            label.setBorder(BorderFactory.createEmptyBorder());
-            label.setBackground(new Color(35, 39, 44));
-            label.setForeground(Color.WHITE);
-            label.setOpaque(true);
-            label.setVisible(true);
-            add(label);
-            add(stockPoolTable);
-            if (radioButton1.isSelected()) {
-                stockPoolTable.setVisible(false);
-                message.setVisible(false);
+                PrivateStockPool.getInstance().remove(map);
+                refreshTabel();
+                ChooseStrategyPanel.getInstance().refreshTabel();
+                event.startDrag(
+                        DragSource.DefaultCopyDrop,
+                        transferable);
+
             }
+        });
 
-            repaint();
+        stockPoolTable.setBounds(adaptScreen(420, 20, 300, 200));
+
+        label = new JLabel();
+        label.setBounds(420 * width / 1920, (20 + 30 * (stockPoolTable.jTable.getRowCount() + 1)) * height / 1030, 300 * width / 1920, 200 * height / 1030);
+        label.setBorder(BorderFactory.createEmptyBorder());
+        label.setBackground(new Color(35, 39, 44));
+        label.setForeground(Color.WHITE);
+        label.setOpaque(true);
+        label.setVisible(true);
+        add(label);
+        add(stockPoolTable);
+        if (radioButton1.isSelected()) {
+            stockPoolTable.setVisible(false);
+            message.setVisible(false);
+        }
+
+        repaint();
     }
     public void openPool1(){
         mulit.setVisible(true);
