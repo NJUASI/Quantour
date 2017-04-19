@@ -7,6 +7,7 @@ import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;
 import utilities.enums.StType;
+import utilities.exceptions.PrivatePoolIsNullException;
 import utilities.exceptions.PrivateStockNotFoundException;
 import vo.StockPoolCriteriaVO;
 
@@ -134,6 +135,9 @@ public class StrategyPoolPanel  extends TemplatePanel {
             e.printStackTrace();
             new PopUpFrame(e.getMessage());
             //TODO 高源后期添加
+        } catch (PrivatePoolIsNullException e) {
+            e.printStackTrace();
+            new PopUpFrame(e.getMessage());
         }
     }
     public void openPool1(){

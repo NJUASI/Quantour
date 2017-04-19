@@ -4,6 +4,7 @@ import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
+import utilities.exceptions.PrivatePoolIsNullException;
 import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
@@ -24,7 +25,7 @@ public class StockPoolTable extends JScrollPane {
 
 
 
-    public StockPoolTable() throws IOException, PrivateStockNotFoundException {
+    public StockPoolTable() throws IOException, PrivateStockNotFoundException, PrivatePoolIsNullException {
 
         windowData = WindowData.getInstance();
         width = windowData.getWidth();

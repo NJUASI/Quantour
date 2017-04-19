@@ -124,7 +124,7 @@ public class StrategyPanelController {
     }
 
     public void deletePool() throws PrivateStockNotExistException, PrivateStockNotFoundException, IOException {
-        PrivateStockPool.getInstance().remove(chooseStrategyPanel.strategyPoolPanel.stockPoolTable.getCode());
+//        PrivateStockPool.getInstance().remove(TODO 传入需要删除的列表);
         chooseStrategyPanel.refreshTabel();
     }
 }

@@ -5,6 +5,7 @@ import presentation.view.tools.WindowData;
 import service.StockService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import utilities.IDReserve;
+import utilities.exceptions.PrivatePoolIsNullException;
 import utilities.exceptions.PrivateStockNotFoundException;
 import vo.StockVO;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 61990 on 2017/4/17.
@@ -22,21 +24,22 @@ public class StockPoolModel extends MyTabelModel {
     private StockService stockService;
 
 
-    public StockPoolModel() throws IOException, PrivateStockNotFoundException {
+    public StockPoolModel() throws IOException, PrivateStockNotFoundException, PrivatePoolIsNullException {
         this.stockService = new StockServiceImpl();
         init();
     }
 
     //初始化列表名称和数据
-    private void init() throws IOException, PrivateStockNotFoundException {
+    private void init() throws IOException, PrivateStockNotFoundException, PrivatePoolIsNullException {
         columnNames = new String[]{"股票代码", "股票名称"};
-        List<StockVO> stockList = PrivateStockPool.getInstance().getPrivatePool();
+        Map<String,String> stockList = PrivateStockPool.getInstance().getPrivatePool();
         data = new Object[stockList.size()][columns];
 
-        for (int i = 0; i < stockList.size(); i++) {
-            StockVO stockVO = stockList.get(i);
-            data[i][0] = stockVO.code;
-            data[i][1] = stockVO.name;
+        int count=0;
+        for(String code:stockList.keySet()){
+            data[count][0] = code;
+            data[count][1] = stockList.get(code);
+            count++;
         }
     }
 

@@ -4,27 +4,27 @@ import presentation.view.tools.WindowData;
 import service.StockService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import utilities.IDReserve;
+import utilities.exceptions.PrivatePoolIsNullException;
 import utilities.exceptions.PrivateStockNotFoundException;
 import vo.StockVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/4/19.
  */
 public class PrivateStockPool {
 
-    private StockService stockService;
-
-    private List<StockVO> privatePool;
+    private Map<String ,String> privatePool;
 
     private static PrivateStockPool privateStockPool;
 
     private PrivateStockPool() throws IOException, PrivateStockNotFoundException {
-        stockService = new StockServiceImpl();
-        privatePool = stockService.getPrivateStocks(IDReserve.getInstance().getUserID(), WindowData.getInstance().getDate());
+        privatePool = new HashMap<>();
     }
 
     public static PrivateStockPool getInstance() throws IOException, PrivateStockNotFoundException {
@@ -34,25 +34,26 @@ public class PrivateStockPool {
         return privateStockPool;
     }
 
-    public List<StockVO> getPrivatePool(){
+    public Map<String, String> getPrivatePool() throws PrivatePoolIsNullException {
+        if(privatePool.size()==0){
+            throw new PrivatePoolIsNullException();
+        }
+
         return privatePool;
     }
 
-    public void remove(String code){
-        for(StockVO stockVO : privatePool){
-            if(stockVO.code.equals(code)){
-                privatePool.remove(stockVO);
-                break;
-            }
-        }
+    public void add(Map<String,String> map){
+      privatePool.putAll(map);
     }
 
-    public void remove(List<String> codes){
+    public void remove(Map<String, String> map){
 
-        if(codes==null||codes.size()==0){return;}
+        if(map==null){return;}
 
-        for(String code : codes){
-            this.remove(code);
+        if(map.size()==0){return;}
+
+        for(String code:map.keySet()){
+            privatePool.remove(code,map.get(code));
         }
     }
 }
