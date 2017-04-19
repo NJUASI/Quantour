@@ -252,17 +252,6 @@ public class StockServiceImpl implements StockService {
     }
 
     /**
-     * 获取该股票代码对应的所有数据
-     *
-     * @param stockCode 股票代码
-     * @return
-     */
-    @Override
-    public List<StockVO> getStockData(String stockCode) throws IOException {
-        return convertStockPO2VO(stockDao.getStockData(stockCode));
-    }
-
-    /**
      * 转换stockPO to stockVO
      * @param stockPOS
      * @return
