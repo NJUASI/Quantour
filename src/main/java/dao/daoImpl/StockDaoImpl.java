@@ -179,26 +179,6 @@ public class StockDaoImpl implements StockDao {
         return stockHelper.getDateWithData();
     }
 
-    /**
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/23
-     * @return 在指定时间区段的所有日期
-     */
-    @Override
-    public List<LocalDate> getDateWithData(LocalDate start, LocalDate end) throws IOException {
-        List<LocalDate> result = getDateWithData();
-        for (int i = 0; i < result.size(); ) {
-            if (!isDateWithinWanted(start, end, result.get(i))) {
-                result.remove(i);
-            } else {
-                i++;
-            }
-        }
-        return result;
-    }
-
-
 
 
     /*

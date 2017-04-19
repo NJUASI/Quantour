@@ -117,7 +117,7 @@ public class StrategyPanelController {
             ChooseStrategyPanel.getInstance().popdown();
             AnalysePanel.getInstance().createChart(traceBackVO);
             StrategySwitchController.getInstance().viewSwitch("analysePanel");
-            analysePanel.setTitle(chooseStrategyPanel.getStrategyType());
+            analysePanel.setTitle("");
             thread.stop();
         });
        thread.start();

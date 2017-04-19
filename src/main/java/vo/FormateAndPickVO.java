@@ -15,6 +15,12 @@ public class FormateAndPickVO {
      */
     public FormateType formateType;
 
+    public FormateAndPickVO(FormateType formateType, PickType pickType, int rank) {
+        this.formateType = formateType;
+        this.pickType = pickType;
+        this.rank = rank;
+    }
+
     /**
      * 形成期挑选的类型
      */

@@ -1,11 +1,13 @@
 package presentation.view.panel.user;
 
+import presentation.view.panel.StocksTablePanel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
 import utilities.exceptions.PrivateStockNotFoundException;
 
+import javax.jws.soap.SOAPBinding;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -56,7 +58,9 @@ public class FavoritePanel extends JScrollPane{
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
             jTable.setBackground(ColorUtils.backgroundColor());
             jTable.setForeground(ColorUtils.fontColor());
-            jTable.setRowSelectionInterval(0, 0);
+            if(jTable.getRowCount()!=0) {
+                jTable.setRowSelectionInterval(0, 0);
+            }
             jTable.setGridColor(ColorUtils.divideColor());
             jTable.setBorder(BorderFactory.createEmptyBorder());
 

@@ -147,5 +147,6 @@ public class StocksTableController {
     public void addFavorite() throws PrivateStockExistedException, PrivateStockNotFoundException {
         stockService = new StockServiceImpl();
         stockService.addPrivateStock(IDReserve.getInstance().getUserID(),stocksTablePane.getCode());
+        StocksTablePanel.getInstance().popUp(stocksTablePane.getCode()+" 添加成功！");
     }
 }

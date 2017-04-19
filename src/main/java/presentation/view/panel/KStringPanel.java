@@ -137,6 +137,7 @@ public class KStringPanel extends TemplatePanel {
         num.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                num.setText("");
                 setAssociatePanelUnvisible();
             }
         });

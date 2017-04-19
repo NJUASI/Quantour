@@ -25,7 +25,7 @@ public class UserPanel extends TemplatePanel {
     public MessagePanel messagePanel;
     public FileImportPanel fileImportPanel;
     public FavoritePanel favoritePanel;
-    public JLabel label;
+    public JLabel label,logo;
     public UserPanel(){
         width= WindowData.getInstance().getWidth();
         height=WindowData.getInstance().getHeight();
@@ -67,7 +67,7 @@ public class UserPanel extends TemplatePanel {
         search.addMouseListener(new DetailOfCodeListener());
         add(search);
 
-        refreshFavorite();
+
 
         MyLabel block1=new MyLabel("",16) ;
         block1.setBounds(adaptScreen(60,60,420-90,850));
@@ -115,6 +115,15 @@ public class UserPanel extends TemplatePanel {
         middle2.setBackground(new Color(27-6,29-6,33-6));
         middle2.setOpaque(true);
         add(middle2);
+
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
+        logo =new JLabel();
+        bgPicture.setImage(bgPicture.getImage());
+        logo.setIcon(bgPicture);
+        logo.setBounds(850*width/1920-200,900*height/1920-200,400,400);
+        add(logo);
+
+        refreshFavorite();
     }
 
     public void refreshFavorite(){
@@ -131,14 +140,20 @@ public class UserPanel extends TemplatePanel {
             label.setBackground(ColorUtils.backgroundColor());
             label.setOpaque(true);
             add(label);
+            if(favoritePanel.jTable.getRowCount()==0){
+                logo.setVisible(true);
+            }else{
+                logo.setVisible(false);
+            }
             add(favoritePanel);
             repaint();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (PrivateStockNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             new PopUpFrame(e.getMessage());
-            //TODO 高源后期添加
+            logo.setVisible(true);
+
         }
 //        label.repaint();
     }
