@@ -4,6 +4,9 @@ import utilities.IDReserve;
 import utilities.StockCodeHelper;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,11 +85,14 @@ public class CodeDirCreator {
             File dataSourceInfo = new File(parent + "info" + post);
             dataSourceInfo.createNewFile();
             File sourceFile = new File(this.sourceFile);
-            long timeDistance = sourceFile.lastModified();
             long fileSize = sourceFile.length();
 
+            String thisDate = LocalDate.now().toString();
+            String thisTime = LocalTime.now().toString();
+            String uploadTime = thisDate + "  " + thisTime.substring(0, thisTime.length() - 4);
+
             BufferedWriter bw = new BufferedWriter(new FileWriter(dataSourceInfo, false));
-            bw.write(String.valueOf(fileSize) + '\t' + String.valueOf(timeDistance));
+            bw.write(String.valueOf(fileSize) + '\t' + uploadTime);
             bw.flush();
             bw.close();
         }

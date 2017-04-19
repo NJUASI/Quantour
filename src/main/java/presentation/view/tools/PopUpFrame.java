@@ -24,7 +24,7 @@ public class PopUpFrame extends JFrame {
     void createWindow(String message) {
 
         setTitle("提示！");
-        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo1.png"));
+        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
         setIconImage(bgPicture.getImage());
 
         setLayout(null);

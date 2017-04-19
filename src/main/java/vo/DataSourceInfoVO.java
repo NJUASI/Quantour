@@ -15,7 +15,7 @@ public class DataSourceInfoVO {
     public String fileSize;
 
     // 上传时间
-    public Timestamp uploadTime;
+    public String uploadTime;
 
     public DataSourceInfoVO(DataSourceInfoPO po) {
         fileSize = po.getFileSize();

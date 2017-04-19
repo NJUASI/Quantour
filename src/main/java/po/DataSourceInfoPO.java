@@ -13,9 +13,9 @@ public class DataSourceInfoPO {
     private String fileSize;
 
     // 上传时间
-    private Timestamp uploadTime;
+    private String uploadTime;
 
-    public DataSourceInfoPO(String fileSize, Timestamp uploadTime) {
+    public DataSourceInfoPO(String fileSize, String uploadTime) {
         this.fileSize = fileSize;
         this.uploadTime = uploadTime;
     }
@@ -24,7 +24,7 @@ public class DataSourceInfoPO {
         return fileSize;
     }
 
-    public Timestamp getUploadTime() {
+    public String getUploadTime() {
         return uploadTime;
     }
 }

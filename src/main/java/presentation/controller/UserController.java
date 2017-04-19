@@ -101,7 +101,7 @@ public class UserController {
             if(dataSourceService.getDataSourceState().equals(DataSourceState.USER)){
                 dataSourceService.setDataSourceState(DataSourceState.USER);
                 userPanel.fileImportPanel.setFound();
-                userPanel.fileImportPanel.setUploadInfo("您上传于" + vo.uploadTime );
+                userPanel.fileImportPanel.setUploadInfo("您上传于" + vo.uploadTime);
             }else {
                 if (vo != null) {
                     userPanel.fileImportPanel.setUploadInfo("您上传于" + vo.uploadTime);
