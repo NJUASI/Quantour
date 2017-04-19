@@ -149,16 +149,19 @@ public class StocksTableController {
     public void addFavorite()  {
         stockService = new StockServiceImpl();
         String code[] = stocksTablePane.getCode();
+        String successCode="";
+        String existCode="";
         for ( int i = 0 ;i<code.length;i++) {
             try {
                 stockService.addPrivateStock(IDReserve.getInstance().getUserID(), code[i]);
-                StocksTablePanel.getInstance().popUp( " 添加成功！");
+                successCode=successCode+code[i]+" ";
             } catch (PrivateStockExistedException e1) {
-                StocksTablePanel.getInstance().popUp(" 添加成功！");
+                existCode=existCode+code[i]+" ";
             } catch (PrivateStockNotFoundException e1) {
-                StocksTablePanel.getInstance().popUp(" 添加失败！");
+//                StocksTablePanel.getInstance().popUp(" 添加失败！");
             }
         }
+        StocksTablePanel.getInstance().popUp(successCode+"添加成功！"+existCode+" 已存在！");
     }
 
     /**

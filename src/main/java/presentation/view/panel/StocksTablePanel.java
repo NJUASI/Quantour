@@ -73,9 +73,10 @@ public class StocksTablePanel extends TemplatePanel {
         search.addMouseListener(new SearchListener());
         add(search);
 
-        success = new MyLabel("", 19);
-        success.setBounds(adaptScreen(1150, 870, 210, 35));
+        success = new MyLabel(" ", 19);
+        success.setBounds(adaptScreen(450, 870, 1060, 35));
         success.setVisible(false);
+        success.setHorizontalAlignment(SwingConstants.RIGHT);
         add(success);
 
         JButton importData = new MyButton("加入收藏");
