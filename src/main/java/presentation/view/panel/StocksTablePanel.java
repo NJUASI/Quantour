@@ -172,7 +172,7 @@ public class StocksTablePanel extends TemplatePanel {
             stockPanel.add(title2);
 
 
-            stockPanel.setBounds(60,700-35,360,235);
+            stockPanel.setBounds(adaptScreen(60,700-35,360,235));
             add(stockPanel);
             repaint();
             stockPoolTable=new StockPoolTable();
