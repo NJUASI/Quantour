@@ -12,6 +12,7 @@ import presentation.chart.tools.Serie;
 import presentation.view.tools.ColorUtils;
 import vo.ExcessAndWinRateDistVO;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Vector;
 
@@ -68,8 +69,9 @@ public class WinRateChart {
     private void setChart(JFreeChart chart) {
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setForegroundAlpha(0.9f);
-        plot.getRenderer().setSeriesPaint(0, ColorUtils.linkColor());
+        plot.getRenderer().setSeriesPaint(0, new Color(0,120,204)); //赢率图的专有颜色
         chart.getLegend().setVisible(false);
+        plot.getDomainAxis().setVisible(false);
     }
 
 }
