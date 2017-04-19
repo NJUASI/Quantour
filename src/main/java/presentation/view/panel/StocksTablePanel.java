@@ -30,6 +30,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by 61990 on 2017/3/5.
@@ -199,12 +201,9 @@ public class StocksTablePanel extends TemplatePanel {
                     DataFlavor[] flavors = transferable.getTransferDataFlavors();
                     //这里简单起见就取0号，
                     DataFlavor data = flavors[0];
-                    String s = (String)transferable.getTransferData(data);
-                    String[] codeAndName = s.split(",");
-
-                    System.out.println(s);
+                    Map<String, String> map = (Map<String,String>)transferable.getTransferData(data);
                     //获得当前鼠标所在的行、列
-                    PrivateStockPool.getInstance().add(codeAndName[0],codeAndName[1]);
+                    PrivateStockPool.getInstance().add(map);
                     refreshTabel();
                     ChooseStrategyPanel.getInstance().refreshTabel();
                     //免得阻塞进程
@@ -225,13 +224,16 @@ public class StocksTablePanel extends TemplatePanel {
             {
                 //当前选择中单元格的内容
                 TableModel tableModel = stockPoolTable.jTable.getModel();
-                int row = stockPoolTable.jTable.getSelectedRow();
-                String code = (String)tableModel.getValueAt(row,0);
-                //这里做的假的
-                PrivateStockPool.getInstance().remove(code);
+                int[] rows = stockPoolTable.jTable.getSelectedRows();
+                Map<String,String> map = new TreeMap<>();
+                for(int i = 0; i < rows.length; i++){
+                    map.put((String)tableModel.getValueAt(rows[i],0),(String) tableModel.getValueAt(rows[i],1));
+                }
+                DraggedTrasferable transferable = new DraggedTrasferable(map);
+
+                PrivateStockPool.getInstance().remove(map);
                 refreshTabel();
                 ChooseStrategyPanel.getInstance().refreshTabel();
-                Transferable transferable = new StringSelection(code);
                 event.startDrag(
                         DragSource.DefaultCopyDrop,
                         transferable);

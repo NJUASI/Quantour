@@ -2,6 +2,7 @@ package presentation.view.tools;
 
 import presentation.controller.StocksTableController;
 import presentation.view.panel.StocksTablePanel;
+import presentation.view.panel.iteration2.stockPool.PrivateStockPool;
 import presentation.view.tools.ui.MyScrollBarUI;
 
 import javax.swing.*;
@@ -102,10 +103,12 @@ public class StocksTablePane extends JScrollPane {
                 {
                     //当前选择中单元格的内容
                     TableModel tableModel = jTable.getModel();
-                    int row = jTable.getSelectedRow();
-                    String code = (String)tableModel.getValueAt(row,0);
-                    String name = (String)tableModel.getValueAt(row,1);
-                    Transferable transferable = new DraggedTrasferable(code,name);
+                    int[] rows = jTable.getSelectedRows();
+                    Map<String,String> map = new TreeMap<>();
+                    for(int i = 0; i < rows.length; i++){
+                        map.put((String)tableModel.getValueAt(rows[i],0),(String) tableModel.getValueAt(rows[i],1));
+                    }
+                    DraggedTrasferable transferable = new DraggedTrasferable(map);
                     event.startDrag(
                             DragSource.DefaultCopyDrop,
                             transferable);

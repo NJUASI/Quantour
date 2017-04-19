@@ -40,4 +40,14 @@ public class PrivateStockPool {
     public void add(String code, String name){
         privatePool.put(code,name);
     }
+
+    public void add(Map<String, String> map){
+        privatePool.putAll(map);
+    }
+
+    public void remove(Map<String, String> map){
+        for(Map.Entry<String, String> entry : map.entrySet()){
+            privatePool.remove(entry.getKey());
+        }
+    }
 }
