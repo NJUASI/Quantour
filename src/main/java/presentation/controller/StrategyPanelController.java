@@ -126,5 +126,6 @@ public class StrategyPanelController {
     public void deletePool() throws PrivateStockNotExistException, PrivateStockNotFoundException, IOException {
 //        PrivateStockPool.getInstance().remove(TODO 传入需要删除的列表);
         chooseStrategyPanel.refreshTabel();
+        //Todo remove gcm 之后还有更新stockTablePanel里面的自选股池
     }
 }
