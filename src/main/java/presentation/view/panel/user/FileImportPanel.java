@@ -138,4 +138,9 @@ public class FileImportPanel extends TemplatePanel {
         radioButton2.setSelected(false);
         radioButton2.setEnabled(false);
     }
+    public void FoundDate(){
+        radioButton1.setSelected(true);
+        radioButton2.setSelected(false);
+        radioButton2.setEnabled(true);
+    }
 }

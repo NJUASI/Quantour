@@ -95,6 +95,8 @@ public class UserController {
             DataSourceInfoVO vo = dataSourceService.getMyDataSource();
             if(vo!=null) {
                 userPanel.fileImportPanel.setUploadInfo("由" + vo.userName + "上传于" + vo.uploadTime);
+                userPanel.fileImportPanel.FoundDate();
+                dataSourceService.setDataSourceState(DataSourceState.ORIGINAL);
             }else{
                 userPanel.fileImportPanel.setUploadInfo("未上传本地数据");
                 userPanel.fileImportPanel.notFoundDate();
