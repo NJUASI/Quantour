@@ -27,7 +27,7 @@ public class DataSourceDataHelperImplTest {
     }
 
     /**
-     * Method: upload(String filePath)
+     * Method: upload(String fileSize)
      */
     @Test
     public void testUpload() throws Exception {
@@ -39,12 +39,12 @@ public class DataSourceDataHelperImplTest {
 //        }
 //
 //
-        DataSourceDataHelper helper = new DataSourceDataHelperImpl();
-        try {
-            helper.upload("/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        DataSourceDataHelper helper = new DataSourceDataHelperImpl();
+//        try {
+//            helper.upload("/Users/cuihua/Documents/大学学习/大二/软件工程与计算三/数据/股票历史数据ALL.csv");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
 //        BaseStockHelper helper = new BaseStockHelper();

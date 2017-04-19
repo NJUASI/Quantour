@@ -7,8 +7,8 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import presentation.chart.tools.CandlestickChartTool;
-import presentation.chart.tools.TraceBackChartTool;
+import presentation.chart.tools.chartTool.CandlestickChartTool;
+import presentation.chart.tools.chartTool.TraceBackChartTool;
 import presentation.view.tools.ColorUtils;
 import vo.*;
 

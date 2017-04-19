@@ -1,4 +1,4 @@
-package presentation.chart.tools;
+package presentation.chart.tools.chartTool;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.StandardChartTheme;
@@ -11,6 +11,8 @@ import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleInsets;
+import presentation.chart.tools.ColorFactory;
+import presentation.chart.tools.renderer.MyCandlestickRenderer;
 import presentation.view.tools.ColorUtils;
 import utilities.enums.MovingAverageType;
 import utilities.exceptions.ColorNotExistException;
@@ -128,6 +130,8 @@ public class CandlestickChartTool {
         xAxis.setTickLabelPaint(ColorUtils.fontColor());
         xAxis.setAxisLineVisible(true);
         xAxis.setPositiveArrowVisible(true);
+        xAxis.setLowerMargin(0.01);
+        xAxis.setUpperMargin(0.06);
 
         return xAxis;
     }
@@ -150,6 +154,8 @@ public class CandlestickChartTool {
         yAxis.setTickLabelPaint(ColorUtils.fontColor());
         yAxis.setAutoRangeIncludesZero(false);
         yAxis.setAxisLineVisible(true);
+        yAxis.setLowerMargin(0.01);
+        yAxis.setUpperMargin(0.06);
 
         return yAxis;
 

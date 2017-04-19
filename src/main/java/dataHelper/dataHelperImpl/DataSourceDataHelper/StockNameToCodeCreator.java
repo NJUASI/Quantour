@@ -3,6 +3,7 @@ package dataHelper.dataHelperImpl.DataSourceDataHelper;
 import com.github.stuxuhai.jpinyin.ChineseHelper;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
+import utilities.IDReserve;
 import utilities.StockCodeHelper;
 
 import java.io.*;
@@ -17,6 +18,7 @@ public class StockNameToCodeCreator {
     final String nameCodeFileParent;
 
     final String separator = System.getProperty("file.separator");
+    final String userID = IDReserve.getInstance().getUserID();
 
     final String parent;
 
@@ -27,17 +29,17 @@ public class StockNameToCodeCreator {
         if (isBaseStock) nameCodeFileParent = "base_stocks";
         else nameCodeFileParent = "stocks";
 
-        parent = System.getProperty("user.dir") + separator + ".attachments" + separator + nameCodeFileParent;
+        parent = System.getProperty("user.dir") + separator + ".attachments" + separator + userID + separator + nameCodeFileParent;
 
     }
 
-    public void handle() throws IOException {
+    public void handle() throws IOException, PinyinException {
         reader();
         writerProperties();
         writerTxt();
     }
 
-    private void reader() throws IOException {
+    private void reader() throws IOException, PinyinException {
         String readerPath = parent + separator + "stock_records_by_code" + separator;
 
         File parentFile = new File(readerPath);
@@ -54,12 +56,11 @@ public class StockNameToCodeCreator {
             String tempName = line.split("\t")[9].replace(" ", "");
             String tempCode = fileNameForRead.substring(0, fileNameForRead.length() - 4);
 
+            // 特别处理中小板P为中小板指
+            if (tempName.equals("中小板P")) tempName = "中小板指";
+
             nameCodeProperties.add(tempName + "=" + StockCodeHelper.simplify(tempCode));
-            try {
-                shortPinyinTxt.add(convertShortPinyin(tempName) + "\t" + tempCode + "\t" + tempName);
-            } catch (PinyinException e) {
-                e.printStackTrace();
-            }
+            shortPinyinTxt.add(convertShortPinyin(tempName) + "\t" + tempCode + "\t" + tempName);
             reader.close();
 
         }

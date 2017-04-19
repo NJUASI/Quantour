@@ -10,7 +10,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import presentation.chart.tools.CompareTool;
+import presentation.chart.tools.chartTool.CompareTool;
 import presentation.chart.tools.DateTickUnitFactory;
 import presentation.chart.tools.ChartUtils;
 import presentation.view.tools.ColorUtils;

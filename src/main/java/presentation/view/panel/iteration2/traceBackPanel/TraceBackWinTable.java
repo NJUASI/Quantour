@@ -34,7 +34,7 @@ public class TraceBackWinTable extends JScrollPane {
 
         try {
             jTable = new JTable(new TraceBackWinModel(certainFormates));
-            jTable.setBounds(0, 0, 300 * width / 1920, 800 * height / 1030);
+            jTable.setBounds(0, 0, 400 * width / 1920, 600 * height / 1030);
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择
             jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

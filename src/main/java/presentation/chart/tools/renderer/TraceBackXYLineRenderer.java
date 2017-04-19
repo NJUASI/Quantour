@@ -1,4 +1,4 @@
-package presentation.chart.tools;
+package presentation.chart.tools.renderer;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;

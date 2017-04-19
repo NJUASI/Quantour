@@ -1,6 +1,7 @@
 package dataHelper.dataHelperImpl.DataSourceDataHelper;
 
 import utilities.AttahmentsInitializer;
+import utilities.IDReserve;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,8 @@ public class OldDirRemover {
         AttahmentsInitializer.init();
 
         final String separator = System.getProperty("file.separator");
-        final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks";
+        final String userID = IDReserve.getInstance().getUserID();
+        final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + userID + separator + "stocks";
 
         File parentFile = new File(parent);
         if (parentFile.exists()) {

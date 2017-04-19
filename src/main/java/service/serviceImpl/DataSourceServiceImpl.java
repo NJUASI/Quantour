@@ -1,5 +1,6 @@
 package service.serviceImpl;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
 import dao.DataSourceDao;
 import dao.daoImpl.DataSourceDaoImpl;
 import service.DataSourceService;
@@ -22,7 +23,7 @@ public class DataSourceServiceImpl implements DataSourceService {
     }
 
     @Override
-    public boolean upload(String filePath) throws IOException, NotCSVException {
+    public boolean upload(String filePath) throws IOException, NotCSVException, PinyinException {
         if (!filePath.endsWith(".csv")) throw new NotCSVException();
         return dao.upload(filePath);
     }

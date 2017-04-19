@@ -1,13 +1,13 @@
-package presentation.chart.tools;
+package presentation.chart.tools.chartTool;
 
 import org.jfree.chart.axis.*;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 
 import org.jfree.ui.TextAnchor;
+import presentation.chart.tools.renderer.TraceBackXYLineRenderer;
 import presentation.view.tools.ColorUtils;
 
-import java.awt.*;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -72,6 +72,8 @@ public class TraceBackChartTool {
         xAxis.setLabelPaint(ColorUtils.fontColor());
         xAxis.setTickLabelPaint(ColorUtils.fontColor());
         xAxis.setAxisLineVisible(false);
+        xAxis.setUpperMargin(0.06);
+        xAxis.setLowerMargin(0.01);
 
         return xAxis;
     }
@@ -95,7 +97,8 @@ public class TraceBackChartTool {
         yAxis.setTickLabelPaint(ColorUtils.fontColor());
         yAxis.setAutoRangeIncludesZero(false);
         yAxis.setNumberFormatOverride(NumberFormat.getPercentInstance());
-
+        yAxis.setLowerMargin(0.01);
+        yAxis.setUpperMargin(0.06);
         return yAxis;
 
     }

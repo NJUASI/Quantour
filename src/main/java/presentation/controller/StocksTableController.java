@@ -91,7 +91,7 @@ public class StocksTableController {
         int num[]=null;
         try {
             stocksTablePane = new MyTable(stocksTablePanel.getChooseDate());
-            stocksTablePane.setLocation(60 * width / 1920, 155 * height / 1030);
+            stocksTablePane.setLocation(460 * width / 1920, 75 * height / 1030);
             if(stocksTablePane!=null) {
                 stocksTablePanel.add(stocksTablePane);
                 stocksTablePane.repaint();
@@ -99,15 +99,22 @@ public class StocksTableController {
             list  = stockSituationService.getStockStituationData(stocksTablePanel.getChooseDate());
              num=new int[]{ list.get(0).num,list.get(1).num,list.get(2).num,list.get(3).num,list.get(4).num,list.get(5).num};
             thermometerPanel=new ThermometerPanel(num,list.get(6).num);
-            thermometerPanel.setLocation(1400 * width / 1920, 80 * height / 1030);
+            thermometerPanel.setLocation(60 * width / 1920, 80 * height / 1030);
             stocksTablePanel.add(thermometerPanel);
-            stocksTablePanel.logo.setVisible(false);
+            stocksTablePanel.message.setVisible(false);
+            stocksTablePanel.notFound.setVisible(false);
+            stocksTablePanel.label.setVisible(false);
+            stocksTablePanel.title.setVisible(true);
+            stocksTablePanel.repaint();
             thermometerPanel.repaint();
 
         }catch (Exception e) {
             stocksTablePanel.remove(stocksTablePane);
             stocksTablePane.repaint();
+            stocksTablePanel.notFound.setVisible(true);
             stocksTablePanel.label.setVisible(true);
+            stocksTablePanel.title.setVisible(false);
+            stocksTablePanel.message.setVisible(true);
             stocksTablePanel.label.repaint();
         }
 

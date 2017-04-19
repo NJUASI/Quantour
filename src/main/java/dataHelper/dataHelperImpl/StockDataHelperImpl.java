@@ -3,10 +3,7 @@ package dataHelper.dataHelperImpl;
 import dataHelper.SearchDataHelper;
 import dataHelper.StockDataHelper;
 import po.StockPO;
-import utilities.DataSourceStateKeeper;
-import utilities.LocalDateComparator;
-import utilities.LocalDateList;
-import utilities.StockCodeHelper;
+import utilities.*;
 import utilities.enums.BlockType;
 import utilities.enums.DataSourceState;
 import utilities.enums.Market;
@@ -144,7 +141,8 @@ public class StockDataHelperImpl implements StockDataHelper {
             parent = Thread.currentThread().getContextClassLoader().getResource(isBaseStockParent).getFile();
             parent += separator + "stock_records_by_date";
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
-            parent = System.getProperty("user.dir") + separator + ".attachments" + separator + isBaseStockParent + separator + "stock_records_by_date";
+            parent = System.getProperty("user.dir") + separator + ".attachments" + separator +
+                    IDReserve.getInstance().getUserID() + separator + isBaseStockParent + separator + "stock_records_by_date";
         }
 
         String[] years = new File(parent).list();
@@ -216,7 +214,8 @@ public class StockDataHelperImpl implements StockDataHelper {
                     getResourceAsStream(path), "UTF-8"));
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8"));
+                    System.getProperty("user.dir") + separator + ".attachments" + separator +
+                            IDReserve.getInstance().getUserID() + separator  + path), "UTF-8"));
         }
 
         List<StockPO> result = new LinkedList<StockPO>();

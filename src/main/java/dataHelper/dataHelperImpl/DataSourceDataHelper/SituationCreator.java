@@ -1,6 +1,7 @@
 package dataHelper.dataHelperImpl.DataSourceDataHelper;
 
 import po.StockSituationPO;
+import utilities.IDReserve;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -11,7 +12,8 @@ import java.time.LocalDate;
 public class SituationCreator {
 
     final String fileSeparator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + "stocks" + fileSeparator;
+    final String userID = IDReserve.getInstance().getUserID();
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + userID + fileSeparator +  "stocks" + fileSeparator;
     final String sourcePath = parent + "stock_records_by_date";
 
     private String[] getFileList() {

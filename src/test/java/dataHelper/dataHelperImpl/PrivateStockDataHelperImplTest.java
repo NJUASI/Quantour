@@ -5,6 +5,10 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
 /**
  * PrivateStockDataHelperImpl Tester.
  *
@@ -30,11 +34,10 @@ public class PrivateStockDataHelperImplTest {
      */
     @Test
     public void testGetPrivateStockCode() throws Exception {
-//        List<String> result = dataHelper.getPrivateStockCode("Harvey");
-//        assertEquals(2, result.size());
-//        assertEquals("Charles 3001", result.get(0));
-//        assertEquals("Suzy 2056", result.get(1));
-//        assertEquals("1", result.get(2));
+        List<String> result = dataHelper.getPrivateStockCode("Guest");
+        assertEquals(2, result.size());
+        assertEquals("000300", result.get(0));
+        assertEquals("000001", result.get(1));
     }
 
     /**
@@ -42,6 +45,7 @@ public class PrivateStockDataHelperImplTest {
      */
     @Test
     public void testAddPrivateStock() throws Exception {
+//        assertEquals(true, dataHelper.addPrivateStock("Guest", "000001"));
     }
 
     /**

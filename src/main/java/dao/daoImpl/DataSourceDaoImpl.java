@@ -1,5 +1,6 @@
 package dao.daoImpl;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
 import dao.DataSourceDao;
 import dataHelper.DataSourceDataHelper;
 import dataHelper.dataHelperImpl.DataSourceDataHelperImpl;
@@ -19,7 +20,7 @@ public class DataSourceDaoImpl implements DataSourceDao {
     }
 
     @Override
-    public boolean upload(String filePath) throws IOException {
+    public boolean upload(String filePath) throws IOException, PinyinException {
         return helper.upload(filePath);
     }
 

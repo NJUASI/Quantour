@@ -1,5 +1,6 @@
 package dataHelper.dataHelperImpl.DataSourceDataHelper;
 
+import utilities.IDReserve;
 import utilities.StockCodeHelper;
 
 import java.io.*;
@@ -14,8 +15,10 @@ public class OriginalDataReader {
 
     final String codeDirParent;
 
-    final String fileSeparator = System.getProperty("file.separator");
+    final String separator = System.getProperty("file.separator");
     final String post = ".txt";
+    final String userID = IDReserve.getInstance().getUserID();
+
 
     final String parent;
     final String codeDesFileParentPath;
@@ -29,7 +32,7 @@ public class OriginalDataReader {
 
         br = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), "UTF-8"));
 
-        parent = System.getProperty("user.dir") + fileSeparator + ".attachments"  + fileSeparator + codeDirParent+ fileSeparator;
+        parent = System.getProperty("user.dir") + separator + ".attachments"  + separator + userID + separator + codeDirParent+ separator;
         codeDesFileParentPath = parent + "stock_records_by_code";
     }
 
@@ -76,7 +79,7 @@ public class OriginalDataReader {
                     temp.setLength(0);
                 }
                 desCode = parts[8];
-                codeDesFilePath = codeDesFileParentPath + fileSeparator + desCode + post;
+                codeDesFilePath = codeDesFileParentPath + separator + desCode + post;
             }
 
             temp.insert(0, parts[0] + "\t" + parts[1] + "\t" + parts[2] + "\t" + parts[3] + "\t" + parts[4] + "\t" + parts[5] + "\t" + parts[6]

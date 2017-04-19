@@ -1,5 +1,6 @@
 package dataHelper.dataHelperImpl;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
 import dataHelper.DataSourceDataHelper;
 import dataHelper.dataHelperImpl.DataSourceDataHelper.*;
 import po.DataSourceInfoPO;
@@ -13,7 +14,7 @@ import java.sql.Timestamp;
 public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
     @Override
-    public boolean upload(String filePath) throws IOException {
+    public boolean upload(String filePath) throws IOException, PinyinException {
         OldDirRemover remover = new OldDirRemover();
         remover.myDelete();
 
@@ -50,6 +51,6 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
         String[] result = br.readLine().split("\t");
-        return new DataSourceInfoPO(result[0], new Timestamp(Long.parseLong(result[1])), result[2]);
+        return new DataSourceInfoPO(result[0], new Timestamp(Long.parseLong(result[1])));
     }
 }

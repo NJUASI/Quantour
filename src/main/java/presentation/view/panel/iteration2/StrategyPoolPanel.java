@@ -122,7 +122,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
             label = new JLabel();
             label.setBounds(420 * width / 1920, (20+30*(stockPoolTable.jTable.getRowCount()+1)) * height / 1030, 200* width / 1920 , 200* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
-            label.setBackground(new Color(32,36,39));
+            label.setBackground( new Color(35,39,44));
             label.setForeground(Color.WHITE);
             label.setOpaque(true);
             label.setVisible(true);

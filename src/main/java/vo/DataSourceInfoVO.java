@@ -12,17 +12,13 @@ import java.sql.Timestamp;
 public class DataSourceInfoVO {
 
     // 上传文件路径
-    public String filePath;
+    public String fileSize;
 
     // 上传时间
     public Timestamp uploadTime;
 
-    // 上传用户
-    public String userName;
-
     public DataSourceInfoVO(DataSourceInfoPO po) {
-        filePath = po.getFilePath();
+        fileSize = po.getFileSize();
         uploadTime = po.getUploadTime();
-        userName = po.getUserName();
     }
 }
