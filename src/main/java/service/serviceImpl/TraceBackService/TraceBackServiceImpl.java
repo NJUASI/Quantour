@@ -101,7 +101,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackVO.absoluteReturnPeriodVO = countReturnPeriod(traceBackVO.holdingDetailVOS, true);
         traceBackVO.relativeReturnPeriodVO = countReturnPeriod(traceBackVO.holdingDetailVOS, false);
 
-        System.err.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
+        System.out.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // 提前保存TraceBackCriteriaVO，以便后续固定持有期计算形成期时使用
         TraceBackCriteriaVO criteriaVOToHold = new TraceBackCriteriaVO(traceBackCriteriaVO);
@@ -175,7 +175,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;
         int initFormativePeriod = traceBackCriteriaVO.formativePeriod;
 
-        for (int i = 2; i <= 50; i++) {
+        for (int i = 2; i <= 50; i = i+2) {
             ExcessAndWinRateDistVO excessAndWinRateDistVO = new ExcessAndWinRateDistVO();
             //给定形成期
             if (certainFormate) {
