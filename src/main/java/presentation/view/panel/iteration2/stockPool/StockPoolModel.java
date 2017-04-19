@@ -1,18 +1,8 @@
 package presentation.view.panel.iteration2.stockPool;
 
 import presentation.view.tools.MyTabelModel;
-import presentation.view.tools.WindowData;
 import service.StockService;
 import service.serviceImpl.StockService.StockServiceImpl;
-import utilities.IDReserve;
-import utilities.exceptions.PrivatePoolIsNullException;
-import utilities.exceptions.PrivateStockNotFoundException;
-import vo.StockVO;
-
-import java.io.IOException;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 /**

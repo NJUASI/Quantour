@@ -5,6 +5,7 @@ import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.panel.iteration2.MultiComboBox;
 import presentation.view.panel.iteration2.StrategyPanel;
 import presentation.view.panel.iteration2.stockPool.PrivateStockPool;
+import presentation.view.tools.PopUpFrame;
 import service.StockService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
@@ -58,7 +59,7 @@ public class StrategyPanelController {
 
     public TraceBackVO search() throws DateNotWithinException, NoMatchEnumException, IOException,
             NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException,
-            InvalidInputException, DataSourceFirstDayException, PrivateStockNotFoundException {
+            InvalidInputException, DataSourceFirstDayException, PrivateStockNotFoundException, PrivatePoolNotEnoughException {
 
         traceBackService = new TraceBackServiceImpl();
         stockService = new StockServiceImpl();
@@ -66,6 +67,8 @@ public class StrategyPanelController {
         TraceBackCriteriaVO vo = chooseStrategyPanel.getInfo();
 
         List<String> stockPool = PrivateStockPool.getInstance().getPrivatePoolCodes();
+
+        if(stockPool.size()<100){throw  new PrivatePoolNotEnoughException();}
 
         return traceBackService.traceBack(vo, stockPool);
 
@@ -96,8 +99,10 @@ public class StrategyPanelController {
                 e1.printStackTrace();
             } catch (PrivateStockNotFoundException e1) {
                 e1.printStackTrace();
+            } catch (PrivatePoolNotEnoughException e) {
+                new PopUpFrame(e.getMessage());
             }
-            ChooseStrategyPanel.getInstance().popdown();
+           ChooseStrategyPanel.getInstance().popdown();
             AnalysePanel.getInstance().createChart(traceBackVO);
             StrategySwitchController.getInstance().viewSwitch("analysePanel");
             analysePanel.setTitle("");

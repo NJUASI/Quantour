@@ -3,7 +3,7 @@ package utilities.exceptions;
 /**
  * Created by Byron Dong on 2017/4/19.
  */
-public class PrivatePoolIsNullException extends Exception{
+public class PrivatePoolNotEnoughException extends Exception{
 
     /**
      * Returns the detail message string of this throwable.
@@ -13,6 +13,6 @@ public class PrivatePoolIsNullException extends Exception{
      */
     @Override
     public String getMessage() {
-        return "自选股票池中尚未添加股票";
+        return "请选择100只以上的自选股票";
     }
 }
