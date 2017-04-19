@@ -81,21 +81,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 查看用户信息
-     *
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
-     * @param  userName 用户姓名
-     * @return 用户信息
-     */
-    @Override
-    public UserVO checkUserInfo(String userName) {
-        UserPO po = userDao.get(userName);
-        return new UserVO(po);
-    }
-
-    /**
      * 用户登录
      *
      * @param userName 用户名称
@@ -128,19 +113,4 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-
-    /**
-     * 用户登出
-     *
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
-     * @param userName 用户姓名
-     * @return 是否注销成功
-     */
-    @Override
-    public boolean logOut(String userName) {
-        return userDao.logOut(userName);
-    }
-
 }
