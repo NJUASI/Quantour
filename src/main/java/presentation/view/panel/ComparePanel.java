@@ -41,7 +41,7 @@ public class ComparePanel extends TemplatePanel {
     //比较按钮
     JButton compare;
     //中间load图标
-    public JLabel logo;
+    public JLabel logo,notFound;
     //联想面板1
     public AssociatePanel associatePanel;
     //联想面板2
@@ -129,13 +129,29 @@ public class ComparePanel extends TemplatePanel {
 
         addFunction();
 
+
+        notFound=new MyLabel("没有找到数据",22) ;
+        notFound.setBounds(1100*width/1920-200,830*height/1920-200,400*height/1920,30*height/1030);
+        notFound.setVisible(false);
+        add(notFound);
+
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
         logo =new JLabel();
         bgPicture.setImage(bgPicture.getImage());
         logo.setIcon(bgPicture);
-        logo.addMouseListener(new UserListener());
         logo.setBounds(850*width/1920-200,900*height/1920-200,400,400);
         add(logo);
+    }
+
+
+    public void setExceptionMessage(String str){
+        ImageIcon bgPicture2= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/notFoundLogo.png"));
+        bgPicture2.setImage(bgPicture2.getImage());
+        notFound.setText(str);
+        notFound.setVisible(true);
+        logo.setIcon(bgPicture2);
+        logo.setVisible(true);
+        repaint();
     }
     /**
      * 改变时刷新联想

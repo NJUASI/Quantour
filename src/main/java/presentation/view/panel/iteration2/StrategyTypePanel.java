@@ -36,7 +36,7 @@ public class StrategyTypePanel extends TemplatePanel {
         add(label2);
 
         MScomboBox=new JComboBox();
-        MScomboBox.setBounds(adaptScreen(170,0,80,35));
+        MScomboBox.setBounds(adaptScreen(170,0,100,35));
         MScomboBox.addItem("5");
         MScomboBox.addItem("10");
         MScomboBox.addItem("20");
@@ -54,7 +54,7 @@ public class StrategyTypePanel extends TemplatePanel {
 
 
         MRcomboBox=new JComboBox();
-        MRcomboBox.setBounds(adaptScreen(170,0,80,35));
+        MRcomboBox.setBounds(adaptScreen(170,0,100,35));
         MRcomboBox.addItem("5");
         MRcomboBox.addItem("10");
         MRcomboBox.addItem("20");
@@ -74,7 +74,7 @@ public class StrategyTypePanel extends TemplatePanel {
         label5.setLocation(60* WindowData.getInstance().getWidth()/1920,70*WindowData.getInstance().getHeight()/1030);
         add(label5);
         holdingDate=new JTextField("5");
-        holdingDate.setBounds(adaptScreen(170,70,30,35));
+        holdingDate.setBounds(adaptScreen(170,70,60,35));
         add(holdingDate);
         label7= new MyLabel("天 (输入请大于1)");
         label7.setBounds(adaptScreen(235,70,140,35));
@@ -84,7 +84,7 @@ public class StrategyTypePanel extends TemplatePanel {
         label6.setLocation(60* WindowData.getInstance().getWidth()/1920,140*WindowData.getInstance().getHeight()/1030);
         add(label6);
         holdingNum=new JTextField("5");
-        holdingNum.setBounds(adaptScreen(170,140,30,35));
+        holdingNum.setBounds(adaptScreen(170,140,60,35));
 
         add(holdingNum);
         label8= new MyLabel("支 (输入请大于1)");

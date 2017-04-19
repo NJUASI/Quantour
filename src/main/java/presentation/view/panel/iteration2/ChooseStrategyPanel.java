@@ -69,7 +69,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
         //区间板块
         MyLabel block2title=new MyLabel("   回 测 区 间",18) ;
-        block2title.setBounds(adaptScreen(60,305,1200,35));
+        block2title.setBounds(adaptScreen(60,310,1200,35));
         block2title.setBackground(ColorUtils.titleBgColor());
         block2title.setOpaque(true);
         add(block2title);

@@ -54,7 +54,7 @@ public class KStringPanel extends TemplatePanel {
     //总体信息
     JButton searchAll;
 
-    public JLabel logo;
+    public JLabel logo,notFound;
     //
     JButton compare;
 
@@ -82,16 +82,32 @@ public class KStringPanel extends TemplatePanel {
         compare = new MyButton("加入比较");
         init();
 
+        notFound=new MyLabel("没有找到数据",22) ;
+        notFound.setBounds(1100*width/1920-200,830*height/1920-200,400*height/1920,30*height/1030);
+        notFound.setVisible(false);
+        add(notFound);
+
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
         logo =new JLabel();
         bgPicture.setImage(bgPicture.getImage());
         logo.setIcon(bgPicture);
-        logo.addMouseListener(new UserListener());
         logo.setBounds(850*width/1920-200,900*height/1920-200,400,400);
         add(logo);
 
+//        ImageIcon bgPicture2= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/notFoundLogo.png"));
+//        bgPicture2.setImage(bgPicture2.getImage());
+
     }
 
+    public void setExceptionMessage(String str){
+        ImageIcon bgPicture2= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/notFoundLogo.png"));
+        bgPicture2.setImage(bgPicture2.getImage());
+        notFound.setText(str);
+        notFound.setVisible(true);
+        logo.setIcon(bgPicture2);
+        logo.setVisible(true);
+        repaint();
+    }
     /**
      * 添加日期选择器等各种原件
      *
@@ -151,7 +167,7 @@ public class KStringPanel extends TemplatePanel {
         add(searchAll);
 
         //搜索按钮
-        search.setBounds(adaptScreen(1230, 50, 100, 35));
+        search.setBounds(adaptScreen(1130, 50, 100, 35));
         search.addMouseListener(new SearchListener());
         add(search);
 

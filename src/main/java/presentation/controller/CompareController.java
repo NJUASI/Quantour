@@ -70,15 +70,13 @@ public class CompareController {
             comparePanel.logo.setVisible(false);
         } catch (DateNotWithinException e) {
             e.printStackTrace();
-            comparePanel.setWarnMessageOnCompareChartPanel("请重新选择时间范围");
+            comparePanel.setExceptionMessage("请重新选择时间范围");
         } catch (DataSourceFirstDayException e) {
-            e.printStackTrace();
-            comparePanel.setWarnMessageOnCompareChartPanel("所选日期数据缺失，无法计算涨幅，请重新选择");
+            comparePanel.setExceptionMessage("所选日期数据缺失，无法计算涨幅，请重新选择");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoDataWithinException e) {
-            e.printStackTrace();
-            comparePanel.setWarnMessageOnCompareChartPanel("请重新选择时间范围");
+            comparePanel.setExceptionMessage("请重新选择时间范围");
         }
 
         comparePanel.refreshAssociate();
