@@ -1,6 +1,7 @@
 package presentation.view.panel.iteration2;
 
 import presentation.listener.strategyPanelListener.DeletePoolListener;
+import presentation.view.panel.StocksTablePanel;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.panel.iteration2.stockPool.PrivateStockPool;
 import presentation.view.panel.iteration2.stockPool.StockPoolTable;
@@ -142,8 +143,8 @@ public class StrategyPoolPanel  extends TemplatePanel {
                 DraggedTrasferable transferable = new DraggedTrasferable(map);
 
                 PrivateStockPool.getInstance().remove(map);
+                StocksTablePanel.getInstance().refreshTabel();
                 refreshTabel();
-                ChooseStrategyPanel.getInstance().refreshTabel();
                 event.startDrag(
                         DragSource.DefaultCopyDrop,
                         transferable);

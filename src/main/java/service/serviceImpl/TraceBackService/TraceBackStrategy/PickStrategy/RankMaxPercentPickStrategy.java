@@ -24,7 +24,7 @@ public class RankMaxPercentPickStrategy extends AllPickStrategy {
         List<String> sortedStockPool = ascSort(formativePeriodRateVOS);
 
         int size = sortedStockPool.size();
-        int pickedNum = size * rank / 100;
+        int pickedNum =  (int)Math.ceil((double)size * rank / 100);
 
         return  sortedStockPool.subList(0,pickedNum);
     }

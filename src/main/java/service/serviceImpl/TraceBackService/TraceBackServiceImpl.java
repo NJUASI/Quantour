@@ -36,6 +36,8 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     private List<CumulativeReturnVO> baseCumulativeReturn;
 
+    private TraceBackStrategyCalculator traceBackStrategyCalculator;
+
     /*
     需要重复计算的一些东西，故保存
      */
@@ -89,10 +91,10 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackVO.baseCumulativeReturn = baseCumulativeReturn;
 
         //选择策略
-        AllTraceBackStrategy traceBackStrategy = new AllTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
+        traceBackStrategyCalculator = new TraceBackStrategyCalculator(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
         //策略回测
-        traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);
+        traceBackVO.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteriaVO);
 
         //计算策略回撤的相关信息
         traceBackVO.maxTraceBackVO = maxRetracement(traceBackVO.strategyCumulativeReturn, baseCumulativeReturn);
@@ -199,10 +201,8 @@ public class TraceBackServiceImpl implements TraceBackService {
             //累计基准收益率,直接赋值即可，不用再次计算
             traceBackVO.baseCumulativeReturn = baseCumulativeReturn;
 
-            AllTraceBackStrategy traceBackStrategy = new AllTraceBackStrategy(traceBackStockPool,traceBackCriteriaVO,allDatesWithData,stockData);
-
             //策略回测
-            traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);
+            traceBackVO.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteriaVO);
 
             traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
             //计算相对收益周期
@@ -312,7 +312,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      */
     @Override
     public List<CumulativeReturnVO>  getCustomizedCumulativeReturn(LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
-//        AllTraceBackStrategy strategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
+//        TraceBackStrategyCalculator strategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 //        return strategy.traceBack(traceBackCriteriaVO);
 
 
@@ -490,8 +490,8 @@ public class TraceBackServiceImpl implements TraceBackService {
                     } else {
                         negativeNums.put(rate, 1);
                     }
+                    negativePeriodNum++;
                 }
-                negativePeriodNum++;
             }
         }
 
