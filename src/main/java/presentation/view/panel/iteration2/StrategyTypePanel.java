@@ -74,8 +74,8 @@ public class StrategyTypePanel extends TemplatePanel {
         chooseComboBox=new JComboBox();
         chooseComboBox.setBounds(adaptScreen(455,100,140,35));
         chooseComboBox.addItem("排名最大");
-        chooseComboBox.addItem("排名%最大");
         chooseComboBox.addItem("排名最小");
+        chooseComboBox.addItem("排名%最大");
         chooseComboBox.addItem("排名%最小");
         chooseComboBox.setEditable(false);
         chooseComboBox.setToolTipText((String)createComboBox.getItemAt(0));

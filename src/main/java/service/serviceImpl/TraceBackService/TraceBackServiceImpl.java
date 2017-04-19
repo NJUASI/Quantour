@@ -23,9 +23,6 @@ public class TraceBackServiceImpl implements TraceBackService {
     private StockService stockService;
     private StockDao stockDao;
 
-    //回测标准
-    private TraceBackCriteriaVO traceBackCriteriaVO;
-
     //自选股票池，用户回测自选股票池时才对此成员变量赋值
     private List<String> baseStockPool;
 
@@ -64,8 +61,6 @@ public class TraceBackServiceImpl implements TraceBackService {
     public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
 
         long enter = System.currentTimeMillis();
-
-        this.traceBackCriteriaVO = traceBackCriteriaVO;
 
         TraceBackVO traceBackVO = new TraceBackVO();
 
@@ -109,11 +104,11 @@ public class TraceBackServiceImpl implements TraceBackService {
         System.err.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // 计算超额收益率/策略胜率，给定持有期/形成期
-        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
+        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO);
         System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
 
 
-        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
+        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO);
         System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等
@@ -143,8 +138,6 @@ public class TraceBackServiceImpl implements TraceBackService {
     /**
      * 给定持有期，计算不同形成期下，超额收益和策略胜率的分布信息
      *
-     * @param traceBackCriteriaVO 用户所选的回测标准
-     * @param stockPool           自选股票池（可能有）
      * @return
      * @throws DateNotWithinException
      * @throws NoDataWithinException
@@ -152,15 +145,13 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws DateShortException
      * @throws CodeNotFoundException
      */
-    private List<ExcessAndWinRateDistVO> findFormateWithCertainHolding(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
-        return findBestFormateOrHolding(traceBackCriteriaVO, stockPool, false);
+    private List<ExcessAndWinRateDistVO> findFormateWithCertainHolding(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
+        return findBestFormateOrHolding(traceBackCriteriaVO, false);
     }
 
     /**
      * 给定形成期，计算不同持有期下，超额收益和策略胜率的分布信息
      *
-     * @param traceBackCriteriaVO 用户所选的回测标准
-     * @param stockPool           自选股票池（可能有）
      * @return
      * @throws CodeNotFoundException
      * @throws DateShortException
@@ -168,11 +159,11 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws NoDataWithinException
      * @throws IOException
      */
-    private List<ExcessAndWinRateDistVO> findHoldingWithCertainFormate(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
-        return findBestFormateOrHolding(traceBackCriteriaVO, stockPool, true);
+    private List<ExcessAndWinRateDistVO> findHoldingWithCertainFormate(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
+        return findBestFormateOrHolding(traceBackCriteriaVO,true);
     }
 
-    private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool, boolean certainFormate) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
+    private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, boolean certainFormate) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
 
         List<ExcessAndWinRateDistVO> certainHoldings = new ArrayList<>();
         int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;
@@ -189,11 +180,13 @@ public class TraceBackServiceImpl implements TraceBackService {
                 }
                 //新的持有期
                 traceBackCriteriaVO.holdingPeriod = initHoldingPeriod * i;
+                System.out.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
             }
             //给定持有期
             else {
                 //新的形成期
                 traceBackCriteriaVO.formativePeriod = initFormativePeriod * i;
+                System.out.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
             }
 
             TraceBackVO traceBackVO = new TraceBackVO();
@@ -297,7 +290,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         if (!traceBackCriteriaVO.isCustomized) {
             return getCumulativeReturnOfOneStock(traceBackCriteriaVO.baseStockName, start, end);
         } else {
-            return getCustomizedCumulativeReturn(start, end);
+            return getCustomizedCumulativeReturn(traceBackCriteriaVO, start, end);
         }
     }
 
@@ -310,11 +303,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @param end   回测区间结束日期
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
-    @Override
-    public List<CumulativeReturnVO>  getCustomizedCumulativeReturn(LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
-//        TraceBackStrategyCalculator strategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
-//        return strategy.traceBack(traceBackCriteriaVO);
-
+    private List<CumulativeReturnVO>  getCustomizedCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<>();
 
