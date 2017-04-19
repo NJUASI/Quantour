@@ -180,13 +180,13 @@ public class TraceBackServiceImpl implements TraceBackService {
                 }
                 //新的持有期
                 traceBackCriteriaVO.holdingPeriod = initHoldingPeriod * i;
-                System.out.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
+                System.err.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
             }
             //给定持有期
             else {
                 //新的形成期
                 traceBackCriteriaVO.formativePeriod = initFormativePeriod * i;
-                System.out.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
+                System.err.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
             }
 
             TraceBackVO traceBackVO = new TraceBackVO();
@@ -196,6 +196,8 @@ public class TraceBackServiceImpl implements TraceBackService {
 
             //策略回测
             traceBackVO.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteriaVO);
+            System.out.println();
+            System.out.println();
 
             traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
             //计算相对收益周期
