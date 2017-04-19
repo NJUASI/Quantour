@@ -1,4 +1,4 @@
-package presentation.chart.tools;
+package presentation.chart.tools.renderer;
 
 import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;

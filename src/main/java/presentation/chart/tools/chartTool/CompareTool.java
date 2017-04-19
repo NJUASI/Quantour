@@ -1,4 +1,4 @@
-package presentation.chart.tools;
+package presentation.chart.tools.chartTool;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryLabelPosition;
@@ -6,6 +6,7 @@ import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
+import presentation.chart.tools.ChartUtils;
 import presentation.view.tools.ColorUtils;
 
 import java.awt.*;
@@ -34,6 +35,8 @@ public class CompareTool {
 
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(ColorUtils.backgroundColor());
+        plot.getDomainAxis().setLowerMargin(0.01);
+        plot.getRangeAxis().setUpperMargin(0.06);
 
         chart.getCategoryPlot().getRenderer().setSeriesPaint(0,ColorUtils.upColor());
         chart.getCategoryPlot().getRenderer().setSeriesPaint(1,ColorUtils.downColor());

@@ -10,7 +10,7 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.ui.RectangleEdge;
-import presentation.chart.tools.CandlestickChartTool;
+import presentation.chart.tools.chartTool.CandlestickChartTool;
 import presentation.listener.chartMouseListener.CandlestickListener;
 import presentation.chart.tools.ChartUtils;
 import presentation.view.tools.ColorUtils;

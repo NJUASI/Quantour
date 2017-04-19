@@ -5,7 +5,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import presentation.chart.tools.ChartUtils;
-import presentation.chart.tools.CompareTool;
+import presentation.chart.tools.chartTool.CompareTool;
 import presentation.chart.tools.Serie;
 import presentation.view.tools.ColorUtils;
 import vo.ReturnPeriodVO;
