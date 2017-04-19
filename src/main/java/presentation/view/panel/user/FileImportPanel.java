@@ -66,7 +66,7 @@ public class FileImportPanel extends TemplatePanel {
 
         JButton importData= new MyButton("导入数据");
         importData.setFont(new Font("" ,Font.LAYOUT_NO_LIMIT_CONTEXT,16*width/1920));
-        importData.setBounds(adaptScreen(80+10,290,120,25));
+        importData.setBounds(adaptScreen(150,310,120,25));
 
 
         importData.addMouseListener(new FileChoose());
@@ -84,7 +84,7 @@ public class FileImportPanel extends TemplatePanel {
     }
     public void popLabel(){
         label= new MyLabel("");
-        label.setBounds(adaptScreen(60+10, 340, 200, 200));
+        label.setBounds(adaptScreen(110, 340, 200, 200));
         add(label);
         thread=new Thread(() ->{
             int num =0;

@@ -129,7 +129,7 @@ public class ThermometerPanel extends TemplatePanel {
      */
     void createPanel(){
 
-        MyLabel label=new MyLabel(" 市 场 温 度 计",22) ;
+        MyLabel label=new MyLabel(" 市 场 温 度 计",20) ;
         label.setBounds(adaptScreen(0,40,360,35));
         label.setBackground(ColorUtils.titleBgColor());
         label.setOpaque(true);

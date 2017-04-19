@@ -31,19 +31,19 @@ public class UserPanel extends TemplatePanel {
         height=WindowData.getInstance().getHeight();
 
 
-        MyLabel user=new MyLabel("   用  户",18) ;
+        MyLabel user=new MyLabel("   用  户",20) ;
         user.setBounds(adaptScreen(60,40,330,40));
         user.setBackground(ColorUtils.titleBgColor());
         user.setOpaque(true);
         add(user);
 
-        MyLabel table=new MyLabel("   自 选 股 票 池",18) ;
+        MyLabel table=new MyLabel("   自 选 股 票 池",20) ;
         table.setBounds(adaptScreen(450,40,1300-480,40));
         table.setBackground(ColorUtils.titleBgColor());
         table.setOpaque(true);
         add(table);
 
-        MyLabel source=new MyLabel("   数  据  源",18) ;
+        MyLabel source=new MyLabel("   数  据  源",20) ;
         source.setBounds(adaptScreen(1330,40,420,40));
         source.setBackground(ColorUtils.titleBgColor());
         source.setOpaque(true);

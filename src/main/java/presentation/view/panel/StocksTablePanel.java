@@ -26,7 +26,7 @@ import java.time.LocalDate;
 
 /**
  * Created by 61990 on 2017/3/5.
- * <p>
+ *
  * 股票列表显示面板
  */
 public class StocksTablePanel extends TemplatePanel {
@@ -82,8 +82,8 @@ public class StocksTablePanel extends TemplatePanel {
         importData.addMouseListener(new AddFavoriteListener());
         add(importData);
 
-        title = new MyLabel("   市 场 行 情", 22);
-        title.setBounds(adaptScreen(460, 80 - 40, 1300, 35));
+        title=new MyLabel("   市 场 行 情",20) ;
+        title.setBounds(adaptScreen(460,80-40,1300,35));
         title.setBackground(ColorUtils.titleBgColor());
         title.setOpaque(true);
 //        title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -123,7 +123,6 @@ public class StocksTablePanel extends TemplatePanel {
         success.setVisible(true);
         repaint();
     }
-
     /**
      * 单件模式
      *
@@ -145,7 +144,7 @@ public class StocksTablePanel extends TemplatePanel {
      *
      * @return the local date 选择的日期
      */
-    public LocalDate getChooseDate() {
+    public LocalDate getChooseDate(){
         return datePickerPanel.getDate();
     }
 
@@ -154,41 +153,40 @@ public class StocksTablePanel extends TemplatePanel {
      *
      * @return the local date 选择的日期
      */
-    public void refreshTabel() {
-        if (stockPanel != null) {
+    public void refreshTabel(){
+        if (stockPanel!=null) {
             remove(stockPanel);
         }
+            stockPanel=new TemplatePanel();
 
-        stockPanel = new TemplatePanel();
+            title2=new MyLabel("  自 选 股 池",20) ;
+            title2.setBounds(adaptScreen(0,0,360,35));
+            title2.setBackground(ColorUtils.titleBgColor());
+            title2.setOpaque(true);
 
-        title2 = new MyLabel("  自 选 股 池", 22);
-        title2.setBounds(adaptScreen(0, 0, 360, 35));
-        title2.setBackground(ColorUtils.titleBgColor());
-        title2.setOpaque(true);
-
-        title2.setBounds(adaptScreen(0, 0, 360, 35));
-        message2 = new MyLabel("请拖拽股票到此处", 17);
-        message2.setBounds(adaptScreen(110, 110, 160, 35));
-        message2.setVisible(false);
-        stockPanel.add(message2);
-        stockPanel.add(title2);
+            title2.setBounds(adaptScreen(0,0,360,35));
+            message2=new MyLabel("请拖拽股票到此处",17) ;
+            message2.setBounds(adaptScreen(110,110,160,35));
+            message2.setVisible(false);
+            stockPanel.add(message2);
+            stockPanel.add(title2);
 
 
-        stockPanel.setBounds(adaptScreen(60, 700 - 35, 360, 235));
-        add(stockPanel);
-        repaint();
-        stockPoolTable = new StockPoolTable();
-        stockPoolTable.setBounds(adaptScreen(0, 35, 360, 200));
+            stockPanel.setBounds(adaptScreen(60,700-35,360,235));
+            add(stockPanel);
+            repaint();
+            stockPoolTable=new StockPoolTable();
+            stockPoolTable.setBounds(adaptScreen(0,35,360,200));
 
-        bgLabel = new JLabel();
-        bgLabel.setBounds(0 * width / 1920, (35 + 30 * (stockPoolTable.jTable.getRowCount() + 1)) * height / 1030, 360 * width / 1920, 200 * height / 1030);
-        bgLabel.setBorder(BorderFactory.createEmptyBorder());
-        bgLabel.setBackground(new Color(27, 29, 33));
-        bgLabel.setForeground(Color.WHITE);
-        bgLabel.setOpaque(true);
-        bgLabel.setVisible(true);
-        stockPanel.add(bgLabel);
-        stockPanel.add(stockPoolTable);
+            bgLabel = new JLabel();
+            bgLabel.setBounds(0 * width / 1920, (35+30*(stockPoolTable.jTable.getRowCount()+1)) * height / 1030, 360* width / 1920 , 200* height / 1030);
+            bgLabel.setBorder(BorderFactory.createEmptyBorder());
+            bgLabel.setBackground( new Color(27,29,33));
+            bgLabel.setForeground(Color.WHITE);
+            bgLabel.setOpaque(true);
+            bgLabel.setVisible(true);
+            stockPanel.add(bgLabel);
+            stockPanel.add(stockPoolTable);
 
         stockPanel.repaint();
         repaint();
