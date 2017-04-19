@@ -98,14 +98,20 @@ public class UserController {
         try {
             dataSourceService = new DataSourceServiceImpl();
             DataSourceInfoVO vo = dataSourceService.getMyDataSource();
-            if(vo!=null) {
-                userPanel.fileImportPanel.setUploadInfo("您上传于" + vo.uploadTime + "\n" + "上传文件大小：" + vo.fileSize);
-                userPanel.fileImportPanel.FoundDate();
-                dataSourceService.setDataSourceState(DataSourceState.ORIGINAL);
-            }else{
-                userPanel.fileImportPanel.setUploadInfo("未上传本地数据");
-                userPanel.fileImportPanel.notFoundDate();
-                dataSourceService.setDataSourceState(DataSourceState.ORIGINAL);
+            if(dataSourceService.getDataSourceState().equals(DataSourceState.USER)){
+                dataSourceService.setDataSourceState(DataSourceState.USER);
+                userPanel.fileImportPanel.setFound();
+                userPanel.fileImportPanel.setUploadInfo("您上传于" + vo.uploadTime );
+            }else {
+                if (vo != null) {
+                    userPanel.fileImportPanel.setUploadInfo("您上传于" + vo.uploadTime);
+                    userPanel.fileImportPanel.FoundDate();
+                    dataSourceService.setDataSourceState(DataSourceState.ORIGINAL);
+                } else {
+                    userPanel.fileImportPanel.setUploadInfo("未上传本地数据");
+                    userPanel.fileImportPanel.notFoundDate();
+                    dataSourceService.setDataSourceState(DataSourceState.ORIGINAL);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,8 +119,10 @@ public class UserController {
     }
 
     public void changePath(DataSourceState dataSourceState){
-        dataSourceService = new DataSourceServiceImpl();
-        dataSourceService.setDataSourceState(dataSourceState);
+        if(userPanel.fileImportPanel.count==1) {
+            dataSourceService = new DataSourceServiceImpl();
+            dataSourceService.setDataSourceState(dataSourceState);
+        }
     }
 
     public void modifyPassword() throws PasswordInputException {

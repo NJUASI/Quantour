@@ -151,7 +151,7 @@ public class UserPanel extends TemplatePanel {
             e.printStackTrace();
         } catch (PrivateStockNotFoundException e) {
 //            e.printStackTrace();
-            new PopUpFrame(e.getMessage());
+//            new PopUpFrame(e.getMessage());
             logo.setVisible(true);
 
         }
