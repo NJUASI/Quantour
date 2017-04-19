@@ -202,7 +202,7 @@ public interface StockDao {
      * @author Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/14
-     * @return the all stocks first letters 返回所有股票的名称及其，名称作为键值
+     * @return the all stocks first letters 返回所有股票的名称及其代码，名称作为键值
      */
     Map<String,String> getAllStocksName();
 

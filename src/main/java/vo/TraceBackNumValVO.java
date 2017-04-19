@@ -18,13 +18,13 @@ public class TraceBackNumValVO {
     // 策略年化波动率
     public double returnVolatility;
 
-    //基准年化波动率
+    // 基准年化波动率
     public double baseReturnVolatility;
 
     // 策略总收益率
     public double sumRate;
 
-    //基准总收益率
+    // 基准总收益率
     public double baseSumRate;
 
     // 阿尔法比率
@@ -36,7 +36,7 @@ public class TraceBackNumValVO {
     // 策略夏普比率
     public double sharpeRatio;
 
-    //基准夏普比率
+    // 基准夏普比率
     public double baseSharpeRatio;
 
     // 最大回撤率
