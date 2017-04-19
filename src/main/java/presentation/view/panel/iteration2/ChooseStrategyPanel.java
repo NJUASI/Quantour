@@ -100,7 +100,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
 
         JButton searchBt= new MyButton("开始回测");
-        searchBt.setBounds(adaptScreen(1400,550,100,35));
+        searchBt.setBounds(adaptScreen(1450,550,100,35));
 
         searchBt.addMouseListener(new SearchListener());
 //        searchBt.addMouseListener(new MouseAdapter() {
@@ -113,7 +113,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         add(searchBt);
 
         JButton returnBt= new MyButton("查看上次");
-        returnBt.setBounds(adaptScreen(1400,480,100,35));
+        returnBt.setBounds(adaptScreen(1450,480,100,35));
         returnBt.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -138,32 +138,21 @@ public class ChooseStrategyPanel extends TemplatePanel {
     }
 
     public void popup(){
-        progressBar = new MyLabel("正在回测..");
-        progressBar.setBounds(adaptScreen(1400, 400, 100, 30));
+        progressBar = new MyLabel("");
+        progressBar.setBounds(adaptScreen(1400, 200, 200, 200));
         add(progressBar);
         thread=new Thread(() ->{
             int num =0;
             while (true){
                 try{
-                    Thread.sleep(400);
+                    Thread.sleep(100);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                switch (num){
-                    case 0:
-                        progressBar.setText("正在回测...");
-                        break;
-                    case 1:
-                        progressBar.setText("正在回测....");
-                        break;
-                    case 2:
-                        progressBar.setText("正在回测.....");
-                        break;
-                    case 3:
-                        progressBar.setText("正在回测..");
-                        break;
-                }
-                num=(num+1)%4;
+                ImageIcon bgPicture= new ImageIcon(thread.currentThread().getContextClassLoader().getResource("picture/loading/loading"+num+".png"));
+                bgPicture.setImage(bgPicture.getImage().getScaledInstance(200*width/1920, 200*height/1030, Image.SCALE_DEFAULT ));
+                progressBar.setIcon(bgPicture);
+                num=(num+1)%14;
             }
         });
         thread.start();
