@@ -41,14 +41,14 @@ public class StocksTablePane extends JScrollPane {
                 jTable.getColumnModel().getColumn(i).setPreferredWidth(50*width/1920);
             }
             jTable.setRowSelectionAllowed(true);//设置可否被选择
-            jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            jTable.setCellSelectionEnabled(true);
             jTable.setSelectionBackground(ColorUtils.tableSelectedColor());//设置所选择行的背景色
             jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
 
             jTable.setShowVerticalLines(true);//是否显示垂直的网格线
             jTable.setBackground(ColorUtils.backgroundColor());
             jTable.setForeground(ColorUtils.fontColor());
-            jTable.setRowSelectionInterval(0, 0);
+//            jTable.setRowSelectionInterval(0, 0);
             jTable.setGridColor(ColorUtils.divideColor());
             jTable.setBorder(BorderFactory.createEmptyBorder());
 

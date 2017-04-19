@@ -21,7 +21,6 @@ public class DeletePoolListener extends MouseAdapter {
         try {
 
             StrategyPanelController.getInstance().deletePool();
-            UserPanel.getInstance().refreshFavorite();
         } catch (PrivateStockNotExistException e1) {
             new PopUpFrame(e1.getMessage());
         } catch (PrivateStockNotFoundException e1) {

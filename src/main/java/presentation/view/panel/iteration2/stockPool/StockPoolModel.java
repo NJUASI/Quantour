@@ -1,4 +1,4 @@
-package presentation.view.panel.iteration2;
+package presentation.view.panel.iteration2.stockPool;
 
 import presentation.view.tools.MyTabelModel;
 import presentation.view.tools.WindowData;
@@ -22,7 +22,6 @@ public class StockPoolModel extends MyTabelModel {
     private StockService stockService;
 
 
-
     public StockPoolModel() throws IOException, PrivateStockNotFoundException {
         this.stockService = new StockServiceImpl();
         init();
@@ -31,8 +30,7 @@ public class StockPoolModel extends MyTabelModel {
     //初始化列表名称和数据
     private void init() throws IOException, PrivateStockNotFoundException {
         columnNames = new String[]{"股票代码", "股票名称"};
-        List<StockVO> stockList = stockService.getPrivateStocks(IDReserve.getInstance().getUserID(), WindowData.getInstance().getDate());
-
+        List<StockVO> stockList = PrivateStockPool.getInstance().getPrivatePool();
         data = new Object[stockList.size()][columns];
 
         for (int i = 0; i < stockList.size(); i++) {

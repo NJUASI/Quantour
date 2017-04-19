@@ -18,8 +18,6 @@ public class StocksTableModel extends MyTabelModel {
 
     private final static int columns = 12;
 
-
-
     //查询的日期
     private LocalDate date;
     private StockService stockService;

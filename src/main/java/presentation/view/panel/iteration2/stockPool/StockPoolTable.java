@@ -1,6 +1,5 @@
-package presentation.view.panel.iteration2;
+package presentation.view.panel.iteration2.stockPool;
 
-import presentation.view.panel.user.FavoriteTableModel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
@@ -8,11 +7,9 @@ import presentation.view.tools.ui.MyScrollBarUI;
 import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.io.IOException;
-import java.time.LocalDate;
 
 /**
  * Created by 61990 on 2017/4/17.

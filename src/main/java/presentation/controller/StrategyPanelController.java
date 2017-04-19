@@ -4,6 +4,7 @@ import presentation.view.panel.iteration2.AnalysePanel;
 import presentation.view.panel.iteration2.ChooseStrategyPanel;
 import presentation.view.panel.iteration2.MultiComboBox;
 import presentation.view.panel.iteration2.StrategyPanel;
+import presentation.view.panel.iteration2.stockPool.PrivateStockPool;
 import service.StockService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
@@ -122,11 +123,8 @@ public class StrategyPanelController {
        thread.start();
     }
 
-    public void deletePool() throws PrivateStockNotExistException, PrivateStockNotFoundException {
-        StockService stockService = new StockServiceImpl();
-        stockService.deletePrivateStock(IDReserve.getInstance().getUserID(), chooseStrategyPanel.strategyPoolPanel.stockPoolTable.getCode());
+    public void deletePool() throws PrivateStockNotExistException, PrivateStockNotFoundException, IOException {
+        PrivateStockPool.getInstance().remove(chooseStrategyPanel.strategyPoolPanel.stockPoolTable.getCode());
         chooseStrategyPanel.refreshTabel();
     }
-
-
 }

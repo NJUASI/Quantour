@@ -1,15 +1,11 @@
 package presentation.view.panel.iteration2;
 
 import presentation.listener.strategyPanelListener.DeletePoolListener;
-import presentation.listener.userPanelListener.DeleteFavoriteListener;
 import presentation.view.panel.TemplatePanel;
-import presentation.view.panel.user.FavoritePanel;
-import presentation.view.tools.ColorUtils;
+import presentation.view.panel.iteration2.stockPool.StockPoolTable;
 import presentation.view.tools.PopUpFrame;
-import presentation.view.tools.WindowData;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;
-import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import utilities.enums.StType;
 import utilities.exceptions.PrivateStockNotFoundException;
 import vo.StockPoolCriteriaVO;
