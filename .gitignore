@@ -2,7 +2,9 @@ target/*
 
 .idea/workspace.xml
 
-.attachments/stocks/*
+.attachments/*
 
-.attachments/base_stocks/*
+!.attachments/userInfo.properties
+
+!.attachments/*/*.txt
 

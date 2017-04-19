@@ -17,7 +17,7 @@ import java.util.*;
 public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
 
     private final String separator = System.getProperty("file.separator");
-    private final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "user";
+    private final String parent = System.getProperty("user.dir") + separator + ".attachments";
     private final String post = ".txt";
 
     private BufferedReader br;
@@ -28,18 +28,16 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     }
 
     /**
-     * 获取用户对应的所有自选股的代码
-     *
      * @param userName 用户名称
-     * @return 自选股代码列表
+     * @return 该用户对应的所有自选股代码列表
      * @author Harvey
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/4/15
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/19
      */
     @Override
     public List<String> getPrivateStockCode(String userName) throws PrivateStockNotFoundException {
-        List<String> result = new LinkedList<String>();
-        String desPath = this.parent + separator + userName + post;
+        List<String> result = new LinkedList<>();
+        String desPath = parent + separator + userName + separator + userName + post;
 
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(desPath)));
@@ -55,29 +53,24 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     }
 
     /**
-     * 添加用户自选股
-     *
      * @param userName  用户名称
      * @param stockCode 股票代码
      * @return 添加是否成功
      * @author Harvey
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/4/15
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/4/19
      */
     @Override
     public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException {
-
-
-        if (this.wasExists(userName)) {
+        if (wasExists(userName)) {
             List<String> stockCodes = this.getPrivateStockCode(userName);
             if (stockCodes.contains(stockCode)) {
                 throw new PrivateStockExistedException();
             }
         }
 
-
         try {
-            String desPath = this.parent + this.separator + userName + post;
+            String desPath = parent + separator + userName + separator + userName + post;
             bw = new BufferedWriter(new FileWriter(desPath, true));
             bw.write(stockCode);
             bw.newLine();
@@ -91,27 +84,22 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     }
 
     /**
-     * 删除用户自选股
-     *
      * @param userName  用户名称
      * @param stockCode 股票代码
-     * @return 删除是否成功
+     * @return 删除自选股是否成功
      * @author Harvey
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/15
      */
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException {
-
-        List<String> stockCodes = null;
-
-            stockCodes = this.getPrivateStockCode(userName);
-            if (!stockCodes.contains(stockCode)) {
-                throw new PrivateStockNotExistException();
-            }
+        List<String> stockCodes = this.getPrivateStockCode(userName);
+        if (!stockCodes.contains(stockCode)) {
+            throw new PrivateStockNotExistException();
+        }
 
         try {
-            String desPath = this.parent + this.separator + userName + post;
+            String desPath = parent + separator + userName + separator + userName + post;
             stockCodes.remove(stockCode);
 
             bw = new BufferedWriter(new FileWriter(desPath, false));
@@ -135,7 +123,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @updateTime 2017/4/15
      */
     private boolean wasExists(String userName) {
-        File file = new File(parent + separator + userName + post);
+        File file = new File(parent + separator + userName + separator + userName + post);
         try {
             if (!file.exists()) {
                 file.createNewFile();

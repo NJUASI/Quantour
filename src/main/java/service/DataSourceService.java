@@ -1,5 +1,6 @@
 package service;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
 import utilities.enums.DataSourceState;
 import utilities.exceptions.NotCSVException;
 import vo.DataSourceInfoVO;
@@ -20,7 +21,7 @@ public interface DataSourceService {
      * @param filePath 要上传的文件路径
      * @return 上传成功
      */
-    boolean upload(String filePath) throws IOException, NotCSVException;
+    boolean upload(String filePath) throws IOException, NotCSVException, PinyinException;
 
     /**
      * @auther cuihua

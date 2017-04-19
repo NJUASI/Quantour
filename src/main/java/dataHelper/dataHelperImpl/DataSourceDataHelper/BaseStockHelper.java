@@ -1,5 +1,8 @@
 package dataHelper.dataHelperImpl.DataSourceDataHelper;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
+import utilities.IDReserve;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -9,9 +12,11 @@ import java.io.IOException;
 public class BaseStockHelper {
 
     final String fileSeparator = System.getProperty("file.separator");
-    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments"  + fileSeparator + "base_stocks"+ fileSeparator;
+    final String userID = IDReserve.getInstance().getUserID();
 
-    public boolean uploadBaseStocks() throws IOException {
+    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments"  + fileSeparator + userID + fileSeparator + "base_stocks"+ fileSeparator;
+
+    public boolean uploadBaseStocks() throws IOException, PinyinException {
         File baseStocksParent = new File(System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + "base_stocks");
 
         // 用户电脑上已存在基准的数据，不再上传

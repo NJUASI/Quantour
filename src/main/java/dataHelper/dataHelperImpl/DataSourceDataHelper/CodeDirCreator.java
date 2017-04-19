@@ -59,7 +59,8 @@ public class CodeDirCreator {
 
     private void create() throws IOException {
         final String separator = System.getProperty("file.separator");
-        final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + codeDirParent + separator;
+        final String userID = IDReserve.getInstance().getUserID();
+        final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + userID + separator + codeDirParent + separator;
         final String post = ".txt";
         final String codeDesFileParentPath = parent + "stock_records_by_code";
 
@@ -82,9 +83,10 @@ public class CodeDirCreator {
             dataSourceInfo.createNewFile();
             File sourceFile = new File(this.sourceFile);
             long timeDistance = sourceFile.lastModified();
+            long fileSize = sourceFile.length();
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(dataSourceInfo, false));
-            bw.write(this.sourceFile + '\t' + timeDistance + '\t' + IDReserve.getInstance().getUserID());
+            bw.write(String.valueOf(fileSize) + '\t' + String.valueOf(timeDistance));
             bw.flush();
             bw.close();
         }

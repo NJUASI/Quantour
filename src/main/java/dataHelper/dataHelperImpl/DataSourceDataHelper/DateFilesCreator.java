@@ -1,5 +1,7 @@
 package dataHelper.dataHelperImpl.DataSourceDataHelper;
 
+import utilities.IDReserve;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.util.Map;
@@ -17,6 +19,7 @@ public class DateFilesCreator {
 
     final String fileSeparator = System.getProperty("file.separator");
     final String lineSeparator = System.getProperty("line.separator");
+    final String userID = IDReserve.getInstance().getUserID();
     final String post = ".txt";
 
     final String parent;
@@ -31,7 +34,7 @@ public class DateFilesCreator {
         else dateFilesParent = "stocks";
 
         this.isBaseStock = isBaseStock;
-        parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + dateFilesParent + fileSeparator;
+        parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + userID + fileSeparator + dateFilesParent + fileSeparator;
         sourcePath = parent + "stock_records_by_code";
         dateDesFileParentPath = parent + "stock_records_by_date";
         situationDesFileParentPath = parent + "stock_situation";

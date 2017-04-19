@@ -1,5 +1,7 @@
 package dataHelper.dataHelperImpl.DataSourceDataHelper;
 
+import utilities.IDReserve;
+
 import java.io.*;
 
 /**
@@ -18,6 +20,7 @@ public class DuplicationAdder {
 
     final String fileSeparator = System.getProperty("file.separator");
     final String lineSeparator = System.getProperty("line.separator");
+    final String userID = IDReserve.getInstance().getUserID();
     final String parent;
     final String sourceFilePath;
 
@@ -30,7 +33,7 @@ public class DuplicationAdder {
         if (isBaseStock) adderParent = "base_stocks";
         else adderParent = "stocks";
 
-        parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + adderParent + fileSeparator;
+        parent = System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + userID + fileSeparator + adderParent + fileSeparator;
         sourceFilePath = parent + "stock_records_by_code";
     }
 

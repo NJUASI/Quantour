@@ -1,5 +1,6 @@
 package dataHelper;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
 import po.DataSourceInfoPO;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public interface DataSourceDataHelper {
      * @param filePath 要上传的文件路径
      * @return 上传成功
      */
-    boolean upload(String filePath) throws IOException;
+    boolean upload(String filePath) throws IOException, PinyinException;
 
     /**
      * @auther cuihua

@@ -27,7 +27,7 @@ public class DataSourceDataHelperImplTest {
     }
 
     /**
-     * Method: upload(String filePath)
+     * Method: upload(String fileSize)
      */
     @Test
     public void testUpload() throws Exception {

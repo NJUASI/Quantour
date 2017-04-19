@@ -10,8 +10,6 @@ import service.serviceImpl.UserServiceImpl;
 import utilities.IDReserve;
 import utilities.exceptions.*;
 
-import javax.swing.*;
-
 /**
  * Created by 61990 on 2017/3/5.
  */
@@ -54,7 +52,7 @@ public class LoginController{
         String password = loginPanel.getPassword();
         try {
             if(userService.logIn(name,password)){
-                IDReserve.getInstance().setUserID(name,password);
+                IDReserve.getInstance().setIDReserve(name,password);
                 loginPanel.setUsername("Enter your admin");
                 loginPanel.setPassword("");
                 MainFrame.getInstance();

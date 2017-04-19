@@ -8,10 +8,15 @@ public class IDReserve {
 
     private String userID;
     private String password;
+
+    public IDReserve() {
+        this.userID = "Guest";
+    }
+
+
     /**
      * 获得单件IDReserve
      *
-     * @param
      * @return
      * @author 61990
      * @updateTime 2017/3/5
@@ -19,10 +24,10 @@ public class IDReserve {
     public static IDReserve getInstance(){
         return idReserve;
     }
+
     /**
      * 获得ID
      *
-     * @param
      * @return
      * @author 61990
      * @updateTime 2017/3/5
@@ -34,12 +39,10 @@ public class IDReserve {
     /**
      * 设置ID
      *
-     * @param
-     * @return
      * @author 61990
      * @updateTime 2017/3/5
      */
-    public void setUserID(String userID, String password) {
+    public void setIDReserve(String userID, String password) {
         this.userID = userID;
         this.password = password;
     }

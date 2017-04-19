@@ -1,5 +1,6 @@
 package presentation.controller;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
 import presentation.view.panel.user.UserPanel;
 import presentation.view.tools.PopUpFrame;
 import presentation.view.tools.WindowData;
@@ -60,7 +61,7 @@ public class UserController {
     }
     /**
      * TODO 导入数据
-     * filePath 路径
+     * fileSize 路径
      */
 
     public void importDate(String filePath) {
@@ -81,6 +82,10 @@ public class UserController {
             } catch (NotCSVException e) {
                 e.printStackTrace();
                 new PopUpFrame(e.getMessage());
+            } catch (PinyinException e) {
+                e.printStackTrace();
+                new PopUpFrame(e.getMessage());
+
             }
             setUpdateMessage();
             userPanel.fileImportPanel.hideLabel();
@@ -94,7 +99,7 @@ public class UserController {
             dataSourceService = new DataSourceServiceImpl();
             DataSourceInfoVO vo = dataSourceService.getMyDataSource();
             if(vo!=null) {
-                userPanel.fileImportPanel.setUploadInfo("由" + vo.userName + "上传于" + vo.uploadTime);
+                userPanel.fileImportPanel.setUploadInfo("您上传于" + vo.uploadTime + "\n" + "上传文件大小：" + vo.fileSize);
                 userPanel.fileImportPanel.FoundDate();
                 dataSourceService.setDataSourceState(DataSourceState.ORIGINAL);
             }else{

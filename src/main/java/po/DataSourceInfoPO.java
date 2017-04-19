@@ -9,30 +9,22 @@ import java.sql.Timestamp;
  */
 public class DataSourceInfoPO {
 
-    // 上传文件路径
-    private String filePath;
+    // 上传文件大小
+    private String fileSize;
 
     // 上传时间
     private Timestamp uploadTime;
 
-    // 上传用户
-    private String userName;
-
-    public DataSourceInfoPO(String filePath, Timestamp uploadTime, String userName) {
-        this.filePath = filePath;
+    public DataSourceInfoPO(String fileSize, Timestamp uploadTime) {
+        this.fileSize = fileSize;
         this.uploadTime = uploadTime;
-        this.userName = userName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getFileSize() {
+        return fileSize;
     }
 
     public Timestamp getUploadTime() {
         return uploadTime;
-    }
-
-    public String getUserName() {
-        return userName;
     }
 }

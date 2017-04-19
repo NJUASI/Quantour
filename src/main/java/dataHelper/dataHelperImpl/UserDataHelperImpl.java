@@ -11,7 +11,7 @@ import java.util.Set;
  * Created by Byron Dong on 2017/3/5.
  * Last updated by Harvey
  * Update time 2017/3/5
- *
+ * <p>
  * 对用户信息进行操作
  */
 public class UserDataHelperImpl implements UserDataHelper {
@@ -22,11 +22,11 @@ public class UserDataHelperImpl implements UserDataHelper {
     private Properties properties = new Properties();
 
     private final String separator = System.getProperty("file.separator");
-    private final String parent = System.getProperty("user.dir") + separator + ".attachments" + separator + "user";
+    private final String parent = System.getProperty("user.dir") + separator + ".attachments";
 
-    public UserDataHelperImpl(){
-
-        wasExists(); //user文件夹和userInfo.properties未创建，则创建
+    public UserDataHelperImpl() {
+        // user文件夹和userInfo.properties未创建，则创建
+        createFile();
         propertiesload();
     }
 
@@ -38,9 +38,8 @@ public class UserDataHelperImpl implements UserDataHelper {
      * @updateTime 2017/4/15
      */
     private void propertiesload() {
-
         try {
-            properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(parent+separator+"userInfo.properties"))));
+            properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(parent + separator + "userInfo.properties"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,22 +47,23 @@ public class UserDataHelperImpl implements UserDataHelper {
 
 
     /**
-     * 添加一个用户
-     *
+     * @param userPO 用户信息
+     * @return 添加是否成功
      * @author Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userPO 用户信息
-     * @return 添加是否成功
      */
     @Override
     public boolean add(UserPO userPO) {
+        properties.put(userPO.getUserName(), userPO.getPassword());
 
-        properties.put(userPO.getUserName(),userPO.getPassword());
-
-        File directory = new File(parent);//设定为当前文件夹
         try {
-            properties.store(new FileWriter(directory.getCanonicalPath()+separator+"userInfo.properties"),"");
+            File parentDir = new File(parent);
+            properties.store(new FileWriter(parentDir.getCanonicalPath() + separator + "userInfo.properties"), "");
+
+            // 创建用户的文件夹
+            File thisUserDir = new File(parent + separator + userPO.getUserName());
+            thisUserDir.mkdirs();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,15 +73,14 @@ public class UserDataHelperImpl implements UserDataHelper {
     /**
      * 获取用户信息
      *
+     * @param username 用户姓名
+     * @return 用户信息载体
      * @author Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param username 用户姓名
-     * @return 用户信息载体
      */
     @Override
     public UserPO get(String username) {
-
         UserPO userPO = new UserPO();
         userPO.setUserName(username);
         userPO.setPassword(properties.getProperty(username));
@@ -91,19 +90,19 @@ public class UserDataHelperImpl implements UserDataHelper {
     /**
      * 修改一条用户信息
      *
+     * @param userPO 用户修改信息
+     * @return 修改是否成功
      * @author Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param userPO 用户修改信息
-     * @return 修改是否成功
      */
     @Override
     public boolean modify(UserPO userPO) {
 
-        properties.put(userPO.getUserName(),userPO.getPassword());
-        File directory = new File(parent);//设定为当前文件夹
+        properties.put(userPO.getUserName(), userPO.getPassword());
+        File directory = new File(parent);
         try {
-            properties.store(new FileWriter(directory.getCanonicalPath()+separator+"userInfo.properties"),"");
+            properties.store(new FileWriter(directory.getCanonicalPath() + separator + "userInfo.properties"), "");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,14 +112,13 @@ public class UserDataHelperImpl implements UserDataHelper {
     /**
      * 获取所有的注册过用户名称
      *
+     * @return 用户名称集合
      * @author Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @return 用户名称集合
      */
     @Override
     public Set<Object> getAllUserNames() {
-
         return properties.keySet();
     }
 
@@ -131,14 +129,13 @@ public class UserDataHelperImpl implements UserDataHelper {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/15
      */
-    private boolean wasExists() {
+    private boolean createFile() {
         File file = new File(parent);
         try {
-            if (!file.exists()&& !file.isDirectory()) {
-                file.mkdir();
-                File tempFile = new File(parent+separator+"userInfo.properties");
-                tempFile.createNewFile();
-                return false;
+            if (!file.exists()) {
+                file.mkdirs();
+                File userInfoFile = new File(parent + separator + "userInfo.properties");
+                userInfoFile.createNewFile();
             }
         } catch (IOException e) {
             e.printStackTrace();
