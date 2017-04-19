@@ -1,20 +1,18 @@
 package utilities.enums;
 
-import utilities.exceptions.NoMatchEnumException;
-
 /**
- * Created by harvey on 17-4-2.
+ * Created by Harvey on 2017/4/19.
  *
- * 回测策略的类型
+ * 回测时， 形成期中的选择策略
  */
-public enum TraceBackStrategy {
+public enum PickType {
 
-    MS("动量策略"),
-    MR("均值回归");
+    RANK_Max_Percent("排名%最大"),
+    RANK_Max("排名最大");
 
     private String repre;
 
-    TraceBackStrategy(String repre) {
+    PickType(String repre) {
         this.repre = repre;
     }
 
@@ -36,12 +34,13 @@ public enum TraceBackStrategy {
      * String TO enum
      * 便于从数据库读入
      */
-    public static TraceBackStrategy getEnum(String a) throws NoMatchEnumException {
-        for (TraceBackStrategy thisEnum : TraceBackStrategy.values()){
+    public static PickType getEnum(String a) {
+        for (PickType thisEnum : PickType.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }
         }
-        throw new NoMatchEnumException();
+        return null;
     }
+
 }

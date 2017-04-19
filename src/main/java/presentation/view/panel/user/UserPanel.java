@@ -124,9 +124,9 @@ public class UserPanel extends TemplatePanel {
         }
         try {
             favoritePanel=new FavoritePanel();
-            favoritePanel.setBounds(adaptScreen(450,100,1300-480,660));
+            favoritePanel.setBounds(adaptScreen(450,80,1300-480,660));
             label = new JLabel();
-            label.setBounds(450 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +100* height / 1030, 1300-480 * width / 1920 , 660* height / 1030-(30*(favoritePanel.jTable.getRowCount()+1)) );
+            label.setBounds(450 * width / 1920, (30*(favoritePanel.jTable.getRowCount()+1)) +80* height / 1030, (1300-480) * width / 1920 , 660* height / 1030-(30*(favoritePanel.jTable.getRowCount()+1)) );
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground(ColorUtils.backgroundColor());
             label.setOpaque(true);

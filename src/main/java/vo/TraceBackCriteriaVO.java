@@ -1,7 +1,5 @@
 package vo;
 
-import utilities.enums.TraceBackStrategy;
-
 import java.time.LocalDate;
 
 /**
@@ -36,15 +34,10 @@ public class TraceBackCriteriaVO {
      */
     public StockPoolCriteriaVO stockPoolVO;
 
-    /**
-     *  MS("动量策略")／MR("均值回归")
-     */
-    public TraceBackStrategy strategyType;
-
-    /**
-     * 持有股票数（MR）
-     */
-    public int holdingNum;
+//    /**
+//     * 持有股票数
+//     */
+//    public int holdingNum;
 
     /**
      * 基准股票的名称，如沪深300
@@ -56,18 +49,23 @@ public class TraceBackCriteriaVO {
      */
     public boolean isCustomized;
 
+    /**
+     * 形成期的形成和挑选类型以及rank
+     */
+    public FormateAndPickVO formateAndPickVO;
+
     public TraceBackCriteriaVO(){
 
     }
-    public TraceBackCriteriaVO(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteriaVO stockPoolVO, TraceBackStrategy strategyType, int holdingNum, String baseStockName, boolean isCustomized) {
+    public TraceBackCriteriaVO(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteriaVO stockPoolVO, String baseStockName, boolean isCustomized, FormateAndPickVO formateAndPickVO) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.formativePeriod = formativePeriod;
         this.holdingPeriod = holdingPeriod;
         this.stockPoolVO = stockPoolVO;
-        this.strategyType = strategyType;
-        this.holdingNum = holdingNum;
+//        this.holdingNum = holdingNum;
         this.baseStockName = baseStockName;
         this.isCustomized = isCustomized;
+        this.formateAndPickVO = formateAndPickVO;
     }
 }

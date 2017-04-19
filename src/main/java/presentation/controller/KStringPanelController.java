@@ -109,6 +109,7 @@ public class KStringPanelController {
 
             try {
                 CandlestickChart candlestickChart = null;
+                kStringPanel.logo.setVisible(false);
                 if(isAll){
                     candlestickChart = new CandlestickChart(stockCode,tag);
                 }
@@ -117,19 +118,19 @@ public class KStringPanelController {
                     try{
                         candlestickChart = new CandlestickChart(chartShowCriteriaVO,tag);
                     } catch (NoDataWithinException e) {
-                        e.printStackTrace();
+                        kStringPanel.setExceptionMessage("节假日没有数据");
                     } catch (DateNotWithinException e) {
-                        kStringPanel.warnMessageOnKStringPanel("请重新选择时间范围");
-                        e.printStackTrace();
+                        kStringPanel.setExceptionMessage("请重新选择时间范围");
                     } catch (DateShortException e) {
-                        e.printStackTrace();
+                        kStringPanel.setExceptionMessage("请重新选择时间范围");
                     }  catch (NoMatchEnumException e) {
-                        e.printStackTrace();
+                        kStringPanel.setExceptionMessage("请重新选择时间范围");
                     }
                 }
 
                 kStringPanel.setChartPanel(candlestickChart);
-               kStringPanel.logo.setVisible(false);
+                kStringPanel. notFound.setVisible(false);
+
             } catch (CodeNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

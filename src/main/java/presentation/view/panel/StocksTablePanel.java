@@ -37,7 +37,7 @@ public class StocksTablePanel extends TemplatePanel {
     SingleDatePickerPanel datePickerPanel;
     public JLabel label;
     public JButton search;
-    public JLabel logo;
+    public JLabel message,title,notFound;
     /**
      * 股票列表面板构造器
      *
@@ -52,36 +52,46 @@ public class StocksTablePanel extends TemplatePanel {
         setBounds(adaptScreen(0,0,1900,1400));
 
         MyLabel label1=new MyLabel("日期") ;
-        label1.setLocation(300*width/1920,50*height/1030);
+        label1.setLocation(60*width/1920,50*height/1030);
         add(label1);
 
         datePickerPanel = new SingleDatePickerPanel();
-        datePickerPanel.setBounds(adaptScreen(350, 50,175,35));
+        datePickerPanel.setBounds(adaptScreen(120, 50,175,35));
         add(datePickerPanel);
 
         search = new MyButton("搜索");
-        search.setBounds(adaptScreen(600,50,80,35));
+        search.setBounds(adaptScreen(330,50,80,35));
         search.addMouseListener(new SearchListener());
         add(search);
 
         JButton importData= new MyButton("加入收藏");
-        importData.setBounds(adaptScreen(1150,50,110,35));
+        importData.setBounds(adaptScreen(1550,870,110,35));
         importData.addMouseListener(new AddFavoriteListener());
         add(importData);
 
-        MyLabel title=new MyLabel("   市 场 行 情",23) ;
-        title.setBounds(adaptScreen(60,160-40,1300,35));
+        title=new MyLabel("   市 场 行 情",23) ;
+        title.setBounds(adaptScreen(460,80-40,1300,35));
         title.setBackground(ColorUtils.titleBgColor());
         title.setOpaque(true);
 //        title.setHorizontalAlignment(SwingConstants.CENTER);
         add(title);
 
-        JButton detailOfCode = new MyButton("查看详情");
-        detailOfCode.setBounds(adaptScreen(900,50,110,35));
-        detailOfCode.addMouseListener(new DetailOfCodeListener());
-        add(detailOfCode);
 
-        label = new JLabel("当日无股票信息",JLabel.CENTER);
+        notFound=new MyLabel("没有找到数据",22) ;
+        notFound.setBounds(1100*width/1920-200,830*height/1920-200,400*height/1920,30*height/1030);
+        notFound.setVisible(false);
+        add(notFound);
+
+
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/notFoundLogo.png"));
+        message =new JLabel();
+        bgPicture.setImage(bgPicture.getImage());
+        message.setIcon(bgPicture);
+        message.setVisible(false);
+        message.setBounds(850*width/1920-200,900*height/1920-200,400,400);
+        add(message);
+
+        label = new JLabel("",JLabel.CENTER);
         label.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,26* WindowData.getInstance().getWidth()/1920));
         label.setBounds(0 * width / 1920, 100 * height / 1030, (1920-120) * width / 1920 , 850* height / 1030);
         label.setBorder(BorderFactory.createEmptyBorder());
@@ -91,13 +101,7 @@ public class StocksTablePanel extends TemplatePanel {
         label.setOpaque(true);
         add(label);
 
-        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
-        logo =new JLabel();
-        bgPicture.setImage(bgPicture.getImage());
-        logo.setIcon(bgPicture);
-        logo.addMouseListener(new UserListener());
-        logo.setBounds(850*width/1920-200,900*height/1920-200,400,400);
-        add(logo);
+
 
     }
 

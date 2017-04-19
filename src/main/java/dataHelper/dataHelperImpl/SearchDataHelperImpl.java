@@ -3,6 +3,7 @@ package dataHelper.dataHelperImpl;
 import dataHelper.SearchDataHelper;
 import po.StockSearchPO;
 import utilities.DataSourceStateKeeper;
+import utilities.IDReserve;
 import utilities.enums.DataSourceState;
 
 import java.io.BufferedReader;
@@ -59,8 +60,10 @@ public class SearchDataHelperImpl implements SearchDataHelper {
         List<StockSearchPO> result = new LinkedList<>();
 
         final String separator = System.getProperty("file.separator");
-        final String isBaseParent = System.getProperty("user.dir") + separator + ".attachments" + separator + "base_stocks" + separator + "stockName-code" + separator + "shortPinyin.txt";
-        final String notBaseParent = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + "stockName-code" + separator + "shortPinyin.txt";
+        final String isBaseParent = System.getProperty("user.dir") + separator + ".attachments" + separator +
+                IDReserve.getInstance().getUserID() + separator + "base_stocks" + separator + "stockName-code" + separator + "shortPinyin.txt";
+        final String notBaseParent = System.getProperty("user.dir") + separator + ".attachments" + separator +
+                IDReserve.getInstance().getUserID() + separator + "stocks" + separator + "stockName-code" + separator + "shortPinyin.txt";
 
         BufferedReader br1 = new BufferedReader(new InputStreamReader(new FileInputStream(isBaseParent), "UTF-8"));
         BufferedReader br2 = new BufferedReader(new InputStreamReader(new FileInputStream(notBaseParent), "UTF-8"));
@@ -124,7 +127,8 @@ public class SearchDataHelperImpl implements SearchDataHelper {
             } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
                 System.out.println(DataSourceState.USER);
                 properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(
-                        System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8")));
+                        System.getProperty("user.dir") + separator + ".attachments" + separator +
+                                IDReserve.getInstance().getUserID() + separator + path), "UTF-8")));
             }
         } catch (IOException e) {
             e.printStackTrace();

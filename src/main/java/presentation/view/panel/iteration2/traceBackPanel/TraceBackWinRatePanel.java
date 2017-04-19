@@ -25,7 +25,7 @@ public class TraceBackWinRatePanel extends TemplatePanel {
     JLabel label;
     WinRateChart winRateChart3,winRateChart4;
     ChartPanel chartPanel3,chartPanel4;
-    JLabel label2;
+    JLabel label2,label3;
     JRadioButton radioButton1,radioButton2;
     ButtonGroup group;
     public TraceBackWinRatePanel(){
@@ -79,7 +79,7 @@ public class TraceBackWinRatePanel extends TemplatePanel {
             remove(chartPanel3);
             remove(chartPanel4);
             remove(traceBackWinTable2);
-            remove(label);
+            remove(label2);
         }
         try {
             winRateChart1=new WinRateChart(certainFormates,1);
@@ -120,9 +120,15 @@ public class TraceBackWinRatePanel extends TemplatePanel {
             add(chartPanel4);
 
             traceBackWinTable2=new TraceBackWinTable(certainHoldings);
-            traceBackWinTable2.setBounds(adaptScreen(250,120,300,800));
-
+            traceBackWinTable2.setBounds(adaptScreen(250,120,300,600));
             add(traceBackWinTable2);
+
+            label3 = new JLabel();
+            label3.setBounds(250 * width / 1920, 30*(traceBackWinTable2.jTable.getRowCount()+1)+120 * height / 1030, 300 * width / 1920 , 600* height / 1030);
+            label3.setBorder(BorderFactory.createEmptyBorder());
+            label3.setBackground(ColorUtils.backgroundColor());
+            label3.setOpaque(true);
+            add(label3);
 
             openGroup1();
             radioButton1.setSelected(true);
@@ -138,16 +144,17 @@ public class TraceBackWinRatePanel extends TemplatePanel {
         label.setVisible(true);
         chartPanel3.setVisible(false);
         chartPanel4.setVisible(false);
+        label3.setVisible(false);
     }
     private void openGroup2(){
         traceBackWinTable2.setVisible(true);
         traceBackWinTable.setVisible(false);
         chartPanel1.setVisible(false);
         chartPanel2.setVisible(false);
-        label.setVisible(true);
+        label.setVisible(false);
         chartPanel3.setVisible(true);
         chartPanel4.setVisible(true);
-
+        label3.setVisible(true);
     }
 }
 
