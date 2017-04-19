@@ -27,13 +27,10 @@ public class MyCustomizedButton extends JLabel {
            bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/button/"+str+"1.png"));
 
         }else if(i==1){
-            x=94;
-            y=120;
-//            if(str=="stock") {
-//                bgPicture = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/button2/" + str + "3.png"));
-//            }else{
-                bgPicture = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/button2/" + str + "1.png"));
-//            }
+            x=80;
+            y=100;
+            bgPicture = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/button2/" + str + "1.png"));
+
         }else if(i==2){
             x=35;
             y=35;

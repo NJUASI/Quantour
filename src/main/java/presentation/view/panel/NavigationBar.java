@@ -52,7 +52,7 @@ public class NavigationBar extends TemplatePanel {
 
         //the door of function 4
         stock = new MyCustomizedButton("stock",1);
-        stock.setBounds(adaptScreen(3, 100, 84, 110));
+        stock.setBounds(adaptScreen(5, 100, 84, 110));
         stock.addMouseListener(new StocksTableListener());
         add(stock);
 
@@ -83,7 +83,7 @@ public class NavigationBar extends TemplatePanel {
 
         //the door of function 1
         kString = new MyCustomizedButton("kString",1);
-        kString.setBounds(adaptScreen(3, 210, 84, 110));
+        kString.setBounds(adaptScreen(5, 210, 84, 110));
         kString.addMouseListener(new KStringListener());
         add(kString);
         kString.addMouseListener(new MouseAdapter() {
@@ -115,7 +115,7 @@ public class NavigationBar extends TemplatePanel {
 
         //the door of function 2
         compare = new MyCustomizedButton("compare",1);
-        compare.setBounds(adaptScreen(3, 320, 84, 110));
+        compare.setBounds(adaptScreen(5, 320, 84, 110));
         compare.addMouseListener(new CompareListener());
         add(compare);
         compare.addMouseListener(new MouseAdapter() {
@@ -146,7 +146,7 @@ public class NavigationBar extends TemplatePanel {
         });
         //the door of function 3
         strategy = new MyCustomizedButton("strategy",1);
-        strategy.setBounds(adaptScreen(3, 430, 84, 110));
+        strategy.setBounds(adaptScreen(5, 430, 84, 110));
         strategy.addMouseListener(new StrategyListener());
         add(strategy);
         strategy.addMouseListener(new MouseAdapter() {
