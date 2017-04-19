@@ -143,7 +143,7 @@ public class TraceBackStrategyCalculator {
         formativePeriod = traceBackCriteriaVO.formativePeriod;
     }
 
-    private List<CumulativeReturnVO> cycleCalcu(int startIndex, int endIndex, int periodSerial) throws DateNotWithinException, NoMatchEnumException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException, DataSourceFirstDayException {
+    private List<CumulativeReturnVO> cycleCalcu(int startIndex, int endIndex, int periodSerial) throws DateNotWithinException, DataSourceFirstDayException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException {
         System.out.println("calculate cycle: " + periodSerial);
 
         LocalDate periodStart = allDatesWithData.get(startIndex);

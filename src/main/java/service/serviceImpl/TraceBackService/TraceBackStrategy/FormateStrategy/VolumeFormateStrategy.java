@@ -31,10 +31,11 @@ public class VolumeFormateStrategy extends AllFormateStrategy {
      * @return 形成的数据
      */
     @Override
-    public List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, DataSourceFirstDayException {
-
+    public List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
+        if (periodStartIndex == 0) throw new DataSourceFirstDayException();
+
         LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
         LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
 

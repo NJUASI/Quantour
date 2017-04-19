@@ -40,7 +40,7 @@ public abstract class AllFormateStrategy {
      * @param formativePeriod 形成期长度（MS）／N日均值偏离度（MR）
      * @return 形成的数据
      */
-    public abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, DataSourceFirstDayException;
+    public abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException;
 
 
     protected List<StrategyStock> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){

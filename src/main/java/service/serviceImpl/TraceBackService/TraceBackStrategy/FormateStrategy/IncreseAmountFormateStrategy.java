@@ -1,10 +1,7 @@
 package service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
 import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
-import utilities.exceptions.CodeNotFoundException;
-import utilities.exceptions.DateNotWithinException;
-import utilities.exceptions.DateShortException;
-import utilities.exceptions.NoDataWithinException;
+import utilities.exceptions.*;
 import vo.FormativePeriodRateVO;
 
 import java.io.IOException;
@@ -25,9 +22,11 @@ public class IncreseAmountFormateStrategy extends AllFormateStrategy {
     }
 
     @Override
-    public List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException {
+    public List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
+        if (periodStartIndex == 0) throw new DataSourceFirstDayException();
+
         LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
         LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
 

@@ -29,7 +29,7 @@ public class BiasFormateStrategy extends AllFormateStrategy {
      * @return 形成的
      */
     @Override
-    public List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, DataSourceFirstDayException {
+    public List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         List<FormativePeriodRateVO> result = new LinkedList<>();
 
         for (String s : stockCodes) {
@@ -38,9 +38,7 @@ public class BiasFormateStrategy extends AllFormateStrategy {
             // 获得前一个交易日
             LocalDate periodJudge;
             int startIndex = allDatesWithData.indexOf(periodStart);
-            if (startIndex == 0) {
-                throw new DataSourceFirstDayException();
-            }
+            if (startIndex == 0) throw new DataSourceFirstDayException();
             periodJudge = allDatesWithData.get(allDatesWithData.indexOf(periodStart) - 1);
 
             int neededMRStockIndex = thisStockData.indexOf(periodJudge);

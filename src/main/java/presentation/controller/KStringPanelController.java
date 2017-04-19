@@ -118,13 +118,13 @@ public class KStringPanelController {
                     try{
                         candlestickChart = new CandlestickChart(chartShowCriteriaVO,tag);
                     } catch (NoDataWithinException e) {
-                        kStringPanel.setExceptionMessage("节假日没有数据");
+                        kStringPanel.setExceptionMessage(e.getMessage());
                     } catch (DateNotWithinException e) {
-                        kStringPanel.setExceptionMessage("请重新选择时间范围");
+                        kStringPanel.setExceptionMessage(e.getMessage());
                     } catch (DateShortException e) {
                         kStringPanel.setExceptionMessage("请重新选择时间范围");
                     }  catch (NoMatchEnumException e) {
-                        kStringPanel.setExceptionMessage("请重新选择时间范围");
+                        kStringPanel.setExceptionMessage("输入数据不太适合。。换一个试试？");
                     }
                 }
 

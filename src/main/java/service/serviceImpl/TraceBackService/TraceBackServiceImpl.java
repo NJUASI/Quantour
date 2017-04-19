@@ -169,7 +169,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;
         int initFormativePeriod = traceBackCriteriaVO.formativePeriod;
 
-        for (int i = 2; i <= 50; i = i + 1) {
+        for (int i = 2; i <= 50; i++) {
             ExcessAndWinRateDistVO excessAndWinRateDistVO = new ExcessAndWinRateDistVO();
             //给定形成期
             if (certainFormate) {

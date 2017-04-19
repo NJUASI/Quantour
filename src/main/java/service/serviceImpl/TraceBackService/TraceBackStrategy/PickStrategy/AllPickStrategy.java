@@ -31,7 +31,7 @@ public abstract class AllPickStrategy {
     public abstract List<String> pick(List<FormativePeriodRateVO> formativePeriodRateVOS);
 
     protected List<String> ascSort(List<FormativePeriodRateVO> formativePeriodRateVOS){
-        List<String> sortedStockCodes = new ArrayList<String>();
+        List<String> sortedStockCodes = new ArrayList<>();
         formativePeriodRateVOS.sort(new AscSorter());
         for(int i = 0; i < formativePeriodRateVOS.size(); i++){
             sortedStockCodes.add(formativePeriodRateVOS.get(i).stockCode);
@@ -40,7 +40,7 @@ public abstract class AllPickStrategy {
     }
 
     protected List<String> descSort(List<FormativePeriodRateVO> formativePeriodRateVOS){
-        List<String> sortedStockCodes = new ArrayList<String>();
+        List<String> sortedStockCodes = new ArrayList<>();
         formativePeriodRateVOS.sort(new DescSorter());
         for(int i = 0; i < formativePeriodRateVOS.size(); i++){
             sortedStockCodes.add(formativePeriodRateVOS.get(i).stockCode);
