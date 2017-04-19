@@ -25,7 +25,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
     JRadioButton radioButton1,radioButton2;
     ButtonGroup group;
     MultiComboBox mulit;
-    JLabel lb,lb3,label;
+    JLabel lb,lb3,label,message;
     JComboBox STComboBox;
     JButton delete;
     public StockPoolTable stockPoolTable;
@@ -102,6 +102,10 @@ public class StrategyPoolPanel  extends TemplatePanel {
         delete.setBounds(adaptScreen(750,120,70,35));
         delete.addMouseListener(new DeletePoolListener());
         add(delete);
+        message=new MyLabel("请到行情面板添加自选股池",17);
+        message.setBounds(520,60,300,100);
+        message.setVisible(false);
+        add(message);
 
         openPool1();
         refreshTabel();
@@ -111,8 +115,10 @@ public class StrategyPoolPanel  extends TemplatePanel {
         if (stockPoolTable!=null) {
             remove(stockPoolTable);
             remove(label);
+            remove(message);
         }
         try {
+
             stockPoolTable=new StockPoolTable();
             stockPoolTable.setBounds(adaptScreen(420,20,300,200));
 
@@ -127,7 +133,9 @@ public class StrategyPoolPanel  extends TemplatePanel {
             add(stockPoolTable);
             if(radioButton1.isSelected()){
                 stockPoolTable.setVisible(false);
+                message.setVisible(false);
             }
+
             repaint();
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,8 +144,11 @@ public class StrategyPoolPanel  extends TemplatePanel {
             new PopUpFrame(e.getMessage());
             //TODO 高源后期添加
         } catch (PrivatePoolIsNullException e) {
-            e.printStackTrace();
-            new PopUpFrame(e.getMessage());
+            if(radioButton1.isSelected()) {
+                message.setVisible(false);
+            }else{
+                message.setVisible(true);
+            }
         }
     }
     public void openPool1(){
@@ -149,6 +160,8 @@ public class StrategyPoolPanel  extends TemplatePanel {
         if(stockPoolTable!=null) {
             stockPoolTable.setVisible(false);
             label.setVisible(false);
+        }else {
+            message.setVisible(false);
         }
     }
 //
@@ -157,9 +170,13 @@ public class StrategyPoolPanel  extends TemplatePanel {
         lb.setVisible(false);
         lb3.setVisible(false);
         STComboBox.setVisible(false);
-        stockPoolTable.setVisible(true);
-        delete.setVisible(true);
-        label.setVisible(true);
+        if(stockPoolTable!=null) {
+            stockPoolTable.setVisible(true);
+            label.setVisible(true);
+            delete.setVisible(false);
+        }else {
+            message.setVisible(true);
+        }
     }
 
     public StockPoolCriteriaVO getPoolVO(){

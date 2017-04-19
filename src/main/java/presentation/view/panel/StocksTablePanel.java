@@ -43,7 +43,7 @@ public class StocksTablePanel extends TemplatePanel {
     public JPanel stockPanel;
     public JLabel label,bgLabel;
     public JButton search;
-    public JLabel message,title,notFound,success,title2;
+    public JLabel message,message2,title,notFound,success,title2;
     public StockPoolTable stockPoolTable;
     /**
      * 股票列表面板构造器
@@ -163,9 +163,18 @@ public class StocksTablePanel extends TemplatePanel {
             title2.setBounds(adaptScreen(0,0,360,35));
             title2.setBackground(ColorUtils.titleBgColor());
             title2.setOpaque(true);
+
+            title2.setBounds(adaptScreen(0,0,360,35));
+            message2=new MyLabel("请拖拽股票到此处",17) ;
+            message2.setBounds(adaptScreen(110,110,160,35));
+            message2.setVisible(false);
+            stockPanel.add(message2);
             stockPanel.add(title2);
 
-            stockPanel.setBounds(60,700-35,360,200);
+
+            stockPanel.setBounds(60,700-35,360,235);
+            add(stockPanel);
+            repaint();
             stockPoolTable=new StockPoolTable();
             stockPoolTable.setBounds(adaptScreen(0,35,360,200));
 
@@ -178,7 +187,7 @@ public class StocksTablePanel extends TemplatePanel {
             bgLabel.setVisible(true);
             stockPanel.add(bgLabel);
             stockPanel.add(stockPoolTable);
-            add(stockPanel);
+
             stockPanel.repaint();
             repaint();
         } catch (IOException e) {
@@ -187,7 +196,7 @@ public class StocksTablePanel extends TemplatePanel {
             e.printStackTrace();
             new PopUpFrame(e.getMessage());
         } catch (PrivatePoolIsNullException e) {
-            new PopUpFrame(e.getMessage());
+            message2.setVisible(true);
         }
     }
 }
