@@ -187,7 +187,11 @@ public class StocksTablePanel extends TemplatePanel {
             bgLabel.setVisible(true);
             stockPanel.add(bgLabel);
             stockPanel.add(stockPoolTable);
-
+            if(stockPoolTable.jTable.getRowCount()==0){
+                message2.setVisible(true);
+            }else{
+                message2.setVisible(false);
+            }
         stockPanel.repaint();
         repaint();
     }
