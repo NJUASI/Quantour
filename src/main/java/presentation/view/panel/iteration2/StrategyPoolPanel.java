@@ -99,7 +99,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         add(STComboBox);
 
         delete= new MyButton("删除");
-        delete.setBounds(adaptScreen(650,120,70,35));
+        delete.setBounds(adaptScreen(750,120,70,35));
         delete.addMouseListener(new DeletePoolListener());
         add(delete);
 
@@ -114,10 +114,10 @@ public class StrategyPoolPanel  extends TemplatePanel {
         }
         try {
             stockPoolTable=new StockPoolTable();
-            stockPoolTable.setBounds(adaptScreen(420,20,200,200));
+            stockPoolTable.setBounds(adaptScreen(420,20,300,200));
 
             label = new JLabel();
-            label.setBounds(420 * width / 1920, (20+30*(stockPoolTable.jTable.getRowCount()+1)) * height / 1030, 200* width / 1920 , 200* height / 1030);
+            label.setBounds(420 * width / 1920, (20+30*(stockPoolTable.jTable.getRowCount()+1)) * height / 1030, 300* width / 1920 , 200* height / 1030);
             label.setBorder(BorderFactory.createEmptyBorder());
             label.setBackground( new Color(35,39,44));
             label.setForeground(Color.WHITE);

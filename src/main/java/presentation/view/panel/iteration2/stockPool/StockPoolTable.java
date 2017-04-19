@@ -32,7 +32,7 @@ public class StockPoolTable extends JScrollPane {
         height = windowData.getHeight();
 
 
-        setSize(200 * width / 1920, 150 * height / 1030);
+        setSize(300 * width / 1920, 150 * height / 1030);
 
         jTable = new JTable(new StockPoolModel());
         jTable.setBounds(0, 0, 200 * width / 1920, 150 * height / 1030);

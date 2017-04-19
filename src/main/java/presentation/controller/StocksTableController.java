@@ -91,7 +91,7 @@ public class StocksTableController {
         int num[]=null;
         try {
             stocksTablePane = new MyTable(stocksTablePanel.getChooseDate());
-            stocksTablePane.setLocation(460 * width / 1920, 75 * height / 1030);
+            stocksTablePane.setBounds(460 , 75 ,1300,750);
             if(stocksTablePane!=null) {
                 stocksTablePanel.add(stocksTablePane);
                 stocksTablePane.repaint();

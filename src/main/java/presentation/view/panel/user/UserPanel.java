@@ -71,7 +71,7 @@ public class UserPanel extends TemplatePanel {
 
         MyLabel block1=new MyLabel("",16) ;
         block1.setBounds(adaptScreen(60,60,420-90,850));
-        block1.setBackground(new Color(27+6,29+6,33+6));
+        block1.setBackground(new Color(27,29,33));
         block1.setOpaque(true);
         add(block1);
         MyLabel middle1=new MyLabel("",16) ;
@@ -82,7 +82,7 @@ public class UserPanel extends TemplatePanel {
 
         MyLabel block2=new MyLabel("",16) ;
         block2.setBounds(adaptScreen(1330,60,420,850));
-        block2.setBackground(new Color(27+6,29+6,33+6));
+        block2.setBackground(new Color(27,29,33));
         block2.setOpaque(true);
         add(block2);
 
