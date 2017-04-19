@@ -146,10 +146,19 @@ public class StocksTableController {
     /**
      * 将选择的股票加入自选股
      */
-    public void addFavorite() throws PrivateStockExistedException, PrivateStockNotFoundException {
+    public void addFavorite()  {
         stockService = new StockServiceImpl();
-        stockService.addPrivateStock(IDReserve.getInstance().getUserID(),stocksTablePane.getCode());
-        StocksTablePanel.getInstance().popUp(stocksTablePane.getCode()+" 添加成功！");
+        String code[] = stocksTablePane.getCode();
+        for ( int i = 0 ;i<code.length;i++) {
+            try {
+                stockService.addPrivateStock(IDReserve.getInstance().getUserID(), code[i]);
+                StocksTablePanel.getInstance().popUp( " 添加成功！");
+            } catch (PrivateStockExistedException e1) {
+                StocksTablePanel.getInstance().popUp(" 添加成功！");
+            } catch (PrivateStockNotFoundException e1) {
+                StocksTablePanel.getInstance().popUp(" 添加失败！");
+            }
+        }
     }
 
     /**

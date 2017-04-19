@@ -18,7 +18,7 @@ public class MyMouseListener extends MouseAdapter {
         //如果是双击
         if (e.getClickCount() == 2) {
             KStringPanel.getInstance().count = 1;
-            CodeReserve.getInstance().setCode(StocksTableController.getInstance().stocksTablePane.getCode(), StocksTableController.getInstance().stocksTablePane.getName());
+            CodeReserve.getInstance().setCode(StocksTableController.getInstance().stocksTablePane.getCode()[0], StocksTableController.getInstance().stocksTablePane.getName());
             ViewSwitchController.getInstance().viewSwitch("kStringPanel");
             StocksTableController.getInstance().checkDetail();
             KStringPanel.getInstance().count = 0;

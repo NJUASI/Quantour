@@ -19,15 +19,9 @@ public class AddFavoriteListener extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        try {
+
             StocksTableController.getInstance().addFavorite();
             UserPanel.getInstance().refreshFavorite();
-            ChooseStrategyPanel.getInstance().refreshTabel();
 
-        } catch (PrivateStockExistedException e1) {
-            StocksTablePanel.getInstance().popUp(e1.getMessage());
-        } catch (PrivateStockNotFoundException e1) {
-            StocksTablePanel.getInstance().popUp(e1.getMessage());
-        }
     }
 }

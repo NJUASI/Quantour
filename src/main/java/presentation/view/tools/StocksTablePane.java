@@ -123,9 +123,13 @@ public class StocksTablePane extends JScrollPane {
 
     }
 
-    public String getCode() {
-        String cellValue = "" + jTable.getValueAt(jTable.getSelectedRow(), 0);// 取单元格数据,row是行号,column是列号
-        return cellValue;
+    public String[] getCode() {
+        int code[] =jTable.getSelectedRows();
+        String cellValue[]=new String[code.length];
+        for(int i = 0 ; i <code.length;i++) {
+            cellValue[i] = "" + jTable.getValueAt(code[i], 0);// 取单元格数据,row是行号,column是列号
+        }
+            return cellValue;
     }
 
     public String getName() {
