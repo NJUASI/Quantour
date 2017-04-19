@@ -14,21 +14,13 @@ import presentation.view.tools.*;
 import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;
 import presentation.view.tools.component.datePicker.SingleDatePickerPanel;
-import utilities.exceptions.PrivatePoolIsNullException;
-import utilities.exceptions.PrivateStockNotFoundException;
-
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.TreeMap;

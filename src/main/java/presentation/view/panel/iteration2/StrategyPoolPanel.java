@@ -6,12 +6,8 @@ import presentation.view.panel.TemplatePanel;
 import presentation.view.panel.iteration2.stockPool.PrivateStockPool;
 import presentation.view.panel.iteration2.stockPool.StockPoolTable;
 import presentation.view.tools.DraggedTrasferable;
-import presentation.view.tools.PopUpFrame;
-import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.MyLabel;
 import utilities.enums.StType;
-import utilities.exceptions.PrivatePoolIsNullException;
-import utilities.exceptions.PrivateStockNotFoundException;
 import vo.StockPoolCriteriaVO;
 
 import javax.swing.*;
@@ -23,7 +19,6 @@ import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -108,10 +103,10 @@ public class StrategyPoolPanel  extends TemplatePanel {
 
         add(STComboBox);
 
-        delete= new MyButton("删除");
-        delete.setBounds(adaptScreen(770,120,70,35));
-        delete.addMouseListener(new DeletePoolListener());
-        add(delete);
+//        delete= new MyButton("删除");
+//        delete.setBounds(adaptScreen(770,120,70,35));
+//        delete.addMouseListener(new DeletePoolListener());
+//        add(delete);
         message=new MyLabel("请到行情面板添加自选股池",17);
         message.setBounds(480,70,300,100);
         message.setVisible(false);
@@ -175,7 +170,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         lb.setVisible(true);
         lb3.setVisible(true);
         STComboBox.setVisible(true);
-        delete.setVisible(false);
+//        delete.setVisible(false);
 
         stockPoolTable.setVisible(false);
         label.setVisible(false);

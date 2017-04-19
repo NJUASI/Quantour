@@ -57,6 +57,7 @@ public class ChartServiceImplTest {
     /**
      * Method: getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days)
      */
+    @Ignore
     @Test
     public void testGetAveDataForChartShowCriteriaVODays() throws Exception {
         ChartShowCriteriaVO vo = new ChartShowCriteriaVO("000001",LocalDate.of(2012,2,1),LocalDate.of(2012,3,20));
@@ -88,6 +89,7 @@ public class ChartServiceImplTest {
     /**
      * Method: getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO)
      */
+    @Ignore
     @Test
     public void testGetComparision() throws Exception {
         List<StockComparisionVO> result = service.getComparision(new StockComparsionCriteriaVO("000001",
