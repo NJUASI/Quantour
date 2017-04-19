@@ -31,8 +31,8 @@ public class MessagePanel extends TemplatePanel{
 
 
         JLabel logo =new JLabel();
-        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
-        bgPicture.setImage(bgPicture.getImage().getScaledInstance(110*width/1920, 110*height/1130, Image.SCALE_DEFAULT ));
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
+        bgPicture.setImage(bgPicture.getImage().getScaledInstance(110*width/1920, 105*height/1130, Image.SCALE_DEFAULT ));
         logo.setIcon(bgPicture);
         logo.addMouseListener(new UserListener());
         logo.setBounds(adaptScreen(105,25,110,110));

@@ -32,10 +32,10 @@ public class NavigationBar extends TemplatePanel {
         setBackground(ColorUtils.divideColor());
         setBounds(adaptScreen(0,0,90,1030));
 
-        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
 
         JLabel logo1 =new JLabel();
-        bgPicture.setImage(bgPicture.getImage().getScaledInstance(80*width/1920, 80*height/1130, Image.SCALE_DEFAULT ));
+        bgPicture.setImage(bgPicture.getImage().getScaledInstance(80*width/1920, 77*height/1130, Image.SCALE_DEFAULT ));
         logo1.setIcon(bgPicture);
         logo1.addMouseListener(new UserListener());
         logo1.setBounds(adaptScreen(5,5,80,80));

@@ -116,7 +116,7 @@ public class UserPanel extends TemplatePanel {
         middle2.setOpaque(true);
         add(middle2);
 
-        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
         logo =new JLabel();
         bgPicture.setImage(bgPicture.getImage());
         logo.setIcon(bgPicture);

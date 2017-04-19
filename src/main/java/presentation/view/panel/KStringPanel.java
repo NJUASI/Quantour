@@ -88,7 +88,7 @@ public class KStringPanel extends TemplatePanel {
         notFound.setVisible(false);
         add(notFound);
 
-        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo4.png"));
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
         logo =new JLabel();
         bgPicture.setImage(bgPicture.getImage());
         logo.setIcon(bgPicture);

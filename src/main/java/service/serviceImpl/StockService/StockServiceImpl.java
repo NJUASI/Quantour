@@ -29,11 +29,9 @@ import java.util.*;
 public class StockServiceImpl implements StockService {
 
     StockDao stockDao;
-    private StockPoolFilter stockPoolFilter;
 
     public StockServiceImpl() {
         stockDao = new StockDaoImpl();
-        stockPoolFilter = new StockPoolFilter();
     }
 
     /**

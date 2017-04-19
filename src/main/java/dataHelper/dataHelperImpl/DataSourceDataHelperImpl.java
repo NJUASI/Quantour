@@ -53,6 +53,6 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
         String[] result = br.readLine().split("\t");
-        return new DataSourceInfoPO(result[0], new Timestamp(Long.parseLong(result[1])));
+        return new DataSourceInfoPO(result[0], result[1]);
     }
 }

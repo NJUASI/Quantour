@@ -84,7 +84,7 @@ public class FileImportPanel extends TemplatePanel {
     }
     public void popLabel(){
         label= new MyLabel("");
-        label.setBounds(adaptScreen(110, 340, 200, 200));
+        label.setBounds(adaptScreen(110, 400, 200, 200));
         add(label);
         thread=new Thread(() ->{
             int num =0;
@@ -96,7 +96,7 @@ public class FileImportPanel extends TemplatePanel {
                 }
 
                 ImageIcon bgPicture= new ImageIcon(thread.currentThread().getContextClassLoader().getResource("picture/loading/loading"+num+".png"));
-                bgPicture.setImage(bgPicture.getImage().getScaledInstance(200*width/1920, 200*height/1030, Image.SCALE_DEFAULT ));
+                bgPicture.setImage(bgPicture.getImage().getScaledInstance(200*width/1920, 180*height/1030, Image.SCALE_DEFAULT ));
                 label.setIcon(bgPicture);
                 num=(num+1)%14;
             }

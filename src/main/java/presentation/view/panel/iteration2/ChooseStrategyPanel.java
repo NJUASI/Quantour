@@ -100,7 +100,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
 
         JButton searchBt= new MyButton("开始回测");
-        searchBt.setBounds(adaptScreen(1450,550,100,35));
+        searchBt.setBounds(adaptScreen(1500,600,100,35));
 
         searchBt.addMouseListener(new SearchListener());
 //        searchBt.addMouseListener(new MouseAdapter() {
@@ -113,7 +113,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
         add(searchBt);
 
         JButton returnBt= new MyButton("查看上次");
-        returnBt.setBounds(adaptScreen(1450,480,100,35));
+        returnBt.setBounds(adaptScreen(1500,530,100,35));
         returnBt.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -139,7 +139,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
     public void popup(){
         progressBar = new MyLabel("");
-        progressBar.setBounds(adaptScreen(1400, 200, 200, 200));
+        progressBar.setBounds(adaptScreen(1450, 200, 200, 200));
         add(progressBar);
         thread=new Thread(() ->{
             int num =0;
@@ -150,7 +150,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
                     e.printStackTrace();
                 }
                 ImageIcon bgPicture= new ImageIcon(thread.currentThread().getContextClassLoader().getResource("picture/loading/loading"+num+".png"));
-                bgPicture.setImage(bgPicture.getImage().getScaledInstance(200*width/1920, 200*height/1030, Image.SCALE_DEFAULT ));
+                bgPicture.setImage(bgPicture.getImage().getScaledInstance(200*width/1920, 180*height/1030, Image.SCALE_DEFAULT ));
                 progressBar.setIcon(bgPicture);
                 num=(num+1)%14;
             }
