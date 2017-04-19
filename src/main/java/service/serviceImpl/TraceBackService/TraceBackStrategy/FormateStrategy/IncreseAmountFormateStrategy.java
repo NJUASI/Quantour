@@ -18,9 +18,9 @@ import java.util.Map;
  *
  * 形成期的涨幅策略
  */
-public class IncreseAmountStrategy extends AllFormateStrategy {
+public class IncreseAmountFormateStrategy extends AllFormateStrategy {
 
-    public IncreseAmountStrategy(List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+    public IncreseAmountFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
         super(allDatesWithData, stockData);
     }
 

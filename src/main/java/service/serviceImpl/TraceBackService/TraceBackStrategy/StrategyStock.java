@@ -1,6 +1,7 @@
 package service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import po.StockPO;
+import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 
 import java.time.LocalDate;
 
@@ -23,11 +24,15 @@ public class StrategyStock {
     // 复权后的收盘指数
     public double adjClose;
 
+    // 交易量
+    public double volume;
+
     public StrategyStock(StockPO po) {
         this.date = po.getDate();
         this.close = po.getClose();
         this.preClose = po.getPreClose();
         this.adjClose = po.getAdjClose();
+        this.volume = new Double(po.getVolume());
     }
 
 }

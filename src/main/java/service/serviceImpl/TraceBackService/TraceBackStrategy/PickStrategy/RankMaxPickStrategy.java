@@ -16,16 +16,9 @@ public class RankMaxPickStrategy extends AllPickStrategy{
         super(rank);
     }
 
-    /**
-     * 根据FormativePeriodRateVO中的periodReturn对排序好的股票代码进行选择
-     *
-     * @param formativePeriodRateVOS
-     * @return List<String> 选择好的持有期的股票代码
-     */
     @Override
     public List<String> pick(List<FormativePeriodRateVO> formativePeriodRateVOS) {
         List<String> sortedStockPool = ascSort(formativePeriodRateVOS);
-
         return  sortedStockPool.subList(0,rank);
     }
 }

@@ -8,7 +8,8 @@ package utilities.enums;
 public enum FormateType {
 
     INCEREASE_AMOUNT("涨幅"),
-    BIAS("乖离率");
+    BIAS("乖离率"),
+    VOLUME("成交量");
 
     private String repre;
 

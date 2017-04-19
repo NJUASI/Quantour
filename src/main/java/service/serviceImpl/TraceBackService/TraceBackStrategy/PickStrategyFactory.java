@@ -1,8 +1,6 @@
 package service.serviceImpl.TraceBackService.TraceBackStrategy;
 
-import service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.AllPickStrategy;
-import service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.RankMaxPercentPickStrategy;
-import service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.RankMaxPickStrategy;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.*;
 import utilities.enums.PickType;
 
 
@@ -15,10 +13,14 @@ public class PickStrategyFactory {
 
     public static AllPickStrategy createPickStrategy(PickType pickType, int rank){
         switch (pickType){
-            case RANK_Max:
+            case RANK_MAX:
                 return new RankMaxPickStrategy(rank);
-            case RANK_Max_Percent:
+            case RANK_MAX_PERCENT:
                 return new RankMaxPercentPickStrategy(rank);
+            case RANK_MIN:
+                return new RankMinPickStrategy(rank);
+            case RANK_MIN_PERCENT:
+                return new RankMinPercentPickStrategy(rank);
         }
         return null;
     }
