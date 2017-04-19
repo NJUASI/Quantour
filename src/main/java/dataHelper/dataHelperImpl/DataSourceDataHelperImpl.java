@@ -4,6 +4,7 @@ import com.github.stuxuhai.jpinyin.PinyinException;
 import dataHelper.DataSourceDataHelper;
 import dataHelper.dataHelperImpl.DataSourceDataHelper.*;
 import po.DataSourceInfoPO;
+import utilities.IDReserve;
 
 import java.io.*;
 import java.sql.Timestamp;
@@ -45,7 +46,8 @@ public class DataSourceDataHelperImpl implements DataSourceDataHelper {
     @Override
     public DataSourceInfoPO getMyDataSource() throws IOException {
         final String separator = System.getProperty("file.separator");
-        final String filePath = System.getProperty("user.dir") + separator + ".attachments" + separator + "stocks" + separator + "info.txt";
+        final String filePath = System.getProperty("user.dir") + separator + ".attachments" + separator +
+                IDReserve.getInstance().getUserID() + separator  + "stocks" + separator + "info.txt";
         File thisFile = new File(filePath);
         if (!thisFile.exists()) return null;
 

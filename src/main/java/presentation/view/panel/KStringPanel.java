@@ -72,7 +72,7 @@ public class KStringPanel extends TemplatePanel {
      * @updateTime 2017/3/5
      */
     public KStringPanel() {
-        setBackground(new Color(35,39,44));
+//        setV
         //初始化datePicker
         searchTextField = new MyTextField();
 
