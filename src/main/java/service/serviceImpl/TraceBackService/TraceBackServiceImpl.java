@@ -1,15 +1,13 @@
 package service.serviceImpl.TraceBackService;
 
-//import com.csvreader.CsvReader;
 import dao.StockDao;
 import dao.daoImpl.StockDaoImpl;
-import org.jfree.data.io.CSV;
 import po.StockPO;
 import service.StockService;
 import service.TraceBackService;
 import service.serviceImpl.StockService.StockServiceImpl;
 import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
-import utilities.enums.TraceBackStrategy;
+import utilities.StrategyStockList;
 import utilities.exceptions.*;
 import vo.*;
 
@@ -64,7 +62,6 @@ public class TraceBackServiceImpl implements TraceBackService {
     public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
 
         long enter = System.currentTimeMillis();
-        System.out.println(enter);
 
         this.traceBackCriteriaVO = traceBackCriteriaVO;
 
@@ -96,6 +93,9 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         //策略回测
         traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);
+
+        //计算策略回撤的相关信息
+        traceBackVO.maxTraceBackVO = maxRetracement(traceBackVO.strategyCumulativeReturn, baseCumulativeReturn);
 
         // 计算持仓详情的基准收益率和超额收益率
         traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
@@ -134,7 +134,7 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     private List<StrategyStock> convertStockPOS(List<StockPO> pos) {
-        List<StrategyStock> result = new LinkedList<>();
+        StrategyStockList result = new StrategyStockList();
         for (StockPO thisPO : pos) {
             result.add(new StrategyStock(thisPO));
         }
@@ -179,10 +179,15 @@ public class TraceBackServiceImpl implements TraceBackService {
         int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;
         int initFormativePeriod = traceBackCriteriaVO.formativePeriod;
 
-        for (int i = 2; i <= 10; i = i + 2) {
+        for (int i = 2; i <= 50; i = i + 1) {
             ExcessAndWinRateDistVO excessAndWinRateDistVO = new ExcessAndWinRateDistVO();
             //给定形成期
             if (certainFormate) {
+                //持有期太大，不能形成一个周期
+                if((initHoldingPeriod * i) > baseCumulativeReturn.size() )
+                {
+                    break;
+                }
                 //新的持有期
                 traceBackCriteriaVO.holdingPeriod = initHoldingPeriod * i;
             }
@@ -272,7 +277,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         returnPeriodVO.negativePeriodNum = negativePeriodNum;
         returnPeriodVO.positiveNums = positiveNums;
         returnPeriodVO.negativeNums = negativeNums;
-        returnPeriodVO.winRate = positivePeriodsNum / holdingDetailVOS.size();
+        returnPeriodVO.winRate = ((double)positivePeriodsNum) / holdingDetailVOS.size();
 
         return returnPeriodVO;
     }
@@ -328,7 +333,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         returnPeriodVO.negativePeriodNum = negativePeriodNum;
         returnPeriodVO.positiveNums = positiveNums;
         returnPeriodVO.negativeNums = negativeNums;
-        returnPeriodVO.winRate = positivePeriodsNum / holdingDetailVOS.size();
+        returnPeriodVO.winRate = ((double)positivePeriodsNum) / holdingDetailVOS.size();
 
         return returnPeriodVO;
     }
@@ -444,9 +449,10 @@ public class TraceBackServiceImpl implements TraceBackService {
             double totalCumulativeReturn = 0;
             int notSuspend = 0;
             for(int j = 0; j < baseStockPool.size(); j++){
-                vo = findStockCertainDay(baseStockPool.get(j), temp);
+                int index = baseStockData.get(baseStockPool.get(j)).indexOf(temp);
                 //当天有数据
-                if(null != vo){
+                if(-1 != index){
+                    vo = baseStockData.get(baseStockPool.get(j)).get(index);
                     totalCumulativeReturn += (vo.close/vo.preClose - 1);
                     notSuspend += 1;
                 }
@@ -465,27 +471,6 @@ public class TraceBackServiceImpl implements TraceBackService {
         cumulativeReturnVOS.get(0).cumulativeReturn = 0;
 
         return cumulativeReturnVOS;
-    }
-
-
-    public TraceBackNumValVO getNumericalVal(TraceBackCriteriaVO traceBackCriteriaVO) {
-
-        TraceBackParameter parameter = null;
-//        try {
-//            parameter = new TraceBackParameter(traceBackCriteriaVO);
-//        } catch (CodeNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (DateNotWithinException e) {
-//            e.printStackTrace();
-//        } catch (NoDataWithinException e) {
-//            e.printStackTrace();
-//        } catch (DateShortException e) {
-//            e.printStackTrace();
-//        }
-
-        return null;
     }
 
     /**
@@ -526,22 +511,57 @@ public class TraceBackServiceImpl implements TraceBackService {
         return cumulativeReturnVOS;
     }
 
+    /**
+     * 计算最大回撤点
+     *
+     * @param strategyCumulativeReturn 未计算最大回撤的基准累计收益率
+     * @param baseCumulativeReturn 未计算回撤的策略累计收益率
+     * @return MaxTraceBackVO 记录基准和策略最大回撤信息的载体
+     */
+    public MaxTraceBackVO maxRetracement(List<CumulativeReturnVO> strategyCumulativeReturn, List<CumulativeReturnVO> baseCumulativeReturn) {
 
-    private StrategyStock findStockCertainDay(String stockCode, LocalDate date){
-        LocalDate thisDate = date;
+        MaxTraceBackVO maxTraceBackVO = new MaxTraceBackVO();
 
-        List<StrategyStock> stockVOList = baseStockData.get(stockCode);
-        List<LocalDate> dates = new ArrayList<>();
-        for(int j = 0; j < stockVOList.size(); j++){
-            dates.add(stockVOList.get(j).date);
+        //TODO gcm 用了两个循环，不知道怎么改进算法，你们可以帮下忙
+
+        //回撤点的峰值在list中的位置
+        int strategyTop = 0;
+        //回撤点的谷值在list中的位置
+        int strategyDown = 0;
+
+        //将第一个位置默认为最大回撤值点
+        strategyCumulativeReturn.get(0).isTraceBack = true;
+        baseCumulativeReturn.get(0).isTraceBack = true;
+
+        double strategyMax = 0;
+        double baseMax = 0;
+
+        for (int i = 0; i < strategyCumulativeReturn.size(); i++) {
+            for (int j = i + 1; j < strategyCumulativeReturn.size(); j++) {
+                double strategyDiff = strategyCumulativeReturn.get(i).cumulativeReturn - strategyCumulativeReturn.get(j).cumulativeReturn;
+                double baseDiff = baseCumulativeReturn.get(i).cumulativeReturn - baseCumulativeReturn.get(j).cumulativeReturn;
+                if (strategyMax < strategyDiff) {
+                    //重新设置最大回撤点
+                    strategyCumulativeReturn.get(strategyTop).isTraceBack = false;
+                    strategyCumulativeReturn.get(strategyDown).isTraceBack = false;
+                    strategyTop = i;
+                    strategyDown = j;
+                    strategyCumulativeReturn.get(strategyTop).isTraceBack = true;
+                    strategyCumulativeReturn.get(strategyDown).isTraceBack = true;
+                    strategyMax = strategyDiff;
+                }
+                baseMax = baseMax < baseDiff ? baseDiff : baseMax;
+            }
         }
 
-        int dateIndex = dates.indexOf(thisDate);
 
-        //该股票当天没有数据
-        if(dateIndex == -1){
-            return null;
-        }
-        return stockVOList.get(dateIndex);
+        maxTraceBackVO.maxBaseTraceBackRate = baseMax;
+        maxTraceBackVO.maxStrategyTraceBackRate = strategyMax;
+        maxTraceBackVO.maxStartIndex = strategyTop;
+        maxTraceBackVO.maxEndIndex = strategyDown;
+        maxTraceBackVO.maxStartDay = strategyCumulativeReturn.get(strategyTop).currentDate;
+        maxTraceBackVO.maxEndDay = strategyCumulativeReturn.get(strategyDown).currentDate;
+
+        return maxTraceBackVO;
     }
 }

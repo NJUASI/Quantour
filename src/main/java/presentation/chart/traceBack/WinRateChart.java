@@ -1,5 +1,6 @@
 package presentation.chart.traceBack;
 
+import javafx.scene.chart.NumberAxis;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -37,6 +38,7 @@ public class WinRateChart {
             categories[i] = certainFormates.get(i).relativeCycle + "";
             if (type == 1) {
                 rates[i] = certainFormates.get(i).excessRate;
+
             } else {
                 rates[i] = certainFormates.get(i).winRate;
             }
@@ -68,7 +70,6 @@ public class WinRateChart {
         plot.setForegroundAlpha(0.9f);
         plot.getRenderer().setSeriesPaint(0, ColorUtils.linkColor());
         chart.getLegend().setVisible(false);
-
     }
 
 }

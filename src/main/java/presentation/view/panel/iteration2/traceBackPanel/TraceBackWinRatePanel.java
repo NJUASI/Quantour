@@ -131,6 +131,8 @@ public class TraceBackWinRatePanel extends TemplatePanel {
         }
     }
     private void openGroup1(){
+        traceBackWinTable.setVisible(true);
+        traceBackWinTable2.setVisible(false);
         chartPanel1.setVisible(true);
         chartPanel2.setVisible(true);
         label.setVisible(true);
@@ -138,6 +140,8 @@ public class TraceBackWinRatePanel extends TemplatePanel {
         chartPanel4.setVisible(false);
     }
     private void openGroup2(){
+        traceBackWinTable2.setVisible(true);
+        traceBackWinTable.setVisible(false);
         chartPanel1.setVisible(false);
         chartPanel2.setVisible(false);
         label.setVisible(true);

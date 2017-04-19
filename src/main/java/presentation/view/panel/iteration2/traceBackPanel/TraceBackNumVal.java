@@ -4,6 +4,7 @@ import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
+import vo.MaxTraceBackVO;
 import vo.TraceBackNumValVO;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class TraceBackNumVal  extends JScrollPane {
 
     int height;
 
-    public TraceBackNumVal(TraceBackNumValVO traceBackNumValVO){
+    public TraceBackNumVal(TraceBackNumValVO traceBackNumValVO, MaxTraceBackVO maxTraceBackVO){
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
@@ -34,7 +35,7 @@ public class TraceBackNumVal  extends JScrollPane {
 
 //        try {
         try {
-            jTable = new JTable(new TraceBackNumModel(traceBackNumValVO));
+            jTable = new JTable(new TraceBackNumModel(traceBackNumValVO,maxTraceBackVO));
         } catch (IOException e) {
             e.printStackTrace();
         }

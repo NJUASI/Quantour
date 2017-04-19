@@ -39,7 +39,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
             }
             periodJudge = allDatesWithData.get(allDatesWithData.indexOf(periodStart) - 1);
 
-            int neededMRStockIndex = findStockWithEspecialDate(thisStockData, periodJudge);
+            int neededMRStockIndex = thisStockData.indexOf(periodJudge);
             // 此股票没有这一天的数据，则不参与形成
             if (neededMRStockIndex == -1) {
                 continue;
@@ -90,24 +90,6 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
         return min;
     }
 
-
-    /**
-     * @param stocks       股票池
-     * @param especialDate 指定日期
-     * @return 池中指定日期的MRStock序号，没有返回-1
-     */
-    private int findStockWithEspecialDate(List<StrategyStock> stocks, LocalDate especialDate) {
-        int index = 0;
-        for (; index < stocks.size(); index++) {
-            StrategyStock thisStock = stocks.get(index);
-            if (thisStock.date.isEqual(especialDate)) {
-                return index;
-            }
-            if (thisStock.date.isAfter(especialDate)) break;
-        }
-        return -1;
-    }
-
     /**
      * @param dataList 需要计算的数据集合
      * @return 数据的平均值
@@ -115,7 +97,7 @@ public class MeanReversionStrategy extends AllTraceBackStrategy {
     private double calculateAve(List<StrategyStock> dataList) {
         double sum = 0;
         for (StrategyStock stock : dataList) {
-            sum += stock.close;
+            sum += stock.adjClose;
         }
         return sum / dataList.size();
     }
