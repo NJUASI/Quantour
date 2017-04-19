@@ -25,7 +25,7 @@ public class PrivateStockPool {
 
     private PrivateStockPool() throws IOException, PrivateStockNotFoundException {
         privatePool = new HashMap<>();
-        privatePool.put("000001","1231");
+//        privatePool.put("000001","1231");
     }
 
     public static PrivateStockPool getInstance() throws IOException, PrivateStockNotFoundException {

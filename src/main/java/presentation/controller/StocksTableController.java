@@ -15,6 +15,7 @@ import utilities.exceptions.PrivateStockNotFoundException;
 import vo.PriceRiseOrFallVO;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -65,7 +66,8 @@ public class StocksTableController {
         return stocksTableController;
     }
 
-
+    int width ;
+    int height ;
     /**
      * Search. 选定日期，搜索列表
      */
@@ -73,8 +75,8 @@ public class StocksTableController {
     public void search() {
 
         WindowData windowData = WindowData.getInstance();
-        int width = windowData.getWidth();
-        int height = windowData.getHeight();
+        width = windowData.getWidth();
+        height = windowData.getHeight();
 
 
         if (stocksTablePane != null) {
@@ -91,7 +93,7 @@ public class StocksTableController {
         int num[]=null;
         try {
             stocksTablePane = new MyTable(stocksTablePanel.getChooseDate());
-            stocksTablePane.setBounds(460 , 75 ,1300,750);
+            stocksTablePane.setBounds(adaptScreen(460 , 75 ,1300,750));
             if(stocksTablePane!=null) {
                 stocksTablePanel.add(stocksTablePane);
                 stocksTablePane.repaint();
@@ -149,4 +151,17 @@ public class StocksTableController {
         stockService.addPrivateStock(IDReserve.getInstance().getUserID(),stocksTablePane.getCode());
         StocksTablePanel.getInstance().popUp(stocksTablePane.getCode()+" 添加成功！");
     }
+
+    /**
+     * 适应不同大小的屏幕
+     *
+     * @param
+     * @return
+     * @author 61990
+     * @updateTime 2017/3/7
+     */
+    public Rectangle adaptScreen(int x,int y,int width,int height){
+        return new Rectangle(this.width*x/1920,this.height*y/1030,this.width*width/1920,this.height*height/1030);
+    }
+
 }
