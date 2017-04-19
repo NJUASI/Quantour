@@ -23,7 +23,7 @@ public class DeleteFavoriteListener extends MouseAdapter {
         } catch (PrivateStockNotFoundException e1) {
             new PopUpFrame(e1.getMessage());
         }  catch (Exception e2){
-            new PopUpFrame("没有自选股");
+//            new PopUpFrame("没有自选股");
         }
     }
 }

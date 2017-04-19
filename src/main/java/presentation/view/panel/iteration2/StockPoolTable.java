@@ -49,6 +49,7 @@ public class StockPoolTable extends JScrollPane {
         jTable.setShowVerticalLines(true);//是否显示垂直的网格线
         jTable.setBackground(ColorUtils.backgroundColor());
         jTable.setForeground(ColorUtils.fontColor());
+        if(jTable.getRowCount()!=0)
         jTable.setRowSelectionInterval(0, 0);
         jTable.setGridColor(ColorUtils.divideColor());
         jTable.setBorder(BorderFactory.createEmptyBorder());
