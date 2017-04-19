@@ -7,8 +7,11 @@ package utilities.enums;
  */
 public enum PickType {
 
-    RANK_Max_Percent("排名%最大"),
-    RANK_Max("排名最大");
+    RANK_MAX_PERCENT("排名%最大"),
+    RANK_MIN_PERCENT("排名%最小"),
+    RANK_MAX("排名最大"),
+    RANK_MIN("排名最小");
+
 
     private String repre;
 

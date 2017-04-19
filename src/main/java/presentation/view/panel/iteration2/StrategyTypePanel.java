@@ -62,6 +62,7 @@ public class StrategyTypePanel extends TemplatePanel {
         typeComboBox.setBounds(adaptScreen(250,100,120,35));
         typeComboBox.addItem("涨幅");
         typeComboBox.addItem("乖离率");
+        typeComboBox.addItem("成交量");
         typeComboBox.setEditable(false);
         typeComboBox.setToolTipText((String)createComboBox.getItemAt(0));
         add(typeComboBox);
@@ -74,6 +75,8 @@ public class StrategyTypePanel extends TemplatePanel {
         chooseComboBox.setBounds(adaptScreen(455,100,140,35));
         chooseComboBox.addItem("排名最大");
         chooseComboBox.addItem("排名%最大");
+        chooseComboBox.addItem("排名最小");
+        chooseComboBox.addItem("排名%最小");
         chooseComboBox.setEditable(false);
         chooseComboBox.setToolTipText((String)createComboBox.getItemAt(0));
         add(chooseComboBox);
@@ -125,7 +128,7 @@ public class StrategyTypePanel extends TemplatePanel {
     }
 
     public FormateAndPickVO getFormateAndPickVO(){
-      return new FormateAndPickVO(  FormateType.getEnum(typeComboBox.getSelectedItem().toString()),
+      return new FormateAndPickVO( FormateType.getEnum(typeComboBox.getSelectedItem().toString()),
         PickType.getEnum(chooseComboBox.getSelectedItem().toString()),
         Integer.parseInt(rank.getText()));
     }
