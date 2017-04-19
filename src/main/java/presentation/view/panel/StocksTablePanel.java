@@ -37,7 +37,7 @@ public class StocksTablePanel extends TemplatePanel {
     SingleDatePickerPanel datePickerPanel;
     public JLabel label;
     public JButton search;
-    public JLabel message,title,notFound;
+    public JLabel message,title,notFound,success;
     /**
      * 股票列表面板构造器
      *
@@ -64,12 +64,17 @@ public class StocksTablePanel extends TemplatePanel {
         search.addMouseListener(new SearchListener());
         add(search);
 
+        success=new MyLabel("",19) ;
+        success.setBounds(adaptScreen(1150,870,210,35));
+        success.setVisible(false);
+        add(success);
+
         JButton importData= new MyButton("加入收藏");
         importData.setBounds(adaptScreen(1550,870,110,35));
         importData.addMouseListener(new AddFavoriteListener());
         add(importData);
 
-        title=new MyLabel("   市 场 行 情",23) ;
+        title=new MyLabel("   市 场 行 情",22) ;
         title.setBounds(adaptScreen(460,80-40,1300,35));
         title.setBackground(ColorUtils.titleBgColor());
         title.setOpaque(true);
@@ -101,10 +106,13 @@ public class StocksTablePanel extends TemplatePanel {
         label.setOpaque(true);
         add(label);
 
-
-
     }
 
+    public void popUp(String str){
+        success.setText(str);
+        success.setVisible(true);
+        repaint();
+    }
     /**
      * 单件模式
      *
@@ -119,6 +127,7 @@ public class StocksTablePanel extends TemplatePanel {
         }
         return stocksTablePanel;
     }
+
 
     /**
      * 获取选择的日期

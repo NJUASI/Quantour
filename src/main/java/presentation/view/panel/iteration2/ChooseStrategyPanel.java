@@ -8,8 +8,8 @@ import presentation.view.tools.component.MyButton;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
 import utilities.enums.FormateType;
+import utilities.enums.PickType;
 import vo.FormateAndPickVO;
-import vo.FormativePeriodRateVO;
 import vo.TraceBackCriteriaVO;
 
 import javax.swing.*;
@@ -24,8 +24,7 @@ import java.awt.event.MouseEvent;
 
 public class ChooseStrategyPanel extends TemplatePanel {
     private static ChooseStrategyPanel chooseStrategyPanel;
-    JRadioButton radioButton1,radioButton2;
-    ButtonGroup group;
+
 
     DoubleDatePickerPanel datePanel;
     StrategyTypePanel strategyTypePanel;
@@ -95,34 +94,6 @@ public class ChooseStrategyPanel extends TemplatePanel {
         block3title.setOpaque(true);
         add(block3title);
 
-        radioButton1 = new JRadioButton("动量策略");// 创建单选按钮
-        radioButton1.setBounds(adaptScreen(250,550+150,150,40));
-        add(radioButton1);// 策略1按钮
-        radioButton1.setBackground(color);
-        radioButton1.setForeground(Color.WHITE);
-        radioButton1.setSelected(true);
-        radioButton1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                strategyTypePanel.openType1();
-            }
-        });
-
-        radioButton2 = new JRadioButton("均值回归");// 创建单选按钮
-        radioButton2.setBounds(adaptScreen(250,590+150,150,40));
-        radioButton2.setBackground(color);
-        radioButton2.setForeground(Color.WHITE);
-        radioButton2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                strategyTypePanel.openType2();
-            }
-        });
-        add(radioButton2);// 策略2按钮
-
-        group = new ButtonGroup();// 创建单选按钮组
-        group.add(radioButton1);// 将radioButton1增加到单选按钮组中
-        group.add(radioButton2);// 将radioButton2增加到单选按钮组中
 
         strategyTypePanel=new StrategyTypePanel();
         add(strategyTypePanel);
@@ -230,14 +201,6 @@ public class ChooseStrategyPanel extends TemplatePanel {
         return chooseStrategyPanel;
     }
 
-    public String getStrategyType(){
-        if(radioButton1.isSelected()){
-            return "动量策略";
-        }else{
-            return "均值回归";
-        }
-
-    }
 
    public void refreshTabel(){
         strategyPoolPanel.refreshTabel();
@@ -254,20 +217,10 @@ public class ChooseStrategyPanel extends TemplatePanel {
     public TraceBackCriteriaVO getInfo(){
         int formative;
 
-        FormateAndPickVO formateAndPickVO = new FormateAndPickVO();
-        if(radioButton1.isSelected()){
-            formative=strategyTypePanel.getMS();
-            formateAndPickVO.formateType = FormateType.INCEREASE_AMOUNT;
-        }else{
-            formative=strategyTypePanel.getMR();
-            formateAndPickVO.formateType = FormateType.BIAS;
-        }
-        //TODO gy 这里需要设置挑选的类型， 是绝对排名还是区间排名
-//        formateAndPickVO.pickType = null;
-        formateAndPickVO.rank = strategyTypePanel.getHoldingNum();
+        formative=strategyTypePanel.getCreatePeriod();
 
         return new TraceBackCriteriaVO(datePanel.getStartDate(),datePanel.getEndDate(),formative,strategyTypePanel.getHoldingPeriod(),
-               strategyPoolPanel.getPoolVO(),getBasicStock(), strategyPoolPanel.getIsCustomized(), formateAndPickVO);
+               strategyPoolPanel.getPoolVO(),getBasicStock(), strategyPoolPanel.getIsCustomized(), strategyTypePanel.getFormateAndPickVO());
     }
 
     public String getBasicStock(){
