@@ -68,4 +68,17 @@ public class TraceBackCriteriaVO {
         this.isCustomized = isCustomized;
         this.formateAndPickVO = formateAndPickVO;
     }
+
+
+    public TraceBackCriteriaVO(TraceBackCriteriaVO vo) {
+        this.startDate = vo.startDate;
+        this.endDate = vo.endDate;
+        this.formativePeriod = vo.formativePeriod;
+        this.holdingPeriod = vo.holdingPeriod;
+        this.stockPoolVO = vo.stockPoolVO;
+//        this.holdingNum = holdingNum;
+        this.baseStockName = vo.baseStockName;
+        this.isCustomized = vo.isCustomized;
+        this.formateAndPickVO = vo.formateAndPickVO;
+    }
 }

@@ -103,12 +103,19 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         System.err.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
+        // 提前保存TraceBackCriteriaVO，以便后续固定持有期计算形成期时使用
+        TraceBackCriteriaVO criteriaVOToHold = new TraceBackCriteriaVO(traceBackCriteriaVO);
+
         // 计算超额收益率/策略胜率，给定持有期/形成期
         traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO);
         System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
 
+//        System.out.println("--------------------------------");
+//        System.out.println(traceBackCriteriaVO.formativePeriod +  "    " + traceBackCriteriaVO.holdingPeriod);
+//        System.out.println(criteriaVOToHold.formativePeriod +  "    " + criteriaVOToHold.holdingPeriod);
+//        System.out.println("--------------------------------");
 
-        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO);
+        traceBackVO.certainHoldings = findFormateWithCertainHolding(criteriaVOToHold);
         System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等
@@ -164,7 +171,6 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, boolean certainFormate) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
-
         List<ExcessAndWinRateDistVO> certainHoldings = new ArrayList<>();
         int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;
         int initFormativePeriod = traceBackCriteriaVO.formativePeriod;
@@ -180,13 +186,13 @@ public class TraceBackServiceImpl implements TraceBackService {
                 }
                 //新的持有期
                 traceBackCriteriaVO.holdingPeriod = initHoldingPeriod * i;
-                System.err.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
+                System.out.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
             }
             //给定持有期
             else {
                 //新的形成期
                 traceBackCriteriaVO.formativePeriod = initFormativePeriod * i;
-                System.err.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
+                System.out.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
             }
 
             TraceBackVO traceBackVO = new TraceBackVO();
