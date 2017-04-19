@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
+import presentation.view.tools.ColorUtils;
 import presentation.view.tools.WindowData;
 
 
@@ -52,7 +53,7 @@ public class DoubleDatePickerPanel  extends JFXPanel {
         setLayout(null);
         width= WindowData.getInstance().getWidth();
         height= WindowData.getInstance().getHeight();
-        setBackground(new Color(55,60,56));
+        setBackground(ColorUtils.backgroundColor());
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

@@ -68,11 +68,11 @@ public class MultiComboBox extends TemplatePanel {
 
         editor = new MyTextField();
         editor.setEditable(false);
-        editor.setBounds(adaptScreen(0, 0, 190, 35));
+        editor.setBounds(adaptScreen(0, 0, 195, 35));
         editor.addMouseListener(new EditorHandler());
 
         arrowButton = new MyCustomizedButton("arrowBt",2);
-        arrowButton.setBounds(adaptScreen(190, 0, 35, 35));
+        arrowButton.setBounds(adaptScreen(195, 0, 35, 35));
         arrowButton.addMouseListener(new EditorHandler());
         add(editor);
         add(arrowButton);

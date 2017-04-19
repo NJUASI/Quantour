@@ -25,6 +25,7 @@ public class FileImportPanel extends TemplatePanel {
     ButtonGroup group;
     JLabel label;
     Thread thread;
+    public int count=0;
     public FileImportPanel() {
         width = WindowData.getInstance().getWidth();
         height = WindowData.getInstance().getHeight();
@@ -42,8 +43,9 @@ public class FileImportPanel extends TemplatePanel {
         add(radioButton1);
         radioButton1.setBackground(color);
         radioButton1.setForeground(Color.WHITE);
-        radioButton1.setSelected(true);
+        radioButton1.setSelected(false);
         radioButton1.addMouseListener(new ChangeNetPath());
+
 
         radioButton2 = new JRadioButton("本地数据源");
         radioButton2.setBounds(adaptScreen(50+10,145,150,40));
@@ -127,10 +129,18 @@ public class FileImportPanel extends TemplatePanel {
         radioButton1.setSelected(true);
         radioButton2.setSelected(false);
         radioButton2.setEnabled(false);
+        count=0;
     }
     public void FoundDate(){
         radioButton1.setSelected(true);
         radioButton2.setSelected(false);
         radioButton2.setEnabled(true);
+        count=1;
+    }
+    public void setFound(){
+        radioButton1.setSelected(false);
+        radioButton2.setSelected(true);
+        radioButton2.setEnabled(true);
+        count=1;
     }
 }

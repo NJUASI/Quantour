@@ -42,7 +42,7 @@ public class CompareChartPanel extends JPanel {
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
-        setBounds(adaptScreen(0, 130, 1830, 990));
+        setBounds(adaptScreen(60, 110, 1920-250, 1030-240));
         setLayout(null);
         JTabbedPane tab = new JTabbedPane(JTabbedPane.TOP);
 

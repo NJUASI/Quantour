@@ -35,6 +35,11 @@ public class ThermometerPanel extends TemplatePanel {
     public ThermometerPanel(int[] num, double volume) {
         setSize(new Dimension(360*WindowData.getInstance().getWidth()/1920,537*WindowData.getInstance().getHeight()/1030));
 
+        JLabel lb2=new JLabel();
+        lb2.setBounds(adaptScreen(0,0,360,45));
+        lb2.setOpaque(true);
+        lb2.setBackground(new Color(21,23,27));
+        add(lb2);
 
         label11=new MyLabel(num[0]+"");
         label11.setBounds(adaptScreen(80,55+move,50,30));
