@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
                 throw new PasswordWrongException();
             }
             else{
-                return userDao.logIn(userName);
+                return true;
             }
         }
     }

@@ -45,17 +45,6 @@ public interface UserDao {
      boolean modify(UserPO userPO);
 
     /**
-     * 记录用户登录信息
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/6
-     * @param userName 用户名称
-     * @return 是否登录
-     */
-    boolean logIn(String userName);
-
-    /**
      * 获取已存在的所有用户名称
      *
      * @author Harvey
