@@ -17,6 +17,6 @@ public class DraggedTrasferable extends StringSelection {
     }
 
     public DraggedTrasferable(String code, String name){
-        super(code+" "+name);
+        super(code+","+name);
     }
 }

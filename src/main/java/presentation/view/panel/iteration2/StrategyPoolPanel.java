@@ -117,39 +117,26 @@ public class StrategyPoolPanel  extends TemplatePanel {
             remove(label);
             remove(message);
         }
-        try {
 
-            stockPoolTable=new StockPoolTable();
-            stockPoolTable.setBounds(adaptScreen(420,20,300,200));
 
-            label = new JLabel();
-            label.setBounds(420 * width / 1920, (20+30*(stockPoolTable.jTable.getRowCount()+1)) * height / 1030, 300* width / 1920 , 200* height / 1030);
-            label.setBorder(BorderFactory.createEmptyBorder());
-            label.setBackground( new Color(35,39,44));
-            label.setForeground(Color.WHITE);
-            label.setOpaque(true);
-            label.setVisible(true);
-            add(label);
-            add(stockPoolTable);
-            if(radioButton1.isSelected()){
-                stockPoolTable.setVisible(false);
-                message.setVisible(false);
-            }
+        stockPoolTable=new StockPoolTable();
+        stockPoolTable.setBounds(adaptScreen(420,20,300,200));
 
-            repaint();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (PrivateStockNotFoundException e) {
-            e.printStackTrace();
-            new PopUpFrame(e.getMessage());
-            //TODO 高源后期添加
-        } catch (PrivatePoolIsNullException e) {
-            if(radioButton1.isSelected()) {
-                message.setVisible(false);
-            }else{
-                message.setVisible(true);
-            }
+        label = new JLabel();
+        label.setBounds(420 * width / 1920, (20+30*(stockPoolTable.jTable.getRowCount()+1)) * height / 1030, 300* width / 1920 , 200* height / 1030);
+        label.setBorder(BorderFactory.createEmptyBorder());
+        label.setBackground( new Color(35,39,44));
+        label.setForeground(Color.WHITE);
+        label.setOpaque(true);
+        label.setVisible(true);
+        add(label);
+        add(stockPoolTable);
+        if(radioButton1.isSelected()){
+            stockPoolTable.setVisible(false);
+            message.setVisible(false);
         }
+
+        repaint();
     }
     public void openPool1(){
         mulit.setVisible(true);

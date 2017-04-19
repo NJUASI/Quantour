@@ -4,13 +4,10 @@ import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
-import utilities.exceptions.PrivatePoolIsNullException;
-import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.io.IOException;
 
 /**
  * Created by 61990 on 2017/4/17.

@@ -53,6 +53,7 @@ public class StocksTablePane extends JScrollPane {
             }
 
             jTable.setRowSelectionAllowed(true);//设置可否被选择
+//            jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             jTable.setSelectionBackground(ColorUtils.tableSelectedColor());//设置所选择行的背景色
             jTable.setSelectionForeground(ColorUtils.fontColor());//设置所选择行的前景色
 
@@ -94,6 +95,7 @@ public class StocksTablePane extends JScrollPane {
             setViewportView(jTable);
 
             jTable.addMouseListener(new MyMouseListener());
+            //源
             DragSource dragSource = DragSource.getDefaultDragSource();
             dragSource.createDefaultDragGestureRecognizer(jTable, DnDConstants.ACTION_COPY_OR_MOVE, new DragGestureListener() {
                 public void dragGestureRecognized(DragGestureEvent event)

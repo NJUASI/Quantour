@@ -7,6 +7,8 @@ import presentation.listener.stocksTablePanelListener.DetailOfCodeListener;
 import presentation.listener.stocksTablePanelListener.SearchListener;
 import presentation.view.frame.MainFrame;
 //import presentation.view.panel.iteration2.StockPoolTable;
+import presentation.view.panel.iteration2.ChooseStrategyPanel;
+import presentation.view.panel.iteration2.stockPool.PrivateStockPool;
 import presentation.view.panel.iteration2.stockPool.StockPoolTable;
 import presentation.view.tools.*;
 import presentation.view.tools.component.MyButton;
@@ -17,7 +19,12 @@ import utilities.exceptions.PrivateStockNotFoundException;
 
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -113,8 +120,6 @@ public class StocksTablePanel extends TemplatePanel {
         label.setForeground(Color.WHITE);
         label.setOpaque(true);
         add(label);
-
-
         refreshTabel();
     }
 
@@ -179,6 +184,60 @@ public class StocksTablePanel extends TemplatePanel {
         repaint();
         stockPoolTable = new StockPoolTable();
         stockPoolTable.setBounds(adaptScreen(0, 35, 360, 200));
+
+        //将tb2做为拖放目标
+        new DropTarget(stockPoolTable, DnDConstants.ACTION_COPY,new DropTargetAdapter()
+        {
+            @Override
+            public  void drop(DropTargetDropEvent event)
+            {
+                try
+                {
+                    System.out.println("enter");
+                    event.acceptDrop(DnDConstants.ACTION_COPY);
+                    Transferable transferable = event.getTransferable();
+                    DataFlavor[] flavors = transferable.getTransferDataFlavors();
+                    //这里简单起见就取0号，
+                    DataFlavor data = flavors[0];
+                    String s = (String)transferable.getTransferData(data);
+                    String[] codeAndName = s.split(",");
+
+                    System.out.println(s);
+                    //获得当前鼠标所在的行、列
+                    PrivateStockPool.getInstance().add(codeAndName[0],codeAndName[1]);
+                    refreshTabel();
+                    ChooseStrategyPanel.getInstance().refreshTabel();
+                    //免得阻塞进程
+                    event.dropComplete(true);
+                }
+                catch (Exception e)
+                {
+                    event.dropComplete(true);
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //源
+        DragSource dragSource = DragSource.getDefaultDragSource();
+        dragSource.createDefaultDragGestureRecognizer(stockPoolTable.jTable, DnDConstants.ACTION_COPY_OR_MOVE, new DragGestureListener() {
+            public void dragGestureRecognized(DragGestureEvent event)
+            {
+                //当前选择中单元格的内容
+                TableModel tableModel = stockPoolTable.jTable.getModel();
+                int row = stockPoolTable.jTable.getSelectedRow();
+                String code = (String)tableModel.getValueAt(row,0);
+                //这里做的假的
+                PrivateStockPool.getInstance().remove(code);
+                refreshTabel();
+                ChooseStrategyPanel.getInstance().refreshTabel();
+                Transferable transferable = new StringSelection(code);
+                event.startDrag(
+                        DragSource.DefaultCopyDrop,
+                        transferable);
+
+            }
+        });
 
         bgLabel = new JLabel();
         bgLabel.setBounds(0 * width / 1920, (35 + 30 * (stockPoolTable.jTable.getRowCount() + 1)) * height / 1030, 360 * width / 1920, 200 * height / 1030);
