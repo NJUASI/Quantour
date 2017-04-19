@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
         createWindow();
         setLayout(null);
 
-        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo1.png"));
+        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
         setIconImage(bgPicture.getImage());
 
         barPanel =  NavigationBar.getInstance();
@@ -79,6 +79,7 @@ public class MainFrame extends JFrame {
         height=WindowData.getInstance().getHeight();
         setSize(width,height);
 
+        //todo fjjjj
 //        setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

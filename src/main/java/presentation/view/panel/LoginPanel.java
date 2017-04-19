@@ -46,6 +46,7 @@ public class LoginPanel extends TemplatePanel {
         //to write your message
 //        admin = new JTextField("Enter your admin");
 
+        // TODO jjjj
         admin = new JTextField("Guest");
         admin.setCaretPosition(admin.getText().length());
         admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
@@ -54,7 +55,7 @@ public class LoginPanel extends TemplatePanel {
         admin.setVisible(true);
         add(admin);
 
-        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo2.png"));
+        ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
         JLabel logo1 =new JLabel();
         bgPicture.setImage(bgPicture.getImage().getScaledInstance(120*width/1920, 120*height/1130, Image.SCALE_DEFAULT ));
         logo1.setIcon(bgPicture);

@@ -1,5 +1,6 @@
 package service.serviceImpl;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -58,7 +59,7 @@ public class ChartServiceImplTest {
      */
     @Test
     public void testGetAveDataForChartShowCriteriaVODays() throws Exception {
-        ChartShowCriteriaVO vo = new ChartShowCriteriaVO("1",LocalDate.of(2012,2,1),LocalDate.of(2012,3,20));
+        ChartShowCriteriaVO vo = new ChartShowCriteriaVO("000001",LocalDate.of(2012,2,1),LocalDate.of(2012,3,20));
         List<MovingAverageType> days = new ArrayList<>();
         days.add(MovingAverageType.MA5);
         days.add(MovingAverageType.MA10);
@@ -89,8 +90,8 @@ public class ChartServiceImplTest {
      */
     @Test
     public void testGetComparision() throws Exception {
-        List<StockComparisionVO> result = service.getComparision(new StockComparsionCriteriaVO("1",
-                "10", LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 10)));
+        List<StockComparisionVO> result = service.getComparision(new StockComparsionCriteriaVO("000001",
+                "000010", LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 10)));
         StockComparisionVO vo1 = result.get(0);
         StockComparisionVO vo2 = result.get(1);
 

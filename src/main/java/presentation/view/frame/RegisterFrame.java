@@ -41,10 +41,11 @@ public class RegisterFrame extends JFrame {
     void createWindow() {
 
         setTitle("注册");
-        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo1.png"));
+        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
         setIconImage(bgPicture.getImage());
 
         setLayout(null);
+        //todo fjj
 //        setUndecorated(true);
         int width=WindowData.getInstance().getWidth();
         int height=WindowData.getInstance().getHeight();

@@ -1,6 +1,7 @@
 package dataHelper.dataHelperImpl;
 
 import dataHelper.PrivateStockDataHelper;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -32,6 +33,7 @@ public class PrivateStockDataHelperImplTest {
     /**
      * Method: getPrivateStockCode(String userName)
      */
+    @Ignore
     @Test
     public void testGetPrivateStockCode() throws Exception {
         List<String> result = dataHelper.getPrivateStockCode("Guest");

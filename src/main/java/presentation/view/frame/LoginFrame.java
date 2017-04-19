@@ -45,10 +45,12 @@ public class LoginFrame extends JFrame {
 
         setTitle("登录");
 
-        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo1.png"));
+        ImageIcon bgPicture =new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
         setIconImage(bgPicture.getImage());
 
         setLayout(new BorderLayout(0, 0));
+
+        // TODO jjj
 //        setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());

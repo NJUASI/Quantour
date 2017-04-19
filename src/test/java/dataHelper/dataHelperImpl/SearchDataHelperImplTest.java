@@ -35,6 +35,7 @@ public class SearchDataHelperImplTest {
         assertEquals(7, result.size());
     }
 
+    @Ignore
     @Test
     public void getAllStocksFirstLetters() throws Exception {
         List<StockSearchPO> result = searchDataHelper.getAllStocksFirstLetters();
