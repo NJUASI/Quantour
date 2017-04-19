@@ -100,24 +100,21 @@ public class TraceBackServiceImpl implements TraceBackService {
         // 计算持仓详情的基准收益率和超额收益率
         traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
 
-        // 计算绝对收益周期
-        traceBackVO.absoluteReturnPeriodVO = countAbsoluteReturnPeriod(traceBackVO.holdingDetailVOS);
+        // 计算绝对收益周期和相对收益周期
+        traceBackVO.absoluteReturnPeriodVO = countReturnPeriod(traceBackVO.holdingDetailVOS, true);
+        traceBackVO.relativeReturnPeriodVO = countReturnPeriod(traceBackVO.holdingDetailVOS, false);
 
-        // 计算相对收益周期
-        traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
-
-        System.out.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
+        System.err.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // 计算超额收益率/策略胜率，给定持有期/形成期
         traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO, stockPool);
-
         System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
 
-        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
 
+        traceBackVO.certainHoldings = findFormateWithCertainHolding(traceBackCriteriaVO, stockPool);
         System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
-        // TraceBackParameter 计算贝塔系数等 b
+        // TraceBackParameter 计算贝塔系数等
         TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO,stockData, traceBackStockPool);
         return traceBackParameter.getTraceBackVO();
 
@@ -209,7 +206,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
             traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
             //计算相对收益周期
-            traceBackVO.relativeReturnPeriodVO = countRelativeReturnPeriod(traceBackVO.holdingDetailVOS);
+            traceBackVO.relativeReturnPeriodVO = countReturnPeriod(traceBackVO.holdingDetailVOS, false);
 
             //相对强弱计算周期
             excessAndWinRateDistVO.relativeCycle = i;
@@ -224,118 +221,6 @@ public class TraceBackServiceImpl implements TraceBackService {
         }
 
         return certainHoldings;
-    }
-
-    /**
-     * 计算绝对收益周期
-     *
-     * @param holdingDetailVOS 历史持仓详情
-     * @return ReturnPeriodVO 绝对收益周期信息载体
-     */
-    private ReturnPeriodVO countAbsoluteReturnPeriod(List<HoldingDetailVO> holdingDetailVOS) {
-
-        ReturnPeriodVO returnPeriodVO = new ReturnPeriodVO();
-
-        int positivePeriodsNum = 0;
-        int negativePeriodNum = 0;
-
-        Map<Double, Integer> positiveNums = new TreeMap<>();
-        // TODO gcm 负收益的rate是取正还是负,现在取的负
-        Map<Double, Integer> negativeNums = new TreeMap<>();
-
-        for (int i = 0; i < holdingDetailVOS.size(); i++) {
-            //为正
-            if (holdingDetailVOS.get(i).strategyReturn > 0) {
-                //向上取整
-                double rate = Math.ceil(holdingDetailVOS.get(i).strategyReturn * 100);
-                if (positiveNums.containsKey(rate)) {
-                    positiveNums.put(rate, positiveNums.get(rate) + 1);
-                } else {
-                    positiveNums.put(rate, 1);
-                }
-
-                //正周期数+1
-                positivePeriodsNum++;
-            }
-            //为负
-            else {
-                if (holdingDetailVOS.get(i).strategyReturn < 0) {
-                    //取绝对值,并向上取整
-                    double rate = (Math.ceil(Math.abs(holdingDetailVOS.get(i).strategyReturn * 100)));
-                    if (negativeNums.containsKey(rate)) {
-                        negativeNums.put(rate, negativeNums.get(rate) + 1);
-                    } else {
-                        negativeNums.put(rate, 1);
-                    }
-                }
-                //负周期数+1
-                negativePeriodNum++;
-            }
-        }
-
-        returnPeriodVO.positivePeriodsNum = positivePeriodsNum;
-        returnPeriodVO.negativePeriodNum = negativePeriodNum;
-        returnPeriodVO.positiveNums = positiveNums;
-        returnPeriodVO.negativeNums = negativeNums;
-        returnPeriodVO.winRate = ((double)positivePeriodsNum) / holdingDetailVOS.size();
-
-        return returnPeriodVO;
-    }
-
-    //TODO gcm 有重复代码
-
-    /**
-     * 计算相对收益周期
-     *
-     * @param holdingDetailVOS 历史持仓详情
-     * @return ReturnPeriodVO 相对收益周期信息载体
-     */
-    private ReturnPeriodVO countRelativeReturnPeriod(List<HoldingDetailVO> holdingDetailVOS) {
-        ReturnPeriodVO returnPeriodVO = new ReturnPeriodVO();
-
-        int positivePeriodsNum = 0;
-        int negativePeriodNum = 0;
-
-        Map<Double, Integer> positiveNums = new TreeMap<>();
-        // TODO gcm 负收益的rate是取正还是负,现在取的负
-        Map<Double, Integer> negativeNums = new TreeMap<>();
-
-        for (int i = 0; i < holdingDetailVOS.size(); i++) {
-
-            //相对收益率为正
-            if (holdingDetailVOS.get(i).excessReturn > 0) {
-                //向上取整
-                double rate = Math.ceil(holdingDetailVOS.get(i).excessReturn * 100);
-                if (positiveNums.containsKey(rate)) {
-                    positiveNums.put(rate, positiveNums.get(rate) + 1);
-                } else {
-                    positiveNums.put(rate, 1);
-                }
-
-                //正周期数+1
-                positivePeriodsNum++;
-            }
-            //为负
-            else if (holdingDetailVOS.get(i).excessReturn < 0) {
-                //取绝对值,并向上取整
-                double rate = (Math.ceil(Math.abs(holdingDetailVOS.get(i).strategyReturn * 100)));
-                if (negativeNums.containsKey(rate)) {
-                    negativeNums.put(rate, negativeNums.get(rate) + 1);
-                } else {
-                    negativeNums.put(rate, 1);
-                }
-                //负周期数+1
-                negativePeriodNum++;
-            }
-        }
-
-        returnPeriodVO.positivePeriodsNum = positivePeriodsNum;
-        returnPeriodVO.negativePeriodNum = negativePeriodNum;
-        returnPeriodVO.positiveNums = positiveNums;
-        returnPeriodVO.negativeNums = negativeNums;
-        returnPeriodVO.winRate = ((double)positivePeriodsNum) / holdingDetailVOS.size();
-
-        return returnPeriodVO;
     }
 
     /**
@@ -380,13 +265,12 @@ public class TraceBackServiceImpl implements TraceBackService {
             double excessReturn = strategyReturn - baseReturn;
 
             HoldingDetailVO holdingDetailVO = new HoldingDetailVO();
-
             holdingDetailVO.periodSerial = holdingSerial;
-            holdingDetailVO.baseReturn = baseReturn;
-            holdingDetailVO.strategyReturn = strategyReturn;
-            holdingDetailVO.excessReturn = excessReturn;
             holdingDetailVO.startDate = baseCumulativeReturn.get(i).currentDate;
             holdingDetailVO.endDate = baseCumulativeReturn.get(periodIndex).currentDate;
+            holdingDetailVO.strategyReturn = strategyReturn;
+            holdingDetailVO.baseReturn = baseReturn;
+            holdingDetailVO.excessReturn = excessReturn;
             holdingDetailVO.remainInvestment = investment * (1 + lastStrategyRate);
 
             preBaseCumulativeReturn = curBaseCumulativeReturn;
@@ -428,6 +312,10 @@ public class TraceBackServiceImpl implements TraceBackService {
      */
     @Override
     public List<CumulativeReturnVO>  getCustomizedCumulativeReturn(LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
+//        AllTraceBackStrategy strategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
+//        return strategy.traceBack(traceBackCriteriaVO);
+
+
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<>();
 
         LocalDate thisStart = traceBackCriteriaVO.startDate;
@@ -563,5 +451,56 @@ public class TraceBackServiceImpl implements TraceBackService {
         maxTraceBackVO.maxEndDay = strategyCumulativeReturn.get(strategyDown).currentDate;
 
         return maxTraceBackVO;
+    }
+
+    /**
+     *
+     * @param holdingDetailVOS 持仓周期详情用于计算
+     * @param isAbsolute true计算绝对，false计算相对
+     * @return 绝对／相对收益
+     */
+    private ReturnPeriodVO countReturnPeriod(List<HoldingDetailVO> holdingDetailVOS, boolean isAbsolute) {
+        ReturnPeriodVO returnPeriodVO = new ReturnPeriodVO();
+
+        int positivePeriodsNum = 0;
+        int negativePeriodNum = 0;
+        Map<Double, Integer> positiveNums = new TreeMap<>();
+        Map<Double, Integer> negativeNums = new TreeMap<>();
+
+        for (int i = 0; i < holdingDetailVOS.size(); i++) {
+            double countedValue;
+            if (isAbsolute) countedValue = holdingDetailVOS.get(i).strategyReturn;
+            else countedValue = holdingDetailVOS.get(i).excessReturn;
+
+            if (countedValue > 0) {
+                // 为正并向上取整
+                double rate = Math.ceil(countedValue * 100);
+                if (positiveNums.containsKey(rate)) {
+                    positiveNums.put(rate, positiveNums.get(rate) + 1);
+                } else {
+                    positiveNums.put(rate, 1);
+                }
+                positivePeriodsNum++;
+            } else {
+                if (countedValue < 0) {
+                    // 为负取绝对值，并向上取整
+                    double rate = (Math.ceil(Math.abs(countedValue * 100)));
+                    if (negativeNums.containsKey(rate)) {
+                        negativeNums.put(rate, negativeNums.get(rate) + 1);
+                    } else {
+                        negativeNums.put(rate, 1);
+                    }
+                }
+                negativePeriodNum++;
+            }
+        }
+
+        returnPeriodVO.positivePeriodsNum = positivePeriodsNum;
+        returnPeriodVO.negativePeriodNum = negativePeriodNum;
+        returnPeriodVO.positiveNums = positiveNums;
+        returnPeriodVO.negativeNums = negativeNums;
+        returnPeriodVO.winRate = ((double)positivePeriodsNum) / holdingDetailVOS.size();
+
+        return returnPeriodVO;
     }
 }
