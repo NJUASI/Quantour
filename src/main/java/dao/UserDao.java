@@ -56,17 +56,6 @@ public interface UserDao {
     boolean logIn(String userName);
 
     /**
-     * 删除用户登录信息
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/6
-     * @param userName 用户名称
-     * @return 是否成功登出
-     */
-    boolean logOut(String userName);
-
-    /**
      * 获取已存在的所有用户名称
      *
      * @author Harvey
@@ -75,14 +64,4 @@ public interface UserDao {
      * @return 用户名称集合
      */
     Set<Object> getAllUserNames();
-
-    /**
-     * 获取已存在的所有用户名称
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/6
-     * @return 已登陆用户名称集合
-     */
-    Set<Object> getLoginUserNames();
 }

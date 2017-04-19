@@ -102,10 +102,7 @@ public class UserServiceImpl implements UserService {
             throw new UserNotExistException();
         }
         else{
-            if(userDao.getLoginUserNames().contains(userName)){
-                throw new DuplicateLoginException();
-            }
-            else if (!userDao.get(userName).getPassword().equals(MD5Util.encodeMD5(password))){
+            if (!userDao.get(userName).getPassword().equals(MD5Util.encodeMD5(password))){
                 throw new PasswordWrongException();
             }
             else{
