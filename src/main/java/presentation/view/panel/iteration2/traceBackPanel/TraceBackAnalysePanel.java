@@ -5,6 +5,7 @@ import presentation.chart.traceBack.HistogramChart;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.component.MyLabel;
+import utilities.NumberFormat;
 import vo.ReturnPeriodVO;
 
 import javax.swing.*;
@@ -58,7 +59,7 @@ public class TraceBackAnalysePanel extends TemplatePanel {
         label22.setBounds(adaptScreen(450,100,500,35));
         add(label22);
 
-         label24=new MyLabel("赢率:"+returnPeriodVO.winRate,17) ;
+         label24=new MyLabel("赢率:"+ NumberFormat.decimaFormat(returnPeriodVO.winRate,4),17) ;
         label24.setBounds(adaptScreen(450,100+40,500,35));
         add(label24);
 
@@ -71,11 +72,8 @@ public class TraceBackAnalysePanel extends TemplatePanel {
          label1=new MyLabel("负收益周期数:"+absoluteReturnPeriodVO.negativePeriodNum,17) ;
         label1.setBounds(adaptScreen(1150,100,600,35));
         add(label1);
-         label14=new MyLabel("赢率:"+absoluteReturnPeriodVO.winRate,17) ;
+         label14=new MyLabel("赢率:"+NumberFormat.decimaFormat(absoluteReturnPeriodVO.winRate,4),17) ;
         label14.setBounds(adaptScreen(1150,100+40,600,35));
         add(label14);
-
-
-
     }
 }
