@@ -89,7 +89,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackVO.baseCumulativeReturn = baseCumulativeReturn;
 
         //选择策略
-        AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
+        AllTraceBackStrategy traceBackStrategy = new AllTraceBackStrategy(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
         //策略回测
         traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);
@@ -199,7 +199,7 @@ public class TraceBackServiceImpl implements TraceBackService {
             //累计基准收益率,直接赋值即可，不用再次计算
             traceBackVO.baseCumulativeReturn = baseCumulativeReturn;
 
-            AllTraceBackStrategy traceBackStrategy = TraceBackStrategyFactory.createTraceBackStrategy(traceBackStockPool,traceBackCriteriaVO,allDatesWithData,stockData);
+            AllTraceBackStrategy traceBackStrategy = new AllTraceBackStrategy(traceBackStockPool,traceBackCriteriaVO,allDatesWithData,stockData);
 
             //策略回测
             traceBackVO.strategyCumulativeReturn = traceBackStrategy.traceBack(traceBackCriteriaVO);

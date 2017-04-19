@@ -10,16 +10,9 @@ import org.jfree.data.time.TimeSeriesCollection;
 import presentation.chart.tools.CandlestickChartTool;
 import presentation.chart.tools.TraceBackChartTool;
 import presentation.view.tools.ColorUtils;
-import service.TraceBackService;
-import service.serviceImpl.TraceBackService.TraceBackServiceImpl;
-import utilities.enums.BlockType;
-import utilities.enums.StType;
-import utilities.enums.TraceBackStrategy;
-import utilities.exceptions.*;
 import vo.*;
 
 import java.awt.*;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

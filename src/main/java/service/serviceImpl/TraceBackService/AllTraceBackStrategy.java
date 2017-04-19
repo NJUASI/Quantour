@@ -1,5 +1,9 @@
 package service.serviceImpl.TraceBackService;
 
+import service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategyFactory;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.AllPickStrategy;
+import service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategyFactory;
 import service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import utilities.exceptions.*;
 import vo.*;
@@ -14,7 +18,7 @@ import java.util.TreeMap;
 /**
  * Created by harvey on 17-4-3.
  */
-public abstract class AllTraceBackStrategy {
+public class AllTraceBackStrategy {
 
     /**
      * 目标股票池
@@ -26,12 +30,22 @@ public abstract class AllTraceBackStrategy {
      */
     protected TraceBackCriteriaVO traceBackCriteriaVO;
 
+    /**
+     * 形成期的形成策略
+     */
+    protected AllFormateStrategy allFormateStrategy;
+
+    /**
+     * 形成期的选择策略
+     */
+    protected AllPickStrategy allPickStrategy;
+
     // 默认1000元初始投资资本
     private final double initMoney = 1;
     private double nowMoney;
 
     // 持股数，持有期，N日均值（MR）／形成期（MS）
-    protected int holdingNum, holdingPeriod, formativePeriod;
+    protected int holdingPeriod, formativePeriod;
 
 
 
@@ -54,26 +68,16 @@ public abstract class AllTraceBackStrategy {
         this.traceBackCriteriaVO = traceBackCriteriaVO;
         this.allDatesWithData = allDatesWithData;
         this.stockData = stockData;
+
+        setFormateAndPickStrategy();
     }
 
-    /**
-     * 形成期／N日均值，用于后续策略筛选
-     *
-     * @param stockCodes      股票列表
-     * @param periodStart     持有期起始日期
-     * @param formativePeriod 形成期长度（MS）／N日均值偏离度（MR）
-     * @return 形成的
-     */
-    protected abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException;
+    protected void setFormateAndPickStrategy() {
+        FormateAndPickVO formateAndPickVO = traceBackCriteriaVO.formateAndPickVO;
 
-    /**
-     * 挑选形成期后的股票数据，用于后续策略计算
-     *
-     * @param formativePeriodRate 形成期长度（MS）／N日均值偏离度（MR）
-     * @return 持有期中会持有的股票代码
-     */
-    protected abstract List<String> pickStocks(List<FormativePeriodRateVO> formativePeriodRate);
-
+        allFormateStrategy = FormateStrategyFactory.createFormateStrategy(formateAndPickVO.formateType, allDatesWithData, stockData);
+        allPickStrategy = PickStrategyFactory.createPickStrategy(formateAndPickVO.pickType, formateAndPickVO.rank);
+    }
 
     /**
      * 根据目标股票池及所给的标准，返回策略的累计收益率
@@ -135,7 +139,6 @@ public abstract class AllTraceBackStrategy {
         this.traceBackCriteriaVO = traceBackCriteriaVO;
 
         nowMoney = initMoney;
-        holdingNum = traceBackCriteriaVO.holdingNum;
         holdingPeriod = traceBackCriteriaVO.holdingPeriod;
         formativePeriod = traceBackCriteriaVO.formativePeriod;
     }
@@ -146,7 +149,7 @@ public abstract class AllTraceBackStrategy {
         LocalDate periodStart = allDatesWithData.get(startIndex);
         LocalDate periodEnd = allDatesWithData.get(endIndex);
 
-        List<String> wantedStockCodes = pickStocks(formate(traceBackStockPool, periodStart, formativePeriod));
+        List<String> wantedStockCodes = allPickStrategy.pick(allFormateStrategy.formate(traceBackStockPool, periodStart, formativePeriod));
 
         for (String s : wantedStockCodes) {
             System.out.println("select: " + s);
@@ -159,7 +162,7 @@ public abstract class AllTraceBackStrategy {
      * @param pickedStockCodes 持有期参与收益的股票集合
      * @param periodStart      持有期起始日期
      * @param periodEnd        持有期结束日期
-     * @return 此持有期的累计收益率饿
+     * @return 此持有期的累计收益率
      */
     private List<CumulativeReturnVO> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd) throws DateNotWithinException, NoDataWithinException, IOException {
         List<CumulativeReturnVO> strategyCumulativeReturn = new LinkedList<>();

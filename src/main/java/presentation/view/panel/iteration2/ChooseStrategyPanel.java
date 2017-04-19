@@ -1,25 +1,21 @@
 package presentation.view.panel.iteration2;
 
-import presentation.controller.StrategyPanelController;
 import presentation.controller.StrategySwitchController;
 import presentation.listener.strategyPanelListener.SearchListener;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.tools.*;
 import presentation.view.tools.component.MyButton;
-import presentation.view.tools.component.PopupProgress;
 import presentation.view.tools.component.datePicker.DoubleDatePickerPanel;
 import presentation.view.tools.component.MyLabel;
-import utilities.enums.StType;
-import utilities.enums.TraceBackStrategy;
-import utilities.exceptions.*;
-import vo.StockPoolCriteriaVO;
+import utilities.enums.FormateType;
+import vo.FormateAndPickVO;
+import vo.FormativePeriodRateVO;
 import vo.TraceBackCriteriaVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 /**
  * Created by day on 17/3/28.
@@ -257,17 +253,21 @@ public class ChooseStrategyPanel extends TemplatePanel {
      */
     public TraceBackCriteriaVO getInfo(){
         int formative;
-        TraceBackStrategy traceBackStrategy=null;
+
+        FormateAndPickVO formateAndPickVO = new FormateAndPickVO();
         if(radioButton1.isSelected()){
             formative=strategyTypePanel.getMS();
-            traceBackStrategy=TraceBackStrategy.MS;
+            formateAndPickVO.formateType = FormateType.INCEREASE_AMOUNT;
         }else{
             formative=strategyTypePanel.getMR();
-            traceBackStrategy=TraceBackStrategy.MR;
+            formateAndPickVO.formateType = FormateType.BIAS;
         }
+        //TODO gy 这里需要设置挑选的类型， 是绝对排名还是区间排名
+//        formateAndPickVO.pickType = null;
+        formateAndPickVO.rank = strategyTypePanel.getHoldingNum();
 
         return new TraceBackCriteriaVO(datePanel.getStartDate(),datePanel.getEndDate(),formative,strategyTypePanel.getHoldingPeriod(),
-               strategyPoolPanel.getPoolVO(),traceBackStrategy,strategyTypePanel.getHoldingNum(),getBasicStock(), strategyPoolPanel.getIsCustomized());
+               strategyPoolPanel.getPoolVO(),getBasicStock(), strategyPoolPanel.getIsCustomized(), formateAndPickVO);
     }
 
     public String getBasicStock(){
