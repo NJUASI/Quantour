@@ -25,7 +25,7 @@ public class TraceBackWinRatePanel extends TemplatePanel {
     JLabel label;
     WinRateChart winRateChart3,winRateChart4;
     ChartPanel chartPanel3,chartPanel4;
-    JLabel label2,label3;
+    JLabel label3;
     JRadioButton radioButton1,radioButton2;
     ButtonGroup group;
     public TraceBackWinRatePanel(){
@@ -79,7 +79,6 @@ public class TraceBackWinRatePanel extends TemplatePanel {
             remove(chartPanel3);
             remove(chartPanel4);
             remove(traceBackWinTable2);
-            remove(label2);
         }
         try {
             winRateChart1=new WinRateChart(certainFormates,1);
