@@ -99,17 +99,16 @@ public class StrategyPoolPanel  extends TemplatePanel {
         add(STComboBox);
 
         delete= new MyButton("删除");
-        delete.setBounds(adaptScreen(750,120,70,35));
+        delete.setBounds(adaptScreen(770,120,70,35));
         delete.addMouseListener(new DeletePoolListener());
         add(delete);
         message=new MyLabel("请到行情面板添加自选股池",17);
-        message.setBounds(520,60,300,100);
+        message.setBounds(480,70,300,100);
         message.setVisible(false);
         add(message);
 
-        openPool1();
         refreshTabel();
-
+        openPool1();
     }
     public void refreshTabel(){
         if (stockPoolTable!=null) {
@@ -117,7 +116,6 @@ public class StrategyPoolPanel  extends TemplatePanel {
             remove(label);
             remove(message);
         }
-
 
             stockPoolTable = new StockPoolTable();
             stockPoolTable.setBounds(adaptScreen(420, 20, 300, 200));
@@ -144,12 +142,11 @@ public class StrategyPoolPanel  extends TemplatePanel {
         lb3.setVisible(true);
         STComboBox.setVisible(true);
         delete.setVisible(false);
-        if(stockPoolTable!=null) {
-            stockPoolTable.setVisible(false);
-            label.setVisible(false);
-        }else {
-            message.setVisible(false);
-        }
+
+        stockPoolTable.setVisible(false);
+        label.setVisible(false);
+        message.setVisible(false);
+
     }
 //
     public void openPool2(){
@@ -157,11 +154,12 @@ public class StrategyPoolPanel  extends TemplatePanel {
         lb.setVisible(false);
         lb3.setVisible(false);
         STComboBox.setVisible(false);
-        if(stockPoolTable!=null) {
-            stockPoolTable.setVisible(true);
-            label.setVisible(true);
-            delete.setVisible(false);
+        stockPoolTable.setVisible(true);
+        label.setVisible(true);
+        if(stockPoolTable.jTable.getRowCount()!=0) {
+            delete.setVisible(true);
         }else {
+            delete.setVisible(false);
             message.setVisible(true);
         }
     }
