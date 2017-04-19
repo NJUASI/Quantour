@@ -18,7 +18,7 @@ import java.util.TreeMap;
 /**
  * Created by harvey on 17-4-3.
  */
-public class AllTraceBackStrategy {
+public class TraceBackStrategyCalculator {
 
     /**
      * 目标股票池
@@ -45,7 +45,7 @@ public class AllTraceBackStrategy {
     private double nowMoney;
 
     // 持股数，持有期，N日均值（MR）／形成期（MS）
-    protected int holdingPeriod, formativePeriod;
+    private int holdingPeriod, formativePeriod;
 
 
 
@@ -63,7 +63,7 @@ public class AllTraceBackStrategy {
     protected Map<String, List<StrategyStock>> stockData;
 
 
-    public AllTraceBackStrategy(List<String> traceBackStockPool, TraceBackCriteriaVO traceBackCriteriaVO, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteriaVO traceBackCriteriaVO, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
         this.traceBackStockPool = traceBackStockPool;
         this.traceBackCriteriaVO = traceBackCriteriaVO;
         this.allDatesWithData = allDatesWithData;

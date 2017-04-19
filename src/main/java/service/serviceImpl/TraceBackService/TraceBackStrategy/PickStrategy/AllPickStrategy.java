@@ -69,8 +69,6 @@ class AscSorter implements Comparator<FormativePeriodRateVO> {
     }
 }
 
-//TODO 排序算法重写， 直接对所有排序
-
 /**
  * 降序排序器
  */
