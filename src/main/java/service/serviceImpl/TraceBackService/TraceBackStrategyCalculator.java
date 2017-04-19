@@ -84,7 +84,7 @@ public class TraceBackStrategyCalculator {
      *
      * @return List<CumulativeReturnVO> 策略的累计收益率
      */
-    public List<CumulativeReturnVO> traceBack(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException {
+    public List<CumulativeReturnVO> traceBack(TraceBackCriteriaVO traceBackCriteriaVO) throws DataSourceFirstDayException {
         setTraceBackInfo(traceBackCriteriaVO);
 
         // 保存相应要返回的数据
@@ -143,7 +143,7 @@ public class TraceBackStrategyCalculator {
         formativePeriod = traceBackCriteriaVO.formativePeriod;
     }
 
-    private List<CumulativeReturnVO> cycleCalcu(int startIndex, int endIndex, int periodSerial) throws DateNotWithinException, DataSourceFirstDayException, IOException, NoDataWithinException, CodeNotFoundException, DateShortException {
+    private List<CumulativeReturnVO> cycleCalcu(int startIndex, int endIndex, int periodSerial) throws DataSourceFirstDayException {
         System.out.println("calculate cycle: " + periodSerial);
 
         LocalDate periodStart = allDatesWithData.get(startIndex);
@@ -164,7 +164,7 @@ public class TraceBackStrategyCalculator {
      * @param periodEnd        持有期结束日期
      * @return 此持有期的累计收益率
      */
-    private List<CumulativeReturnVO> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd) throws DateNotWithinException, NoDataWithinException, IOException {
+    private List<CumulativeReturnVO> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd) {
         List<CumulativeReturnVO> strategyCumulativeReturn = new LinkedList<>();
 
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();

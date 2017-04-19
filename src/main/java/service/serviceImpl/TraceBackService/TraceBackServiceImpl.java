@@ -58,7 +58,7 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     @Override
-    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, NoDataWithinException, DateNotWithinException, DateShortException, CodeNotFoundException, NoMatchEnumException, UnhandleBlockTypeException, DataSourceFirstDayException {
+    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException {
 
         long enter = System.currentTimeMillis();
 
@@ -152,7 +152,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws DateShortException
      * @throws CodeNotFoundException
      */
-    private List<ExcessAndWinRateDistVO> findFormateWithCertainHolding(TraceBackCriteriaVO traceBackCriteriaVO) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
+    private List<ExcessAndWinRateDistVO> findFormateWithCertainHolding(TraceBackCriteriaVO traceBackCriteriaVO) throws DataSourceFirstDayException {
         return findBestFormateOrHolding(traceBackCriteriaVO, false);
     }
 
@@ -166,11 +166,11 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws NoDataWithinException
      * @throws IOException
      */
-    private List<ExcessAndWinRateDistVO> findHoldingWithCertainFormate(TraceBackCriteriaVO traceBackCriteriaVO) throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
+    private List<ExcessAndWinRateDistVO> findHoldingWithCertainFormate(TraceBackCriteriaVO traceBackCriteriaVO) throws DataSourceFirstDayException {
         return findBestFormateOrHolding(traceBackCriteriaVO,true);
     }
 
-    private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, boolean certainFormate) throws DateNotWithinException, NoDataWithinException, IOException, DateShortException, CodeNotFoundException, NoMatchEnumException, DataSourceFirstDayException, UnhandleBlockTypeException {
+    private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, boolean certainFormate) throws DataSourceFirstDayException {
         List<ExcessAndWinRateDistVO> certainHoldings = new ArrayList<>();
         int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;
         int initFormativePeriod = traceBackCriteriaVO.formativePeriod;
@@ -291,7 +291,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws NoDataWithinException
      * @throws DateNotWithinException
      */
-    private List<CumulativeReturnVO> getBase(TraceBackCriteriaVO traceBackCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException {
+    private List<CumulativeReturnVO> getBase(TraceBackCriteriaVO traceBackCriteriaVO) {
         LocalDate start = traceBackCriteriaVO.startDate;
         LocalDate end = traceBackCriteriaVO.endDate;
 
@@ -311,7 +311,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @param end   回测区间结束日期
      * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
-    private List<CumulativeReturnVO>  getCustomizedCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
+    private List<CumulativeReturnVO>  getCustomizedCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO, LocalDate start, LocalDate end) {
 
         List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<>();
 
@@ -365,7 +365,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @param end       结束日期
      * @return List<CumulativeReturnVO> 一只基准股的累计收益率
      */
-    private List<CumulativeReturnVO> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) throws IOException {
+    private List<CumulativeReturnVO> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) {
 
         List<StockVO> list = null;
         try {

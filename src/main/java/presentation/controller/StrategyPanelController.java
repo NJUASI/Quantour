@@ -57,9 +57,7 @@ public class StrategyPanelController {
         analysePanel = AnalysePanel.getInstance();
     }
 
-    public TraceBackVO search() throws DateNotWithinException, NoMatchEnumException, IOException,
-            NoDataWithinException, CodeNotFoundException, DateShortException, UnhandleBlockTypeException,
-            InvalidInputException, DataSourceFirstDayException, PrivateStockNotFoundException, PrivatePoolNotEnoughException {
+    public TraceBackVO search() throws IOException, DateNotWithinException, DataSourceFirstDayException, NoDataWithinException, UnhandleBlockTypeException, PrivatePoolNotEnoughException {
 
         traceBackService = new TraceBackServiceImpl();
         stockService = new StockServiceImpl();
@@ -68,7 +66,7 @@ public class StrategyPanelController {
 
         List<String> stockPool = PrivateStockPool.getInstance().getPrivatePoolCodes();
 
-        if(stockPool.size()<100&&vo.isCustomized){throw  new PrivatePoolNotEnoughException();}
+        if(stockPool.size()<100&&vo.isCustomized){throw new PrivatePoolNotEnoughException();}
 
         return traceBackService.traceBack(vo, stockPool);
 
@@ -81,26 +79,16 @@ public class StrategyPanelController {
                 traceBackVO = search();
             } catch (DateNotWithinException e1) {
                 e1.printStackTrace();
-            } catch (NoMatchEnumException e1) {
-                e1.printStackTrace();
             } catch (IOException e1) {
                 e1.printStackTrace();
             } catch (NoDataWithinException e1) {
                 e1.printStackTrace();
-            } catch (CodeNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (DateShortException e1) {
-                e1.printStackTrace();
             } catch (UnhandleBlockTypeException e1) {
-                e1.printStackTrace();
-            } catch (InvalidInputException e1) {
                 e1.printStackTrace();
             } catch (DataSourceFirstDayException e1) {
                 e1.printStackTrace();
-            } catch (PrivateStockNotFoundException e1) {
-                e1.printStackTrace();
             } catch (PrivatePoolNotEnoughException e) {
-                new PopUpFrame(e.getMessage());
+                e.printStackTrace();
             }
            ChooseStrategyPanel.getInstance().popdown();
             AnalysePanel.getInstance().createChart(traceBackVO);

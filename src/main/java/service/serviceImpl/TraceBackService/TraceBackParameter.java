@@ -65,8 +65,7 @@ public class TraceBackParameter {
      * @updateTime 2017/4/9
      */
     public TraceBackParameter(TraceBackCriteriaVO traceBackCriteriaVO, TraceBackVO traceBackVO,
-                              Map<String, List<StrategyStock>> stockData, List<String> codes) throws CodeNotFoundException,
-            IOException, DateNotWithinException, NoDataWithinException, DateShortException, UnhandleBlockTypeException {
+                              Map<String, List<StrategyStock>> stockData, List<String> codes) throws IOException, NoDataWithinException, DateNotWithinException {
         this.stockService = new StockServiceImpl();
         this.stockData = stockData;
         this.traceBackVO = traceBackVO;
@@ -122,7 +121,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    private void initStrategy() throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException, UnhandleBlockTypeException {
+    private void initStrategy() {
 
         List<List<StrategyStock>> list = new ArrayList<>();
 
@@ -159,7 +158,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    private void initBase() throws CodeNotFoundException, DateShortException, DateNotWithinException, NoDataWithinException, IOException {
+    private void initBase() throws DateNotWithinException, NoDataWithinException, IOException {
         baseRate = this.calBaseDailyRate(stockService.getBaseStockData(traceBackCriteriaVO.baseStockName,
                 traceBackCriteriaVO.startDate, traceBackCriteriaVO.endDate));
 
