@@ -45,7 +45,7 @@ public class StocksTableController {
     /**
      * The Stocks table.
      */
-    public MyTable stocksTablePane;
+    public StocksTablePane stocksTablePane;
     ThermometerPanel thermometerPanel;
     StockSituationService stockSituationService;
     StockService stockService;
@@ -90,7 +90,7 @@ public class StocksTableController {
         stockSituationService=new StockSituationServiceImpl();
         int num[]=null;
         try {
-            stocksTablePane = new MyTable(stocksTablePanel.getChooseDate());
+            stocksTablePane = new StocksTablePane(stocksTablePanel.getChooseDate());
             stocksTablePane.setLocation(460 * width / 1920, 75 * height / 1030);
             if(stocksTablePane!=null) {
                 stocksTablePanel.add(stocksTablePane);
