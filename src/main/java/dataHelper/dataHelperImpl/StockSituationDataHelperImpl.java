@@ -3,6 +3,7 @@ package dataHelper.dataHelperImpl;
 import dataHelper.StockSituationDataHelper;
 import po.StockSituationPO;
 import utilities.DataSourceStateKeeper;
+import utilities.IDReserve;
 import utilities.enums.DataSourceState;
 import utilities.exceptions.NoDataWithinException;
 import utilities.exceptions.NoSituationDataException;
@@ -50,7 +51,8 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
                 }
             } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){
                 br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                        System.getProperty("user.dir") + separator + ".attachments" + separator + path), "UTF-8"));
+                        System.getProperty("user.dir") + separator + ".attachments" + separator +
+                                IDReserve.getInstance().getUserID() + separator + path), "UTF-8"));
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
