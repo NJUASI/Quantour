@@ -30,7 +30,8 @@ public class ChooseStrategyPanel extends TemplatePanel {
     StrategyTypePanel strategyTypePanel;
     public StrategyPoolPanel strategyPoolPanel;
     JComboBox comboBox;
-    JLabel progressBar;
+    JLabel progressBar,exception,logo;
+    ImageIcon bgPicture1,bgPicture2;
     Thread thread;
     int width;
     int height;
@@ -103,13 +104,6 @@ public class ChooseStrategyPanel extends TemplatePanel {
         searchBt.setBounds(adaptScreen(1500,600,100,35));
 
         searchBt.addMouseListener(new SearchListener());
-//        searchBt.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                StrategySwitchController.getInstance().viewSwitch("analysePanel");
-//            }
-//        });
-
         add(searchBt);
 
         JButton returnBt= new MyButton("查看上次");
@@ -122,6 +116,21 @@ public class ChooseStrategyPanel extends TemplatePanel {
         });
         add(returnBt);
 
+        bgPicture1= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo.png"));
+        bgPicture1.setImage(bgPicture1.getImage().getScaledInstance(300*width/1920, 270*height/1130, Image.SCALE_DEFAULT ));
+
+        bgPicture2= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/notFoundLogo.png"));
+        bgPicture2.setImage(bgPicture2.getImage().getScaledInstance(300*width/1920, 270*height/1130, Image.SCALE_DEFAULT ));
+
+        logo =new JLabel();
+        logo.setIcon(bgPicture1);
+        logo.setBounds(adaptScreen(1400, 200, 300, 270));
+        add(logo);
+
+        exception =new MyLabel("出错了");
+        exception.setBounds(adaptScreen(1500, 170, 400, 35));
+        exception.setVisible(false);
+        add(exception);
 
 
         MyLabel block2=new MyLabel("") ;
@@ -139,10 +148,11 @@ public class ChooseStrategyPanel extends TemplatePanel {
 
     public void popup(){
         progressBar = new MyLabel("");
-        progressBar.setBounds(adaptScreen(1450, 200, 200, 200));
+        progressBar.setBounds(adaptScreen(1400, 200, 300, 270));
         add(progressBar);
         thread=new Thread(() ->{
             int num =0;
+            logo.setVisible(false);
             while (true){
                 try{
                     Thread.sleep(100);
@@ -150,7 +160,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
                     e.printStackTrace();
                 }
                 ImageIcon bgPicture= new ImageIcon(thread.currentThread().getContextClassLoader().getResource("picture/loading/loading"+num+".png"));
-                bgPicture.setImage(bgPicture.getImage().getScaledInstance(200*width/1920, 180*height/1030, Image.SCALE_DEFAULT ));
+                bgPicture.setImage(bgPicture.getImage().getScaledInstance(300*width/1920, 270*height/1030, Image.SCALE_DEFAULT ));
                 progressBar.setIcon(bgPicture);
                 num=(num+1)%14;
             }
@@ -172,6 +182,7 @@ public class ChooseStrategyPanel extends TemplatePanel {
 //        remove(progressBar);
 //        remove(message);
         thread.stop();
+        logo.setVisible(true);
         remove(progressBar);
         repaint();
     }
@@ -216,4 +227,14 @@ public class ChooseStrategyPanel extends TemplatePanel {
         return comboBox.getSelectedItem().toString();
     }
 
+
+
+    public void handleExceptions(String str){
+
+            exception.setText(str);
+            exception.setVisible(true);
+            logo.setIcon(bgPicture2);
+            logo.setVisible(true);
+            repaint();
+    }
 }

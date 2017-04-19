@@ -26,7 +26,7 @@ public class AnalysePanel extends TemplatePanel {
     TraceBackDetail traceBackDetail;
     TraceBackWinRatePanel traceBackWinRatePanel;
     JPanel detailOfTraceBack;
-    JLabel title,label;
+    JLabel label;
     int width,height;
     private AnalysePanel(){
         width=WindowData.getInstance().getWidth();
@@ -72,15 +72,7 @@ public class AnalysePanel extends TemplatePanel {
         });
         add(back);
 
-        title=new JLabel("动量策略");
-        title.setForeground(ColorUtils.fontColor());
-        title.setFont(new Font("微软雅黑" ,Font.CENTER_BASELINE,17*WindowData.getInstance().getWidth()/1920));
-        title.setBounds(adaptScreen(850,3,120,35));
-        add(title);
-    }
 
-    public void setTitle(String str){
-        title.setText(str);
     }
 
     public static AnalysePanel getInstance(){

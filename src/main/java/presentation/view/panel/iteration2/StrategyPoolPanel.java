@@ -1,6 +1,5 @@
 package presentation.view.panel.iteration2;
 
-import presentation.listener.strategyPanelListener.DeletePoolListener;
 import presentation.view.panel.StocksTablePanel;
 import presentation.view.panel.TemplatePanel;
 import presentation.view.panel.iteration2.stockPool.PrivateStockPool;
@@ -32,7 +31,6 @@ public class StrategyPoolPanel  extends TemplatePanel {
     MultiComboBox mulit;
     JLabel lb,lb3,label,message;
     JComboBox STComboBox;
-    JButton delete;
     public StockPoolTable stockPoolTable;
 
     public StrategyPoolPanel(){
@@ -103,10 +101,6 @@ public class StrategyPoolPanel  extends TemplatePanel {
 
         add(STComboBox);
 
-//        delete= new MyButton("删除");
-//        delete.setBounds(adaptScreen(770,120,70,35));
-//        delete.addMouseListener(new DeletePoolListener());
-//        add(delete);
         message=new MyLabel("请到行情面板添加自选股池",17);
         message.setBounds(480,70,300,100);
         message.setVisible(false);
@@ -170,7 +164,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         lb.setVisible(true);
         lb3.setVisible(true);
         STComboBox.setVisible(true);
-//        delete.setVisible(false);
+
 
         stockPoolTable.setVisible(false);
         label.setVisible(false);
@@ -185,10 +179,7 @@ public class StrategyPoolPanel  extends TemplatePanel {
         STComboBox.setVisible(false);
         stockPoolTable.setVisible(true);
         label.setVisible(true);
-        if(stockPoolTable.jTable.getRowCount()!=0) {
-            delete.setVisible(true);
-        }else {
-            delete.setVisible(false);
+        if(stockPoolTable.jTable.getRowCount()==0) {
             message.setVisible(true);
         }
     }

@@ -84,7 +84,7 @@ public class StrategyTypePanel extends TemplatePanel {
         chooseComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(chooseComboBox.getSelectedItem().equals("排名最大")) {
+                if(chooseComboBox.getSelectedItem().equals("排名最大")||chooseComboBox.getSelectedItem().equals("排名最小")) {
                     label4.setText("支");
                 }else{
                     label4.setText(" %");

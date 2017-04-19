@@ -21,11 +21,6 @@ import java.io.IOException;
 public class SearchListener extends MouseAdapter {
 
     @Override
-    public void mousePressed(MouseEvent e) {
-//        ChooseStrategyPanel.getInstance().popup();
-    }
-
-    @Override
     public void mouseClicked(MouseEvent e) {
        StrategyPanelController.getInstance().runThread();
     }

@@ -74,26 +74,25 @@ public class StrategyPanelController {
 
     public void runThread() {
        thread = new Thread(() -> {
-            ChooseStrategyPanel.getInstance().popup();
+            chooseStrategyPanel.popup();
             try {
                 traceBackVO = search();
-            } catch (DateNotWithinException e1) {
-                e1.printStackTrace();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (NoDataWithinException e1) {
-                e1.printStackTrace();
-            } catch (UnhandleBlockTypeException e1) {
-                e1.printStackTrace();
-            } catch (DataSourceFirstDayException e1) {
-                e1.printStackTrace();
+                AnalysePanel.getInstance().createChart(traceBackVO);
+                StrategySwitchController.getInstance().viewSwitch("analysePanel");
+            } catch (IOException e) {
+                chooseStrategyPanel.handleExceptions(e.getMessage());
+            } catch (UnhandleBlockTypeException e) {
+                chooseStrategyPanel.handleExceptions(e.getMessage());
+            } catch (DataSourceFirstDayException e) {
+                chooseStrategyPanel.handleExceptions(e.getMessage());
             } catch (PrivatePoolNotEnoughException e) {
-                e.printStackTrace();
+                chooseStrategyPanel.handleExceptions(e.getMessage());
+            } catch (NoDataWithinException e) {
+                chooseStrategyPanel.handleExceptions(e.getMessage());
+            } catch (DateNotWithinException e) {
+                chooseStrategyPanel.handleExceptions(e.getMessage());
             }
-           ChooseStrategyPanel.getInstance().popdown();
-            AnalysePanel.getInstance().createChart(traceBackVO);
-            StrategySwitchController.getInstance().viewSwitch("analysePanel");
-            analysePanel.setTitle("");
+           chooseStrategyPanel.popdown();
             thread.stop();
         });
        thread.start();
