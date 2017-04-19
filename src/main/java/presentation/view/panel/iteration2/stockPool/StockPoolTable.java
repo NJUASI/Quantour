@@ -25,7 +25,7 @@ public class StockPoolTable extends JScrollPane {
 
 
 
-    public StockPoolTable() throws IOException, PrivateStockNotFoundException, PrivatePoolIsNullException {
+    public StockPoolTable() {
 
         windowData = WindowData.getInstance();
         width = windowData.getWidth();

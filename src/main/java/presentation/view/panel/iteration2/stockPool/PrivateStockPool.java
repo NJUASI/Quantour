@@ -8,10 +8,7 @@ import utilities.exceptions.PrivatePoolIsNullException;
 import utilities.exceptions.PrivateStockNotFoundException;
 import vo.StockVO;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,23 +20,18 @@ public class PrivateStockPool {
 
     private static PrivateStockPool privateStockPool;
 
-    private PrivateStockPool() throws IOException, PrivateStockNotFoundException {
+    private PrivateStockPool()  {
         privatePool = new HashMap<>();
-//        privatePool.put("000001","1231");
     }
 
-    public static PrivateStockPool getInstance() throws IOException, PrivateStockNotFoundException {
+    public static PrivateStockPool getInstance(){
         if(privateStockPool == null){
             privateStockPool = new PrivateStockPool();
         }
         return privateStockPool;
     }
 
-    public Map<String, String> getPrivatePool() throws PrivatePoolIsNullException {
-        if(privatePool.size()==0){
-            throw new PrivatePoolIsNullException();
-        }
-
+    public Map<String, String> getPrivatePool() {
         return privatePool;
     }
 

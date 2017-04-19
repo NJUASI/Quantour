@@ -24,13 +24,13 @@ public class StockPoolModel extends MyTabelModel {
     private StockService stockService;
 
 
-    public StockPoolModel() throws IOException, PrivateStockNotFoundException, PrivatePoolIsNullException {
+    public StockPoolModel() {
         this.stockService = new StockServiceImpl();
         init();
     }
 
     //初始化列表名称和数据
-    private void init() throws IOException, PrivateStockNotFoundException, PrivatePoolIsNullException {
+    private void init() {
         columnNames = new String[]{"股票代码", "股票名称"};
         Map<String,String> stockList = PrivateStockPool.getInstance().getPrivatePool();
         data = new Object[stockList.size()][columns];
