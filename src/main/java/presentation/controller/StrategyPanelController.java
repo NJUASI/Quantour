@@ -68,7 +68,7 @@ public class StrategyPanelController {
 
         List<String> stockPool = PrivateStockPool.getInstance().getPrivatePoolCodes();
 
-        if(stockPool.size()<100){throw  new PrivatePoolNotEnoughException();}
+        if(stockPool.size()<100&&vo.isCustomized){throw  new PrivatePoolNotEnoughException();}
 
         return traceBackService.traceBack(vo, stockPool);
 
