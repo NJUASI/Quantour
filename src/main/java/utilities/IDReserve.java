@@ -9,11 +9,6 @@ public class IDReserve {
     private String userID;
     private String password;
 
-    public IDReserve() {
-        this.userID = "Guest";
-    }
-
-
     /**
      * 获得单件IDReserve
      *
