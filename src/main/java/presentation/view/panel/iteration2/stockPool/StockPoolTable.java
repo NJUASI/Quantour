@@ -1,18 +1,16 @@
-package presentation.view.panel.iteration2;
+package presentation.view.panel.iteration2.stockPool;
 
-import presentation.view.panel.user.FavoriteTableModel;
 import presentation.view.tools.ColorUtils;
 import presentation.view.tools.MyTableHeaderRender;
 import presentation.view.tools.WindowData;
 import presentation.view.tools.ui.MyScrollBarUI;
+import utilities.exceptions.PrivatePoolIsNullException;
 import utilities.exceptions.PrivateStockNotFoundException;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.io.IOException;
-import java.time.LocalDate;
 
 /**
  * Created by 61990 on 2017/4/17.
@@ -27,14 +25,14 @@ public class StockPoolTable extends JScrollPane {
 
 
 
-    public StockPoolTable() throws IOException, PrivateStockNotFoundException {
+    public StockPoolTable() throws IOException, PrivateStockNotFoundException, PrivatePoolIsNullException {
 
         windowData = WindowData.getInstance();
         width = windowData.getWidth();
         height = windowData.getHeight();
 
 
-        setSize(200 * width / 1920, 150 * height / 1030);
+        setSize(300 * width / 1920, 150 * height / 1030);
 
         jTable = new JTable(new StockPoolModel());
         jTable.setBounds(0, 0, 200 * width / 1920, 150 * height / 1030);
@@ -49,6 +47,7 @@ public class StockPoolTable extends JScrollPane {
         jTable.setShowVerticalLines(true);//是否显示垂直的网格线
         jTable.setBackground(ColorUtils.backgroundColor());
         jTable.setForeground(ColorUtils.fontColor());
+        if(jTable.getRowCount()!=0)
         jTable.setRowSelectionInterval(0, 0);
         jTable.setGridColor(ColorUtils.divideColor());
         jTable.setBorder(BorderFactory.createEmptyBorder());

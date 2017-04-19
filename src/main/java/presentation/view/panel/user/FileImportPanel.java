@@ -29,7 +29,7 @@ public class FileImportPanel extends TemplatePanel {
         width = WindowData.getInstance().getWidth();
         height = WindowData.getInstance().getHeight();
 
-        Color color=new Color(27+6,29+6,33+6);
+        Color color=new Color(27,29,33);
 
         setBackground(color);
 
@@ -81,32 +81,22 @@ public class FileImportPanel extends TemplatePanel {
 
     }
     public void popLabel(){
-        label= new MyLabel("正在上传.");
-        label.setBounds(adaptScreen(60+10, 340, 200, 35));
+        label= new MyLabel("");
+        label.setBounds(adaptScreen(60+10, 340, 200, 200));
         add(label);
         thread=new Thread(() ->{
             int num =0;
             while (true){
                 try{
-                    Thread.sleep(400);
+                    Thread.sleep(100);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                switch (num){
-                    case 0:
-                        label.setText("正在上传..");
-                        break;
-                    case 1:
-                        label.setText("正在上传....");
-                        break;
-                    case 2:
-                        label.setText("正在上传....");
-                        break;
-                    case 3:
-                        label.setText("正在上传..");
-                        break;
-                }
-                num=(num+1)%4;
+
+                ImageIcon bgPicture= new ImageIcon(thread.currentThread().getContextClassLoader().getResource("picture/loading/loading"+num+".png"));
+                bgPicture.setImage(bgPicture.getImage().getScaledInstance(200*width/1920, 200*height/1030, Image.SCALE_DEFAULT ));
+                label.setIcon(bgPicture);
+                num=(num+1)%14;
             }
         });
         thread.start();

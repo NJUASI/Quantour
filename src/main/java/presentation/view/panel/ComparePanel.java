@@ -117,6 +117,7 @@ public class ComparePanel extends TemplatePanel {
 
 
         num1.setBounds(adaptScreen(750, 50, 150, 35));
+
         add(num1);
 
 
@@ -171,12 +172,14 @@ public class ComparePanel extends TemplatePanel {
         num1.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                num1.setText("");
                 refreshAssociate();
             }
         });
         name2.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                num2.setText("");
                 refreshAssociate();
             }
         });

@@ -27,15 +27,15 @@ public class MessagePanel extends TemplatePanel{
         width= WindowData.getInstance().getWidth();
         height= WindowData.getInstance().getHeight();
 
-        setBackground(new Color(27+6,29+6,33+6));
+        setBackground(new Color(27,29,33));
 
 
         JLabel logo =new JLabel();
         ImageIcon bgPicture= new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("picture/logo3.png"));
-        bgPicture.setImage(bgPicture.getImage().getScaledInstance(80*width/1920, 80*height/1130, Image.SCALE_DEFAULT ));
+        bgPicture.setImage(bgPicture.getImage().getScaledInstance(110*width/1920, 110*height/1130, Image.SCALE_DEFAULT ));
         logo.setIcon(bgPicture);
         logo.addMouseListener(new UserListener());
-        logo.setBounds(adaptScreen(130,50,80,80));
+        logo.setBounds(adaptScreen(105,25,110,110));
         add(logo);
 
         MyLabel name = new MyLabel("账户",17);

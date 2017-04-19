@@ -29,13 +29,6 @@ public class TraceBackDetailModel extends MyTabelModel {
         columnNames = new String[]{"周期详情", "开始日期", "结束日期", "股票持有只数", "策略收益",
                 "基准收益", " 超额收益", "模拟投资"};
 
-//        data = new Object[10][columns];
-//        for (int i = 0; i < 10; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                data[i][j] = "-";
-//            }
-//        }
-
         data = new Object[holdingDetailVOS.size()][columns];
         for (int i = 0; i < holdingDetailVOS.size(); i++) {
             HoldingDetailVO holdingDetailVO = holdingDetailVOS.get(i);
@@ -48,9 +41,5 @@ public class TraceBackDetailModel extends MyTabelModel {
             data[i][6] = NumberFormat.percentFormat(holdingDetailVO.excessReturn,2);
             data[i][7] = NumberFormat.decimaFormat(holdingDetailVO.remainInvestment,2);
         }
-
-
     }
-
-
 }

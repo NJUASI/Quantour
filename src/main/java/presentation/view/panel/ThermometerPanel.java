@@ -22,7 +22,7 @@ public class ThermometerPanel extends TemplatePanel {
 
     Color GREEN = ColorUtils.downColor();
     Color RED =ColorUtils.upColor();
-    int move=150;
+    int move=130;
 
     /**
      * 温度计面板构造器
@@ -33,7 +33,7 @@ public class ThermometerPanel extends TemplatePanel {
      * @updateTime 2017/3/5
      */
     public ThermometerPanel(int[] num, double volume) {
-        setSize(new Dimension(360*WindowData.getInstance().getWidth()/1920,587*WindowData.getInstance().getHeight()/1030));
+        setSize(new Dimension(360*WindowData.getInstance().getWidth()/1920,537*WindowData.getInstance().getHeight()/1030));
 
 
         label11=new MyLabel(num[0]+"");
@@ -107,27 +107,11 @@ public class ThermometerPanel extends TemplatePanel {
         add(label32);
 
 
-        MyLabel lb=new MyLabel((int)volume+"",16) ;
+        MyLabel lb=new MyLabel((int)volume+"",18) ;
         lb.setBounds(adaptScreen(120,move-20,180,30));
         add(lb);
 
         createPanel();
-        MyLabel lb5=new MyLabel("",16) ;
-        lb5.setBounds(adaptScreen(0,75,2,510));
-        lb5.setBackground(new Color(16,17,18));
-        lb5.setOpaque(true);
-        add(lb5);
-        MyLabel lb6=new MyLabel("",16) ;
-        lb6.setBounds(adaptScreen(0,75+510,400,2));
-        lb6.setBackground(new Color(16,17,18));
-        lb6.setOpaque(true);
-        add(lb6);
-        MyLabel lb7=new MyLabel("",16) ;
-        lb7.setBounds(adaptScreen(358,75,2,510));
-        lb7.setBackground(new Color(16,17,18));
-        lb7.setOpaque(true);
-        add(lb7);
-
     }
 
     /**
@@ -140,7 +124,7 @@ public class ThermometerPanel extends TemplatePanel {
      */
     void createPanel(){
 
-        MyLabel label=new MyLabel("市场温度计",24) ;
+        MyLabel label=new MyLabel(" 市 场 温 度 计",22) ;
         label.setBounds(adaptScreen(0,40,360,35));
         label.setBackground(ColorUtils.titleBgColor());
         label.setOpaque(true);
@@ -148,7 +132,7 @@ public class ThermometerPanel extends TemplatePanel {
         add(label);
 
 
-        MyLabel lb=new MyLabel("总成交量",16) ;
+        MyLabel lb=new MyLabel("总成交量",18) ;
         lb.setBounds(adaptScreen(30,move-20,80,30));
         add(lb);
 
