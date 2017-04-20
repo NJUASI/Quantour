@@ -37,12 +37,12 @@ public class TraceBackAnalysePanel extends TemplatePanel {
             remove(label14);
         }
         chartPanel1 = new HistogramChart(returnPeriodVO).createChart();
-        chartPanel1.setBounds(adaptScreen(200, 200, 620, 400));
+        chartPanel1.setBounds(adaptScreen(200, 200, 640, 400));
         chartPanel1.setVisible(true);
         add(chartPanel1);
 
         chartPanel2 = new HistogramChart(absoluteReturnPeriodVO).createChart();
-        chartPanel2.setBounds(adaptScreen(900, 200, 620, 400));
+        chartPanel2.setBounds(adaptScreen(900, 200, 640, 400));
         chartPanel2.setVisible(true);
         add(chartPanel2);
 
