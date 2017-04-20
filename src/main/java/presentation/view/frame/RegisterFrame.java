@@ -45,8 +45,7 @@ public class RegisterFrame extends JFrame {
         setIconImage(bgPicture.getImage());
 
         setLayout(null);
-        //todo fjj
-//        setUndecorated(true);
+        setUndecorated(true);
         int width=WindowData.getInstance().getWidth();
         int height=WindowData.getInstance().getHeight();
 

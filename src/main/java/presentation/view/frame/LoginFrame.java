@@ -50,8 +50,7 @@ public class LoginFrame extends JFrame {
 
         setLayout(new BorderLayout(0, 0));
 
-        // TODO jjj
-//        setUndecorated(true);
+        setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
         Rectangle bounds = new Rectangle(dim);

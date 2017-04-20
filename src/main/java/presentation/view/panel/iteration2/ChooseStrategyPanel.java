@@ -150,8 +150,10 @@ public class ChooseStrategyPanel extends TemplatePanel {
         progressBar = new MyLabel("");
         progressBar.setBounds(adaptScreen(1400, 200, 300, 270));
         add(progressBar);
+
         thread=new Thread(() ->{
             int num =0;
+            exception.setVisible(false);
             logo.setVisible(false);
             while (true){
                 try{

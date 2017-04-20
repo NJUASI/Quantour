@@ -46,12 +46,11 @@ public class LoginPanel extends TemplatePanel {
         //to write your message
 //        admin = new JTextField("Enter your admin");
 
-        // TODO jjjj
-        admin = new JTextField("Guest");
+        admin = new JTextField("");
         admin.setCaretPosition(admin.getText().length());
         admin.setFont(new Font("", Font.CENTER_BASELINE, 18 * width / 1920));
         admin.setBounds(adaptScreen(90, 200, 260, 38));
-        admin.setBackground(ColorUtils.divideColor());
+//        admin.setBackground(ColorUtils.divideColor());
         admin.setVisible(true);
         add(admin);
 
@@ -69,11 +68,11 @@ public class LoginPanel extends TemplatePanel {
         label2.setLocation(35*width/1920,255*height/1030);
         add(label2);
 
-        password = new JPasswordField("qwertyuiop123456");
+        password = new JPasswordField("");
         password.setFont(new Font("", Font.CENTER_BASELINE, 13 * width / 1920));
         password.setBounds(adaptScreen(90, 255, 260, 38));
         password.setVisible(true);
-        password.setBackground(ColorUtils.divideColor());
+//        password.setBackground(ColorUtils.divideColor());
         add(password);
 
 //        password.setEnabled(false);
