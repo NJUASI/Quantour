@@ -26,7 +26,7 @@ public class TraceBackChartPanel extends TemplatePanel {
     }
 
     public void createChart(TraceBackNumValVO traceBackNumValVO, List<CumulativeReturnVO> baseCumulativeReturn,
-                            List<CumulativeReturnVO> strategyCumulativeReturn, MaxTraceBackVO maxTraceBackVO) {
+                            List<CumulativeReturnVO> strategyCumulativeReturn, MaxTraceBackVO maxTraceBackVO) throws IllegalArgumentException{
         if (chartPanel != null) {
             remove(chartPanel);
             remove(traceBackNumVal);

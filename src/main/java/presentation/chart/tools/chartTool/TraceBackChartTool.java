@@ -9,6 +9,7 @@ import presentation.chart.tools.renderer.TraceBackXYLineRenderer;
 import presentation.view.tools.ColorUtils;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
@@ -52,14 +53,14 @@ public class TraceBackChartTool {
      * @updateTime 2017/3/30
      * @return  DateAxis
      */
-    public DateAxis getX (LocalDate start,LocalDate end) {
+    public DateAxis getX (LocalDate start,LocalDate end) throws IllegalArgumentException{
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         DateAxis xAxis = new DateAxis();
 
         xAxis.setAutoRange(true);//设置不采用自动设置时间范围
         try {
             xAxis.setRange(dateFormat.parse(start.toString()), dateFormat.parse(end.toString()));//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
-        } catch (Exception e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 //        xAxis.setTimeline(timeline);//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期，使图形看上去连续

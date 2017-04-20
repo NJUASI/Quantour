@@ -91,6 +91,8 @@ public class StrategyPanelController {
                 chooseStrategyPanel.handleExceptions(e.getMessage());
             } catch (DateNotWithinException e) {
                 chooseStrategyPanel.handleExceptions(e.getMessage());
+            } catch (IllegalArgumentException e){
+                chooseStrategyPanel.handleExceptions("起始日期需要比截止日期小");
             }
            chooseStrategyPanel.popdown();
             thread.stop();

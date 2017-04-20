@@ -60,7 +60,7 @@ public class TraceBackChart {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/30
      */
-    public JFreeChart createTracebackChart() {
+    public JFreeChart createTracebackChart() throws IllegalArgumentException {
         CandlestickChartTool.setChartTheme();
         TraceBackChartTool tool = new TraceBackChartTool();
         JFreeChart traceBackChart = ChartFactory.createTimeSeriesChart("", "", "", this.getTracebackDataset());

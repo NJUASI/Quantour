@@ -82,7 +82,7 @@ public class AnalysePanel extends TemplatePanel {
         return analysePanel;
     }
 
-    public void createChart(TraceBackVO traceBackVO){
+    public void createChart(TraceBackVO traceBackVO) throws IllegalArgumentException{
         traceBackAnalysePanelPanel.createChart(traceBackVO.absoluteReturnPeriodVO,traceBackVO.relativeReturnPeriodVO);
         traceBackChartPanelPanel.createChart(traceBackVO.traceBackNumValVO,traceBackVO.baseCumulativeReturn,traceBackVO.strategyCumulativeReturn,traceBackVO.maxTraceBackVO);
         traceBackWinRatePanel.createChart(traceBackVO.certainFormates,traceBackVO.certainHoldings);
