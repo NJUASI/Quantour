@@ -8,6 +8,6 @@ package utilities.exceptions;
 public class DataSourceFirstDayException extends Exception {
     @Override
     public String getMessage() {
-        return "所选日期为数据源中起始日，不能得其涨跌幅";
+        return "所选日期包含数据源中起始日，不能计算";
     }
 }

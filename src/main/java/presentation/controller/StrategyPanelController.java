@@ -79,6 +79,8 @@ public class StrategyPanelController {
                 traceBackVO = search();
                 AnalysePanel.getInstance().createChart(traceBackVO);
                 StrategySwitchController.getInstance().viewSwitch("analysePanel");
+            }catch (IndexOutOfBoundsException e) {
+                chooseStrategyPanel.handleExceptions("回测失败orz，换个时间试试吧～");
             } catch (IOException e) {
                 chooseStrategyPanel.handleExceptions(e.getMessage());
             } catch (UnhandleBlockTypeException e) {
@@ -95,8 +97,8 @@ public class StrategyPanelController {
                 chooseStrategyPanel.handleExceptions("起始日期需要比截止日期小");
             }
            chooseStrategyPanel.popdown();
-            thread.stop();
-        });
+           thread.stop();
+       });
        thread.start();
     }
 

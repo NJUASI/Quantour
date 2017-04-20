@@ -47,33 +47,33 @@ public class TraceBackAnalysePanel extends TemplatePanel {
         add(chartPanel2);
 
 //        MyLabel label2label22label24 label12 label1 label14
-        MyLabel label23=new MyLabel("绝对收益直方图",17) ;
-        label23.setBounds(adaptScreen(250,100,150,35));
+        MyLabel label23 = new MyLabel("绝对收益直方图", 22);
+        label23.setBounds(adaptScreen(250, 100, 2000, 35));
         add(label23);
 
-         label2=new MyLabel("正收益周期数："+returnPeriodVO.positivePeriodsNum,17) ;
-        label2.setBounds(adaptScreen(450,100-40,500,35));
+        label2 = new MyLabel("正收益周期数：" + returnPeriodVO.positivePeriodsNum, 17);
+        label2.setBounds(adaptScreen(500, 100 - 40, 500, 35));
         add(label2);
 
-         label22=new MyLabel("负收益周期数:"+returnPeriodVO.negativePeriodNum,17) ;
-        label22.setBounds(adaptScreen(450,100,500,35));
+        label22 = new MyLabel("负收益周期数：" + returnPeriodVO.negativePeriodNum, 17);
+        label22.setBounds(adaptScreen(500, 100, 500, 35));
         add(label22);
 
-         label24=new MyLabel("赢率:"+ NumberFormat.decimaFormat(returnPeriodVO.winRate,4),17) ;
-        label24.setBounds(adaptScreen(450,100+40,500,35));
+        label24 = new MyLabel("赢率：" + NumberFormat.decimaFormat(returnPeriodVO.winRate, 4), 17);
+        label24.setBounds(adaptScreen(500, 100 + 40, 500, 35));
         add(label24);
 
-        MyLabel label13=new MyLabel("相对收益直方图",17) ;
-        label13.setBounds(adaptScreen(950,100,150,35));
+        MyLabel label13 = new MyLabel("相对收益直方图", 22);
+        label13.setBounds(adaptScreen(950, 100, 200, 35));
         add(label13);
-         label12=new MyLabel("正收益周期数："+absoluteReturnPeriodVO.positivePeriodsNum,17) ;
-        label12.setBounds(adaptScreen(1150,100-40,600,35));
+        label12 = new MyLabel("正收益周期数：" + absoluteReturnPeriodVO.positivePeriodsNum, 17);
+        label12.setBounds(adaptScreen(1200,100-40,600,35));
         add(label12);
-         label1=new MyLabel("负收益周期数:"+absoluteReturnPeriodVO.negativePeriodNum,17) ;
-        label1.setBounds(adaptScreen(1150,100,600,35));
+         label1=new MyLabel("负收益周期数："+absoluteReturnPeriodVO.negativePeriodNum,17) ;
+        label1.setBounds(adaptScreen(1200,100,600,35));
         add(label1);
-         label14=new MyLabel("赢率:"+NumberFormat.decimaFormat(absoluteReturnPeriodVO.winRate,4),17) ;
-        label14.setBounds(adaptScreen(1150,100+40,600,35));
+         label14=new MyLabel("赢率："+NumberFormat.decimaFormat(absoluteReturnPeriodVO.winRate,4),17) ;
+        label14.setBounds(adaptScreen(1200,100+40,600,35));
         add(label14);
     }
 }
