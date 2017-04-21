@@ -94,6 +94,19 @@ public class DateFilesCreator {
             bw.flush();
             bw.close();
         }
+
+        // 创建all_dates文件
+        StringBuffer dates = new StringBuffer();
+        for (LocalDate tempDate : results.keySet()) {
+            dates.append(tempDate.toString() + lineSeparator);
+        }
+        File datesFile = new File(dateDesFileParentPath + fileSeparator + "all_dates" + post);
+        datesFile.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(datesFile), "UTF-8"));
+        bw.write(dates.toString());
+        bw.flush();
+        bw.close();
+
         return true;
     }
 

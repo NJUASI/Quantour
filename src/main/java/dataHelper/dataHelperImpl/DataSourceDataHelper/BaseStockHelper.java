@@ -14,19 +14,18 @@ public class BaseStockHelper {
     final String fileSeparator = System.getProperty("file.separator");
     final String userID = IDReserve.getInstance().getUserID();
 
-    final String parent = System.getProperty("user.dir") + fileSeparator + ".attachments"  + fileSeparator + userID + fileSeparator + "base_stocks"+ fileSeparator;
-
     public boolean uploadBaseStocks() throws IOException, PinyinException {
-        File baseStocksParent = new File(System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + "base_stocks");
+        File baseStocksParent = new File(System.getProperty("user.dir") + fileSeparator + ".attachments" + fileSeparator + userID + fileSeparator + "base_stocks");
 
         // 用户电脑上已存在基准的数据，不再上传
-        if (baseStocksParent.exists()) return true;
+        if (baseStocksParent.exists()) {
+            return true;
+        }
 
-        final String sourceBaseStockFilePath = Thread.currentThread().getContextClassLoader().getResource("base_stocks.csv").getFile();
-        CodeDirCreator creator = new CodeDirCreator(sourceBaseStockFilePath, true);
+        CodeDirCreator creator = new CodeDirCreator("base_stocks.csv", true);
         creator.createDir();
 
-        OriginalDataReader reader = new OriginalDataReader(sourceBaseStockFilePath, true);
+        OriginalDataReader reader = new OriginalDataReader("base_stocks.csv", true);
         reader.handle();
 
         DuplicationAdder adder = new DuplicationAdder(true);

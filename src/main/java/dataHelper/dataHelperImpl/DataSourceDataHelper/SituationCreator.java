@@ -25,7 +25,7 @@ public class SituationCreator {
         BufferedReader br = null;
 
         for (String s : getFileList()) {
-            if (!s.equals(".DS_Store")) {
+            if (!s.equals(".DS_Store") && !s.equals("all_dates.txt")) {
                 File source2 = new File(sourcePath + fileSeparator + s);
                 for (String s2 : source2.list()) {
                     LocalDate nowLocalDate = getLocalDateOfFileName(s2);

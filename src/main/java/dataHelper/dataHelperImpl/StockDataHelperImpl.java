@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by Byron Dong on 2017/3/5.
  * Last updated by cuihua
  * Update time 2017/3/18
- *
+ * <p>
  * 对getFirstDay接口理解错误，重新实现
  */
 public class StockDataHelperImpl implements StockDataHelper {
@@ -53,28 +53,29 @@ public class StockDataHelperImpl implements StockDataHelper {
     /**
      * 获取指定股票所有数据
      *
+     * @param stockCode 指定股票代码
+     * @return 指定股票所有数据
+     * @throws IOException IO
      * @author cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
-     * @param stockCode  指定股票代码
-     * @return 指定股票所有数据
-     * @throws IOException IO
      */
     @Override
     public List<StockPO> getStockRecords(String stockCode) throws IOException {
-        if (isBaseStock(stockCode)) return getStockByPath(isBaseStockParent + stockRecordByCodePathPre + stockCode + stockRecordPathPost);
+        if (isBaseStock(stockCode))
+            return getStockByPath(isBaseStockParent + stockRecordByCodePathPre + stockCode + stockRecordPathPost);
         else return getStockByPath(notBaseStockParent + stockRecordByCodePathPre + stockCode + stockRecordPathPost);
     }
 
     /**
      * 获取指定日期的所有股票数据
      *
+     * @param date 指定日期
+     * @return 指定日期的所有股票数据
+     * @throws IOException IO
      * @author cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/9
-     * @param date  指定日期
-     * @return 指定日期的所有股票数据
-     * @throws IOException IO
      */
     @Override
     public List<StockPO> getStockRecords(LocalDate date) throws IOException {
@@ -84,12 +85,12 @@ public class StockDataHelperImpl implements StockDataHelper {
     }
 
     /**
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/9
      * @param stockCode 股票代码
      * @return 数据库中股票存在记录的起讫时间，List.get(0)为第一天，List.get(1)为最后一天
      * @throws IOException IO
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
      */
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
@@ -97,16 +98,16 @@ public class StockDataHelperImpl implements StockDataHelper {
 
         List<LocalDate> result = new LinkedList<>();
         result.add(allResult.get(0).getDate());
-        result.add(allResult.get(allResult.size()-1).getDate());
+        result.add(allResult.get(allResult.size() - 1).getDate());
         return result;
     }
 
     /**
+     * @param stockCode 股票代码
+     * @return 此年份此股票需要被剔除的所有日期
      * @author cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/23
-     * @param stockCode 股票代码
-     * @return 此年份此股票需要被剔除的所有日期
      */
     @Override
     public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
@@ -135,29 +136,21 @@ public class StockDataHelperImpl implements StockDataHelper {
     public List<LocalDate> getDateWithData() throws IOException {
         List<LocalDate> dates = new LocalDateList();
 
-        String parent = null;
-
+        final String directPath = isBaseStockParent + separator + "stock_records_by_date" + separator + "all_dates" + stockRecordPathPost;
+        BufferedReader br = null;
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
-            parent = Thread.currentThread().getContextClassLoader().getResource(isBaseStockParent).getFile();
-            parent += separator + "stock_records_by_date";
+            br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
+                    getResourceAsStream(directPath), "UTF-8"));
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
-            parent = System.getProperty("user.dir") + separator + ".attachments" + separator +
-                    IDReserve.getInstance().getUserID() + separator + isBaseStockParent + separator + "stock_records_by_date";
+            final String path = System.getProperty("user.dir") + separator + ".attachments" + separator +
+                    IDReserve.getInstance().getUserID() + separator + directPath;
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8"));
+
         }
 
-        String[] years = new File(parent).list();
-
-        for (String thisYear : years) {
-            if (thisYear.equals(".DS_Store")) {
-                continue;
-            }
-            String yearDir = parent + separator + thisYear;
-            String[] dateFiles = new File(yearDir).list();
-            for (String thisDate : dateFiles) {
-                if (!thisDate.equals(".DS_Store")) {
-                    dates.add(convertLocalDate(thisDate));
-                }
-            }
+        String line;
+        while ((line = br.readLine()) != null) {
+            dates.add(convertLocalDate(line));
         }
 
         dates.sort(new LocalDateComparator());
@@ -191,7 +184,7 @@ public class StockDataHelperImpl implements StockDataHelper {
 
             boolean isSt = stockNames.get(i).contains("ST");
 
-            result.add(new StockPoolVO(tempCode, thisBlockType ,isSt));
+            result.add(new StockPoolVO(tempCode, thisBlockType, isSt));
         }
 
         return result;
@@ -200,22 +193,21 @@ public class StockDataHelperImpl implements StockDataHelper {
     /**
      * 根据路径读取stock_records_by_code/date中的数据
      *
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/9
      * @param path 要读取的数据源
      * @return 根据俄参数路径读取到的所有股票数据
      * @throws IOException IO
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/9
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
-        System.out.println(path);
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream(path), "UTF-8"));
-        } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER){
+        } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
                     System.getProperty("user.dir") + separator + ".attachments" + separator +
-                            IDReserve.getInstance().getUserID() + separator  + path), "UTF-8"));
+                            IDReserve.getInstance().getUserID() + separator + path), "UTF-8"));
         }
 
         List<StockPO> result = new LinkedList<StockPO>();
@@ -255,7 +247,7 @@ public class StockDataHelperImpl implements StockDataHelper {
     private LocalDate convertLocalDate(String formated) {
         // formated as 2011-01-18.txt
         String[] parts = formated.split("-");
-        return LocalDate.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2].substring(0, parts[2].length()-4)));
+        return LocalDate.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
     }
 
     private boolean isBaseStock(String stockCode) {

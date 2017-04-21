@@ -27,10 +27,16 @@ public class OriginalDataReader {
     private String codeDesFilePath = null;
 
     public OriginalDataReader(String sourceFile, boolean isBaseStock) throws FileNotFoundException, UnsupportedEncodingException {
-        if (isBaseStock) codeDirParent = "base_stocks";
-        else codeDirParent = "stocks";
+        if (isBaseStock) {
+            codeDirParent = "base_stocks";
+            br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
+                    getResourceAsStream(sourceFile), "UTF-8"));
+        }
+        else {
+            codeDirParent = "stocks";
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), "UTF-8"));
+        }
 
-        br = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), "UTF-8"));
 
         parent = System.getProperty("user.dir") + separator + ".attachments"  + separator + userID + separator + codeDirParent+ separator;
         codeDesFileParentPath = parent + "stock_records_by_code";
