@@ -20,7 +20,7 @@ import java.time.LocalDate;
  */
 public class StockSituationDataHelperImpl implements StockSituationDataHelper {
 
-    private static final String separator = System.getProperty("file.separator");
+    private static final String separator = "/";
 
     private static final String pathPre = "stocks" + separator + "stock_situation" + separator;
     private static final String pathPost = ".txt";
