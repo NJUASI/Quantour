@@ -3,6 +3,7 @@ package dataHelper.dataHelperImpl;
 import dataHelper.StockSituationDataHelper;
 import po.StockSituationPO;
 import utilities.DataSourceStateKeeper;
+import utilities.FilePathStandardizer;
 import utilities.IDReserve;
 import utilities.enums.DataSourceState;
 import utilities.exceptions.NoDataWithinException;
@@ -20,7 +21,7 @@ import java.time.LocalDate;
  */
 public class StockSituationDataHelperImpl implements StockSituationDataHelper {
 
-    private static final String separator = "/";
+    private static final String separator = System.getProperty("file.separator");
 
     private static final String pathPre = "stocks" + separator + "stock_situation" + separator;
     private static final String pathPost = ".txt";
@@ -43,6 +44,7 @@ public class StockSituationDataHelperImpl implements StockSituationDataHelper {
         String line = null;
         try {
             if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+                path = FilePathStandardizer.standardize(path);
                 InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
                 if (inputStream == null) {
                     throw new NoSituationDataException();

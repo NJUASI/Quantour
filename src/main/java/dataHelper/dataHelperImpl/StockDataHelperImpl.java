@@ -139,8 +139,9 @@ public class StockDataHelperImpl implements StockDataHelper {
         final String directPath = isBaseStockParent + separator + "stock_records_by_date" + separator + "all_dates" + stockRecordPathPost;
         BufferedReader br = null;
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+            final String path = FilePathStandardizer.standardize(directPath);
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
-                    getResourceAsStream(directPath), "UTF-8"));
+                    getResourceAsStream(path), "UTF-8"));
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
             final String path = System.getProperty("user.dir") + separator + ".attachments" + separator +
                     IDReserve.getInstance().getUserID() + separator + directPath;
@@ -201,7 +202,9 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @updateTime 2017/3/9
      */
     private List<StockPO> getStockByPath(String path) throws IOException {
+        path = FilePathStandardizer.standardize(path);
         if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
+            path = FilePathStandardizer.standardize(path);
             br = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream(path), "UTF-8"));
         } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {

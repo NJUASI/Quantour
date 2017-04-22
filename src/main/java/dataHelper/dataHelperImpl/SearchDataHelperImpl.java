@@ -3,6 +3,7 @@ package dataHelper.dataHelperImpl;
 import dataHelper.SearchDataHelper;
 import po.StockSearchPO;
 import utilities.DataSourceStateKeeper;
+import utilities.FilePathStandardizer;
 import utilities.IDReserve;
 import utilities.enums.DataSourceState;
 
@@ -119,13 +120,12 @@ public class SearchDataHelperImpl implements SearchDataHelper {
     private void propertiesload(String path) {
         try {
             properties = new Properties();
+
             if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.ORIGINAL) {
-                System.out.println(DataSourceState.ORIGINAL);
-                System.out.println(Thread.currentThread().getContextClassLoader().getResourceAsStream(path));
+                path = FilePathStandardizer.standardize(path);
                 properties.load(new BufferedReader(new InputStreamReader(
-                        Thread.currentThread().getContextClassLoader().getResourceAsStream(path))));
+                        Thread.currentThread().getContextClassLoader().getResourceAsStream(path), "UTF-8")));
             } else if (DataSourceStateKeeper.getInstance().getState() == DataSourceState.USER) {
-                System.out.println(DataSourceState.USER);
                 properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(
                         System.getProperty("user.dir") + separator + ".attachments" + separator +
                                 IDReserve.getInstance().getUserID() + separator + path), "UTF-8")));
