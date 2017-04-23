@@ -6,7 +6,9 @@
 ##运行要求
 项目需在搭载了JRE的环境中运行。编码环境要求UTF-8。（在Windows下运行架包2.0，可能会出现汉字乱码的情况）
 
-可直接运行分支Harvey目录下架包（ jar/asi-2.0-SNAPSHOT-jar-with-dependencies.jar ）
+可直接运行分支Harvey目录（ jar/asi-2.0-SNAPSHOT-jar-with-dependencies.jar ）下架包。
+
+> 我们没有给默认的账户密码，烦请助教自己注册一个。密码需要数字加字母（比如qwertyuiop123456）
 
 ##项目层级目录
 项目主页下，“lib”为项目依赖的一些maven依赖库里面没有的架包，“src”中包含项目源码和测试源码，“文档”中包含所有文档的word和pdf文件，“jar”中包含可执行文件。
