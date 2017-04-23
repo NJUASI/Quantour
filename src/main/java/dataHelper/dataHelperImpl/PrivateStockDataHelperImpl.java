@@ -124,6 +124,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      */
     private boolean wasExists(String userName) {
         File file = new File(parent + separator + userName + separator + userName + post);
+        System.out.println(file.getPath());
         try {
             if (!file.exists()) {
                 file.createNewFile();
