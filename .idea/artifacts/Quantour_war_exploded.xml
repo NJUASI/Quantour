@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Quantour:war exploded">
+    <output-path>$PROJECT_DIR$/target/asi</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Quantour" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.jfree:jfreechart:1.0.19" />
+          <element id="library" level="project" name="Maven: org.jfree:jcommon:1.0.23" />
+          <element id="library" level="project" name="Maven: net.sourceforge.javacsv:javacsv:2.0" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-math3:3.6.1" />
+          <element id="library" level="project" name="Maven: com.github.stuxuhai:jpinyin:1.1.8" />
+          <element id="library" level="project" name="Maven: org.jb2011:beautyeye_lnf:4.1" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/asi/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="Quantour/web/Web" />
+    </root>
+  </artifact>
+</component>
