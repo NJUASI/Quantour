@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	 http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	 http://www.springframework.org/schema/mvc
+	 http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+
+    <!-- 激活@Controller模式 -->
+    <mvc:annotation-driven/>
+    <!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.edu.nju.asi.controller"/>
+
+
+
+    <!---->
+    <!-- 声明一个拦截器 -->
+    <!--<mvc:interceptors>-->
+    <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
+    <!--&lt;!&ndash;<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>&ndash;&gt;-->
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/ask_question"/>-->
+    <!--&lt;!&ndash; 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 &ndash;&gt;-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/answer_question"/>-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/get_reply"/>-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/my_question_list"/>-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/my_answer_list"/>-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/public_QA_list"/>-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/unsolved_question_list"/>-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/onDuty"/>-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>
