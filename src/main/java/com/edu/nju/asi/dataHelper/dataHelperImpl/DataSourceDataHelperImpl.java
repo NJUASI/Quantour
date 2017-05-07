@@ -1,0 +1,57 @@
+package com.edu.nju.asi.dataHelper.dataHelperImpl;
+
+import com.github.stuxuhai.jpinyin.PinyinException;
+import com.edu.nju.asi.dataHelper.DataSourceDataHelper;
+import com.edu.nju.asi.dataHelper.dataHelperImpl.DataSourceDataHelper.*;
+import com.edu.nju.asi.po.DataSourceInfoPO;
+import com.edu.nju.asi.utilities.IDReserve;
+
+import java.io.*;
+
+/**
+ * Created by cuihua on 2017/3/30.
+ */
+public class DataSourceDataHelperImpl implements DataSourceDataHelper {
+
+    @Override
+    public boolean upload(String filePath) throws IOException, PinyinException {
+        OldDirRemover remover = new OldDirRemover();
+        remover.myDelete();
+
+        CodeDirCreator creator = new CodeDirCreator(filePath, false);
+        creator.createDir();
+
+        OriginalDataReader reader = new OriginalDataReader(filePath, false);
+        reader.handle();
+
+        DuplicationAdder adder = new DuplicationAdder(false);
+        adder.handle();
+
+        DateFilesCreator creator2 = new DateFilesCreator(false);
+        creator2.handle();
+
+        SituationCreator creator3 = new SituationCreator();
+        creator3.handle();
+
+        StockNameToCodeCreator creator4 = new StockNameToCodeCreator(false);
+        creator4.handle();
+
+        BaseStockHelper helper = new BaseStockHelper();
+        helper.uploadBaseStocks();
+
+        return true;
+    }
+
+    @Override
+    public DataSourceInfoPO getMyDataSource() throws IOException {
+        final String separator = System.getProperty("file.separator");
+        final String filePath = System.getProperty("user.dir") + separator + ".attachments" + separator +
+                IDReserve.getInstance().getUserID() + separator  + "stocks" + separator + "info.txt";
+        File thisFile = new File(filePath);
+        if (!thisFile.exists()) return null;
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
+        String[] result = br.readLine().split("\t");
+        return new DataSourceInfoPO(result[0], result[1]);
+    }
+}
