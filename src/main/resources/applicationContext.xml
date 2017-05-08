@@ -11,8 +11,8 @@
                          http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
     <!--<context:property-placeholder location="classpath:jdbc.properties" />-->
-    <context:component-scan base-package="com.edu.nju.asi.model" />
-    <context:component-scan base-package="com.edu.nju.asi.dao" />
+    <context:component-scan base-package="com.edu.nju.asi.model"/>
+    <context:component-scan base-package="com.edu.nju.asi.dao"/>
     <context:component-scan base-package="com.edu.nju.asi.service"/>
 
     <!-- task任务扫描注解，用于日常定期更新 -->
@@ -20,87 +20,87 @@
     <!--<context:component-scan base-package="task"/>-->
 
     <!-- 数据源 -->
-    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"-->
-          <!--destroy-method="close">-->
-        <!--<property name="driverClass" value="${jdbc.driver}"/>-->
-        <!--<property name="jdbcUrl" value="${jdbc.url}" />-->
-        <!--<property name="user" value="${jdbc.username}" />-->
-        <!--<property name="password" value="${jdbc.password}" />-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
 
-        <!--&lt;!&ndash; 请求超时时间 &ndash;&gt;-->
-        <!--<property name="checkoutTimeout" value="10000" />-->
-        <!--&lt;!&ndash; 每60秒检查所有连接池中的空闲连接。默认值: 0，不检查 &ndash;&gt;-->
-        <!--<property name="idleConnectionTestPeriod" value="1800" />-->
-        <!--&lt;!&ndash; 连接数据库连接池最大空闲时间 &ndash;&gt;-->
-        <!--<property name="maxIdleTime" value="1800" />-->
-        <!--&lt;!&ndash; 连接池初始化连接数 &ndash;&gt;-->
-        <!--<property name="initialPoolSize" value="2" />-->
-        <!--<property name="minPoolSize" value="10" />-->
-        <!--<property name="maxPoolSize" value="2000" />-->
-        <!--&lt;!&ndash;当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 &ndash;&gt;-->
-        <!--<property name="acquireIncrement" value="2" />-->
-        <!--<property name="acquireRetryAttempts" value="10"/>-->
-        <!--&lt;!&ndash; 关闭缓存 &ndash;&gt;-->
-        <!--<property name="maxStatements" value="0" />-->
-        <!--&lt;!&ndash; 请求连接失败后不再重连 &ndash;&gt;-->
-        <!--<property name="breakAfterAcquireFailure" value="false" />-->
-        <!--&lt;!&ndash; 自动超时回收Connection /> &ndash;&gt;-->
-        <!--<property name="unreturnedConnectionTimeout" value="25" />-->
-        <!--&lt;!&ndash; 配置超时自动断开conn /> &ndash;&gt;-->
-        <!--<property name="maxIdleTimeExcessConnections" value="20" />-->
-    <!--</bean>-->
+        <!-- 请求超时时间 -->
+        <property name="checkoutTimeout" value="10000"/>
+        <!-- 每60秒检查所有连接池中的空闲连接。默认值: 0，不检查 -->
+        <property name="idleConnectionTestPeriod" value="1800"/>
+        <!-- 连接数据库连接池最大空闲时间 -->
+        <property name="maxIdleTime" value="1800"/>
+        <!-- 连接池初始化连接数 -->
+        <property name="initialPoolSize" value="2"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="maxPoolSize" value="2000"/>
+        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 -->
+        <property name="acquireIncrement" value="2"/>
+        <property name="acquireRetryAttempts" value="10"/>
+        <!-- 关闭缓存 -->
+        <property name="maxStatements" value="0"/>
+        <!-- 请求连接失败后不再重连 -->
+        <property name="breakAfterAcquireFailure" value="false"/>
+        <!-- 自动超时回收Connection /> -->
+        <property name="unreturnedConnectionTimeout" value="25"/>
+        <!-- 配置超时自动断开conn /> -->
+        <property name="maxIdleTimeExcessConnections" value="20"/>
+    </bean>
 
-    <!-- 配置sessionFactory -->
-    <!--<bean id="sessionFactory"-->
-          <!--class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">-->
-        <!--<property name="dataSource" ref="dataSource" />-->
-        <!--<property name="packagesToScan" valcom.edu.nju.asi.modelodel" />&lt;!&ndash; 实体类的包 &ndash;&gt;-->
+    <!--配置sessionFactory -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.edu.nju.asi.model" /><!-- 实体类的包 -->
 
-        <!--<property name="hibernateProperties">-->
-            <!--<props>-->
-                <!--&lt;!&ndash; 方言：为每一种数据库提供适配器，方便转换 &ndash;&gt;-->
-                <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>-->
-                <!--<prop key="hibernate.show_sql">false</prop>-->
-                <!--&lt;!&ndash; 会自动创表，但是不会自动创建数据库，所以要先手动创建数据库。 &ndash;&gt;-->
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
-                <!--<prop key="hibernate.format_sql">false</prop>&lt;!&ndash;为了方便调试是否在运行hibernate时在日志中输出sql语句 &ndash;&gt;-->
-                <!--<prop key="hibernate.search.default.directory_provider">${hibernate.search.directory_provider}</prop>-->
-                <!--<prop key="hibernate.search.default.indexBase">${hibernate.search.indexBase}</prop>-->
-                <!--<prop key="hibernate.search.analyzer"> ${hibernate.search.analyzer}</prop>-->
+        <property name="hibernateProperties">
+            <props>
+                <!-- 方言：为每一种数据库提供适配器，方便转换 -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <!-- 会自动创表，但是不会自动创建数据库，所以要先手动创建数据库。 -->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.format_sql">false</prop><!--为了方便调试是否在运行hibernate时在日志中输出sql语句 -->
+                <prop key="hibernate.search.default.directory_provider">${hibernate.search.directory_provider}</prop>
+                <prop key="hibernate.search.default.indexBase">${hibernate.search.indexBase}</prop>
+                <prop key="hibernate.search.analyzer">${hibernate.search.analyzer}</prop>
 
-            <!--</props>-->
-        <!--</property>-->
-    <!--</bean>-->
+            </props>
+        </property>
+    </bean>
 
-    <!--&lt;!&ndash; 用于注入到GeneralDao中 &ndash;&gt;-->
-    <!--<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">-->
-        <!--<property name="sessionFactory" ref="sessionFactory" />-->
-    <!--</bean>-->
+    <!-- 用于注入到GeneralDao中 -->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
-    <!--&lt;!&ndash;hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到 &ndash;&gt;-->
-    <!--<bean id="txManager"-->
-          <!--class="org.springframework.orm.hibernate5.HibernateTransactionManager">-->
-        <!--<property name="sessionFactory" ref="sessionFactory"></property>-->
-    <!--</bean>-->
+    <!--hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到 -->
+    <bean id="txManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
 
-    <!--<tx:advice id="txAdvice" transaction-manager="txManager">-->
-        <!--<tx:attributes>-->
-            <!--<tx:method name="find*" propagation="REQUIRED" />-->
-            <!--<tx:method name="get*" propagation="REQUIRED" />-->
-            <!--<tx:method name="add*" propagation="REQUIRED" />-->
-            <!--<tx:method name="del*" propagation="REQUIRED" />-->
-            <!--<tx:method name="update*" propagation="REQUIRED" />-->
-            <!--<tx:method name="save*" propagation="REQUIRED" />-->
-            <!--<tx:method name="load*" propagation="REQUIRED" />-->
-            <!--<tx:method name="fakeDelete*" propagation="REQUIRED" />-->
-            <!--<tx:method name="*" read-only="true" />-->
-        <!--</tx:attributes>-->
-    <!--</tx:advice>-->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="find*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="load*" propagation="REQUIRED"/>
+            <tx:method name="fakeDelete*" propagation="REQUIRED"/>
+            <tx:method name="*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
 
 
-    <!--<aop:config proxy-target-class="true">-->
-        <!--&lt;!&ndash;<aop:advisor advice-ref="txAdvice" pointcut="execution(* org.wx.weixcom.edu.nju.asi.dao.dao.*.*(..))"/> &ndash;&gt;-->
-        <!--<aop:pointcut expression="executiocom.edu.nju.asi.dao dao..*.*(..))" id="pointcut" />-->
-        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />-->
-    <!--</aop:config>-->
+    <aop:config proxy-target-class="true">
+        <!--<aop:advisor advice-ref="txAdvice" pointcut="execution(* org.wx.weixcom.edu.nju.asi.dao.dao.*.*(..))"/> -->
+        <aop:pointcut expression="execution(* com.edu.nju.asi.dao..*.*(..))" id="pointcut" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
 </beans>

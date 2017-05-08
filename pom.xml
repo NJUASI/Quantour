@@ -48,7 +48,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- 使用SpringMVC需配置 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
