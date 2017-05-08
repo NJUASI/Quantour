@@ -1,6 +1,11 @@
-package com.edu.nju.asi.pojo;
+package com.edu.nju.asi.model;
 
-import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -9,16 +14,29 @@ import java.io.Serializable;
  * 用户上传的数据源相关信息
  */
 @Entity
-@Table
 public class DataSourceInfo implements Serializable {
 
-    // 上传文件大小
+    //用户名
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name="myGenerator",strategy = "assigned")
+    @GeneratedValue(generator = "myGenerator")
+    private String userName;
+
+    // 上传文件大小
+    @Basic
     private String fileSize;
 
     // 上传时间
+    @Basic
     private String uploadTime;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getFileSize() {
         return fileSize;

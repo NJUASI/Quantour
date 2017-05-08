@@ -1,4 +1,6 @@
-package com.edu.nju.asi.pojo;
+package com.edu.nju.asi.model;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,18 +11,20 @@ import java.io.Serializable;
  * 股票查找的信息携带者
  */
 @Entity
-@Table
 public class StockSearch implements Serializable {
 
     // 股票代码
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name="myGenerator",strategy = "assigned")
+    @GeneratedValue(generator = "myGenerator")
     private String code;
 
     // 股票名称
+    @Basic
     private String name;
 
     // 汉字首字母名称
+    @Basic
     private String firstLetters;
 
     public String getCode() {

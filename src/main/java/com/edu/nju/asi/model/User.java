@@ -1,28 +1,37 @@
-package com.edu.nju.asi.pojo;
+package com.edu.nju.asi.model;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Byron Dong on 2017/5/7.
  */
 @Entity
-@Table
 public class User implements Serializable {
 
     // 用户姓名
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name="myGenerator",strategy = "assigned")
+    @GeneratedValue(generator = "myGenerator")
     private String userName;
 
     // 用户密码
+    @Basic
     private String password;
 
-    //有bug
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Stock.class)
-    private Set<Stock> privateStock =  new HashSet<Stock>();
+    @ManyToMany
+    private List<Stock> privateStock;
+
+    public List<Stock> getPrivateStock() {
+        return privateStock;
+    }
+
+    public void setPrivateStock(List<Stock> privateStock) {
+        this.privateStock = privateStock;
+    }
 
     public String getUserName() {
         return userName;
@@ -40,11 +49,4 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Set<Stock> getPrivateStock() {
-        return privateStock;
-    }
-
-    public void setPrivateStock(Set<Stock> privateStock) {
-        this.privateStock = privateStock;
-    }
 }

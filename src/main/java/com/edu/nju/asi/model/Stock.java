@@ -1,6 +1,8 @@
-package com.edu.nju.asi.pojo;
+package com.edu.nju.asi.model;
+
 
 import com.edu.nju.asi.utilities.enums.Market;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,45 +14,56 @@ import java.time.LocalDate;
  * 股票
  */
 @Entity
-@Table
 public class Stock implements Serializable {
 
     // 股票代码
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name="myGenerator",strategy = "assigned")
+    @GeneratedValue(generator = "myGenerator")
     private String code;
 
     // 股票名称
+    @Basic
     private String name;
 
     // 日期(月/日/年)
+    @Basic
     private LocalDate date;
 
     // 市场名称
+    @Basic
     private Market market;
 
     // 开盘指数
+    @Basic
     private double open;
 
     // 最高指数
+    @Basic
     private double high;
 
     // 最低指数
+    @Basic
     private double low;
 
     // 收盘指数
+    @Basic
     private double close;
 
     // 成交量
+    @Basic
     private String volume;
 
     // 复权后的收盘指数
+    @Basic
     private double adjClose;
 
     // 昨收
+    @Basic
     private double preClose;
 
     // 昨日复权收盘指数
+    @Basic
     private double preAdjClose;
 
     public LocalDate getDate() {
