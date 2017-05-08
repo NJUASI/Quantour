@@ -1,4 +1,4 @@
-package utilities;
+package com.edu.nju.asi.utilities;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

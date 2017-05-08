@@ -18,11 +18,11 @@
         <property name="hbm2ddl.auto">update</property>
 
         <!--映射hbm文件（类）-->
-        <mapping class="pojo.Stock"/>
-        <mapping class="pojo.PrivateStock"/>
-        <mapping class="pojo.DataSourceInfo"/>
-        <mapping class="pojo.StockSearch"/>
-        <mapping class="pojo.StockSituation"/>
-        <mapping class="pojo.User"/>
+        <mapping class="com.edu.nju.asi.pojo.Stock"/>
+        <mapping class="com.edu.nju.asi.pojo.PrivateStock"/>
+        <mapping class="com.edu.nju.asi.pojo.DataSourceInfo"/>
+        <mapping class="com.edu.nju.asi.pojo.StockSearch"/>
+        <mapping class="com.edu.nju.asi.pojo.StockSituation"/>
+        <mapping class="com.edu.nju.asi.pojo.User"/>
     </session-factory>
 </hibernate-configuration>

@@ -52,7 +52,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
+            <version>4.3.8.RELEASE</version>
         </dependency>
 
         <!-- 关系型数据库整合时需配置 如hibernate jpa等 -->

@@ -1,4 +1,4 @@
-package pojo;
+package com.edu.nju.asi.pojo;
 
 import javax.persistence.*;
 import java.io.Serializable;

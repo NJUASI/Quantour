@@ -1,6 +1,6 @@
-package pojo;
+package com.edu.nju.asi.pojo;
 
-import utilities.enums.Market;
+import com.edu.nju.asi.utilities.enums.Market;
 
 import javax.persistence.*;
 import java.io.Serializable;
