@@ -2,6 +2,8 @@ package com.edu.nju.asi.utilities;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
@@ -11,7 +13,7 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtil {
 
     //用于获取session的配置对象
-    private static Configuration configuration = null;
+//    private static Configuration configuration = null;
 
     //session工厂
     private static SessionFactory sessionFactory =null;
@@ -21,9 +23,11 @@ public class HibernateUtil {
 
     //优先初始化的静态代码块
     static {
-        configuration = new Configuration().configure();
-        sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder().
-                applySettings(configuration.getProperties()).build());
+//        configuration = new Configuration().configure();
+//        sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder().
+//                applySettings(configuration.getProperties()).build());
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
     }
 
     /**
@@ -37,8 +41,8 @@ public class HibernateUtil {
      */
     public static Session getSession(){
         if(sessionFactory == null){
-            sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder().
-                    applySettings(configuration.getProperties()).build());
+            sessionFactory = new MetadataSources( new StandardServiceRegistryBuilder().configure().build())
+                    .buildMetadata().buildSessionFactory();
         }
         session = sessionFactory.openSession();
         return session;

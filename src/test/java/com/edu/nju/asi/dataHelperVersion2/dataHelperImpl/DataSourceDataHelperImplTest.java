@@ -1,6 +1,7 @@
 package com.edu.nju.asi.dataHelperVersion2.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelperVersion2.DataSourceDataHelper;
+import com.edu.nju.asi.model.DataSourceInfo;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -47,7 +48,9 @@ public class DataSourceDataHelperImplTest {
 
     @Test
     public void getMyDataSource() throws Exception {
-
+        DataSourceInfo dataSourceInfo = dataSourceDataHelper.getMyDataSource("ByronDong");
+        assertEquals("100",dataSourceInfo.getFileSize());
+        assertEquals("2017-05-08T21:54:34.365",dataSourceInfo.getUploadTime());
     }
 
 }

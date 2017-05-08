@@ -14,6 +14,7 @@ import java.io.Serializable;
  * 用户上传的数据源相关信息
  */
 @Entity
+@org.hibernate.annotations.Proxy(lazy = true)
 public class DataSourceInfo implements Serializable {
 
     //用户名

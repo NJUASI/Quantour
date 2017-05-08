@@ -55,21 +55,34 @@
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="com.edu.nju.asi.model" /><!-- 实体类的包 -->
-
         <property name="hibernateProperties">
             <props>
                 <!-- 方言：为每一种数据库提供适配器，方便转换 -->
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
                 <!-- 会自动创表，但是不会自动创建数据库，所以要先手动创建数据库。 -->
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.format_sql">false</prop><!--为了方便调试是否在运行hibernate时在日志中输出sql语句 -->
+                <prop key="hibernate.format_sql">true</prop><!--为了方便调试是否在运行hibernate时在日志中输出sql语句 -->
                 <prop key="hibernate.search.default.directory_provider">${hibernate.search.directory_provider}</prop>
                 <prop key="hibernate.search.default.indexBase">${hibernate.search.indexBase}</prop>
                 <prop key="hibernate.search.analyzer">${hibernate.search.analyzer}</prop>
-
             </props>
         </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.edu.nju.asi.model.DataSourceInfo</value>
+                <value>com.edu.nju.asi.model.Stock</value>
+                <value>com.edu.nju.asi.model.StockSearch</value>
+                <value>com.edu.nju.asi.model.StockSituation</value>
+                <value>com.edu.nju.asi.model.User</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 定义Hibernate的事务管理器HibernateTransactionManager -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <!-- 依赖注入上面的sessionFactory -->
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <!-- 用于注入到GeneralDao中 -->
@@ -96,7 +109,6 @@
             <tx:method name="*" read-only="true"/>
         </tx:attributes>
     </tx:advice>
-
 
     <aop:config proxy-target-class="true">
         <!--<aop:advisor advice-ref="txAdvice" pointcut="execution(* org.wx.weixcom.edu.nju.asi.dao.dao.*.*(..))"/> -->
