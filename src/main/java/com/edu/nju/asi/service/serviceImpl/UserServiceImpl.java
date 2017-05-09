@@ -4,7 +4,7 @@ import com.edu.nju.asi.dao.UserDao;
 import com.edu.nju.asi.dao.daoImpl.UserDaoImpl;
 import com.edu.nju.asi.utilities.AttahmentsInitializer;
 import com.edu.nju.asi.utilities.Detector;
-import com.edu.nju.asi.utilities.MD5Util;
+import com.edu.nju.asi.utilities.util.MD5Util;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.po.UserPO;
 import com.edu.nju.asi.service.UserService;

@@ -1,9 +1,6 @@
 package com.edu.nju.asi.dao;
 
-import com.edu.nju.asi.po.StockSituationPO;
-import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
-
-import java.io.IOException;
+import com.edu.nju.asi.model.StockSituation;
 import java.time.LocalDate;
 
 /**
@@ -17,11 +14,10 @@ public interface StockSituationDao {
      * 获取指定日期市场温度计数据
      *
      * @author Byron Dong
-     * @updateTime 2017/3/5
+     * @updateTime 2017/5/9
      * @param date 指定日期
-     * @return StockSituationPO 指定日期市场温度计数据
-     * @throws IOException IO
+     * @return StockSituation 指定日期市场温度计数据
      */
-    StockSituationPO getStockSituation(LocalDate date) throws IOException, NoSituationDataException;
+    StockSituation getStockSituation(LocalDate date);
 
 }

@@ -1,9 +1,6 @@
 package com.edu.nju.asi.dao;
 
-import com.github.stuxuhai.jpinyin.PinyinException;
-import com.edu.nju.asi.po.DataSourceInfoPO;
-
-import java.io.IOException;
+import com.edu.nju.asi.model.DataSourceInfo;
 
 /**
  * Created by cuihua on 2017/3/30.
@@ -13,19 +10,37 @@ import java.io.IOException;
 public interface DataSourceDao {
 
     /**
-     * @auther cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/30
-     * @param filePath 要上传的文件路径
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @param dataSourceInfo 要上传的信息
      * @return 上传成功
      */
-    boolean upload(String filePath) throws IOException, PinyinException;
+    boolean addDataSource(DataSourceInfo dataSourceInfo);
 
     /**
-     * @auther cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/4/13
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @param dataSourceInfo 要修改的信息
+     * @return 上传成功
+     */
+    boolean updateDataSource(DataSourceInfo dataSourceInfo);
+
+    /**
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @param userName 用户名
+     * @return 上传成功
+     */
+    boolean deleteDataSource(String userName);
+
+    /**
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
      * @return 用户自己上传的数据源格式信息，没有返回null
      */
-    DataSourceInfoPO getMyDataSource() throws IOException;
+    DataSourceInfo getDataSource();
 }

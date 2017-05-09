@@ -1,4 +1,4 @@
-package com.edu.nju.asi.utilities;
+package com.edu.nju.asi.utilities.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
