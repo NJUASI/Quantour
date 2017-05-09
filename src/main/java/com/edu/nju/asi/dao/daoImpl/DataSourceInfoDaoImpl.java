@@ -2,16 +2,11 @@ package com.edu.nju.asi.dao.daoImpl;
 
 import com.edu.nju.asi.model.DataSourceInfo;
 import com.edu.nju.asi.dao.DataSourceInfoDao;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
 
 /**
  * Created by cuihua on 2017/3/30.
@@ -107,14 +102,7 @@ public class DataSourceInfoDaoImpl implements DataSourceInfoDao {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        DataSourceInfo dataSourceInfo = null;
-        Criteria criteria = session.createCriteria(DataSourceInfo.class);
-        criteria.add(Expression.eq("userName",userName));
-        List<DataSourceInfo> list = criteria.list();
-
-        if(list!=null && !list.isEmpty()){
-            dataSourceInfo = list.get(0);
-        }
+        DataSourceInfo dataSourceInfo = (DataSourceInfo)session.get(DataSourceInfo.class,userName);
         transaction.commit();
         session.close();
         return dataSourceInfo;
