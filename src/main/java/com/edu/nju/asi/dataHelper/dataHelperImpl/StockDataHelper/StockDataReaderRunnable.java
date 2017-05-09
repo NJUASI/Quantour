@@ -26,15 +26,16 @@ public class StockDataReaderRunnable implements Runnable {
 
         try {
 
-            result = new StockDaoImpl().getStockData(code);
+//            result = new StockDaoImpl().getStockData(code);
+            result = null;
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public List<StockPO> getResult() {
+    public List<StockPO> getResult(){
         return result;
     }
 }

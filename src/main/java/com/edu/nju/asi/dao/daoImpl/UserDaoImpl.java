@@ -6,6 +6,10 @@ import com.edu.nju.asi.dataHelper.dataHelperImpl.UserDataHelperImpl;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.po.UserPO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 
@@ -14,8 +18,12 @@ import java.util.Set;
  * Last updated by Harvey
  * Update time 2017/3/6
  */
+@Repository
 public class UserDaoImpl implements UserDao {
 
+    @Autowired
+    protected SessionFactory sessionFactory;
+    private Session session;
 
     /**
      * 添加用户信息

@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
  */
 public class DAOManager {
 
-    public final static  DataSourceDao dataSourceDao;
+    public final static DataSourceInfoDao dataSourceInfoDao;
 
     public final static  StockDao stockDao;
 
@@ -20,7 +20,7 @@ public class DAOManager {
 
     static {
         ApplicationContext applicationContext = ApplicationContextHelper.getApplicationContext();
-        dataSourceDao = applicationContext.getBean(DataSourceDao.class);
+        dataSourceInfoDao = applicationContext.getBean(DataSourceInfoDao.class);
         stockDao = applicationContext.getBean(StockDao.class);
         stockSearchDao = applicationContext.getBean(StockSearchDao.class);
         stockSituationDao = applicationContext.getBean(StockSituationDao.class);

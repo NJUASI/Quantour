@@ -14,6 +14,10 @@ import com.edu.nju.asi.po.StockPO;
 import com.edu.nju.asi.po.StockSearchPO;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.vo.StockPoolVO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,7 +31,12 @@ import java.util.Map;
  * Update time 2017/3/15
  * 新增异常
  */
+@Repository
 public class StockDaoImpl implements StockDao {
+
+    @Autowired
+    protected SessionFactory sessionFactory;
+    private Session session;
 
     /**
      * 获取特定日期指定股票的相关数据

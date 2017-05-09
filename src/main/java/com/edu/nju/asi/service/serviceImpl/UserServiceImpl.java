@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         detector.infoDetector(userVO.userName);
 
         userVO.password = MD5Util.encodeMD5(userVO.password);
-        userDao.add(new UserPO(userVO));
+//        userDao.add(new UserPO(userVO));
         return true;
     }
 
@@ -77,7 +77,8 @@ public class UserServiceImpl implements UserService {
         detector.passwordDetector(userVO.password);
 
         userVO.password = MD5Util.encodeMD5(userVO.password);
-        return userDao.modify(new UserPO(userVO));
+//        return userDao.modify(new UserPO(userVO));
+        return true;
     }
 
     /**

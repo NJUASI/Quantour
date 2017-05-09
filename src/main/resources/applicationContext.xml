@@ -68,15 +68,6 @@
                 <prop key="hibernate.search.analyzer">${hibernate.search.analyzer}</prop>
             </props>
         </property>
-        <property name="annotatedClasses">
-            <list>
-                <value>com.edu.nju.asi.model.DataSourceInfo</value>
-                <value>com.edu.nju.asi.model.Stock</value>
-                <value>com.edu.nju.asi.model.StockSearch</value>
-                <value>com.edu.nju.asi.model.StockSituation</value>
-                <value>com.edu.nju.asi.model.User</value>
-            </list>
-        </property>
     </bean>
 
     <!-- 定义Hibernate的事务管理器HibernateTransactionManager -->

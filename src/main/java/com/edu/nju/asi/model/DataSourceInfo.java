@@ -25,11 +25,21 @@ public class DataSourceInfo implements Serializable {
 
     // 上传文件大小
     @Basic
+
     private String fileSize;
 
     // 上传时间
     @Basic
     private String uploadTime;
+
+    public DataSourceInfo() {
+    }
+
+    public DataSourceInfo(String userName,String fileSize, String uploadTime) {
+        this.userName = userName;
+        this.fileSize = fileSize;
+        this.uploadTime = uploadTime;
+    }
 
     public String getUserName() {
         return userName;

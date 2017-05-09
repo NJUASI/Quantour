@@ -49,9 +49,9 @@ public class ChartServiceImpl implements ChartService {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         List<StockPO> tempList = null;
 
-        if(codeExist(code)){
-            tempList = stockDao.getStockData(code);
-        }
+//        if(codeExist(code)){
+//            tempList = stockDao.getStockData(code);
+//        }
 
         for (StockPO po : tempList) {
             System.out.println(po.getDate());
@@ -96,36 +96,37 @@ public class ChartServiceImpl implements ChartService {
      */
     @Override
     public Map<MovingAverageType, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> MATypes) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException, NoMatchEnumException {
-        Map<MovingAverageType, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
-
-        String code = chartShowCriteriaVO.stockCode;
-        LocalDate begin = chartShowCriteriaVO.start;
-        LocalDate end = chartShowCriteriaVO.end;
-
-        List<StockPO> poList = null;
-        if (codeExist(code)) {
-            poList = stockDao.getStockData(code, begin, end);
-        }
-
-        // 按5日／10日等分别计算
-        for (int i = 0; i < MATypes.size(); i++) {
-            LocalDate firstDay = stockDao.getFirstAndLastDay(code).get(0);
-            List<StockPO> preList = stockDao.getStockData(code, firstDay, begin);
-
-            //之前的数据够用
-            int thisMARepre = MATypes.get(i).getRepre();
-            if (preList.size() >= thisMARepre) {
-                // preList中包含与现有poList中重复的begin的数据，故subList中需要减一
-                preList = preList.subList(preList.size() - thisMARepre, preList.size() - 1);
-            }
-
-            List<StockPO> tempList = preList;
-            tempList.addAll(poList);
-
-            //放入天数和其所对应的均值点的数据
-            aveDataMap.put(MATypes.get(i), calculate(tempList, thisMARepre));
-        }
-        return aveDataMap;
+//        Map<MovingAverageType, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
+//
+//        String code = chartShowCriteriaVO.stockCode;
+//        LocalDate begin = chartShowCriteriaVO.start;
+//        LocalDate end = chartShowCriteriaVO.end;
+//
+//        List<StockPO> poList = null;
+////        if (codeExist(code)) {
+////            poList = stockDao.getStockData(code, begin, end);
+////        }
+//
+//        // 按5日／10日等分别计算
+//        for (int i = 0; i < MATypes.size(); i++) {
+//            LocalDate firstDay = stockDao.getFirstAndLastDay(code).get(0);
+//            List<StockPO> preList = stockDao.getStockData(code, firstDay, begin);
+//
+//            //之前的数据够用
+//            int thisMARepre = MATypes.get(i).getRepre();
+//            if (preList.size() >= thisMARepre) {
+//                // preList中包含与现有poList中重复的begin的数据，故subList中需要减一
+//                preList = preList.subList(preList.size() - thisMARepre, preList.size() - 1);
+//            }
+//
+//            List<StockPO> tempList = preList;
+//            tempList.addAll(poList);
+//
+//            //放入天数和其所对应的均值点的数据
+//            aveDataMap.put(MATypes.get(i), calculate(tempList, thisMARepre));
+//        }
+//        return aveDataMap;
+        return null;
     }
 
     /**
@@ -142,25 +143,26 @@ public class ChartServiceImpl implements ChartService {
     @Override
     public Map<MovingAverageType, List<MovingAverageVO>> getAveData(String code, List<MovingAverageType> MATypes) throws DateShortException {
 
-        Map<MovingAverageType, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
-
-        //获取单支股票全部数据
-        List<StockPO> poList = null;
-        try {
-            poList = stockDao.getStockData(code);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for (int i = 0; i < MATypes.size(); i++) {
-            try {
-                aveDataMap.put(MATypes.get(i), calculate(poList, MATypes.get(i).getRepre()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return aveDataMap;
+//        Map<MovingAverageType, List<MovingAverageVO>> aveDataMap = new TreeMap<>();
+//
+//        //获取单支股票全部数据
+//        List<StockPO> poList = null;
+//        try {
+//            poList = stockDao.getStockData(code);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        for (int i = 0; i < MATypes.size(); i++) {
+//            try {
+//                aveDataMap.put(MATypes.get(i), calculate(poList, MATypes.get(i).getRepre()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return aveDataMap;
+        return null;
     }
 
     /**
@@ -174,13 +176,14 @@ public class ChartServiceImpl implements ChartService {
      */
     @Override
     public List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, NoDataWithinException, DateNotWithinException, DataSourceFirstDayException {
-        List<StockPO> stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
-        List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
-
-        List<StockComparisionVO> result = new LinkedList<>();
-        result.add(new StockComparisionVO(stockPOList1));
-        result.add(new StockComparisionVO(stockPOList2));
-        return result;
+//        List<StockPO> stockPOList1 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode1, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+//        List<StockPO> stockPOList2 = stockDao.getStockData(stockComparsionCriteriaVO.stockCode2, stockComparsionCriteriaVO.start, stockComparsionCriteriaVO.end);
+//
+//        List<StockComparisionVO> result = new LinkedList<>();
+//        result.add(new StockComparisionVO(stockPOList1));
+//        result.add(new StockComparisionVO(stockPOList2));
+//        return result;
+        return null;
     }
 
     /**
@@ -233,7 +236,8 @@ public class ChartServiceImpl implements ChartService {
      * @return StockPO的列表
      */
     private List<StockPO> getStockPOs(ChartShowCriteriaVO vo) throws IOException, DateNotWithinException, NoDataWithinException {
-        return stockDao.getStockData(vo.stockCode, vo.start, vo.end);
+//        return stockDao.getStockData(vo.stockCode, vo.start, vo.end);
+        return null;
     }
 
 

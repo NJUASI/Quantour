@@ -7,7 +7,7 @@ import com.edu.nju.asi.model.DataSourceInfo;
  *
  * 更换数据源的接口
  */
-public interface DataSourceDao {
+public interface DataSourceInfoDao {
 
     /**
      * @auther Byron Dong
@@ -16,7 +16,7 @@ public interface DataSourceDao {
      * @param dataSourceInfo 要上传的信息
      * @return 上传成功
      */
-    boolean addDataSource(DataSourceInfo dataSourceInfo);
+    boolean addDataSourceInfo(DataSourceInfo dataSourceInfo);
 
     /**
      * @auther Byron Dong
@@ -25,7 +25,7 @@ public interface DataSourceDao {
      * @param dataSourceInfo 要修改的信息
      * @return 上传成功
      */
-    boolean updateDataSource(DataSourceInfo dataSourceInfo);
+    boolean updateDataSourceInfo(DataSourceInfo dataSourceInfo);
 
     /**
      * @auther Byron Dong
@@ -34,7 +34,7 @@ public interface DataSourceDao {
      * @param userName 用户名
      * @return 上传成功
      */
-    boolean deleteDataSource(String userName);
+    boolean deleteDataSourceInfo(String userName);
 
     /**
      * @auther Byron Dong
@@ -42,5 +42,5 @@ public interface DataSourceDao {
      * @updateTime 2017/5/9
      * @return 用户自己上传的数据源格式信息，没有返回null
      */
-    DataSourceInfo getDataSource();
+    DataSourceInfo getDataSourceInfo(String userName);
 }
