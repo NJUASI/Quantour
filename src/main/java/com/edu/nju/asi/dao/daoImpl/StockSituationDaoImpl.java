@@ -1,11 +1,8 @@
 package com.edu.nju.asi.dao.daoImpl;
 
-import com.edu.nju.asi.dataHelper.StockSituationDataHelper;
-import com.edu.nju.asi.dataHelper.dataHelperImpl.StockSituationDataHelperImpl;
-import com.edu.nju.asi.po.StockSituationPO;
-import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
+import com.edu.nju.asi.dao.StockSituationDao;
+import com.edu.nju.asi.model.StockSituation;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -13,32 +10,19 @@ import java.time.LocalDate;
  * Last updated by cuihua
  * Update time 2017/3/9
  */
-public class StockSituationDaoImpl implements com.edu.nju.asi.dao.StockSituationDao {
+public class StockSituationDaoImpl implements StockSituationDao {
 
-    //市场温度计信息获取的helper对象
-    private StockSituationDataHelper stockSituationHelper;
-
-    /**
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/5
-     */
-    public StockSituationDaoImpl() {
-        this.stockSituationHelper = new StockSituationDataHelperImpl();
-    }
 
     /**
      * 获取指定日期市场温度计数据
      *
-     * @author Byron Dong
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/9
      * @param date 指定日期
-     * @return 指定日期市场温度计数据
-     * @throws IOException IO
+     * @return StockSituation 指定日期市场温度计数据
+     * @author Byron Dong
+     * @updateTime 2017/5/9
      */
     @Override
-    public StockSituationPO getStockSituation(LocalDate date) throws NoSituationDataException, IOException {
-        return this.stockSituationHelper.getStockSituation(date);
+    public StockSituation getStockSituation(LocalDate date) {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.edu.nju.asi.dao;
 
-import com.edu.nju.asi.po.UserPO;
+import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.User;
 
 import java.util.Set;
 
@@ -16,41 +17,71 @@ public interface UserDao {
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/5
-     * @param userPO 用户信息载体
+     * @updateTime 2017/5/9
+     * @param user 用户信息载体
      * @return 是否成功添加用户
      */
-     boolean add(UserPO userPO);
+     boolean add(User user);
 
     /**
      * 获取指定用户信息
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/5
+     * @updateTime 2017/5/9
      * @param username 用户账号
      * @return 用户信息载体
      */
-     UserPO get(String username);
+     User get(String username);
 
     /**
      * 修改用户信息
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/3/5
-     * @param userPO 用户信息载体
+     * @updateTime 2017/5/9
+     * @param user 用户信息载体
      * @return 是否成功修改用户
      */
-     boolean modify(UserPO userPO);
+     boolean update(User user);
 
     /**
      * 获取已存在的所有用户名称
      *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/6
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
      * @return 用户名称集合
      */
     Set<Object> getAllUserNames();
+
+    /**
+     * 获取已存在的所有用户名称
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @return 用户名称集合
+     */
+    Set<Stock> getPrivateStock(String userName);
+
+    /**
+     * 添加自选股
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @return 用户名称集合
+     */
+    boolean addPrivateStock(Stock stock);
+
+    /**
+     * 删除自选股
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @return 用户名称集合
+     */
+    boolean deletePrivateStock(String stockCode);
 }
