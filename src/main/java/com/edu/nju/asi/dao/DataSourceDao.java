@@ -1,4 +1,4 @@
-package com.edu.nju.asi.dataHelper;
+package com.edu.nju.asi.dao;
 
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.edu.nju.asi.po.DataSourceInfoPO;
@@ -7,8 +7,10 @@ import java.io.IOException;
 
 /**
  * Created by cuihua on 2017/3/30.
+ *
+ * 更换数据源的接口
  */
-public interface DataSourceDataHelper {
+public interface DataSourceDao {
 
     /**
      * @auther cuihua

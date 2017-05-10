@@ -12,7 +12,7 @@
 
     <context:property-placeholder location="classpath:jdbc.properties" />
     <context:component-scan base-package="com.edu.nju.asi.model"/>
-    <context:component-scan base-package="com.edu.nju.asi.dao"/>
+    <context:component-scan base-package="com.edu.nju.asi.dataHelper"/>
     <context:component-scan base-package="com.edu.nju.asi.service"/>
 
     <!-- task任务扫描注解，用于日常定期更新 -->
@@ -103,7 +103,7 @@
 
     <aop:config proxy-target-class="true">
         <!--<aop:advisor advice-ref="txAdvice" pointcut="execution(* org.wx.weixcom.edu.nju.asi.dao.dao.*.*(..))"/> -->
-        <aop:pointcut expression="execution(* com.edu.nju.asi.dao..*.*(..))" id="pointcut" />
+        <aop:pointcut expression="execution(* com.edu.nju.asi.dataHelper..*.*(..))" id="pointcut" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
 </beans>

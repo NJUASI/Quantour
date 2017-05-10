@@ -126,11 +126,11 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     private void setUp(List<String> traceBackStockPool) throws IOException {
 
-//        stockData = new HashMap<>();
-//        for (String thisStockCode : traceBackStockPool) {
-//            List<StockPO> tempPOS = stockDao.getStockData(thisStockCode);
-//            stockData.put(thisStockCode, convertStockPOS(tempPOS));
-//        }
+        stockData = new HashMap<>();
+        for (String thisStockCode : traceBackStockPool) {
+            List<StockPO> tempPOS = stockDao.getStockData(thisStockCode);
+            stockData.put(thisStockCode, convertStockPOS(tempPOS));
+        }
 
     }
 

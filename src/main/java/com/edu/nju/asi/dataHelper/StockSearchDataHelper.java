@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Harvey on 2017/3/14.
  */
-public interface SearchDataHelper {
+public interface StockSearchDataHelper {
 
     /**
      * @return 所有股票简化代码
@@ -24,7 +24,7 @@ public interface SearchDataHelper {
     /**
      * @return 所有股票名称的首字母缩写及其名称、代码
      */
-    List<StockSearchPO> getAllStocksFirstLetters() throws IOException;
+    List<StockSearchPO> getAllStocksFirstLetters();
 
     /**
      * @return 返回所有股票的代码及其名称，代码作为键值

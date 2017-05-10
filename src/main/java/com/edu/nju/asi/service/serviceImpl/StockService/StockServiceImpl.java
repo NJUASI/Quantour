@@ -48,13 +48,13 @@ public class StockServiceImpl implements StockService {
     public List<StockVO> getAllStocks(LocalDate date) throws IOException {
 
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-//        try {
-//            for (StockPO po:stockDao.getStockData(date)) {
-//                stockVOList.add(new StockVO(po));
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            for (StockPO po:stockDao.getStockData(date)) {
+                stockVOList.add(new StockVO(po));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return stockVOList;
     }
 
@@ -71,9 +71,9 @@ public class StockServiceImpl implements StockService {
     @Override
     public List<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
-//        for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
-//            stockVOList.add(new StockVO(po));
-//        }
+        for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
+            stockVOList.add(new StockVO(po));
+        }
         return stockVOList;
     }
 
@@ -88,8 +88,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<String> getPrivateStockCodes(String userName) throws PrivateStockNotFoundException {
-//        return stockDao.getPrivateStockCodes(userName);
-        return null;
+        return stockDao.getPrivateStockCodes(userName);
     }
 
     /**
@@ -103,8 +102,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException {
-//        return stockDao.addPrivateStock(userName, stockCode);
-        return true;
+        return stockDao.addPrivateStock(userName, stockCode);
     }
 
     /**
@@ -118,8 +116,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException {
-//        return stockDao.deletePrivateStock(userName, stockCode);
-        return true;
+        return stockDao.deletePrivateStock(userName, stockCode);
     }
 
     /**
@@ -162,14 +159,14 @@ public class StockServiceImpl implements StockService {
         }
 
         //通过匹配股票的首字母来查询
-//        if(searchString.matches("[a-zA-Z]+")){
-//            List<StockSearchPO> firstLetters = stockDao.getAllStocksFirstLetters();
-//            for (StockSearchPO po : firstLetters) {
-//                if (po.getFirstLetters().contains(searchString)){
-//                    stockSearchVOs.add(new StockSearchVO(po));
-//                }
-//            }
-//        }
+        if(searchString.matches("[a-zA-Z]+")){
+            List<StockSearchPO> firstLetters = stockDao.getAllStocksFirstLetters();
+            for (StockSearchPO po : firstLetters) {
+                if (po.getFirstLetters().contains(searchString)){
+                    stockSearchVOs.add(new StockSearchVO(po));
+                }
+            }
+        }
         return  stockSearchVOs;
     }
 
@@ -184,10 +181,10 @@ public class StockServiceImpl implements StockService {
     @Override
     public Map<LocalDate, StockVO> getOneStockDateAndData(String stockCode, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
         Map<LocalDate, StockVO> dateAndData = new TreeMap<LocalDate, StockVO>();
-//        List<StockVO> stockVOS = convertStockPO2VO(stockDao.getStockData(stockCode,start,end));
-//        for(int i = 0; i < stockVOS.size(); i++){
-//            dateAndData.put(stockVOS.get(i).date,stockVOS.get(i));
-//        }
+        List<StockVO> stockVOS = convertStockPO2VO(stockDao.getStockData(stockCode,start,end));
+        for(int i = 0; i < stockVOS.size(); i++){
+            dateAndData.put(stockVOS.get(i).date,stockVOS.get(i));
+        }
         return dateAndData;
     }
 
@@ -201,9 +198,8 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<StockVO> getOneStockData(String stockCode, LocalDate start, LocalDate end) throws DateNotWithinException, NoDataWithinException, IOException {
-//        List<StockPO> stockPOS = stockDao.getStockData(stockCode,start,end);
-//        return convertStockPO2VO(stockPOS);
-        return null;
+        List<StockPO> stockPOS = stockDao.getStockData(stockCode,start,end);
+        return convertStockPO2VO(stockPOS);
     }
 
     /**

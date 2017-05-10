@@ -12,12 +12,14 @@ import java.time.LocalDate;
  * 市场情况温度计
  */
 @Entity
+@Table(name = "stocksituation")
 public class StockSituation implements Serializable {
 
     //日期
     @Id
     @GenericGenerator(name="myGenerator",strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
+    @Column(name = "date")
     private LocalDate date;
 
     // 当日总交易量

@@ -1,9 +1,6 @@
 package com.edu.nju.asi.dataHelper;
 
-import com.edu.nju.asi.po.StockSituationPO;
-import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
-
-import java.io.IOException;
+import com.edu.nju.asi.model.StockSituation;
 import java.time.LocalDate;
 
 /**
@@ -16,14 +13,12 @@ import java.time.LocalDate;
 public interface StockSituationDataHelper {
 
     /**
-     * 获取指定日期所有数据
+     * 获取指定日期市场温度计数据
      *
      * @author Byron Dong
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/5
-     * @param date  指定股票代码
-     * @return 指定股票所有数据
-     * @throws IOException IO
+     * @updateTime 2017/5/9
+     * @param date 指定日期
+     * @return StockSituation 指定日期市场温度计数据
      */
-    StockSituationPO getStockSituation(LocalDate date) throws IOException, NoSituationDataException;
+    StockSituation getStockSituation(LocalDate date);
 }

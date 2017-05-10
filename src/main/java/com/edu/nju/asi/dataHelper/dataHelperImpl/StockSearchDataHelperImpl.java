@@ -1,25 +1,15 @@
-package com.edu.nju.asi.dao.daoImpl;
+package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
-import com.edu.nju.asi.dao.StockSearchDao;
+import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.po.StockSearchPO;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Byron Dong on 2017/5/9.
+ * Created by Harvey on 2017/3/14.
  */
-@Repository
-public class StockSearchDaoImpl implements StockSearchDao {
-
-    @Autowired
-    protected SessionFactory sessionFactory;
-    private Session session;
-
+public class StockSearchDataHelperImpl implements StockSearchDataHelper {
     /**
      * @return 所有股票简化代码
      */

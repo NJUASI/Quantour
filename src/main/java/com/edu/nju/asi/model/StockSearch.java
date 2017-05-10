@@ -11,12 +11,14 @@ import java.io.Serializable;
  * 股票查找的信息携带者
  */
 @Entity
+@Table(name = "stocksearch")
 public class StockSearch implements Serializable {
 
     // 股票代码
     @Id
     @GenericGenerator(name="myGenerator",strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
+    @Column(name = "code")
     private String code;
 
     // 股票名称

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="quantour@localhost" uuid="2e04ce72-48a9-4558-8e4a-48e1f7901d7b">
+    <data-source source="LOCAL" name="quantour@localhost" uuid="bb95c5a5-de22-4ef9-b288-7f9a10831e49">
       <driver-ref>mysql</driver-ref>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/quantour</jdbc-url>

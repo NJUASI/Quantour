@@ -7,6 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Byron Dong on 2017/5/7.
@@ -14,12 +16,14 @@ import java.time.LocalDate;
  * 股票
  */
 @Entity
+@Table(name = "stock")
 public class Stock implements Serializable {
 
     // 股票代码
     @Id
     @GenericGenerator(name="myGenerator",strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
+    @Column(name = "code")
     private String code;
 
     // 股票名称
@@ -65,6 +69,9 @@ public class Stock implements Serializable {
     // 昨日复权收盘指数
     @Basic
     private double preAdjClose;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY,mappedBy = "privateStock")
+    private Set<User> users =  new HashSet<>();
 
     public LocalDate getDate() {
         return date;
@@ -160,5 +167,13 @@ public class Stock implements Serializable {
 
     public void setPreAdjClose(double preAdjClose) {
         this.preAdjClose = preAdjClose;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUserSet(Set<User> users) {
+        this.users = users;
     }
 }

@@ -38,8 +38,7 @@ public class StockSituationServiceImpl implements StockSituationService {
      * @throws IOException IO
      */
     private StockSituationVO getStockSituation(LocalDate date) throws IOException, NoSituationDataException {
-//       return new StockSituationVO(stockSituationDao.getStockSituation(date));
-        return null;
+       return new StockSituationVO(stockSituationDao.getStockSituation(date));
     }
 
     /**
