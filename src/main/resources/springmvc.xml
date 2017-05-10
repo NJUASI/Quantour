@@ -11,7 +11,7 @@
 	 http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 
-    <!-- 默认的注解映射的支持。激活@Controller模式 -->
+    <!-- 注册用于支持基于注解的控制器请求处理方法的bean对象，激活@Controller模式 -->
     <mvc:annotation-driven/>
     <!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
     <context:component-scan base-package="com.edu.nju.asi.controller"/>
@@ -31,7 +31,7 @@
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/view/"/>
+        <property name="prefix" value="/view/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 </beans>
