@@ -2,6 +2,10 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockSituationDataHelper;
 import com.edu.nju.asi.model.StockSituation;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 
@@ -13,7 +17,13 @@ import java.time.LocalDate;
  *
  * 具体实现其功能
  */
+@Repository
 public class StockSituationDataHelperImpl implements StockSituationDataHelper {
+
+    @Autowired
+    protected SessionFactory sessionFactory;
+    private Session session;
+
     /**
      * 获取指定日期市场温度计数据
      *

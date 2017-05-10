@@ -2,6 +2,10 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.po.StockSearchPO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +13,13 @@ import java.util.Map;
 /**
  * Created by Harvey on 2017/3/14.
  */
+@Repository
 public class StockSearchDataHelperImpl implements StockSearchDataHelper {
+
+    @Autowired
+    protected SessionFactory sessionFactory;
+    private Session session;
+
     /**
      * @return 所有股票简化代码
      */

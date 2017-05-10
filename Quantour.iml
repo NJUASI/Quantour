@@ -26,6 +26,7 @@
         <naming-strategy-map>
           <unit-entry name="sessionFactory" />
         </naming-strategy-map>
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
       </configuration>
     </facet>
   </component>

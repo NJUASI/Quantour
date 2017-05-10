@@ -4,6 +4,10 @@ import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.vo.StockPoolVO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +18,12 @@ import java.util.Map;
  * Last updated by cuihua
  * Update time 2017/3/18
  */
+@Repository
 public class StockDataHelperImpl implements StockDataHelper {
+
+    @Autowired
+    protected SessionFactory sessionFactory;
+    private Session session;
 
     /**
      * 获取特定日期指定股票的相关数据

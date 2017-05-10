@@ -23,16 +23,11 @@ public class Stock implements Serializable {
     @Id
     @GenericGenerator(name="myGenerator",strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
-    @Column(name = "code")
-    private String code;
+    private StockID stockID;
 
     // 股票名称
     @Basic
     private String name;
-
-    // 日期(月/日/年)
-    @Basic
-    private LocalDate date;
 
     // 市场名称
     @Basic
@@ -70,15 +65,15 @@ public class Stock implements Serializable {
     @Basic
     private double preAdjClose;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY,mappedBy = "privateStock")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "privateStock")
     private Set<User> users =  new HashSet<>();
 
-    public LocalDate getDate() {
-        return date;
+    public StockID getStockID() {
+        return stockID;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStockID(StockID stockID) {
+        this.stockID = stockID;
     }
 
     public double getOpen() {
@@ -129,14 +124,6 @@ public class Stock implements Serializable {
         this.adjClose = adjClose;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
     }
@@ -173,7 +160,8 @@ public class Stock implements Serializable {
         return users;
     }
 
-    public void setUserSet(Set<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
+
 }

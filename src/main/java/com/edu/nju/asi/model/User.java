@@ -24,9 +24,10 @@ public class User implements Serializable {
     @Basic
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name = "user_stock",joinColumns = {@JoinColumn(name = "user_userName")},
-            inverseJoinColumns = {@JoinColumn(name = "privateStock_code")})
+    @ManyToMany
+    @JoinTable(name = "user_stock",joinColumns = {@JoinColumn(name = "user_userName",referencedColumnName="userName")},
+            inverseJoinColumns = {@JoinColumn(name = "privateStock_code",referencedColumnName="code"),
+            @JoinColumn(name = "privateStock_date",referencedColumnName = "date")})
     private List<Stock> privateStock;
 
     public String getUserName() {

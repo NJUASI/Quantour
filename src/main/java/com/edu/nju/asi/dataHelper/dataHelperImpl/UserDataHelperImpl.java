@@ -3,6 +3,10 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 import com.edu.nju.asi.dataHelper.UserDataHelper;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 
@@ -13,7 +17,13 @@ import java.util.Set;
  * <p>
  * 对用户信息进行操作
  */
+@Repository
 public class UserDataHelperImpl implements UserDataHelper {
+
+    @Autowired
+    protected SessionFactory sessionFactory;
+    private Session session;
+
     /**
      * 添加用户信息
      *
