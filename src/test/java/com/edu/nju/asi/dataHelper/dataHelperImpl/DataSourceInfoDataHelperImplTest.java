@@ -1,7 +1,7 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.DataSourceInfoDataHelper;
-import com.edu.nju.asi.dataHelper.DataHelperManager;
+import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.model.DataSourceInfo;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -27,7 +27,7 @@ public class DataSourceInfoDataHelperImplTest {
 
     @Before
     public void setUp() throws Exception {
-        dataSourceInfoDataHelper = DataHelperManager.dataSourceInfoDataHelper;
+        dataSourceInfoDataHelper = HelperManager.dataSourceInfoDataHelper;
     }
 
     @Test
@@ -61,15 +61,14 @@ public class DataSourceInfoDataHelperImplTest {
 
     @Test
     public void getDataSourceInfo() throws Exception {
-        DataSourceInfo dataSourceInfo = dataSourceInfoDataHelper.getDataSourceInfo("dddd");
+        DataSourceInfo dataSourceInfo = dataSourceInfoDataHelper.getDataSourceInfo("ByronDong");
         DataSourceInfo dataSourceInfo0 = dataSourceInfoDataHelper.getDataSourceInfo("ByronDong");
         DataSourceInfo dataSourceInfo1 = dataSourceInfoDataHelper.getDataSourceInfo("HarveyGong");
         DataSourceInfo dataSourceInfo2 = dataSourceInfoDataHelper.getDataSourceInfo("HarveyGong");
         DataSourceInfo dataSourceInfo3 = dataSourceInfoDataHelper.getDataSourceInfo("61990");
         DataSourceInfo dataSourceInfo4 = dataSourceInfoDataHelper.getDataSourceInfo("61990");
-//        assertEquals("100",dataSourceInfo.getFileSize());
-//        assertEquals("2017-05-10T14:38:04.403",dataSourceInfo.getUploadTime());
-        assertEquals(null,dataSourceInfo);
+        assertEquals("100",dataSourceInfo.getFileSize());
+        assertEquals("2017-05-09T21:03:23.619",dataSourceInfo.getUploadTime());
     }
 
 }

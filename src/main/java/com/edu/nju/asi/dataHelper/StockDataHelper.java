@@ -17,6 +17,7 @@ import java.util.Map;
  */
 public interface StockDataHelper {
 
+
     /*
     股票数据
      */
