@@ -31,6 +31,9 @@ public class StockSearch implements Serializable {
     @Column(length = 100)
     private String firstLetters;
 
+    public StockSearch() {
+    }
+
     public StockSearch(String name, String firstLetters) {
         this.name = name;
         this.firstLetters = firstLetters;

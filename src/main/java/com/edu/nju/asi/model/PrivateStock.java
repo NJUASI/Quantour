@@ -9,8 +9,8 @@ import java.io.Serializable;
 
 /**
  * Created by cuihua on 2017/3/12.
- * Last updated by cuihua
- * Update time 2017/3/12
+ * Last updated by Byron Dong
+ * Update time 2017/5/11
  */
 @Entity
 public class PrivateStock implements Serializable {

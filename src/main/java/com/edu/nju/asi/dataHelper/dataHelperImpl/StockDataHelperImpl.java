@@ -1,6 +1,7 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockDataHelper;
+import com.edu.nju.asi.infoCarrier.FirstAndLastDay;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
 import org.hibernate.Session;
@@ -158,22 +159,9 @@ public class StockDataHelperImpl implements StockDataHelper {
     public List<LocalDate> getFirstAndLastDay(String stockCode) {
 
         List<LocalDate> dates = getAllDateByCode(stockCode);
-        LocalDate start = LocalDate.MAX;
-        LocalDate end = LocalDate.MIN;
-
-        for(LocalDate localDate : dates){
-            if(localDate.isBefore(start)){
-                start = localDate;
-            }
-
-            if(localDate.isAfter(end)){
-                end = localDate;
-            }
-        }
-
         List<LocalDate> result = new ArrayList<>();
-        result.add(start);
-        result.add(end);
+        result.add(dates.get(0));
+        result.add(dates.get(dates.size()-1));
         return result;
     }
 
@@ -181,7 +169,7 @@ public class StockDataHelperImpl implements StockDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql  = "select distinct stock.id.date from Stock stock where stock.id.code = ?";
+        String hql  = "select distinct stock.id.date from Stock stock where stock.id.code = ? order by stock.id.date";
         Query query = session.createQuery(hql);
         query.setParameter(0,code);
         List<LocalDate> dates = query.list();
