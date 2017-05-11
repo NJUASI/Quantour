@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * Created by Byron Dong on 2017/5/10.
  */
-public class HelperManager {
+public class DataHelperManager {
 
     public final static DataSourceInfoDataHelper dataSourceInfoDataHelper;
 

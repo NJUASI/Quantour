@@ -21,4 +21,24 @@ public interface StockSituationDataHelper {
      * @return StockSituation 指定日期市场温度计数据
      */
     StockSituation getStockSituation(LocalDate date);
+
+    /**
+     * 修改指定日期市场温度计数据
+     *
+     * @author Byron Dong
+     * @updateTime 2017/5/9
+     * @param stockSituation 指指定日期市场温度计数据
+     * @return StockSituation 指定日期市场温度计数据
+     */
+    boolean updateStockSituation(StockSituation stockSituation);
+
+    /**
+     * 添加指定日期市场温度计数据
+     *
+     * @author Byron Dong
+     * @updateTime 2017/5/9
+     * @param stockSituation 指指定日期市场温度计数据
+     * @return StockSituation 指定日期市场温度计数据
+     */
+    boolean addStockSituation(StockSituation stockSituation);
 }

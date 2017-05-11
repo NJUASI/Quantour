@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Byron Dong on 2017/5/7.
@@ -27,8 +28,8 @@ public class User implements Serializable {
     @ManyToMany
     @JoinTable(name = "user_stock",joinColumns = {@JoinColumn(name = "user_userName",referencedColumnName="userName")},
             inverseJoinColumns = {@JoinColumn(name = "privateStock_code",referencedColumnName="code"),
-            @JoinColumn(name = "privateStock_date",referencedColumnName = "date")})
-    private List<Stock> privateStock;
+            @JoinColumn(name = "privateStock_date")})
+    private Set<Stock> privateStock;
 
     public String getUserName() {
         return userName;
@@ -46,11 +47,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List<Stock> getPrivateStock() {
+    public Set<Stock> getPrivateStock() {
         return privateStock;
     }
 
-    public void setPrivateStock(List<Stock> privateStock) {
+    public void setPrivateStock(Set<Stock> privateStock) {
         this.privateStock = privateStock;
     }
 
