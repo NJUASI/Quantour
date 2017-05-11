@@ -1,12 +1,9 @@
 package com.edu.nju.asi.dataHelper;
 
 import com.edu.nju.asi.model.Stock;
-import com.edu.nju.asi.model.StockSearch;
-import com.edu.nju.asi.vo.StockPoolVO;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/3/5.
@@ -67,6 +64,10 @@ public interface StockDataHelper {
      */
     boolean addStockAll(List<Stock> stocks);
 
+
+    /*
+    交易时间相关
+     */
     /**
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong

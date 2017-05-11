@@ -1,18 +1,22 @@
 package com.edu.nju.asi.dao.daoImpl;
 
 import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
-import com.edu.nju.asi.dataHelper.dataHelperImpl.StockSearchDataHelperImpl;
-import com.edu.nju.asi.dataHelper.dataHelperImpl.StockDataHelperImpl;
-import com.edu.nju.asi.po.PrivateStockPO;
-import com.edu.nju.asi.po.StockPO;
-import com.edu.nju.asi.po.StockSearchPO;
+import com.edu.nju.asi.dataHelper.UserDataHelper;
+import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.StockCodeHelper;
+import com.edu.nju.asi.utilities.comparator.StockDateComparator;
+import com.edu.nju.asi.utilities.enums.BlockType;
+import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.vo.StockPoolVO;
+import com.edu.nju.asi.utilities.infoCarrier.StockPool;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +30,9 @@ import java.util.Map;
 public class StockDaoImpl implements StockDao {
 
     //股票信息获取的helper对象
-    private StockDataHelper stockHelper;
-//    private PrivateStockDataHelper privateStockDataHelper;
+    private StockDataHelper stockDataHelper;
     private StockSearchDataHelper stockSearchDataHelper;
+    private UserDataHelper userDataHelper;
 
     /**
      * @author Byron Dong
@@ -36,9 +40,9 @@ public class StockDaoImpl implements StockDao {
      * @updateTime 2017/3/5
      */
     public StockDaoImpl() {
-        stockHelper = new StockDataHelperImpl();
-//        privateStockDataHelper = new PrivateStockDataHelperImpl();
-        stockSearchDataHelper = new StockSearchDataHelperImpl();
+        stockDataHelper = HelperManager.stockDataHelper;
+        stockSearchDataHelper = HelperManager.stockSearchDataHelper;
+        userDataHelper = HelperManager.userDataHelper;
     }
 
 
@@ -50,19 +54,19 @@ public class StockDaoImpl implements StockDao {
      *
      * @author cuihua
      * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/12
+     * @updateTime 2017/5/11
      * @param stockCode 指定股票代码
      * @param date 指定日期
      * @return 特定日期指定股票的相关数据
      */
     @Override
-    public StockPO getStockData(String stockCode, LocalDate date) throws IOException {
-//        List<StockPO> result = stockHelper.getStockRecords(date);
-//        for (StockPO stock : result) {
-//            if (stock.getCode().equals(stockCode)) {
-//                return stock;
-//            }
-//        }
+    public Stock getStockData(String stockCode, LocalDate date) throws IOException {
+        List<Stock> result = stockDataHelper.getStockData(date);
+        for (Stock stock : result) {
+            if (stock.getStockID().getCode().equals(stockCode)) {
+                return stock;
+            }
+        }
         return null;
     }
 
@@ -79,27 +83,27 @@ public class StockDaoImpl implements StockDao {
      * @return 特定时间段内的指定股票所有数据
      */
     @Override
-    public List<StockPO> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException, DateNotWithinException, NoDataWithinException {
+    public List<Stock> getStockData(String stockCode, LocalDate start, LocalDate end) throws IOException, DateNotWithinException, NoDataWithinException {
         if (!isDateWithinSource(stockCode, start, end)) {
             // 用户要查找的时间区间超出数据源时间区间
             throw new DateNotWithinException();
         }
 
-//        List<StockPO> result = stockHelper.getStockRecords(stockCode);
-//        for (int i = 0; i < result.size(); ) {
-//            if (!isDateWithinWanted(start, end, result.get(i).getDate())) {
-//                result.remove(i);
-//            }else {
-//                i++;
-//            }
-//        }
+        List<Stock> result = stockDataHelper.getStockData(stockCode);
+        for (int i = 0; i < result.size(); ) {
+            if (!isDateWithinWanted(start, end, result.get(i).getStockID().getDate())) {
+                result.remove(i);
+            }else {
+                i++;
+            }
+        }
 
-//        if (result.size() == 0) {
-//            throw new NoDataWithinException(stockCode);
-//        }
+        if (result.size() == 0) {
+            throw new NoDataWithinException(stockCode);
+        }
 
-//        return result;
-        return null;
+        result.sort(new StockDateComparator());
+        return result;
     }
 
     /**
@@ -113,9 +117,10 @@ public class StockDaoImpl implements StockDao {
      * @return 此股票的所有数据
      */
     @Override
-    public List<StockPO> getStockData(String stockCode) throws IOException {
-//        return stockHelper.getStockRecords(stockCode);
-        return null;
+    public List<Stock> getStockData(String stockCode) throws IOException {
+        List<Stock> result = stockDataHelper.getStockData(stockCode);
+        result.sort(new StockDateComparator());
+        return result;
     }
 
     /**
@@ -129,11 +134,15 @@ public class StockDaoImpl implements StockDao {
      * @throws IOException IO
      */
     @Override
-    public List<StockPO> getStockData(LocalDate date) throws IOException {
-//        return stockHelper.getStockRecords(date);
-        return null;
+    public List<Stock> getStockData(LocalDate date) throws IOException {
+        return stockDataHelper.getStockData(date);
     }
 
+
+
+    /*
+    交易时间相关
+     */
     /**
      * @author cuihua
      * @lastUpdatedBy cuihua
@@ -143,8 +152,25 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
-//        return stockHelper.getDateWithoutData(stockCode);
-        return null;
+        List<Stock> result = getStockData(stockCode);
+
+        List<LocalDate> dates = new LinkedList<>();
+
+        LocalDate temp = result.get(0).getStockID().getDate();
+        LocalDate end = result.get(result.size() - 1).getStockID().getDate();
+
+        // 先加入所有目标可能的日期
+        while (!temp.isEqual(end)) {
+            dates.add(temp);
+            temp = temp.plusDays(1);
+        }
+
+        // 再剔除有数据的日期
+        for (Stock stock : result) {
+            dates.remove(stock.getStockID().getDate());
+        }
+
+        return dates;
     }
 
     /**
@@ -177,7 +203,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<LocalDate> getDateWithData() throws IOException {
-        return stockHelper.getDateWithData();
+        return stockDataHelper.getDateWithData();
     }
 
 
@@ -196,45 +222,15 @@ public class StockDaoImpl implements StockDao {
      * @return 指定用户的自选股票
      */
     @Override
-    public List<StockPO> getPrivateStockData(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
-        List<StockPO> result = new LinkedList<StockPO>();
+    public List<Stock> getPrivateStockData(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
+        List<Stock> result = new LinkedList<>();
 
-        PrivateStockPO myPrivateStockPO = getPrivateStocks(userName);
-        for (String stockCode : myPrivateStockPO.getPrivateStocks()) {
+        PrivateStock myPrivateStock = getPrivateStocks(userName);
+        for (String stockCode : myPrivateStock.getPrivateStocks()) {
             result.add(getStockData(stockCode, date));
         }
 
         return result;
-    }
-
-    /**
-     * 获取用户的自选股票
-     *
-     * @author cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/12
-     * @param userName 用户名称
-     * @return 指定用户的自选股
-     */
-    @Override
-    public PrivateStockPO getPrivateStocks(String userName) throws PrivateStockNotFoundException {
-//        return new PrivateStockPO(userName, privateStockDataHelper.getPrivateStockCode(userName));
-        return null;
-    }
-
-    /**
-     * 获取用户的自选股票池
-     *
-     * @param userName 用户名称
-     * @return 指定用户的自选股
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/4/17
-     */
-    @Override
-    public List<String> getPrivateStockCodes(String userName) throws PrivateStockNotFoundException {
-//        return privateStockDataHelper.getPrivateStockCode(userName);
-        return null;
     }
 
     /**
@@ -249,8 +245,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException {
-//        return privateStockDataHelper.addPrivateStock(userName, stockCode);
-        return true;
+        return userDataHelper.addPrivateStock(userName, stockCode);
     }
 
     /**
@@ -265,8 +260,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException {
-//        return privateStockDataHelper.deletePrivateStock(userName, stockCode);
-        return true;
+        return userDataHelper.deletePrivateStock(userName, stockCode);
     }
 
 
@@ -286,7 +280,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) throws IOException {
-        return stockHelper.getFirstAndLastDay(stockCode);
+        return stockDataHelper.getFirstAndLastDay(stockCode);
     }
 
     /**
@@ -305,9 +299,8 @@ public class StockDaoImpl implements StockDao {
      * @return the all stocks first letters
      */
     @Override
-    public List<StockSearchPO> getAllStocksFirstLetters() throws IOException {
-//        return stockSearchDataHelper.getAllStocksFirstLetters();
-        return null;
+    public List<StockSearch> getAllStocksFirstLetters() throws IOException {
+        return stockSearchDataHelper.getAllStocksFirstLetters();
     }
 
     /**
@@ -329,9 +322,36 @@ public class StockDaoImpl implements StockDao {
      * @return 所有股票的版块有关的信息
      */
     @Override
-    public List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException {
-//        return stockHelper.getAllStockPool();
-        return null;
+    public List<StockPool> getAllStockPool() throws IOException, UnhandleBlockTypeException {
+        List<StockPool> result = new LinkedList<>();
+
+        Map<String, String> codeName = stockSearchDataHelper.getAllStocksCode();
+        List<String> stockCodes = new ArrayList<>(codeName.keySet());
+        List<String> stockNames = new ArrayList<>(codeName.values());
+
+        stockCodes.removeAll(stockSearchDataHelper.getAllBaseStockCodes());
+
+        for (int i = 0; i < stockCodes.size(); i++) {
+            String tempCode = StockCodeHelper.format(stockCodes.get(i));
+
+            BlockType thisBlockType;
+            if (tempCode.startsWith("001") || tempCode.startsWith("000")) {
+                thisBlockType = BlockType.ZB;
+            } else if (tempCode.startsWith("002")) {
+                thisBlockType = BlockType.ZXB;
+            } else if (tempCode.startsWith("300")) {
+                thisBlockType = BlockType.CYB;
+            } else {
+                System.out.println("未处理股票板块：" + tempCode);
+                throw new UnhandleBlockTypeException();
+            }
+
+            boolean isSt = stockNames.get(i).contains("ST");
+
+            result.add(new StockPool(tempCode, thisBlockType, isSt));
+        }
+
+        return result;
     }
 
     /**

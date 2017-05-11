@@ -3,8 +3,6 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
-import com.edu.nju.asi.model.StockSearch;
-import com.edu.nju.asi.vo.StockPoolVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/3/5.

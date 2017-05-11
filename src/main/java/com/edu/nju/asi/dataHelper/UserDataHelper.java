@@ -59,6 +59,7 @@ public interface UserDataHelper {
      */
     List<String> getAllUserNames();
 
+
     //------------------自选股---------------//
     /**
      * 获取自选股

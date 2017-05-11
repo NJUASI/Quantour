@@ -3,7 +3,7 @@ package com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilter;
 import com.edu.nju.asi.utilities.enums.BlockType;
 import com.edu.nju.asi.vo.StockPoolCriteriaVO;
-import com.edu.nju.asi.vo.StockPoolVO;
+import com.edu.nju.asi.utilities.infoCarrier.StockPool;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class BlockCriteriaFilter extends StockPoolFilter {
      * @params List<StockVO> stocks 未经筛选的全部股票
      */
     @Override
-    public List<StockPoolVO> meetCriteria(List<StockPoolVO> stocks, StockPoolCriteriaVO vo) {
+    public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteriaVO vo) {
 
         // 选择ALL时放且只放在第一个位置
         if(vo.blockTypes.get(0) !=  BlockType.ALL){

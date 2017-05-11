@@ -1,4 +1,4 @@
-package com.edu.nju.asi.po;
+package com.edu.nju.asi.model;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  * Last updated by cuihua
  * Update time 2017/3/12
  */
-public class PrivateStockPO {
+public class PrivateStock {
 
     // 用户名
     private String userName;
@@ -15,7 +15,7 @@ public class PrivateStockPO {
     // 用户的自选股列表
     private List<String> privateStocks;
 
-    public PrivateStockPO(String userName, List<String> privateStocks) {
+    public PrivateStock(String userName, List<String> privateStocks) {
         this.userName = userName;
         this.privateStocks = privateStocks;
     }

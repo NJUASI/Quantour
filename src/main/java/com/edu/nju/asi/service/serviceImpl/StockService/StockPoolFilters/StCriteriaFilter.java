@@ -3,7 +3,7 @@ package com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilter;
 import com.edu.nju.asi.utilities.enums.StType;
 import com.edu.nju.asi.vo.StockPoolCriteriaVO;
-import com.edu.nju.asi.vo.StockPoolVO;
+import com.edu.nju.asi.utilities.infoCarrier.StockPool;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class StCriteriaFilter extends StockPoolFilter{
      * @params List<StockVO> stocks 未经筛选的全部股票
      */
     @Override
-    public List<StockPoolVO> meetCriteria(List<StockPoolVO> stocks, StockPoolCriteriaVO vo) {
+    public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteriaVO vo) {
 
         //TODO 因为现在还不需要筛选出st，故先直接返回，不做筛选
 
