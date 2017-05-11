@@ -135,43 +135,6 @@ public class StockDataHelperImpl implements StockDataHelper {
     }
 
     /**
-     * 获取所有股票的代码
-     *
-     * @return the all stocks code 返回所有股票的代码及其名称，代码作为键值
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/14
-     */
-    @Override
-    public Map<String, String> getAllStocksCode() {
-        return null;
-    }
-
-    /**
-     * @return the all stocks first letters 返回所有股票的首字母及其名称、代码
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     */
-    @Override
-    public List<StockSearch> getAllStocksFirstLetters() {
-        return null;
-    }
-
-    /**
-     * 获取所有股票的名称
-     *
-     * @return the all stocks first letters 返回所有股票的名称及其代码，名称作为键值
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/14
-     */
-    @Override
-    public Map<String, String> getAllStocksName() {
-        return null;
-    }
-
-    /**
      * 获取所有股票的版块有关的信息
      *
      * @return 所有股票的版块有关的信息

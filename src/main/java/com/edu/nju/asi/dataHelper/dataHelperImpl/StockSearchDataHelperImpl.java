@@ -1,14 +1,16 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
-import com.edu.nju.asi.po.StockSearchPO;
+import com.edu.nju.asi.model.StockSearch;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Harvey on 2017/3/14.
@@ -21,27 +23,18 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
     private Session session;
 
     /**
-     * @return 所有股票简化代码
-     */
-    @Override
-    public List<String> getAllStockCodes() {
-        return null;
-    }
-
-    /**
-     * @return 所有股票指数简化代码
-     */
-    @Override
-    public List<String> getAllBaseStockCodes() {
-        return null;
-    }
-
-    /**
      * @return 所有股票名称的首字母缩写及其名称、代码
      */
     @Override
-    public List<StockSearchPO> getAllStocksFirstLetters() {
-        return null;
+    public List<StockSearch> getAllStocksFirstLetters() {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "from StockSearch";
+        List<StockSearch> list = session.createQuery(hql).list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 
     /**
@@ -49,7 +42,13 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksCode() {
-        return null;
+        List list = getCodeAndName();
+        Map<String,String> map = new TreeMap<String,String>();
+        for(int i=0;i<list.size();i++){
+            String[] temp = (String[])list.get(i);
+            map.put(temp[0],temp[1]);
+        }
+        return map;
     }
 
     /**
@@ -57,6 +56,23 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
      */
     @Override
     public Map<String, String> getAllStocksName() {
-        return null;
+        List list = getCodeAndName();
+        Map<String,String> map = new TreeMap<String,String>();
+        for(int i=0;i<list.size();i++){
+            String[] temp = (String[])list.get(i);
+            map.put(temp[1],temp[0]);
+        }
+        return map;
+    }
+
+    private List getCodeAndName(){
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "select stocksearch.code, stocksearch.name from StockSearch stocksearch";
+        List list = session.createQuery(hql).list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 }

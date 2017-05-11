@@ -305,7 +305,8 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockSearchPO> getAllStocksFirstLetters() throws IOException {
-        return stockSearchDataHelper.getAllStocksFirstLetters();
+//        return stockSearchDataHelper.getAllStocksFirstLetters();
+        return null;
     }
 
     /**

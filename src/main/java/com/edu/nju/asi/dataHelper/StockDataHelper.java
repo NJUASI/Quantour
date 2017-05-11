@@ -113,34 +113,6 @@ public interface StockDataHelper {
     List<LocalDate> getFirstAndLastDay(String stockCode);
 
     /**
-     * 获取所有股票的代码
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/14
-     * @return the all stocks code 返回所有股票的代码及其名称，代码作为键值
-     */
-    Map<String, String> getAllStocksCode();
-
-    /**
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @return the all stocks first letters 返回所有股票的首字母及其名称、代码
-     */
-    List<StockSearch> getAllStocksFirstLetters();
-
-    /**
-     * 获取所有股票的名称
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/14
-     * @return the all stocks first letters 返回所有股票的名称及其代码，名称作为键值
-     */
-    Map<String,String> getAllStocksName();
-
-    /**
      * 获取所有股票的版块有关的信息
      * @return 所有股票的版块有关的信息
      */
