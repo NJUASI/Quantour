@@ -45,8 +45,8 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         List list = getCodeAndName();
         Map<String,String> map = new TreeMap<String,String>();
         for(int i=0;i<list.size();i++){
-            String[] temp = (String[])list.get(i);
-            map.put(temp[0],temp[1]);
+            Object[] temp = (Object[]) list.get(i);
+            map.put((String)temp[0],(String)temp[1]);
         }
         return map;
     }
@@ -59,8 +59,8 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         List list = getCodeAndName();
         Map<String,String> map = new TreeMap<String,String>();
         for(int i=0;i<list.size();i++){
-            String[] temp = (String[])list.get(i);
-            map.put(temp[1],temp[0]);
+            Object[] temp = (Object[])list.get(i);
+            map.put((String)temp[1],(String)temp[0]);
         }
         return map;
     }
