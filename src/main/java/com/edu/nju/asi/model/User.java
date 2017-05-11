@@ -17,18 +17,13 @@ public class User implements Serializable {
     @Id
     @GenericGenerator(name="myGenerator",strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
-    @Column(name = "userName")
+    @Column(name = "userName",length = 200)
     private String userName;
 
     // 用户密码
     @Basic
+    @Column(length = 200)
     private String password;
-
-    @ManyToMany
-    @JoinTable(name = "user_stock",joinColumns = {@JoinColumn(name = "user_userName",referencedColumnName="userName")},
-            inverseJoinColumns = {@JoinColumn(name = "privateStock_code",referencedColumnName="code"),
-            @JoinColumn(name = "privateStock_date",referencedColumnName = "date")})
-    private List<Stock> privateStock;
 
     public String getUserName() {
         return userName;
@@ -44,14 +39,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Stock> getPrivateStock() {
-        return privateStock;
-    }
-
-    public void setPrivateStock(List<Stock> privateStock) {
-        this.privateStock = privateStock;
     }
 
 }

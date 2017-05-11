@@ -29,6 +29,7 @@ public class Stock implements Serializable {
 
     // 股票名称
     @Basic
+    @Column(length = 100)
     private String name;
 
     // 市场名称
@@ -53,6 +54,7 @@ public class Stock implements Serializable {
 
     // 成交量
     @Basic
+    @Column(length = 200)
     private String volume;
 
     // 复权后的收盘指数
@@ -66,9 +68,6 @@ public class Stock implements Serializable {
     // 昨日复权收盘指数
     @Basic
     private double preAdjClose;
-
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "privateStock")
-    private List<User> users =  new ArrayList<>();
 
     public StockID getStockID() {
         return stockID;
@@ -156,13 +155,5 @@ public class Stock implements Serializable {
 
     public void setPreAdjClose(double preAdjClose) {
         this.preAdjClose = preAdjClose;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 }

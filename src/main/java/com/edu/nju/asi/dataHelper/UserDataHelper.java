@@ -58,36 +58,4 @@ public interface UserDataHelper {
      * @return 用户名称集合
      */
     List<String> getAllUserNames();
-
-
-    //------------------自选股---------------//
-    /**
-     * 获取自选股
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @return 用户名称集合
-     */
-    List<Stock> getPrivateStock(String userName);
-
-    /**
-     * 添加自选股
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @return 用户名称集合
-     */
-    boolean addPrivateStock(String userName,Stock stock);
-
-    /**
-     * 删除自选股
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @return 用户名称集合
-     */
-    boolean deletePrivateStock(String userName,Stock stock);
 }
