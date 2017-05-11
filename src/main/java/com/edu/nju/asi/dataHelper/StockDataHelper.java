@@ -34,20 +34,6 @@ public interface StockDataHelper {
     Stock getStockData(String stockCode, LocalDate date);
 
     /**
-     * 获取特定时间段内的指定股票所有数据
-     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @param stockCode 指定股票代码
-     * @param start 时间区域的小值
-     * @param end 时间区域的大值
-     * @return （股票代码相同）特定时间段内的指定股票所有数据
-     */
-    List<Stock> getStockData(String stockCode, LocalDate start, LocalDate end);
-
-    /**
      * 取指定股票的所有数据，没有返回null
      * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
      *
@@ -70,27 +56,16 @@ public interface StockDataHelper {
      */
     List<Stock> getStockData(LocalDate date);
 
-
-    /*
-    交易日期相关
-     */
     /**
+     * 添加股票列表
+     *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
-     * @param stockCode 股票代码
-     * @return 此股票需要被剔除的所有日期
+     * @param stocks 需要添加的股票列表
+     * @return boolean
      */
-    List<LocalDate> getDateWithoutData(String stockCode);
-
-    /**
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @param stockCode 股票代码
-     * @return 在指定时间区段此股票需要被剔除的所有日期
-     */
-    List<LocalDate> getDateWithoutData(String stockCode, LocalDate start, LocalDate end);
+    boolean addStockAll(List<Stock> stocks);
 
     /**
      * @author Byron Dong
@@ -100,9 +75,6 @@ public interface StockDataHelper {
      */
     List<LocalDate> getDateWithData();
 
-    /*
-    暂定
-     */
     /**
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
@@ -111,10 +83,4 @@ public interface StockDataHelper {
      * @return 数据库中股票存在记录的起讫时间，List.get(0)为第一天，List.get(1)为最后一天
      */
     List<LocalDate> getFirstAndLastDay(String stockCode);
-
-    /**
-     * 获取所有股票的版块有关的信息
-     * @return 所有股票的版块有关的信息
-     */
-    List<StockPoolVO> getAllStockPool();
 }

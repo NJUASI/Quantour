@@ -143,7 +143,8 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<LocalDate> getDateWithoutData(String stockCode) throws IOException {
-        return stockHelper.getDateWithoutData(stockCode);
+//        return stockHelper.getDateWithoutData(stockCode);
+        return null;
     }
 
     /**
@@ -329,7 +330,8 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockPoolVO> getAllStockPool() throws IOException, UnhandleBlockTypeException {
-        return stockHelper.getAllStockPool();
+//        return stockHelper.getAllStockPool();
+        return null;
     }
 
     /**
