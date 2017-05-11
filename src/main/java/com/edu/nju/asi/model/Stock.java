@@ -7,7 +7,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -66,7 +68,7 @@ public class Stock implements Serializable {
     private double preAdjClose;
 
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "privateStock")
-    private Set<User> users =  new HashSet<>();
+    private List<User> users =  new ArrayList<>();
 
     public StockID getStockID() {
         return stockID;
@@ -156,12 +158,11 @@ public class Stock implements Serializable {
         this.preAdjClose = preAdjClose;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
-
 }

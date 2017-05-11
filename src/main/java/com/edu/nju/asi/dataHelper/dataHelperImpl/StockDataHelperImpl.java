@@ -2,10 +2,12 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.StockID;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.vo.StockPoolVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -37,24 +39,13 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public Stock getStockData(String stockCode, LocalDate date) {
-        return null;
-    }
-
-    /**
-     * 获取特定时间段内的指定股票所有数据
-     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
-     *
-     * @param stockCode 指定股票代码
-     * @param start     时间区域的小值
-     * @param end       时间区域的大值
-     * @return （股票代码相同）特定时间段内的指定股票所有数据
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     */
-    @Override
-    public List<Stock> getStockData(String stockCode, LocalDate start, LocalDate end) {
-        return null;
+        StockID stockID = new StockID(stockCode,date);
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Stock stock = (Stock)session.get(Stock.class,stockID);
+        transaction.commit();
+        session.close();
+        return stock;
     }
 
     /**
@@ -87,28 +78,17 @@ public class StockDataHelperImpl implements StockDataHelper {
     }
 
     /**
-     * @param stockCode 股票代码
-     * @return 此股票需要被剔除的所有日期
+     * 添加股票列表
+     *
+     * @param stocks 需要添加的股票列表
+     * @return boolean
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public List<LocalDate> getDateWithoutData(String stockCode) {
-        return null;
-    }
-
-    /**
-     * @param stockCode 股票代码
-     * @param start
-     * @param end       @return 在指定时间区段此股票需要被剔除的所有日期
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     */
-    @Override
-    public List<LocalDate> getDateWithoutData(String stockCode, LocalDate start, LocalDate end) {
-        return null;
+    public boolean addStockAll(List<Stock> stocks) {
+        return false;
     }
 
     /**
@@ -134,50 +114,4 @@ public class StockDataHelperImpl implements StockDataHelper {
         return null;
     }
 
-    /**
-     * 获取所有股票的代码
-     *
-     * @return the all stocks code 返回所有股票的代码及其名称，代码作为键值
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/14
-     */
-    @Override
-    public Map<String, String> getAllStocksCode() {
-        return null;
-    }
-
-    /**
-     * @return the all stocks first letters 返回所有股票的首字母及其名称、代码
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     */
-    @Override
-    public List<StockSearch> getAllStocksFirstLetters() {
-        return null;
-    }
-
-    /**
-     * 获取所有股票的名称
-     *
-     * @return the all stocks first letters 返回所有股票的名称及其代码，名称作为键值
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/14
-     */
-    @Override
-    public Map<String, String> getAllStocksName() {
-        return null;
-    }
-
-    /**
-     * 获取所有股票的版块有关的信息
-     *
-     * @return 所有股票的版块有关的信息
-     */
-    @Override
-    public List<StockPoolVO> getAllStockPool() {
-        return null;
-    }
 }

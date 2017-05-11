@@ -17,6 +17,15 @@ public class StockID implements Serializable{
     @Column(name = "date")
     private LocalDate date;
 
+    public StockID() {
+    }
+
+    public StockID(String code, LocalDate date) {
+        this.code = code;
+        this.date = date;
+
+    }
+
     public String getCode() {
         return code;
     }

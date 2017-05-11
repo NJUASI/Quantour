@@ -1,8 +1,6 @@
 package com.edu.nju.asi.dataHelper;
 
-import com.edu.nju.asi.po.StockSearchPO;
-
-import java.io.IOException;
+import com.edu.nju.asi.model.StockSearch;
 import java.util.List;
 import java.util.Map;
 
@@ -12,19 +10,9 @@ import java.util.Map;
 public interface StockSearchDataHelper {
 
     /**
-     * @return 所有股票简化代码
-     */
-    List<String> getAllStockCodes();
-
-    /**
-     * @return 所有股票指数简化代码
-     */
-    List<String> getAllBaseStockCodes();
-
-    /**
      * @return 所有股票名称的首字母缩写及其名称、代码
      */
-    List<StockSearchPO> getAllStocksFirstLetters();
+    List<StockSearch> getAllStocksFirstLetters();
 
     /**
      * @return 返回所有股票的代码及其名称，代码作为键值

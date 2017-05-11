@@ -81,7 +81,8 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public Set<Object> getAllUserNames() {
-        return userHelper.getAllUserNames();
+//        return userHelper.getAllUserNames();
+        return null;
     }
 
 }
