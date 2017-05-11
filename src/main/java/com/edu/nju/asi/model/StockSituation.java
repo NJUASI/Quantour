@@ -50,6 +50,14 @@ public class StockSituation implements Serializable {
     @Basic
     private int slipingNum;
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public String getVolume() {
         return volume;
     }

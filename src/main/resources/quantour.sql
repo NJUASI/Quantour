@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-05-10 14:39:11
+Date: 2017-05-11 11:01:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,11 +29,11 @@ CREATE TABLE `datasourceinfo` (
 -- ----------------------------
 -- Records of datasourceinfo
 -- ----------------------------
-INSERT INTO `datasourceinfo` VALUES ('61990', '200', '2017-05-10T14:38:05.320');
-INSERT INTO `datasourceinfo` VALUES ('ByronDong', '100', '2017-05-10T14:38:04.403');
-INSERT INTO `datasourceinfo` VALUES ('CharlesFeng', '400', '2017-05-10T14:38:05.707');
-INSERT INTO `datasourceinfo` VALUES ('cuihua', '50', '2017-05-10T14:38:05.451');
-INSERT INTO `datasourceinfo` VALUES ('HarveyGong', '120', '2017-05-10T14:38:05.593');
+INSERT INTO `datasourceinfo` VALUES ('61990', '200', '2017-05-11T11:00:06.711');
+INSERT INTO `datasourceinfo` VALUES ('ByronDong', '100', '2017-05-11T11:00:06.403');
+INSERT INTO `datasourceinfo` VALUES ('CharlesFeng', '400', '2017-05-11T11:00:07.065');
+INSERT INTO `datasourceinfo` VALUES ('cuihua', '50', '2017-05-11T11:00:06.780');
+INSERT INTO `datasourceinfo` VALUES ('HarveyGong', '120', '2017-05-11T11:00:06.996');
 
 -- ----------------------------
 -- Table structure for `stock`

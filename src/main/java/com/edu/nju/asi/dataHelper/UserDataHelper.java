@@ -4,6 +4,7 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.po.UserPO;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -56,17 +57,18 @@ public interface UserDataHelper {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    Set<Object> getAllUserNames();
+    List<String> getAllUserNames();
 
+    //------------------自选股---------------//
     /**
-     * 获取已存在的所有用户名称
+     * 获取自选股
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    Set<Stock> getPrivateStock(String userName);
+    List<Stock> getPrivateStock(String userName);
 
     /**
      * 添加自选股
@@ -76,7 +78,7 @@ public interface UserDataHelper {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean addPrivateStock(Stock stock);
+    boolean addPrivateStock(String userName,Stock stock);
 
     /**
      * 删除自选股
@@ -86,5 +88,5 @@ public interface UserDataHelper {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean deletePrivateStock(String stockCode);
+    boolean deletePrivateStock(String userName,Stock stock);
 }
