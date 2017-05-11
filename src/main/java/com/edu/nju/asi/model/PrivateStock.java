@@ -13,12 +13,12 @@ import java.io.Serializable;
  * Update time 2017/3/12
  */
 @Entity
-public class PrivateStock implements Serializable{
+public class PrivateStock implements Serializable {
 
     @Id
-    @GenericGenerator(name="myGenerator",strategy = "assigned")
+    @GenericGenerator(name = "myGenerator", strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
-   private PrivateStockID privateStockID;
+    private PrivateStockID privateStockID;
 
     public PrivateStockID getPrivateStockID() {
         return privateStockID;

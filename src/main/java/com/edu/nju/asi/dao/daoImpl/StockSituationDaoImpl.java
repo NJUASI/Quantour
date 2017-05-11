@@ -1,5 +1,6 @@
 package com.edu.nju.asi.dao.daoImpl;
 
+import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSituationDataHelper;
 import com.edu.nju.asi.dataHelper.dataHelperImpl.StockSituationDataHelperImpl;
 import com.edu.nju.asi.model.StockSituation;
@@ -24,7 +25,7 @@ public class StockSituationDaoImpl implements com.edu.nju.asi.dao.StockSituation
      * @updateTime 2017/3/5
      */
     public StockSituationDaoImpl() {
-        this.stockSituationHelper = new StockSituationDataHelperImpl();
+        this.stockSituationHelper = HelperManager.stockSituationDataHelper;
     }
 
     /**

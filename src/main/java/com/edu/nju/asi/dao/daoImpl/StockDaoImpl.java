@@ -207,65 +207,6 @@ public class StockDaoImpl implements StockDao {
     }
 
 
-
-    /*
-    自选股
-     */
-    /**
-     * 获取用户自选股票的数据
-     *
-     * @author Harvey
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/3/12
-     * @param userName 用户名称
-     * @param date 股票代码
-     * @return 指定用户的自选股票
-     */
-    @Override
-    public List<Stock> getPrivateStockData(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
-        List<Stock> result = new LinkedList<>();
-
-        PrivateStock myPrivateStock = getPrivateStocks(userName);
-        for (String stockCode : myPrivateStock.getPrivateStocks()) {
-            result.add(getStockData(stockCode, date));
-        }
-
-        return result;
-    }
-
-    /**
-     * 添加用户自选股
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
-     * @param userName 用户名称
-     * @param stockCode 股票代码
-     * @return 添加是否成功
-     */
-    @Override
-    public boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException {
-        return userDataHelper.addPrivateStock(userName, stockCode);
-    }
-
-    /**
-     * 删除用户自选股
-     *
-     * @author Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
-     * @param userName 用户名称
-     * @param stockCode 股票代码
-     * @return 删除是否成功
-     */
-    @Override
-    public boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException {
-        return userDataHelper.deletePrivateStock(userName, stockCode);
-    }
-
-
-
-
    /*
     暂定
      */

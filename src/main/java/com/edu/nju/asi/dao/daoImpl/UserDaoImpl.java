@@ -1,6 +1,7 @@
 package com.edu.nju.asi.dao.daoImpl;
 
 import com.edu.nju.asi.dao.UserDao;
+import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.UserDataHelper;
 import com.edu.nju.asi.dataHelper.dataHelperImpl.UserDataHelperImpl;
 import com.edu.nju.asi.model.User;
@@ -23,7 +24,7 @@ public class UserDaoImpl implements UserDao {
      * @updateTime 2017/3/5
      */
     public UserDaoImpl() {
-        this.userHelper = new UserDataHelperImpl();
+        this.userHelper = HelperManager.userDataHelper;
     }
 
     /**

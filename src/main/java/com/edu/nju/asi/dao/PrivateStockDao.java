@@ -1,4 +1,4 @@
-package com.edu.nju.asi.service;
+package com.edu.nju.asi.dao;
 
 import com.edu.nju.asi.model.PrivateStockID;
 import com.edu.nju.asi.model.Stock;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by cuihua on 2017/5/11.
  */
-public interface PrivateStockService {
+public interface PrivateStockDao {
 
     /**
      * 显示用户的自选股信息列表
