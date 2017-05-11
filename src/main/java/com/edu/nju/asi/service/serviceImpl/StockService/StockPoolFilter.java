@@ -1,7 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.StockService;
 
-import com.edu.nju.asi.vo.StockPoolCriteriaVO;
-import com.edu.nju.asi.utilities.infoCarrier.StockPool;
+import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
+import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ public class StockPoolFilter {
      * @params List<StockVO> stocks 未经筛选的全部股票
      * @return 经过筛选后的目标股票池
      */
-    public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteriaVO vo){
-        return getNextFilter().meetCriteria(stocks, vo);
+    public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria){
+        return getNextFilter().meetCriteria(stocks, criteria);
     }
 
     /**

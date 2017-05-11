@@ -2,8 +2,8 @@ package com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters;
 
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilter;
 import com.edu.nju.asi.utilities.enums.BlockType;
-import com.edu.nju.asi.vo.StockPoolCriteriaVO;
-import com.edu.nju.asi.utilities.infoCarrier.StockPool;
+import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
+import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class BlockCriteriaFilter extends StockPoolFilter {
      * 筛选股票
      *
      * @param stocks
+     * @param criteria
      * @return 经过筛选后的目标股票池
      * @auther Harvey
      * @lastUpdatedBy Harvey
@@ -23,13 +24,12 @@ public class BlockCriteriaFilter extends StockPoolFilter {
      * @params List<StockVO> stocks 未经筛选的全部股票
      */
     @Override
-    public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteriaVO vo) {
+    public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria) {
 
         // 选择ALL时放且只放在第一个位置
-        if(vo.blockTypes.get(0) !=  BlockType.ALL){
+        if(criteria.blockTypes.get(0) !=  BlockType.ALL){
             for(int i = 0; i < stocks.size();){
-                if(vo.blockTypes.contains(stocks.get(i).blockType)){
-
+                if(criteria.blockTypes.contains(stocks.get(i).blockType)){
                     i++;
                     continue;
                 }
@@ -44,7 +44,7 @@ public class BlockCriteriaFilter extends StockPoolFilter {
             return stocks;
         }
         else {
-            return getNextFilter().meetCriteria(stocks, vo);
+            return getNextFilter().meetCriteria(stocks, criteria);
         }
     }
 }

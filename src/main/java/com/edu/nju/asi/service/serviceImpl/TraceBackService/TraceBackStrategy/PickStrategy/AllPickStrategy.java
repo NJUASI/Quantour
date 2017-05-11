@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
 
-import com.edu.nju.asi.vo.FormativePeriodRateVO;
+import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,25 +25,25 @@ public abstract class AllPickStrategy {
 
     /**
      * 根据FormativePeriodRateVO中的periodReturn对股票代码进行排序并选择
-     * @param formativePeriodRateVOS
+     * @param formativePeriodRates
      * @return List<String> 选择好的持有期的股票代码
      */
-    public abstract List<String> pick(List<FormativePeriodRateVO> formativePeriodRateVOS);
+    public abstract List<String> pick(List<FormativePeriodRate> formativePeriodRates);
 
-    protected List<String> ascSort(List<FormativePeriodRateVO> formativePeriodRateVOS){
+    protected List<String> ascSort(List<FormativePeriodRate> formativePeriodRates){
         List<String> sortedStockCodes = new ArrayList<>();
-        formativePeriodRateVOS.sort(new AscSorter());
-        for(int i = 0; i < formativePeriodRateVOS.size(); i++){
-            sortedStockCodes.add(formativePeriodRateVOS.get(i).stockCode);
+        formativePeriodRates.sort(new AscSorter());
+        for(int i = 0; i < formativePeriodRates.size(); i++){
+            sortedStockCodes.add(formativePeriodRates.get(i).stockCode);
         }
         return sortedStockCodes;
     }
 
-    protected List<String> descSort(List<FormativePeriodRateVO> formativePeriodRateVOS){
+    protected List<String> descSort(List<FormativePeriodRate> formativePeriodRates){
         List<String> sortedStockCodes = new ArrayList<>();
-        formativePeriodRateVOS.sort(new DescSorter());
-        for(int i = 0; i < formativePeriodRateVOS.size(); i++){
-            sortedStockCodes.add(formativePeriodRateVOS.get(i).stockCode);
+        formativePeriodRates.sort(new DescSorter());
+        for(int i = 0; i < formativePeriodRates.size(); i++){
+            sortedStockCodes.add(formativePeriodRates.get(i).stockCode);
         }
         return sortedStockCodes;
     }
@@ -53,10 +53,10 @@ public abstract class AllPickStrategy {
 /**
  * 升序排序器
  */
-class AscSorter implements Comparator<FormativePeriodRateVO> {
+class AscSorter implements Comparator<FormativePeriodRate> {
 
     @Override
-    public int compare(FormativePeriodRateVO o1, FormativePeriodRateVO o2) {
+    public int compare(FormativePeriodRate o1, FormativePeriodRate o2) {
         if(o1.periodReturn > o2.periodReturn){
             return -1;
         }
@@ -72,9 +72,9 @@ class AscSorter implements Comparator<FormativePeriodRateVO> {
 /**
  * 降序排序器
  */
-class DescSorter implements Comparator<FormativePeriodRateVO>{
+class DescSorter implements Comparator<FormativePeriodRate>{
     @Override
-    public int compare(FormativePeriodRateVO o1, FormativePeriodRateVO o2) {
+    public int compare(FormativePeriodRate o1, FormativePeriodRate o2) {
         if(o1.periodReturn > o2.periodReturn){
             return 1;
         }

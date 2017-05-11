@@ -1,4 +1,4 @@
-package com.edu.nju.asi.vo;
+package com.edu.nju.asi.infoCarrier.traceBack;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
  *
  * 仿照果仁网，历史持仓详情
  */
-public class HoldingDetailVO {
+public class HoldingDetail {
 
     /**
      * 周期详情，即周期序号
@@ -59,7 +59,7 @@ public class HoldingDetailVO {
      */
     public double remainInvestment;
 
-    public HoldingDetailVO(int periodSerial, LocalDate startDate, LocalDate endDate, int holdingNum, double strategyReturn, double remainInvestment) {
+    public HoldingDetail(int periodSerial, LocalDate startDate, LocalDate endDate, int holdingNum, double strategyReturn, double remainInvestment) {
         this.periodSerial = periodSerial;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -68,6 +68,6 @@ public class HoldingDetailVO {
         this.remainInvestment = remainInvestment;
     }
 
-    public HoldingDetailVO() {
+    public HoldingDetail() {
     }
 }

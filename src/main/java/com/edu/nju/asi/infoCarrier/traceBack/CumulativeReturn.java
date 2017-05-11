@@ -1,4 +1,4 @@
-package com.edu.nju.asi.vo;
+package com.edu.nju.asi.infoCarrier.traceBack;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
  *
  * 回测累计收益率
  */
-public class CumulativeReturnVO {
+public class CumulativeReturn {
 
     // 当天的日期
     public LocalDate currentDate;
@@ -18,7 +18,7 @@ public class CumulativeReturnVO {
     // 是否为最大回测点
     public boolean isTraceBack;
 
-    public CumulativeReturnVO(LocalDate currentDate, double cumulativeReturn, boolean isTraceBack) {
+    public CumulativeReturn(LocalDate currentDate, double cumulativeReturn, boolean isTraceBack) {
         this.currentDate = currentDate;
         this.cumulativeReturn = cumulativeReturn;
         this.isTraceBack = isTraceBack;

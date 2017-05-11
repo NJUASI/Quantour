@@ -3,7 +3,7 @@ package com.edu.nju.asi.dao.daoImpl;
 import com.edu.nju.asi.dao.UserDao;
 import com.edu.nju.asi.dataHelper.UserDataHelper;
 import com.edu.nju.asi.dataHelper.dataHelperImpl.UserDataHelperImpl;
-import com.edu.nju.asi.po.UserPO;
+import com.edu.nju.asi.model.User;
 
 import java.util.Set;
 
@@ -32,11 +32,11 @@ public class UserDaoImpl implements UserDao {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
-     * @param userPO 用户信息载体
+     * @param user 用户信息载体
      * @return 是否成功添加用户
      */
     @Override
-    public boolean add(UserPO userPO) {
+    public boolean add(User user) {
 //        return this.userHelper.add(userPO);
         return true;
     }
@@ -51,7 +51,7 @@ public class UserDaoImpl implements UserDao {
      * @return 用户信息载体
      */
     @Override
-    public UserPO get(String username) {
+    public User get(String username) {
 //        return this.userHelper.get(username);
         return null;
     }
@@ -62,11 +62,11 @@ public class UserDaoImpl implements UserDao {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
-     * @param userPO 用户信息载体
+     * @param user 用户信息载体
      * @return 是否成功修改用户
      */
     @Override
-    public boolean modify(UserPO userPO) {
+    public boolean modify(User user) {
 //        return this.userHelper.modify(userPO);
         return true;
     }

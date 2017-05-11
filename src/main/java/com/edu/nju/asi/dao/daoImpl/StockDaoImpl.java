@@ -12,7 +12,7 @@ import com.edu.nju.asi.utilities.comparator.StockDateComparator;
 import com.edu.nju.asi.utilities.enums.BlockType;
 import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.utilities.infoCarrier.StockPool;
+import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -329,7 +329,8 @@ public class StockDaoImpl implements StockDao {
         List<String> stockCodes = new ArrayList<>(codeName.keySet());
         List<String> stockNames = new ArrayList<>(codeName.values());
 
-        stockCodes.removeAll(stockSearchDataHelper.getAllBaseStockCodes());
+        // TODO 冯俊杰：基准股票怎么搞
+//        stockCodes.removeAll(stockSearchDataHelper.getAllBaseStockCodes());
 
         for (int i = 0; i < stockCodes.size(); i++) {
             String tempCode = StockCodeHelper.format(stockCodes.get(i));

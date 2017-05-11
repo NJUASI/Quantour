@@ -29,6 +29,11 @@ public class StockSearch implements Serializable {
     @Basic
     private String firstLetters;
 
+    public StockSearch(String name, String firstLetters) {
+        this.name = name;
+        this.firstLetters = firstLetters;
+    }
+
     public String getCode() {
         return code;
     }

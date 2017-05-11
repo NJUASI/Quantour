@@ -2,10 +2,8 @@ package com.edu.nju.asi.dataHelper;
 
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.User;
-import com.edu.nju.asi.po.UserPO;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by cuihua on 2017/3/4.

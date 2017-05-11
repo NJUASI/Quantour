@@ -1,11 +1,11 @@
-package com.edu.nju.asi.vo;
+package com.edu.nju.asi.infoCarrier.traceBack;
 
 import java.time.LocalDate;
 
 /**
  * Created by Byron Dong on 2017/4/10.
  */
-public class DailyRateVO {
+public class DailyRate {
 
     // 当日收益指数
     public double rate;
@@ -15,11 +15,11 @@ public class DailyRateVO {
 
     public int count;
 
-    public DailyRateVO() {
+    public DailyRate() {
         count = 1;
     }
 
-    public DailyRateVO(double rate, LocalDate date) {
+    public DailyRate(double rate, LocalDate date) {
         this.rate = rate;
         this.date = date;
         count = 1;
