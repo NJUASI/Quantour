@@ -1,8 +1,9 @@
 package com.edu.nju.asi.service;
 
+import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.vo.StockPoolCriteriaVO;
-import com.edu.nju.asi.vo.StockSearchVO;
 import com.edu.nju.asi.vo.StockVO;
 
 import java.io.IOException;
@@ -41,10 +42,10 @@ public interface StockService{
      * @param date 用户选择日期
      * @return the iterator 自选股信息列表
      */
-    List<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException;
+    List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException;
 
     /**
-     * 获取用户的自选股票池
+     * 获取用户的自选股的股票池
      *
      * @author  Byron Dong
      * @lastUpdatedBy Byron Dong
@@ -84,7 +85,7 @@ public interface StockService{
      * @param searchString 代码或股票首字母或股票名称
      * @return 符合条件的股票简要信息
      */
-    List<StockSearchVO> searchStock(String searchString) throws IOException;
+    List<StockSearch> searchStock(String searchString) throws IOException;
 
     /**
      * 根据股票代码，起始日期，结束日期，获得该股票在此期间的数据

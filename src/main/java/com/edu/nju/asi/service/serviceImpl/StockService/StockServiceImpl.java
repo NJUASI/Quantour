@@ -2,6 +2,8 @@ package com.edu.nju.asi.service.serviceImpl.StockService;
 
 import com.edu.nju.asi.dao.StockDao;
 import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
+import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.po.StockPO;
 import com.edu.nju.asi.po.StockSearchPO;
 import com.edu.nju.asi.service.StockService;
@@ -10,7 +12,7 @@ import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.StCrite
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.vo.StockPoolCriteriaVO;
-import com.edu.nju.asi.vo.StockPoolVO;
+import com.edu.nju.asi.utilities.infoCarrier.StockPool;
 import com.edu.nju.asi.vo.StockSearchVO;
 import com.edu.nju.asi.vo.StockVO;
 
@@ -69,7 +71,7 @@ public class StockServiceImpl implements StockService {
      * @return the iterator 自选股信息列表
      */
     @Override
-    public List<StockVO> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
+    public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
         List<StockVO> stockVOList = new ArrayList<StockVO>();
         for (StockPO po:stockDao.getPrivateStockData(userName,date)) {
             stockVOList.add(new StockVO(po));
@@ -129,7 +131,7 @@ public class StockServiceImpl implements StockService {
      * @updateTime 2017/3/14
      */
     @Override
-    public List<StockSearchVO> searchStock(String searchString) throws IOException {
+    public List<StockSearch> searchStock(String searchString) throws IOException {
 
         List<StockSearchVO> stockSearchVOs = new ArrayList<StockSearchVO>();
 
@@ -238,10 +240,10 @@ public class StockServiceImpl implements StockService {
 
         List<String> stockPoolCodes = new ArrayList<String>();
         //筛选股票
-        List<StockPoolVO> allStockPool = stockPoolFilter.meetCriteria(stockDao.getAllStockPool(),stockPoolCriteriaVO);
+        List<StockPool> allStockPool = stockPoolFilter.meetCriteria(stockDao.getAllStockPool(),stockPoolCriteriaVO);
 
         //只需要股票池所有股票的股票代码
-        for(StockPoolVO vo : allStockPool){
+        for(StockPool vo : allStockPool){
             stockPoolCodes.add(vo.stockCode);
         }
 

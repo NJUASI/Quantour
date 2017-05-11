@@ -8,8 +8,6 @@ import org.springframework.context.ApplicationContext;
  */
 public class HelperManager {
 
-    public final static DataSourceInfoDataHelper dataSourceInfoDataHelper;
-
     public final static  StockDataHelper stockDataHelper;
 
     public final static  StockSearchDataHelper stockSearchDataHelper;
@@ -20,7 +18,6 @@ public class HelperManager {
 
     static {
         ApplicationContext applicationContext = ApplicationContextHelper.getApplicationContext();
-        dataSourceInfoDataHelper = applicationContext.getBean(DataSourceInfoDataHelper.class);
         stockDataHelper = applicationContext.getBean(StockDataHelper.class);
         stockSearchDataHelper = applicationContext.getBean(StockSearchDataHelper.class);
         stockSituationDataHelper = applicationContext.getBean(StockSituationDataHelper.class);

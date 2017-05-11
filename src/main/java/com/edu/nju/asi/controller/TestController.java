@@ -2,14 +2,15 @@ package com.edu.nju.asi.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by cuihua on 2017/5/7.
  */
 @Controller
-@RequestMapping("test")
 public class TestController {
 
 

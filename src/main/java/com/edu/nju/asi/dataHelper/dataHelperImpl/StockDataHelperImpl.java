@@ -3,17 +3,16 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
-import com.edu.nju.asi.model.StockSearch;
-import com.edu.nju.asi.vo.StockPoolVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/3/5.
@@ -50,7 +49,7 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     /**
      * 取指定股票的所有数据，没有返回null
-     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
+     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端 TODO dao进行排序
      *
      * @param stockCode 指定的股票代码
      * @return （股票代码相同）此股票的所有数据
@@ -60,7 +59,16 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<Stock> getStockData(String stockCode) {
-        return null;
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql  = "from Stock stock where stock.id.code = ?";
+        Query query = session.createQuery(hql);
+        query.setParameter(0,stockCode);
+        List<Stock> stocks = query.list();
+        transaction.commit();
+        session.close();
+        return stocks;
     }
 
     /**
@@ -74,7 +82,16 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<Stock> getStockData(LocalDate date) {
-        return null;
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql  = "from Stock stock where stock.id.date = ?";
+        Query query = session.createQuery(hql);
+        query.setParameter(0,date);
+        List<Stock> stocks = query.list();
+        transaction.commit();
+        session.close();
+        return stocks;
     }
 
     /**
@@ -88,7 +105,28 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public boolean addStockAll(List<Stock> stocks) {
-        return false;
+        boolean result = true;
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            for(int i=0;i<stocks.size();i++){
+                session.save(stocks.get(i));
+                if(i%20 == 0){
+                    session.flush();
+                    session.clear();
+                }
+            }
+            transaction.commit();
+        } catch(Exception e){
+            e.printStackTrace();
+            transaction.rollback();
+            result = false;
+        }finally {
+            session.close();
+        }
+
+        return result;
     }
 
     /**
@@ -99,7 +137,14 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getDateWithData() {
-        return null;
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql  = "select distinct stock.id.date from Stock stock";
+        List<LocalDate> dates = session.createQuery(hql).list();
+        transaction.commit();
+        session.close();
+        return dates;
     }
 
     /**
@@ -111,7 +156,39 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<LocalDate> getFirstAndLastDay(String stockCode) {
-        return null;
+
+        List<LocalDate> dates = getAllDateByCode(stockCode);
+        LocalDate start = LocalDate.MAX;
+        LocalDate end = LocalDate.MIN;
+
+        for(LocalDate localDate : dates){
+            if(localDate.isBefore(start)){
+                start = localDate;
+            }
+
+            if(localDate.isAfter(end)){
+                end = localDate;
+            }
+        }
+
+        List<LocalDate> result = new ArrayList<>();
+        result.add(start);
+        result.add(end);
+        return result;
+    }
+
+    private List<LocalDate> getAllDateByCode(String code){
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql  = "select distinct stock.id.date from Stock stock where stock.id.code = ?";
+        Query query = session.createQuery(hql);
+        query.setParameter(0,code);
+        List<LocalDate> dates = query.list();
+        transaction.commit();
+        session.close();
+
+        return dates;
     }
 
 }
