@@ -1,8 +1,8 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
-import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.vo.FormativePeriodRateVO;
+import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
+import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class IncreseAmountFormateStrategy extends AllFormateStrategy {
     }
 
     @Override
-    public List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+    public List<FormativePeriodRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
@@ -30,7 +30,7 @@ public class IncreseAmountFormateStrategy extends AllFormateStrategy {
         LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
 
 
-        List<FormativePeriodRateVO> formativePeriodRate = new ArrayList<>();
+        List<FormativePeriodRate> formativePeriodRate = new ArrayList<>();
         for(int i = 0; i < stockCodes.size(); i++){
             List<StrategyStock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
             //说明为该形成期没有数据
@@ -40,7 +40,7 @@ public class IncreseAmountFormateStrategy extends AllFormateStrategy {
 
             double rate = (stockVOList.get(stockVOList.size()-1).close - stockVOList.get(0).close) / stockVOList.get(0).close;
 
-            formativePeriodRate.add(new FormativePeriodRateVO(stockCodes.get(i), rate));
+            formativePeriodRate.add(new FormativePeriodRate(stockCodes.get(i), rate));
         }
 
         return formativePeriodRate;

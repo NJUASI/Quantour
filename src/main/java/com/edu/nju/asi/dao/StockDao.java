@@ -4,7 +4,7 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.utilities.infoCarrier.StockPool;
+import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 
 import java.io.IOException;
 import java.time.LocalDate;

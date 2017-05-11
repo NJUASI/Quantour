@@ -1,4 +1,4 @@
-package com.edu.nju.asi.vo;
+package com.edu.nju.asi.infoCarrier;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
  *
  * K线、均线总体时的起讫时间
  */
-public class FirstLastDayVO {
+public class FirstAndLastDay {
 
     // 起始时间
     public LocalDate first;
@@ -15,7 +15,7 @@ public class FirstLastDayVO {
     // 结束时间
     public LocalDate last;
 
-    public FirstLastDayVO(LocalDate first, LocalDate last) {
+    public FirstAndLastDay(LocalDate first, LocalDate last) {
         this.first = first;
         this.last = last;
     }

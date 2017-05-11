@@ -1,6 +1,6 @@
 package com.edu.nju.asi.utilities;
 
-import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
+import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

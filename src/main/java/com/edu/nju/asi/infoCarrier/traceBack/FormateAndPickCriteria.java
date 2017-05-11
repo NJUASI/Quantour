@@ -1,4 +1,4 @@
-package com.edu.nju.asi.vo;
+package com.edu.nju.asi.infoCarrier.traceBack;
 
 import com.edu.nju.asi.utilities.enums.FormateType;
 import com.edu.nju.asi.utilities.enums.PickType;
@@ -8,18 +8,12 @@ import com.edu.nju.asi.utilities.enums.PickType;
  *
  * 形成期的形成和挑选类型以及rank
  */
-public class FormateAndPickVO {
+public class FormateAndPickCriteria {
 
     /**
      * 形成期形成的类型
      */
     public FormateType formateType;
-
-    public FormateAndPickVO(FormateType formateType, PickType pickType, int rank) {
-        this.formateType = formateType;
-        this.pickType = pickType;
-        this.rank = rank;
-    }
 
     /**
      * 形成期挑选的类型
@@ -30,4 +24,10 @@ public class FormateAndPickVO {
      * 排名
      */
     public int rank;
+
+    public FormateAndPickCriteria(FormateType formateType, PickType pickType, int rank) {
+        this.formateType = formateType;
+        this.pickType = pickType;
+        this.rank = rank;
+    }
 }

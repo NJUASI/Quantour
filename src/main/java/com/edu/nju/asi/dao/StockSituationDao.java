@@ -1,6 +1,6 @@
 package com.edu.nju.asi.dao;
 
-import com.edu.nju.asi.po.StockSituationPO;
+import com.edu.nju.asi.model.StockSituation;
 import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
 
 import java.io.IOException;
@@ -22,6 +22,6 @@ public interface StockSituationDao {
      * @return StockSituationPO 指定日期市场温度计数据
      * @throws IOException IO
      */
-    StockSituationPO getStockSituation(LocalDate date) throws IOException, NoSituationDataException;
+    StockSituation getStockSituation(LocalDate date) throws IOException, NoSituationDataException;
 
 }
