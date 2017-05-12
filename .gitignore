@@ -7,3 +7,5 @@ target/*
 !.attachments/userInfo.properties
 
 !.attachments/*/*.txt
+
+.idea/dataSources.local.xml

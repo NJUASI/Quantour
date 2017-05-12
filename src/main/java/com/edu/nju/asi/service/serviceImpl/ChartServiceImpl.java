@@ -7,7 +7,10 @@ import com.edu.nju.asi.utilities.enums.MovingAverageType;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.po.StockPO;
 import com.edu.nju.asi.service.ChartService;
+<<<<<<< HEAD
 import com.edu.nju.asi.vo.*;
+=======
+>>>>>>> parent of 390f122... Add：初始化controller
 
 import java.io.IOException;
 import java.time.LocalDate;
