@@ -17,6 +17,7 @@
     <context:component-scan base-package="com.edu.nju.asi.controller"/>
 
 
+
     <!-- 声明一个拦截器 -->
     <!--<mvc:interceptors>-->
         <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->

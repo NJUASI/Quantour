@@ -178,8 +178,6 @@
                     <button type="button" class="btn btn-primary" onclick="login()">登录</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
-
-                <a href="/test2">test2</a><br>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
@@ -188,44 +186,7 @@
 <script src="../js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
-<script type="text/javascript">
-    function login() {
-        alert("大风过后");
-        var username = $("#username").val();
-        var password = $("#password").val();
+<script src="../js/logIn.js"></script>
 
-        $.post("/view/template.html", {
-                name: "菜鸟教程",
-                url: "http://www.runoob.com"
-            },
-            function (data, status) {
-
-                alert("数据: \n" + data + "\n状态: " + status);
-            });
-//        var obj = $.ajax({
-//            type: "post",
-//            url: "../template.html",
-//            async: false,
-//            data: {
-//                "username": username,
-//                "password": password,
-//            },
-//
-//            success: function (result) {
-////                if (result == true) {
-////                    window.location.href = "welcome?id=" + username;
-////                    alert(obj.responseText);
-////                } else {
-////                    alert("qwertyuioiuytrewertyui");
-////                }
-//                alert("qwertyuiop");
-//            },
-//            error: function(){
-//                alert("错误");
-//            }
-//        })
-//        ;
-    }
-</script>
 </body>
 </html>

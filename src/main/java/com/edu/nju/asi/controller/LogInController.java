@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by cuihua on 2017/5/12.
  */
@@ -20,7 +22,10 @@ public class LogInController {
     }
 
     @PostMapping("/logIn")
-    public boolean logIn2() {
+    public boolean logIn2(HttpServletRequest request) {
+        System.out.println(request.getParameter("username"));
+        System.out.println(request.getParameter("password"));
+
         System.out.println("-------In  post------");
         return true;
     }
