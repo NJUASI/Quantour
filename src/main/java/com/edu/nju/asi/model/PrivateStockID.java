@@ -18,6 +18,14 @@ public class PrivateStockID implements Serializable{
     @Column(name = "stcokCode",length = 200)
     private String stockCode;
 
+    public PrivateStockID() {
+    }
+
+    public PrivateStockID(String userName, String stockCode) {
+        this.userName = userName;
+        this.stockCode = stockCode;
+    }
+
     public String getUserName() {
         return userName;
     }

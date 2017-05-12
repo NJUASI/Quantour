@@ -69,6 +69,22 @@ public class Stock implements Serializable {
     @Basic
     private double preAdjClose;
 
+    public Stock() {
+    }
+
+    public Stock(String name, Market market, double open, double high, double low, double close, String volume, double adjClose, double preClose, double preAdjClose) {
+        this.name = name;
+        this.market = market;
+        this.open = open;
+        this.high = high;
+        this.low = low;
+        this.close = close;
+        this.volume = volume;
+        this.adjClose = adjClose;
+        this.preClose = preClose;
+        this.preAdjClose = preAdjClose;
+    }
+
     public StockID getStockID() {
         return stockID;
     }

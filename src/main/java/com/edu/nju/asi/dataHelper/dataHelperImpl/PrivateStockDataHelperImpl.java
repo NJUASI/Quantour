@@ -38,9 +38,9 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql = "from PrivateStock where privateStockID.userName = ?";
+        String hql = "from PrivateStock where privateStockID.userName =:userName";
         Query query = session.createQuery(hql);
-        query.setParameter(0, userName);
+        query.setParameter("userName", userName);
         List<PrivateStock> list = query.list();
         return list;
     }
@@ -154,7 +154,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      */
     @Override
     public boolean deletePrivateStockAll(List<PrivateStockID> list) {
-        String hql = "delete from PrivateStock where privateStockID = ?";
+        String hql = "delete from PrivateStock where privateStockID =:id";
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         boolean result = true;
@@ -162,7 +162,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
         try {
             for (PrivateStockID privateStockID : list) {
                 Query query = session.createQuery(hql);
-                query.setParameter(0, privateStockID);
+                query.setParameter("id", privateStockID);
                 query.executeUpdate();
             }
             transaction.commit();
