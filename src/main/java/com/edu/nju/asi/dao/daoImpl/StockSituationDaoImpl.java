@@ -1,8 +1,9 @@
 package com.edu.nju.asi.dao.daoImpl;
 
+import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSituationDataHelper;
 import com.edu.nju.asi.dataHelper.dataHelperImpl.StockSituationDataHelperImpl;
-import com.edu.nju.asi.po.StockSituationPO;
+import com.edu.nju.asi.model.StockSituation;
 import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class StockSituationDaoImpl implements com.edu.nju.asi.dao.StockSituation
      * @updateTime 2017/3/5
      */
     public StockSituationDaoImpl() {
-        this.stockSituationHelper = new StockSituationDataHelperImpl();
+        this.stockSituationHelper = HelperManager.stockSituationDataHelper;
     }
 
     /**
@@ -38,7 +39,7 @@ public class StockSituationDaoImpl implements com.edu.nju.asi.dao.StockSituation
      * @throws IOException IO
      */
     @Override
-    public StockSituationPO getStockSituation(LocalDate date) throws NoSituationDataException, IOException {
+    public StockSituation getStockSituation(LocalDate date) throws NoSituationDataException, IOException {
 //        return this.stockSituationHelper.getStockSituation(date);
         return null;
     }

@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
 
-import com.edu.nju.asi.vo.FormativePeriodRateVO;
+import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ public class RankMaxPercentPickStrategy extends AllPickStrategy {
     /**
      * 根据FormativePeriodRateVO中的periodReturn对股票代码进行排序并选择
      *
-     * @param formativePeriodRateVOS
+     * @param formativePeriodRates
      * @return List<String> 选择好的持有期的股票代码
      */
     @Override
-    public List<String> pick(List<FormativePeriodRateVO> formativePeriodRateVOS) {
-        List<String> sortedStockPool = ascSort(formativePeriodRateVOS);
+    public List<String> pick(List<FormativePeriodRate> formativePeriodRates) {
+        List<String> sortedStockPool = ascSort(formativePeriodRates);
 
         int size = sortedStockPool.size();
         int pickedNum =  (int)Math.ceil((double)size * rank / 100);

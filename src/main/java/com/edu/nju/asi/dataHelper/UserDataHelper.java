@@ -2,10 +2,8 @@ package com.edu.nju.asi.dataHelper;
 
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.User;
-import com.edu.nju.asi.po.UserPO;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -58,36 +56,4 @@ public interface UserDataHelper {
      * @return 用户名称集合
      */
     List<String> getAllUserNames();
-
-
-    //------------------自选股---------------//
-    /**
-     * 获取自选股
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @return 用户名称集合
-     */
-    List<Stock> getPrivateStock(String userName);
-
-    /**
-     * 添加自选股
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @return 用户名称集合
-     */
-    boolean addPrivateStock(String userName,Stock stock);
-
-    /**
-     * 删除自选股
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     * @return 用户名称集合
-     */
-    boolean deletePrivateStock(String userName,Stock stock);
 }
