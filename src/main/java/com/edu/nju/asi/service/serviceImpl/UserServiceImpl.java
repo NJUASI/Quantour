@@ -8,10 +8,7 @@ import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.po.UserPO;
 import com.edu.nju.asi.service.UserService;
 import com.edu.nju.asi.utilities.util.MD5Util;
-<<<<<<< HEAD
 import com.edu.nju.asi.vo.UserVO;
-=======
->>>>>>> parent of 390f122... Add：初始化controller
 
 import java.io.IOException;
 

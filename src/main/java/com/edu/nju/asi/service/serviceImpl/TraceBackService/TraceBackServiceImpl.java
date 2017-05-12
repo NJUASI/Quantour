@@ -9,10 +9,7 @@ import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import com.edu.nju.asi.utilities.StrategyStockList;
 import com.edu.nju.asi.utilities.exceptions.*;
-<<<<<<< HEAD
 import com.edu.nju.asi.vo.*;
-=======
->>>>>>> parent of 390f122... Add：初始化controller
 
 import java.io.IOException;
 import java.time.LocalDate;

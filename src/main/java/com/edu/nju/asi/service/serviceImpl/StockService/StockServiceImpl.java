@@ -11,15 +11,12 @@ import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.BlockCr
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.exceptions.*;
-<<<<<<< HEAD
 import com.edu.nju.asi.vo.StockPoolCriteriaVO;
 import com.edu.nju.asi.utilities.infoCarrier.StockPool;
 import com.edu.nju.asi.vo.StockSearchVO;
 import com.edu.nju.asi.vo.StockVO;
-=======
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
->>>>>>> parent of 390f122... Add：初始化controller
 
 import java.io.IOException;
 import java.time.LocalDate;
