@@ -112,4 +112,109 @@ public class UserDataHelperImpl implements UserDataHelper {
         session.close();
         return result;
     }
+
+    /**
+     * 获取已存在的所有用户名称
+     *
+     * @param userName
+     * @return 用户名称集合
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public List<Stock> getPrivateStock(String userName) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        User user =(User)session.get(User.class,userName);
+        List<Stock> stocks = user.getPrivateStock();
+        transaction.commit();
+        session.close();
+        return stocks;
+    }
+
+    /**
+     * 添加自选股
+     *
+     * @param userName
+     * @param stock
+     * @return 用户名称集合
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public boolean addPrivateStock(String userName, Stock stock) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        User user = (User)session.get(User.class,userName);
+        List<Stock> privateStocks  = user.getPrivateStock();
+
+        Stock tempStock = isExistStock(privateStocks,stock);
+        if(tempStock == null){
+            privateStocks.add(stock);
+            user.setPrivateStock(privateStocks);
+            session.save(user);
+        } else{
+            return false;
+        }
+
+        transaction.commit();
+        session.close();
+        return true;
+    }
+
+    /**
+     * 删除自选股
+     *
+     * @param userName
+     * @param stock
+     * @return 用户名称集合
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public boolean deletePrivateStock(String userName, Stock stock) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        User user = (User)session.get(User.class,userName);
+        List<Stock> privateStocks  = user.getPrivateStock();
+
+        Stock tempStock = isExistStock(privateStocks,stock);
+        if(tempStock != null){
+            privateStocks.remove(tempStock);
+            user.setPrivateStock(privateStocks);
+            session.save(user);
+        } else{
+            return false;
+        }
+
+        transaction.commit();
+        session.close();
+        return true;
+    }
+
+    /**
+     * 判断自选股是否已经存在
+     *
+     * @param privateStocks
+     * @param stock
+     * @return boolean
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    private Stock isExistStock(List<Stock> privateStocks, Stock stock){
+        for(Stock privateStock:privateStocks){
+            if(privateStock.getStockID().getCode().equals(stock.getStockID().getCode())){
+                return privateStock;
+            }
+        }
+        return null;
+    }
+
 }

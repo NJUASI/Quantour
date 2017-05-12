@@ -1,7 +1,7 @@
 package com.edu.nju.asi.service;
 
-import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.utilities.exceptions.*;
+import com.edu.nju.asi.vo.UserVO;
 
 import java.io.IOException;
 
@@ -18,12 +18,12 @@ public interface UserService{
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param user 注册用户信息
+     * @param userVO 注册用户信息
      * @param password2
      * @return 是否注册成功
      * @throws DuplicatedNameException 用户名重复
      */
-    boolean registerUser(User user, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException, PasswordInputException, InvalidInputException;
+    boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException, PasswordInputException, InvalidInputException;
 
     /**
      * 修改用户信息
@@ -31,10 +31,10 @@ public interface UserService{
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param user 修改后的用户信息
+     * @param userVO 修改后的用户信息
      * @return 是否修改成功
      */
-    boolean modifyUser(User user) throws PasswordInputException;
+    boolean modifyUser(UserVO userVO) throws PasswordInputException;
 
     /**
      * 用户登录

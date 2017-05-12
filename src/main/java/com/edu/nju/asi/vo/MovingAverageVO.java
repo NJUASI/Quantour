@@ -1,11 +1,11 @@
-package com.edu.nju.asi.infoCarrier;
+package com.edu.nju.asi.vo;
 
 import java.time.LocalDate;
 
 /**
  * Created by Harvey on 2017/3/9.
  */
-public class MovingAverage {
+public class MovingAverageVO {
 
     // 对应日期
     public LocalDate date;
@@ -13,12 +13,12 @@ public class MovingAverage {
     // 当天平均指数
     public double average;
 
-    public MovingAverage(LocalDate date, double average) {
+    public MovingAverageVO(LocalDate date, double average) {
         this.date = date;
         this.average = average;
     }
 
-    public MovingAverage() {
+    public MovingAverageVO() {
 
     }
 }

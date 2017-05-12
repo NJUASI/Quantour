@@ -2,8 +2,8 @@ package com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters;
 
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilter;
 import com.edu.nju.asi.utilities.enums.StType;
-import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
-import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
+import com.edu.nju.asi.vo.StockPoolCriteriaVO;
+import com.edu.nju.asi.utilities.infoCarrier.StockPool;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class StCriteriaFilter extends StockPoolFilter{
      * 筛选股票
      *
      * @param stocks
-     * @param criteria
+     * @param vo
      * @return 经过筛选后的目标股票池
      * @auther Harvey
      * @lastUpdatedBy Harvey
@@ -24,11 +24,11 @@ public class StCriteriaFilter extends StockPoolFilter{
      * @params List<StockVO> stocks 未经筛选的全部股票
      */
     @Override
-    public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria) {
+    public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteriaVO vo) {
 
         //TODO 因为现在还不需要筛选出st，故先直接返回，不做筛选
 
-        if(criteria.stType == StType.EXCLUDE){
+        if(vo.stType == StType.EXCLUDE){
             for(int i = 0; i < stocks.size();){
                 if (stocks.get(i).isSt){
                     stocks.remove(i);
@@ -36,7 +36,7 @@ public class StCriteriaFilter extends StockPoolFilter{
                 i++;
             }
         }
-        else if(criteria.stType == StType.ONLY){
+        else if(vo.stType == StType.ONLY){
             for(int i = 0; i < stocks.size();){
                 if(!stocks.get(i).isSt){
                     stocks.remove(i);
@@ -49,7 +49,7 @@ public class StCriteriaFilter extends StockPoolFilter{
             return stocks;
         }
         else {
-            return getNextFilter().meetCriteria(stocks, criteria);
+            return getNextFilter().meetCriteria(stocks, vo);
         }
     }
 }

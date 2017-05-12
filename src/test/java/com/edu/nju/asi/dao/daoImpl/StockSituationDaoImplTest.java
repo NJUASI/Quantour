@@ -1,9 +1,9 @@
 package com.edu.nju.asi.dao.daoImpl;
 
-import com.edu.nju.asi.model.StockSituation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import com.edu.nju.asi.po.StockSituationPO;
 
 import java.time.LocalDate;
 
@@ -32,7 +32,7 @@ public class StockSituationDaoImplTest {
      */
     @Test
     public void getStockSituation_1() throws Exception {
-        StockSituation thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2009, 1, 9));
+        StockSituationPO thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2009, 1, 9));
 
         assertEquals("26794465", thisStockSituation.getVolume());
         assertEquals(5, thisStockSituation.getLimitUpNum());
@@ -45,7 +45,7 @@ public class StockSituationDaoImplTest {
 
     @Test
     public void getStockSituation_2() throws Exception {
-        StockSituation thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2014, 4, 29));
+        StockSituationPO thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2014, 4, 29));
 
         assertEquals("27844947", thisStockSituation.getVolume());
         assertEquals(4, thisStockSituation.getLimitUpNum());
@@ -59,7 +59,7 @@ public class StockSituationDaoImplTest {
 
     @Test
     public void getStockSituation_3() throws Exception {
-        StockSituation thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2005, 12, 30));
+        StockSituationPO thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2005, 12, 30));
 
         assertEquals("5187455", thisStockSituation.getVolume());
         assertEquals(0, thisStockSituation.getLimitUpNum());
@@ -72,7 +72,7 @@ public class StockSituationDaoImplTest {
 
     @Test
     public void getStockSituation_4() throws Exception {
-        StockSituation thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2013, 6, 7));
+        StockSituationPO thisStockSituation = this.stockSituationDao.getStockSituation(LocalDate.of(2013, 6, 7));
 
         assertEquals("42804884", thisStockSituation.getVolume());
         assertEquals(4, thisStockSituation.getLimitUpNum());

@@ -1,6 +1,6 @@
-package com.edu.nju.asi.infoCarrier.traceBack;
+package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy;
 
-import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.po.StockPO;
 
 import java.time.LocalDate;
 
@@ -26,12 +26,12 @@ public class StrategyStock {
     // 交易量
     public double volume;
 
-    public StrategyStock(Stock stock) {
-        this.date = stock.getStockID().getDate();
-        this.close = stock.getClose();
-        this.preClose = stock.getPreClose();
-        this.adjClose = stock.getAdjClose();
-        this.volume = new Double(stock.getVolume());
+    public StrategyStock(StockPO po) {
+        this.date = po.getDate();
+        this.close = po.getClose();
+        this.preClose = po.getPreClose();
+        this.adjClose = po.getAdjClose();
+        this.volume = new Double(po.getVolume());
     }
 
 }

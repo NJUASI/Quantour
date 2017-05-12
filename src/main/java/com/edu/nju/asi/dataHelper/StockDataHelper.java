@@ -1,6 +1,5 @@
 package com.edu.nju.asi.dataHelper;
 
-import com.edu.nju.asi.infoCarrier.FirstAndLastDay;
 import com.edu.nju.asi.model.Stock;
 
 import java.time.LocalDate;

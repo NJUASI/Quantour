@@ -1,11 +1,11 @@
-package com.edu.nju.asi.infoCarrier.traceBack;
+package com.edu.nju.asi.vo;
 
 /**
  * Created by Harvey on 2017/4/15.
  *
  * 超额收益率与不同形成期/持有期的关系图以及策略胜率与不同形成期/持有期的关系图
  */
-public class ExcessAndWinRateDist {
+public class ExcessAndWinRateDistVO {
 
     /**
      * 相对强弱周期

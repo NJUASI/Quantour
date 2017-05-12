@@ -1,10 +1,10 @@
 package com.edu.nju.asi.service;
 
-import com.edu.nju.asi.model.StockSituation;
 import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
+import com.edu.nju.asi.vo.PriceRiseOrFallVO;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -22,5 +22,5 @@ public interface StockSituationService{
      * @param date the date
      * @return the stock stituation data
      */
-    StockSituation getStockStituation(LocalDate date) throws NoSituationDataException, IOException;
+    List<PriceRiseOrFallVO> getStockStituationData(LocalDate date) throws NoSituationDataException;
 }

@@ -18,26 +18,16 @@ public class StockSearch implements Serializable {
     @Id
     @GenericGenerator(name="myGenerator",strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
-    @Column(name = "code",length = 100)
+    @Column(name = "code")
     private String code;
 
     // 股票名称
     @Basic
-    @Column(length = 100)
     private String name;
 
     // 汉字首字母名称
     @Basic
-    @Column(length = 100)
     private String firstLetters;
-
-    public StockSearch() {
-    }
-
-    public StockSearch(String name, String firstLetters) {
-        this.name = name;
-        this.firstLetters = firstLetters;
-    }
 
     public String getCode() {
         return code;

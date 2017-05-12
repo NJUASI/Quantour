@@ -1,9 +1,9 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
-import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import org.junit.Before;
 import org.junit.Test;
 import com.edu.nju.asi.service.TraceBackService;
+import com.edu.nju.asi.vo.TraceBackCriteriaVO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -19,7 +19,7 @@ public class TraceBackServiceImplTest {
     LocalDate start;
     LocalDate end;
     List<String> stockCodes;
-    TraceBackCriteria TraceBackCriteria;
+    TraceBackCriteriaVO TraceBackCriteriaVO;
 
     @Before
     public void setUp() throws IOException {
@@ -28,10 +28,10 @@ public class TraceBackServiceImplTest {
         end = LocalDate.of(2014,4,29);
 
         //设置TraceBackCriteriaVO
-        TraceBackCriteria = new TraceBackCriteria();
-        TraceBackCriteria.baseStockName = "深发展Ａ";
-        TraceBackCriteria.startDate = start;
-        TraceBackCriteria.endDate = end;
+        TraceBackCriteriaVO = new TraceBackCriteriaVO();
+        TraceBackCriteriaVO.baseStockName = "深发展Ａ";
+        TraceBackCriteriaVO.startDate = start;
+        TraceBackCriteriaVO.endDate = end;
 
 
         //设置自选股的股票代码
@@ -47,7 +47,7 @@ public class TraceBackServiceImplTest {
 //    @Test
 //    public void getCustomizedCumulativeReturn() throws Exception {
 //
-//        List<CumulativeReturn> cumulativeReturnVOS = traceBackService.getCustomizedCumulativeReturn(TraceBackCriteria.startDate,TraceBackCriteria.endDate,stockCodes, stockMap);
+//        List<CumulativeReturnVO> cumulativeReturnVOS = traceBackService.getCustomizedCumulativeReturn(TraceBackCriteriaVO.startDate,TraceBackCriteriaVO.endDate,stockCodes, stockMap);
 //        assertEquals(-0.021,cumulativeReturnVOS.get(1).cumulativeReturn,0.001);
 //
 //    }

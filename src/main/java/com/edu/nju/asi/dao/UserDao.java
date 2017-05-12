@@ -1,6 +1,6 @@
 package com.edu.nju.asi.dao;
 
-import com.edu.nju.asi.model.User;
+import com.edu.nju.asi.po.UserPO;
 
 import java.util.Set;
 
@@ -17,10 +17,10 @@ public interface UserDao {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
-     * @param user 用户信息载体
+     * @param userPO 用户信息载体
      * @return 是否成功添加用户
      */
-     boolean add(User user);
+     boolean add(UserPO userPO);
 
     /**
      * 获取指定用户信息
@@ -31,7 +31,7 @@ public interface UserDao {
      * @param username 用户账号
      * @return 用户信息载体
      */
-     User get(String username);
+     UserPO get(String username);
 
     /**
      * 修改用户信息
@@ -39,10 +39,10 @@ public interface UserDao {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/5
-     * @param user 用户信息载体
+     * @param userPO 用户信息载体
      * @return 是否成功修改用户
      */
-     boolean modify(User user);
+     boolean modify(UserPO userPO);
 
     /**
      * 获取已存在的所有用户名称

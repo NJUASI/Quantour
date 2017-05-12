@@ -2,13 +2,13 @@ package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.dao.UserDao;
 import com.edu.nju.asi.dao.daoImpl.UserDaoImpl;
-import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.utilities.AttahmentsInitializer;
 import com.edu.nju.asi.utilities.Detector;
 import com.edu.nju.asi.utilities.exceptions.*;
+import com.edu.nju.asi.po.UserPO;
 import com.edu.nju.asi.service.UserService;
 import com.edu.nju.asi.utilities.util.MD5Util;
-import org.springframework.stereotype.Service;
+import com.edu.nju.asi.vo.UserVO;
 
 import java.io.IOException;
 
@@ -19,65 +19,65 @@ import java.io.IOException;
  *
  * 去除在用户注册时为用户新建一个properties的实现
  */
-@Service("UserService")
 public class UserServiceImpl implements UserService {
 
     UserDao userDao;
 
     public UserServiceImpl() {
-        userDao = new UserDaoImpl();
+         userDao = new UserDaoImpl();
     }
 
     /**
      * 用户注册.
      *
-     * @param user      注册用户信息
-     * @param password2
-     * @return 是否注册成功
-     * @throws DuplicatedNameException 用户名重复
      * @auther Harvey
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/15
+     * @param userVO 注册用户信息
+     * @param password2
+     * @return 是否注册成功
+     * @throws DuplicatedNameException 用户名重复
      */
     @Override
-    public boolean registerUser(User user, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException, PasswordInputException, InvalidInputException {
+    public boolean registerUser(UserVO userVO, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException, PasswordInputException, InvalidInputException {
 
         AttahmentsInitializer.init();
 
-        if (userDao.getAllUserNames().contains(user.getUserName())) {
+        if(userDao.getAllUserNames().contains(userVO.userName)){
             throw new DuplicatedNameException();
-        } else if (!user.getPassword().equals(password2)) {
+        }
+        else if(!userVO.password.equals(password2)){
             throw new PasswordNotSameException();
         }
 
         //检测密码与用户名是否存在不合法符号
         Detector detector = new Detector();
-        detector.passwordDetector(user.getPassword());
-        detector.infoDetector(user.getUserName());
+        detector.passwordDetector(userVO.password);
+        detector.infoDetector(userVO.userName);
 
-        user.setPassword(MD5Util.encodeMD5(user.getPassword()));
-        userDao.add(user);
+        userVO.password = MD5Util.encodeMD5(userVO.password);
+        userDao.add(new UserPO(userVO));
         return true;
     }
 
     /**
      * 修改用户信息
      *
-     * @param user 修改后的用户信息
-     * @return 是否修改成功
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
+     * @param userVO 修改后的用户信息
+     * @return 是否修改成功
      */
     @Override
-    public boolean modifyUser(User user) throws PasswordInputException {
+    public boolean modifyUser(UserVO userVO) throws PasswordInputException {
 
         //检测密码与用户名是否存在不合法符号
         Detector detector = new Detector();
-        detector.passwordDetector(user.getPassword());
+        detector.passwordDetector(userVO.password);
 
-        user.setPassword(MD5Util.encodeMD5(user.getPassword()));
-        return userDao.modify(user);
+        userVO.password = MD5Util.encodeMD5(userVO.password);
+        return userDao.modify(new UserPO(userVO));
     }
 
     /**
@@ -98,12 +98,14 @@ public class UserServiceImpl implements UserService {
         detector.passwordDetector(password);
         detector.infoDetector(userName);
 
-        if (!userDao.getAllUserNames().contains(userName)) {
+        if(!userDao.getAllUserNames().contains(userName)){
             throw new UserNotExistException();
-        } else {
-            if (!userDao.get(userName).getPassword().equals(MD5Util.encodeMD5(password))) {
+        }
+        else{
+            if (!userDao.get(userName).getPassword().equals(MD5Util.encodeMD5(password))){
                 throw new PasswordWrongException();
-            } else {
+            }
+            else{
                 return true;
             }
         }

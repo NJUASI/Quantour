@@ -1,6 +1,5 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.BiasFormateStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.IncreseAmountFormateStrategy;

@@ -1,8 +1,8 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
+import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
-import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
+import com.edu.nju.asi.vo.FormativePeriodRateVO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public abstract class AllFormateStrategy {
      * @param formativePeriod 形成期长度（MS）／N日均值偏离度（MR）
      * @return 形成的数据
      */
-    public abstract List<FormativePeriodRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException;
+    public abstract List<FormativePeriodRateVO> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException;
 
 
     protected List<StrategyStock> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){

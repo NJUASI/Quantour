@@ -3,17 +3,9 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.StockSearch;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.tool.schema.TargetType;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
@@ -29,15 +21,6 @@ public class StockSearchDataHelperImplTest {
     @Before
     public void setUp() throws Exception {
         stockSearchDataHelper = HelperManager.stockSearchDataHelper;
-    }
-
-    @Test
-    @Ignore
-    public void createDB(){
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure().build();
-        Metadata metadata = new MetadataSources(serviceRegistry).buildMetadata();
-        SchemaExport schemaExport = new SchemaExport();
-        schemaExport.create(EnumSet.of(TargetType.DATABASE), metadata);
     }
 
     @Test

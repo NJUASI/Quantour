@@ -1,9 +1,8 @@
 package com.edu.nju.asi.service;
 
-import com.edu.nju.asi.infoCarrier.*;
-import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.enums.MovingAverageType;
 import com.edu.nju.asi.utilities.exceptions.*;
+import com.edu.nju.asi.vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -30,7 +29,7 @@ public interface ChartService {
      * @param code 股票代码
      * @return 特定股票的所有交易信息
      */
-    List<Stock> getSingleStockRecords(String code) throws IOException, CodeNotFoundException;
+    List<StockVO> getSingleStockRecords(String code) throws IOException, CodeNotFoundException;
 
     /**
      * 获取单支股票的一段日期内的信息
@@ -38,10 +37,10 @@ public interface ChartService {
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param chartShowCriteria 股票的选择标准
+     * @param chartShowCriteriaVO 股票的选择标准
      * @return 特定股票的所有交易信息
      */
-    List<Stock> getSingleStockRecords(ChartShowCriteria chartShowCriteria) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException;
+    List<StockVO> getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException;
 
     /**
      * 获取单支股票一段日期内，用户所选天数的均线图的平均值.
@@ -49,12 +48,12 @@ public interface ChartService {
      * @auther Harvey
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
-     * @param chartShowCriteria the chart show criteria com.edu.nju.asi.vo 用户所选股票的信息
+     * @param chartShowCriteriaVO the chart show criteria com.edu.nju.asi.vo 用户所选股票的信息
      * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<MovingAverageType, List<MovingAverage>> getAveData(ChartShowCriteria chartShowCriteria, List<MovingAverageType> MATypes) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException, NoMatchEnumException;
+    Map<MovingAverageType, List<MovingAverageVO>> getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<MovingAverageType> MATypes) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException, NoMatchEnumException;
 
     /**
      * 获取单支股票所有数据均线图的平均值.
@@ -67,7 +66,7 @@ public interface ChartService {
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<MovingAverageType, List<MovingAverage>> getAveData(String code, List<MovingAverageType> MATypes) throws DateShortException, DateNotWithinException;
+    Map<MovingAverageType, List<MovingAverageVO>> getAveData(String code, List<MovingAverageType> MATypes) throws DateShortException, DateNotWithinException;
 
     /**
      * 获取两只股票的比较信息
@@ -75,10 +74,10 @@ public interface ChartService {
      * @auther cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/12
-     * @param stockComparsionCriteria 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
+     * @param stockComparsionCriteriaVO 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
      * @return 界面上需要的两只股票的比较信息
      */
-    List<StockComparision> getComparision(StockComparsionCriteria stockComparsionCriteria) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException;
+    List<StockComparisionVO> getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException;
 
     /**
      * 获取单支股票被剔除的日期
@@ -97,10 +96,10 @@ public interface ChartService {
      * @auther Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/3/21
-     * @param chartShowCriteria 股票的选择标准
+     * @param chartShowCriteriaVO 股票的选择标准
      * @return 被剔除的日期
      */
-    List<LocalDate> getDateWithoutData(ChartShowCriteria chartShowCriteria) throws IOException;
+    List<LocalDate> getDateWithoutData(ChartShowCriteriaVO chartShowCriteriaVO) throws IOException;
 
     /**
      * @auther cuihua
@@ -109,6 +108,6 @@ public interface ChartService {
      * @param stockCode 股票代码
      * @return 股票在数据源中的起讫时间
      */
-    FirstAndLastDay getFirstAndLastDay(String stockCode) throws IOException;
+    FirstLastDayVO getFirstAndLastDay(String stockCode) throws IOException;
 
 }

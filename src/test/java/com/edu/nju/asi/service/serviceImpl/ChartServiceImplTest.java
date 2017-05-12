@@ -1,15 +1,15 @@
 package com.edu.nju.asi.service.serviceImpl;
 
-import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.utilities.enums.MovingAverageType;
-import com.edu.nju.asi.infoCarrier.MovingAverage;
-import com.edu.nju.asi.infoCarrier.StockComparision;
-import com.edu.nju.asi.infoCarrier.StockComparsionCriteria;
+import com.edu.nju.asi.vo.ChartShowCriteriaVO;
+import com.edu.nju.asi.vo.MovingAverageVO;
+import com.edu.nju.asi.vo.StockComparisionVO;
+import com.edu.nju.asi.vo.StockComparsionCriteriaVO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class ChartServiceImplTest {
     }
 
     /**
-     * Method: getSingleStockRecords(ChartShowCriteria chartShowCriteriaVO)
+     * Method: getSingleStockRecords(ChartShowCriteriaVO chartShowCriteriaVO)
      */
     @Test
     public void testGetSingleStockRecordsChartShowCriteriaVO() throws Exception {
@@ -55,21 +55,21 @@ public class ChartServiceImplTest {
     }
 
     /**
-     * Method: getAveData(ChartShowCriteria chartShowCriteriaVO, List<Integer> days)
+     * Method: getAveData(ChartShowCriteriaVO chartShowCriteriaVO, List<Integer> days)
      */
     @Ignore
     @Test
     public void testGetAveDataForChartShowCriteriaVODays() throws Exception {
-        ChartShowCriteria vo = new ChartShowCriteria("000001",LocalDate.of(2012,2,1),LocalDate.of(2012,3,20));
+        ChartShowCriteriaVO vo = new ChartShowCriteriaVO("000001",LocalDate.of(2012,2,1),LocalDate.of(2012,3,20));
         List<MovingAverageType> days = new ArrayList<>();
         days.add(MovingAverageType.MA5);
         days.add(MovingAverageType.MA10);
         days.add(MovingAverageType.MA20);
 
-        Map<MovingAverageType,List<MovingAverage>> map = service.getAveData(vo,days);
+        Map<MovingAverageType,List<MovingAverageVO>> map = service.getAveData(vo,days);
 
 //        for(int i:days){
-//            List<MovingAverage> list = map.get(i);
+//            List<MovingAverageVO> list = map.get(i);
 //            for(int j = 0;j<list.size();j++){
 //                System.out.println(list.get(j).date);
 //            }
@@ -87,15 +87,15 @@ public class ChartServiceImplTest {
     }
 
     /**
-     * Method: getComparision(StockComparsionCriteria stockComparsionCriteriaVO)
+     * Method: getComparision(StockComparsionCriteriaVO stockComparsionCriteriaVO)
      */
     @Ignore
     @Test
     public void testGetComparision() throws Exception {
-        List<StockComparision> result = service.getComparision(new StockComparsionCriteria("000001",
+        List<StockComparisionVO> result = service.getComparision(new StockComparsionCriteriaVO("000001",
                 "000010", LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 10)));
-        StockComparision vo1 = result.get(0);
-        StockComparision vo2 = result.get(1);
+        StockComparisionVO vo1 = result.get(0);
+        StockComparisionVO vo2 = result.get(1);
 
         assertEquals(11.5, vo1.min, 0);
         assertEquals(12.3, vo1.max, 0);
@@ -104,7 +104,7 @@ public class ChartServiceImplTest {
     }
 
     /**
-     * Method: getStockPOs(ChartShowCriteria com.edu.nju.asi.vo)
+     * Method: getStockPOs(ChartShowCriteriaVO com.edu.nju.asi.vo)
      */
     @Test
     public void testGetStockPOs() throws Exception {
@@ -112,7 +112,7 @@ public class ChartServiceImplTest {
     }
 
     /**
-     * Method: calculate(ChartShowCriteria chartShowCriteriaVO, int day)
+     * Method: calculate(ChartShowCriteriaVO chartShowCriteriaVO, int day)
      */
     @Test
     public void testCalculate() throws Exception {

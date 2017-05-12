@@ -1,8 +1,7 @@
 package com.edu.nju.asi.service;
 
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
-import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
+import com.edu.nju.asi.vo.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,10 +16,10 @@ public interface TraceBackService {
 
     /**
      *
-     * @param traceBackCriteria 回测标准
+     * @param traceBackCriteriaVO 回测标准
      * @param stockPool 自选股的代码列表
      * @return 回测所要展示的数据
      */
-    TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria, List<String> stockPool)  throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException;
+    TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool)  throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException;
 
 }

@@ -1,7 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
 
 
-import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
+import com.edu.nju.asi.vo.FormativePeriodRateVO;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ public class RankMaxPickStrategy extends AllPickStrategy{
     }
 
     @Override
-    public List<String> pick(List<FormativePeriodRate> formativePeriodRates) {
-        List<String> sortedStockPool = ascSort(formativePeriodRates);
+    public List<String> pick(List<FormativePeriodRateVO> formativePeriodRateVOS) {
+        List<String> sortedStockPool = ascSort(formativePeriodRateVOS);
         return  sortedStockPool.subList(0,rank);
     }
 }

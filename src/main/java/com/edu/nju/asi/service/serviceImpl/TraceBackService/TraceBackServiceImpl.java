@@ -2,14 +2,14 @@ package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.dao.StockDao;
 import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
-import com.edu.nju.asi.infoCarrier.traceBack.*;
-import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.po.StockPO;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
+import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import com.edu.nju.asi.utilities.StrategyStockList;
 import com.edu.nju.asi.utilities.exceptions.*;
-import org.springframework.stereotype.Service;
+import com.edu.nju.asi.vo.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,7 +18,6 @@ import java.util.*;
 /**
  * Created by harvey on 17-3-28.
  */
-@Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
     private StockService stockService;
@@ -32,7 +31,7 @@ public class TraceBackServiceImpl implements TraceBackService {
     //自选股票池的所有数据
     private Map<String, List<StrategyStock>> baseStockData;
 
-    private List<CumulativeReturn> baseCumulativeReturn;
+    private List<CumulativeReturnVO> baseCumulativeReturn;
 
     private TraceBackStrategyCalculator traceBackStrategyCalculator;
 
@@ -59,16 +58,16 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     @Override
-    public TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria, List<String> stockPool) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException {
+    public TraceBackVO traceBack(TraceBackCriteriaVO traceBackCriteriaVO, List<String> stockPool) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException {
 
         long enter = System.currentTimeMillis();
 
-        TraceBackInfo traceBackInfo = new TraceBackInfo();
+        TraceBackVO traceBackVO = new TraceBackVO();
 
         // 选取回测的股票池为自选股票池／板块股票池
 
         //是自选股票池
-        if (traceBackCriteria.isCustomized){
+        if (traceBackCriteriaVO.isCustomized){
             traceBackStockPool = stockPool;
             //给基准股票池赋值，即为自选股票池
             baseStockPool = stockPool;
@@ -78,50 +77,50 @@ public class TraceBackServiceImpl implements TraceBackService {
         }
         //不是自选股票池
         else {
-            traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolVO);
+            traceBackStockPool = stockService.getStockPool(traceBackCriteriaVO.stockPoolVO);
             setUp(traceBackStockPool);
         }
 
         // 累计基准收益率
-        baseCumulativeReturn = getBase(traceBackCriteria);
-        traceBackInfo.baseCumulativeReturn = baseCumulativeReturn;
+        baseCumulativeReturn = getBase(traceBackCriteriaVO);
+        traceBackVO.baseCumulativeReturn = baseCumulativeReturn;
 
         //选择策略
-        traceBackStrategyCalculator = new TraceBackStrategyCalculator(traceBackStockPool, traceBackCriteria, allDatesWithData, stockData);
+        traceBackStrategyCalculator = new TraceBackStrategyCalculator(traceBackStockPool, traceBackCriteriaVO, allDatesWithData, stockData);
 
         //策略回测
-        traceBackInfo.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteria);
+        traceBackVO.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteriaVO);
 
         //计算策略回撤的相关信息
-        traceBackInfo.maxTraceBack = maxRetracement(traceBackInfo.strategyCumulativeReturn, baseCumulativeReturn);
+        traceBackVO.maxTraceBackVO = maxRetracement(traceBackVO.strategyCumulativeReturn, baseCumulativeReturn);
 
         // 计算持仓详情的基准收益率和超额收益率
-        traceBackInfo.holdingDetails = calcuHoldingDetail(traceBackInfo.baseCumulativeReturn, traceBackInfo.strategyCumulativeReturn, traceBackCriteria.holdingPeriod);
+        traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
 
         // 计算绝对收益周期和相对收益周期
-        traceBackInfo.absoluteReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, true);
-        traceBackInfo.relativeReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, false);
+        traceBackVO.absoluteReturnPeriodVO = countReturnPeriod(traceBackVO.holdingDetailVOS, true);
+        traceBackVO.relativeReturnPeriodVO = countReturnPeriod(traceBackVO.holdingDetailVOS, false);
 
         System.out.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // 提前保存TraceBackCriteriaVO，以便后续固定持有期计算形成期时使用
-        TraceBackCriteria criteriaVOToHold = new TraceBackCriteria(traceBackCriteria);
+        TraceBackCriteriaVO criteriaVOToHold = new TraceBackCriteriaVO(traceBackCriteriaVO);
 
         // 计算超额收益率/策略胜率，给定持有期/形成期
-        traceBackInfo.certainFormates = findHoldingWithCertainFormate(traceBackCriteria);
+        traceBackVO.certainFormates = findHoldingWithCertainFormate(traceBackCriteriaVO);
         System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
 
 //        System.out.println("--------------------------------");
-//        System.out.println(traceBackCriteria.formativePeriod +  "    " + traceBackCriteria.holdingPeriod);
+//        System.out.println(traceBackCriteriaVO.formativePeriod +  "    " + traceBackCriteriaVO.holdingPeriod);
 //        System.out.println(criteriaVOToHold.formativePeriod +  "    " + criteriaVOToHold.holdingPeriod);
 //        System.out.println("--------------------------------");
 
-        traceBackInfo.certainHoldings = findFormateWithCertainHolding(criteriaVOToHold);
+        traceBackVO.certainHoldings = findFormateWithCertainHolding(criteriaVOToHold);
         System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等
-        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteria, traceBackInfo,stockData, traceBackStockPool);
-        return traceBackParameter.getTraceBackInfo();
+        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteriaVO, traceBackVO,stockData, traceBackStockPool);
+        return traceBackParameter.getTraceBackVO();
 
     }
 
@@ -129,16 +128,16 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         stockData = new HashMap<>();
         for (String thisStockCode : traceBackStockPool) {
-            List<Stock> tempPOS = stockDao.getStockData(thisStockCode);
+            List<StockPO> tempPOS = stockDao.getStockData(thisStockCode);
             stockData.put(thisStockCode, convertStockPOS(tempPOS));
         }
 
     }
 
-    private List<StrategyStock> convertStockPOS(List<Stock> stocks) {
+    private List<StrategyStock> convertStockPOS(List<StockPO> pos) {
         StrategyStockList result = new StrategyStockList();
-        for (Stock thisStock : stocks) {
-            result.add(new StrategyStock(thisStock));
+        for (StockPO thisPO : pos) {
+            result.add(new StrategyStock(thisPO));
         }
         return result;
     }
@@ -153,8 +152,8 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws DateShortException
      * @throws CodeNotFoundException
      */
-    private List<ExcessAndWinRateDist> findFormateWithCertainHolding(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException {
-        return findBestFormateOrHolding(traceBackCriteria, false);
+    private List<ExcessAndWinRateDistVO> findFormateWithCertainHolding(TraceBackCriteriaVO traceBackCriteriaVO) throws DataSourceFirstDayException {
+        return findBestFormateOrHolding(traceBackCriteriaVO, false);
     }
 
     /**
@@ -167,17 +166,17 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws NoDataWithinException
      * @throws IOException
      */
-    private List<ExcessAndWinRateDist> findHoldingWithCertainFormate(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException {
-        return findBestFormateOrHolding(traceBackCriteria,true);
+    private List<ExcessAndWinRateDistVO> findHoldingWithCertainFormate(TraceBackCriteriaVO traceBackCriteriaVO) throws DataSourceFirstDayException {
+        return findBestFormateOrHolding(traceBackCriteriaVO,true);
     }
 
-    private List<ExcessAndWinRateDist> findBestFormateOrHolding(TraceBackCriteria traceBackCriteria, boolean certainFormate) throws DataSourceFirstDayException {
-        List<ExcessAndWinRateDist> certainHoldings = new ArrayList<>();
-        int initHoldingPeriod = traceBackCriteria.holdingPeriod;
-        int initFormativePeriod = traceBackCriteria.formativePeriod;
+    private List<ExcessAndWinRateDistVO> findBestFormateOrHolding(TraceBackCriteriaVO traceBackCriteriaVO, boolean certainFormate) throws DataSourceFirstDayException {
+        List<ExcessAndWinRateDistVO> certainHoldings = new ArrayList<>();
+        int initHoldingPeriod = traceBackCriteriaVO.holdingPeriod;
+        int initFormativePeriod = traceBackCriteriaVO.formativePeriod;
 
         for (int i = 2; i <= 50; i = i+2) {
-            ExcessAndWinRateDist excessAndWinRateDist = new ExcessAndWinRateDist();
+            ExcessAndWinRateDistVO excessAndWinRateDistVO = new ExcessAndWinRateDistVO();
             //给定形成期
             if (certainFormate) {
                 //持有期太大，不能形成一个周期
@@ -186,40 +185,40 @@ public class TraceBackServiceImpl implements TraceBackService {
                     break;
                 }
                 //新的持有期
-                traceBackCriteria.holdingPeriod = initHoldingPeriod * i;
-                System.out.println("形成期：" + traceBackCriteria.formativePeriod +"持有期: " + traceBackCriteria.holdingPeriod);
+                traceBackCriteriaVO.holdingPeriod = initHoldingPeriod * i;
+                System.out.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
             }
             //给定持有期
             else {
                 //新的形成期
-                traceBackCriteria.formativePeriod = initFormativePeriod * i;
-                System.out.println("形成期：" + traceBackCriteria.formativePeriod +"持有期: " + traceBackCriteria.holdingPeriod);
+                traceBackCriteriaVO.formativePeriod = initFormativePeriod * i;
+                System.out.println("形成期：" + traceBackCriteriaVO.formativePeriod +"持有期: " + traceBackCriteriaVO.holdingPeriod);
             }
 
-            TraceBackInfo traceBackInfo = new TraceBackInfo();
+            TraceBackVO traceBackVO = new TraceBackVO();
 
             //累计基准收益率,直接赋值即可，不用再次计算
-            traceBackInfo.baseCumulativeReturn = baseCumulativeReturn;
+            traceBackVO.baseCumulativeReturn = baseCumulativeReturn;
 
             //策略回测
-            traceBackInfo.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteria);
+            traceBackVO.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteriaVO);
             System.out.println();
             System.out.println();
 
-            traceBackInfo.holdingDetails = calcuHoldingDetail(traceBackInfo.baseCumulativeReturn, traceBackInfo.strategyCumulativeReturn, traceBackCriteria.holdingPeriod);
+            traceBackVO.holdingDetailVOS = calcuHoldingDetail(traceBackVO.baseCumulativeReturn, traceBackVO.strategyCumulativeReturn,traceBackCriteriaVO.holdingPeriod);
             //计算相对收益周期
-            traceBackInfo.relativeReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, false);
+            traceBackVO.relativeReturnPeriodVO = countReturnPeriod(traceBackVO.holdingDetailVOS, false);
 
             //相对强弱计算周期
-            excessAndWinRateDist.relativeCycle = i;
+            excessAndWinRateDistVO.relativeCycle = i;
             //总超额收益
-            double strategyLastRate = traceBackInfo.strategyCumulativeReturn.get(traceBackInfo.strategyCumulativeReturn.size() - 1).cumulativeReturn;
-            double baseLastRate = traceBackInfo.baseCumulativeReturn.get(traceBackInfo.baseCumulativeReturn.size() - 1).cumulativeReturn;
-            excessAndWinRateDist.excessRate = strategyLastRate - baseLastRate;
+            double strategyLastRate = traceBackVO.strategyCumulativeReturn.get(traceBackVO.strategyCumulativeReturn.size() - 1).cumulativeReturn;
+            double baseLastRate = traceBackVO.baseCumulativeReturn.get(traceBackVO.baseCumulativeReturn.size() - 1).cumulativeReturn;
+            excessAndWinRateDistVO.excessRate = strategyLastRate - baseLastRate;
             //策略胜率
-            excessAndWinRateDist.winRate = traceBackInfo.relativeReturnPeriod.winRate;
+            excessAndWinRateDistVO.winRate = traceBackVO.relativeReturnPeriodVO.winRate;
 
-            certainHoldings.add(excessAndWinRateDist);
+            certainHoldings.add(excessAndWinRateDistVO);
         }
 
         return certainHoldings;
@@ -230,8 +229,8 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @param holdingPeriod        持有期长度
      * @return 根据基准收益率和超额收益率的完整的HoldingDetailVO列表
      */
-    private List<HoldingDetail> calcuHoldingDetail(List<CumulativeReturn> baseCumulativeReturn, List<CumulativeReturn> strategyCumulativeReturn, int holdingPeriod) {
-        List<HoldingDetail> holdingDetails = new LinkedList<>();
+    private List<HoldingDetailVO> calcuHoldingDetail(List<CumulativeReturnVO> baseCumulativeReturn, List<CumulativeReturnVO> strategyCumulativeReturn,int holdingPeriod) {
+        List<HoldingDetailVO> holdingDetailVOS = new LinkedList<>();
 
         double investment = 1000;
 
@@ -266,40 +265,40 @@ public class TraceBackServiceImpl implements TraceBackService {
             // 超额收益率
             double excessReturn = strategyReturn - baseReturn;
 
-            HoldingDetail holdingDetail = new HoldingDetail();
-            holdingDetail.periodSerial = holdingSerial;
-            holdingDetail.startDate = baseCumulativeReturn.get(i).currentDate;
-            holdingDetail.endDate = baseCumulativeReturn.get(periodIndex).currentDate;
-            holdingDetail.strategyReturn = strategyReturn;
-            holdingDetail.baseReturn = baseReturn;
-            holdingDetail.excessReturn = excessReturn;
-            holdingDetail.remainInvestment = investment * (1 + lastStrategyRate);
+            HoldingDetailVO holdingDetailVO = new HoldingDetailVO();
+            holdingDetailVO.periodSerial = holdingSerial;
+            holdingDetailVO.startDate = baseCumulativeReturn.get(i).currentDate;
+            holdingDetailVO.endDate = baseCumulativeReturn.get(periodIndex).currentDate;
+            holdingDetailVO.strategyReturn = strategyReturn;
+            holdingDetailVO.baseReturn = baseReturn;
+            holdingDetailVO.excessReturn = excessReturn;
+            holdingDetailVO.remainInvestment = investment * (1 + lastStrategyRate);
 
             preBaseCumulativeReturn = curBaseCumulativeReturn;
             preStrategyCumulativeReturn = curStrategyCumulativeReturn;
 
             holdingSerial++;
 
-            holdingDetails.add(holdingDetail);
+            holdingDetailVOS.add(holdingDetailVO);
         }
-        return holdingDetails;
+        return holdingDetailVOS;
     }
 
     /**
-     * @param traceBackCriteria 回测标准
+     * @param traceBackCriteriaVO 回测标准
      * @return
      * @throws IOException
      * @throws NoDataWithinException
      * @throws DateNotWithinException
      */
-    private List<CumulativeReturn> getBase(TraceBackCriteria traceBackCriteria) {
-        LocalDate start = traceBackCriteria.startDate;
-        LocalDate end = traceBackCriteria.endDate;
+    private List<CumulativeReturnVO> getBase(TraceBackCriteriaVO traceBackCriteriaVO) {
+        LocalDate start = traceBackCriteriaVO.startDate;
+        LocalDate end = traceBackCriteriaVO.endDate;
 
-        if (!traceBackCriteria.isCustomized) {
-            return getCumulativeReturnOfOneStock(traceBackCriteria.baseStockName, start, end);
+        if (!traceBackCriteriaVO.isCustomized) {
+            return getCumulativeReturnOfOneStock(traceBackCriteriaVO.baseStockName, start, end);
         } else {
-            return getCustomizedCumulativeReturn(traceBackCriteria, start, end);
+            return getCustomizedCumulativeReturn(traceBackCriteriaVO, start, end);
         }
     }
 
@@ -310,14 +309,14 @@ public class TraceBackServiceImpl implements TraceBackService {
      *
      * @param start 回测区间起始日期
      * @param end   回测区间结束日期
-     * @return List<CumulativeReturn> 基准累计收益率的列表
+     * @return List<CumulativeReturnVO> 基准累计收益率的列表
      */
-    private List<CumulativeReturn>  getCustomizedCumulativeReturn(TraceBackCriteria traceBackCriteria, LocalDate start, LocalDate end) {
+    private List<CumulativeReturnVO>  getCustomizedCumulativeReturn(TraceBackCriteriaVO traceBackCriteriaVO, LocalDate start, LocalDate end) {
 
-        List<CumulativeReturn> cumulativeReturns = new ArrayList<>();
+        List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<>();
 
-        LocalDate thisStart = traceBackCriteria.startDate;
-        LocalDate thisEnd = traceBackCriteria.endDate;
+        LocalDate thisStart = traceBackCriteriaVO.startDate;
+        LocalDate thisEnd = traceBackCriteriaVO.endDate;
 
         while(!allDatesWithData.contains(thisStart) || !allDatesWithData.contains(thisEnd)){
             if(!allDatesWithData.contains(thisStart)){
@@ -331,15 +330,15 @@ public class TraceBackServiceImpl implements TraceBackService {
         LocalDate temp = thisStart;
         double baseStockCumulative = 1;
         while(temp.isBefore(thisEnd) || temp.isEqual(thisEnd)){
-            StrategyStock stock = null;
+            StrategyStock vo = null;
             double totalCumulativeReturn = 0;
             int notSuspend = 0;
             for(int j = 0; j < baseStockPool.size(); j++){
                 int index = baseStockData.get(baseStockPool.get(j)).indexOf(temp);
                 //当天有数据
                 if(-1 != index){
-                    stock = baseStockData.get(baseStockPool.get(j)).get(index);
-                    totalCumulativeReturn += (stock.close/stock.preClose - 1);
+                    vo = baseStockData.get(baseStockPool.get(j)).get(index);
+                    totalCumulativeReturn += (vo.close/vo.preClose - 1);
                     notSuspend += 1;
                 }
             }
@@ -347,16 +346,16 @@ public class TraceBackServiceImpl implements TraceBackService {
             //即该天有股票开盘
             if(notSuspend != 0){
                 baseStockCumulative = baseStockCumulative * (1 + (totalCumulativeReturn / notSuspend));
-                cumulativeReturns.add(new CumulativeReturn(stock.date, baseStockCumulative-1, false));
+                cumulativeReturnVOS.add(new CumulativeReturnVO(vo.date, baseStockCumulative-1, false));
             }
 
             temp = temp.plusDays(1);
         }
 
         //修改第一天的基准收益率为0
-        cumulativeReturns.get(0).cumulativeReturn = 0;
+        cumulativeReturnVOS.get(0).cumulativeReturn = 0;
 
-        return cumulativeReturns;
+        return cumulativeReturnVOS;
     }
 
     /**
@@ -364,11 +363,11 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @param stockName 单一股票的信息
      * @param start     起始日期
      * @param end       结束日期
-     * @return List<CumulativeReturn> 一只基准股的累计收益率
+     * @return List<CumulativeReturnVO> 一只基准股的累计收益率
      */
-    private List<CumulativeReturn> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) {
+    private List<CumulativeReturnVO> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) {
 
-        List<Stock> list = null;
+        List<StockVO> list = null;
         try {
             list = stockService.getBaseStockData(stockName, start, end);
         } catch (IOException e) {
@@ -379,22 +378,22 @@ public class TraceBackServiceImpl implements TraceBackService {
             e.printStackTrace();
         }
 
-        List<CumulativeReturn> cumulativeReturns = new ArrayList<CumulativeReturn>();
+        List<CumulativeReturnVO> cumulativeReturnVOS = new ArrayList<CumulativeReturnVO>();
 
         //累计收益率以第一个交易日前一天的收益率来对比计算
-        double closeOfFirstDay = list.get(0).getPreClose();
+        double closeOfFirstDay = list.get(0).preClose;
 
         for (int i = 0; i < list.size(); i++) {
-            double sucClose = list.get(i).getClose();
+            double sucClose = list.get(i).close;
             double cumulativeReturn = (sucClose - closeOfFirstDay) / closeOfFirstDay;
             //先将所有的最大回测点设为false
-            cumulativeReturns.add(new CumulativeReturn(list.get(i).getStockID().getDate(), cumulativeReturn, false));
+            cumulativeReturnVOS.add(new CumulativeReturnVO(list.get(i).date, cumulativeReturn, false));
         }
 
         //将第一天的收益率设置为0
-        cumulativeReturns.get(0).cumulativeReturn = 0;
+        cumulativeReturnVOS.get(0).cumulativeReturn = 0;
 
-        return cumulativeReturns;
+        return cumulativeReturnVOS;
     }
 
     /**
@@ -402,11 +401,11 @@ public class TraceBackServiceImpl implements TraceBackService {
      *
      * @param strategyCumulativeReturn 未计算最大回撤的基准累计收益率
      * @param baseCumulativeReturn 未计算回撤的策略累计收益率
-     * @return MaxTraceBack 记录基准和策略最大回撤信息的载体
+     * @return MaxTraceBackVO 记录基准和策略最大回撤信息的载体
      */
-    public MaxTraceBack maxRetracement(List<CumulativeReturn> strategyCumulativeReturn, List<CumulativeReturn> baseCumulativeReturn) {
+    public MaxTraceBackVO maxRetracement(List<CumulativeReturnVO> strategyCumulativeReturn, List<CumulativeReturnVO> baseCumulativeReturn) {
 
-        MaxTraceBack maxTraceBack = new MaxTraceBack();
+        MaxTraceBackVO maxTraceBackVO = new MaxTraceBackVO();
 
         //TODO gcm 用了两个循环，不知道怎么改进算法，你们可以帮下忙
 
@@ -441,34 +440,34 @@ public class TraceBackServiceImpl implements TraceBackService {
         }
 
 
-        maxTraceBack.maxBaseTraceBackRate = baseMax;
-        maxTraceBack.maxStrategyTraceBackRate = strategyMax;
-        maxTraceBack.maxStartIndex = strategyTop;
-        maxTraceBack.maxEndIndex = strategyDown;
-        maxTraceBack.maxStartDay = strategyCumulativeReturn.get(strategyTop).currentDate;
-        maxTraceBack.maxEndDay = strategyCumulativeReturn.get(strategyDown).currentDate;
+        maxTraceBackVO.maxBaseTraceBackRate = baseMax;
+        maxTraceBackVO.maxStrategyTraceBackRate = strategyMax;
+        maxTraceBackVO.maxStartIndex = strategyTop;
+        maxTraceBackVO.maxEndIndex = strategyDown;
+        maxTraceBackVO.maxStartDay = strategyCumulativeReturn.get(strategyTop).currentDate;
+        maxTraceBackVO.maxEndDay = strategyCumulativeReturn.get(strategyDown).currentDate;
 
-        return maxTraceBack;
+        return maxTraceBackVO;
     }
 
     /**
      *
-     * @param holdingDetails 持仓周期详情用于计算
+     * @param holdingDetailVOS 持仓周期详情用于计算
      * @param isAbsolute true计算绝对，false计算相对
      * @return 绝对／相对收益
      */
-    private ReturnPeriod countReturnPeriod(List<HoldingDetail> holdingDetails, boolean isAbsolute) {
-        ReturnPeriod returnPeriod = new ReturnPeriod();
+    private ReturnPeriodVO countReturnPeriod(List<HoldingDetailVO> holdingDetailVOS, boolean isAbsolute) {
+        ReturnPeriodVO returnPeriodVO = new ReturnPeriodVO();
 
         int positivePeriodsNum = 0;
         int negativePeriodNum = 0;
         Map<Double, Integer> positiveNums = new TreeMap<>();
         Map<Double, Integer> negativeNums = new TreeMap<>();
 
-        for (int i = 0; i < holdingDetails.size(); i++) {
+        for (int i = 0; i < holdingDetailVOS.size(); i++) {
             double countedValue;
-            if (isAbsolute) countedValue = holdingDetails.get(i).strategyReturn;
-            else countedValue = holdingDetails.get(i).excessReturn;
+            if (isAbsolute) countedValue = holdingDetailVOS.get(i).strategyReturn;
+            else countedValue = holdingDetailVOS.get(i).excessReturn;
 
             if (countedValue > 0) {
                 // 为正并向上取整
@@ -493,12 +492,12 @@ public class TraceBackServiceImpl implements TraceBackService {
             }
         }
 
-        returnPeriod.positivePeriodsNum = positivePeriodsNum;
-        returnPeriod.negativePeriodNum = negativePeriodNum;
-        returnPeriod.positiveNums = positiveNums;
-        returnPeriod.negativeNums = negativeNums;
-        returnPeriod.winRate = ((double)positivePeriodsNum) / holdingDetails.size();
+        returnPeriodVO.positivePeriodsNum = positivePeriodsNum;
+        returnPeriodVO.negativePeriodNum = negativePeriodNum;
+        returnPeriodVO.positiveNums = positiveNums;
+        returnPeriodVO.negativeNums = negativeNums;
+        returnPeriodVO.winRate = ((double)positivePeriodsNum) / holdingDetailVOS.size();
 
-        return returnPeriod;
+        return returnPeriodVO;
     }
 }

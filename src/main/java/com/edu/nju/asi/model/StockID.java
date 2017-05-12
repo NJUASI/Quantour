@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Embeddable
 public class StockID implements Serializable{
 
-    @Column(name = "code",length = 100)
+    @Column(name = "code")
     private String code;
 
     @Column(name = "date")

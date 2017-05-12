@@ -1,4 +1,4 @@
-package com.edu.nju.asi.infoCarrier;
+package com.edu.nju.asi.vo;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
  *
  * 对股票的选择条件
  */
-public class ChartShowCriteria {
+public class ChartShowCriteriaVO {
 
     // 股票代码
     public String stockCode;
@@ -18,7 +18,7 @@ public class ChartShowCriteria {
     // 区间内结束时间
     public LocalDate end;
 
-    public ChartShowCriteria(String stockCode, LocalDate start, LocalDate end) {
+    public ChartShowCriteriaVO(String stockCode, LocalDate start, LocalDate end) {
         this.stockCode = stockCode;
         this.start = start;
         this.end = end;

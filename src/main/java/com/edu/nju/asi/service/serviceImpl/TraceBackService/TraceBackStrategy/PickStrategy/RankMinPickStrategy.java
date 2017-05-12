@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
+import com.edu.nju.asi.vo.FormativePeriodRateVO;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class RankMinPickStrategy extends AllPickStrategy {
     }
 
     @Override
-    public List<String> pick(List<FormativePeriodRate> formativePeriodRates) {
+    public List<String> pick(List<FormativePeriodRateVO> formativePeriodRateVOS) {
         return null;
     }
 }

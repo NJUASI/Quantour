@@ -4,7 +4,7 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
+import com.edu.nju.asi.utilities.infoCarrier.StockPool;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -100,6 +100,69 @@ public interface StockDao {
      * @return 所有的交易日期
      */
     List<LocalDate> getDateWithData() throws IOException;
+
+
+
+    /*
+    自选股操作
+     */
+    /**
+     * 获取用户自选股票的数据
+     *
+     * @author Harvey
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/12
+     * @param userName 用户名称
+     * @param date 股票代码
+     * @return （时间相同）指定用户指定日期的自选股票数据
+     */
+    List<Stock> getPrivateStockData(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException;
+
+    /**
+     * 获取用户的自选股票
+     *
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/3/12
+     * @param userName 用户名称
+     * @return 指定用户的自选股
+     */
+    PrivateStock getPrivateStocks(String userName) throws PrivateStockNotFoundException;
+
+    /**
+     * 获取用户的自选股票池
+     *
+     * @author  Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/4/17
+     * @param userName 用户名称
+     * @return 指定用户的自选股
+     */
+    List<String> getPrivateStockCodes(String userName) throws PrivateStockNotFoundException;
+
+    /**
+     * 添加用户自选股
+     *
+     * @author Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/5
+     * @param userName 用户名称
+     * @param stockCode 股票代码
+     * @return 添加是否成功
+     */
+    boolean addPrivateStock(String userName, String stockCode) throws PrivateStockExistedException, PrivateStockNotFoundException;
+
+    /**
+     * 删除用户自选股
+     *
+     * @author Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/5
+     * @param userName 用户名称
+     * @param stockCode 股票代码
+     * @return 删除是否成功
+     */
+    boolean deletePrivateStock(String userName, String stockCode) throws PrivateStockNotExistException, PrivateStockNotFoundException;
 
     /*
     暂定

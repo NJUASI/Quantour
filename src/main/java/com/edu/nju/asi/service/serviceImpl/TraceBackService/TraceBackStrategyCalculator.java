@@ -1,11 +1,12 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
-import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategyFactory;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.AllPickStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategyFactory;
+import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.StrategyStock;
 import com.edu.nju.asi.utilities.exceptions.*;
+import com.edu.nju.asi.vo.*;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -26,7 +27,7 @@ public class TraceBackStrategyCalculator {
     /**
      * 回测标准
      */
-    protected TraceBackCriteria traceBackCriteria;
+    protected TraceBackCriteriaVO traceBackCriteriaVO;
 
     /**
      * 形成期的形成策略
@@ -61,9 +62,9 @@ public class TraceBackStrategyCalculator {
     protected Map<String, List<StrategyStock>> stockData;
 
 
-    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteriaVO traceBackCriteriaVO, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
         this.traceBackStockPool = traceBackStockPool;
-        this.traceBackCriteria = traceBackCriteria;
+        this.traceBackCriteriaVO = traceBackCriteriaVO;
         this.allDatesWithData = allDatesWithData;
         this.stockData = stockData;
 
@@ -71,28 +72,28 @@ public class TraceBackStrategyCalculator {
     }
 
     protected void setFormateAndPickStrategy() {
-        FormateAndPickCriteria formateAndPickCriteria = traceBackCriteria.formateAndPickCriteria;
+        FormateAndPickVO formateAndPickVO = traceBackCriteriaVO.formateAndPickVO;
 
-        allFormateStrategy = FormateStrategyFactory.createFormateStrategy(formateAndPickCriteria.formateType, allDatesWithData, stockData);
-        allPickStrategy = PickStrategyFactory.createPickStrategy(formateAndPickCriteria.pickType, formateAndPickCriteria.rank);
+        allFormateStrategy = FormateStrategyFactory.createFormateStrategy(formateAndPickVO.formateType, allDatesWithData, stockData);
+        allPickStrategy = PickStrategyFactory.createPickStrategy(formateAndPickVO.pickType, formateAndPickVO.rank);
     }
 
     /**
      * 根据目标股票池及所给的标准，返回策略的累计收益率
      *
-     * @return List<CumulativeReturn> 策略的累计收益率
+     * @return List<CumulativeReturnVO> 策略的累计收益率
      */
-    public List<CumulativeReturn> traceBack(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException {
-        setTraceBackInfo(traceBackCriteria);
+    public List<CumulativeReturnVO> traceBack(TraceBackCriteriaVO traceBackCriteriaVO) throws DataSourceFirstDayException {
+        setTraceBackInfo(traceBackCriteriaVO);
 
         // 保存相应要返回的数据
-        List<CumulativeReturn> strategyCumulativeReturn = new LinkedList<>();
+        List<CumulativeReturnVO> strategyCumulativeReturn = new LinkedList<>();
 
 
         //区间第一个交易日在allDatesWithData中的位置
         int allStartIndex, allEndIndex;
-        LocalDate thisStart = this.traceBackCriteria.startDate;
-        LocalDate thisEnd = this.traceBackCriteria.endDate;
+        LocalDate thisStart = this.traceBackCriteriaVO.startDate;
+        LocalDate thisEnd = this.traceBackCriteriaVO.endDate;
         while (!allDatesWithData.contains(thisStart) || !allDatesWithData.contains(thisEnd)) {
             if (!allDatesWithData.contains(thisStart)) {
                 thisStart = thisStart.plusDays(1);
@@ -133,15 +134,15 @@ public class TraceBackStrategyCalculator {
         return strategyCumulativeReturn;
     }
 
-    private void setTraceBackInfo(TraceBackCriteria traceBackCriteria) {
-        this.traceBackCriteria = traceBackCriteria;
+    private void setTraceBackInfo(TraceBackCriteriaVO traceBackCriteriaVO) {
+        this.traceBackCriteriaVO = traceBackCriteriaVO;
 
         nowMoney = initMoney;
-        holdingPeriod = traceBackCriteria.holdingPeriod;
-        formativePeriod = traceBackCriteria.formativePeriod;
+        holdingPeriod = traceBackCriteriaVO.holdingPeriod;
+        formativePeriod = traceBackCriteriaVO.formativePeriod;
     }
 
-    private List<CumulativeReturn> cycleCalcu(int startIndex, int endIndex, int periodSerial) throws DataSourceFirstDayException {
+    private List<CumulativeReturnVO> cycleCalcu(int startIndex, int endIndex, int periodSerial) throws DataSourceFirstDayException {
         System.out.println("calculate cycle: " + periodSerial);
 
         LocalDate periodStart = allDatesWithData.get(startIndex);
@@ -162,8 +163,8 @@ public class TraceBackStrategyCalculator {
      * @param periodEnd        持有期结束日期
      * @return 此持有期的累计收益率
      */
-    private List<CumulativeReturn> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd) {
-        List<CumulativeReturn> strategyCumulativeReturn = new LinkedList<>();
+    private List<CumulativeReturnVO> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd) {
+        List<CumulativeReturnVO> strategyCumulativeReturn = new LinkedList<>();
 
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
 
@@ -193,7 +194,7 @@ public class TraceBackStrategyCalculator {
             nowMoney *= (thisYield + 1);
             double cumulativeYield = nowMoney / initMoney - 1;
 
-            strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), cumulativeYield, false));
+            strategyCumulativeReturn.add(new CumulativeReturnVO(entry.getKey(), cumulativeYield, false));
         }
         return strategyCumulativeReturn;
     }

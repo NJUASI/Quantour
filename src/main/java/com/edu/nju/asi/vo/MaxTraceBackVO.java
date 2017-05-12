@@ -1,4 +1,4 @@
-package com.edu.nju.asi.infoCarrier.traceBack;
+package com.edu.nju.asi.vo;
 
 import java.time.LocalDate;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
  *
  * 如果还需要什么其它的回撤数据，注意是回撤，则在这个里面增加变量， 并在maxTracement方法中计算相关数据
  */
-public class MaxTraceBack {
+public class MaxTraceBackVO {
 
     /**
      * 基准最大回撤率

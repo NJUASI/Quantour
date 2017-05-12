@@ -1,4 +1,4 @@
-package com.edu.nju.asi.infoCarrier.traceBack;
+package com.edu.nju.asi.utilities.infoCarrier;
 
 import com.edu.nju.asi.utilities.enums.BlockType;
 

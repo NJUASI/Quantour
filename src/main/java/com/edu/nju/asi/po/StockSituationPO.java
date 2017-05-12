@@ -1,61 +1,72 @@
-package com.edu.nju.asi.model;
-
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDate;
+package com.edu.nju.asi.po;
 
 /**
- * Created by Byron Dong on 2017/5/7.
+ * Created by cuihua on 2017/3/4.
  * <p>
  * 市场情况温度计
  */
-@Entity
-@Table(name = "stocksituation")
-public class StockSituation implements Serializable {
-
-    //日期
-    @Id
-    @GenericGenerator(name="myGenerator",strategy = "assigned")
-    @GeneratedValue(generator = "myGenerator")
-    @Column(name = "date")
-    private LocalDate date;
+public class StockSituationPO {
 
     // 当日总交易量
-    @Basic
     private String volume;
 
     // 涨停股票数（使用复权收盘价进行计算）
-    @Basic
     private int limitUpNum;
 
     // 跌停股票数（使用复权收盘价进行计算）
-    @Basic
     private int limitDownNum;
 
     // 涨幅超过5%的股票数（使用复权收盘价进行计算）
-    @Basic
     private int surgingNum;
 
     // 跌幅超过5%的股票数（使用复权收盘价进行计算）
-    @Basic
     private int slumpingNum;
 
     // 开盘‐收盘小于‐5% * 上一个交易日收盘价的股票个数（使用收盘价进行计算，负涨）
-    @Basic
     private int climbingNum;
 
     // 开盘‐收盘大于5% * 上一个交易日收盘价的股票个数（使用收盘价进行计算，正跌）
-    @Basic
     private int slipingNum;
 
-    public LocalDate getDate() {
-        return date;
+    public StockSituationPO() {
+        volume = "0";
+        limitUpNum = 0;
+        limitDownNum = 0;
+        surgingNum = 0;
+        slumpingNum = 0;
+        climbingNum = 0;
+        slumpingNum = 0;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public StockSituationPO(String volume, int limitUpNum, int limitDownNum, int surgingNum, int slumpingNum, int climbingNum, int slipingNum) {
+        this.volume = volume;
+        this.limitUpNum = limitUpNum;
+        this.limitDownNum = limitDownNum;
+        this.surgingNum = surgingNum;
+        this.slumpingNum = slumpingNum;
+        this.climbingNum = climbingNum;
+        this.slipingNum = slipingNum;
+    }
+
+    public StockSituationPO(String[] info){
+        this.volume = info[0];
+        this.limitUpNum = Integer.parseInt(info[1]);
+        this.limitDownNum = Integer.parseInt(info[2]);
+        this.surgingNum = Integer.parseInt(info[3]);
+        this.slumpingNum = Integer.parseInt(info[4]);
+        this.climbingNum = Integer.parseInt(info[5]);
+        this.slipingNum = Integer.parseInt(info[6]);
+    }
+
+    public StockSituationPO plus(StockSituationPO another) {
+        long newVolume = Long.parseLong(this.getVolume()) + Long.parseLong(another.getVolume());
+        int newLimitUpNum = this.limitUpNum+another.limitUpNum;
+        int newLimitDownNum = this.limitDownNum+another.limitDownNum;
+        int newSurgingNum = this.surgingNum+another.surgingNum;
+        int newSlumpingNum = this.slumpingNum+another.slumpingNum;
+        int newClimbingNum = this.climbingNum+another.climbingNum;
+        int newSlipingNum = this.slipingNum+another.slipingNum;
+        return new StockSituationPO(String.valueOf(newVolume), newLimitUpNum, newLimitDownNum, newSurgingNum, newSlumpingNum, newClimbingNum, newSlipingNum);
     }
 
     public String getVolume() {

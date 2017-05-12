@@ -10,42 +10,48 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-05-11 20:34:51
+Date: 2017-05-11 11:01:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `privatestock`
+-- Table structure for `datasourceinfo`
 -- ----------------------------
-DROP TABLE IF EXISTS `privatestock`;
-CREATE TABLE `privatestock` (
-  `stcokCode` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `userName` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`stcokCode`,`userName`)
+DROP TABLE IF EXISTS `datasourceinfo`;
+CREATE TABLE `datasourceinfo` (
+  `userName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `fileSize` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `uploadTime` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
--- Records of privatestock
+-- Records of datasourceinfo
 -- ----------------------------
+INSERT INTO `datasourceinfo` VALUES ('61990', '200', '2017-05-11T11:00:06.711');
+INSERT INTO `datasourceinfo` VALUES ('ByronDong', '100', '2017-05-11T11:00:06.403');
+INSERT INTO `datasourceinfo` VALUES ('CharlesFeng', '400', '2017-05-11T11:00:07.065');
+INSERT INTO `datasourceinfo` VALUES ('cuihua', '50', '2017-05-11T11:00:06.780');
+INSERT INTO `datasourceinfo` VALUES ('HarveyGong', '120', '2017-05-11T11:00:06.996');
 
 -- ----------------------------
 -- Table structure for `stock`
 -- ----------------------------
 DROP TABLE IF EXISTS `stock`;
 CREATE TABLE `stock` (
-  `code` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `adjClose` double NOT NULL,
   `close` double NOT NULL,
   `high` double NOT NULL,
   `low` double NOT NULL,
   `market` int(11) DEFAULT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `open` double NOT NULL,
   `preAdjClose` double NOT NULL,
   `preClose` double NOT NULL,
-  `volume` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `volume` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`code`,`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -67,10 +73,6 @@ CREATE TABLE `stocksearch` (
 -- ----------------------------
 -- Records of stocksearch
 -- ----------------------------
-INSERT INTO `stocksearch` VALUES ('000001', 's', '深发展A');
-INSERT INTO `stocksearch` VALUES ('000002', 'h', '沪深A股');
-INSERT INTO `stocksearch` VALUES ('000003', 'n', '南京B股');
-INSERT INTO `stocksearch` VALUES ('000011', 's', '深宝宝A股');
 
 -- ----------------------------
 -- Table structure for `stocksituation`
@@ -97,11 +99,29 @@ CREATE TABLE `stocksituation` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `userName` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `userName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of user
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `user_stock`
+-- ----------------------------
+DROP TABLE IF EXISTS `user_stock`;
+CREATE TABLE `user_stock` (
+  `user_userName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `privateStock_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `privateStock_date` date NOT NULL,
+  KEY `FKf4wpmanftaqfc381r5k7boqwt` (`privateStock_code`,`privateStock_date`),
+  KEY `FKkd4wmxmohn8rk8pee5sndmo8i` (`user_userName`),
+  CONSTRAINT `FKf4wpmanftaqfc381r5k7boqwt` FOREIGN KEY (`privateStock_code`, `privateStock_date`) REFERENCES `stock` (`code`, `date`),
+  CONSTRAINT `FKkd4wmxmohn8rk8pee5sndmo8i` FOREIGN KEY (`user_userName`) REFERENCES `user` (`userName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of user_stock
 -- ----------------------------

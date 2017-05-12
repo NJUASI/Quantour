@@ -1,6 +1,6 @@
-package com.edu.nju.asi.infoCarrier;
+package com.edu.nju.asi.vo;
 
-import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.po.StockPO;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.util.*;
  * Update time 2017/3/15
  * 修改此数据结构
  */
-public class StockComparision {
+public class StockComparisionVO {
 
     // 股票名称
     public String name;
@@ -39,27 +39,27 @@ public class StockComparision {
     public double logarithmicYieldVariance;
 
 
-    public StockComparision(List<Stock> stocks) throws DataSourceFirstDayException {
-        initBasics(stocks);
+    public StockComparisionVO(List<StockPO> stock) throws DataSourceFirstDayException {
+        initBasics(stock);
 
-        closes = initCloses(stocks);
+        closes = initCloses(stock);
 
-        initLogarithmicYieldInfo(stocks);
+        initLogarithmicYieldInfo(stock);
     }
 
 
     // 初始化基本信息中的数值
-    private void initBasics(List<Stock> stocks) throws DataSourceFirstDayException {
-        name = stocks.get(0).getName();
-        code = stocks.get(0).getStockID().getCode();
-        min = getMin(stocks);
-        max = getMax(stocks);
-        increaseMargin = getIncreaseMargin(stocks);
+    private void initBasics(List<StockPO> stock) throws DataSourceFirstDayException {
+        name = stock.get(0).getName();
+        code = stock.get(0).getCode();
+        min = getMin(stock);
+        max = getMax(stock);
+        increaseMargin = getIncreaseMargin(stock);
     }
 
     // 初始化涨幅／跌幅
     // 注意：此处stock为时间顺序，即时间小的在前面
-    private double getIncreaseMargin(List<Stock> stocks) throws DataSourceFirstDayException {
+    private double getIncreaseMargin(List<StockPO> stocks) throws DataSourceFirstDayException {
 //        Map<LocalDate, Double> result = new TreeMap<>();
 //        for (StockPO stockPO : stocks) {
 //            if (stockPO.getPreAdjClose() == -1) {
@@ -80,27 +80,27 @@ public class StockComparision {
     }
 
     // 初始化收盘价
-    private Map<LocalDate, Double> initCloses(List<Stock> stocks) {
+    private Map<LocalDate, Double> initCloses(List<StockPO> stock) {
         Map<LocalDate, Double> result = new TreeMap<>();
-        for (Stock tempStock : stocks) {
-            result.put(tempStock.getStockID().getDate(), tempStock.getClose());
+        for (StockPO stockPO : stock) {
+            result.put(stockPO.getDate(), stockPO.getClose());
         }
         return result;
     }
 
     // 初始化对数收益率和对数收益率方差
-    private void initLogarithmicYieldInfo(List<Stock> stocks) {
+    private void initLogarithmicYieldInfo(List<StockPO> stock) {
         logarithmicYield = new TreeMap<>();
 
         List<Double> logarithmicYieldList = new LinkedList<>();
-        for (Stock stock : stocks) {
-            if (stock.getPreAdjClose() == -1) {
+        for (StockPO stockPO : stock) {
+            if (stockPO.getPreAdjClose() == -1) {
                 // 此条数据为数据库中最早的一条，故不能得其对数收益率
                 continue;
             }
-            double temp = Math.log(stock.getAdjClose() / stock.getPreAdjClose());
+            double temp = Math.log(stockPO.getAdjClose() / stockPO.getPreAdjClose());
             logarithmicYieldList.add(temp);
-            logarithmicYield.put(stock.getStockID().getDate(), temp);
+            logarithmicYield.put(stockPO.getDate(), temp);
         }
 
         logarithmicYieldVariance = initLogarithmicYieldVariance(logarithmicYieldList);
@@ -122,9 +122,9 @@ public class StockComparision {
     }
 
 
-    private Double getMin(List<Stock> stocks) {
-        double thisMin = stocks.get(0).getLow();
-        for (Stock stock : stocks) {
+    private Double getMin(List<StockPO> stockPOS) {
+        double thisMin = stockPOS.get(0).getLow();
+        for (StockPO stock : stockPOS) {
             if (stock.getLow() < thisMin) {
                 thisMin = stock.getLow();
             }
@@ -132,9 +132,9 @@ public class StockComparision {
         return thisMin;
     }
 
-    private Double getMax(List<Stock> stocks) {
-        double thisMax = stocks.get(0).getHigh();
-        for (Stock stock : stocks) {
+    private Double getMax(List<StockPO> stockPOS) {
+        double thisMax = stockPOS.get(0).getHigh();
+        for (StockPO stock : stockPOS) {
             if (stock.getHigh() > thisMax) {
                 thisMax = stock.getHigh();
             }
