@@ -12,204 +12,165 @@
     <schema id="6" parent="1" name="performance_schema"/>
     <schema id="7" parent="1" name="po"/>
     <schema id="8" parent="1" name="sys"/>
-    <table id="9" parent="2" name="datasourceinfo"/>
+    <table id="9" parent="2" name="privatestock"/>
     <table id="10" parent="2" name="stock"/>
     <table id="11" parent="2" name="stocksearch"/>
     <table id="12" parent="2" name="stocksituation"/>
     <table id="13" parent="2" name="user"/>
-    <table id="14" parent="2" name="user_stock"/>
-    <column id="15" parent="9" name="userName">
+    <column id="14" parent="9" name="stcokCode">
       <Position>1</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(200)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="16" parent="9" name="fileSize">
+    <column id="15" parent="9" name="userName">
       <Position>2</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(200)|0</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="17" parent="9" name="uploadTime">
-      <Position>3</Position>
-      <DataType>varchar(255)|0</DataType>
-    </column>
-    <key id="18" parent="9" name="PRIMARY">
+    <key id="16" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>userName</ColNames>
+      <ColNames>stcokCode
+userName</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="19" parent="10" name="code">
+    <column id="17" parent="10" name="code">
       <Position>1</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="10" name="date">
+    <column id="18" parent="10" name="date">
       <Position>2</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="21" parent="10" name="adjClose">
+    <column id="19" parent="10" name="adjClose">
       <Position>3</Position>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="22" parent="10" name="close">
+    <column id="20" parent="10" name="close">
       <Position>4</Position>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="23" parent="10" name="high">
+    <column id="21" parent="10" name="high">
       <Position>5</Position>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="24" parent="10" name="low">
+    <column id="22" parent="10" name="low">
       <Position>6</Position>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="25" parent="10" name="market">
+    <column id="23" parent="10" name="market">
       <Position>7</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="26" parent="10" name="name">
+    <column id="24" parent="10" name="name">
       <Position>8</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="27" parent="10" name="open">
+    <column id="25" parent="10" name="open">
       <Position>9</Position>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="28" parent="10" name="preAdjClose">
+    <column id="26" parent="10" name="preAdjClose">
       <Position>10</Position>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="29" parent="10" name="preClose">
+    <column id="27" parent="10" name="preClose">
       <Position>11</Position>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="30" parent="10" name="volume">
+    <column id="28" parent="10" name="volume">
       <Position>12</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(200)|0</DataType>
     </column>
-    <key id="31" parent="10" name="PRIMARY">
+    <key id="29" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code
 date</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="32" parent="11" name="code">
+    <column id="30" parent="11" name="code">
       <Position>1</Position>
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="33" parent="11" name="firstLetters">
+    <column id="31" parent="11" name="firstLetters">
       <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <column id="34" parent="11" name="name">
+    <column id="32" parent="11" name="name">
       <Position>3</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <key id="35" parent="11" name="PRIMARY">
+    <key id="33" parent="11" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="36" parent="12" name="date">
+    <column id="34" parent="12" name="date">
       <Position>1</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="37" parent="12" name="climbingNum">
+    <column id="35" parent="12" name="climbingNum">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="38" parent="12" name="limitDownNum">
+    <column id="36" parent="12" name="limitDownNum">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="39" parent="12" name="limitUpNum">
+    <column id="37" parent="12" name="limitUpNum">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="40" parent="12" name="slipingNum">
+    <column id="38" parent="12" name="slipingNum">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="41" parent="12" name="slumpingNum">
+    <column id="39" parent="12" name="slumpingNum">
       <Position>6</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="42" parent="12" name="surgingNum">
+    <column id="40" parent="12" name="surgingNum">
       <Position>7</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="43" parent="12" name="volume">
+    <column id="41" parent="12" name="volume">
       <Position>8</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <key id="44" parent="12" name="PRIMARY">
+    <key id="42" parent="12" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>date</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="45" parent="13" name="userName">
+    <column id="43" parent="13" name="userName">
       <Position>1</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(200)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="46" parent="13" name="password">
+    <column id="44" parent="13" name="password">
       <Position>2</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(200)|0</DataType>
     </column>
-    <key id="47" parent="13" name="PRIMARY">
+    <key id="45" parent="13" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>userName</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="48" parent="14" name="user_userName">
-      <Position>1</Position>
-      <DataType>varchar(255)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="49" parent="14" name="privateStock_code">
-      <Position>2</Position>
-      <DataType>varchar(255)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="50" parent="14" name="privateStock_date">
-      <Position>3</Position>
-      <DataType>date|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <index id="51" parent="14" name="FKf4wpmanftaqfc381r5k7boqwt">
-      <ColNames>privateStock_code
-privateStock_date</ColNames>
-    </index>
-    <index id="52" parent="14" name="FKkd4wmxmohn8rk8pee5sndmo8i">
-      <ColNames>user_userName</ColNames>
-    </index>
-    <foreign-key id="53" parent="14" name="FKkd4wmxmohn8rk8pee5sndmo8i">
-      <ColNames>user_userName</ColNames>
-      <RefSchemaName>quantour</RefSchemaName>
-      <RefTableName>user</RefTableName>
-      <RefColNames>userName</RefColNames>
-    </foreign-key>
-    <foreign-key id="54" parent="14" name="FKf4wpmanftaqfc381r5k7boqwt">
-      <ColNames>privateStock_code
-privateStock_date</ColNames>
-      <RefSchemaName>quantour</RefSchemaName>
-      <RefTableName>stock</RefTableName>
-      <RefColNames>code
-date</RefColNames>
-    </foreign-key>
   </database-model>
 </dataSource>
