@@ -39,60 +39,35 @@
             margin-top: 20px;
         }
 
-        .media-list{
+        .media-list {
             margin: 0px 100px;
         }
 
-        .media{
+        .media {
             margin-top: 0px;
             padding: 100px;
         }
 
-        .fix-bar {
-            position: fixed;
-            z-index: 1000;
-            bottom: 50px;
-            right: 20px;
+        .modal-dialog{
+            width: 400px;
         }
-        .fix-bar .item {
-            width: 36px;
-            height: 36px;
-            position: relative;
-            border-radius: 2px;
-            margin-bottom: 1px;
-            cursor: pointer;
-            background: #444444;
+
+        #loginLabel{
+            margin-left: 22px;
         }
-        .fix-bar .item span {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .modal-body{
+            margin-top: 30px;
         }
-        .fix-bar .item .tip {
-            width: 80px;
-            background: #555555;
-            position: absolute;
-            left: -79px;
-            height: 36px;
-            line-height: 36px;
-            top: 0;
-            color: #fff;
-            font-size: 14px;
-            text-align: center;
-            display: none;
-            border-top-left-radius: 2px;
-            border-bottom-left-radius: 2px;
-            z-index: 1050;
+
+        .modal-body .form-group{
+            margin-bottom: 25px;
         }
-        .fix-bar .item:hover {
-            background: #555555;
+
+        #rem-password{
+            padding-right: 66px;
         }
-        .fix-bar .item:hover .tip {
-            display: block;
-        }
+
     </style>
 
 </head>
@@ -111,7 +86,7 @@
                 <li><a href="#">大盘详情</a></li>
                 <li><a href="#">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
-                <li><a href="#">登录</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
                 <li><a href="#">注册</a></li>
             </ul>
         </div><!-- /.container-fluid -->
@@ -119,86 +94,107 @@
 </header>
 <div class="content">
     <div class="container-fluid">
-    <ul class="media-list">
-        <li class="media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src=""
-                     alt="媒体对象">
-            </a>
-            <div class="media-body">
-                <h4 class="media-heading">媒体标题</h4>
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-            </div>
-        </li>
-        <li class="media">
-            <a class="pull-right" href="#">
-                <img class="media-object" src=""
-                     alt="媒体对象">
-            </a>
-            <div class="media-body">
-                <h4 class="media-heading">媒体标题</h4>
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-            </div>
-        </li>
-        <li class="media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src=""
-                     alt="媒体对象">
-            </a>
-            <div class="media-body">
-                <h4 class="media-heading">媒体标题</h4>
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-                这是一些示例文本。这是一些示例文本。
-            </div>
-        </li>
-    </ul>
-</div>
-    <!-- 返回顶部 -->
-    <div class="fix-bar">
-        <div class="item" onclick="goTop()">
-            <span><img src="img/top.png" alt=""></span>
-            <div class="tip">回到顶部</div>
-        </div>
+        <ul class="media-list">
+            <li class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src=""
+                         alt="媒体对象">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">媒体标题</h4>
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                </div>
+            </li>
+            <li class="media">
+                <a class="pull-right" href="#">
+                    <img class="media-object" src=""
+                         alt="媒体对象">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">媒体标题</h4>
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                </div>
+            </li>
+            <li class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src=""
+                         alt="媒体对象">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">媒体标题</h4>
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                    这是一些示例文本。这是一些示例文本。
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
 <footer>
 
 </footer>
 
-
+<!-- 登录模态框（Modal） -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="loginLabel">登录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="username">用户名:</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="username" placeholder="请输入用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="password">密码:</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="password" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="checkbox text-right">
+                        <label id="rem-password">
+                            <input type="checkbox">记住密码
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="login-btn-group">
+                <button type="button" class="btn btn-primary" onclick="login()">登录</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.js"></script>
 <script type="text/javascript">
-    //返回顶部
-    function goTop() {
-        var inteval = $(window).scrollTop() / 100;
-        var inervalId = setInterval(function() {
-            if ($(window).scrollTop() > 0) {
-                var top = $(window).scrollTop();
-
-                if (top > inteval) {
-                    $(window).scrollTop(top - inteval);
-                } else {
-                    $(window).scrollTop(0);
-                }
-
-            } else {
-                clearInterval(inervalId);
-            }
-        }, 1);
+    function login() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var htmlobj = $.ajax({
+            url: "template.html",
+            async: false
+        });
+        window.location.href = "template.html";
     }
 </script>
 </body>
