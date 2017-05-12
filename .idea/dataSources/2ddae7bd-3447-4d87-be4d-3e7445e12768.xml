@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="quantour@localhost">
+<dataSource name="jdbc:mysql://localhost:3306/quantour?serverTimezone=GMT%2b8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;useServerPrepStmts=false&amp;rewriteBatchedStatements=true">
   <database-model serializer="dbm" rdbms="MYSQL" format-version="4.1">
     <root id="1"/>
     <schema id="2" parent="1" name="quantour">

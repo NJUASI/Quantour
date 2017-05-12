@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,23 +48,23 @@
             padding: 100px;
         }
 
-        .modal-dialog{
+        .modal-dialog {
             width: 400px;
         }
 
-        #loginLabel{
+        #loginLabel {
             margin-left: 22px;
         }
 
-        .modal-body{
+        .modal-body {
             margin-top: 30px;
         }
 
-        .modal-body .form-group{
+        .modal-body .form-group {
             margin-bottom: 25px;
         }
 
-        #rem-password{
+        #rem-password {
             padding-right: 66px;
         }
 
@@ -175,28 +175,56 @@
             </div>
             <div class="modal-footer">
                 <div class="login-btn-group">
-                <button type="button" class="btn btn-primary" onclick="login()">登录</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="login()">登录</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
+
+                <a href="/test2">test2</a><br>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-3.2.1.min.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.js"></script>
+<script src="../js/bootstrap.js"></script>
 <script type="text/javascript">
     function login() {
+        alert("大风过后");
         var username = $("#username").val();
         var password = $("#password").val();
-        var htmlobj = $.ajax({
-            url: "logIn",
-            async: false
-        },
-            success: function (result) {
-            window.location.href = "welcome";
-        });
+
+        $.post("/view/template.html", {
+                name: "菜鸟教程",
+                url: "http://www.runoob.com"
+            },
+            function (data, status) {
+
+                alert("数据: \n" + data + "\n状态: " + status);
+            });
+//        var obj = $.ajax({
+//            type: "post",
+//            url: "../template.html",
+//            async: false,
+//            data: {
+//                "username": username,
+//                "password": password,
+//            },
+//
+//            success: function (result) {
+////                if (result == true) {
+////                    window.location.href = "welcome?id=" + username;
+////                    alert(obj.responseText);
+////                } else {
+////                    alert("qwertyuioiuytrewertyui");
+////                }
+//                alert("qwertyuiop");
+//            },
+//            error: function(){
+//                alert("错误");
+//            }
+//        })
+//        ;
     }
 </script>
 </body>
