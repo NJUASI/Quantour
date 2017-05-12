@@ -8,6 +8,7 @@ import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.MovingAverageType;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.service.ChartService;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ import java.util.*;
  * 新增接口getComparision实现
  *
  */
+@Service("ChartService")
 public class ChartServiceImpl implements ChartService {
 
     StockDao stockDao;

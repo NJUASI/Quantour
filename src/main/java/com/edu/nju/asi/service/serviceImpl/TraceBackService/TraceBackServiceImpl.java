@@ -9,6 +9,7 @@ import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.StrategyStockList;
 import com.edu.nju.asi.utilities.exceptions.*;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import java.util.*;
 /**
  * Created by harvey on 17-3-28.
  */
+@Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
     private StockService stockService;

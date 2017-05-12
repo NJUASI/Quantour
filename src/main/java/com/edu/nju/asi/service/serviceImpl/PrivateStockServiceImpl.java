@@ -10,6 +10,7 @@ import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockNotExistException;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * Created by cuihua on 2017/5/11.
  */
+@Service("PrivateStockService")
 public class PrivateStockServiceImpl implements PrivateStockService {
 
     PrivateStockDao privateStockDao;

@@ -11,6 +11,7 @@ import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ import java.util.*;
  * Update time 2017/3/12
  * 因修改下层接口而修改
  */
+@Service("StockService")
 public class StockServiceImpl implements StockService {
 
     StockDao stockDao;
