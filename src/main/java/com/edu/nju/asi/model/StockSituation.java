@@ -50,6 +50,19 @@ public class StockSituation implements Serializable {
     @Basic
     private int slipingNum;
 
+    public StockSituation() {
+    }
+
+    public StockSituation(String volume, int limitUpNum, int limitDownNum, int surgingNum, int slumpingNum, int climbingNum, int slipingNum) {
+        this.volume = volume;
+        this.limitUpNum = limitUpNum;
+        this.limitDownNum = limitDownNum;
+        this.surgingNum = surgingNum;
+        this.slumpingNum = slumpingNum;
+        this.climbingNum = climbingNum;
+        this.slipingNum = slipingNum;
+    }
+
     public LocalDate getDate() {
         return date;
     }

@@ -1,6 +1,7 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockDataHelper;
+import com.edu.nju.asi.infoCarrier.FirstAndLastDay;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
 import org.hibernate.Session;
@@ -49,7 +50,7 @@ public class StockDataHelperImpl implements StockDataHelper {
 
     /**
      * 取指定股票的所有数据，没有返回null
-     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端 TODO dao进行排序
+     * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
      *
      * @param stockCode 指定的股票代码
      * @return （股票代码相同）此股票的所有数据
@@ -62,9 +63,9 @@ public class StockDataHelperImpl implements StockDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql  = "from Stock stock where stock.id.code = ?";
+        String hql  = "from Stock stock where stock.id.code =:code order by stock.stockID.date";
         Query query = session.createQuery(hql);
-        query.setParameter(0,stockCode);
+        query.setParameter("code",stockCode);
         List<Stock> stocks = query.list();
         transaction.commit();
         session.close();
@@ -85,9 +86,9 @@ public class StockDataHelperImpl implements StockDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql  = "from Stock stock where stock.id.date = ?";
+        String hql  = "from Stock stock where stock.id.date =:date";
         Query query = session.createQuery(hql);
-        query.setParameter(0,date);
+        query.setParameter("date",date);
         List<Stock> stocks = query.list();
         transaction.commit();
         session.close();
@@ -108,6 +109,7 @@ public class StockDataHelperImpl implements StockDataHelper {
         boolean result = true;
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+        String hql = "";
 
         try {
             for(int i=0;i<stocks.size();i++){
@@ -140,7 +142,7 @@ public class StockDataHelperImpl implements StockDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql  = "select distinct stock.id.date from Stock stock";
+        String hql  = "select distinct stock.id.date from Stock stock order by stock.id.date";
         List<LocalDate> dates = session.createQuery(hql).list();
         transaction.commit();
         session.close();
@@ -158,22 +160,9 @@ public class StockDataHelperImpl implements StockDataHelper {
     public List<LocalDate> getFirstAndLastDay(String stockCode) {
 
         List<LocalDate> dates = getAllDateByCode(stockCode);
-        LocalDate start = LocalDate.MAX;
-        LocalDate end = LocalDate.MIN;
-
-        for(LocalDate localDate : dates){
-            if(localDate.isBefore(start)){
-                start = localDate;
-            }
-
-            if(localDate.isAfter(end)){
-                end = localDate;
-            }
-        }
-
         List<LocalDate> result = new ArrayList<>();
-        result.add(start);
-        result.add(end);
+        result.add(dates.get(0));
+        result.add(dates.get(dates.size()-1));
         return result;
     }
 
@@ -181,9 +170,9 @@ public class StockDataHelperImpl implements StockDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql  = "select distinct stock.id.date from Stock stock where stock.id.code = ?";
+        String hql  = "select distinct stock.id.date from Stock stock where stock.id.code =:code order by stock.id.date";
         Query query = session.createQuery(hql);
-        query.setParameter(0,code);
+        query.setParameter("code",code);
         List<LocalDate> dates = query.list();
         transaction.commit();
         session.close();

@@ -1,4 +1,4 @@
-package com.edu.nju.asi.vo;
+package com.edu.nju.asi.infoCarrier.traceBack;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
  *
  * 用于列表展示回测中的数值型数据
  */
-public class TraceBackNumValVO {
+public class TraceBackNumVal {
 
     // 策略年化收益率
     public double annualizedRateOfReturn;
@@ -55,10 +55,10 @@ public class TraceBackNumValVO {
     public LocalDate endDate;
 
 
-    public TraceBackNumValVO(double annualizedRateOfReturn, double baseAnnualizedRateOfReturn, double returnVolatility,
-                             double baseReturnVolatility, double sumRate, double baseSumRate, double alpha, double beta,
-                             double sharpeRatio, double baseSharpeRatio, double maxRetracementRatio, double peakPointRatio,
-                             double valleyPointRatio, LocalDate startDate, LocalDate endDate) {
+    public TraceBackNumVal(double annualizedRateOfReturn, double baseAnnualizedRateOfReturn, double returnVolatility,
+                           double baseReturnVolatility, double sumRate, double baseSumRate, double alpha, double beta,
+                           double sharpeRatio, double baseSharpeRatio, double maxRetracementRatio, double peakPointRatio,
+                           double valleyPointRatio, LocalDate startDate, LocalDate endDate) {
         this.annualizedRateOfReturn = annualizedRateOfReturn;
         this.baseAnnualizedRateOfReturn = baseAnnualizedRateOfReturn;
         this.returnVolatility = returnVolatility;
@@ -76,6 +76,6 @@ public class TraceBackNumValVO {
         this.endDate = endDate;
     }
 
-    public TraceBackNumValVO() {
+    public TraceBackNumVal() {
     }
 }

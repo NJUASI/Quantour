@@ -1,4 +1,4 @@
-package com.edu.nju.asi.vo;
+package com.edu.nju.asi.infoCarrier.traceBack;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
  *
  * 保存用户在界面上选择的回测的条件
  */
-public class TraceBackCriteriaVO {
+public class TraceBackCriteria {
 
     /**
      * 回测区间的起始时间
@@ -32,7 +32,7 @@ public class TraceBackCriteriaVO {
     /**
      * 板块
      */
-    public StockPoolCriteriaVO stockPoolVO;
+    public StockPoolCriteria stockPoolVO;
 
 //    /**
 //     * 持有股票数
@@ -52,12 +52,12 @@ public class TraceBackCriteriaVO {
     /**
      * 形成期的形成和挑选类型以及rank
      */
-    public FormateAndPickVO formateAndPickVO;
+    public FormateAndPickCriteria formateAndPickCriteria;
 
-    public TraceBackCriteriaVO(){
+    public TraceBackCriteria(){
 
     }
-    public TraceBackCriteriaVO(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteriaVO stockPoolVO, String baseStockName, boolean isCustomized, FormateAndPickVO formateAndPickVO) {
+    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteria stockPoolVO, String baseStockName, boolean isCustomized, FormateAndPickCriteria formateAndPickCriteria) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.formativePeriod = formativePeriod;
@@ -66,11 +66,11 @@ public class TraceBackCriteriaVO {
 //        this.holdingNum = holdingNum;
         this.baseStockName = baseStockName;
         this.isCustomized = isCustomized;
-        this.formateAndPickVO = formateAndPickVO;
+        this.formateAndPickCriteria = formateAndPickCriteria;
     }
 
 
-    public TraceBackCriteriaVO(TraceBackCriteriaVO vo) {
+    public TraceBackCriteria(TraceBackCriteria vo) {
         this.startDate = vo.startDate;
         this.endDate = vo.endDate;
         this.formativePeriod = vo.formativePeriod;
@@ -79,6 +79,6 @@ public class TraceBackCriteriaVO {
 //        this.holdingNum = holdingNum;
         this.baseStockName = vo.baseStockName;
         this.isCustomized = vo.isCustomized;
-        this.formateAndPickVO = vo.formateAndPickVO;
+        this.formateAndPickCriteria = vo.formateAndPickCriteria;
     }
 }
