@@ -8,11 +8,11 @@ package com.edu.nju.asi.utilities.enums;
  */
 public enum Market {
 
-    SZ("SZ");
+    SZ(0);
 
-    private String repre;
+    private int repre;
 
-    Market(String repre) {
+    Market(int repre) {
         this.repre = repre;
     }
 
@@ -20,10 +20,10 @@ public enum Market {
      *
      * @return 该枚举相对应的文件中形式
      *
-     * enum TO String
+     * enum TO int
      * 便于写入数据库
      */
-    public String getRepre() {
+    public int getRepre() {
         return repre;
     }
 
@@ -34,15 +34,14 @@ public enum Market {
      * String TO enum
      * 便于从数据库读入
      */
-    public static Market getEnum(String a) {
+    public static Market getEnum(int a) {
         for (Market thisEnum : Market.values()){
-            if (thisEnum.repre.equals(a)){
+            if (thisEnum.repre == a){
                 return thisEnum;
             }
         }
         return null;
     }
-
 
 
 //    private int representNum;

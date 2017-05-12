@@ -61,4 +61,14 @@ public interface PrivateStockDataHelper {
      * @return 用户名称集合
      */
     boolean deletePrivateStockAll(List<PrivateStockID> list);
+
+    /**
+     * 更改用户名
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @return boolean
+     */
+    boolean updatePrivateStock(String userName,String oldName);
 }

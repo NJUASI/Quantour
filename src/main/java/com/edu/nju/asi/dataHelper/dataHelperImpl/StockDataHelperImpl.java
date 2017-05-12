@@ -4,6 +4,7 @@ import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.infoCarrier.FirstAndLastDay;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
+import com.edu.nju.asi.utilities.util.JDBCUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,6 +12,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,27 +109,43 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addStockAll(List<Stock> stocks) {
+    public boolean addStockAll(List<Stock> stocks){
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO stock(code, date, adjClose, close, high, low, market, name, open, preAdjClose, preClose, volume)" +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         boolean result = true;
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "";
 
         try {
-            for(int i=0;i<stocks.size();i++){
-                session.save(stocks.get(i));
-                if(i%20 == 0){
-                    session.flush();
-                    session.clear();
-                }
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql);
+            for (Stock stock : stocks){
+                preparedStatement.setString(1,stock.getStockID().getCode());
+                preparedStatement.setObject(2,stock.getStockID().getDate());
+                preparedStatement.setDouble(3,stock.getAdjClose());
+                preparedStatement.setDouble(4,stock.getClose());
+                preparedStatement.setDouble(5,stock.getHigh());
+                preparedStatement.setDouble(6,stock.getLow());
+                preparedStatement.setInt(7,stock.getMarket().getRepre());
+                preparedStatement.setString(8,stock.getName());
+                preparedStatement.setDouble(9,stock.getOpen());
+                preparedStatement.setDouble(10,stock.getPreAdjClose());
+                preparedStatement.setDouble(11,stock.getPreClose());
+                preparedStatement.setString(12,stock.getVolume());
+                preparedStatement.addBatch();
             }
-            transaction.commit();
-        } catch(Exception e){
+            preparedStatement.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
             e.printStackTrace();
-            transaction.rollback();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             result = false;
         }finally {
-            session.close();
+            JDBCUtil.close(preparedStatement,connection);
         }
 
         return result;

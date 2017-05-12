@@ -92,4 +92,9 @@ public class PrivateStockDataHelperImplTest {
         privateStockDataHelper.deletePrivateStockAll(list);
     }
 
+    @Test
+    public void updatePrivateStock() throws Exception {
+        privateStockDataHelper.updatePrivateStock("HarveyGong","Harvey");
+    }
+
 }

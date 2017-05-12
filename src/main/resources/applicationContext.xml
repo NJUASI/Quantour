@@ -66,6 +66,8 @@
                 <prop key="hibernate.search.default.directory_provider">${hibernate.search.directory_provider}</prop>
                 <prop key="hibernate.search.default.indexBase">${hibernate.search.indexBase}</prop>
                 <prop key="hibernate.search.analyzer">${hibernate.search.analyzer}</prop>
+                <prop key="hibernate.jdbc.batch_size">100</prop>
+                <prop key="hibernate.order_updates">true</prop>
             </props>
         </property>
     </bean>

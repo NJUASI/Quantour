@@ -66,9 +66,9 @@ public class StockDataHelperImplTest {
     @Test
     public void addStockAll() throws Exception {
         String code = "000001";
-        LocalDate localDate = LocalDate.of(1017,1,2);
+        LocalDate localDate = LocalDate.of(1017,1,1);
         List<Stock> stocks = new ArrayList<>();
-        for(int i=0;i<50000;i++){
+        for(int i=0;i<100;i++){
             Stock stock = new Stock("景兴纸业", Market.SZ,3.29,3.31,3.23,3.26,"60536",1.58,3.29,1.6);
             stock.setStockID( new StockID(code,localDate));
             stocks.add(stock);

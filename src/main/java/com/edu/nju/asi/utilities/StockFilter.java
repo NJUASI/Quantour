@@ -1,6 +1,6 @@
 package com.edu.nju.asi.utilities;
 
-import com.edu.nju.asi.po.StockPO;
+import com.edu.nju.asi.model.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +14,19 @@ public class StockFilter {
     }
 
     //过滤器，过滤出停盘的数据
-    public static List<StockPO> filter(List<StockPO> preList) {
-        List<StockPO> handledList = new ArrayList<StockPO>();
-        for (StockPO po : preList) {
-            if (isSuspension(po)){
-                handledList.add(po);
+    public static List<Stock> filter(List<Stock> preList) {
+        List<Stock> handledList = new ArrayList<>();
+        for (Stock stock : preList) {
+            if (isSuspension(stock)){
+                handledList.add(stock);
             }
         }
         return handledList;
     }
 
     //判断是否当天是否停盘
-    public static boolean isSuspension(StockPO po){
-        if (new Long(po.getVolume()) != 0){
+    public static boolean isSuspension(Stock stock){
+        if (new Long(stock.getVolume()) != 0){
             return true;
         }
         return false;
