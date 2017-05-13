@@ -2,12 +2,16 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.util.JDBCUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -63,6 +67,43 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
             map.put((String)temp[1],(String)temp[0]);
         }
         return map;
+    }
+
+    /**
+     * 添加StockSearch列表
+     *
+     * @param list
+     */
+    @Override
+    public boolean addStockSearchAll(List<StockSearch> list) {
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO stocksearch(code, firstLetters, name) VALUES(?,?,?)";
+        boolean result = true;
+
+        try {
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql);
+            for (StockSearch stockSearch : list){
+                preparedStatement.setString(1,stockSearch.getCode());
+                preparedStatement.setString(2,stockSearch.getFirstLetters());
+                preparedStatement.setString(3,stockSearch.getName());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            result = false;
+        }finally {
+            JDBCUtil.close(preparedStatement,connection);
+        }
+        return result;
     }
 
     private List getCodeAndName(){

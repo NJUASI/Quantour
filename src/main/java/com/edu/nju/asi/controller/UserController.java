@@ -1,9 +1,9 @@
 package com.edu.nju.asi.controller;
 
-import com.edu.nju.asi.model.User;
+import com.edu.nju.asi.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -12,14 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
-    @GetMapping("/welcome")
-    public ModelAndView welcome(@RequestParam String id) {
-        ModelAndView result = new ModelAndView("welcome");
+    @Autowired
+    UserService userService;
 
-        User thisUser = new User();
-        thisUser.setUserName(id);
-        result.addObject("user", thisUser);
-        return result;
+
+    /**
+     * 修改用户信息
+     */
+    @PostMapping
+    public ModelAndView modify() {
+        return null;
     }
 
 }

@@ -136,7 +136,7 @@ public class ChartServiceImpl implements ChartService {
      * @throws DateShortException 类型不匹配
      */
     @Override
-    public Map<MovingAverageType, List<MovingAverage>> getAveData(String code, List<MovingAverageType> MATypes) throws DateShortException {
+    public Map<MovingAverageType, List<MovingAverage>> getAveData(String code, List<MovingAverageType> MATypes) {
 
         Map<MovingAverageType, List<MovingAverage>> aveDataMap = new TreeMap<>();
 

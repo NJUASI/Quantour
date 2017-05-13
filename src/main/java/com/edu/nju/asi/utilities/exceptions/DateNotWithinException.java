@@ -8,6 +8,6 @@ package com.edu.nju.asi.utilities.exceptions;
 public class DateNotWithinException extends Exception {
     @Override
     public String getMessage() {
-        return "所选日期区间不在数据源库内，请重选！";
+        return "所选日期区间较数据源太广，暂无这么早的数据！";
     }
 }

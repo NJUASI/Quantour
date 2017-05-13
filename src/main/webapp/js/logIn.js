@@ -4,20 +4,23 @@
 function login() {
     var username = $("#username").val();
     var password = $("#password").val();
-    alert(username);
+    $("#")
 
     var obj = $.ajax({
             type: "post",
             async: true,
-            url: "/logIn",
+            url: "/log_in",
             data: {
                 "username": username,
                 "password": password,
             },
 
         success: function (result) {
-            if (result == "1") {
-                window.location.href = "/welcome?id=Guest";
+            var array = result.split(";")
+
+            if (array[0] == "1") {
+                alert("666")
+                window.location.href = "/welcome?id=" + username;
             } else {
                 alert("qwertyuioiuytrewertyui");
             }

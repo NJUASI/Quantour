@@ -70,15 +70,15 @@ public class TraceBackCriteria {
     }
 
 
-    public TraceBackCriteria(TraceBackCriteria vo) {
-        this.startDate = vo.startDate;
-        this.endDate = vo.endDate;
-        this.formativePeriod = vo.formativePeriod;
-        this.holdingPeriod = vo.holdingPeriod;
-        this.stockPoolVO = vo.stockPoolVO;
+    public TraceBackCriteria(TraceBackCriteria criteria) {
+        this.startDate = criteria.startDate;
+        this.endDate = criteria.endDate;
+        this.formativePeriod = criteria.formativePeriod;
+        this.holdingPeriod = criteria.holdingPeriod;
+        this.stockPoolVO = criteria.stockPoolVO;
 //        this.holdingNum = holdingNum;
-        this.baseStockName = vo.baseStockName;
-        this.isCustomized = vo.isCustomized;
-        this.formateAndPickCriteria = vo.formateAndPickCriteria;
+        this.baseStockName = criteria.baseStockName;
+        this.isCustomized = criteria.isCustomized;
+        this.formateAndPickCriteria = criteria.formateAndPickCriteria;
     }
 }

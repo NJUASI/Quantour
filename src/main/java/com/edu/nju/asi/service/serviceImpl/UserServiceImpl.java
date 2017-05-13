@@ -1,9 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.dao.UserDao;
-import com.edu.nju.asi.dao.daoImpl.UserDaoImpl;
 import com.edu.nju.asi.model.User;
-import com.edu.nju.asi.utilities.AttahmentsInitializer;
 import com.edu.nju.asi.utilities.Detector;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.service.UserService;
@@ -43,9 +41,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean registerUser(User user, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException, PasswordInputException, InvalidInputException {
-
-        AttahmentsInitializer.init();
-
         if (userDao.getAllUserNames().contains(user.getUserName())) {
             throw new DuplicatedNameException();
         } else if (!user.getPassword().equals(password2)) {
@@ -93,7 +88,7 @@ public class UserServiceImpl implements UserService {
      * @updateTime 2017/3/5
      */
     @Override
-    public boolean logIn(String userName, String password) throws UserNotExistException, DuplicateLoginException, PasswordWrongException, PasswordInputException, InvalidInputException {
+    public boolean logIn(String userName, String password) throws UserNotExistException, PasswordWrongException, PasswordInputException, InvalidInputException {
 
         //检测密码与用户名是否存在不合法符号
         Detector detector = new Detector();

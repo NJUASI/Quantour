@@ -2,6 +2,7 @@ package com.edu.nju.asi.dao;
 
 import com.edu.nju.asi.model.User;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -52,5 +53,5 @@ public interface UserDao {
      * @updateTime 2017/3/6
      * @return 用户名称集合
      */
-    Set<Object> getAllUserNames();
+    List<String> getAllUserNames();
 }
