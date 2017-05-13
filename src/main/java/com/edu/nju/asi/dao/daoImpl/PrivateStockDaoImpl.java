@@ -8,8 +8,6 @@ import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.model.PrivateStockID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
-import com.edu.nju.asi.utilities.exceptions.PrivateStockNotExistException;
-import com.edu.nju.asi.utilities.exceptions.PrivateStockNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
     }
 
     @Override
-    public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
+    public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException {
         List<Stock> result = new ArrayList<>();
 
         List<PrivateStock> privateStockIDList = privateStockDataHelper.getPrivateStock(userName);
@@ -45,7 +43,7 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
     }
 
     @Override
-    public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException, PrivateStockNotFoundException {
+    public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException {
         return privateStockDataHelper.addPrivateStock(privateStockID);
     }
 
@@ -55,7 +53,7 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
     }
 
     @Override
-    public boolean deletePrivateStock(PrivateStockID privateStockID) throws PrivateStockNotExistException, PrivateStockNotFoundException {
+    public boolean deletePrivateStock(PrivateStockID privateStockID) {
         return deletePrivateStock(privateStockID);
     }
 

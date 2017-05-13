@@ -4,7 +4,7 @@
 function login() {
     var username = $("#username").val();
     var password = $("#password").val();
-    alert(username);
+    $("#")
 
     var obj = $.ajax({
             type: "post",

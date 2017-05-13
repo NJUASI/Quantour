@@ -2,14 +2,10 @@ package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.dao.PrivateStockDao;
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.PrivateStockDaoImpl;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.model.PrivateStockID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
-import com.edu.nju.asi.utilities.exceptions.PrivateStockNotExistException;
-import com.edu.nju.asi.utilities.exceptions.PrivateStockNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +27,12 @@ public class PrivateStockServiceImpl implements PrivateStockService {
     }
 
     @Override
-    public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
+    public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException {
         return privateStockDao.getPrivateStocks(userName, date);
     }
 
     @Override
-    public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException, PrivateStockNotFoundException {
+    public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException{
         return privateStockDao.addPrivateStock(privateStockID);
     }
 
@@ -46,7 +42,7 @@ public class PrivateStockServiceImpl implements PrivateStockService {
     }
 
     @Override
-    public boolean deletePrivateStock(PrivateStockID privateStockID) throws PrivateStockNotExistException, PrivateStockNotFoundException {
+    public boolean deletePrivateStock(PrivateStockID privateStockID){
         return privateStockDao.deletePrivateStock(privateStockID);
     }
 

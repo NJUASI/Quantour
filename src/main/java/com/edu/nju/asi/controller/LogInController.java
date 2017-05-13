@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -107,7 +106,7 @@ public class LogInController {
         String userType = (String) session.getAttribute("user_type");
         if (userType.equals("user")) {
             // 普通用户
-            ModelAndView mv = new ModelAndView("welcome-user");
+            ModelAndView mv = new ModelAndView("welcome_user");
 
             User thisUser = (User) session.getAttribute("user");
             if (thisUser != null) {
@@ -135,7 +134,7 @@ public class LogInController {
             }
         } else if (userType.equals("admin")) {
             // 管理员 TODO
-            return new ModelAndView("welcome-admin");
+            return new ModelAndView("welcome_admin");
         }
 
         return new ModelAndView("index");
