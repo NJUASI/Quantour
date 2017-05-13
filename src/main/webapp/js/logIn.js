@@ -6,14 +6,14 @@ function login() {
     var password = $("#password").val();
     alert(username);
 
-    $.ajax({
-        type: "post",
-        async: true,
-        url: "/logIn",
-        data: {
-            "username": username,
-            "password": password,
-        },
+    var obj = $.ajax({
+            type: "post",
+            async: true,
+            url: "/logIn",
+            data: {
+                "username": username,
+                "password": password,
+            },
 
         success: function (result) {
             if (result == "1") {
@@ -21,7 +21,6 @@ function login() {
             } else {
                 alert("qwertyuioiuytrewertyui");
             }
-            alert("qwertyuiop");
         },
         error: function () {
             alert("错误");

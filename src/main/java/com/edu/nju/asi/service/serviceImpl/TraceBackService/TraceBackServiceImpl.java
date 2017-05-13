@@ -9,6 +9,8 @@ import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.StrategyStockList;
 import com.edu.nju.asi.utilities.exceptions.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -17,9 +19,12 @@ import java.util.*;
 /**
  * Created by harvey on 17-3-28.
  */
+@Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
+    @Autowired
     private StockService stockService;
+    @Autowired
     private StockDao stockDao;
 
     //自选股票池，用户回测自选股票池时才对此成员变量赋值
@@ -49,15 +54,27 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     public TraceBackServiceImpl() throws IOException {
-        stockService = new StockServiceImpl();
-        stockDao = new StockDaoImpl();
-
-        //获取所有数据的日期
-        allDatesWithData = stockDao.getDateWithData();
+//        stockService = new StockServiceImpl();
+//        stockDao = new StockDaoImpl();
+//
+//        //获取所有数据的日期
+//        allDatesWithData = stockDao.getDateWithData();
     }
+
+    /**
+     * 因为对springMVC未找到自动注入时初始化的方法，故在使用成员变量前先初始化
+     */
+    private void init() throws IOException {
+        if (allDatesWithData == null) {
+            //获取所有数据的日期
+            allDatesWithData = stockDao.getDateWithData();
+        }
+    }
+
 
     @Override
     public TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria, List<String> stockPool) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException {
+        init();
 
         long enter = System.currentTimeMillis();
 

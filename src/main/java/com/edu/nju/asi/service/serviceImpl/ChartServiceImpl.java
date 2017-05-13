@@ -8,6 +8,8 @@ import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.MovingAverageType;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.service.ChartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -20,20 +22,27 @@ import java.util.*;
  * 新增接口getComparision实现
  *
  */
+@Service("ChartService")
 public class ChartServiceImpl implements ChartService {
 
+    @Autowired
     StockDao stockDao;
+
     Set<String> allCodes;
 
-    /**
-     * @auther Harvey
-     * @lastUpdatedBy Harvey
-     * @updateTime 2017/3/5
-     */
-    public ChartServiceImpl()  {
-        stockDao = new StockDaoImpl();
-        allCodes = stockDao.getAllStocksCode().keySet();
+    public ChartServiceImpl() {
+//        stockDao = new StockDaoImpl();
+//        allCodes = stockDao.getAllStocksCode().keySet();
     }
+
+
+    /**
+     * 因为对springMVC未找到自动注入时初始化的方法，故在使用成员变量前先初始化
+     */
+    private void init(){
+        if (allCodes == null) allCodes = stockDao.getAllStocksCode().keySet();
+    }
+
 
     /**
      * 获取单支股票的所有数据
@@ -257,7 +266,7 @@ public class ChartServiceImpl implements ChartService {
      * @throws CodeNotFoundException 数据源中未找到此股票
      */
     private boolean codeExist(String code) throws CodeNotFoundException {
-
+        init();
         code = StockCodeHelper.simplify(code);
 
         if(allCodes.contains(code)) return true;

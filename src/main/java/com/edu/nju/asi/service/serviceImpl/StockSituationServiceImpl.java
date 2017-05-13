@@ -5,6 +5,8 @@ import com.edu.nju.asi.dao.daoImpl.StockSituationDaoImpl;
 import com.edu.nju.asi.model.StockSituation;
 import com.edu.nju.asi.service.StockSituationService;
 import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,12 +18,14 @@ import java.time.LocalDate;
  *
  * 市场温度计信息获取
  */
+@Service("StockSituationService")
 public class StockSituationServiceImpl implements StockSituationService {
 
+    @Autowired
     StockSituationDao stockSituationDao;
 
     public StockSituationServiceImpl() {
-        stockSituationDao = new StockSituationDaoImpl();
+//        stockSituationDao = new StockSituationDaoImpl();
     }
 
     /**
