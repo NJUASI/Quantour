@@ -191,11 +191,16 @@
         var username = $("#username").val();
         var password = $("#password").val();
         var htmlobj = $.ajax({
-            url: "logIn",
-            async: false
-        },
-            success: function (result) {
-            window.location.href = "welcome";
+            type: "post",
+            url: "template.html",
+            async: false,
+            success: function () {
+                alert(1);
+                window.location.href = "template.html";
+            },
+            error: function () {
+                alert(2);
+            }
         });
     }
 </script>
