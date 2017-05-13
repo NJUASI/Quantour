@@ -23,4 +23,9 @@ public interface StockSearchDataHelper {
      * @return 返回所有股票的汉语名称及其代码，名称作为键值
      */
     Map<String,String> getAllStocksName();
+
+    /**
+     * 添加StockSearch列表
+     */
+    boolean addStockSearchAll(List<StockSearch> list);
 }

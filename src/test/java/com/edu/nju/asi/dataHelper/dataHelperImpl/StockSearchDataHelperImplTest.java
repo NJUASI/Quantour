@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -45,19 +46,19 @@ public class StockSearchDataHelperImplTest {
         List<StockSearch> list = stockSearchDataHelper.getAllStocksFirstLetters();
 
         assertEquals("000001",list.get(0).getCode());
-        assertEquals("s",list.get(0).getFirstLetters());
+        assertEquals("sfza",list.get(0).getFirstLetters());
         assertEquals("深发展A",list.get(0).getName());
 
         assertEquals("000002",list.get(1).getCode());
-        assertEquals("h",list.get(1).getFirstLetters());
+        assertEquals("hsag",list.get(1).getFirstLetters());
         assertEquals("沪深A股",list.get(1).getName());
 
         assertEquals("000003",list.get(2).getCode());
-        assertEquals("n",list.get(2).getFirstLetters());
+        assertEquals("njbg",list.get(2).getFirstLetters());
         assertEquals("南京B股",list.get(2).getName());
 
         assertEquals("000011",list.get(3).getCode());
-        assertEquals("s",list.get(3).getFirstLetters());
+        assertEquals("sbbag",list.get(3).getFirstLetters());
         assertEquals("深宝宝A股",list.get(3).getName());
 
     }
@@ -81,6 +82,25 @@ public class StockSearchDataHelperImplTest {
         assertEquals("000002",map.get("沪深A股"));
         assertEquals("000003",map.get("南京B股"));
         assertEquals("000011",map.get("深宝宝A股"));
+    }
+
+    @Test
+    public void addStockSearchAll() throws Exception {
+        List<StockSearch> stockSearches = new ArrayList<>();
+        StockSearch stockSearch1 = new StockSearch("深发展A","sfza");
+        stockSearch1.setCode("000001");
+        stockSearches.add(stockSearch1);
+        StockSearch stockSearch2 = new StockSearch("沪深A股","hsag");
+        stockSearch2.setCode("000002");
+        stockSearches.add(stockSearch2);
+        StockSearch stockSearch3 = new StockSearch("南京B股","njbg");
+        stockSearch3.setCode("000003");
+        stockSearches.add(stockSearch3);
+        StockSearch stockSearch4 = new StockSearch("深宝宝A股","sbbag");
+        stockSearch4.setCode("000011");
+        stockSearches.add(stockSearch4);
+
+        stockSearchDataHelper.addStockSearchAll(stockSearches);
     }
 
 }
