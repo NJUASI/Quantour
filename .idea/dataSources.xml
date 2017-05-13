@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/quantour?serverTimezone=GMT%2b8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;useServerPrepStmts=false&amp;rewriteBatchedStatements=true" uuid="2ddae7bd-3447-4d87-be4d-3e7445e12768">
+    <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/quantour?serverTimezone=GMT%2b8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;useServerPrepStmts=false&amp;rewriteBatchedStatements=true" uuid="e955669b-266f-4bdc-b853-2612ef7e2114">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>

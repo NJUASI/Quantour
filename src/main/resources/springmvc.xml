@@ -29,10 +29,17 @@
         <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
 
+    <!-- don't handle the static resource -->
+    <mvc:default-servlet-handler />
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 上传文件的Resolver -->
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="102400000"></property>
     </bean>
 </beans>

@@ -13,6 +13,7 @@ import com.edu.nju.asi.utilities.enums.BlockType;
 import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ import java.util.Map;
  * Update time 2017/3/15
  * 新增异常
  */
+@Component("StockDao")
 public class StockDaoImpl implements StockDao {
 
     //股票信息获取的helper对象

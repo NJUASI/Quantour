@@ -1,10 +1,11 @@
 package com.edu.nju.asi.dao.daoImpl;
 
+import com.edu.nju.asi.dao.StockSituationDao;
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSituationDataHelper;
-import com.edu.nju.asi.dataHelper.dataHelperImpl.StockSituationDataHelperImpl;
 import com.edu.nju.asi.model.StockSituation;
 import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -14,7 +15,8 @@ import java.time.LocalDate;
  * Last updated by cuihua
  * Update time 2017/3/9
  */
-public class StockSituationDaoImpl implements com.edu.nju.asi.dao.StockSituationDao {
+@Component("StockSituationDao")
+public class StockSituationDaoImpl implements StockSituationDao {
 
     //市场温度计信息获取的helper对象
     private StockSituationDataHelper stockSituationHelper;
