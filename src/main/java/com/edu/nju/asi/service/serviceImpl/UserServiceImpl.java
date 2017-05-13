@@ -43,9 +43,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean registerUser(User user, String password2) throws DuplicatedNameException, PasswordNotSameException, IOException, PasswordInputException, InvalidInputException {
-
-        AttahmentsInitializer.init();
-
         if (userDao.getAllUserNames().contains(user.getUserName())) {
             throw new DuplicatedNameException();
         } else if (!user.getPassword().equals(password2)) {
@@ -93,7 +90,7 @@ public class UserServiceImpl implements UserService {
      * @updateTime 2017/3/5
      */
     @Override
-    public boolean logIn(String userName, String password) throws UserNotExistException, DuplicateLoginException, PasswordWrongException, PasswordInputException, InvalidInputException {
+    public boolean logIn(String userName, String password) throws UserNotExistException, PasswordWrongException, PasswordInputException, InvalidInputException {
 
         //检测密码与用户名是否存在不合法符号
         Detector detector = new Detector();

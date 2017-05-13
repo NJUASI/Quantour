@@ -26,7 +26,7 @@ public class StockSearch implements Serializable {
     @Column(length = 100)
     private String name;
 
-    // 汉字首字母名称
+    // 汉字拼音首字母
     @Basic
     @Column(length = 100)
     private String firstLetters;
@@ -34,9 +34,17 @@ public class StockSearch implements Serializable {
     public StockSearch() {
     }
 
-    public StockSearch(String name, String firstLetters) {
+    // TODO  股票搜索Model与逻辑之间有点问题，确认之后再改
+    public StockSearch(String code, String name, String firstLetters) {
+        this.code = code;
         this.name = name;
         this.firstLetters = firstLetters;
+    }
+
+
+    public StockSearch(String code, String name) {
+        this.code = code;
+        this.name = name;
     }
 
     public String getCode() {
