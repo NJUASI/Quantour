@@ -9,7 +9,7 @@ function login() {
     var obj = $.ajax({
             type: "post",
             async: true,
-            url: "/logIn",
+            url: "/log_in",
             data: {
                 "username": username,
                 "password": password,
@@ -17,7 +17,7 @@ function login() {
 
         success: function (result) {
             if (result == "1") {
-                window.location.href = "/welcome?id=Guest";
+                window.location.href = "/welcome?id=" + username;
             } else {
                 alert("qwertyuioiuytrewertyui");
             }

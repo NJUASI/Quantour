@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: cuihua
@@ -10,7 +11,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 Bootstrap -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <title>Welcome</title>
 </head>
 <body>
@@ -18,7 +19,13 @@
     <li><a>${user.userName}已经成功登录</a></li>
 </c:if>
 
-
+<c:forEach items="${psList}" var="stock" varStatus="vs">
+    <div>
+        <%-- 列表显示所有自选股当日股票信息 --%>
+        <a>${stock.stockID.code} + " " + ${stock.stockID.date} + " " + ${stock.name} + " " + ${stock.open} + " " +
+                ${stock.close} + " " + ${stock.high} + " " + ${stock.low} + " " + ${stock.volume}</a>
+    </div>
+</c:forEach>
 
 
 <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->

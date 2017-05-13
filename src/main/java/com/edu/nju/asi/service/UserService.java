@@ -45,6 +45,6 @@ public interface UserService{
      * @param userName 用户名称
      * @return 是否登录成功
      */
-    boolean logIn(String userName, String password) throws DuplicateLoginException, UserNotExistException, PasswordWrongException, PasswordInputException, InvalidInputException;
+    boolean logIn(String userName, String password) throws UserNotExistException, PasswordWrongException, PasswordInputException, InvalidInputException;
 
 }
