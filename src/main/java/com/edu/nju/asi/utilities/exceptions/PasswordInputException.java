@@ -10,7 +10,7 @@ public class PasswordInputException extends Exception{
 
 	@Override
 	public String getMessage(){
-		return "密码至少要含有一个数字和一个字母";
+		return "密码需同时包含数字和字母";
 	}
 
 }

@@ -42,7 +42,6 @@ public class StockSituationDaoImpl implements StockSituationDao {
      */
     @Override
     public StockSituation getStockSituation(LocalDate date) throws NoSituationDataException, IOException {
-//        return this.stockSituationHelper.getStockSituation(date);
-        return null;
+        return stockSituationHelper.getStockSituation(date);
     }
 }

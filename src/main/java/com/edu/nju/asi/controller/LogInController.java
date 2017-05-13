@@ -4,6 +4,7 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.service.UserService;
+import com.edu.nju.asi.utilities.enums.Market;
 import com.edu.nju.asi.utilities.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -74,7 +75,7 @@ public class LogInController {
         try {
             result = userService.logIn(username, password);
 
-            HttpSession session=request.getSession(true);
+            HttpSession session = request.getSession(true);
             session.setAttribute("user_type", "user");
             session.setAttribute("user", new User(username, password));
         } catch (UserNotExistException e) {
@@ -96,33 +97,44 @@ public class LogInController {
      * 用户登录初始界面，需展示用户基本信息和用户自选股列表
      */
     @GetMapping("/welcome")
-    public ModelAndView welcome(@RequestParam("userName") String userName, HttpServletRequest request) {
+    public ModelAndView welcome(@RequestParam("id") String userName, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session != null) {
+        if (session == null) {
             return new ModelAndView("index");
         }
 
         String userType = (String) session.getAttribute("user_type");
         if (userType.equals("user")) {
             // 普通用户
-            ModelAndView mv = new ModelAndView("welcome-user");
+            ModelAndView mv = new ModelAndView("welcome_user");
 
             User thisUser = (User) session.getAttribute("user");
             if (thisUser != null) {
-                try {
-                    List<Stock> psList = privateStockService.getPrivateStocks(userName, LocalDate.now());
-                    mv.addObject("psList", psList);
-                } catch (PrivateStockNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                // TODO  暂无数据
+//                try {
+//                    List<Stock> psList = privateStockService.getPrivateStocks(userName, LocalDate.now());
+
+                List<Stock> psList = new LinkedList<>();
+                psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+                psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+                psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+                psList.add(new Stock("哈哈哈4", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+                psList.add(new Stock("哈哈哈5", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+                psList.add(new Stock("哈哈哈6", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+
+
+                mv.addObject("psList", psList);
+//                } catch (PrivateStockNotFoundException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
                 return mv;
             }
-        } else if (userType.equals("admin")){
+        } else if (userType.equals("admin")) {
             // 管理员 TODO
-            return new ModelAndView("welcome-admin");
+            return new ModelAndView("welcome_admin");
         }
 
         return new ModelAndView("index");
