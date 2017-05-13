@@ -10,6 +10,7 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockNotExistException;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * Created by cuihua on 2017/5/11.
  */
+@Component("PrivateStockDao")
 public class PrivateStockDaoImpl implements PrivateStockDao {
 
     StockDataHelper stockDataHelper;

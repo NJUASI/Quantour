@@ -15,18 +15,15 @@ function login() {
                 "password": password,
             },
 
-            success: function (result) {
-                if (result == true) {
-                    window.location.href = "welcome?id=" + username;
-                    alert(obj.responseText);
-                } else {
-                    alert("qwertyuioiuytrewertyui");
-                }
-                alert("qwertyuiop");
-            },
-            error: function () {
-                alert("错误");
+        success: function (result) {
+            if (result == "1") {
+                window.location.href = "/welcome?id=Guest";
+            } else {
+                alert("qwertyuioiuytrewertyui");
             }
-        })
-    ;
+        },
+        error: function () {
+            alert("错误");
+        }
+    });
 }

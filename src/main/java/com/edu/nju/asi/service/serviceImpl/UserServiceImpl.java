@@ -8,6 +8,8 @@ import com.edu.nju.asi.utilities.Detector;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.service.UserService;
 import com.edu.nju.asi.utilities.util.MD5Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
@@ -18,12 +20,14 @@ import java.io.IOException;
  *
  * 去除在用户注册时为用户新建一个properties的实现
  */
+@Service("UserService")
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     UserDao userDao;
 
     public UserServiceImpl() {
-        userDao = new UserDaoImpl();
+//        userDao = new UserDaoImpl();
     }
 
     /**

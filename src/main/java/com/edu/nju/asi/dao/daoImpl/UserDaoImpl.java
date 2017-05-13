@@ -5,6 +5,7 @@ import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.UserDataHelper;
 import com.edu.nju.asi.dataHelper.dataHelperImpl.UserDataHelperImpl;
 import com.edu.nju.asi.model.User;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import java.util.Set;
  * Last updated by Harvey
  * Update time 2017/3/6
  */
+@Component("UserDao")
 public class UserDaoImpl implements UserDao {
 
     //用户信息获取的helper对象
