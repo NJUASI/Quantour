@@ -94,7 +94,7 @@ public class LogInController {
 
 
     /**
-     * 用户登录初始界面，需展示用户基本信息和用户自选股列表
+     * 普通用户登录初始界面，需展示用户基本信息和用户自选股列表
      */
     @GetMapping("/welcome")
     public ModelAndView welcome(@RequestParam("id") String userName, HttpServletRequest request) {
@@ -112,7 +112,7 @@ public class LogInController {
             if (thisUser != null) {
                 // TODO  暂无数据
 //                try {
-//                    List<Stock> psList = privateStockService.getPrivateStocks(userName, LocalDate.now());
+//                    List<Stock> ps_list = privateStockService.getPrivateStocks(userName, LocalDate.now());
 
                 List<Stock> psList = new LinkedList<>();
                 psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
@@ -123,7 +123,7 @@ public class LogInController {
                 psList.add(new Stock("哈哈哈6", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
 
 
-                mv.addObject("psList", psList);
+                mv.addObject("ps_list", psList);
 //                } catch (PrivateStockNotFoundException e) {
 //                    e.printStackTrace();
 //                } catch (IOException e) {
