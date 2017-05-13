@@ -5,15 +5,15 @@ function createCandlestickChart(id,candlestickData) {
     
     function splitCandlestickData(rawData) {
         var categoryData = [];
-        var valus = [];
+        var values = [];
         for(var i = 0;i<rawData.length;i++){
             categoryData.push(rawData[i].splice(0,1)[0]);
-            valus.push(rawData[i]);
+            values.push(rawData[i]);
         }
 
         return {
             categoryData: categoryData,
-            values: valus
+            values: values
         };
     }
     
@@ -74,15 +74,17 @@ function createCandlestickChart(id,candlestickData) {
         dataZoom:[
             {
                 type: 'inside',
-                start: 50,
+                xAxisIndex: [0],
+                start: 0,
                 end: 100
             },
             {
                 type: 'slider',
-                show: false,
-                start: 50,
+                show: true,
+                xAxisIndex: [0],
+                start: 0,
                 end: 100
-            },
+            }
         ],
         series:[
             {
@@ -134,15 +136,15 @@ function createCandlestickChart(id,candlestickData) {
 
 function createBarChart(id,barData,title,legend){
     function spliteBarData(rawData) {
-        var category = [];
+        var categoryData = [];
         var values = [];
 
         for(var i = 0;i<rawData.length;i++){
-            category.push(rawData[i].splice(0,1)[0]);
+            categoryData.push(rawData[i].splice(0,1)[0]);
             values.push(rawData[i].splice(0,1)[0]);
         }
         return {
-            category: category,
+            categoryData: categoryData,
             values: values
         };
     }
@@ -151,7 +153,9 @@ function createBarChart(id,barData,title,legend){
     var data0 = spliteBarData(barData);
 
     var option = {
-        title:{},
+        title:{
+            text: title
+        },
         tooltip:{
             trigger: 'axis',
             axisPointer: {
@@ -163,7 +167,7 @@ function createBarChart(id,barData,title,legend){
         },
         xAxis:{
             type: 'category',
-            data: data0.category,
+            data: data0.categoryData,
             scale: true,
             boundaryGap: false,
             axisLine: {onZero: false},
@@ -200,4 +204,89 @@ function createBarChart(id,barData,title,legend){
     };
     barChart.setOption(option);
     return barChart;
+}
+
+function createLineChart(id,lineData,title,legend) {
+    function splitLineData(rawData){
+        var categoryData = [];
+        var values = [];
+
+        for(var i = 0;i<rawData.length;i++){
+            categoryData.push(rawData[i].splice(0,1)[0]);
+            values.push(rawData[i].splice(0,1)[0]);
+        }
+        return {
+            category: categoryData,
+            values: values
+        };
+    }
+
+    var dataAll = [];
+    for(var i = 0; i<lineData.length;i++){
+        dataAll.push(splitLineData(lineData[i]));
+    }
+    var lineChart = echarts.init(document.getElementById(id));
+
+    function initSeries(){
+        var series = [];
+        for(var i = 0; i<legend.length;i++){
+            var item = {
+                name: legend[i],
+                type: 'line',
+                data: dataAll[i].values
+            };
+            series.push(item);
+        }
+        return series;
+    }
+
+    var lineSeries = initSeries();
+
+    var option = {
+        title:{
+            text: title
+        },
+        tooltip:{
+            trigger: 'axis',
+            axisPointer:{
+                type: 'line'
+            }
+        },
+        legend:{
+            data: legend
+        },
+        grid:{
+            left: '3%',
+            right: '4%',
+            bottom : '3%',
+            containLabel: true
+        },
+        xAxis:{
+            type: 'category',
+            boundaryGap: false,
+            data: dataAll[0].categoryData,
+            splitNumber: 20
+        },
+        yAxis:{
+            type: 'value',
+            scale: true
+        },
+        dataZoom:[
+            {
+                type: 'inside',
+                start: 50,
+                end: 100
+            },
+            {
+                type: 'slider',
+                show: false,
+                start: 50,
+                end: 100
+            }
+        ],
+        series: lineSeries
+    };
+
+    lineChart.setOption(option);
+    return lineChart;
 }
