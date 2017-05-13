@@ -34,10 +34,6 @@ public class PrivateStockServiceImpl implements PrivateStockService {
     public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException, PrivateStockNotFoundException {
         return privateStockDao.getPrivateStocks(userName, date);
     }
-    @Override
-    public List<String> getPrivateStockCodes(String userName) throws PrivateStockNotFoundException {
-        return privateStockDao.getPrivateStockCodes(userName);
-    }
 
     @Override
     public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException, PrivateStockNotFoundException {

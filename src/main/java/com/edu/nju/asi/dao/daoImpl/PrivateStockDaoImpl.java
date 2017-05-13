@@ -45,12 +45,6 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
     }
 
     @Override
-    public List<String> getPrivateStockCodes(String userName) throws PrivateStockNotFoundException {
-//        return privateStockDataHelper.getPrivateStock(userName);
-        return null;
-    }
-
-    @Override
     public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException, PrivateStockNotFoundException {
         return privateStockDataHelper.addPrivateStock(privateStockID);
     }

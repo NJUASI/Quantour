@@ -16,7 +16,10 @@ function login() {
             },
 
         success: function (result) {
-            if (result == "1") {
+            var array = result.split(";")
+
+            if (array[0] == "1") {
+                alert("666")
                 window.location.href = "/welcome?id=" + username;
             } else {
                 alert("qwertyuioiuytrewertyui");

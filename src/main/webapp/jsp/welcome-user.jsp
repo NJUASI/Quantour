@@ -16,7 +16,11 @@
 </head>
 <body>
 <c:if test="${user!=null}">
-    <li><a>${user.userName}已经成功登录</a></li>
+    <li><a>普通用户${user.userName}已经成功登录</a></li>
+    <li><a>自选股列表大小：${psList.size()}</a></li>
+
+
+
 </c:if>
 
 <c:forEach items="${psList}" var="stock" varStatus="vs">
