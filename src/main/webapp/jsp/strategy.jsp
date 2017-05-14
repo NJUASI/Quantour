@@ -85,7 +85,7 @@
     <div class="row">
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h3 class="panel_title">
                     选股票池
                 </h3>
             </div>
@@ -148,7 +148,7 @@
     <div class="row">
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h3 class="panel_title">
                     回测条件
                 </h3>
             </div>
@@ -167,7 +167,7 @@
     <div class="row">
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h3 class="panel_title">
                     选择策略
                 </h3>
             </div>

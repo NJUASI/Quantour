@@ -83,7 +83,7 @@
 <div class="row">
     <div class="panel panel-default col-lg-8 col-lg-offset-2 userBlock">
         <div class="panel-heading">
-            <h3 class="panel-title">
+            <h3 class="panel_title">
                 登录信息
             </h3>
         </div>
@@ -135,7 +135,7 @@
 <div class="row">
     <div class="panel panel-default col-lg-8 col-lg-offset-2 messageBlock">
         <div class="panel-heading">
-            <h3 class="panel-title">
+            <h3 class="panel_title">
                 基本信息
             </h3>
         </div>

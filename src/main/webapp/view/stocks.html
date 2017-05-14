@@ -19,21 +19,80 @@
             margin-top: 70px;
         }
 
-        .content {
-            margin-top: 70px;
+        .panel_title_wrapper {
+            margin-top: 30px;
         }
 
-        .row {
-            margin-top: 30px;
+        .markets_wrapper {
+            margin-top: 45px;
+            padding-bottom: 30px;
+        }
+
+        .panel_title {
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        .curr {
+            width: auto;
+            height: 48px;
+            font-size: 30px;
+            border-bottom: 2px solid #0287fe;
         }
 
         .pagination-wrapper {
             width: 100%;
         }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0px;
+        }
+
+        .each_market{
+            padding-left: 4.5%;
+            padding-right: 4.5%;
+            width: auto;
+            display: inline-block;
+        }
+
+        .market-data-extra li {
+            margin-bottom: 8px;
+        }
+
+        .market_high, .market_limit_up, .stock_high{
+            color: #FF5256;
+        }
+
+        .market_low, .market_limit_down, .stock_low{
+            color: #5DCD0B;
+        }
+
+        #shangzh, #sz{
+            border-right: 1px solid #e6e6e6;
+        }
+
+        table th,td{
+            text-align: center;
+        }
+
+        table caption{
+            margin-bottom: 10px;
+            color: #323232;
+        }
+
+        table th{
+            font-size: 15px;
+            font-weight: 500;
+            color: #5e5e5e;
+        }
+
+        table thead{
+            background-color: #EAF5FF;
+        }
     </style>
 </head>
 <header>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
@@ -54,50 +113,100 @@
 </header>
 <div class="content">
     <div class="container">
-        <div class="row">
-            <div class="col-md-2 col-md-offset-1">
-                <form role="form">
-                    <div class="input-group">
-                        <input type="text" class="form-control form_datetime">
-                        <span class="input-group-btn">
+        <div class="row panel_title_wrapper">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="panel_title">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <ul class="nav">
+                                <li class="curr text-center">沪深行情</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 col-md-offset-1">
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy/mm/dd"
+                                 data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                <input class="form-control" size="16" type="text">
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-md-offset-3">
+                            <form role="form">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="输入代码/简称/拼音">
+                                    <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
                                         <span class="glyphicon glyphicon-search"> </span>
                                     </button>
                             </span>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
-            <div class="col-md-3 col-md-offset-3">
-                <form role="form">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="输入代码/简称/拼音">
-                        <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <span class="glyphicon glyphicon-search"> </span>
-                                    </button>
-                            </span>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-1 col-md-offset-1">
-                <button type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-align-left"> 对比</span>
-                </button>
+        </div>
+        <div class="row markets_wrapper">
+            <div class="col-md-offset-1 col-md-10">
+                <ul class="market">
+                    <li class="each_market" id="shangzh">
+                        <h4>上证指数</h4>
+                        <h3>3083.51&nbsp;&nbsp;
+                            <small>+22.01&nbsp;&nbsp;</small>
+                            <small>+0.71%</small>
+                        </h3>
+                        <ul class="market-data-extra">
+                            <li><span>最高:<span class="market_high">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最低:<span
+                                    class="market_low">3051.87</span></span></li>
+                            <li><span>涨停:<span class="market_limit_up">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;跌停:<span
+                                    class="market_limit_down">3051.87</span></span></li>
+                            <li><span>成交量:<span class="volume">3090</span></span></li>
+                        </ul>
+                    </li>
+                    <li class="each_market" id="sz">
+                        <h4>深证指数</h4>
+                        <h3>3083.51&nbsp;&nbsp;
+                            <small>+22.01&nbsp;&nbsp;</small>
+                            <small>+0.71%</small>
+                        </h3>
+                        <ul class="market-data-extra">
+                            <li><span>最高:<span class="market_high">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最低:<span
+                                    class="market_low">3051.87</span></span></li>
+                            <li><span>涨停:<span class="market_limit_up">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;跌停:<span
+                                    class="market_limit_down">3051.87</span></span></li>
+                            <li><span>成交量:<span class="volume">3090</span></span></li>
+                        </ul>
+                    </li>
+                    <li class="each_market" id="cy">
+                        <h4>创业指数</h4>
+                        <h3>3083.51&nbsp;&nbsp;
+                            <small>+22.01&nbsp;&nbsp;</small>
+                            <small>+0.71%</small>
+                        </h3>
+                        <ul class="market-data-extra">
+                            <li><span>最高:<span class="market_high">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最低:<span
+                                    class="market_low">3051.87</span></span></li>
+                            <li><span>涨停:<span class="market_limit_up">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;跌停:<span
+                                    class="market_limit_down">3051.87</span></span></li>
+                            <li><span>成交量:<span class="volume">3090</span></span></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 col-md-offset-1">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-condensed">
-                        <caption>市场行情</caption>
+                    <table class="table table-hover table-condensed">
+                        <caption class="text-center"><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
                             <th>代码</th>
                             <th>名称</th>
                             <th>开盘价</th>
                             <th>收盘价</th>
-                            <th>最低价</th>
-                            <th>最高价</th>
+                            <th class="stock_high">最高价</th>
+                            <th class="stock_low">最低价</th>
                             <th>昨收</th>
                             <th>交易量</th>
                             <th>交易额</th>
@@ -382,7 +491,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="pagination-wrapper text-center">
+                <div class="pagination-wrapper text-right">
                     <ul class="pagination">
                         <li><a href="#">&laquo;</a></li>
                         <li><a href="#">1</a></li>
@@ -394,47 +503,6 @@
                         <li><a href="#">30</a></li>
                         <li><a href="#">&raquo;</a></li>
                     </ul>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-condensed">
-                                    <caption>自选股票池</caption>
-                                    <thead>
-                                    <tr>
-                                        <th>代码</th>
-                                        <th>名称</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Tanmay</td>
-                                        <td>Bangalore</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanmay</td>
-                                        <td>Bangalore</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanmay</td>
-                                        <td>Bangalore</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanmay</td>
-                                        <td>Bangalore</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanmay</td>
-                                        <td>Bangalore</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -449,19 +517,19 @@
 <script src="../js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
-<script src="../js/jquery.pin.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
-    $(".form_datetime").datetimepicker({
+    $(".form_date").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
         todayBtn: true,
         language: 'zh-CN',//中文，需要引用zh-CN.js包
         startView: 2,//日视图
-        minView: 2,//日期时间选择器所能够提供的最精确的时间选择视图
+        minView: 2,//日期时间选择器所能够提供的最精确的时间选择视图0
+        pickerPosition: "bottom-left"
     });
-    $('.form_datetime')
+    $('.form_date')
         .datetimepicker()
         .on('changeDate', function (ev) {
             alert("今天是" + ev.date.valueOf());
