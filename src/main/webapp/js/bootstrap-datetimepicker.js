@@ -1,4 +1,4 @@
-﻿/* =========================================================
+﻿﻿/* =========================================================
  * bootstrap-datetimepicker.js
  * =========================================================
  * Copyright 2012 Stefan Petre
@@ -133,7 +133,7 @@
       this.formatViewType = this.element.data('formatViewType');
     }
 
-    this.minView = 2;
+    this.minView = 0;
     if ('minView' in options) {
       this.minView = options.minView;
     } else if ('minView' in this.element.data()) {

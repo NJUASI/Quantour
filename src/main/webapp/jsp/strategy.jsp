@@ -16,7 +16,7 @@
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/bootstrap-select.css">
-    <link rel="stylesheet" href="../css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -92,7 +92,7 @@
             <div class="panel-body">
                 <div class="row">
 
-                    <div class="col-lg-2 col-lg-offset-2 userBlockLeft">
+                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
                         <div class="radio">
                             <label>
                                 <input type="radio" name="optionsRadios" id="optionsRadios1" value="byBlock" checked>
@@ -107,33 +107,29 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 userBlockLeft">
-                        <div class="form-group">
-                            <label for="blocks" class="col-sm-4 control-label">板块：</label>
-                            <div class="col-sm-8">
-                                <select id="blocks" name="blocks" class="selectpicker show-tick form-control"
-                                        multiple data-live-search="false" placeholder="请选择板块">
-                                    <option value="1" selected>主板</option>
-                                    <option value="2" selected>中小板</option>
-                                    <option value="3" selected>创业板</option>
+                    <div class="col-md-2 col-lg-offset-1 userBlockLeft">
+
+                            <label for="blocks">板块：</label>
+                            <select id="blocks" name="blocks" class="selectpicker show-tick form-control"
+                                    multiple data-live-search="false" placeholder="请选择板块">
+                                <option value="1" selected>主板</option>
+                                <option value="2" selected>中小板</option>
+                                <option value="3" selected>创业板</option>
+                            </select>
+
+                    </div>
+
+                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+
+                            <label>ST：</label>
+                            <div style="display: inline">
+                                <select class="selectpicker show-tick form-control">
+                                    <option value="0" selected>包含ST</option>
+                                    <option value="1">排除ST</option>
+                                    <option value="2">仅有ST</option>
                                 </select>
                             </div>
-                        </div>
                     </div>
-
-                    <div class="col-lg-3 userBlockLeft">
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label">ST：</label>
-                        <div class="col-sm-8">
-                            <select  class="selectpicker show-tick form-control" >
-                                <option value="0" selected>包含ST</option>
-                                <option value="1">排除ST</option>
-                                <option value="2">仅有ST</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
 
 
                 </div>
@@ -155,10 +151,48 @@
             <div class="panel-body">
                 <div class="row">
 
-                    <div class="col-lg-7 col-lg-offset-1 userBlockLeft" >
-                        <input type="text" id="sandbox-container" class="form-control" value="02-16-2012">
+                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
 
+                            <label>开始日期：</label>
+                            <!--指定 date标记-->
+                            <div class='input-group date' id='datetimeStart'>
+                                <input type='text' class="form-control form_datetime"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+
+                        </div>
                     </div>
+                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+                            <label>结束日期：</label>
+                            <!--指定 date标记-->
+                            <div class='input-group date' id='datetimeEnd'>
+                                <input type='text' class="form-control form_datetime"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+
+                        <label>收益基准：</label>
+
+                        <select id="basic" name="basic"   class="selectpicker show-tick form-control">
+                            <option value="1" selected>沪深300</option>
+                            <option value="2" >创业板指</option>
+                            <option value="3" >中小板指</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+
+                        <input type="submit" class="btn btn-info"
+                               style="margin-top: 15px;margin-left: -40px;" value="开始回测"/>
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -171,23 +205,90 @@
                     选择策略
                 </h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body userBlockLeft">
                 <div class="row">
+                    <div class="col-md-4 col-md-offset-1">
+                        <div class="row">
+                            <div class="col-md-5"><label>形成指标</label></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">形成期</div>
+                            <div class="col-md-3">
+                                <select name=""   class="selectpicker show-tick form-control">
+                                    <option value="1" selected>5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="60">60</option>
+                                </select>
+                                </div>
+                            <div class="col-md-1">
+                                <label>日</label>
+                            </div>
+                            <div class="col-md-3">
+                                <select  name=""   class="selectpicker show-tick form-control">
+                                    <option value="1" selected>涨幅</option>
+                                    <option value="2">乖离率</option>
+                                    <option value="3">成交量</option>
 
-                    <div class="col-lg-7 col-lg-offset-1 userBlockLeft" id="modify">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-5"><label>筛选条件</label></div>
+                        </div>
+                        <div class="row">
 
+                            <div class="col-md-4">
+                                <select  name=""   class="selectpicker show-tick form-control">
+                                    <option value="1" selected>排名最大</option>
+                                    <option value="2">排名最小</option>
+                                    <option value="3">排名%最大</option>
+                                    <option value="4">排名%最小</option>
+                                </select>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="row">
+                            <div class="col-md-7">
+                                        <input type="text" class="form-control col-md-1" id="stockNum"
+                                               name="stockNum" placeholder="请输入股票数">
+                            </div>
+                            <div class="col-md-5">
+                                <label for="stockNum" class="col-md-2">只/%</label>
+                            </div>
+                                </div>
 
-                        <div id="passwordField">
-                            <div class="form-group">
-                                <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
-                                <label style="margin-left: 20px">*******</label>
                             </div>
 
-                            <button type="button" id="modifyBT" class="btn btn-primary">修改密码</button>
                         </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-5"><label>调仓周期</label></div>
+                        </div>
+                        <div class="row">
 
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control col-md-1" id="period"
+                                               name="period" placeholder="请输入周期数">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="period" class="col-md-2">天</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>
@@ -203,15 +304,36 @@
 
 
 <script src="../js/bootstrap-select.js"></script>
-<script src="../js/bootstrap-datepicker.js"></script>
-
+<script src="../js/bootstrap-datetimepicker.js"></script>
+<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
 
-    $('#sandbox-container).datepicker({
-        language: "zh-CN",
-        orientation: "top auto",
-        daysOfWeekDisabled: "0,4,6",
-        daysOfWeekHighlighted: "1,2,3,4,5"
+    var today = new Date();
+
+    var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
+    var endTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    $("#datetimeStart>input").attr('value', startTime);
+    $("#datetimeEnd>input").attr('value', endTime);
+
+
+    $("#datetimeStart").datetimepicker({
+        format: 'yyyy-mm-dd',
+        minView: 'month',
+        language: 'zh-CN',
+        autoclose: true,
+        startDate: new Date(2005 - 04 - 03),
+        endDate: new Date()
+    }).on("click", function () {
+        $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())
+    });
+    $("#datetimeEnd").datetimepicker({
+        format: 'yyyy-mm-dd',
+        minView: 'month',
+        language: 'zh-CN',
+        autoclose: true,
+        endDate: new Date()
+    }).on("click", function () {
+        $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
     });
 
     $(document).ready(function () {
@@ -219,6 +341,7 @@
             $("#passwordField").toggle("slow");
             $("#passwordModify").toggle("slow");
         });
+
     });
 
 
