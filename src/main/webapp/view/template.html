@@ -8,7 +8,18 @@
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
+
+    <style rel="stylesheet" type="text/css">
+        footer {
+            width: 100%;
+            height: 70px;
+        }
+
+        .content{
+            margin-top: 70px;
+        }
+    </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,11 +29,36 @@
     <![endif]-->
 </head>
 <body>
-<h1>你好，世界！</h1>
+<header>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand brand" href="#">
+                    <!-- TODO -->
+                    <img alt="Brand" src="">
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">大盘详情</a></li>
+                <li><a href="#">量化社区</a></li>
+                <li><a href="#">帮助</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                <li><a href="#">注册</a></li>
+            </ul>
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>
+<div class="content">
+
+</div>
+<footer>
+
+</footer>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-3.2.1.min.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.js"></script>
+<script src="../js/bootstrap.js"></script>
 </body>
 </html>
