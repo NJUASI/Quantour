@@ -55,10 +55,10 @@ public class Detector {
      * @lastChangedBy Byron Dong
      * @updateTime 2016/4/16
      * @param express
-     *            传入需要检查不合法符号的信息内容
+     *            传入需要检查不合法符号的信息内容，必须输入小于length长度的数字
      * @return boolean 是否符合要求规范
      */
-    public boolean cycleDetector(String express,String length) throws InvalidInputException {
+    public boolean cycleDetector(String express, String length) throws InvalidInputException {
         expression = "[1-9]\\d{0,"+length+"}+";
 
         if(!this.getResultOfDetector(express)){

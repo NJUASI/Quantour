@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -45,7 +46,17 @@ public class TraceBackStockPoolDaoImpl implements TraceBackStockPoolDao {
             TraceBackStockID id = temp.getTraceBackStockID();
             result.add(stockDataHelper.getStockData(id.getStockCode(), localDate));
         }
+        return result;
+    }
 
+    @Override
+    public List<String> getTraceBackStockPoolCodes(String userName) {
+        List<String> result = new LinkedList<>();
+        List<TraceBackStockPool> traceBackStockPools = traceBackStockPoolDataHelper.getTraceBackStockPool(userName);
+
+        for (TraceBackStockPool temp : traceBackStockPools) {
+            result.add(temp.getTraceBackStockID().getStockCode());
+        }
         return result;
     }
 

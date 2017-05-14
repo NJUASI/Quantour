@@ -2,12 +2,9 @@
  * Created by cuihua on 2017/5/12.
  */
 function login() {
-    var username = $("#username").val();
-    var password = $("#password").val();
-
     var jsonData = {
-        "userName": username,
-        "password": password
+        "userName": $("#username").val(),
+        "password": $("#password").val()
     };
 
     var obj = $.ajax({
@@ -19,7 +16,8 @@ function login() {
 
         success: function (result) {
             alert(result);
-            var array = result.split(";")
+            alert(JSON.stringify(jsonData));
+            var array = result.split(";");
 
             if (array[0] == "1") {
                 alert("666");
@@ -32,6 +30,7 @@ function login() {
             }
         },
         error: function (result) {
+            alert(JSON.stringify(jsonData));
             alert("错误" + result);
         }
     });

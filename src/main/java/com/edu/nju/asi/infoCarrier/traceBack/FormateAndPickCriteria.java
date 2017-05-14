@@ -25,6 +25,9 @@ public class FormateAndPickCriteria {
      */
     public int rank;
 
+    public FormateAndPickCriteria() {
+    }
+
     public FormateAndPickCriteria(FormateType formateType, PickType pickType, int rank) {
         this.formateType = formateType;
         this.pickType = pickType;

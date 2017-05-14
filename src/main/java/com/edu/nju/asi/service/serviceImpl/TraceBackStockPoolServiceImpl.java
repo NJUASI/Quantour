@@ -35,6 +35,11 @@ public class TraceBackStockPoolServiceImpl implements TraceBackStockPoolService 
         return traceBackStockPoolDao.getTraceBackStockPool(userName, localDate);
     }
 
+    @Override
+    public List<String> getTraceBackStockPoolCodes(String userName) {
+        return traceBackStockPoolDao.getTraceBackStockPoolCodes(userName);
+    }
+
     /**
      * 添加单只回测股
      *

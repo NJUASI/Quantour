@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 61990
@@ -95,13 +96,13 @@
                     <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="byBlock" checked>
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="false" checked>
                                 按板块选
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="byChoice">
+                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="true">
                                 自选股池
                             </label>
                         </div>
@@ -109,32 +110,28 @@
 
                     <div class="col-md-2 col-lg-offset-1 userBlockLeft">
 
-                            <label for="blocks">板块：</label>
-                            <select id="blocks" name="blocks" class="selectpicker show-tick form-control"
-                                    multiple data-live-search="false" placeholder="请选择板块">
-                                <option value="1" selected>主板</option>
-                                <option value="2" selected>中小板</option>
-                                <option value="3" selected>创业板</option>
-                            </select>
+                        <label for="blockTypes">板块：</label>
+                        <select id="blockTypes" name="blockTypes" class="selectpicker show-tick form-control"
+                                multiple data-live-search="false" placeholder="请选择板块">
+                            <option value="ZB" selected>主板</option>
+                            <option value="ZXB" selected>中小板</option>
+                            <option value="CYB" selected>创业板</option>
+                        </select>
 
                     </div>
 
                     <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
 
-                            <label>ST：</label>
-                            <div style="display: inline">
-                                <select class="selectpicker show-tick form-control">
-                                    <option value="0" selected>包含ST</option>
-                                    <option value="1">排除ST</option>
-                                    <option value="2">仅有ST</option>
-                                </select>
-                            </div>
+                        <label>ST：</label>
+                        <div style="display: inline">
+                            <select id="stType" class="selectpicker show-tick form-control">
+                                <option value="INCLUDE" selected>包含ST</option>
+                                <option value="EXCLUDE">排除ST</option>
+                                <option value="ONLY">仅有ST</option>
+                            </select>
+                        </div>
                     </div>
-
-
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -153,22 +150,22 @@
 
                     <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
 
-                            <label>开始日期：</label>
-                            <!--指定 date标记-->
-                            <div class='input-group date' id='datetimeStart'>
-                                <input type='text' class="form-control form_datetime"/>
-                                <span class="input-group-addon">
+                        <label>开始日期：</label>
+                        <!--指定 date标记-->
+                        <div class='input-group date' id='datetimeStart'>
+                            <input id="startDate" type='text' class="form-control form_datetime"/>
+                            <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
 
                         </div>
                     </div>
                     <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
-                            <label>结束日期：</label>
-                            <!--指定 date标记-->
-                            <div class='input-group date' id='datetimeEnd'>
-                                <input type='text' class="form-control form_datetime"/>
-                                <span class="input-group-addon">
+                        <label>结束日期：</label>
+                        <!--指定 date标记-->
+                        <div class='input-group date' id='datetimeEnd'>
+                            <input id="endDate" type='text' class="form-control form_datetime"/>
+                            <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
 
@@ -179,17 +176,17 @@
 
                         <label>收益基准：</label>
 
-                        <select id="basic" name="basic"   class="selectpicker show-tick form-control">
-                            <option value="1" selected>沪深300</option>
-                            <option value="2" >创业板指</option>
-                            <option value="3" >中小板指</option>
+                        <select id="baseStock" name="baseStock" class="selectpicker show-tick form-control">
+                            <option value="沪深300" selected>沪深300</option>
+                            <option value="创业板指">创业板指</option>
+                            <option value="中小板指">中小板指</option>
                         </select>
                     </div>
 
                     <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
 
-                        <input type="submit" class="btn btn-info"
-                               style="margin-top: 15px;margin-left: -40px;" value="开始回测"/>
+                        <button type="button" class="btn btn-info" onclick="traceback()"
+                                style="margin-top: 15px;margin-left: -40px;">开始回测
                         </button>
                     </div>
 
@@ -214,22 +211,22 @@
                         <div class="row">
                             <div class="col-md-3">形成期</div>
                             <div class="col-md-3">
-                                <select name=""   class="selectpicker show-tick form-control">
-                                    <option value="1" selected>5</option>
+                                <select id="formativePeriod" name="" class="selectpicker show-tick form-control">
+                                    <option value="5" selected>5</option>
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                     <option value="30">30</option>
                                     <option value="60">60</option>
                                 </select>
-                                </div>
+                            </div>
                             <div class="col-md-1">
                                 <label>日</label>
                             </div>
                             <div class="col-md-3">
-                                <select  name=""   class="selectpicker show-tick form-control">
-                                    <option value="1" selected>涨幅</option>
-                                    <option value="2">乖离率</option>
-                                    <option value="3">成交量</option>
+                                <select id="formativeStrategy" name="" class="selectpicker show-tick form-control">
+                                    <option value="INCEREASE_AMOUNT" selected>涨幅</option>
+                                    <option value="BIAS">乖离率</option>
+                                    <option value="VOLUME">成交量</option>
 
                                 </select>
                             </div>
@@ -242,22 +239,22 @@
                         <div class="row">
 
                             <div class="col-md-4">
-                                <select  name=""   class="selectpicker show-tick form-control">
-                                    <option value="1" selected>排名最大</option>
-                                    <option value="2">排名最小</option>
-                                    <option value="3">排名%最大</option>
-                                    <option value="4">排名%最小</option>
+                                <select id="pickStrategy" name="" class="selectpicker show-tick form-control">
+                                    <option value="RANK_MAX_PERCENT" selected>排名最大</option>
+                                    <option value="RANK_MIN_PERCENT">排名最小</option>
+                                    <option value="RANK_MAX">排名%最大</option>
+                                    <option value="RANK_MIN">排名%最小</option>
                                 </select>
                             </div>
                             <div class="col-md-7">
                                 <div class="row">
-                            <div class="col-md-7">
-                                        <input type="text" class="form-control col-md-1" id="stockNum"
-                                               name="stockNum" placeholder="请输入股票数">
-                            </div>
-                            <div class="col-md-5">
-                                <label for="stockNum" class="col-md-2">只/%</label>
-                            </div>
+                                    <div class="col-md-7">
+                                        <input id="rank" type="text" class="form-control col-md-1"
+                                               name="rank" placeholder="请输入排名条件">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label for="rank" class="col-md-2">只/%</label>
+                                    </div>
                                 </div>
 
                             </div>
@@ -273,11 +270,11 @@
                             <div class="col-md-9">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control col-md-1" id="period"
-                                               name="period" placeholder="请输入周期数">
+                                        <input id="holdingPeriod" type="text" class="form-control col-md-1"
+                                               name="holdingPeriod" placeholder="请输入天数">
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="period" class="col-md-2">天</label>
+                                        <label for="holdingPeriod" class="col-md-2">天</label>
                                     </div>
                                 </div>
 
@@ -286,7 +283,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
             </div>
@@ -301,7 +297,7 @@
 <script src="../js/jquery.validate.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
-
+<script src="../js/traceBack.js"></script>
 
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>

@@ -1,12 +1,10 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
-import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.StrategyStockList;
 import com.edu.nju.asi.utilities.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +91,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         }
         //不是自选股票池
         else {
-            traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolVO);
+            traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
             setUp(traceBackStockPool);
         }
 

@@ -1,9 +1,8 @@
 package com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters;
 
-import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilter;
-import com.edu.nju.asi.utilities.enums.BlockType;
-import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
+import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
+import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilter;
 
 import java.util.List;
 
@@ -26,24 +25,19 @@ public class BlockCriteriaFilter extends StockPoolFilter {
     @Override
     public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria) {
 
-        // 选择ALL时放且只放在第一个位置
-        if(criteria.blockTypes.get(0) !=  BlockType.ALL){
-            for(int i = 0; i < stocks.size();){
-                if(criteria.blockTypes.contains(stocks.get(i).blockType)){
-                    i++;
-                    continue;
-                }
-
-                // 此股票没有在期望的板块中
-                stocks.remove(i);
-
+        for (int i = 0; i < stocks.size(); ) {
+            if (criteria.blockTypes.contains(stocks.get(i).blockType)) {
+                i++;
+                continue;
             }
+
+            // 此股票没有在期望的板块中
+            stocks.remove(i);
         }
 
-        if(getNextFilter() == null){
+        if (getNextFilter() == null) {
             return stocks;
-        }
-        else {
+        } else {
             return getNextFilter().meetCriteria(stocks, criteria);
         }
     }

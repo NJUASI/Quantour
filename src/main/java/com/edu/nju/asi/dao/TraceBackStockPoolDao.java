@@ -24,6 +24,12 @@ public interface TraceBackStockPoolDao {
     List<Stock> getTraceBackStockPool(String userName, LocalDate localDate);
 
     /**
+     * @param userName 用户账号
+     * @return 此用户需要进行回测的股票池
+     */
+    List<String> getTraceBackStockPoolCodes(String userName);
+
+    /**
      * 添加单只回测股
      *
      * @author Byron Dong

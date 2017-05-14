@@ -11,8 +11,7 @@ public enum  BlockType {
 
     ZB("主板"),
     CYB("创业板"),
-    ZXB("中小板"),
-    ALL("全部");
+    ZXB("中小板");
 
     private String repre;
 
