@@ -91,10 +91,4 @@ public class TraceBackStockPoolDataHelperImplTest {
         list.add(new TraceBackStockID("高源","040078"));
         traceBackStockPoolDataHelper.deleteTraceBackStockAll(list);
     }
-
-    @Test
-    public void updateTraceBackStockPool() throws Exception {
-        traceBackStockPoolDataHelper.updateTraceBackStockPool("HarveyGong","Harvey");
-    }
-
 }

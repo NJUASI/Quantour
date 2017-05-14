@@ -178,41 +178,6 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     }
 
     /**
-     * 更改用户名(用于User中的userName被修改后调用)
-     *
-     * @param userName
-     * @return boolean
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     */
-    @Override
-    public boolean updatePrivateStock(String userName,String oldName) {
-
-        List<PrivateStock> list = getPrivateStock(oldName);
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        boolean result = false;
-
-        String hql = "update PrivateStock p set p.privateStockID.userName =:userName where " +
-                "p.privateStockID.userName =:oldName and privateStockID.stockCode =:code";
-
-        if(list != null&&!list.isEmpty()){
-            for(PrivateStock privateStock :list){
-                Query query = session.createQuery(hql);
-                query.setParameter("userName",userName);
-                query.setParameter("oldName",oldName);
-                query.setParameter("code",privateStock.getPrivateStockID().getStockCode());
-                query.executeUpdate();
-            }
-            result = true;
-        }
-        transaction.commit();
-        session.close();
-        return result;
-    }
-
-    /**
      * 用于判断指定自选股是否存在
      *
      * @param privateStockID

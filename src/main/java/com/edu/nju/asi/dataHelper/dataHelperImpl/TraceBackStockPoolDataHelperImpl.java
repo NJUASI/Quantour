@@ -178,41 +178,6 @@ public class TraceBackStockPoolDataHelperImpl implements TraceBackStockPoolDataH
     }
 
     /**
-     * 更改用户名
-     *
-     * @param userName
-     * @param oldName
-     * @return boolean
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/9
-     */
-    @Override
-    public boolean updateTraceBackStockPool(String userName, String oldName) {
-        List<TraceBackStockPool> list = getTraceBackStockPool(oldName);
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        boolean result = false;
-
-        String hql = "update TraceBackStockPool t set t.traceBackStockID.userName =:userName where " +
-                "t.traceBackStockID.userName =:oldName and t.traceBackStockID.stockCode =:code";
-
-        if(list != null&&!list.isEmpty()){
-            for(TraceBackStockPool traceBackStockPool :list){
-                Query query = session.createQuery(hql);
-                query.setParameter("userName",userName);
-                query.setParameter("oldName",oldName);
-                query.setParameter("code",traceBackStockPool.getTraceBackStockID().getStockCode());
-                query.executeUpdate();
-            }
-            result = true;
-        }
-        transaction.commit();
-        session.close();
-        return result;
-    }
-
-    /**
      * 用于判断指定回测股是否存在
      *
      * @param traceBackStockID

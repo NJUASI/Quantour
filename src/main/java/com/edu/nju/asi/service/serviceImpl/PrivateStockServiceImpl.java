@@ -22,10 +22,6 @@ public class PrivateStockServiceImpl implements PrivateStockService {
     @Autowired
     PrivateStockDao privateStockDao;
 
-    public PrivateStockServiceImpl(StockDao stockDao) {
-//        this.privateStockDao = new PrivateStockDaoImpl();
-    }
-
     @Override
     public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException {
         return privateStockDao.getPrivateStocks(userName, date);

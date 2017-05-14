@@ -1,15 +1,17 @@
-package com.edu.nju.asi.dataHelper;
+package com.edu.nju.asi.dao;
 
+import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.TraceBackStockID;
 import com.edu.nju.asi.model.TraceBackStockPool;
 import com.edu.nju.asi.utilities.exceptions.TraceBackStockExistedException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * Created by Byron Dong on 2017/5/14.
  */
-public interface TraceBackStockPoolDataHelper {
+public interface TraceBackStockPoolDao {
 
     /**
      * 获取指定用户名的回测股池
@@ -19,7 +21,7 @@ public interface TraceBackStockPoolDataHelper {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    List<TraceBackStockPool> getTraceBackStockPool(String userName);
+    List<Stock> getTraceBackStockPool(String userName, LocalDate localDate);
 
     /**
      * 添加单只回测股

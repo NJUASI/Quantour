@@ -54,11 +54,11 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
 
     @Override
     public boolean deletePrivateStock(PrivateStockID privateStockID) {
-        return deletePrivateStock(privateStockID);
+        return privateStockDataHelper.deletePrivateStock(privateStockID);
     }
 
     @Override
     public boolean deletePrivateStockAll(List<PrivateStockID> list) {
-        return deletePrivateStockAll(list);
+        return privateStockDataHelper.deletePrivateStockAll(list);
     }
 }
