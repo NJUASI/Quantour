@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.List;
 
 /**
@@ -25,12 +26,24 @@ public class User implements Serializable {
     @Column(length = 100)
     private String password;
 
+    //用户头像
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "headPotrait",columnDefinition = "BLOB",nullable = true)
+    private Blob headPortrait;
+
     public User() {
     }
 
-    public User(String userName, String password) {
+    public User(String userName,String password) {
         this.userName = userName;
         this.password = password;
+    }
+
+    public User(String userName, String password, Blob headPortrait) {
+        this.userName = userName;
+        this.password = password;
+        this.headPortrait = headPortrait;
     }
 
     public String getUserName() {
@@ -47,6 +60,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Blob getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(Blob headPortrait) {
+        this.headPortrait = headPortrait;
     }
 
 }

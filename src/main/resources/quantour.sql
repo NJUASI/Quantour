@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-05-14 18:21:24
+Date: 2017-05-14 18:58:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -237,13 +237,14 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userName` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `headPotrait` blob,
   PRIMARY KEY (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('61990', '345678');
-INSERT INTO `user` VALUES ('ByronDong', '123456');
-INSERT INTO `user` VALUES ('CharlesFeng47', '901234');
-INSERT INTO `user` VALUES ('Harvey Gong', '789012');
+INSERT INTO `user` VALUES ('61990', 'b7bfe0c070d6fb3d9acc375d317dcfb5', null);
+INSERT INTO `user` VALUES ('ByronDong', '8e523cd5ef475ab6834f0598f4a502f8', null);
+INSERT INTO `user` VALUES ('CharlesFeng47', 'e78a98a93547e180cc7bf5323f1b6b66', null);
+INSERT INTO `user` VALUES ('Harvey Gong', '2fbed987fcaedad037df73d70cd5e422', null);
