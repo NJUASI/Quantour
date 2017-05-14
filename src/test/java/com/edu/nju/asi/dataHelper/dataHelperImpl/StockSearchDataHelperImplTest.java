@@ -87,17 +87,13 @@ public class StockSearchDataHelperImplTest {
     @Test
     public void addStockSearchAll() throws Exception {
         List<StockSearch> stockSearches = new ArrayList<>();
-        StockSearch stockSearch1 = new StockSearch("深发展A","sfza");
-        stockSearch1.setCode("000001");
+        StockSearch stockSearch1 = new StockSearch("000001","深发展A","sfza");
         stockSearches.add(stockSearch1);
-        StockSearch stockSearch2 = new StockSearch("沪深A股","hsag");
-        stockSearch2.setCode("000002");
+        StockSearch stockSearch2 = new StockSearch("000002","沪深A股","hsag");
         stockSearches.add(stockSearch2);
-        StockSearch stockSearch3 = new StockSearch("南京B股","njbg");
-        stockSearch3.setCode("000003");
+        StockSearch stockSearch3 = new StockSearch("000003","南京B股","njbg");
         stockSearches.add(stockSearch3);
-        StockSearch stockSearch4 = new StockSearch("深宝宝A股","sbbag");
-        stockSearch4.setCode("000011");
+        StockSearch stockSearch4 = new StockSearch("000011","深宝宝A股","sbbag");
         stockSearches.add(stockSearch4);
 
         stockSearchDataHelper.addStockSearchAll(stockSearches);

@@ -32,7 +32,7 @@ public class PrivateStockServiceImpl implements PrivateStockService {
     }
 
     @Override
-    public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException{
+    public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException {
         return privateStockDao.addPrivateStock(privateStockID);
     }
 

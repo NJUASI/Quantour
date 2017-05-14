@@ -17,12 +17,12 @@ public class User implements Serializable {
     @Id
     @GenericGenerator(name="myGenerator",strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
-    @Column(name = "userName",length = 200)
+    @Column(name = "userName",length = 100)
     private String userName;
 
     // 用户密码
     @Basic
-    @Column(length = 200)
+    @Column(length = 100)
     private String password;
 
     public User() {

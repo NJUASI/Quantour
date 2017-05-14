@@ -1,9 +1,9 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
-import com.edu.nju.asi.dataHelper.PrivateStockDataHelper;
-import com.edu.nju.asi.model.PrivateStock;
-import com.edu.nju.asi.model.PrivateStockID;
-import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
+import com.edu.nju.asi.dataHelper.TraceBackStockPoolDataHelper;
+import com.edu.nju.asi.model.TraceBackStockID;
+import com.edu.nju.asi.model.TraceBackStockPool;
+import com.edu.nju.asi.utilities.exceptions.TraceBackStockExistedException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,17 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Byron Dong on 2017/5/11.
+ * Created by Byron Dong on 2017/5/14.
  */
 @Repository
-public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
+public class TraceBackStockPoolDataHelperImpl implements TraceBackStockPoolDataHelper {
 
     @Autowired
     protected SessionFactory sessionFactory;
     private Session session;
 
     /**
-     * 获取自选股
+     * 获取指定用户名的回测股池
      *
      * @param userName
      * @return 用户名称集合
@@ -34,46 +34,46 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @updateTime 2017/5/9
      */
     @Override
-    public List<PrivateStock> getPrivateStock(String userName) {
+    public List<TraceBackStockPool> getTraceBackStockPool(String userName) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql = "from PrivateStock where privateStockID.userName =:userName";
+        String hql = "from TraceBackStockPool where traceBackStockID.userName =:userName";
         Query query = session.createQuery(hql);
         query.setParameter("userName", userName);
-        List<PrivateStock> list = query.list();
+        List<TraceBackStockPool> list = query.list();
         transaction.commit();
         session.close();
         return list;
     }
 
     /**
-     * 添加自选股
+     * 添加单只回测股
      *
-     * @param privateStockID
+     * @param traceBackStockID
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addPrivateStock(PrivateStockID privateStockID) {
-        if (isExist(privateStockID)) {
+    public boolean addTraceBackStock(TraceBackStockID traceBackStockID) {
+        if (isExist(traceBackStockID)) {
             return false;
         }
 
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        PrivateStock privateStock = new PrivateStock();
-        privateStock.setPrivateStockID(privateStockID);
-        session.save(privateStock);
+        TraceBackStockPool traceBackStockPool = new TraceBackStockPool();
+        traceBackStockPool.setTraceBackStockID(traceBackStockID);
+        session.save(traceBackStockPool);
         transaction.commit();
         session.close();
         return true;
     }
 
     /**
-     * 添加自选股列表
+     * 添加回测股列表
      *
      * @param list
      * @return 用户名称集合
@@ -82,22 +82,22 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addPrivateStockAll(List<PrivateStockID> list) throws PrivateStockExistedException {
+    public boolean addTraceBackStockAll(List<TraceBackStockID> list) throws TraceBackStockExistedException {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<PrivateStock> exceptionStock = new ArrayList<>();
+        List<TraceBackStockPool> exceptionStock = new ArrayList<>();
 
         try {
             for (int i = 0; i < list.size(); i++) {
-                PrivateStock privateStock = (PrivateStock) session.get(PrivateStock.class, list.get(i));
-                if (privateStock == null) {
-                    privateStock = new PrivateStock();
-                    privateStock.setPrivateStockID(list.get(i));
-                    session.save(privateStock);
+                TraceBackStockPool traceBackStockPool = (TraceBackStockPool) session.get(TraceBackStockPool.class, list.get(i));
+                if (traceBackStockPool == null) {
+                    traceBackStockPool = new TraceBackStockPool();
+                    traceBackStockPool.setTraceBackStockID(list.get(i));
+                    session.save(traceBackStockPool);
                 } else {
-                    privateStock = new PrivateStock();
-                    privateStock.setPrivateStockID(list.get(i));
-                    exceptionStock.add(privateStock);
+                    traceBackStockPool = new TraceBackStockPool();
+                    traceBackStockPool.setTraceBackStockID(list.get(i));
+                    exceptionStock.add(traceBackStockPool);
                 }
 
                 if (i % 20 == 0) {
@@ -115,38 +115,38 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
         if (exceptionStock.isEmpty()) {
             return true;
         } else {
-            throw new PrivateStockExistedException(exceptionStock);
+            throw new TraceBackStockExistedException(exceptionStock);
         }
     }
 
     /**
-     * 删除自选股
+     * 删除单只回测股
      *
-     * @param privateStockID
+     * @param traceBackStockID
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deletePrivateStock(PrivateStockID privateStockID) {
-        if (!isExist(privateStockID)) {
+    public boolean deleteTraceBackStock(TraceBackStockID traceBackStockID) {
+        if (!isExist(traceBackStockID)) {
             return false;
         }
 
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        PrivateStock privateStock = new PrivateStock();
-        privateStock.setPrivateStockID(privateStockID);
-        session.delete(privateStock);
+        TraceBackStockPool traceBackStockPool = new TraceBackStockPool();
+        traceBackStockPool.setTraceBackStockID(traceBackStockID);
+        session.delete(traceBackStockPool);
         transaction.commit();
         session.close();
         return true;
     }
 
     /**
-     * 删除自选股列表
+     * 删除回测股列表
      *
      * @param list
      * @return 用户名称集合
@@ -155,16 +155,16 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deletePrivateStockAll(List<PrivateStockID> list) {
-        String hql = "delete from PrivateStock where privateStockID =:id";
+    public boolean deleteTraceBackStockAll(List<TraceBackStockID> list) {
+        String hql = "delete from TraceBackStockPool where traceBackStockID =:id";
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         boolean result = true;
 
         try {
-            for (PrivateStockID privateStockID : list) {
+            for (TraceBackStockID traceBackStockID : list) {
                 Query query = session.createQuery(hql);
-                query.setParameter("id", privateStockID);
+                query.setParameter("id", traceBackStockID);
                 query.executeUpdate();
             }
             transaction.commit();
@@ -178,31 +178,31 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     }
 
     /**
-     * 更改用户名(用于User中的userName被修改后调用)
+     * 更改用户名
      *
      * @param userName
+     * @param oldName
      * @return boolean
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean updatePrivateStock(String userName,String oldName) {
-
-        List<PrivateStock> list = getPrivateStock(oldName);
+    public boolean updateTraceBackStockPool(String userName, String oldName) {
+        List<TraceBackStockPool> list = getTraceBackStockPool(oldName);
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         boolean result = false;
 
-        String hql = "update PrivateStock p set p.privateStockID.userName =:userName where " +
-                "p.privateStockID.userName =:oldName and privateStockID.stockCode =:code";
+        String hql = "update TraceBackStockPool t set t.traceBackStockID.userName =:userName where " +
+                "t.traceBackStockID.userName =:oldName and t.traceBackStockID.stockCode =:code";
 
         if(list != null&&!list.isEmpty()){
-            for(PrivateStock privateStock :list){
+            for(TraceBackStockPool traceBackStockPool :list){
                 Query query = session.createQuery(hql);
                 query.setParameter("userName",userName);
                 query.setParameter("oldName",oldName);
-                query.setParameter("code",privateStock.getPrivateStockID().getStockCode());
+                query.setParameter("code",traceBackStockPool.getTraceBackStockID().getStockCode());
                 query.executeUpdate();
             }
             result = true;
@@ -213,21 +213,21 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     }
 
     /**
-     * 用于判断指定自选股是否存在
+     * 用于判断指定回测股是否存在
      *
-     * @param privateStockID
+     * @param traceBackStockID
      * @return boolean
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/14
      */
-    private boolean isExist(PrivateStockID privateStockID) {
+    private boolean isExist(TraceBackStockID traceBackStockID) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         boolean result = false;
 
-        PrivateStock privateStock = (PrivateStock) session.get(PrivateStock.class, privateStockID);
-        if (privateStock != null) {
+        TraceBackStockPool traceBackStockPool = (TraceBackStockPool) session.get(TraceBackStockPool.class, traceBackStockID);
+        if (traceBackStockPool != null) {
             result = true;
         }
         transaction.commit();

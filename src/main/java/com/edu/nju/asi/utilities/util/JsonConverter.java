@@ -18,11 +18,31 @@ import java.util.Map;
  */
 public class JsonConverter {
 
+    /**
+     *
+     * 将数据集合变成json-String
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     * @return String 转换后的json
+     */
     public static String jsonOfObject(Object object) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(object);
     }
 
+    /**
+     *
+     * 将数据集合变成json-String(用于K线图)
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     * @return String 转换后的json
+     */
     public static String convertCandlestick(List<Stock> stocks) throws JsonProcessingException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
         List<List<String>> result = new ArrayList<>();
@@ -39,6 +59,16 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
+    /**
+     *
+     * 将数据集合变成json-String(用于交易量)
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     * @return String 转换后的json
+     */
     public static String convertVolume(List<Stock> stocks) throws JsonProcessingException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
         List<List<String>> result = new ArrayList<>();
@@ -52,6 +82,16 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
+    /**
+     *
+     * 将数据集合变成json-String(用于回测图)
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     * @return String 转换后的json
+     */
     public static String convertTraceBack(List<CumulativeReturn> list) throws JsonProcessingException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
         List<List<String>> result = new ArrayList<>();
@@ -66,6 +106,16 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
+    /**
+     *
+     * 将数据集合变成json-String(赢率图)
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     * @return String 转换后的json
+     */
     public static List<String> convertExcessAndWin(List<ExcessAndWinRateDist> list) throws JsonProcessingException {
         List<String> result =  new ArrayList<>();
         List<List<String>> excessRate = new ArrayList<>();
@@ -88,6 +138,16 @@ public class JsonConverter {
         return result;
     }
 
+    /**
+     *
+     * 将数据集合变成json-String(用于正负周期的图)
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     * @return String 转换后的json
+     */
     public static List<String> convertHistogram(ReturnPeriod returnPeriod) throws JsonProcessingException {
         String[] categories = {"1%", "2%", "3%", "4%", "5%", "6%", "7%", "8%", "9%", "10%", "11%", ">12%"};
         Object[] datas1 = new Object[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -113,6 +173,16 @@ public class JsonConverter {
         return result;
     }
 
+    /**
+     *
+     * 数据填充
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     * @return String 转换后的json
+     */
     private static void setData(Map<Double,Integer> map, Object[]data){
         for(Double key:map.keySet()){
             int index = key.intValue()-1;

@@ -1,65 +1,66 @@
 package com.edu.nju.asi.dataHelper;
 
-import com.edu.nju.asi.model.PrivateStock;
-import com.edu.nju.asi.model.PrivateStockID;
+import com.edu.nju.asi.model.TraceBackStockID;
+import com.edu.nju.asi.model.TraceBackStockPool;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
+import com.edu.nju.asi.utilities.exceptions.TraceBackStockExistedException;
 
 import java.util.List;
 
 /**
- * Created by Byron Dong on 2017/5/11.
+ * Created by Byron Dong on 2017/5/14.
  */
-public interface PrivateStockDataHelper {
+public interface TraceBackStockPoolDataHelper {
 
     /**
-     * 获取自选股
+     * 获取指定用户名的回测股池
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    List<PrivateStock> getPrivateStock(String userName);
+    List<TraceBackStockPool> getTraceBackStockPool(String userName);
 
     /**
-     * 添加自选股
+     * 添加单只回测股
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean addPrivateStock(PrivateStockID privateStockID);
+    boolean addTraceBackStock(TraceBackStockID traceBackStockID);
 
     /**
-     * 添加自选股列表
+     * 添加回测股列表
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean addPrivateStockAll(List<PrivateStockID> list) throws PrivateStockExistedException;
+    boolean addTraceBackStockAll(List<TraceBackStockID> list) throws TraceBackStockExistedException;
 
     /**
-     * 删除自选股
+     * 删除单只回测股
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean deletePrivateStock(PrivateStockID privateStockID);
+    boolean deleteTraceBackStock(TraceBackStockID traceBackStockID);
 
     /**
-     * 删除自选股列表
+     * 删除回测股列表
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean deletePrivateStockAll(List<PrivateStockID> list);
+    boolean deleteTraceBackStockAll(List<TraceBackStockID> list);
 
     /**
      * 更改用户名
@@ -69,5 +70,5 @@ public interface PrivateStockDataHelper {
      * @updateTime 2017/5/9
      * @return boolean
      */
-    boolean updatePrivateStock(String userName,String oldName);
+    boolean updateTraceBackStockPool(String userName,String oldName);
 }

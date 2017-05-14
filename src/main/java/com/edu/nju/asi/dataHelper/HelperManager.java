@@ -18,6 +18,8 @@ public class HelperManager {
 
     public final static PrivateStockDataHelper privateStockDataHelper;
 
+    public final static TraceBackStockPoolDataHelper traceBackStockPoolDataHelper;
+
     static {
         ApplicationContext applicationContext = ApplicationContextHelper.getApplicationContext();
         stockDataHelper = applicationContext.getBean(StockDataHelper.class);
@@ -25,6 +27,7 @@ public class HelperManager {
         stockSituationDataHelper = applicationContext.getBean(StockSituationDataHelper.class);
         userDataHelper = applicationContext.getBean(UserDataHelper.class);
         privateStockDataHelper = applicationContext.getBean(PrivateStockDataHelper.class);
+        traceBackStockPoolDataHelper = applicationContext.getBean(TraceBackStockPoolDataHelper.class);
     }
 
 }
