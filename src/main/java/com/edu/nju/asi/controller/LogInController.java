@@ -72,7 +72,6 @@ public class LogInController {
             System.out.println("--------------FAIL!! The user is NULL!!-------------");
         }
 
-
         boolean result = false;
         try {
             result = userService.logIn(user.getUserName(), user.getPassword());

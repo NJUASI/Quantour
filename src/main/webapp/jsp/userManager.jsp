@@ -12,6 +12,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -25,14 +27,11 @@
     <style rel="stylesheet" type="text/css">
 
 
-
         .picture {
             height: 200px;
             width: 200px;
             margin: 10px auto;
         }
-
-
 
         .userBlock {
             margin-top: 20px;
@@ -50,7 +49,6 @@
         .userBlockLeft {
             margin-top: 50px;
         }
-
 
         #passwordModify {
             display: none;
@@ -121,7 +119,7 @@
                             </div>
 
                             <input type="submit" class="btn btn-info" onclick="modify()"
-                                    style="margin-top: 15px;margin-left: 80px;" value="确认修改"/>
+                                   style="margin-top: 15px;margin-left: 80px;" value="确认修改"/>
                             </button>
                         </form>
                     </div>
@@ -174,7 +172,7 @@
                             </div>
 
                             <input type="submit" class="btn btn-info"
-                                    style="margin-top: 15px;margin-left: -40px;" value="保存信息"/>
+                                   style="margin-top: 15px;margin-left: -40px;" value="保存信息"/>
                             </button>
 
                         </div>
@@ -185,7 +183,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../js/jquery-3.2.1.min.js"></script>

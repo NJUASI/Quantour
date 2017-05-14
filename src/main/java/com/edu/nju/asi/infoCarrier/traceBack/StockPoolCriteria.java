@@ -22,6 +22,9 @@ public class StockPoolCriteria {
      */
     public List<BlockType> blockTypes;
 
+    public StockPoolCriteria() {
+    }
+
     public StockPoolCriteria(StType stType, List<BlockType> blockTypes) {
         this.stType = stType;
         this.blockTypes = blockTypes;

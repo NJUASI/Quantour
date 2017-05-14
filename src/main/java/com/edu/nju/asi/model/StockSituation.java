@@ -24,6 +24,7 @@ public class StockSituation implements Serializable {
 
     // 当日总交易量
     @Basic
+    @Column(length = 100)
     private String volume;
 
     // 涨停股票数（使用复权收盘价进行计算）

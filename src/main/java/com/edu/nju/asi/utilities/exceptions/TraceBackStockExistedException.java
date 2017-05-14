@@ -1,17 +1,14 @@
 package com.edu.nju.asi.utilities.exceptions;
 
-import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.model.TraceBackStockPool;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
- * Created by Byron Dong on 2017/4/15.
+ * Created by Byron Dong on 2017/5/14.
  */
-public class PrivateStockExistedException extends Exception{
+public class TraceBackStockExistedException extends Exception {
 
     private List<String> exceptionCode;
 
@@ -23,7 +20,7 @@ public class PrivateStockExistedException extends Exception{
      */
     @Override
     public String getMessage() {
-        return "该自选股已添加";
+        return "该回测自选股已添加";
     }
 
     /**
@@ -31,7 +28,7 @@ public class PrivateStockExistedException extends Exception{
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      */
-    public PrivateStockExistedException() {
+    public TraceBackStockExistedException() {
     }
 
     /**
@@ -39,10 +36,10 @@ public class PrivateStockExistedException extends Exception{
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      */
-    public PrivateStockExistedException(List<PrivateStock> privateStocks) {
+    public TraceBackStockExistedException(List<TraceBackStockPool> traceBackStockPools) {
         exceptionCode = new ArrayList<>();
-        for(PrivateStock privateStock: privateStocks){
-            exceptionCode.add(privateStock.getPrivateStockID().getStockCode());
+        for(TraceBackStockPool traceBackStockPool: traceBackStockPools){
+            exceptionCode.add(traceBackStockPool.getTraceBackStockID().getStockCode());
         }
     }
 
@@ -59,3 +56,4 @@ public class PrivateStockExistedException extends Exception{
         return exceptionCode;
     }
 }
+

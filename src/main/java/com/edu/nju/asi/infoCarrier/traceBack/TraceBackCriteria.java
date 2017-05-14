@@ -1,5 +1,8 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
+import com.edu.nju.asi.utilities.LocalDateHelper;
+import com.edu.nju.asi.utilities.tempHolder.TraceBackCriteriaTempHolder;
+
 import java.time.LocalDate;
 
 /**
@@ -32,7 +35,7 @@ public class TraceBackCriteria {
     /**
      * 板块
      */
-    public StockPoolCriteria stockPoolVO;
+    public StockPoolCriteria stockPoolCriteria;
 
 //    /**
 //     * 持有股票数
@@ -57,12 +60,12 @@ public class TraceBackCriteria {
     public TraceBackCriteria(){
 
     }
-    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteria stockPoolVO, String baseStockName, boolean isCustomized, FormateAndPickCriteria formateAndPickCriteria) {
+    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteria stockPoolCriteria, String baseStockName, boolean isCustomized, FormateAndPickCriteria formateAndPickCriteria) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.formativePeriod = formativePeriod;
         this.holdingPeriod = holdingPeriod;
-        this.stockPoolVO = stockPoolVO;
+        this.stockPoolCriteria = stockPoolCriteria;
 //        this.holdingNum = holdingNum;
         this.baseStockName = baseStockName;
         this.isCustomized = isCustomized;
@@ -75,10 +78,21 @@ public class TraceBackCriteria {
         this.endDate = criteria.endDate;
         this.formativePeriod = criteria.formativePeriod;
         this.holdingPeriod = criteria.holdingPeriod;
-        this.stockPoolVO = criteria.stockPoolVO;
+        this.stockPoolCriteria = criteria.stockPoolCriteria;
 //        this.holdingNum = holdingNum;
         this.baseStockName = criteria.baseStockName;
         this.isCustomized = criteria.isCustomized;
         this.formateAndPickCriteria = criteria.formateAndPickCriteria;
+    }
+
+    public TraceBackCriteria(TraceBackCriteriaTempHolder tempHolder) {
+        this.startDate = LocalDateHelper.convertString(tempHolder.startDate);
+        this.endDate = LocalDateHelper.convertString(tempHolder.endDate);
+        this.formativePeriod = tempHolder.formativePeriod;
+        this.holdingPeriod = tempHolder.holdingPeriod;
+        this.stockPoolCriteria = tempHolder.stockPoolCriteria;
+        this.baseStockName = tempHolder.baseStockName;
+        this.isCustomized = tempHolder.isCustomized;
+        this.formateAndPickCriteria = tempHolder.formateAndPickCriteria;
     }
 }
