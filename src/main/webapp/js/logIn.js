@@ -4,26 +4,35 @@
 function login() {
     var username = $("#username").val();
     var password = $("#password").val();
-    alert(username);
+
+    var jsonData = {
+        "userName": username,
+        "password": password
+    };
 
     var obj = $.ajax({
-            type: "post",
-            async: true,
-            url: "/log_in",
-            data: {
-                "username": username,
-                "password": password,
-            },
+        type: "post",
+        async: true,
+        url: "/log_in",
+        contentType:'application/json;charset=UTF-8',
+        data: JSON.stringify(jsonData),
 
         success: function (result) {
-            if (result == "1") {
+            alert(result);
+            var array = result.split(";")
+
+            if (array[0] == "1") {
+                alert("666");
                 window.location.href = "/welcome?id=" + username;
+            } else if (array[0] == "-1"){
+                // 提示错误信息
+                alert(array[1]);
             } else {
-                alert("qwertyuioiuytrewertyui");
+                alert("未知错误类型orz");
             }
         },
-        error: function () {
-            alert("错误");
+        error: function (result) {
+            alert("错误" + result);
         }
     });
 }

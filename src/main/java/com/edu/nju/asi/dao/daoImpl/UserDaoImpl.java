@@ -7,6 +7,7 @@ import com.edu.nju.asi.dataHelper.dataHelperImpl.UserDataHelperImpl;
 import com.edu.nju.asi.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,8 +41,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public boolean add(User user) {
-//        return this.userHelper.add(userPO);
-        return true;
+        return userHelper.add(user);
     }
 
     /**
@@ -55,8 +55,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public User get(String username) {
-//        return this.userHelper.get(username);
-        return null;
+        return userHelper.get(username);
     }
 
     /**
@@ -70,8 +69,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public boolean modify(User user) {
-//        return this.userHelper.modify(userPO);
-        return true;
+        return userHelper.update(user);
     }
 
     /**
@@ -83,9 +81,8 @@ public class UserDaoImpl implements UserDao {
      * @return 用户名称集合
      */
     @Override
-    public Set<Object> getAllUserNames() {
-//        return userHelper.getAllUserNames();
-        return null;
+    public List<String> getAllUserNames() {
+        return userHelper.getAllUserNames();
     }
 
 }

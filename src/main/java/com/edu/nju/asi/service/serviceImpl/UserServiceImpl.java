@@ -1,9 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.dao.UserDao;
-import com.edu.nju.asi.dao.daoImpl.UserDaoImpl;
 import com.edu.nju.asi.model.User;
-import com.edu.nju.asi.utilities.AttahmentsInitializer;
 import com.edu.nju.asi.utilities.Detector;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.service.UserService;

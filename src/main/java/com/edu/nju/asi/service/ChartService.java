@@ -54,7 +54,7 @@ public interface ChartService {
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<MovingAverageType, List<MovingAverage>> getAveData(ChartShowCriteria chartShowCriteria, List<MovingAverageType> MATypes) throws DateShortException, IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException, NoMatchEnumException;
+    Map<MovingAverageType, List<MovingAverage>> getAveData(ChartShowCriteria chartShowCriteria, List<MovingAverageType> MATypes) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException, NoMatchEnumException;
 
     /**
      * 获取单支股票所有数据均线图的平均值.
@@ -67,7 +67,7 @@ public interface ChartService {
      * @return 用户所选天数的均线图的平均值
      * @throws DateShortException 类型不匹配
      */
-    Map<MovingAverageType, List<MovingAverage>> getAveData(String code, List<MovingAverageType> MATypes) throws DateShortException, DateNotWithinException;
+    Map<MovingAverageType, List<MovingAverage>> getAveData(String code, List<MovingAverageType> MATypes);
 
     /**
      * 获取两只股票的比较信息

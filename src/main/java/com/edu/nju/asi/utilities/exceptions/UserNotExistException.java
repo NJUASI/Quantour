@@ -12,6 +12,6 @@ public class UserNotExistException extends Exception {
      */
     @Override
     public String getMessage() {
-        return "用户不存在,请检查用户名";
+        return "用户尚未注册！";
     }
 }
