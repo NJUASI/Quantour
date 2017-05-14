@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+    <style rel="stylesheet" type="text/css">
+        footer {
+            width: 100%;
+            height: 70px;
+            background-color: #444444;
+            margin-top: 70px;
+        }
+
+        .content {
+            margin-top: 70px;
+        }
+
+        .row {
+            margin-top: 30px;
+        }
+
+        .pagination-wrapper {
+            width: 100%;
+        }
+    </style>
+</head>
+<header>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand brand" href="#">
+                    <!-- TODO -->
+                    <img alt="Brand" src="">
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">大盘详情</a></li>
+                <li><a href="#">量化社区</a></li>
+                <li><a href="#">帮助</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                <li><a href="#">注册</a></li>
+            </ul>
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-1">
+                <form role="form">
+                    <div class="input-group">
+                        <input type="text" class="form-control form_datetime">
+                        <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <span class="glyphicon glyphicon-search"> </span>
+                                    </button>
+                            </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3 col-md-offset-3">
+                <form role="form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="输入代码/简称/拼音">
+                        <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <span class="glyphicon glyphicon-search"> </span>
+                                    </button>
+                            </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-1 col-md-offset-1">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-align-left"> 对比</span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-1">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-condensed">
+                        <caption>市场行情</caption>
+                        <thead>
+                        <tr>
+                            <th>代码</th>
+                            <th>名称</th>
+                            <th>开盘价</th>
+                            <th>收盘价</th>
+                            <th>最低价</th>
+                            <th>最高价</th>
+                            <th>昨收</th>
+                            <th>交易量</th>
+                            <th>交易额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                            <td>560001</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-wrapper text-center">
+                    <ul class="pagination">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><span>&middot;&middot;&middot;</span></li>
+                        <li><a href="#">30</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-condensed">
+                                    <caption>自选股票池</caption>
+                                    <thead>
+                                    <tr>
+                                        <th>代码</th>
+                                        <th>名称</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Tanmay</td>
+                                        <td>Bangalore</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanmay</td>
+                                        <td>Bangalore</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanmay</td>
+                                        <td>Bangalore</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanmay</td>
+                                        <td>Bangalore</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanmay</td>
+                                        <td>Bangalore</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer>
+
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../js/bootstrap.js"></script>
+<script src="../js/jquery.pin.js"></script>
+<script src="../js/bootstrap-datetimepicker.js"></script>
+<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript">
+
+
+    $(".form_datetime").datetimepicker({
+        format: 'yyyy-mm-dd',
+        minView: 'month',
+        language: 'zh-CN',
+        autoclose: true,
+        startDate: new Date(2005 - 04 - 03),
+        endDate: new Date()
+    });
+</script>
+</body>
+</html>
