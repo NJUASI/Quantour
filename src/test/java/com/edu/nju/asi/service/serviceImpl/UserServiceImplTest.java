@@ -1,12 +1,11 @@
-package test.com.edu.nju.asi.service.serviceImpl;
+package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.UserService;
-import com.edu.nju.asi.service.serviceImpl.UserServiceImpl;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * UserServiceImpl Tester.

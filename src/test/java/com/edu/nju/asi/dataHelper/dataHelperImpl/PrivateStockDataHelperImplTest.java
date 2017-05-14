@@ -91,10 +91,4 @@ public class PrivateStockDataHelperImplTest {
         list.add(new PrivateStockID("高源","040078"));
         privateStockDataHelper.deletePrivateStockAll(list);
     }
-
-    @Test
-    public void updatePrivateStock() throws Exception {
-        privateStockDataHelper.updatePrivateStock("HarveyGong","Harvey");
-    }
-
 }
