@@ -17,6 +17,7 @@
 <script type="text/javascript">
     var data = ${candlestickData};
     data.reverse();
+    <%--var data2 = ${volumeData};--%>
     createCandlestickChart("candlestick",data);
 </script>
 </body>
