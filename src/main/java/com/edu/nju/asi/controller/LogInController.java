@@ -8,10 +8,7 @@ import com.edu.nju.asi.utilities.enums.Market;
 import com.edu.nju.asi.utilities.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +33,8 @@ public class LogInController {
      * 普通用户注册
      */
     @PostMapping("/register")
-    @ResponseBody
-    public String register(HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody
+    String register(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String password2 = request.getParameter("password2");
@@ -64,20 +61,25 @@ public class LogInController {
 
     /**
      * 检查普通用户登录是否合法 TODO 管理员未处理
+     * produces少一点都不行
      */
-    @PostMapping("/log_in")
-    @ResponseBody
-    public String logIn(HttpServletRequest request, HttpServletResponse response) {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+    @PostMapping(value = "/log_in", produces = "text/html;charset=UTF-8;application/json")
+    public @ResponseBody
+    String logIn(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
+        if (user != null) {
+            System.out.println(user.getUserName() + "  " + user.getPassword());
+        } else {
+            System.out.println("--------------FAIL!! The user is NULL!!-------------");
+        }
+
 
         boolean result = false;
         try {
-            result = userService.logIn(username, password);
+            result = userService.logIn(user.getUserName(), user.getPassword());
 
             HttpSession session = request.getSession(true);
             session.setAttribute("user_type", "user");
-            session.setAttribute("user", new User(username, password));
+            session.setAttribute("user", user);
         } catch (UserNotExistException e) {
             return "-1;用户尚未注册！";
         } catch (PasswordWrongException e) {
@@ -88,7 +90,10 @@ public class LogInController {
             return "-1;有不合法的输入标志符！";
         }
 
-        if (result) return "1;登录成功";
+        if (result) {
+            System.out.println("Success");
+            return "1;登录成功";
+        }
         else return "-1;服务器开了一个小差。。请稍后重试";
     }
 

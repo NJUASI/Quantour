@@ -34,6 +34,17 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!-- 配置资源文件url -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+
     <!--解决post请求中文乱码 -->
     <filter>
         <filter-name>encodingFilter</filter-name>

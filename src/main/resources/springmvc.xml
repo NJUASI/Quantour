@@ -17,29 +17,23 @@
     <context:component-scan base-package="com.edu.nju.asi.controller"/>
 
 
-
     <!-- 声明一个拦截器 -->
     <!--<mvc:interceptors>-->
-        <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
-        <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/ask_question"/>-->
-            <!--&lt;!&ndash; 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 &ndash;&gt;-->
-            <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
-        <!--</mvc:interceptor>-->
+    <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/ask_question"/>-->
+    <!--&lt;!&ndash; 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 &ndash;&gt;-->
+    <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
+    <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
 
     <!-- don't handle the static resource -->
-    <mvc:default-servlet-handler />
+    <mvc:default-servlet-handler/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
-    </bean>
-
-    <!-- 上传文件的Resolver -->
-    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="102400000"></property>
     </bean>
 </beans>

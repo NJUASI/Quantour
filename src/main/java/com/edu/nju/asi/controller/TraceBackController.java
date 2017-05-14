@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,13 +30,14 @@ import java.util.List;
 @RequestMapping("/traceback")
 public class TraceBackController {
 
-    @Autowired TraceBackService traceBackService;
+    @Autowired
+    TraceBackService traceBackService;
 
     /**
      * 通过选择的条件进行股票回测
      */
     @GetMapping
-    public ModelAndView traceBack(HttpServletRequest request, HttpServletResponse response){
+    public ModelAndView traceBack(@RequestBody TraceBackCriteria traceBackCriteria, HttpServletRequest request, HttpServletResponse response) {
         // TODO  又：可以通过json传输
 //        String date1 = request.getParameter("startDate");
 //        String date2 = request.getParameter("endDate");
