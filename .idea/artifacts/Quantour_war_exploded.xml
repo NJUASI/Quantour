@@ -50,6 +50,21 @@
           <element id="library" level="project" name="Maven: net.sourceforge.javacsv:javacsv:2.0" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-math3:3.6.1" />
           <element id="library" level="project" name="Maven: com.github.stuxuhai:jpinyin:1.1.8" />
+          <element id="library" level="project" name="Maven: us.codecraft:webmagic-core:0.6.1" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.4" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.1" />
+          <element id="library" level="project" name="Maven: us.codecraft:xsoup:0.3.1" />
+          <element id="library" level="project" name="Maven: org.assertj:assertj-core:1.5.0" />
+          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
+          <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.8.3" />
+          <element id="library" level="project" name="Maven: com.jayway.jsonpath:json-path:0.8.1" />
+          <element id="library" level="project" name="Maven: net.minidev:json-smart:1.1.1" />
+          <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
+          <element id="library" level="project" name="Maven: us.codecraft:webmagic-extension:0.6.1" />
+          <element id="library" level="project" name="Maven: redis.clients:jedis:2.9.0" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.4.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">
