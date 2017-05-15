@@ -73,10 +73,10 @@ public interface ChartService {
      * @auther cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/12
-     * @param stockComparsionCriteria 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
+     * @param stockComparisionCriteria 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
      * @return 界面上需要的两只股票的比较信息
      */
-    List<StockComparision> getComparision(StockComparsionCriteria stockComparsionCriteria) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException;
+    List<StockComparision> getComparision(StockComparisionCriteria stockComparisionCriteria) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException;
 
     /**
      * 获取单支股票被剔除的日期

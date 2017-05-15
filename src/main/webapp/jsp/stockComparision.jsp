@@ -68,7 +68,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.jsp">首页</a></li>
                 <li><a href="/stocks">大盘详情</a></li>
-                <li><a href="/traceback_home">量化社区</a></li>
+                <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <li><a href="#" style="color: #4cae4c">用户</a></li>
             </ul>
@@ -79,20 +79,19 @@
     <div class="row inputBlock">
         <div class="col-md-2 col-md-offset-2">
             <label class="control-label" for="stock1">股票1：</label>
-                <input type='text' id="stock1" class="form-control" placeholder="输入股票1名称/代码/拼音"/>
-
+            <input type='text' id="stock1" class="form-control" placeholder="输入股票1名称/代码/拼音"/>
         </div>
 
         <div class="col-md-2 ">
             <label>股票2：</label>
-            <input type='text' class="form-control" placeholder="输入股票2名称/代码/拼音"/>
+            <input type='text' id="stock2" class="form-control" placeholder="输入股票2名称/代码/拼音"/>
         </div>
 
         <div class="col-md-2">
 
             <label>开始日期：</label>
             <!--指定 date标记-->
-            <div class='input-group date' id='datetimeStart'>
+            <div class='input-group date' id="compare_startDate">
                 <input type='text' class="form-control form_datetime"/>
                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -102,7 +101,7 @@
         <div class="col-md-2">
             <label>结束日期：</label>
             <!--指定 date标记-->
-            <div class='input-group date' id='datetimeEnd'>
+            <div class='input-group date' id="compare_endDate">
                 <input type='text' class="form-control form_datetime"/>
                 <span class="input-group-addon">
                        <span class="glyphicon glyphicon-calendar"></span>
@@ -118,7 +117,7 @@
 <div class="row">
 
     <div class="col-md-2 col-md-offset-8">
-        <button type="button" class="btn btn-primary" onclick=""/>开始对比</button>
+        <button type="button" class="btn btn-primary" onclick="compare()"/>开始对比</button>
     </div>
 
 </div>
@@ -140,8 +139,8 @@
 
     var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
     var endTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    $("#datetimeStart>input").attr('value', startTime);
-    $("#datetimeEnd>input").attr('value', endTime);
+    $("#compare_startDate>input").attr('value', startTime);
+    $("#compare_endDate>input").attr('value', endTime);
 
 
     $("#datetimeStart").datetimepicker({
@@ -152,7 +151,7 @@
         startDate: new Date(2005 - 04 - 03),
         endDate: new Date()
     }).on("click", function () {
-        $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())
+        $("#compare_startDate").datetimepicker('setEndDate', $("#compare_endDate>input").val())
     });
     $("#datetimeEnd").datetimepicker({
         format: 'yyyy-mm-dd',
@@ -161,7 +160,7 @@
         autoclose: true,
         endDate: new Date()
     }).on("click", function () {
-        $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
+        $("#compare_endDate").datetimepicker("setStartDate", $("#compare_startDate>input").val())
     });
 
 </script>

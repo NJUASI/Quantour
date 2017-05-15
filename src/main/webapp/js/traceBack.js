@@ -29,8 +29,29 @@ function traceback() {
     $.ajax({
         type: "post",
         async: true,
-        url: "/traceback",
+        url: "/req_trace_back",
         contentType:'application/json;charset=UTF-8',
-        data: JSON.stringify(jsonData)
+        data: JSON.stringify(jsonData),
+
+
+        success: function (result) {
+            alert(result);
+            alert(JSON.stringify(jsonData));
+            var array = result.split(";");
+
+            if (array[0] == "1") {
+                alert("666");
+                window.location.href = "/trace_back";
+            } else if (array[0] == "-1") {
+                // 提示错误信息
+                alert(array[1]);
+            } else {
+                alert("未知错误类型orz");
+            }
+        },
+        error: function (result) {
+            alert(JSON.stringify(jsonData));
+            alert("错误" + result);
+        }
     });
 }

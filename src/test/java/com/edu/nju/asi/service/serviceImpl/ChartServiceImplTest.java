@@ -1,6 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
+import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Before;
@@ -9,7 +10,6 @@ import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.utilities.enums.MovingAverageType;
 import com.edu.nju.asi.infoCarrier.MovingAverage;
 import com.edu.nju.asi.infoCarrier.StockComparision;
-import com.edu.nju.asi.infoCarrier.StockComparsionCriteria;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -87,12 +87,12 @@ public class ChartServiceImplTest {
     }
 
     /**
-     * Method: getComparision(StockComparsionCriteria stockComparsionCriteriaVO)
+     * Method: getComparision(StockComparisionCriteria stockComparsionCriteriaVO)
      */
     @Ignore
     @Test
     public void testGetComparision() throws Exception {
-        List<StockComparision> result = service.getComparision(new StockComparsionCriteria("000001",
+        List<StockComparision> result = service.getComparision(new StockComparisionCriteria("000001",
                 "000010", LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 10)));
         StockComparision vo1 = result.get(0);
         StockComparision vo2 = result.get(1);

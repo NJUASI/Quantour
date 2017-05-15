@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,11 +30,37 @@ public class LogInController {
     UserService userService;
 
     /**
-     * 普通用户注册
+     * 普通用户登录初始界面，需展示用户基本信息和用户自选股列表
      */
-    @PostMapping(value = "/register", produces = "text/html;charset=UTF-8")
+    @GetMapping("/welcome")
+    public ModelAndView welcome(@RequestParam("id") String userName, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return new ModelAndView("index");
+        }
+
+        String userType = (String) session.getAttribute("userType");
+        if (userType.equals("user")) {
+            // 普通用户
+            ModelAndView mv = new ModelAndView("welcome_user");
+            List<Stock> psList = (List<Stock>) session.getAttribute("privateStockList");
+            mv.addObject("ps_list", psList);
+            return mv;
+        } else if (userType.equals("admin")) {
+            // 管理员 TODO
+            return new ModelAndView("welcome_admin");
+        }
+
+        return new ModelAndView("index");
+    }
+
+
+    /**
+     * 【请求】普通用户注册
+     */
+    @PostMapping(value = "/req_register", produces = "text/html;charset=UTF-8")
     public @ResponseBody
-    String register(HttpServletRequest request, HttpServletResponse response) {
+    String reqRegister(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
         String password2 = request.getParameter("password2");
@@ -44,17 +69,17 @@ public class LogInController {
 
         boolean result = false;
         try {
-            result = userService.registerUser(new User(username, password), password2);
-        } catch (DuplicatedNameException e) {
-            return "-1;该用户名已被注册！";
-        } catch (PasswordNotSameException e) {
-            return "-1;两次密码不一致，请检查后重试！";
+            User thisUser = new User(username, password);
+            result = userService.registerUser(thisUser, password2);
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute("userType", "user");
+            session.setAttribute("user", thisUser);
+            session.setAttribute("privateStockList", null);
         } catch (IOException e) {
             return "-1;服务器开了一个小差。。请稍后重试";
-        } catch (PasswordInputException e) {
-            return "-1;密码需同时包含数字和字母哦！";
-        } catch (InvalidInputException e) {
-            return "-1;有不合法的输入标志符！";
+        } catch (DuplicatedNameException | PasswordNotSameException | PasswordInputException | InvalidInputException e) {
+            return "-1;" + e.getMessage();
         }
 
         if (result) return "1;注册成功";
@@ -63,12 +88,12 @@ public class LogInController {
 
 
     /**
-     * 检查普通用户登录是否合法 TODO 管理员未处理
+     * 【请求】用户登录 TODO 管理员未处理
      * produces少一点都不行
      */
-    @PostMapping(value = "/log_in", produces = "text/html;charset=UTF-8;application/json")
+    @PostMapping(value = "/req_log_in", produces = "text/html;charset=UTF-8;application/json")
     public @ResponseBody
-    String logIn(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
+    String reqLogIn(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
         if (user != null) {
             System.out.println(user.getUserName() + "  " + user.getPassword());
         } else {
@@ -82,31 +107,17 @@ public class LogInController {
 //            List<Stock> psList = privateStockService.getPrivateStocks(user.getUserName(), LocalDate.now());
 
             List<Stock> psList = new LinkedList<>();
-//            psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-//            psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-//            psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-//            psList.add(new Stock("哈哈哈4", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-//            psList.add(new Stock("哈哈哈5", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-//            psList.add(new Stock("哈哈哈6", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-
-
+            psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
+            psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
+            psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
 
             HttpSession session = request.getSession(true);
-            session.setAttribute("user_type", "user");
+            session.setAttribute("userType", "user");
             session.setAttribute("user", user);
             session.setAttribute("privateStockList", psList);
-        } catch (UserNotExistException e) {
+        } catch (UserNotExistException | PasswordWrongException | PasswordInputException | InvalidInputException e) {
             e.printStackTrace();
-            return "-1;用户尚未注册！";
-        } catch (PasswordWrongException e) {
-            e.printStackTrace();
-            return "-1;密码错误！";
-        } catch (PasswordInputException e) {
-            e.printStackTrace();
-            return "-1;密码输入格式不对！";
-        } catch (InvalidInputException e) {
-            e.printStackTrace();
-            return "-1;有不合法的输入标志符！";
+            return "-1;" + e.getMessage();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //            return "-1;IO读取失败！";
@@ -116,32 +127,6 @@ public class LogInController {
             System.out.println("Success");
             return "1;登录成功";
         } else return "-1;服务器开了一个小差。。请稍后重试";
-    }
-
-
-    /**
-     * 普通用户登录初始界面，需展示用户基本信息和用户自选股列表
-     */
-    @GetMapping("/welcome")
-    public ModelAndView welcome(@RequestParam("id") String userName, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return new ModelAndView("index");
-        }
-
-        String userType = (String) session.getAttribute("user_type");
-        if (userType.equals("user")) {
-            // 普通用户
-            ModelAndView mv = new ModelAndView("welcome_user");
-            List<Stock> psList = (List<Stock>) session.getAttribute("privateStockList");
-            mv.addObject("ps_list", psList);
-            return mv;
-        } else if (userType.equals("admin")) {
-            // 管理员 TODO
-            return new ModelAndView("welcome_admin");
-        }
-
-        return new ModelAndView("index");
     }
 
 }

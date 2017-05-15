@@ -2,18 +2,20 @@ package com.edu.nju.asi.controller;
 
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
-import com.edu.nju.asi.model.TraceBackStockPool;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.TraceBackStockPoolService;
-import com.edu.nju.asi.utilities.Detector;
-import com.edu.nju.asi.utilities.exceptions.*;
+import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import com.edu.nju.asi.utilities.tempHolder.TraceBackCriteriaTempHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,19 +38,43 @@ public class TraceBackController {
     /**
      * 通过选择的条件进行股票回测
      */
-    @GetMapping(value = "/traceback_home", produces = "text/html;charset=UTF-8;application/json")
-    public String traceBack(HttpServletRequest request, HttpServletResponse response) {
-        return "traceback_home";
+    @GetMapping("/trace_back_home")
+    public String traceBackHome() {
+        return "traceBackHome";
     }
 
 
     /**
-     * 通过选择的条件进行股票回测
+     * 查看回测结果
      */
-    @PostMapping(value = "/traceback", produces = "text/html;charset=UTF-8;application/json")
-    public ModelAndView traceBack(@RequestBody TraceBackCriteriaTempHolder criteriaTempHolder, HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndView("index");
+    @GetMapping("/trace_back")
+    public ModelAndView traceBack(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return new ModelAndView("index");
+        }
 
+        TraceBackInfo traceBackInfo = (TraceBackInfo) session.getAttribute("traceBackResult");
+        session.setAttribute("traceBackResult", null);
+
+        if (traceBackInfo != null) {
+            ModelAndView mv = new ModelAndView("traceBack");
+            // TODO 金玉在这里add进去要的数据
+            mv.addObject("traceBackInfo", traceBackInfo);
+            return mv;
+        }
+
+
+        return new ModelAndView("index");
+    }
+
+
+    /**
+     * 通过选择的条件，请求进行股票回测
+     */
+    @PostMapping(value = "/req_trace_back", produces = "text/html;charset=UTF-8;application/json")
+    public @ResponseBody
+    String reqTraceBack(@RequestBody TraceBackCriteriaTempHolder criteriaTempHolder, HttpServletRequest request, HttpServletResponse response) {
         // 限制进入
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -58,44 +84,36 @@ public class TraceBackController {
                 response.sendRedirect("/welcome");
             } catch (IOException e) {
                 e.printStackTrace();
-                return mv;
+                return "-1;不给看";
             }
-            return mv;
+            return "-1;未知错误";
         }
-
-        TraceBackCriteria criteria = new TraceBackCriteria(criteriaTempHolder);
-
-        // TODO 冯俊杰：检测是否合法，可尝试分离
-//        try {
-//            boolean detect1 = new Detector().cycleDetector(String.valueOf(criteria.holdingPeriod), "2");
-//        } catch (InvalidInputException e) {
-//            e.printStackTrace();
-//        }
-
-        mv.setViewName("traceback");
 
         User thisUser = (User) request.getSession().getAttribute("user");
-        List<String> stockPool = stockPoolService.getTraceBackStockPoolCodes(thisUser.getUserName());
-
         System.out.println("已登录：" + thisUser.getUserName());
 
+        TraceBackCriteria criteria = new TraceBackCriteria(criteriaTempHolder);
+        List<String> stockPool = stockPoolService.getTraceBackStockPoolCodes(thisUser.getUserName());
 
-        try {
-            TraceBackInfo traceBackInfo = traceBackService.traceBack(criteria, stockPool);
-            mv.addObject("result", traceBackInfo);
-        } catch (IOException e) {
-            mv.addObject("error", "失败");
-        } catch (DataSourceFirstDayException e) {
-            mv.addObject("error", "所选开始时间为数据源中第一日，不能比其更前进行回测啦！");
-        } catch (DateNotWithinException e) {
-            mv.addObject("error", "时间太广，暂缺数据。。");
-        } catch (NoDataWithinException e) {
-            mv.addObject("error", "所选时间区间内没有数据");
-        } catch (UnhandleBlockTypeException e) {
-            mv.addObject("error", "数据源中有未处理的板块信息");
-        }
+        System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.formateAndPickCriteria.rank + "  "+ criteria.holdingPeriod);
 
-        return mv;
+
+        TraceBackInfo traceBackInfo = null;
+//        try {
+//            traceBackInfo = traceBackService.traceBack(criteria, stockPool);
+            session.setAttribute("traceBackResult", traceBackInfo);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return "-1;IO读取失败！";
+//        } catch (DataSourceFirstDayException | DateNotWithinException | NoDataWithinException | UnhandleBlockTypeException e) {
+//            e.printStackTrace();
+//            return "-1;" + e.getMessage();
+//        }
+
+//        if (traceBackInfo != null) {
+//            System.out.println("Success");
+            return "1;回测成功";
+//        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
 

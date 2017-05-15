@@ -8,6 +8,6 @@ package com.edu.nju.asi.utilities.exceptions;
 public class DataSourceFirstDayException extends Exception {
     @Override
     public String getMessage() {
-        return "所选日期包含数据源中起始日，不能计算";
+        return "所选日期包含数据源中起始日，不能计算！";
     }
 }
