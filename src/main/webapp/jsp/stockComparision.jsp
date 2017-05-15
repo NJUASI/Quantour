@@ -66,9 +66,9 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">大盘详情</a></li>
-                <li><a href="#">量化社区</a></li>
+                <li><a href="index.jsp">首页</a></li>
+                <li><a href="/stocks">大盘详情</a></li>
+                <li><a href="/traceback_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <li><a href="#" style="color: #4cae4c">用户</a></li>
             </ul>
@@ -118,9 +118,7 @@
 <div class="row">
 
     <div class="col-md-2 col-md-offset-8">
-
-        <input type="submit" class="btn btn-info" value="开始对比"/>
-        </button>
+        <button type="button" class="btn btn-primary" onclick=""/>开始对比</button>
     </div>
 
 </div>

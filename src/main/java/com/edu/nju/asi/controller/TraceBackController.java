@@ -30,7 +30,6 @@ public class TraceBackController {
 
     @Autowired
     TraceBackService traceBackService;
-
     @Autowired
     TraceBackStockPoolService stockPoolService;
 
