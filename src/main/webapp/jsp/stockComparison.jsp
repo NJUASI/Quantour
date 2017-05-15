@@ -75,51 +75,48 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<div class="row inputBlock">
-    <div class="col-md-2 col-md-offset-2">
-        <label>股票1：</label>
-        <div class="input-group">
-            <input type='text' class="form-control form_datetime" placeholder="输入股票1名称/代码/拼音"/>
-        </div>
-
-    </div>
-
-    <div class="col-md-2">
-        <label>股票2：</label>
-        <div class="input-group">
-            <input type='text' class="form-control form_datetime" placeholder="输入股票2名称/代码/拼音"/>
+<div class="form-group form">
+    <div class="row inputBlock">
+        <div class="col-md-2 col-md-offset-2">
+            <label class="control-label" for="stock1">股票1：</label>
+                <input type='text' id="stock1" class="form-control" placeholder="输入股票1名称/代码/拼音"/>
 
         </div>
-    </div>
 
-    <div class="col-md-2">
+        <div class="col-md-2 ">
+            <label>股票2：</label>
+            <input type='text' class="form-control" placeholder="输入股票2名称/代码/拼音"/>
+        </div>
 
-        <label>开始日期：</label>
-        <!--指定 date标记-->
-        <div class='input-group date' id='datetimeStart'>
-            <input type='text' class="form-control form_datetime"/>
-            <span class="input-group-addon">
+        <div class="col-md-2">
+
+            <label>开始日期：</label>
+            <!--指定 date标记-->
+            <div class='input-group date' id='datetimeStart'>
+                <input type='text' class="form-control form_datetime"/>
+                <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
+            </div>
         </div>
-    </div>
-    <div class="col-md-2">
-        <label>结束日期：</label>
-        <!--指定 date标记-->
-        <div class='input-group date' id='datetimeEnd'>
-            <input type='text' class="form-control form_datetime"/>
-            <span class="input-group-addon">
+        <div class="col-md-2">
+            <label>结束日期：</label>
+            <!--指定 date标记-->
+            <div class='input-group date' id='datetimeEnd'>
+                <input type='text' class="form-control form_datetime"/>
+                <span class="input-group-addon">
                        <span class="glyphicon glyphicon-calendar"></span>
                 </span>
 
+            </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
 
 <div class="row">
-    
+
     <div class="col-md-2 col-md-offset-8">
 
         <input type="submit" class="btn btn-info" value="开始对比"/>

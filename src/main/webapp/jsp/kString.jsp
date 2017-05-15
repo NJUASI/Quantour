@@ -115,7 +115,7 @@
         <label>开始日期：</label>
         <!--指定 date标记-->
         <div class='input-group date' id='datetimeStart'>
-            <input type='text' class="form-control form_datetime" placeholder="输入股票名称/代码/拼音"/>
+            <input type='text' class="form-control form_datetime"/>
             <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
