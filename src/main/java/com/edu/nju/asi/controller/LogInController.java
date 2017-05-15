@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,12 +33,14 @@ public class LogInController {
     /**
      * 普通用户注册
      */
-    @PostMapping("/register")
+    @PostMapping(value = "/register", produces = "text/html;charset=UTF-8")
     public @ResponseBody
     String register(HttpServletRequest request, HttpServletResponse response) {
-        String username = request.getParameter("username");
+        String username = request.getParameter("userName");
         String password = request.getParameter("password");
         String password2 = request.getParameter("password2");
+
+        System.out.println(username + "  " + password + "  " + password2);
 
         boolean result = false;
         try {
@@ -75,25 +78,44 @@ public class LogInController {
         boolean result = false;
         try {
             result = userService.logIn(user.getUserName(), user.getPassword());
+            // TODO 暂无数据
+//            List<Stock> psList = privateStockService.getPrivateStocks(user.getUserName(), LocalDate.now());
+
+            List<Stock> psList = new LinkedList<>();
+            psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+            psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+            psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+            psList.add(new Stock("哈哈哈4", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+            psList.add(new Stock("哈哈哈5", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+            psList.add(new Stock("哈哈哈6", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
+
+
 
             HttpSession session = request.getSession(true);
             session.setAttribute("user_type", "user");
             session.setAttribute("user", user);
+            session.setAttribute("privateStockList", psList);
         } catch (UserNotExistException e) {
+            e.printStackTrace();
             return "-1;用户尚未注册！";
         } catch (PasswordWrongException e) {
+            e.printStackTrace();
             return "-1;密码错误！";
         } catch (PasswordInputException e) {
+            e.printStackTrace();
             return "-1;密码输入格式不对！";
         } catch (InvalidInputException e) {
+            e.printStackTrace();
             return "-1;有不合法的输入标志符！";
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return "-1;IO读取失败！";
         }
 
         if (result) {
             System.out.println("Success");
             return "1;登录成功";
-        }
-        else return "-1;服务器开了一个小差。。请稍后重试";
+        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
 
@@ -111,12 +133,9 @@ public class LogInController {
         if (userType.equals("user")) {
             // 普通用户
             ModelAndView mv = new ModelAndView("welcome_user");
-
-            User thisUser = (User) session.getAttribute("user");
-            if (thisUser != null) {
-
-                return mv;
-            }
+            List<Stock> psList = (List<Stock>) session.getAttribute("privateStockList");
+            mv.addObject("ps_list", psList);
+            return mv;
         } else if (userType.equals("admin")) {
             // 管理员 TODO
             return new ModelAndView("welcome_admin");

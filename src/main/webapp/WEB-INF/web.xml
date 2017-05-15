@@ -52,9 +52,21 @@
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
         <url-pattern>*.ttf</url-pattern>
     </servlet-mapping>
 
+
+    <!-- 配置错误返回页面 -->
+    <error-page>
+        <location>/jsp/errorPage.jsp</location>
+    </error-page>
+    
+    
     <!--解决post请求中文乱码 -->
     <filter>
         <filter-name>encodingFilter</filter-name>

@@ -79,7 +79,7 @@
     </nav>
 </header>
 <div class="row">
-    <div class="panel panel-default col-lg-8 col-lg-offset-2 userBlock">
+    <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
         <div class="panel-heading">
             <h3 class="panel_title">
                 登录信息
@@ -87,8 +87,8 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="panel-body col-lg-3 col-lg-offset-1"><img src="../img/sad.png" class="picture"/></div>
-                <div class="col-lg-7 col-lg-offset-1 userBlockLeft" id="modify">
+                <div class="panel-body col-md-3 col-md-offset-1"><img src="../img/sad.png" class="picture"/></div>
+                <div class="col-md-7 col-md-offset-1 userBlockLeft" id="modify">
 
                     <div class="form-group">
                         <label>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：</label>
@@ -131,7 +131,7 @@
 
 
 <div class="row">
-    <div class="panel panel-default col-lg-8 col-lg-offset-2 messageBlock">
+    <div class="panel panel-default col-md-8 col-md-offset-2 messageBlock">
         <div class="panel-heading">
             <h3 class="panel_title">
                 基本信息
