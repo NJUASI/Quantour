@@ -1,7 +1,6 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockDataHelper;
-import com.edu.nju.asi.infoCarrier.FirstAndLastDay;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
@@ -50,6 +49,33 @@ public class StockDataHelperImpl implements StockDataHelper {
         transaction.commit();
         session.close();
         return stock;
+    }
+
+    /**
+     * 获取特定日期指定股票的相关数据
+     *
+     * @param stockCode 指定股票代码
+     * @param start     指定开始日期（如果存在，包含start）
+     * @param end       指定结束日期（如果存在，包含end）
+     * @return 特定日期指定股票的相关数据
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public List<Stock> getStockData(String stockCode, LocalDate start, LocalDate end) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        String hql = "from Stock where stockID.date<=:endDate and stockID.date>=:startDate and stockID.code=:code order by stockID.date";
+
+        Query query = session.createQuery(hql);
+        query.setParameter("endDate",end);
+        query.setParameter("startDate",start);
+        query.setParameter("code",stockCode);
+        List<Stock> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 
     /**

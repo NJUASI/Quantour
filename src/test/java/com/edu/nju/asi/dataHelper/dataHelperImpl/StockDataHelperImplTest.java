@@ -2,6 +2,7 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
+import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
 import com.edu.nju.asi.utilities.StockCodeHelper;
@@ -59,6 +60,13 @@ public class StockDataHelperImplTest {
         assertEquals(2,stocks.size());
         assertEquals("000001",stocks.get(0).getStockID().getCode());
         assertEquals("000100",stocks.get(1).getStockID().getCode());
+    }
+
+    @Test
+    public void getStockData3() throws Exception {
+        List<Stock> list = stockDataHelper.getStockData("000001",
+                LocalDate.of(1017,1,1),LocalDate.of(1017,4,11));
+        assertEquals(101,list.size());
     }
 
     @Test

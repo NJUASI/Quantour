@@ -91,20 +91,11 @@ public class StockDaoImpl implements StockDao {
             throw new DateNotWithinException();
         }
 
-        List<Stock> result = stockDataHelper.getStockData(stockCode);
-        for (int i = 0; i < result.size(); ) {
-            if (!isDateWithinWanted(start, end, result.get(i).getStockID().getDate())) {
-                result.remove(i);
-            }else {
-                i++;
-            }
-        }
+        List<Stock> result = stockDataHelper.getStockData(stockCode,start,end);
 
         if (result.size() == 0) {
             throw new NoDataWithinException(stockCode);
         }
-
-        result.sort(new StockDateComparator());
         return result;
     }
 

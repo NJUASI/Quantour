@@ -72,12 +72,11 @@
     </column>
     <column id="25" parent="7" name="transactionAmount">
       <Position>12</Position>
-      <DataType>double|0</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(100)|0</DataType>
     </column>
     <column id="26" parent="7" name="volume">
       <Position>13</Position>
-      <DataType>varchar(200)|0</DataType>
+      <DataType>varchar(100)|0</DataType>
     </column>
     <key id="27" parent="7" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
@@ -146,12 +145,11 @@ userName</ColNames>
     </column>
     <column id="40" parent="9" name="volume">
       <Position>16</Position>
-      <DataType>varchar(200)|0</DataType>
+      <DataType>varchar(100)|0</DataType>
     </column>
     <column id="41" parent="9" name="circulationMarketValue">
       <Position>3</Position>
-      <DataType>double|0</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(100)|0</DataType>
     </column>
     <column id="42" parent="9" name="fluctuation">
       <Position>5</Position>
@@ -165,13 +163,11 @@ userName</ColNames>
     </column>
     <column id="44" parent="9" name="totalValue">
       <Position>13</Position>
-      <DataType>double|0</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(100)|0</DataType>
     </column>
     <column id="45" parent="9" name="transactionAmount">
       <Position>14</Position>
-      <DataType>double|0</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(100)|0</DataType>
     </column>
     <column id="46" parent="9" name="turnoverRate">
       <Position>15</Position>
