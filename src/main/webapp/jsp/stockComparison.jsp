@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: 61990
-  Date: 2017/5/14
-  Time: 19:04
+  Date: 2017/5/15
+  Time: 19:03
   To change this template use File | Settings | File Templates.
 --%>
 
@@ -24,7 +24,7 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <title>个股</title>
+    <title>股票比较</title>
 
     <style rel="stylesheet" type="text/css">
 
@@ -43,8 +43,9 @@
             padding-left: 0;
         }
 
-        .userBlockLeft {
+        .inputBlock {
             margin-top: 50px;
+            margin-bottom: 40px;
         }
 
         #passwordModify {
@@ -74,54 +75,35 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<div class="row userBlockLeft">
-    <div class="col-md-2 col-lg-offset-6 input-group">
-        <input type="text" class="form-control form-inline">
-        <span class="input-group-btn">
-                                    <button class="btn btn-default form-control" type="button">
-                                        <span class="glyphicon glyphicon-search"> </span>
-                                    </button>
-    </span>
+<div class="row inputBlock">
+    <div class="col-md-2 col-md-offset-2">
+        <label>股票1：</label>
+        <div class="input-group">
+            <input type='text' class="form-control form_datetime" placeholder="输入股票1名称/代码/拼音"/>
+        </div>
+
     </div>
-</div>
 
+    <div class="col-md-2">
+        <label>股票2：</label>
+        <div class="input-group">
+            <input type='text' class="form-control form_datetime" placeholder="输入股票2名称/代码/拼音"/>
 
-<div class="row stock" style="margin-top: -60px">
-    <span class="col-md-2 col-md-offset-2"><span id="stockName">艾派克</span>&nbsp;<i id="stockCode">002180</i></span>
-    <button class="btn btn-primary ">+自选</button>
-</div>
+        </div>
+    </div>
 
-
-<div class="row">
-    <ul id="stockDetail" class="col-md-6 col-md-offset-2 list-inline">
-        <li>开盘 <span class=" font-green ">25.62</span></li>
-        <li>最高 <span class=" font-red ">26.45</span></li>
-        <li>最低 <span class=" font-green ">25.62</span></li>
-        <li>涨停 <span class=" font-red ">28.25</span></li>
-        <li>跌停 <span class=" font-green ">23.11</span></li>
-        <li>昨收 <span class=" font-black ">25.68</span></li>
-        <li>成交量 <span>67.03万</span></li>
-        <li>成交额 <span>1747.02万</span></li>
-        <li>总手 <span>6703.43</span></li>
-        <li>振幅 <span>3.23%</span></li>
-    </ul>
-</div>
-
-
-<div class="row">
-
-    <div class="col-lg-2 col-lg-offset-2 userBlockLeft">
+    <div class="col-md-2">
 
         <label>开始日期：</label>
         <!--指定 date标记-->
         <div class='input-group date' id='datetimeStart'>
-            <input type='text' class="form-control form_datetime" placeholder="输入股票名称/代码/拼音"/>
+            <input type='text' class="form-control form_datetime"/>
             <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
         </div>
     </div>
-    <div class="col-lg-2 userBlockLeft">
+    <div class="col-md-2">
         <label>结束日期：</label>
         <!--指定 date标记-->
         <div class='input-group date' id='datetimeEnd'>
@@ -132,10 +114,15 @@
 
         </div>
     </div>
-    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
 
-        <input type="submit" class="btn btn-info"
-               style="margin-top: 15px;margin-left: -40px;" value="查看区间"/>
+</div>
+
+
+<div class="row">
+    
+    <div class="col-md-2 col-md-offset-8">
+
+        <input type="submit" class="btn btn-info" value="开始对比"/>
         </button>
     </div>
 
@@ -185,3 +172,4 @@
 </script>
 </body>
 </html>
+
