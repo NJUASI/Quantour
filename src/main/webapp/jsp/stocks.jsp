@@ -14,8 +14,13 @@
     <title>股票市场</title>
 </head>
 <body>
+<div id = "candlestick_chart" style="width:100%;height:600px"></div>
 
 
-
+<script src="../js/chart.js"></script>
+<script src="../js/echarts.min.js"></script>
+<script type="text/javascript">
+    var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});
+</script>
 </body>
 </html>

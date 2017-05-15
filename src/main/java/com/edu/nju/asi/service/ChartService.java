@@ -52,7 +52,6 @@ public interface ChartService {
      * @param chartShowCriteria the chart show criteria com.edu.nju.asi.vo 用户所选股票的信息
      * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
-     * @throws DateShortException 类型不匹配
      */
     Map<MovingAverageType, List<MovingAverage>> getAveData(ChartShowCriteria chartShowCriteria, List<MovingAverageType> MATypes) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException, NoMatchEnumException;
 
@@ -65,7 +64,6 @@ public interface ChartService {
      * @param code  用户所选股票的代号
      * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
-     * @throws DateShortException 类型不匹配
      */
     Map<MovingAverageType, List<MovingAverage>> getAveData(String code, List<MovingAverageType> MATypes);
 

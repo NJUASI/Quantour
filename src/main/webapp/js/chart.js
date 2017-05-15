@@ -91,6 +91,7 @@ function createCandlestickChart(id, candlestickData, volumes) {
                 boundaryGap: false,
                 axisLine: {onZero: false},
                 splitLine: {show: false},
+                axisLabel: {show: false},
                 splitNumber: 20,
                 min: 'dataMin',
                 max: 'dataMax',
@@ -103,11 +104,9 @@ function createCandlestickChart(id, candlestickData, volumes) {
                 gridIndex: 1,
                 data: data.categoryData,
                 scale: true,
-                boundaryGap: false,
                 axisLine: {onZero: false},
                 axisTick: {show: false},
                 splitLine: {show: false},
-                axisLabel: {show: false},
                 splitNumber: 20,
                 min: 'dataMin',
                 max: 'dataMax',
@@ -338,7 +337,14 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'line'
+                type: 'cross'
+            },
+            backgroundColor: 'rgba(245, 245, 245, 0.8)',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            textStyle: {
+                color: '#000'
             }
         },
         legend: {
@@ -366,10 +372,13 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
         dataZoom: [
             {
                 type: 'inside',
-                start: 1,
+                start: 0,
                 end: 100
-            },
-            {
+            }, {
+                type: 'slider',
+                show: true,
+                start: 0,
+                end: 100,
                 handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
                 handleSize: '80%',
                 handleStyle: {
@@ -379,12 +388,6 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
                     shadowOffsetX: 2,
                     shadowOffsetY: 2
                 }
-            },
-            {
-                type: 'slider',
-                show: true,
-                start: 1,
-                end: 100
             }
         ],
         series: [
@@ -402,11 +405,11 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
             }
         ]
     };
-    traceBackChart.setOption(option,true);
+    traceBackChart.setOption(option, true);
     return traceBackChart;
 }
 
-function createAreaChart(id, areaData) {
+function createAreaChart(id, areaData, title) {
 
     function splitAreaData(rawData) {
         var categoryData = [];
@@ -422,7 +425,7 @@ function createAreaChart(id, areaData) {
         };
     }
 
-    var date = splitAreaData(areaData);
+    var data = splitAreaData(areaData);
     var areaChart = echarts.init(document.getElementById(id));
 
     var option = {
@@ -434,24 +437,42 @@ function createAreaChart(id, areaData) {
         },
         title: {
             left: 'center',
-            text: '策略胜率',
+            text: title
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            },
+            backgroundColor: 'rgba(245, 245, 245, 0.8)',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            textStyle: {
+                color: '#000'
+            }
         },
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: date
+            data: data.categoryData
         },
         yAxis: {
             type: 'value',
-            boundaryGap: [0, '100%']
+            boundaryGap: [0, '50%'],
+            axisLabel: {
+                formatter: '{value}%'
+            }
         },
         dataZoom: [{
             type: 'inside',
-            start: 0,
-            end: 10
+            start: 1,
+            end: 100
         }, {
-            start: 0,
-            end: 10,
+            type: 'slider',
+            show: true,
+            start: 1,
+            end: 100,
             handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
             handleSize: '80%',
             handleStyle: {
@@ -484,16 +505,15 @@ function createAreaChart(id, areaData) {
                         }])
                     }
                 },
-                data: data
+                data: data.values
             }
         ]
     };
-
     areaChart.setOption(option);
     return areaChart;
 }
 
-function createHistogramChart(id, data1, data2, title, legend) {
+function createHistogramChart(id, data1, data2, title) {
     function spliteHistogramData(rawData) {
         var categoryData = [];
         var values = [];
@@ -513,46 +533,43 @@ function createHistogramChart(id, data1, data2, title, legend) {
     var histogramChart = echarts.init(document.getElementById(id));
 
     var option = {
-        title: {
-            text: title
-        },
-        tooltip: {
+        tooltip : {
             trigger: 'axis',
-            axisPointer: {
-                type: 'line'
+            axisPointer : {
+                type : 'shadow'
             }
         },
         legend: {
-            data: legend
+            data: ['正收益周期数','负收益周期数'],
         },
         xAxis: {
             type: 'category',
             data: datas1.categoryData,
             scale: true,
-            boundaryGap: false,
-            axisLine: {onZero: false},
-            splitLine: {show: false},
-            splitNumber: 40
+            axisLine: {onZero: true},
         },
         yAxis: {
             scale: true,
-            boundaryGap: false,
-            splitArea: {show: false},
             axisLabel: {
                 // formatter: '{value}万'
             }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            containLabel: true
         },
         dataZoom: [
             {
                 type: 'inside',
                 show: true,
-                start: 50,
+                start: 0,
                 end: 100
             },
             {
                 type: 'slider',
                 show: true,
-                start: 50,
+                start: 0,
                 end: 100
             }
         ],
@@ -560,11 +577,13 @@ function createHistogramChart(id, data1, data2, title, legend) {
             {
                 name: '正收益周期',
                 type: 'bar',
+                stack: '收益周期',
                 data: datas1.values
             },
             {
                 name: '负收益周期',
                 type: 'bar',
+                stack: '收益周期',
                 data: datas2.values
             }
         ]
