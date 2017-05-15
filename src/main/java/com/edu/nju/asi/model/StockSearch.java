@@ -1,5 +1,6 @@
 package com.edu.nju.asi.model;
 
+import com.edu.nju.asi.utilities.enums.Market;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -31,7 +32,11 @@ public class StockSearch implements Serializable {
     @Column(length = 100)
     private String firstLetters;
 
+    @Basic
+    private Market market;
+
     public StockSearch() {
+
     }
 
     // TODO  股票搜索Model与逻辑之间有点问题，确认之后再改
@@ -39,6 +44,13 @@ public class StockSearch implements Serializable {
         this.code = code;
         this.name = name;
         this.firstLetters = firstLetters;
+    }
+
+    public StockSearch(String code, String name, String firstLetters,Market market) {
+        this.code = code;
+        this.name = name;
+        this.firstLetters = firstLetters;
+        this.market = market;
     }
 
 
@@ -69,5 +81,13 @@ public class StockSearch implements Serializable {
 
     public void setFirstLetters(String firstLetters) {
         this.firstLetters = firstLetters;
+    }
+
+    public Market getMarket() {
+        return market;
+    }
+
+    public void setMarket(Market market) {
+        this.market = market;
     }
 }

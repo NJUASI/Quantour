@@ -71,11 +71,11 @@ public class StockComparision {
 //        return result;
 
 
-        double denominator = stocks.get(0).getPreAdjClose();
+        double denominator = stocks.get(0).getPreClose();
         if (denominator == -1) {
             throw new DataSourceFirstDayException();
         }
-        double temp = stocks.get(stocks.size() - 1).getAdjClose() / denominator - 1;
+        double temp = stocks.get(stocks.size() - 1).getClose() / denominator - 1;
         return temp;
     }
 
@@ -94,11 +94,11 @@ public class StockComparision {
 
         List<Double> logarithmicYieldList = new LinkedList<>();
         for (Stock stock : stocks) {
-            if (stock.getPreAdjClose() == -1) {
+            if (stock.getPreClose() == -1) {
                 // 此条数据为数据库中最早的一条，故不能得其对数收益率
                 continue;
             }
-            double temp = Math.log(stock.getAdjClose() / stock.getPreAdjClose());
+            double temp = Math.log(stock.getClose() / stock.getPreClose());
             logarithmicYieldList.add(temp);
             logarithmicYield.put(stock.getStockID().getDate(), temp);
         }

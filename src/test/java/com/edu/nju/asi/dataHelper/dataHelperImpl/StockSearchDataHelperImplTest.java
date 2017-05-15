@@ -3,6 +3,7 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.enums.Market;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -48,18 +49,22 @@ public class StockSearchDataHelperImplTest {
         assertEquals("000001",list.get(0).getCode());
         assertEquals("sfza",list.get(0).getFirstLetters());
         assertEquals("深发展A",list.get(0).getName());
+        assertEquals(Market.SZ,list.get(0).getMarket());
 
         assertEquals("000002",list.get(1).getCode());
         assertEquals("hsag",list.get(1).getFirstLetters());
         assertEquals("沪深A股",list.get(1).getName());
+        assertEquals(Market.SZ,list.get(1).getMarket());
 
         assertEquals("000003",list.get(2).getCode());
         assertEquals("njbg",list.get(2).getFirstLetters());
         assertEquals("南京B股",list.get(2).getName());
+        assertEquals(Market.SZ,list.get(2).getMarket());
 
         assertEquals("000011",list.get(3).getCode());
         assertEquals("sbbag",list.get(3).getFirstLetters());
         assertEquals("深宝宝A股",list.get(3).getName());
+        assertEquals(Market.SZ,list.get(3).getMarket());
 
     }
 
@@ -87,13 +92,13 @@ public class StockSearchDataHelperImplTest {
     @Test
     public void addStockSearchAll() throws Exception {
         List<StockSearch> stockSearches = new ArrayList<>();
-        StockSearch stockSearch1 = new StockSearch("000001","深发展A","sfza");
+        StockSearch stockSearch1 = new StockSearch("000001","深发展A","sfza", Market.SZ);
         stockSearches.add(stockSearch1);
-        StockSearch stockSearch2 = new StockSearch("000002","沪深A股","hsag");
+        StockSearch stockSearch2 = new StockSearch("000002","沪深A股","hsag",Market.SZ);
         stockSearches.add(stockSearch2);
-        StockSearch stockSearch3 = new StockSearch("000003","南京B股","njbg");
+        StockSearch stockSearch3 = new StockSearch("000003","南京B股","njbg",Market.SZ);
         stockSearches.add(stockSearch3);
-        StockSearch stockSearch4 = new StockSearch("000011","深宝宝A股","sbbag");
+        StockSearch stockSearch4 = new StockSearch("000011","深宝宝A股","sbbag",Market.SZ);
         stockSearches.add(stockSearch4);
 
         stockSearchDataHelper.addStockSearchAll(stockSearches);

@@ -114,25 +114,6 @@ public class LogInController {
 
             User thisUser = (User) session.getAttribute("user");
             if (thisUser != null) {
-                // TODO  暂无数据
-//                try {
-//                    List<Stock> ps_list = privateStockService.getPrivateStocks(userName, LocalDate.now());
-
-                List<Stock> psList = new LinkedList<>();
-                psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-                psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-                psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-                psList.add(new Stock("哈哈哈4", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-                psList.add(new Stock("哈哈哈5", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-                psList.add(new Stock("哈哈哈6", Market.SZ, 1, 1, 1, 1, "1000", 1, 1, 1));
-
-
-                mv.addObject("ps_list", psList);
-//                } catch (PrivateStockNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
 
                 return mv;
             }

@@ -5,23 +5,23 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
- * Created by Byron Dong on 2017/5/14.
+ * Created by Byron Dong on 2017/5/11.
  */
 @Embeddable
-public class TraceBackStockID implements Serializable{
+public class OptionalStockID implements Serializable{
 
-    //用户名
+    // 用户名
     @Column(name = "userName",length = 100)
-    public String userName;
+    private String userName;
 
-    //股票代号
+    // 用户的自选股列表
     @Column(name = "stockCode",length = 100)
-    public String stockCode;
+    private String stockCode;
 
-    public TraceBackStockID() {
+    public OptionalStockID() {
     }
 
-    public TraceBackStockID(String userName, String stockCode) {
+    public OptionalStockID(String userName, String stockCode) {
         this.userName = userName;
         this.stockCode = stockCode;
     }
@@ -47,7 +47,7 @@ public class TraceBackStockID implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TraceBackStockID that = (TraceBackStockID) o;
+        OptionalStockID that = (OptionalStockID) o;
 
         if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
         return stockCode != null ? stockCode.equals(that.stockCode) : that.stockCode == null;

@@ -2,6 +2,7 @@ package com.edu.nju.asi.controller;
 
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
+import com.edu.nju.asi.model.TraceBackStockPool;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.TraceBackStockPoolService;

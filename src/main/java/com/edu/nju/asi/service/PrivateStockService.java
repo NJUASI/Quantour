@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service;
 
-import com.edu.nju.asi.model.PrivateStockID;
+import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 
@@ -33,7 +33,7 @@ public interface PrivateStockService {
      * @param privateStockID 用户名称和股票代码
      * @return 是否添加成功
      */
-    boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException;
+    boolean addPrivateStock(OptionalStockID privateStockID) throws PrivateStockExistedException;
 
     /**
      * 添加自选股列表
@@ -43,7 +43,7 @@ public interface PrivateStockService {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean addPrivateStockAll(List<PrivateStockID> list) throws PrivateStockExistedException;
+    boolean addPrivateStockAll(List<OptionalStockID> list) throws PrivateStockExistedException;
 
     /**
      * 用户删除自选股
@@ -53,7 +53,7 @@ public interface PrivateStockService {
      * @param privateStockID 用户名称和股票代码
      * @return 是否删除成功
      */
-    boolean deletePrivateStock(PrivateStockID privateStockID);
+    boolean deletePrivateStock(OptionalStockID privateStockID);
 
     /**
      * 删除自选股列表
@@ -63,6 +63,6 @@ public interface PrivateStockService {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean deletePrivateStockAll(List<PrivateStockID> list);
+    boolean deletePrivateStockAll(List<OptionalStockID> list);
 
 }

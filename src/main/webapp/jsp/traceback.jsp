@@ -14,9 +14,13 @@
     <title>回测系统</title>
 </head>
 <body>
+<div id = "trace_back_chart" style="width:100%;height:600px"></div>
 <h1>欢迎开始回测</h1>
 
-
-
+<script src = "../js/echarts.min.js"></script>
+<script src = "../js/chart.js"></script>
+<script type = "text/javascript">
+//    var trace_back_chart = createTraceBackChart("trace_back_chart")
+</script>
 </body>
 </html>

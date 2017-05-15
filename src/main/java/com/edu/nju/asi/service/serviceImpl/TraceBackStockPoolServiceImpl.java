@@ -2,7 +2,8 @@ package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.dao.TraceBackStockPoolDao;
 import com.edu.nju.asi.model.Stock;
-import com.edu.nju.asi.model.TraceBackStockID;
+import com.edu.nju.asi.model.OptionalStockID;
+import com.edu.nju.asi.model.TraceBackStockPool;
 import com.edu.nju.asi.service.TraceBackStockPoolService;
 import com.edu.nju.asi.utilities.exceptions.TraceBackStockExistedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,14 @@ public class TraceBackStockPoolServiceImpl implements TraceBackStockPoolService 
      * 获取指定用户名的回测股池
      *
      * @param userName
-     * @param localDate
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public List<Stock> getTraceBackStockPool(String userName, LocalDate localDate) {
-        return traceBackStockPoolDao.getTraceBackStockPool(userName, localDate);
+    public List<TraceBackStockPool> getTraceBackStockPool(String userName) {
+        return traceBackStockPoolDao.getTraceBackStockPool(userName);
     }
 
     @Override
@@ -43,15 +43,15 @@ public class TraceBackStockPoolServiceImpl implements TraceBackStockPoolService 
     /**
      * 添加单只回测股
      *
-     * @param traceBackStockID
+     * @param traceBackStockPool
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addTraceBackStock(TraceBackStockID traceBackStockID) {
-        return traceBackStockPoolDao.addTraceBackStock(traceBackStockID);
+    public boolean addTraceBackStock(TraceBackStockPool traceBackStockPool) {
+        return traceBackStockPoolDao.addTraceBackStock(traceBackStockPool);
     }
 
     /**
@@ -64,7 +64,7 @@ public class TraceBackStockPoolServiceImpl implements TraceBackStockPoolService 
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addTraceBackStockAll(List<TraceBackStockID> list) throws TraceBackStockExistedException {
+    public boolean addTraceBackStockAll(List<TraceBackStockPool> list) throws TraceBackStockExistedException {
         return traceBackStockPoolDao.addTraceBackStockAll(list);
     }
 
@@ -78,7 +78,7 @@ public class TraceBackStockPoolServiceImpl implements TraceBackStockPoolService 
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deleteTraceBackStock(TraceBackStockID traceBackStockID) {
+    public boolean deleteTraceBackStock(OptionalStockID traceBackStockID) {
         return traceBackStockPoolDao.deleteTraceBackStock(traceBackStockID);
     }
 
@@ -92,7 +92,7 @@ public class TraceBackStockPoolServiceImpl implements TraceBackStockPoolService 
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deleteTraceBackStockAll(List<TraceBackStockID> list) {
+    public boolean deleteTraceBackStockAll(List<OptionalStockID> list) {
         return traceBackStockPoolDao.deleteTraceBackStockAll(list);
     }
 }

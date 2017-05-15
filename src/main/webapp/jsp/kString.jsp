@@ -137,7 +137,7 @@
                style="margin-top: 15px;margin-left: -40px;" value="查看区间"/>
         </button>
     </div>
-
+    <div id = "candlestick_chart" style="width:100%;height:600px"></div>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

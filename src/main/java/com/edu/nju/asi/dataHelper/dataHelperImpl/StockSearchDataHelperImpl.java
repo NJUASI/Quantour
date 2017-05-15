@@ -78,7 +78,7 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
     public boolean addStockSearchAll(List<StockSearch> list) {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO stocksearch(code, firstLetters, name) VALUES(?,?,?)";
+        String sql = "INSERT INTO stocksearch(code, firstLetters, name, market) VALUES(?,?,?,?)";
         boolean result = true;
 
         try {
@@ -88,6 +88,7 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
                 preparedStatement.setString(1,stockSearch.getCode());
                 preparedStatement.setString(2,stockSearch.getFirstLetters());
                 preparedStatement.setString(3,stockSearch.getName());
+                preparedStatement.setInt(4,stockSearch.getMarket().getRepre());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();

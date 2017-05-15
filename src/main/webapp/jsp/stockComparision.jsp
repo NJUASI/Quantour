@@ -14,7 +14,7 @@
     <title>股票比较</title>
 </head>
 <body>
-
+<div id = "comparision_chart" style="width:100%;height:600px"></div>
 
 
 </body>

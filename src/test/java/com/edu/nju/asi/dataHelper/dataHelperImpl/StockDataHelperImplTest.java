@@ -37,12 +37,10 @@ public class StockDataHelperImplTest {
         assertEquals(3.23, stock.getLow(), 0);
         assertEquals(3.26, stock.getClose(), 0);
         assertEquals("60536", stock.getVolume());
-        assertEquals(1.58, stock.getAdjClose(), 0);
         assertEquals("000001", stock.getStockID().getCode());
         assertEquals("景兴纸业", stock.getName());
         assertEquals(Market.SZ, stock.getMarket());
-        assertEquals(3.29, stock.getPreClose(), 0);
-        assertEquals(1.6, stock.getPreAdjClose(), 0);
+        assertEquals(1.58, stock.getPreClose(), 0);
     }
 
     @Test
@@ -69,7 +67,9 @@ public class StockDataHelperImplTest {
         LocalDate localDate = LocalDate.of(1017,1,1);
         List<Stock> stocks = new ArrayList<>();
         for(int i=0;i<100;i++){
-            Stock stock = new Stock("景兴纸业", Market.SZ,3.29,3.31,3.23,3.26,"60536",1.58,3.29,1.6);
+            Stock stock = new Stock("景兴纸业", Market.SZ,3.29,3.31,3.23,3.26,"60536",
+                    "605366",1.58,3.29,1.6,0.23,
+                    "48976","4876589");
             stock.setStockID( new StockID(code,localDate));
             stocks.add(stock);
             code = addOne(code);

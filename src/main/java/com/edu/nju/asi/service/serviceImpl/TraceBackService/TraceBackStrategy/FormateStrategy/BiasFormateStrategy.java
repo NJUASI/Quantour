@@ -56,11 +56,11 @@ public class BiasFormateStrategy extends AllFormateStrategy {
             //计算数据的平均值
             double sum = 0;
             for (StrategyStock stock : temp) {
-                sum += stock.adjClose;
+                sum += stock.close;
             }
             double average = sum / temp.size();
 
-            double biasRatio = (average - thisStockData.get(neededMRStockIndex).adjClose) / average;
+            double biasRatio = (average - thisStockData.get(neededMRStockIndex).close) / average;
             result.add(new FormativePeriodRate(s, biasRatio));
         }
         return result;

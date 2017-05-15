@@ -20,9 +20,6 @@ public class StrategyStock {
     // 昨收
     public double preClose;
 
-    // 复权后的收盘指数
-    public double adjClose;
-
     // 交易量
     public double volume;
 
@@ -30,7 +27,6 @@ public class StrategyStock {
         this.date = stock.getStockID().getDate();
         this.close = stock.getClose();
         this.preClose = stock.getPreClose();
-        this.adjClose = stock.getAdjClose();
         this.volume = new Double(stock.getVolume());
     }
 
