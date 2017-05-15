@@ -8,9 +8,7 @@ import com.edu.nju.asi.dataHelper.UserDataHelper;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.StockCodeHelper;
-import com.edu.nju.asi.utilities.comparator.StockDateComparator;
 import com.edu.nju.asi.utilities.enums.BlockType;
-import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 import org.springframework.stereotype.Component;
@@ -112,7 +110,6 @@ public class StockDaoImpl implements StockDao {
     @Override
     public List<Stock> getStockData(String stockCode) throws IOException {
         List<Stock> result = stockDataHelper.getStockData(stockCode);
-        result.sort(new StockDateComparator());
         return result;
     }
 
