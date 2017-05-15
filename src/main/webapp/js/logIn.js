@@ -13,7 +13,7 @@ function login() {
     $.ajax({
         type: "post",
         async: true,
-        url: "/log_in",
+        url: "/req_log_in",
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(jsonData),
 
@@ -47,7 +47,7 @@ function register() {
     $.ajax({
         type: "post",
         async: true,
-        url: "/register",
+        url: "/req_register",
         data: {
             "userName":userName,
             "password": password1,

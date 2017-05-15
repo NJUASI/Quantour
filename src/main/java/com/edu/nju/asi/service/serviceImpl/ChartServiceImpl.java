@@ -1,7 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.StockCodeHelper;
@@ -165,13 +164,13 @@ public class ChartServiceImpl implements ChartService {
      * @auther cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/11
-     * @param stockComparsionCriteria 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
+     * @param stockComparisionCriteria 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
      * @return 界面上需要的两只股票的比较信息
      */
     @Override
-    public List<StockComparision> getComparision(StockComparsionCriteria stockComparsionCriteria) throws IOException, NoDataWithinException, DateNotWithinException, DataSourceFirstDayException {
-        List<Stock> stockList1 = stockDao.getStockData(stockComparsionCriteria.stockCode1, stockComparsionCriteria.start, stockComparsionCriteria.end);
-        List<Stock> stockList2 = stockDao.getStockData(stockComparsionCriteria.stockCode2, stockComparsionCriteria.start, stockComparsionCriteria.end);
+    public List<StockComparision> getComparision(StockComparisionCriteria stockComparisionCriteria) throws IOException, NoDataWithinException, DateNotWithinException, DataSourceFirstDayException {
+        List<Stock> stockList1 = stockDao.getStockData(stockComparisionCriteria.stockCode1, stockComparisionCriteria.start, stockComparisionCriteria.end);
+        List<Stock> stockList2 = stockDao.getStockData(stockComparisionCriteria.stockCode2, stockComparisionCriteria.start, stockComparisionCriteria.end);
 
         List<StockComparision> result = new LinkedList<>();
         result.add(new StockComparision(stockList1));

@@ -12,6 +12,6 @@ public class DuplicatedNameException extends Exception {
      */
     @Override
     public String getMessage() {
-        return "该用户名已存在";
+        return "该用户名已被注册！";
     }
 }

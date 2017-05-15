@@ -7,6 +7,6 @@ public class PasswordWrongException extends Exception {
 
     @Override
     public String getMessage() {
-        return "账号密码错误，请重新输入！";
+        return "密码错误！";
     }
 }

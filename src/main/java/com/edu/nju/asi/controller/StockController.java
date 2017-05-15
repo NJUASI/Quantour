@@ -1,21 +1,21 @@
 package com.edu.nju.asi.controller;
 
 import com.edu.nju.asi.infoCarrier.StockComparision;
-import com.edu.nju.asi.infoCarrier.StockComparsionCriteria;
+import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSituation;
 import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.StockSituationService;
 import com.edu.nju.asi.utilities.LocalDateHelper;
-import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.utilities.util.JsonConverter;
+import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoSituationDataException;
+import com.edu.nju.asi.utilities.tempHolder.StockComparisionCriteriaTempHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +41,7 @@ public class StockController {
 
 
     /**
+     * TODO 分离请求和查看
      * 指定日期（默认当日）股票市场查看（所有股票数据、市场温度计）
      */
     @GetMapping()
@@ -69,6 +70,7 @@ public class StockController {
     }
 
     /**
+     * TODO 分离请求和查看
      * 单只股票的股票详情
      */
     @GetMapping("/{id}")
@@ -91,12 +93,35 @@ public class StockController {
     }
 
     /**
-     * 比较两只股票
+     * 显示股票比较的信息
      */
-    @PostMapping("/compare")
-    public ModelAndView compare(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndView("index");
+    @GetMapping("/compare")
+    public ModelAndView compare(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return new ModelAndView("index");
+        }
 
+        List<StockComparision> result = (List<StockComparision>) session.getAttribute("compareResult");
+        session.setAttribute("compareResult", null);
+
+        if (result != null) {
+            ModelAndView mv = new ModelAndView("stockComparision");
+            mv.addObject("stockCompare1", result.get(0));
+            mv.addObject("stockCompare2", result.get(1));
+            return mv;
+        }
+
+        return new ModelAndView("index");
+    }
+
+
+    /**
+     * 【请求】比较两只股票
+     */
+    @PostMapping(value = "/req_compare", produces = "text/html;charset=UTF-8;application/json")
+    public @ResponseBody
+    String reqCompare(@RequestBody StockComparisionCriteriaTempHolder holder, HttpServletRequest request, HttpServletResponse response) {
         // 限制进入
         HttpSession session = request.getSession(false);
         if (session == null) {
@@ -104,38 +129,32 @@ public class StockController {
                 response.sendRedirect("/welcome");
             } catch (IOException e) {
                 e.printStackTrace();
-                return mv;
+                return "-1;不给看哈哈哈";
             }
-            return mv;
-        } else {
-            mv.setViewName("stockComparision");
-
-            String stockCode1 = request.getParameter("stockCode1");
-            String stockCode2 = request.getParameter("stockCode2");
-            LocalDate start = LocalDateHelper.convertString(request.getParameter("start"));
-            LocalDate end = LocalDateHelper.convertString(request.getParameter("end"));
-
-
-            try {
-                List<StockComparision> result = chartService.getComparision(new StockComparsionCriteria(stockCode1, stockCode2, start, end));
-                mv.addObject("compare1", result.get(0));
-                mv.addObject("compare2", result.get(1));
-
-                // TODO 加入当日信息显示
-
-
-
-                return mv;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (DataSourceFirstDayException e) {
-                e.printStackTrace();
-            } catch (DateNotWithinException e) {
-                e.printStackTrace();
-            } catch (NoDataWithinException e) {
-                e.printStackTrace();
-            }
+            return "-1;未知错误";
         }
-        return mv;
+
+        StockComparisionCriteria criteria = new StockComparisionCriteria(holder);
+        System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
+
+
+        List<StockComparision> result = null;
+        try {
+            result = chartService.getComparision(criteria);
+            session.setAttribute("compareResult", result);
+            // TODO 加入当日信息显示，与界面沟通
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-1;IO读取失败！";
+        } catch (DataSourceFirstDayException | DateNotWithinException | NoDataWithinException e) {
+            e.printStackTrace();
+            return "-1;" + e.getMessage();
+        }
+
+        if (result != null) {
+            System.out.println("Success");
+            return "1;比较成功";
+        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 }
