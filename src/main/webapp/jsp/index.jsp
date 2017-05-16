@@ -167,6 +167,7 @@
                             <input type="text" class="form-control" id="login_password" placeholder="请输入密码">
                         </div>
                     </div>
+                    <p class="col-md-offset-3" id="errorMessageField"></p>
                     <div class="checkbox text-right">
                         <label id="rem-password">
                             <input type="checkbox">记住密码
@@ -205,7 +206,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_password2">确认密码：</label>
+                        <label class="col-md-3 control-label" for="reg_password2" style="padding-left: 0">确认密码：</label>
                         <div class="col-md-7">
                             <input type="text" class="form-control" id="reg_password2" placeholder="请再次输入密码">
                         </div>
