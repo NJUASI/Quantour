@@ -85,10 +85,10 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(sql);
             for (StockSearch stockSearch : list){
-                preparedStatement.setString(1,stockSearch.getCode());
+                preparedStatement.setString(1,stockSearch.getSearchID().getCode());
                 preparedStatement.setString(2,stockSearch.getFirstLetters());
-                preparedStatement.setString(3,stockSearch.getName());
-                preparedStatement.setInt(4,stockSearch.getMarket().getRepre());
+                preparedStatement.setString(3,stockSearch.getSearchID().getName());
+                preparedStatement.setInt(4,stockSearch.getSearchID().getMarket().getRepre());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
@@ -111,7 +111,7 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql = "select stocksearch.code, stocksearch.name from StockSearch stocksearch";
+        String hql = "select stocksearch.searchID.code, stocksearch.searchID.name from StockSearch stocksearch";
         List list = session.createQuery(hql).list();
         transaction.commit();
         session.close();
