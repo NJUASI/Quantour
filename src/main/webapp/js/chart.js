@@ -513,7 +513,7 @@ function createAreaChart(id, areaData, title) {
     return areaChart;
 }
 
-function createHistogramChart(id, data1, data2, title) {
+function createHistogramChart(id, data,title) {
     function spliteHistogramData(rawData) {
         var categoryData = [];
         var values = [];
@@ -528,8 +528,8 @@ function createHistogramChart(id, data1, data2, title) {
         };
     }
 
-    var datas1 = spliteHistogramData(data1);
-    var datas2 = spliteHistogramData(data2);
+    var datas1 = spliteHistogramData(data[0]);
+    var datas2 = spliteHistogramData(data[1]);
     var histogramChart = echarts.init(document.getElementById(id));
 
     var option = {

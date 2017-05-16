@@ -27,8 +27,8 @@
 <script src = "../js/chart.js"></script>
 <script type = "text/javascript">
     var trace_back_chart = createTraceBackChart("trace_back_chart"${strategyData},${baseData},['策略','基准'],'1','1');
-    <%--var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart"${})--%>
-    <%--var relative_histogram_chart = createHistogramChart("relative_histogram_chart"${})--%>
+    var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart",${absoluteHistogramData});
+    var relative_histogram_chart = createHistogramChart("relative_histogram_chart",${relativeHistogramData});
     var formates_excess_chart = createAreaChart("formates_excess_chart",${certainFormatesExcessData},'胜率');
     var formates_win_chart = createAreaChart("formates_win_chart",${certainFormatesWinData},'赢率');
     var holdings_excess_chart = createAreaChart("holdings_excess_chart",${certainHoldingsExcessData},'胜率');
