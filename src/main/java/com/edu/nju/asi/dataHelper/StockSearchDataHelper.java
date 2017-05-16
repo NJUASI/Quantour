@@ -28,4 +28,9 @@ public interface StockSearchDataHelper {
      * 添加StockSearch列表
      */
     boolean addStockSearchAll(List<StockSearch> list);
+
+    /**
+     * 添加StockSearch列表
+     */
+    List<StockSearch> search(String info);
 }

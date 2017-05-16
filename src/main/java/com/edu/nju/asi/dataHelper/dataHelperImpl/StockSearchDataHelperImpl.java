@@ -1,11 +1,13 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
+import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -105,6 +107,26 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
             JDBCUtil.close(preparedStatement,connection);
         }
         return result;
+    }
+
+    /**
+     * 添加StockSearch列表
+     */
+    @Override
+    public List<StockSearch> search(String info) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "from StockSearch where searchID.code like :code or searchID.name like :name or " +
+                "firstLetters like :firstLetters";
+        Query query = session.createQuery(hql);
+        query.setParameter("code","%"+info+"%");
+        query.setParameter("name","%"+info+"%");
+        query.setParameter("firstLetters","%"+info+"%");
+        List<StockSearch> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 
     private List getCodeAndName(){

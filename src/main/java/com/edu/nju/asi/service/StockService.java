@@ -38,7 +38,7 @@ public interface StockService{
      * @param searchString 代码或股票首字母或股票名称
      * @return 符合条件的股票简要信息
      */
-    List<StockSearch> searchStock(String searchString) throws IOException;
+    List<StockSearch> searchStock(String searchString);
 
     /**
      * 根据基准股票名称，起始日期，结束日期，获得该基准股票在此期间的数据

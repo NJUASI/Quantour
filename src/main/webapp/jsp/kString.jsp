@@ -138,6 +138,7 @@
                style="margin-top: 15px;margin-left: -40px;" value="查看区间"/>
         </button>
     </div>
+    <div id = "candlestick_chart" style="width:100%;height:600px"></div>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -150,6 +151,8 @@
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../js/chart.js"></script>
+<script src="../js/echarts.min.js"></script>
 <script type="text/javascript">
 
     $("#stockDetail>li").addClass("col-md-3");
@@ -181,6 +184,7 @@
         $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
     });
 
+    var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});
 </script>
 </body>
 </html>

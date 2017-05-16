@@ -63,47 +63,9 @@ public class StockServiceImpl implements StockService {
      * @updateTime 2017/3/14
      */
     @Override
-    public List<StockSearch> searchStock(String searchString) throws IOException {
-
-        List<StockSearch> result = new ArrayList<>();
-
-        //通过匹配股票的代码来查询
-        if (searchString.matches("[0-9]+")) {
-            searchString = StockCodeHelper.simplify(searchString);
-            Map<String, String> codeAndName = stockDao.getAllStocksCode();
-            Set<String> codes = codeAndName.keySet();
-            for (String code : codes) {
-                if (code.contains(searchString)) {
-                    StockSearch ss = new StockSearch(new SearchID(StockCodeHelper.format(code), codeAndName.get(code)));
-                    result.add(ss);
-                }
-            }
-        }
-
-        //通过名称匹配股票
-        else {
-            Map<String, String> namesAndCode = stockDao.getAllStocksName();
-            Set<String> names = namesAndCode.keySet();
-            for (String name : names) {
-                if (name.contains(searchString)) {
-                    StockSearch ss = new StockSearch(new SearchID(StockCodeHelper.format(namesAndCode.get(name)), name));
-                    result.add(ss);
-                }
-            }
-        }
-
-        //通过匹配股票的首字母来查询
-        if (searchString.matches("[a-zA-Z]+")) {
-            List<StockSearch> firstLetters = stockDao.getAllStocksFirstLetters();
-            for (StockSearch tempSearch : firstLetters) {
-                if (tempSearch.getFirstLetters().contains(searchString)) {
-                    result.add(tempSearch);
-                }
-            }
-        }
-        return result;
+    public List<StockSearch> searchStock(String searchString){
+        return stockDao.searchStock(searchString);
     }
-
 
     /**
      * 根据基准股票名称，起始日期，结束日期，获得该基准股票在此期间的数据

@@ -10,6 +10,8 @@ import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import com.edu.nju.asi.utilities.tempHolder.TraceBackCriteriaTempHolder;
+import com.edu.nju.asi.utilities.util.JsonConverter;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,12 +61,23 @@ public class TraceBackController {
 
         if (traceBackInfo != null) {
             ModelAndView mv = new ModelAndView("traceBack");
-            // TODO 金玉在这里add进去要的数据
-            mv.addObject("traceBackInfo", traceBackInfo);
+            try {
+                mv.addObject("strategyData", JsonConverter.convertTraceBack(traceBackInfo.strategyCumulativeReturn));
+                mv.addObject("baseData",JsonConverter.convertTraceBack(traceBackInfo.baseCumulativeReturn));
+                mv.addObject("absoluteHistogramData",JsonConverter.convertHistogram(traceBackInfo.absoluteReturnPeriod));
+                mv.addObject("relativeHistogramData",JsonConverter.convertHistogram(traceBackInfo.relativeReturnPeriod));
+
+                List<String> formate= JsonConverter.convertExcessAndWin(traceBackInfo.certainFormates);
+                List<String> holdings = JsonConverter.convertExcessAndWin(traceBackInfo.certainHoldings);
+                mv.addObject("certainFormatesExcessData",formate.get(0));
+                mv.addObject("certainFormatesWinData",formate.get(1));
+                mv.addObject("certainHoldingsExcessData",holdings.get(0));
+                mv.addObject("certainHoldingsWinData",holdings.get(1));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
             return mv;
         }
-
-
         return new ModelAndView("index");
     }
 

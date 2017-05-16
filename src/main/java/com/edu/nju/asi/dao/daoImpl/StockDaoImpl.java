@@ -128,6 +128,20 @@ public class StockDaoImpl implements StockDao {
         return stockDataHelper.getStockData(date);
     }
 
+    /**
+     * 用户输入代码或者股票首字母或股票名称，查找符合条件的股票
+     *
+     * @param searchString 代码或股票首字母或股票名称
+     * @return 符合条件的股票简要信息
+     * @auther Harvey
+     * @lastUpdatedBy Harvey
+     * @updateTime 2017/3/14
+     */
+    @Override
+    public List<StockSearch> searchStock(String searchString) {
+        return stockSearchDataHelper.search(searchString);
+    }
+
 
 
     /*
