@@ -142,6 +142,7 @@ public class StocksDownloadProcessor implements PageProcessor {
             //添加开始日期一直到今天的下载链接
             page.putField("url","http://quotes.money.163.com/service/chddata.html?code="+prefix+code+"&start="+start+"&end="+end+"&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP");
             page.putField("code",code);
+            page.putField("isNormal",true);
         }
     }
 
@@ -150,22 +151,4 @@ public class StocksDownloadProcessor implements PageProcessor {
         return site;
     }
 
-    public static void main(String[] args) {
-
-        Request request = new Request();
-//        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
-        request.setUrl("http://quotes.money.163.com/trade/lsjysj_000001.html");
-//        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=142&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
-        request.setMethod(HttpConstant.Method.GET);
-
-        Spider.create(new StocksDownloadProcessor())
-                .addRequest(request)
-                //可以有多个pipeline
-                .addPipeline(new ConsolePipeline())
-                .addPipeline(new StocksDownloadPipeline())
-                //开启1个线程抓取
-                .thread(1)
-                //启动爬虫
-                .run();
-    }
 }

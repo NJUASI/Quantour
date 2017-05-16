@@ -1,6 +1,7 @@
 package com.edu.nju.asi.model;
 
 
+import com.edu.nju.asi.spider.Model.NormalStock;
 import com.edu.nju.asi.utilities.enums.Market;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -108,6 +109,24 @@ public class Stock implements Serializable {
         this.turnoverRate = turnoverRate;
         this.totalValue = totalValue;
         this.circulationMarketValue = circulationMarketValue;
+    }
+
+    public Stock(NormalStock normalStock) {
+        this.name = normalStock.getName();
+        //这里默认给深圳
+        this.market = Market.SZ;
+        this.open = normalStock.getOpen();
+        this.high = normalStock.getHigh();
+        this.low = normalStock.getLow();
+        this.close = normalStock.getClose();
+        this.volume = normalStock.getVolume().toString();
+        this.transactionAmount = normalStock.getAmount().toString();
+        this.preClose = normalStock.getPreClose();
+        this.increaseMargin = normalStock.getChangeRate();
+        this.fluctuation = normalStock.getFluctuation();
+        this.turnoverRate = normalStock.getTurnOverRate();
+        this.totalValue = normalStock.getMarketCap().toString();
+        this.circulationMarketValue = normalStock.getMarketEquity().toString();
     }
 
     public StockID getStockID() {

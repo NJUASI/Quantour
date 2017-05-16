@@ -177,7 +177,7 @@
 
                         <label>收益基准：</label>
 
-                        <select id="baseStock" name="baseStock" class="selectpicker show-tick form-control">
+                        <select id="baseStockEve" name="baseStockEve" class="selectpicker show-tick form-control">
                             <option value="沪深300" selected>沪深300</option>
                             <option value="创业板指">创业板指</option>
                             <option value="中小板指">中小板指</option>

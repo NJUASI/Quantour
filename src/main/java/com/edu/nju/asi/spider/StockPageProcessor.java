@@ -1,15 +1,10 @@
 package com.edu.nju.asi.spider;
 
-import com.edu.nju.asi.spider.Model.BaseStock;
 import com.edu.nju.asi.spider.Model.NormalStock;
 import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
-import us.codecraft.webmagic.utils.HttpConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,21 +209,5 @@ public class StockPageProcessor implements PageProcessor {
     @Override
     public Site getSite() {
         return site;
-    }
-
-    public static void main(String[] args) {
-        Request request = new Request();
-        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
-        request.setMethod(HttpConstant.Method.GET);
-
-        Spider.create(new StockPageProcessor())
-                //从“http://quotes.money.163.com/old/#query=todayRank"开始抓
-                .addRequest(request)
-                //可以有多个pipeline
-                .addPipeline(new ConsolePipeline())
-                //开启1个线程抓取
-                .thread(1)
-                //启动爬虫
-                .run();
     }
 }

@@ -43,6 +43,11 @@ public class NormalStock {
     String code;
 
     /**
+     * 名称
+     */
+    String name;
+
+    /**
      * 日期
      */
     LocalDate date;
@@ -180,7 +185,7 @@ public class NormalStock {
         this.changeRate = changeRate;
     }
 
-    public double getVolume() {
+    public Double getVolume() {
         return volume;
     }
 
@@ -188,7 +193,7 @@ public class NormalStock {
         this.volume = volume;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
@@ -204,7 +209,7 @@ public class NormalStock {
         this.turnOverRate = turnOverRate;
     }
 
-    public double getMarketCap() {
+    public Double getMarketCap() {
         return marketCap;
     }
 
@@ -212,7 +217,7 @@ public class NormalStock {
         this.marketCap = marketCap;
     }
 
-    public double getMarketEquity() {
+    public Double getMarketEquity() {
         return marketEquity;
     }
 
@@ -245,21 +250,11 @@ public class NormalStock {
     }
 
     public void setFluctuation(String fluctuation) {
-        if (fluctuation.equals("None")){
-            this.fluctuation = null;
-        }
-        else {
-            this.fluctuation = Double.parseDouble(fluctuation);
-        }
+        this.fluctuation = Double.parseDouble(fluctuation);
     }
 
     public void setChangeRate(String changeRate) {
-        if (changeRate.equals("None")){
-            this.changeRate = null;
-        }
-        else {
-            this.changeRate = Double.parseDouble(changeRate);
-        }
+        this.changeRate = Double.parseDouble(changeRate);
     }
 
     public void setVolume(String volume) {
@@ -280,5 +275,13 @@ public class NormalStock {
 
     public void setMarketEquity(String marketEquity) {
         this.marketEquity = Double.parseDouble(marketEquity);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

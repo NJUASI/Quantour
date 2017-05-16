@@ -1,6 +1,7 @@
 package com.edu.nju.asi.model;
 
 import com.edu.nju.asi.utilities.enums.Market;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -36,7 +37,7 @@ public class StockSearch implements Serializable {
     private Market market;
 
     public StockSearch() {
-
+        //TODO gcm
     }
 
     // TODO  股票搜索Model与逻辑之间有点问题，确认之后再改

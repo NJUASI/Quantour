@@ -1,5 +1,6 @@
 package com.edu.nju.asi.model;
 
+import com.edu.nju.asi.spider.Model.BaseStockEve;
 import com.edu.nju.asi.utilities.enums.Market;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -82,6 +83,21 @@ public class BaseStock implements Serializable{
         this.preClose = preClose;
         this.increaseMargin = increaseMargin;
         this.fluctuation = fluctuation;
+    }
+
+    public BaseStock(BaseStockEve baseStockEve) {
+        this.name = baseStockEve.getName();
+        //这里默认给SZ
+        this.market = Market.SZ;
+        this.open = baseStockEve.getOpen();
+        this.high = baseStockEve.getHigh();
+        this.low = baseStockEve.getLow();
+        this.close = baseStockEve.getClose();
+        this.volume = baseStockEve.getVolume().toString();
+        this.transactionAmount = baseStockEve.getAmount().toString();
+        this.preClose = baseStockEve.getPreClose();
+        this.increaseMargin = baseStockEve.getChangeRate();
+        this.fluctuation = baseStockEve.getFluctuation();
     }
 
     public StockID getStockID() {

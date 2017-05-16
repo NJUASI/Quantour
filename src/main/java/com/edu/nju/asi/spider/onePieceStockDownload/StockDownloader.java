@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class StockDownloader {
 
-    //下载三只基准股票
-    public void downLoadBaseStock(String savePath, LocalDate today){
+    //下载三只基准股票全部的数据
+    public void downLoadBaseStock(String savePath, LocalDate startDay, LocalDate today){
         DownloadDataHelper dataHelper = new DownloadDataHelper();
 
         List<String> baseCodes = new ArrayList<>();
@@ -32,7 +32,7 @@ public class StockDownloader {
         String prefix = "http://quotes.money.163.com/service/chddata.html?";
         String suffix = "&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER";
 
-        String start = today.format(formatter);
+        String start = startDay.format(formatter);
         String end = today.format(formatter);
 
         boolean isSuccess = false;

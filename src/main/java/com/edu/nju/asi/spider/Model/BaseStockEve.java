@@ -5,9 +5,9 @@ import java.time.LocalDate;
 /**
  * Created by Harvey on 2017/5/15.
  */
-public class BaseStock {
+public class BaseStockEve {
 
-    public BaseStock() {
+    public BaseStockEve() {
 
     }
 
@@ -15,6 +15,11 @@ public class BaseStock {
      * 代码
      */
     String code;
+
+    /**
+     * 名称
+     */
+    String name;
 
     /**
      * 日期
@@ -139,7 +144,7 @@ public class BaseStock {
         this.changeRate = changeRate;
     }
 
-    public double getVolume() {
+    public Double getVolume() {
         return volume;
     }
 
@@ -147,7 +152,7 @@ public class BaseStock {
         this.volume = volume;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
@@ -180,21 +185,11 @@ public class BaseStock {
     }
 
     public void setFluctuation(String fluctuation) {
-        if (fluctuation.equals("None")){
-            this.fluctuation = null;
-        }
-        else {
-            this.fluctuation = Double.parseDouble(fluctuation);
-        }
+        this.fluctuation = Double.parseDouble(fluctuation);
     }
 
     public void setChangeRate(String changeRate) {
-        if (changeRate.equals("None")){
-            this.changeRate = null;
-        }
-        else {
-            this.changeRate = Double.parseDouble(changeRate);
-        }
+        this.changeRate = Double.parseDouble(changeRate);
     }
 
     public void setVolume(String volume) {
@@ -203,5 +198,13 @@ public class BaseStock {
 
     public void setAmount(String amount) {
         this.amount = Double.parseDouble(amount);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

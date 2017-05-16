@@ -1,6 +1,5 @@
 package com.edu.nju.asi.spider;
 
-import com.edu.nju.asi.spider.Model.BaseStock;
 import com.edu.nju.asi.spider.Model.Code_Name;
 import com.edu.nju.asi.spider.Model.NormalStock;
 import com.edu.nju.asi.spider.onePieceStockDownload.Code_NamePipeline;
