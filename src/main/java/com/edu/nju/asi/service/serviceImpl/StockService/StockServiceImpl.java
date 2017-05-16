@@ -2,6 +2,7 @@ package com.edu.nju.asi.service.serviceImpl.StockService;
 
 import com.edu.nju.asi.dao.StockDao;
 import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
+import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.service.StockService;
@@ -73,7 +74,7 @@ public class StockServiceImpl implements StockService {
             Set<String> codes = codeAndName.keySet();
             for (String code : codes) {
                 if (code.contains(searchString)) {
-                    StockSearch ss = new StockSearch(StockCodeHelper.format(code), codeAndName.get(code));
+                    StockSearch ss = new StockSearch(new SearchID(StockCodeHelper.format(code), codeAndName.get(code)));
                     result.add(ss);
                 }
             }
@@ -85,7 +86,7 @@ public class StockServiceImpl implements StockService {
             Set<String> names = namesAndCode.keySet();
             for (String name : names) {
                 if (name.contains(searchString)) {
-                    StockSearch ss = new StockSearch(StockCodeHelper.format(namesAndCode.get(name)), name);
+                    StockSearch ss = new StockSearch(new SearchID(StockCodeHelper.format(namesAndCode.get(name)), name));
                     result.add(ss);
                 }
             }

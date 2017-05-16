@@ -20,60 +20,32 @@ public class StockSearch implements Serializable {
     @Id
     @GenericGenerator(name="myGenerator",strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
-    @Column(name = "code",length = 100)
-    private String code;
-
-    // 股票名称
-    @Basic
-    @Column(length = 100)
-    private String name;
+    private SearchID searchID;
 
     // 汉字拼音首字母
     @Basic
     @Column(length = 100)
     private String firstLetters;
 
-    @Basic
-    private Market market;
-
     public StockSearch() {
         //TODO gcm
     }
 
-    // TODO  股票搜索Model与逻辑之间有点问题，确认之后再改
-    public StockSearch(String code, String name, String firstLetters) {
-        this.code = code;
-        this.name = name;
+    public StockSearch(SearchID searchID) {
+        this.searchID = searchID;
+    }
+
+    public StockSearch(SearchID searchID,String firstLetters) {
+        this.searchID = searchID;
         this.firstLetters = firstLetters;
     }
 
-    public StockSearch(String code, String name, String firstLetters,Market market) {
-        this.code = code;
-        this.name = name;
-        this.firstLetters = firstLetters;
-        this.market = market;
+    public SearchID getSearchID() {
+        return searchID;
     }
 
-
-    public StockSearch(String code, String name) {
-        this.code = code;
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setSearchID(SearchID searchID) {
+        this.searchID = searchID;
     }
 
     public String getFirstLetters() {
@@ -82,13 +54,5 @@ public class StockSearch implements Serializable {
 
     public void setFirstLetters(String firstLetters) {
         this.firstLetters = firstLetters;
-    }
-
-    public Market getMarket() {
-        return market;
-    }
-
-    public void setMarket(Market market) {
-        this.market = market;
     }
 }
