@@ -9,13 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="../css/reset.css" rel="stylesheet">
 
     <style rel="stylesheet" type="text/css">
 
@@ -23,11 +17,28 @@
             background-color: #f9f9f9;
         }
 
+        footer {
+            width: 100%;
+            height: 100px;
+            background-color: #444444;
+            /*margin-top: 70px;*/
+        }
+
         header {
             width: 100%;
             height: 500px;
-            background-color: #444444;
+            background-image: url("../img/banner.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
             overflow: hidden;
+            filter: blur(5px);
+        }
+
+        .navbar {
+            position: absolute;
+            top: 10px;
+            left: 70px;
+            text-align: center;
         }
 
         .nav-wrapper {
@@ -35,12 +46,16 @@
             border-color: transparent;
         }
 
+        .navbar-header {
+            padding-left: 5%;
+        }
+
         .nav-wrapper .container {
             margin-top: 20px;
         }
 
         .media-list {
-            margin: 0px 100px;
+            margin: 0px 10%;
         }
 
         .media {
@@ -80,21 +95,106 @@
             padding-left: 50px;
         }
 
+        .media-list li a {
+            cursor: default;
+        }
+
+        .features {
+            margin: 0;
+        }
+
+        .feature-wrapper-odd ,.feature-wrapper-mean{
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
+        .feature-wrapper-odd {
+            background-color: #F1F4F9;
+        }
+
+        .feature-wrapper-mean {
+            background-color: #FFFFFF;
+        }
+
+        .media {
+            padding-bottom: 5%;
+            padding-top: 5%;
+        }
+
+        .desc {
+            padding-left: 7%;
+            padding-top: 4%;
+        }
+
+        .detail {
+            opacity: 0;
+        }
+
+        .detail {
+            opacity: 0;
+            transform: translateX(50%);
+            transition: all .6s ease-out;
+        }
+
+        .media:hover .detail {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all ease-out .6s .4s;
+        }
+
+        .desc {
+            transformY(0);
+            transition: all ease .6s;
+        }
+
+        .media:hover .desc {
+            transform: translateY(-10%);
+            transition: all .6s ease;
+        }
+
+        .detail li {
+            color: #999;
+            line-height: 24px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .navbar li a{
+            margin-left: 15px;
+            margin-right: 15px;;
+            padding-left: 8px;
+            padding-right: 8px;
+            transition: all .2s;
+        }
+
+        .navbar li a.act {
+            border-bottom: 2px solid #fff;
+            padding-bottom: 6px;
+            opacity: 1;
+        }
+
+        .navbar li a:hover {
+            border-bottom: 2px solid #fff;
+            padding-bottom: 6px;
+            opacity: 1;
+        }
+
     </style>
 
 </head>
 <body>
-<header>
+<div>
+    <header>
+    </header>
     <nav class="navbar navbar-default nav-wrapper">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
-                    <!-- TODO -->
                     <img alt="Brand" src="">
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">首页</a></li>
+                <li><a href="#" class="act">首页</a></li>
                 <li><a href="/stocks">大盘详情</a></li>
                 <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
@@ -103,49 +203,56 @@
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
-</header>
+</div>
 <div class="content">
     <div class="container-fluid">
-        <ul class="media-list">
+        <ul class="media-list features">
             <li class="media feature-wrapper-odd">
                 <a class="media-left">
                 <img class="media-object" src="../img/img01.png" alt="媒体对象">
                 </a>
-                <div class="media-body">
+                <div class="media-body desc">
                     <h4 class="media-heading">媒体标题</h4>
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
+                    <p>高质量的海量金融数据支撑，轻松实现大数据时代的交易策略</p>
+                    <div class="detail">
+                        <ul>
+                            <li> 依托通联数据团队，免费提供股票、基金、债券、研报、宏观、资讯、社交、电商等全量数据；</li>
+                            <li> 专业团队负责数据的收集、清洗、加工及存储，来源权威，数据精准可靠，并定期推出特色数据；</li>
+                            <li> 通过api接口可直接在平台调用，免费提供给优矿用户使用；</li>
+                        </ul>
+                    </div>
                 </div>
             </li>
             <li class="media feature-wrapper-mean">
-                <a class="pull-right" href="#">
-                    <img class="media-object" src="../img/img02.png"
-                         alt="媒体对象">
+                <a class="media-right pull-right">
+                <img class="media-object" src="../img/img01.png" alt="媒体对象">
                 </a>
-                <div class="media-body">
+                <div class="media-body desc">
                     <h4 class="media-heading">媒体标题</h4>
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
+                    <p>高质量的海量金融数据支撑，轻松实现大数据时代的交易策略</p>
+                    <div class="detail">
+                        <ul>
+                            <li> 依托通联数据团队，免费提供股票、基金、债券、研报、宏观、资讯、社交、电商等全量数据；</li>
+                            <li> 专业团队负责数据的收集、清洗、加工及存储，来源权威，数据精准可靠，并定期推出特色数据；</li>
+                            <li> 通过api接口可直接在平台调用，免费提供给优矿用户使用；</li>
+                        </ul>
+                    </div>
                 </div>
             </li>
             <li class="media feature-wrapper-odd">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="../img/img03.png"
-                         alt="媒体对象">
+                <a class="media-left">
+                    <img class="media-object" src="../img/img01.png" alt="媒体对象">
                 </a>
-                <div class="media-body">
+                <div class="media-body desc">
                     <h4 class="media-heading">媒体标题</h4>
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
+                    <p>高质量的海量金融数据支撑，轻松实现大数据时代的交易策略</p>
+                    <div class="detail">
+                        <ul>
+                            <li> 依托通联数据团队，免费提供股票、基金、债券、研报、宏观、资讯、社交、电商等全量数据；</li>
+                            <li> 专业团队负责数据的收集、清洗、加工及存储，来源权威，数据精准可靠，并定期推出特色数据；</li>
+                            <li> 通过api接口可直接在平台调用，免费提供给优矿用户使用；</li>
+                        </ul>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -232,12 +339,10 @@
     </div><!-- /.modal -->
 </div>
 
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 <script src="../js/logIn.js"></script>
-
 </body>
 </html>
