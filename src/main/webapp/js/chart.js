@@ -225,6 +225,7 @@ function createCandlestickChart(id, candlestickData, volumes) {
         ]
     };
     chart.setOption(option, true);
+    chart.hideLoading();
     return chart;
 }
 
@@ -398,13 +399,6 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
             {
                 name: '策略',
                 type: 'line',
-                // markPoint: {
-                //     data: [{
-                //         name: '最大值',
-                //         type: 'max',
-                //         valueIndex: 3
-                //     }]
-                // },
                 data: strategy.values,
                 smooth: true
             },
@@ -416,44 +410,8 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
             }
         ]
     };
-    var option1 = {
-        tooltip: {
-            trigger: 'axis'
-        },
-        toolbox: {
-            show: true
-        },
-        xAxis:  {
-            type: 'category',
-            boundaryGap: true,
-            data: strategy.categoryData
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value}%'
-            }
-        },
-        series: [
-            {
-                name:'策略',
-                type:'line',
-                smooth: true,
-                showSymbol: false,
-                symbol: false,
-                markPoint: {
-                    data: [{
-                        name: '最大值',
-                        type: 'max',
-                        valueIndex: 1
-                    }]
-                },
-                data: strategy.values
-            }
-        ]
-    };
 
-    traceBackChart.setOption(option1, true);
+    traceBackChart.setOption(option, true);
     traceBackChart.hideLoading();
     return traceBackChart;
 }
@@ -564,7 +522,7 @@ function createAreaChart(id, areaData, title) {
     return areaChart;
 }
 
-function createHistogramChart(id, data,title) {
+function createHistogramChart(id, data, title) {
     function spliteHistogramData(rawData) {
         var categoryData = [];
         var values = [];
@@ -585,17 +543,17 @@ function createHistogramChart(id, data,title) {
     histogramChart.showLoading();
 
     var option = {
-        title:{
+        title: {
             text: title
         },
-        tooltip : {
+        tooltip: {
             trigger: 'axis',
-            axisPointer : {
-                type : 'shadow'
+            axisPointer: {
+                type: 'shadow'
             }
         },
         legend: {
-            data: ['正收益周期数','负收益周期数']
+            data: ['正收益周期数', '负收益周期数']
         },
         xAxis: {
             type: 'category',

@@ -45,12 +45,11 @@ public class JsonConverter {
      * @return String 转换后的json
      */
     public static String convertCandlestick(List<Stock> stocks) throws JsonProcessingException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
         List<List<String>> result = new ArrayList<>();
 
         for(Stock stock : stocks){
             List<String> temp = new ArrayList<>();
-            temp.add(dateFormat.format(stock.getStockID().getDate().toString()));
+            temp.add(stock.getStockID().getDate().toString());
             temp.add(String.valueOf(stock.getOpen()));
             temp.add(String.valueOf(stock.getClose()));
             temp.add(String.valueOf(stock.getLow()));
@@ -71,12 +70,11 @@ public class JsonConverter {
      * @return String 转换后的json
      */
     public static String convertVolume(List<Stock> stocks) throws JsonProcessingException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
         List<List<String>> result = new ArrayList<>();
 
         for(Stock stock : stocks){
             List<String> temp = new ArrayList<>();
-            temp.add(dateFormat.format(stock.getStockID().getDate().toString()));
+            temp.add(stock.getStockID().getDate().toString());
             temp.add(stock.getVolume());
             result.add(temp);
         }
@@ -94,12 +92,11 @@ public class JsonConverter {
      * @return String 转换后的json
      */
     public static String convertTraceBack(List<CumulativeReturn> list) throws JsonProcessingException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
         List<List<String>> result = new ArrayList<>();
 
         for(CumulativeReturn cumulativeReturn : list){
             List<String> temp =  new ArrayList<>();
-            temp.add(dateFormat.format(cumulativeReturn.currentDate.toString()));
+            temp.add(cumulativeReturn.currentDate.toString());
             temp.add(String.valueOf(cumulativeReturn.cumulativeReturn));
             result.add(temp);
         }
@@ -185,12 +182,11 @@ public class JsonConverter {
      * @return String 转换后的json
      */
     public static String convertComparision(Map<LocalDate,Double> map) throws JsonProcessingException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
         List<List<String>> result = new ArrayList<>();
 
         for(LocalDate localDate : map.keySet()){
             List<String> temp = new ArrayList<>();
-            temp.add(dateFormat.format(localDate.toString()));
+            temp.add(localDate.toString());
             temp.add(String.valueOf(map.get(localDate)));
             result.add(temp);
         }
