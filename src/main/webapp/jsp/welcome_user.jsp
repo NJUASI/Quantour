@@ -24,8 +24,8 @@
             <c:forEach items="${ps_list}" var="stock" varStatus="vs">
                 <div>
                         <%-- 列表显示所有自选股当日股票信息 --%>
-                    <a>${stock.stockID.code} + " " + ${stock.stockID.date} + " " + ${stock.name} + " " + ${stock.open} + " " +
-                            ${stock.close} + " " + ${stock.high} + " " + ${stock.low} + " " + ${stock.volume}</a>
+                    <p>${stock.stockID.code} + " " + ${stock.stockID.date} + " " + ${stock.name} + " " + ${stock.open} + " " +
+                            ${stock.close} + " " + ${stock.high} + " " + ${stock.low} + " " + ${stock.volume}</p>
                 </div>
             </c:forEach>
         </c:when>

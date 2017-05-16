@@ -29,6 +29,12 @@ public class LogInController {
     @Autowired
     UserService userService;
 
+    @GetMapping
+    public String home(){
+        return "index";
+    }
+
+
     /**
      * 普通用户登录初始界面，需展示用户基本信息和用户自选股列表
      */
