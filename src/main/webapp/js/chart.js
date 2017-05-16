@@ -543,35 +543,42 @@ function createHistogramChart(id, data, title) {
     histogramChart.showLoading();
 
     var option = {
-        title: {
+        title:{
             text: title
         },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'shadow'
+                type: 'cross'
+            },
+            backgroundColor: 'rgba(245, 245, 245, 0.8)',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            textStyle: {
+                color: '#000'
             }
         },
         legend: {
-            data: ['正收益周期数', '负收益周期数']
+            data:['正收益周期数', '负收益周期数']
         },
-        xAxis: {
-            type: 'category',
-            data: datas1.categoryData,
-            scale: true,
-            axisLine: {onZero: true}
-        },
-        yAxis: {
-            scale: true,
-            axisLabel: {
-                // formatter: '{value}万'
+        xAxis: [
+            {
+                type: 'category',
+                data: datas1.categoryData,
+                scale: true,
+                axisPointer: {
+                    type: 'shadow'
+                }
             }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            containLabel: true
-        },
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                scale: true,
+                name: '周期数',
+            }
+        ],
         dataZoom: [
             {
                 type: 'inside',
@@ -588,16 +595,14 @@ function createHistogramChart(id, data, title) {
         ],
         series: [
             {
-                name: '正收益周期',
-                type: 'bar',
-                stack: '收益周期',
-                data: datas1.values
+                name:'正收益周期数',
+                type:'bar',
+                data:datas1.values
             },
             {
-                name: '负收益周期',
-                type: 'bar',
-                stack: '收益周期',
-                data: datas2.values
+                name:'负收益周期数',
+                type:'bar',
+                data:datas2.values
             }
         ]
     };
