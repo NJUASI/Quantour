@@ -5,10 +5,6 @@ import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.TraceBackStockPoolService;
-import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
-import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
-import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
-import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import com.edu.nju.asi.utilities.tempHolder.TraceBackCriteriaTempHolder;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,19 +56,28 @@ public class TraceBackController {
         session.setAttribute("traceBackResult", null);
 
         if (traceBackInfo != null) {
-            ModelAndView mv = new ModelAndView("traceBack");
-            try {
-                mv.addObject("strategyData", JsonConverter.convertTraceBack(traceBackInfo.strategyCumulativeReturn));
-                mv.addObject("baseData",JsonConverter.convertTraceBack(traceBackInfo.baseCumulativeReturn));
-                mv.addObject("absoluteHistogramData",JsonConverter.convertHistogram(traceBackInfo.absoluteReturnPeriod));
-                mv.addObject("relativeHistogramData",JsonConverter.convertHistogram(traceBackInfo.relativeReturnPeriod));
+            ModelAndView mv = new ModelAndView("traceBackHome");
+            mv.addObject("traceBackNums", traceBackInfo.traceBackNumVal);
+            mv.addObject("maxTraceBack", traceBackInfo.maxTraceBack);
+            mv.addObject("abReturnPeriod", traceBackInfo.absoluteReturnPeriod);
+            mv.addObject("reReturnPeriod", traceBackInfo.relativeReturnPeriod);
+            mv.addObject("holdingDetails", traceBackInfo.holdingDetails);
+            mv.addObject("certainFormates", traceBackInfo.certainFormates);
+            mv.addObject("certainHoldings", traceBackInfo.certainHoldings);
 
-                List<String> formate= JsonConverter.convertExcessAndWin(traceBackInfo.certainFormates);
+            // 加入画图所需的信息
+            try {
+                mv.addObject("json_strategyData", JsonConverter.convertTraceBack(traceBackInfo.strategyCumulativeReturn));
+                mv.addObject("json_baseData", JsonConverter.convertTraceBack(traceBackInfo.baseCumulativeReturn));
+                mv.addObject("json_absoluteHistogramData", JsonConverter.convertHistogram(traceBackInfo.absoluteReturnPeriod));
+                mv.addObject("json_relativeHistogramData", JsonConverter.convertHistogram(traceBackInfo.relativeReturnPeriod));
+
+                List<String> formate = JsonConverter.convertExcessAndWin(traceBackInfo.certainFormates);
                 List<String> holdings = JsonConverter.convertExcessAndWin(traceBackInfo.certainHoldings);
-                mv.addObject("certainFormatesExcessData",formate.get(0));
-                mv.addObject("certainFormatesWinData",formate.get(1));
-                mv.addObject("certainHoldingsExcessData",holdings.get(0));
-                mv.addObject("certainHoldingsWinData",holdings.get(1));
+                mv.addObject("json_certainFormatesExcessData", formate.get(0));
+                mv.addObject("json_certainFormatesWinData", formate.get(1));
+                mv.addObject("json_certainHoldingsExcessData", holdings.get(0));
+                mv.addObject("json_certainHoldingsWinData", holdings.get(1));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -108,13 +113,13 @@ public class TraceBackController {
         TraceBackCriteria criteria = new TraceBackCriteria(criteriaTempHolder);
         List<String> stockPool = stockPoolService.getTraceBackStockPoolCodes(thisUser.getUserName());
 
-        System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.formateAndPickCriteria.rank + "  "+ criteria.holdingPeriod);
+        System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.formateAndPickCriteria.rank + "  " + criteria.holdingPeriod);
 
 
         TraceBackInfo traceBackInfo = null;
 //        try {
 //            traceBackInfo = traceBackService.traceBack(criteria, stockPool);
-            session.setAttribute("traceBackResult", traceBackInfo);
+        session.setAttribute("traceBackResult", traceBackInfo);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //            return "-1;IO读取失败！";
@@ -125,7 +130,7 @@ public class TraceBackController {
 
 //        if (traceBackInfo != null) {
 //            System.out.println("Success");
-            return "1;回测成功";
+        return "1;回测成功";
 //        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 

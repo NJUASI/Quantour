@@ -61,9 +61,9 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">大盘详情</a></li>
-                <li><a href="#" style="color: #4cae4c">量化社区</a></li>
+                <li><a href="/">首页</a></li>
+                <li><a href="/stocks">大盘详情</a></li>
+                <li><a href="/trace_back_home" style="color: #4cae4c">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <li><a href="#">用户</a></li>
             </ul>
@@ -283,12 +283,13 @@
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
         <li><a href="#circlePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
         <li><a href="#detailPanel" role="tab" data-toggle="tab">交易详情</a></li>
-        <li><a href="#winRatePanel" role="tab" data-toggle="tab">相对赢率分布</a></li>
+        <li><a href="#winRatePanel" role="tab" data-toggle="tab">赢率分布</a></li>
         <li><a href="#absoluteRatePanel" role="tab" data-toggle="tab">绝对赢率分布</a></li>
     </ul>
 </div>
 <!-- 选项卡面板 -->
 <div id="myTabContent" class="col-md-10 col-lg-offset-1 tab-content">
+
 
     <div class="tab-pane active" id="chartPanel">
         <div class="col-md-12 table-responsive">
@@ -343,12 +344,10 @@
             <div id="main" class="col-md-12" style="height:500px"></div>
         </div>
     </div>
+    <div class="tab-pane" id="circlePanel">
+</div>
 
-
-    <div class="tab-pane row" id="circlePanel">
-
-    </div>
-    <div class="tab-pane" id="detailPanel">论坛内容面板</div>
+<div class="tab-pane" id="detailPanel">论坛内容面板</div>
     <div class="tab-pane" id="winRatePanel">
 
         <div class="row">
@@ -434,6 +433,30 @@
 
 </div>
 </div>
+
+
+
+
+<div id = "trace_back_chart" style="width:100%;height:600px"></div>
+<div id = "absolute_histogram_chart" style="width:100%;height:600px"></div>
+<div id = "relative_histogram_chart" style="width:100%;height:600px"></div>
+<div id = "formates_excess_chart" style="width:100%;height:600px"></div>
+<div id = "formates_win_chart" style="width:100%;height:600px"></div>
+<div id = "holdings_excess_chart" style="width:100%;height:600px"></div>
+<div id = "holdings_win_chart" style="width:100%;height:600px"></div>
+<h1>欢迎开始回测</h1>
+
+<script src = "../js/echarts.min.js"></script>
+<script src = "../js/chart.js"></script>
+<script type = "text/javascript">
+    var trace_back_chart = createTraceBackChart("trace_back_chart"${json_strategyData},${json_baseData},['策略','基准'],'1','1');
+    var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart",${json_absoluteHistogramData}, "绝对收益直方图");
+    var relative_histogram_chart = createHistogramChart("relative_histogram_chart",${json_relativeHistogramData}, "相对收益直方图");
+    var formates_excess_chart = createAreaChart("formates_excess_chart",${json_certainFormatesExcessData},'胜率');
+    var formates_win_chart = createAreaChart("formates_win_chart",${json_certainFormatesWinData},'赢率');
+    var holdings_excess_chart = createAreaChart("holdings_excess_chart",${json_certainHoldingsExcessData},'胜率');
+    var holdings_win_chart = createAreaChart("holdings_win_chart",${json_certainHoldingsWinData},'赢率');
+</script>
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

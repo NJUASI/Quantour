@@ -8,6 +8,7 @@ import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.StockSituationService;
 import com.edu.nju.asi.utilities.LocalDateHelper;
+import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.utilities.tempHolder.StockComparisionCriteriaTempHolder;
 import com.edu.nju.asi.utilities.util.JsonConverter;
@@ -40,6 +41,9 @@ public class StockController {
     StockSituationService situationService;
 
 
+
+
+
     /**
      * TODO 分离请求和查看
      * 指定日期（默认当日）股票市场查看（所有股票数据、市场温度计）
@@ -70,23 +74,54 @@ public class StockController {
     }
 
     /**
-     * TODO 分离请求和查看
      * 单只股票的股票详情
      */
     @GetMapping("/{id}")
-    public ModelAndView getOneStock(@PathVariable("id") String stockCode) {
+    public ModelAndView getOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
+        List<Stock> stocks = (List<Stock>) request.getSession(false).getAttribute("oneStockResult");
+
+        if (!stockCode.equals(stocks.get(0).getStockID().getCode())) return new ModelAndView("errorPage");
+
+        ModelAndView mv = new ModelAndView("kString");
         try {
-            List<Stock> stocks = chartService.getSingleStockRecords(stockCode);
-            ModelAndView modelAndView = new ModelAndView("KString");
-            modelAndView.addObject("candlestickData", JsonConverter.convertCandlestick(stocks));
-            modelAndView.addObject("volumeData", JsonConverter.convertVolume(stocks));
-            return modelAndView;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CodeNotFoundException e) {
+            mv.addObject("candlestickData", JsonConverter.convertCandlestick(stocks));
+            mv.addObject("volumeData", JsonConverter.convertVolume(stocks));
+            return mv;
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return new ModelAndView("index");
+    }
+
+
+    /**
+     * 【请求】单只股票的股票详情
+     */
+    @PostMapping(value = "/{id}", produces = "text/html;charset=UTF-8;")
+    public @ResponseBody
+    String reqGetOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
+        List<Stock> stocks = null;
+        try {
+            stocks = chartService.getSingleStockRecords(StockCodeHelper.format(stockCode));
+            HttpSession session = request.getSession(false);
+            session.setAttribute("oneStockResult", stocks);
+
+            System.out.println(stocks.size());
+            System.out.println(stocks.get(0).getOpen());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-1;IO读取失败！";
+        } catch (CodeNotFoundException e) {
+            e.printStackTrace();
+            return "-1;" + e.getMessage();
+        }
+
+        if (stocks != null) {
+            System.out.println("Success");
+            return "1;获取单只股票成功";
+        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
     /**
@@ -97,7 +132,7 @@ public class StockController {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return new ModelAndView("index");
-    }
+        }
 
         List<StockComparision> result = (List<StockComparision>) session.getAttribute("compareResult");
         session.setAttribute("compareResult", null);

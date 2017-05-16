@@ -61,9 +61,13 @@
     </servlet-mapping>
 
 
+    <!--暂时不配置，方便观察错误信息报错-->
+    <!--&lt;!&ndash; 配置错误返回页面 &ndash;&gt;-->
+    <!--<error-page>-->
+    <!--<location>/jsp/errorPage.jsp</location>-->
+    <!--</error-page>-->
 
 
-    
     <!--解决post请求中文乱码 -->
     <filter>
         <filter-name>encodingFilter</filter-name>

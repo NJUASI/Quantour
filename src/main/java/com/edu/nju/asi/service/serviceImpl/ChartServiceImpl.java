@@ -266,7 +266,6 @@ public class ChartServiceImpl implements ChartService {
      */
     private boolean codeExist(String code) throws CodeNotFoundException {
         init();
-        code = StockCodeHelper.simplify(code);
 
         if(allCodes.contains(code)) return true;
         else throw new CodeNotFoundException();

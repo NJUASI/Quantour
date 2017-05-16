@@ -136,13 +136,13 @@
                                  data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                                 <input id="stocks_date" class="form-control" size="16" type="text" onclick="getOneDate()">
                                 <span class="input-group-addon"><span
-                                        class="glyphicon glyphicon-calendar"></span></span>
+                                        class="glyphicon glyphicon-calendar" onclick="getOneDate()"></span></span>
                             </div>
                         </div>
                         <div class="col-md-3 col-md-offset-3">
                             <form role="form">
                                 <div class="input-group">
-                                    <input id="stocks_id" type="text" class="form-control" placeholder="输入代码/简称/拼音">
+                                    <input id="stocks_id" type="text" class="form-control" onkeyup="getOneStock()" placeholder="输入代码/简称/拼音">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" onclick="getOneStock()">
                                         <span class="glyphicon glyphicon-search"> </span>
@@ -519,7 +519,7 @@
 </div>
 <div id="candlestick_chart" style="width:100%;height:600px"></div>
 
-
+<script src="../js/stocks.js"></script>
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
 <script type="text/javascript">
