@@ -38,6 +38,7 @@ function createCandlestickChart(id, candlestickData, volumes) {
 
     var data = splitCandlestickData(candlestickData);
     var chart = echarts.init(document.getElementById(id));
+    chart.showLoading();
 
     var option = {
         backgroundColor: '#eee',
@@ -247,6 +248,7 @@ function createLineChart(id, lineData, title, legend) {
         dataAll.push(splitLineData(lineData[i]));
     }
     var lineChart = echarts.init(document.getElementById(id));
+    lineChart.showLoading();
 
     function initSeries() {
         var series = [];
@@ -310,6 +312,7 @@ function createLineChart(id, lineData, title, legend) {
     };
 
     lineChart.setOption(option);
+    lineChart.hideLoading();
     return lineChart;
 }
 
@@ -331,6 +334,7 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
     var strategy = splitTraceBackData(strategyData);
     var base = splitTraceBackData(baseData);
     var traceBackChart = echarts.init(document.getElementById(id));
+    traceBackChart.showLoading();
 
     var option = {
         title: {},
@@ -394,6 +398,13 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
             {
                 name: '策略',
                 type: 'line',
+                // markPoint: {
+                //     data: [{
+                //         name: '最大值',
+                //         type: 'max',
+                //         valueIndex: 3
+                //     }]
+                // },
                 data: strategy.values,
                 smooth: true
             },
@@ -405,7 +416,45 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
             }
         ]
     };
-    traceBackChart.setOption(option, true);
+    var option1 = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        toolbox: {
+            show: true
+        },
+        xAxis:  {
+            type: 'category',
+            boundaryGap: true,
+            data: strategy.categoryData
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}%'
+            }
+        },
+        series: [
+            {
+                name:'策略',
+                type:'line',
+                smooth: true,
+                showSymbol: false,
+                symbol: false,
+                markPoint: {
+                    data: [{
+                        name: '最大值',
+                        type: 'max',
+                        valueIndex: 1
+                    }]
+                },
+                data: strategy.values
+            }
+        ]
+    };
+
+    traceBackChart.setOption(option1, true);
+    traceBackChart.hideLoading();
     return traceBackChart;
 }
 
@@ -427,6 +476,7 @@ function createAreaChart(id, areaData, title) {
 
     var data = splitAreaData(areaData);
     var areaChart = echarts.init(document.getElementById(id));
+    areaChart.showLoading();
 
     var option = {
         tooltip: {
@@ -510,6 +560,7 @@ function createAreaChart(id, areaData, title) {
         ]
     };
     areaChart.setOption(option);
+    areaChart.hideLoading();
     return areaChart;
 }
 
@@ -531,6 +582,7 @@ function createHistogramChart(id, data,title) {
     var datas1 = spliteHistogramData(data[0]);
     var datas2 = spliteHistogramData(data[1]);
     var histogramChart = echarts.init(document.getElementById(id));
+    histogramChart.showLoading();
 
     var option = {
         title:{
@@ -543,13 +595,13 @@ function createHistogramChart(id, data,title) {
             }
         },
         legend: {
-            data: ['正收益周期数','负收益周期数'],
+            data: ['正收益周期数','负收益周期数']
         },
         xAxis: {
             type: 'category',
             data: datas1.categoryData,
             scale: true,
-            axisLine: {onZero: true},
+            axisLine: {onZero: true}
         },
         yAxis: {
             scale: true,
@@ -592,5 +644,6 @@ function createHistogramChart(id, data,title) {
         ]
     };
     histogramChart.setOption(option);
+    histogramChart.hideLoading();
     return histogramChart;
 }

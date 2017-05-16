@@ -50,7 +50,7 @@ public class JsonConverter {
 
         for(Stock stock : stocks){
             List<String> temp = new ArrayList<>();
-            temp.add(dateFormat.format(stock.getStockID().getDate()));
+            temp.add(dateFormat.format(stock.getStockID().getDate().toString()));
             temp.add(String.valueOf(stock.getOpen()));
             temp.add(String.valueOf(stock.getClose()));
             temp.add(String.valueOf(stock.getLow()));
@@ -76,7 +76,7 @@ public class JsonConverter {
 
         for(Stock stock : stocks){
             List<String> temp = new ArrayList<>();
-            temp.add(dateFormat.format(stock.getStockID().getDate()));
+            temp.add(dateFormat.format(stock.getStockID().getDate().toString()));
             temp.add(stock.getVolume());
             result.add(temp);
         }
@@ -99,7 +99,7 @@ public class JsonConverter {
 
         for(CumulativeReturn cumulativeReturn : list){
             List<String> temp =  new ArrayList<>();
-            temp.add(dateFormat.format(cumulativeReturn.currentDate));
+            temp.add(dateFormat.format(cumulativeReturn.currentDate.toString()));
             temp.add(String.valueOf(cumulativeReturn.cumulativeReturn));
             result.add(temp);
         }
@@ -190,7 +190,7 @@ public class JsonConverter {
 
         for(LocalDate localDate : map.keySet()){
             List<String> temp = new ArrayList<>();
-            temp.add(dateFormat.format(localDate));
+            temp.add(dateFormat.format(localDate.toString()));
             temp.add(String.valueOf(map.get(localDate)));
             result.add(temp);
         }

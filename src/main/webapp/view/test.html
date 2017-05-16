@@ -76,7 +76,29 @@
    var endX= '2015/7/14';
    var legend = ['策略','基准'];
    var chart = createTraceBackChart('main',strategyData,baseData,legend,startX,endX);
-
+//   chart.setInterval(function () {
+//       chart.dispatchAction({
+//           type: 'downplay',
+//           seriesIndex: 0,
+//           dataIndex: 9
+//       });
+//       chart.dispatchAction({
+//           type: 'downplay',
+//           seriesIndex: 0,
+//           dataIndex: 13
+//       });
+//       chart.dispatchAction({
+//           type: 'highlight',
+//           seriesIndex: 0,
+//           dataIndex: 9
+//       });
+//       chart.dispatchAction({
+//           type: 'highlight',
+//           seriesIndex: 0,
+//           dataIndex: 13
+//       });
+//   },10);
+//   alert('ok');
 </script>
 </body>
 </html>
