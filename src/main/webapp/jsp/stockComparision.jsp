@@ -121,6 +121,8 @@
     </div>
 
 </div>
+<div id="closesChart" style="width:100%;height:600px"></div>
+<div id="logarithmicYieldChart" style="width:100%;height:600px"></div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
@@ -132,6 +134,8 @@
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src = "../js/echarts.min.js"></script>
+<script src = "../js/chart.js"></script>
 <script type="text/javascript">
 
     $("#stockDetail>li").addClass("col-md-3");
@@ -162,6 +166,9 @@
     }).on("click", function () {
         $("#compare_endDate").datetimepicker("setStartDate", $("#compare_startDate>input").val())
     });
+
+    var closesChart = createLineChart("closesChart",${closesData},'收盘价',${comparisionName});
+    var logarithmicYieldChart = createLineChart("logarithmicYieldChart",${logarithmicYieldData},'对数收益率方差',${comparisionName});
 
 </script>
 </body>

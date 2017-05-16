@@ -24,10 +24,12 @@ public class Code_NamePipeline implements Pipeline {
     }
 
     public static String ascii2native(String ascii) {
-        int n = ascii.length() / 6;
-        StringBuilder sb = new StringBuilder(n);
+        String needTobeConvert = ascii.substring(ascii.indexOf('\\'));
+        int n = needTobeConvert.length() / 6;
+        StringBuilder sb = new StringBuilder();
+        sb.append(ascii.substring(0,ascii.indexOf('\\')));
         for (int i = 0, j = 2; i < n; i++, j += 6) {
-            String code = ascii.substring(j, j + 4);
+            String code = needTobeConvert.substring(j, j + 4);
             char ch = (char) Integer.parseInt(code, 16);
             sb.append(ch);
         }

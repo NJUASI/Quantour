@@ -11,6 +11,7 @@ import com.edu.nju.asi.utilities.LocalDateHelper;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.utilities.tempHolder.StockComparisionCriteriaTempHolder;
 import com.edu.nju.asi.utilities.util.JsonConverter;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,18 +97,34 @@ public class StockController {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return new ModelAndView("index");
-        }
+    }
 
         List<StockComparision> result = (List<StockComparision>) session.getAttribute("compareResult");
         session.setAttribute("compareResult", null);
 
         if (result != null) {
             ModelAndView mv = new ModelAndView("stockComparision");
-            mv.addObject("stockCompare1", result.get(0));
-            mv.addObject("stockCompare2", result.get(1));
+            try {
+                List<String> closes = new ArrayList<>();
+                closes.add(JsonConverter.jsonOfObject(result.get(0).closes));
+                closes.add(JsonConverter.jsonOfObject(result.get(1).closes));
+
+                List<String> logarithmicYield = new ArrayList<>();
+                logarithmicYield.add(JsonConverter.jsonOfObject(result.get(0).logarithmicYield));
+                logarithmicYield.add(JsonConverter.jsonOfObject(result.get(1).logarithmicYield));
+
+                List<String> name = new ArrayList<>();
+                name.add(result.get(0).name);
+                name.add(result.get(1).name);
+
+                mv.addObject("closesData", JsonConverter.jsonOfObject(closes));
+                mv.addObject("logarithmicYieldData", JsonConverter.jsonOfObject(logarithmicYield));
+                mv.addObject("comparisionName", JsonConverter.jsonOfObject(name));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
             return mv;
         }
-
         return new ModelAndView("index");
     }
 
