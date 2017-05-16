@@ -42,43 +42,116 @@ public class StockController {
 
 
 
+    // 测试用
+    private final static LocalDate nowDate = LocalDate.of(2007,1,11);
+//    private final static LocalDate nowDate = LocalDate.now();
+
 
 
     /**
-     * TODO 分离请求和查看
      * 指定日期（默认当日）股票市场查看（所有股票数据、市场温度计）
      */
     @GetMapping()
     public ModelAndView getStockMarket(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView("stocks");
 
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("oneDateStockList") == null) {
+            System.out.println("默认进来的");
+
+            // 刚进来默认访问此方法，默认显示当日，先调用请求方法
+            String reqResult = reqGetStockMarket(request, response);
+            if (reqResult.split(";")[0].equals("1")) {
+                System.out.println("请求成功");
+
+                StockSituation situation = (StockSituation) session.getAttribute("oneDateSituation");
+                List<Stock> stocks = (List<Stock>) session.getAttribute("oneDateStockList");
+                session.setAttribute("oneDateSituation", null);
+                session.setAttribute("oneDateStockList", null);
+
+                // TODO 金玉转换成图
+                mv.addObject("situation", situation);
+                mv.addObject("stockList", stocks);
+
+                System.out.println(stocks.size()+"\n\n\n");
+            } else {
+                System.out.println("请求失败");
+                return new ModelAndView("errorPage");
+            }
+
+
+        } else {
+            // 是通过js请求来的，只需要add进mv
+            System.out.println("通过js访问的");
+
+            StockSituation situation = (StockSituation) session.getAttribute("oneDateSituation");
+            List<Stock> stocks = (List<Stock>) session.getAttribute("oneDateStockList");
+            session.setAttribute("oneDateSituation", null);
+            session.setAttribute("oneDateStockList", null);
+
+            // TODO 金玉转换成图
+            mv.addObject("situation", situation);
+            mv.addObject("stockList", stocks);
+
+            System.out.println(stocks.size()+"\n\n\n");
+
+        }
+        return mv;
+    }
+
+
+    /**
+     * 【请求】指定日期（默认当日）股票市场查看（所有股票数据、市场温度计）
+     */
+    @PostMapping(produces = "text/html;charset=UTF-8;")
+    public @ResponseBody
+    String reqGetStockMarket(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("--------在req中-----------");
         LocalDate thisDate;
         String date = request.getParameter("date");
 
         // 默认获取当天
-        if (date == null) thisDate = LocalDate.now();
-        else thisDate = LocalDateHelper.convertString(date);
-
-        try {
-            StockSituation situation = situationService.getStockStituation(thisDate);
-            mv.addObject("stockSituation", situation);
-
-            List<Stock> stock_list = stockService.getAllStocks(thisDate);
-            mv.addObject("stock_list", stock_list);
-        } catch (NoSituationDataException e) {
-            mv.addObject("error", e.getMessage());
-        } catch (IOException e) {
-            mv.addObject("error", "失败");
+        if (date == null) {
+            System.out.println("js没有。。");
+            thisDate = nowDate;
         }
-        return mv;
-    }
+        else {
+            System.out.println("JS有的！！");
+            thisDate = LocalDateHelper.convertString(date);
+        }
+
+        StockSituation situation = null;
+        List<Stock> stockList = null;
+        try {
+            situation = situationService.getStockStituation(thisDate);
+            stockList = stockService.getAllStocks(thisDate);
+
+            HttpSession session = request.getSession(false);
+            session.setAttribute("oneDateSituation", situation);
+            session.setAttribute("oneDateStockList", stockList);
+
+            System.out.println(stockList.size());
+        } catch (NoSituationDataException e) {
+            e.printStackTrace();
+            return "-1;" + e.getMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-1;IO读取失败！";
+        }
+
+        if (stockList != null) {
+            System.out.println("Success");
+            return "1;获取单只股票成功";
+        } else return "-1;服务器开了一个小差。。请稍后重试";    }
 
     /**
      * 单只股票的股票详情
      */
     @GetMapping("/{id}")
     public ModelAndView getOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
-        List<Stock> stocks = (List<Stock>) request.getSession(false).getAttribute("oneStockResult");
+        HttpSession session = request.getSession(false);
+        List<Stock> stocks = (List<Stock>) session.getAttribute("oneStockResult");
+        session.setAttribute("oneStockResult", null);
 
         if (!stockCode.equals(stocks.get(0).getStockID().getCode())) return new ModelAndView("errorPage");
 

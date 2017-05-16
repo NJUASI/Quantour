@@ -13,7 +13,6 @@ function getOneDate() {
 
         success: function (result) {
             alert(result);
-            alert(JSON.stringify(jsonData));
             var array = result.split(";");
 
             if (array[0] == "1") {
