@@ -18,10 +18,10 @@ import java.time.LocalDate;
  */
 public class SpiderController {
 
-    static String allNormalStocksPath = "G:/Quantour/stocks";
-    static String allBaseStocksPath = "G:/Quantour/baseStocks";
-    static String todayNormalStocksPath = "G:/Quantour/todayNormalStock";
-    static String todayBaseStocksPath = "G:/Quantour/todayBaseStock";
+    static String allNormalStocksPath = "D:/Quantour/stocks";
+    static String allBaseStocksPath = "D:/Quantour/baseStocks";
+    static String todayNormalStocksPath = "D:/Quantour/todayNormalStock";
+    static String todayBaseStocksPath = "D:/Quantour/todayBaseStock";
 
 
     public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class SpiderController {
         //保存当天的普通股票数据
         downloadDataHelper.normalStockStore(todayNormalStocksPath);
         //下载当天的基准股票数据
-        stockDownloader.downLoadBaseStock(todayBaseStocksPath, LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
+        stockDownloader.downLoadBaseStock(todayBaseStocksPath, LocalDate.now(), LocalDate.now());
         //保存当天的基准股票数据
         downloadDataHelper.baseStockStore(todayBaseStocksPath);
 
@@ -49,8 +49,8 @@ public class SpiderController {
 
     public static void downloadTodayNormalStocks(String todayNormalStocksPath){
         Request request = new Request();
-//        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
-        request.setUrl("http://quotes.money.163.com/trade/lsjysj_000001.html");
+        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
+//        request.setUrl("http://quotes.money.163.com/trade/lsjysj_000001.html");
 //        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=142&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
         request.setMethod(HttpConstant.Method.GET);
 
@@ -71,7 +71,7 @@ public class SpiderController {
 
     public static void downloadAllNormalStocks(String downloadPath){
         Request request = new Request();
-//        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
+        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
 //        request.setUrl("http://quotes.money.163.com/trade/lsjysj_000001.html");
 //        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=142&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
         request.setMethod(HttpConstant.Method.GET);
