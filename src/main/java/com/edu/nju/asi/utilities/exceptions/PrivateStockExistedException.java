@@ -42,7 +42,7 @@ public class PrivateStockExistedException extends Exception{
     public PrivateStockExistedException(List<PrivateStock> privateStocks) {
         exceptionCode = new ArrayList<>();
         for(PrivateStock privateStock: privateStocks){
-            exceptionCode.add(privateStock.getPrivateStockID().getStockCode());
+            exceptionCode.add(privateStock.getOptionalStockID().getStockCode());
         }
     }
 

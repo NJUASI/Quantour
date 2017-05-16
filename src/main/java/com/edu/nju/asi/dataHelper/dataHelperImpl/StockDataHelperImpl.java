@@ -1,7 +1,6 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.StockDataHelper;
-import com.edu.nju.asi.infoCarrier.FirstAndLastDay;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
@@ -50,6 +49,33 @@ public class StockDataHelperImpl implements StockDataHelper {
         transaction.commit();
         session.close();
         return stock;
+    }
+
+    /**
+     * 获取特定日期指定股票的相关数据
+     *
+     * @param stockCode 指定股票代码
+     * @param start     指定开始日期（如果存在，包含start）
+     * @param end       指定结束日期（如果存在，包含end）
+     * @return 特定日期指定股票的相关数据
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public List<Stock> getStockData(String stockCode, LocalDate start, LocalDate end) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        String hql = "from Stock where stockID.date<=:endDate and stockID.date>=:startDate and stockID.code=:code order by stockID.date";
+
+        Query query = session.createQuery(hql);
+        query.setParameter("endDate",end);
+        query.setParameter("startDate",start);
+        query.setParameter("code",stockCode);
+        List<Stock> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 
     /**
@@ -112,8 +138,9 @@ public class StockDataHelperImpl implements StockDataHelper {
     public boolean addStockAll(List<Stock> stocks){
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO stock(code, date, adjClose, close, high, low, market, name, open, preAdjClose, preClose, volume)" +
-                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO stock(code, date, close, high, low, market, name, open, preClose, volume," +
+                "circulationMarketValue, fluctuation, increaseMargin, totalValue, transactionAmount, turnoverRate)" +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         boolean result = true;
 
         try {
@@ -122,16 +149,20 @@ public class StockDataHelperImpl implements StockDataHelper {
             for (Stock stock : stocks){
                 preparedStatement.setString(1,stock.getStockID().getCode());
                 preparedStatement.setObject(2,stock.getStockID().getDate());
-                preparedStatement.setDouble(3,stock.getAdjClose());
-                preparedStatement.setDouble(4,stock.getClose());
-                preparedStatement.setDouble(5,stock.getHigh());
-                preparedStatement.setDouble(6,stock.getLow());
-                preparedStatement.setInt(7,stock.getMarket().getRepre());
-                preparedStatement.setString(8,stock.getName());
-                preparedStatement.setDouble(9,stock.getOpen());
-                preparedStatement.setDouble(10,stock.getPreAdjClose());
-                preparedStatement.setDouble(11,stock.getPreClose());
-                preparedStatement.setString(12,stock.getVolume());
+                preparedStatement.setDouble(3,stock.getClose());
+                preparedStatement.setDouble(4,stock.getHigh());
+                preparedStatement.setDouble(5,stock.getLow());
+                preparedStatement.setInt(6,stock.getMarket().getRepre());
+                preparedStatement.setString(7,stock.getName());
+                preparedStatement.setDouble(8,stock.getOpen());
+                preparedStatement.setDouble(9,stock.getPreClose());
+                preparedStatement.setString(10,stock.getVolume());
+                preparedStatement.setString(11,stock.getCirculationMarketValue());
+                preparedStatement.setDouble(12,stock.getFluctuation());
+                preparedStatement.setDouble(13,stock.getIncreaseMargin());
+                preparedStatement.setString(14,stock.getTotalValue());
+                preparedStatement.setString(15,stock.getTransactionAmount());
+                preparedStatement.setDouble(16,stock.getTurnoverRate());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();

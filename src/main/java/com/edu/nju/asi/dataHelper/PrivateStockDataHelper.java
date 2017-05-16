@@ -1,7 +1,7 @@
 package com.edu.nju.asi.dataHelper;
 
 import com.edu.nju.asi.model.PrivateStock;
-import com.edu.nju.asi.model.PrivateStockID;
+import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public interface PrivateStockDataHelper {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean addPrivateStock(PrivateStockID privateStockID);
+    boolean addPrivateStock(OptionalStockID opionalStockID);
 
     /**
      * 添加自选股列表
@@ -39,7 +39,7 @@ public interface PrivateStockDataHelper {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean addPrivateStockAll(List<PrivateStockID> list) throws PrivateStockExistedException;
+    boolean addPrivateStockAll(List<OptionalStockID> list) throws PrivateStockExistedException;
 
     /**
      * 删除自选股
@@ -49,7 +49,7 @@ public interface PrivateStockDataHelper {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean deletePrivateStock(PrivateStockID privateStockID);
+    boolean deletePrivateStock(OptionalStockID opionalStockID);
 
     /**
      * 删除自选股列表
@@ -59,5 +59,5 @@ public interface PrivateStockDataHelper {
      * @updateTime 2017/5/9
      * @return 用户名称集合
      */
-    boolean deletePrivateStockAll(List<PrivateStockID> list);
+    boolean deletePrivateStockAll(List<OptionalStockID> list);
 }

@@ -10,6 +10,6 @@ public class InvalidInputException extends Exception {
 
 	@Override
 	public String getMessage(){
-		return "无效输入";
+		return "无效输入，有不合法的输入标志符！";
 	}
 }

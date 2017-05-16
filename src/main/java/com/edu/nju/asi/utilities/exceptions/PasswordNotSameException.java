@@ -12,6 +12,6 @@ public class PasswordNotSameException extends Exception {
      */
     @Override
     public String getMessage() {
-        return "两次密码不一致，请检查";
+        return "两次密码不一致，请检查后重试！";
     }
 }

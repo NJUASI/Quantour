@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 61990
@@ -48,13 +48,14 @@
             padding-left: 0;
         }
 
-        .userBlockLeft {
+        .inputBlock {
             margin-top: 20px;
             margin-bottom: 10px;
         }
 
-        #passwordModify {
-            display: none;
+        .panel-title{
+            margin-bottom: 0;
+            margin-top: 0;
         }
     </style>
 
@@ -86,14 +87,14 @@
     <div class="row">
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h4 class="panel-title">
                     选股票池
-                </h3>
+                </h4>
             </div>
             <div class="panel-body">
                 <div class="row">
 
-                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+                    <div class="col-lg-2 col-lg-offset-1 inputBlock">
                         <div class="radio">
                             <label>
                                 <input type="radio" name="optionsRadios" id="optionsRadios1" value="false" checked>
@@ -108,7 +109,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2 col-lg-offset-1 userBlockLeft">
+                    <div class="col-md-2 col-lg-offset-1 inputBlock">
 
                         <label for="blockTypes">板块：</label>
                         <select id="blockTypes" name="blockTypes" class="selectpicker show-tick form-control"
@@ -120,7 +121,7 @@
 
                     </div>
 
-                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+                    <div class="col-lg-2 col-lg-offset-1 inputBlock">
 
                         <label>ST：</label>
                         <div style="display: inline">
@@ -141,14 +142,14 @@
     <div class="row">
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h4 class="panel-title">
                     回测条件
-                </h3>
+                </h4>
             </div>
             <div class="panel-body">
                 <div class="row">
 
-                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+                    <div class="col-md-2 col-md-offset-1 inputBlock">
 
                         <label>开始日期：</label>
                         <!--指定 date标记-->
@@ -160,7 +161,7 @@
 
                         </div>
                     </div>
-                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+                    <div class="col-md-2 col-md-offset-1 inputBlock">
                         <label>结束日期：</label>
                         <!--指定 date标记-->
                         <div class='input-group date' id='datetimeEnd'>
@@ -172,7 +173,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+                    <div class="col-md-2 col-md-offset-1 inputBlock">
 
                         <label>收益基准：</label>
 
@@ -183,7 +184,7 @@
                         </select>
                     </div>
 
-                    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+                    <div class="col-md-2 col-md-offset-1 inputBlock">
 
                         <button type="button" class="btn btn-info" onclick="traceback()"
                                 style="margin-top: 15px;margin-left: -40px;">开始回测
@@ -196,20 +197,20 @@
     </div>
 
     <div class="row">
-        <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
+        <div class="panel panel-default col-md-10 col-md-offset-1 userBlock">
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h4 class="panel-title">
                     选择策略
-                </h3>
+                </h4>
             </div>
-            <div class="panel-body userBlockLeft">
+            <div class="panel-body inputBlock">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-1">
                         <div class="row">
                             <div class="col-md-5"><label>形成指标</label></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">形成期</div>
+                            <div class="col-md-2">形成期</div>
                             <div class="col-md-3">
                                 <select id="formativePeriod" name="" class="selectpicker show-tick form-control">
                                     <option value="5" selected>5</option>
@@ -219,10 +220,8 @@
                                     <option value="60">60</option>
                                 </select>
                             </div>
-                            <div class="col-md-1">
-                                <label>日</label>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-1">日</div>
+                            <div class="col-md-4">
                                 <select id="formativeStrategy" name="" class="selectpicker show-tick form-control">
                                     <option value="INCEREASE_AMOUNT" selected>涨幅</option>
                                     <option value="BIAS">乖离率</option>

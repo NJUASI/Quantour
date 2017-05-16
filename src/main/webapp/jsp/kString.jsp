@@ -17,6 +17,7 @@
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -74,7 +75,7 @@
     </nav>
 </header>
 <div class="row userBlockLeft">
-    <div class="col-md-2 col-lg-offset-2 input-group">
+    <div class="col-md-2 col-lg-offset-6 input-group">
         <input type="text" class="form-control form-inline">
         <span class="input-group-btn">
                                     <button class="btn btn-default form-control" type="button">
@@ -85,7 +86,7 @@
 </div>
 
 
-<div class="row stock">
+<div class="row stock" style="margin-top: -60px">
     <span class="col-md-2 col-md-offset-2"><span id="stockName">艾派克</span>&nbsp;<i id="stockCode">002180</i></span>
     <button class="btn btn-primary ">+自选</button>
 </div>
@@ -137,7 +138,6 @@
                style="margin-top: 15px;margin-left: -40px;" value="查看区间"/>
         </button>
     </div>
-
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

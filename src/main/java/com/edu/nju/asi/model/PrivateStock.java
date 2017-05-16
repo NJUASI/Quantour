@@ -18,13 +18,13 @@ public class PrivateStock implements Serializable {
     @Id
     @GenericGenerator(name = "myGenerator", strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
-    private PrivateStockID privateStockID;
+    private OptionalStockID optionalStockID;
 
-    public PrivateStockID getPrivateStockID() {
-        return privateStockID;
+    public OptionalStockID getOptionalStockID() {
+        return optionalStockID;
     }
 
-    public void setPrivateStockID(PrivateStockID privateStockID) {
-        this.privateStockID = privateStockID;
+    public void setOptionalStockID(OptionalStockID optionalStockID) {
+        this.optionalStockID = optionalStockID;
     }
 }

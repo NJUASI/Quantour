@@ -31,47 +31,33 @@ public class TraceBackStockPoolDaoImpl implements TraceBackStockPoolDao {
      * 获取指定用户名的回测股池
      *
      * @param userName
-     * @param localDate
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public List<Stock> getTraceBackStockPool(String userName, LocalDate localDate) {
-        List<Stock> result = new ArrayList<>();
-
-        List<TraceBackStockPool> traceBackStockPools = traceBackStockPoolDataHelper.getTraceBackStockPool(userName);
-        for (TraceBackStockPool temp : traceBackStockPools) {
-            TraceBackStockID id = temp.getTraceBackStockID();
-            result.add(stockDataHelper.getStockData(id.getStockCode(), localDate));
-        }
-        return result;
+    public List<TraceBackStockPool> getTraceBackStockPool(String userName) {
+        return traceBackStockPoolDataHelper.getTraceBackStockPool(userName);
     }
 
     @Override
     public List<String> getTraceBackStockPoolCodes(String userName) {
-        List<String> result = new LinkedList<>();
-        List<TraceBackStockPool> traceBackStockPools = traceBackStockPoolDataHelper.getTraceBackStockPool(userName);
-
-        for (TraceBackStockPool temp : traceBackStockPools) {
-            result.add(temp.getTraceBackStockID().getStockCode());
-        }
-        return result;
+        return traceBackStockPoolDataHelper.getTraceBackStockPoolCodes(userName);
     }
 
     /**
      * 添加单只回测股
      *
-     * @param traceBackStockID
+     * @param traceBackStockPool
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addTraceBackStock(TraceBackStockID traceBackStockID) {
-       return traceBackStockPoolDataHelper.addTraceBackStock(traceBackStockID);
+    public boolean addTraceBackStock(TraceBackStockPool traceBackStockPool) {
+       return traceBackStockPoolDataHelper.addTraceBackStock(traceBackStockPool);
     }
 
     /**
@@ -84,7 +70,7 @@ public class TraceBackStockPoolDaoImpl implements TraceBackStockPoolDao {
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addTraceBackStockAll(List<TraceBackStockID> list) throws TraceBackStockExistedException {
+    public boolean addTraceBackStockAll(List<TraceBackStockPool> list) throws TraceBackStockExistedException {
         return traceBackStockPoolDataHelper.addTraceBackStockAll(list);
     }
 
@@ -98,7 +84,7 @@ public class TraceBackStockPoolDaoImpl implements TraceBackStockPoolDao {
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deleteTraceBackStock(TraceBackStockID traceBackStockID) {
+    public boolean deleteTraceBackStock(OptionalStockID traceBackStockID) {
         return traceBackStockPoolDataHelper.deleteTraceBackStock(traceBackStockID);
     }
 
@@ -112,7 +98,7 @@ public class TraceBackStockPoolDaoImpl implements TraceBackStockPoolDao {
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deleteTraceBackStockAll(List<TraceBackStockID> list) {
+    public boolean deleteTraceBackStockAll(List<OptionalStockID> list) {
         return traceBackStockPoolDataHelper.deleteTraceBackStockAll(list);
     }
 }

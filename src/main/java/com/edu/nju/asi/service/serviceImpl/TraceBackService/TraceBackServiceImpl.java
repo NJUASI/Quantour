@@ -142,13 +142,13 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         stockData = new HashMap<>();
         for (String thisStockCode : traceBackStockPool) {
-            List<Stock> tempPOS = stockDao.getStockData(thisStockCode);
-            stockData.put(thisStockCode, convertStockPOS(tempPOS));
+            List<Stock> stocks = stockDao.getStockData(thisStockCode);
+            stockData.put(thisStockCode, convertStocks(stocks));
         }
 
     }
 
-    private List<StrategyStock> convertStockPOS(List<Stock> stocks) {
+    private List<StrategyStock> convertStocks(List<Stock> stocks) {
         StrategyStockList result = new StrategyStockList();
         for (Stock thisStock : stocks) {
             result.add(new StrategyStock(thisStock));
@@ -163,7 +163,6 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @throws DateNotWithinException
      * @throws NoDataWithinException
      * @throws IOException
-     * @throws DateShortException
      * @throws CodeNotFoundException
      */
     private List<ExcessAndWinRateDist> findFormateWithCertainHolding(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException {
@@ -175,7 +174,6 @@ public class TraceBackServiceImpl implements TraceBackService {
      *
      * @return
      * @throws CodeNotFoundException
-     * @throws DateShortException
      * @throws DateNotWithinException
      * @throws NoDataWithinException
      * @throws IOException

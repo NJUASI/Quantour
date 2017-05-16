@@ -1,7 +1,7 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.TraceBackStockPoolDataHelper;
-import com.edu.nju.asi.model.TraceBackStockID;
+import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.model.TraceBackStockPool;
 import com.edu.nju.asi.utilities.exceptions.TraceBackStockExistedException;
 import org.hibernate.Session;
@@ -38,7 +38,7 @@ public class TraceBackStockPoolDataHelperImpl implements TraceBackStockPoolDataH
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql = "from TraceBackStockPool where traceBackStockID.userName =:userName";
+        String hql = "from TraceBackStockPool where optionalStockID.userName =:userName";
         Query query = session.createQuery(hql);
         query.setParameter("userName", userName);
         List<TraceBackStockPool> list = query.list();
@@ -48,24 +48,45 @@ public class TraceBackStockPoolDataHelperImpl implements TraceBackStockPoolDataH
     }
 
     /**
-     * 添加单只回测股
+     * 获取指定用户名的回测股池股票代号
      *
-     * @param traceBackStockID
+     * @param userName
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addTraceBackStock(TraceBackStockID traceBackStockID) {
-        if (isExist(traceBackStockID)) {
+    public List<String> getTraceBackStockPoolCodes(String userName) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "select optionalStockID.stockCode from TraceBackStockPool where optionalStockID.userName =:userName";
+        Query query = session.createQuery(hql);
+        query.setParameter("userName", userName);
+        List<String> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
+    /**
+     * 添加单只回测股
+     *
+     * @param traceBackStockPool
+     * @return 用户名称集合
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public boolean addTraceBackStock(TraceBackStockPool traceBackStockPool) {
+        if (isExist(traceBackStockPool.getOptionalStockID())) {
             return false;
         }
 
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        TraceBackStockPool traceBackStockPool = new TraceBackStockPool();
-        traceBackStockPool.setTraceBackStockID(traceBackStockID);
         session.save(traceBackStockPool);
         transaction.commit();
         session.close();
@@ -82,22 +103,18 @@ public class TraceBackStockPoolDataHelperImpl implements TraceBackStockPoolDataH
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addTraceBackStockAll(List<TraceBackStockID> list) throws TraceBackStockExistedException {
+    public boolean addTraceBackStockAll(List<TraceBackStockPool> list) throws TraceBackStockExistedException {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<TraceBackStockPool> exceptionStock = new ArrayList<>();
 
         try {
             for (int i = 0; i < list.size(); i++) {
-                TraceBackStockPool traceBackStockPool = (TraceBackStockPool) session.get(TraceBackStockPool.class, list.get(i));
+                TraceBackStockPool traceBackStockPool = (TraceBackStockPool) session.get(TraceBackStockPool.class, list.get(i).getOptionalStockID());
                 if (traceBackStockPool == null) {
-                    traceBackStockPool = new TraceBackStockPool();
-                    traceBackStockPool.setTraceBackStockID(list.get(i));
-                    session.save(traceBackStockPool);
+                    session.save(list.get(i));
                 } else {
-                    traceBackStockPool = new TraceBackStockPool();
-                    traceBackStockPool.setTraceBackStockID(list.get(i));
-                    exceptionStock.add(traceBackStockPool);
+                    exceptionStock.add(list.get(i));
                 }
 
                 if (i % 20 == 0) {
@@ -122,24 +139,25 @@ public class TraceBackStockPoolDataHelperImpl implements TraceBackStockPoolDataH
     /**
      * 删除单只回测股
      *
-     * @param traceBackStockID
+     * @param optionalStockID
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deleteTraceBackStock(TraceBackStockID traceBackStockID) {
-        if (!isExist(traceBackStockID)) {
+    public boolean deleteTraceBackStock(OptionalStockID optionalStockID) {
+        if (!isExist(optionalStockID)) {
             return false;
         }
 
+        String hql = "delete from TraceBackStockPool where optionalStockID =:id";
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        TraceBackStockPool traceBackStockPool = new TraceBackStockPool();
-        traceBackStockPool.setTraceBackStockID(traceBackStockID);
-        session.delete(traceBackStockPool);
+        Query query = session.createQuery(hql);
+        query.setParameter("id",optionalStockID);
+        query.executeUpdate();
         transaction.commit();
         session.close();
         return true;
@@ -155,16 +173,16 @@ public class TraceBackStockPoolDataHelperImpl implements TraceBackStockPoolDataH
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deleteTraceBackStockAll(List<TraceBackStockID> list) {
-        String hql = "delete from TraceBackStockPool where traceBackStockID =:id";
+        public boolean deleteTraceBackStockAll(List<OptionalStockID> list) {
+        String hql = "delete from TraceBackStockPool where optionalStockID =:id";
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         boolean result = true;
 
         try {
-            for (TraceBackStockID traceBackStockID : list) {
+            for (OptionalStockID optionalStockID : list) {
                 Query query = session.createQuery(hql);
-                query.setParameter("id", traceBackStockID);
+                query.setParameter("id", optionalStockID);
                 query.executeUpdate();
             }
             transaction.commit();
@@ -180,18 +198,18 @@ public class TraceBackStockPoolDataHelperImpl implements TraceBackStockPoolDataH
     /**
      * 用于判断指定回测股是否存在
      *
-     * @param traceBackStockID
+     * @param optionalStockID
      * @return boolean
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/14
      */
-    private boolean isExist(TraceBackStockID traceBackStockID) {
+    private boolean isExist(OptionalStockID optionalStockID) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         boolean result = false;
 
-        TraceBackStockPool traceBackStockPool = (TraceBackStockPool) session.get(TraceBackStockPool.class, traceBackStockID);
+        TraceBackStockPool traceBackStockPool = (TraceBackStockPool) session.get(TraceBackStockPool.class, optionalStockID);
         if (traceBackStockPool != null) {
             result = true;
         }

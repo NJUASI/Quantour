@@ -52,7 +52,6 @@ public interface ChartService {
      * @param chartShowCriteria the chart show criteria com.edu.nju.asi.vo 用户所选股票的信息
      * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
-     * @throws DateShortException 类型不匹配
      */
     Map<MovingAverageType, List<MovingAverage>> getAveData(ChartShowCriteria chartShowCriteria, List<MovingAverageType> MATypes) throws IOException, DateNotWithinException, CodeNotFoundException, NoDataWithinException, NoMatchEnumException;
 
@@ -65,7 +64,6 @@ public interface ChartService {
      * @param code  用户所选股票的代号
      * @param MATypes  用户指定需要查看的几日均线图：如5、10日均线图，则传入包含5、10的list
      * @return 用户所选天数的均线图的平均值
-     * @throws DateShortException 类型不匹配
      */
     Map<MovingAverageType, List<MovingAverage>> getAveData(String code, List<MovingAverageType> MATypes);
 
@@ -75,10 +73,10 @@ public interface ChartService {
      * @auther cuihua
      * @lastUpdatedBy cuihua
      * @updateTime 2017/3/12
-     * @param stockComparsionCriteria 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
+     * @param stockComparisionCriteria 要比较的两只股票标准，包括分别的代码，要比较的起讫时间
      * @return 界面上需要的两只股票的比较信息
      */
-    List<StockComparision> getComparision(StockComparsionCriteria stockComparsionCriteria) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException;
+    List<StockComparision> getComparision(StockComparisionCriteria stockComparisionCriteria) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException;
 
     /**
      * 获取单支股票被剔除的日期

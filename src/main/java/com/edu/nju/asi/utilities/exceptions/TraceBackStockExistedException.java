@@ -39,7 +39,7 @@ public class TraceBackStockExistedException extends Exception {
     public TraceBackStockExistedException(List<TraceBackStockPool> traceBackStockPools) {
         exceptionCode = new ArrayList<>();
         for(TraceBackStockPool traceBackStockPool: traceBackStockPools){
-            exceptionCode.add(traceBackStockPool.getTraceBackStockID().getStockCode());
+            exceptionCode.add(traceBackStockPool.getOptionalStockID().getStockCode());
         }
     }
 

@@ -2,7 +2,7 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.PrivateStockDataHelper;
 import com.edu.nju.asi.model.PrivateStock;
-import com.edu.nju.asi.model.PrivateStockID;
+import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,7 +38,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql = "from PrivateStock where privateStockID.userName =:userName";
+        String hql = "from PrivateStock where optionalStockID.userName =:userName";
         Query query = session.createQuery(hql);
         query.setParameter("userName", userName);
         List<PrivateStock> list = query.list();
@@ -50,22 +50,22 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     /**
      * 添加自选股
      *
-     * @param privateStockID
+     * @param optionalStockID
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addPrivateStock(PrivateStockID privateStockID) {
-        if (isExist(privateStockID)) {
+    public boolean addPrivateStock(OptionalStockID optionalStockID) {
+        if (isExist(optionalStockID)) {
             return false;
         }
 
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         PrivateStock privateStock = new PrivateStock();
-        privateStock.setPrivateStockID(privateStockID);
+        privateStock.setOptionalStockID(optionalStockID);
         session.save(privateStock);
         transaction.commit();
         session.close();
@@ -82,7 +82,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean addPrivateStockAll(List<PrivateStockID> list) throws PrivateStockExistedException {
+    public boolean addPrivateStockAll(List<OptionalStockID> list) throws PrivateStockExistedException {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<PrivateStock> exceptionStock = new ArrayList<>();
@@ -92,11 +92,11 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
                 PrivateStock privateStock = (PrivateStock) session.get(PrivateStock.class, list.get(i));
                 if (privateStock == null) {
                     privateStock = new PrivateStock();
-                    privateStock.setPrivateStockID(list.get(i));
+                    privateStock.setOptionalStockID(list.get(i));
                     session.save(privateStock);
                 } else {
                     privateStock = new PrivateStock();
-                    privateStock.setPrivateStockID(list.get(i));
+                    privateStock.setOptionalStockID(list.get(i));
                     exceptionStock.add(privateStock);
                 }
 
@@ -122,15 +122,15 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     /**
      * 删除自选股
      *
-     * @param privateStockID
+     * @param optionalStockID
      * @return 用户名称集合
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deletePrivateStock(PrivateStockID privateStockID) {
-        if (!isExist(privateStockID)) {
+    public boolean deletePrivateStock(OptionalStockID optionalStockID) {
+        if (!isExist(optionalStockID)) {
             return false;
         }
 
@@ -138,7 +138,7 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
         Transaction transaction = session.beginTransaction();
 
         PrivateStock privateStock = new PrivateStock();
-        privateStock.setPrivateStockID(privateStockID);
+        privateStock.setOptionalStockID(optionalStockID);
         session.delete(privateStock);
         transaction.commit();
         session.close();
@@ -155,16 +155,16 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
      * @updateTime 2017/5/9
      */
     @Override
-    public boolean deletePrivateStockAll(List<PrivateStockID> list) {
-        String hql = "delete from PrivateStock where privateStockID =:id";
+    public boolean deletePrivateStockAll(List<OptionalStockID> list) {
+        String hql = "delete from PrivateStock where optionalStockID =:id";
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         boolean result = true;
 
         try {
-            for (PrivateStockID privateStockID : list) {
+            for (OptionalStockID optionalStockID : list) {
                 Query query = session.createQuery(hql);
-                query.setParameter("id", privateStockID);
+                query.setParameter("id", optionalStockID);
                 query.executeUpdate();
             }
             transaction.commit();
@@ -180,18 +180,18 @@ public class PrivateStockDataHelperImpl implements PrivateStockDataHelper {
     /**
      * 用于判断指定自选股是否存在
      *
-     * @param privateStockID
+     * @param optionalStockID
      * @return boolean
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/14
      */
-    private boolean isExist(PrivateStockID privateStockID) {
+    private boolean isExist(OptionalStockID optionalStockID) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         boolean result = false;
 
-        PrivateStock privateStock = (PrivateStock) session.get(PrivateStock.class, privateStockID);
+        PrivateStock privateStock = (PrivateStock) session.get(PrivateStock.class, optionalStockID);
         if (privateStock != null) {
             result = true;
         }

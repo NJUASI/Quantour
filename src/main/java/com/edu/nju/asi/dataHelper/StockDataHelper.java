@@ -32,6 +32,19 @@ public interface StockDataHelper {
     Stock getStockData(String stockCode, LocalDate date);
 
     /**
+     * 获取特定日期指定股票的相关数据
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @param stockCode 指定股票代码
+     * @param start 指定开始日期（如果存在，包含start）
+     * @param  end 指定结束日期（如果存在，包含end）
+     * @return 特定日期指定股票的相关数据
+     */
+    List<Stock> getStockData(String stockCode, LocalDate start,LocalDate end);
+
+    /**
      * 取指定股票的所有数据，没有返回null
      * 注意：取出来的所有股票数据中，年份小的在链表前端，年份大的在链表后端
      *

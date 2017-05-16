@@ -106,7 +106,7 @@ public class UserDataHelperImpl implements UserDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql = "select userName from User ";
+        String hql = "select userName from User";
         List<String> result = session.createQuery(hql).list();
         transaction.commit();
         session.close();

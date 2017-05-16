@@ -1,25 +1,17 @@
 package com.edu.nju.asi.model;
 
-
 import com.edu.nju.asi.utilities.enums.Market;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
- * Created by Byron Dong on 2017/5/7.
- *
- * 股票
+ * Created by Byron Dong on 2017/5/15.
  */
 @Entity
-@Table(name = "stock")
-public class Stock implements Serializable {
+@Table(name = "basestock")
+public class BaseStock implements Serializable{
 
     // 股票代码
     @Id
@@ -74,26 +66,11 @@ public class Stock implements Serializable {
     @Basic
     private double fluctuation;
 
-    //换手率
-    @Basic
-    private double turnoverRate;
-
-    //总市值
-    @Basic
-    @Column(length = 100)
-    private String totalValue;
-
-    //流通市值
-    @Basic
-    @Column(length = 100)
-    private String circulationMarketValue;
-
-    public Stock() {
+    public BaseStock() {
     }
 
-    public Stock(String name, Market market, double open, double high, double low, double close,
-                 String volume, String transactionAmount, double preClose, double increaseMargin,
-                 double fluctuation, double turnoverRate, String totalValue, String circulationMarketValue) {
+    public BaseStock(String name, Market market, double open, double high, double low, double close,
+                     String volume, String transactionAmount, double preClose, double increaseMargin, double fluctuation) {
         this.name = name;
         this.market = market;
         this.open = open;
@@ -105,9 +82,6 @@ public class Stock implements Serializable {
         this.preClose = preClose;
         this.increaseMargin = increaseMargin;
         this.fluctuation = fluctuation;
-        this.turnoverRate = turnoverRate;
-        this.totalValue = totalValue;
-        this.circulationMarketValue = circulationMarketValue;
     }
 
     public StockID getStockID() {
@@ -116,6 +90,22 @@ public class Stock implements Serializable {
 
     public void setStockID(StockID stockID) {
         this.stockID = stockID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Market getMarket() {
+        return market;
+    }
+
+    public void setMarket(Market market) {
+        this.market = market;
     }
 
     public double getOpen() {
@@ -158,20 +148,12 @@ public class Stock implements Serializable {
         this.volume = volume;
     }
 
-    public String getName() {
-        return name;
+    public String getTransactionAmount() {
+        return transactionAmount;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Market getMarket() {
-        return market;
-    }
-
-    public void setMarket(Market market) {
-        this.market = market;
+    public void setTransactionAmount(String transactionAmount) {
+        this.transactionAmount = transactionAmount;
     }
 
     public double getPreClose() {
@@ -196,37 +178,5 @@ public class Stock implements Serializable {
 
     public void setFluctuation(double fluctuation) {
         this.fluctuation = fluctuation;
-    }
-
-    public double getTurnoverRate() {
-        return turnoverRate;
-    }
-
-    public void setTurnoverRate(double turnoverRate) {
-        this.turnoverRate = turnoverRate;
-    }
-
-    public String getTransactionAmount() {
-        return transactionAmount;
-    }
-
-    public void setTransactionAmount(String transactionAmount) {
-        this.transactionAmount = transactionAmount;
-    }
-
-    public String getTotalValue() {
-        return totalValue;
-    }
-
-    public void setTotalValue(String totalValue) {
-        this.totalValue = totalValue;
-    }
-
-    public String getCirculationMarketValue() {
-        return circulationMarketValue;
-    }
-
-    public void setCirculationMarketValue(String circulationMarketValue) {
-        this.circulationMarketValue = circulationMarketValue;
     }
 }

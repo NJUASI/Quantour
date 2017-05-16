@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Test4</title>
+</head>
+<body>
+<div id="candlestick" style="width:100%;height:600px"></div>
+<script src="../js/echarts.min.js"></script>
+<script src="../js/chart.js"></script>
+<script type="text/javascript">
+
+    var data1 = [['1','12'],
+        ['2','19'],
+        ['3','27'],
+        ['4','31'],
+        ['5','34'],
+        ['6','76'],
+        ['7','45'],
+        ['8','76'],
+        ['9','23'],
+        ['10','18'],
+        ['11','38'],
+        ['12','45'],
+        ['14','27'],
+        ['15','34']];
+
+    var data2 = [ ['1','23'],
+        ['2','14'],
+        ['3','12'],
+        ['4','27'],
+        ['5','21'],
+        ['6','34'],
+        ['7','45'],
+        ['8','43'],
+        ['9','23'],
+        ['10','18'],
+        ['11','12'],
+        ['12','11'],
+        ['13','1'],
+        ['14','14'],
+        ['15','17']];
+    createHistogramChart("candlestick",data1,data2,'test12');
+</script>
+</body>
+</html>

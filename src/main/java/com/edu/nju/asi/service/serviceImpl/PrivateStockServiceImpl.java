@@ -1,8 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.dao.PrivateStockDao;
-import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.model.PrivateStockID;
+import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
@@ -28,22 +27,22 @@ public class PrivateStockServiceImpl implements PrivateStockService {
     }
 
     @Override
-    public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException {
+    public boolean addPrivateStock(OptionalStockID privateStockID) throws PrivateStockExistedException {
         return privateStockDao.addPrivateStock(privateStockID);
     }
 
     @Override
-    public boolean addPrivateStockAll(List<PrivateStockID> list) throws PrivateStockExistedException {
+    public boolean addPrivateStockAll(List<OptionalStockID> list) throws PrivateStockExistedException {
         return privateStockDao.addPrivateStockAll(list);
     }
 
     @Override
-    public boolean deletePrivateStock(PrivateStockID privateStockID){
+    public boolean deletePrivateStock(OptionalStockID privateStockID){
         return privateStockDao.deletePrivateStock(privateStockID);
     }
 
     @Override
-    public boolean deletePrivateStockAll(List<PrivateStockID> list) {
+    public boolean deletePrivateStockAll(List<OptionalStockID> list) {
         return privateStockDao.deletePrivateStockAll(list);
     }
 }

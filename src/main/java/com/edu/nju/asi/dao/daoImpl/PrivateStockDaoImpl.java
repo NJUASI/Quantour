@@ -5,7 +5,7 @@ import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.PrivateStockDataHelper;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.model.PrivateStock;
-import com.edu.nju.asi.model.PrivateStockID;
+import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
 
         List<PrivateStock> privateStockIDList = privateStockDataHelper.getPrivateStock(userName);
         for (PrivateStock temp : privateStockIDList) {
-            PrivateStockID id = temp.getPrivateStockID();
+            OptionalStockID id = temp.getOptionalStockID();
             result.add(stockDataHelper.getStockData(id.getStockCode(), date));
         }
 
@@ -43,22 +43,22 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
     }
 
     @Override
-    public boolean addPrivateStock(PrivateStockID privateStockID) throws PrivateStockExistedException {
+    public boolean addPrivateStock(OptionalStockID privateStockID) throws PrivateStockExistedException {
         return privateStockDataHelper.addPrivateStock(privateStockID);
     }
 
     @Override
-    public boolean addPrivateStockAll(List<PrivateStockID> list) throws PrivateStockExistedException {
+    public boolean addPrivateStockAll(List<OptionalStockID> list) throws PrivateStockExistedException {
         return privateStockDataHelper.addPrivateStockAll(list);
     }
 
     @Override
-    public boolean deletePrivateStock(PrivateStockID privateStockID) {
+    public boolean deletePrivateStock(OptionalStockID privateStockID) {
         return privateStockDataHelper.deletePrivateStock(privateStockID);
     }
 
     @Override
-    public boolean deletePrivateStockAll(List<PrivateStockID> list) {
+    public boolean deletePrivateStockAll(List<OptionalStockID> list) {
         return privateStockDataHelper.deletePrivateStockAll(list);
     }
 }
