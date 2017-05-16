@@ -1,4 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,6 +68,18 @@
             padding-right: 66px;
         }
 
+        .feature-wrapper-odd ,.feature-wrapper-mean {
+            width: 100%;
+        }
+
+        .media {
+            padding-left: 0px;
+        }
+
+        .media-body {
+            padding-left: 50px;
+        }
+
     </style>
 
 </head>
@@ -83,7 +94,7 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">首页</a></li>
+                <li><a href="#">首页</a></li>
                 <li><a href="/stocks">大盘详情</a></li>
                 <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
@@ -96,10 +107,9 @@
 <div class="content">
     <div class="container-fluid">
         <ul class="media-list">
-            <li class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="../img/img01.png"
-                         alt="媒体对象">
+            <li class="media feature-wrapper-odd">
+                <a class="media-left">
+                <img class="media-object" src="../img/img01.png" alt="媒体对象">
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">媒体标题</h4>
@@ -110,7 +120,7 @@
                     这是一些示例文本。这是一些示例文本。
                 </div>
             </li>
-            <li class="media">
+            <li class="media feature-wrapper-mean">
                 <a class="pull-right" href="#">
                     <img class="media-object" src="../img/img02.png"
                          alt="媒体对象">
@@ -124,7 +134,7 @@
                     这是一些示例文本。这是一些示例文本。
                 </div>
             </li>
-            <li class="media">
+            <li class="media feature-wrapper-odd">
                 <a class="pull-left" href="#">
                     <img class="media-object" src="../img/img03.png"
                          alt="媒体对象">
