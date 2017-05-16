@@ -86,6 +86,7 @@ public class BaseStock implements Serializable{
     }
 
     public BaseStock(BaseStockEve baseStockEve) {
+        this.stockID = new StockID(baseStockEve.getCode(),baseStockEve.getDate());
         this.name = baseStockEve.getName();
         //这里默认给SZ
         this.market = Market.SZ;

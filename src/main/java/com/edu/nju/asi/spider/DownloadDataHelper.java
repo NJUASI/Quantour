@@ -103,6 +103,7 @@ public class DownloadDataHelper {
                     }
                     BaseStockEve baseStockEve = new BaseStockEve();
                     baseStockEve.setCode(reader.get(1));
+                    baseStockEve.setName(reader.get(2));
                     baseStockEve.setDate(reader.get(0));
                     baseStockEve.setOpen(reader.get(6));
                     baseStockEve.setClose(reader.get(3));

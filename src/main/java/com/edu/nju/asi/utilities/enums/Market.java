@@ -8,7 +8,7 @@ package com.edu.nju.asi.utilities.enums;
  */
 public enum Market {
 
-    SZ(0);
+    SZ(0), SH(1);
 
     private int repre;
 

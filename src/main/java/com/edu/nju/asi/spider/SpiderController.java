@@ -10,6 +10,8 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.utils.HttpConstant;
 
+import java.time.LocalDate;
+
 
 /**
  * Created by Harvey on 2017/5/16.
@@ -27,21 +29,21 @@ public class SpiderController {
         StockDownloader stockDownloader = new StockDownloader();
 
         //先下载全部的普通股票数据
-//        downloadAllNormalStocks(allNormalStocksPath);
+        downloadAllNormalStocks(allNormalStocksPath);
         //再保存全部的普通数据
-//        downloadDataHelper.normalStockStore(allNormalStocksPath);
+        downloadDataHelper.normalStockStore(allNormalStocksPath);
         //下载全部的基准股票数据
-//        stockDownloader.downLoadBaseStock(allBaseStocksPath, LocalDate.of(2017,1,1), LocalDate.now());
+        stockDownloader.downLoadBaseStock(allBaseStocksPath, LocalDate.of(2017,1,1), LocalDate.now());
         //保存全部的基准股票数据
-//        downloadDataHelper.baseStockStore(allBaseStocksPath);
+        downloadDataHelper.baseStockStore(allBaseStocksPath);
         //下载当天的普通股票数据
         downloadTodayNormalStocks(todayNormalStocksPath);
         //保存当天的普通股票数据
         downloadDataHelper.normalStockStore(todayNormalStocksPath);
         //下载当天的基准股票数据
-//        stockDownloader.downLoadBaseStock(todayBaseStocksPath, LocalDate.now(), LocalDate.now());
+        stockDownloader.downLoadBaseStock(todayBaseStocksPath, LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
         //保存当天的基准股票数据
-//        downloadDataHelper.baseStockStore(todayBaseStocksPath);
+        downloadDataHelper.baseStockStore(todayBaseStocksPath);
 
     }
 
@@ -59,7 +61,7 @@ public class SpiderController {
                 //下载每天的数据
                 .addPipeline(new StockDownloadPipeline(todayNormalStocksPath))
                 //更新代码和名称
-//                .addPipeline(new Code_NamePipeline())
+                .addPipeline(new Code_NamePipeline())
                 //开启1个线程抓取
                 .thread(1)
                 //启动爬虫

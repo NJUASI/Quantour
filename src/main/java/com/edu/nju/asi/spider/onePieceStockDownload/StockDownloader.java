@@ -44,7 +44,6 @@ public class StockDownloader {
                 try {
                     downLoadFromUrl(url,savePath,baseCodes.get(i));
                     isSuccess = true;
-                    dataHelper.baseStockStore(savePath+File.separator+baseCodes.get(i).substring(1)+".csv");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

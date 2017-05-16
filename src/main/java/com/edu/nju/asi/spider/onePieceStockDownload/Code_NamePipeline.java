@@ -1,6 +1,7 @@
 package com.edu.nju.asi.spider.onePieceStockDownload;
 
 import com.edu.nju.asi.spider.Model.Code_Name;
+import com.edu.nju.asi.utilities.enums.Market;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
@@ -22,10 +23,21 @@ public class Code_NamePipeline implements Pipeline {
         }
     }
 
+    public static String ascii2native(String ascii) {
+        int n = ascii.length() / 6;
+        StringBuilder sb = new StringBuilder(n);
+        for (int i = 0, j = 2; i < n; i++, j += 6) {
+            String code = ascii.substring(j, j + 4);
+            char ch = (char) Integer.parseInt(code, 16);
+            sb.append(ch);
+        }
+        return sb.toString();
+    }
+
     public boolean addCode_Name(Code_Name code_name){
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO code_name(code, name, spell, type)" +
+        String sql = "INSERT INTO stocksearch(code, market, name, firstLetters)" +
                 "VALUES(?,?,?,?)";
         boolean result = true;
 
@@ -33,9 +45,10 @@ public class Code_NamePipeline implements Pipeline {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,code_name.getCode());
-            preparedStatement.setString(2,code_name.getName());
-            preparedStatement.setString(3,code_name.getSpell());
-            preparedStatement.setString(4,code_name.getType());
+            preparedStatement.setInt(2,Market.valueOf(code_name.getType()).getRepre());
+            preparedStatement.setString(3,ascii2native(code_name.getName()));
+            System.out.println(ascii2native(code_name.getName()));
+            preparedStatement.setString(4,code_name.getSpell());
             preparedStatement.addBatch();
             preparedStatement.executeBatch();
             connection.commit();
