@@ -88,7 +88,6 @@ function createCandlestickChart(id, candlestickData, volumes) {
                 type: 'category',
                 data: data.categoryData,
                 scale: true,
-                boundaryGap: false,
                 axisLine: {onZero: false},
                 splitLine: {show: false},
                 axisLabel: {show: false},
@@ -255,6 +254,7 @@ function createLineChart(id, lineData, title, legend) {
             var item = {
                 name: legend[i],
                 type: 'line',
+                smooth: true,
                 data: dataAll[i].values
             };
             series.push(item);
@@ -296,13 +296,13 @@ function createLineChart(id, lineData, title, legend) {
         dataZoom: [
             {
                 type: 'inside',
-                start: 50,
+                start: 1,
                 end: 100
             },
             {
                 type: 'slider',
-                show: false,
-                start: 50,
+                show: true,
+                start: 1,
                 end: 100
             }
         ],
@@ -533,6 +533,9 @@ function createHistogramChart(id, data,title) {
     var histogramChart = echarts.init(document.getElementById(id));
 
     var option = {
+        title:{
+            text: title
+        },
         tooltip : {
             trigger: 'axis',
             axisPointer : {
