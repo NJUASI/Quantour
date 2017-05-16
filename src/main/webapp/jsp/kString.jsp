@@ -138,8 +138,14 @@
                style="margin-top: 15px;margin-left: -40px;" value="查看区间"/>
         </button>
     </div>
-    <div id = "candlestick_chart" style="width:100%;height:600px"></div>
 </div>
+<div class="row">
+    <div class="col-md-offset-2 col-md-8">
+        <div id="candlestick_chart"></div>
+    </div>
+</div>
+
+
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>

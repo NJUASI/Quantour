@@ -18,16 +18,14 @@ function login() {
         data: JSON.stringify(jsonData),
 
         success: function (result) {
-            alert(result);
-            alert(JSON.stringify(jsonData));
+
             var array = result.split(";");
 
             if (array[0] == "1") {
                 alert("666");
                 window.location.href = "/welcome?id=" + userName;
             } else if (array[0] == "-1") {
-                // 提示错误信息
-                alert(array[1]);
+                $("#errorMessageField").html("账号或密码错误");
             } else {
                 alert("未知错误类型orz");
             }

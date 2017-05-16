@@ -20,9 +20,9 @@ public class StockDownloader {
 
     //下载三只基准股票全部的数据
     public void downLoadBaseStock(String savePath, LocalDate startDay, LocalDate today){
-        DownloadDataHelper dataHelper = new DownloadDataHelper();
 
         List<String> baseCodes = new ArrayList<>();
+
         baseCodes.add("1000001");
         baseCodes.add("1399001");
         baseCodes.add("1399300");
@@ -35,20 +35,40 @@ public class StockDownloader {
         String start = startDay.format(formatter);
         String end = today.format(formatter);
 
-        boolean isSuccess = false;
+        boolean isSuccess1 = false;
+        boolean isSuccess2 = false;
+        boolean isSuccess3 = false;
 
-        //下载三只基准股票数据
-        for(int i = 0; i < baseCodes.size(); i++){
-            String url = prefix+"code="+baseCodes.get(i)+"&start="+start+"&end="+end+suffix;
-            while(!isSuccess){
-                try {
-                    downLoadFromUrl(url,savePath,baseCodes.get(i));
-                    isSuccess = true;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        String url = prefix+"code="+baseCodes.get(0)+"&start="+start+"&end="+end+suffix;
+        while(!isSuccess1){
+            try {
+                downLoadFromUrl(url,savePath,baseCodes.get(0));
+                isSuccess1 = true;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+
+        url = prefix+"code="+baseCodes.get(1)+"&start="+start+"&end="+end+suffix;
+        while(!isSuccess2){
+            try {
+                downLoadFromUrl(url,savePath,baseCodes.get(1));
+                isSuccess2 = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        url = prefix+"code="+baseCodes.get(2)+"&start="+start+"&end="+end+suffix;
+        while(!isSuccess3){
+            try {
+                downLoadFromUrl(url,savePath,baseCodes.get(2));
+                isSuccess3 = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     /**
@@ -67,7 +87,7 @@ public class StockDownloader {
         conn.setRequestProperty("Connection", "keep-alive");
         conn.setRequestProperty("Upgrade-Insecure-Requests", "1");
         //设置超时间为3秒
-        conn.setConnectTimeout(600000);
+        conn.setConnectTimeout(60000);
 
         System.out.println(conn.getResponseMessage());
 

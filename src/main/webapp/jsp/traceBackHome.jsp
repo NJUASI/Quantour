@@ -61,9 +61,9 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">首页</a></li>
-                <li><a href="/stocks">大盘详情</a></li>
-                <li><a href="/trace_back_home" style="color: #4cae4c">量化社区</a></li>
+                <li><a href="#">首页</a></li>
+                <li><a href="#">大盘详情</a></li>
+                <li><a href="#" style="color: #4cae4c">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <li><a href="#">用户</a></li>
             </ul>
@@ -283,12 +283,12 @@
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
         <li><a href="#circlePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
         <li><a href="#detailPanel" role="tab" data-toggle="tab">交易详情</a></li>
-        <li><a href="#winRatePanel" role="tab" data-toggle="tab">赢率分布</a></li>
+        <li><a href="#winRatePanel" role="tab" data-toggle="tab">相对赢率分布</a></li>
+        <li><a href="#absoluteRatePanel" role="tab" data-toggle="tab">绝对赢率分布</a></li>
     </ul>
 </div>
 <!-- 选项卡面板 -->
 <div id="myTabContent" class="col-md-10 col-lg-offset-1 tab-content">
-
 
     <div class="tab-pane active" id="chartPanel">
         <div class="col-md-12 table-responsive">
@@ -343,20 +343,98 @@
             <div id="main" class="col-md-12" style="height:500px"></div>
         </div>
     </div>
-    <div class="tab-pane" id="circlePanel">规则内容面板</div>
+
+
+    <div class="tab-pane row" id="circlePanel">
+
+    </div>
     <div class="tab-pane" id="detailPanel">论坛内容面板</div>
     <div class="tab-pane" id="winRatePanel">
 
+        <div class="row">
+            <div class="col-md-3 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <caption class="text-center"><h3>相对</h3></caption>
+                    <thead>
+                    <tr>
+                        <th>周期</th>
+                        <th>超额收益</th>
+                        <th>1年内胜率</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Bangalore</td>
+                        <td>560001</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Bangalore</td>
+                        <td>560001</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Bangalore</td>
+                        <td>560001</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-7 col-md-offset-1">
             <div class="row">
-
-
-
+                <div id="candlestick" class="col-md-12" style="width:800px;height:400px"></div>
+                <div id="candlestick2" class="col-md-12" style="width: 800px;height:400px"></div>
+            </div>
+            </div>
         </div>
 
     </div>
+    <div class="tab-pane" id="absoluteRatePanel">
+
+            <div class="row">
+                <div class="col-md-3 table-responsive">
+                    <table class="table table-hover table-condensed">
+                        <caption class="text-center"><h3>绝对</h3></caption>
+                        <thead>
+                        <tr>
+                            <th>周期</th>
+                            <th>超额收益</th>
+                            <th>1年内胜率</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-7 col-md-offset-1">
+                    <div class="row">
+                        <div id="candlestick3" class="col-md-12" style="width:800px;height:400px"></div>
+                        <div id="candlestick4" class="col-md-12" style="width: 800px;height:400px"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 </div>
 </div>
-<div id="candlestick" class="col-md-offset-1 col-md-10" style="height:600px"></div>
+
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
@@ -563,7 +641,115 @@
         ['30', '0.17'],
         ['31', '0.15']];
 
-    createAreaChart("candlestick", data, '胜率');
+    createAreaChart("candlestick", data, '超额收益');
+
+
+
+
+
+    var data2 = [['0', '0.23'],
+        ['1', '0.12'],
+        ['2', '0.19'],
+        ['3', '0.27'],
+        ['4', '0.31'],
+        ['5', '0.34'],
+        ['6', '0.76'],
+        ['7', '0.45'],
+        ['8', '0.76'],
+        ['9', '0.23'],
+        ['10', '0.18'],
+        ['11', '0.38'],
+        ['12', '0.45'],
+        ['14', '0.27'],
+        ['15', '0.34'],
+        ['16', '0.09'],
+        ['17', '-0.02'],
+        ['18', '-0.12'],
+        ['19', '-0.27'],
+        ['20', '-0.08'],
+        ['21', '0.01'],
+        ['22', '0.06'],
+        ['23', '0.12'],
+        ['24', '0.13'],
+        ['25', '0.18'],
+        ['26', '0.12'],
+        ['27', '0.11'],
+        ['28', '0.1'],
+        ['29', '0.14'],
+        ['30', '0.17'],
+        ['31', '0.15']];
+
+    createAreaChart("candlestick2", data2, '胜率');
+
+
+    var data3 = [['0', '0.23'],
+        ['1', '0.12'],
+        ['2', '0.19'],
+        ['3', '0.27'],
+        ['4', '0.31'],
+        ['5', '0.34'],
+        ['6', '0.76'],
+        ['7', '0.45'],
+        ['8', '0.76'],
+        ['9', '0.23'],
+        ['10', '0.18'],
+        ['11', '0.38'],
+        ['12', '0.45'],
+        ['14', '0.27'],
+        ['15', '0.34'],
+        ['16', '0.09'],
+        ['17', '-0.02'],
+        ['18', '-0.12'],
+        ['19', '-0.27'],
+        ['20', '-0.08'],
+        ['21', '0.01'],
+        ['22', '0.06'],
+        ['23', '0.12'],
+        ['24', '0.13'],
+        ['25', '0.18'],
+        ['26', '0.12'],
+        ['27', '0.11'],
+        ['28', '0.1'],
+        ['29', '0.14'],
+        ['30', '0.17'],
+        ['31', '0.15']];
+
+    createAreaChart("candlestick3", data3, '超额收益');
+
+
+    var data4 = [['0', '0.23'],
+        ['1', '0.12'],
+        ['2', '0.19'],
+        ['3', '0.27'],
+        ['4', '0.31'],
+        ['5', '0.34'],
+        ['6', '0.76'],
+        ['7', '0.45'],
+        ['8', '0.76'],
+        ['9', '0.23'],
+        ['10', '0.18'],
+        ['11', '0.38'],
+        ['12', '0.45'],
+        ['14', '0.27'],
+        ['15', '0.34'],
+        ['16', '0.09'],
+        ['17', '-0.02'],
+        ['18', '-0.12'],
+        ['19', '-0.27'],
+        ['20', '-0.08'],
+        ['21', '0.01'],
+        ['22', '0.06'],
+        ['23', '0.12'],
+        ['24', '0.13'],
+        ['25', '0.18'],
+        ['26', '0.12'],
+        ['27', '0.11'],
+        ['28', '0.1'],
+        ['29', '0.14'],
+        ['30', '0.17'],
+        ['31', '0.15']];
+
+    createAreaChart("candlestick4", data4, '胜率');
 
 </script>
 

@@ -46,7 +46,7 @@ public class DownloadDataHelper {
                 while(reader.readRecord()){
                     NormalStock normalStock = new NormalStock();
                     //当天未开盘，不存入数据库中
-                    if (reader.get(3).equals("0")){
+                    if (reader.get(3).equals("0") || reader.get(8).equals("None")){
                         continue;
                     }
                     normalStock.setCode(reader.get(1));
@@ -98,7 +98,7 @@ public class DownloadDataHelper {
                 //逐条读取记录
                 while(reader.readRecord()){
                     //当天未开盘，不存入数据库中
-                    if (reader.get(3).equals("0")){
+                    if (reader.get(3).equals("0") || reader.get(8).equals("None")){
                         continue;
                     }
                     BaseStockEve baseStockEve = new BaseStockEve();
