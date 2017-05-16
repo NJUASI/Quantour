@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -171,6 +172,29 @@ public class JsonConverter {
         result.add(JsonConverter.jsonOfObject(data1));
         result.add(JsonConverter.jsonOfObject(data2));
         return result;
+    }
+
+    /**
+     *
+     * 将数据集合变成json-String(用于比较的图)
+     *
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     * @return String 转换后的json
+     */
+    public static String convertComparision(Map<LocalDate,Double> map) throws JsonProcessingException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
+        List<List<String>> result = new ArrayList<>();
+
+        for(LocalDate localDate : map.keySet()){
+            List<String> temp = new ArrayList<>();
+            temp.add(dateFormat.format(localDate));
+            temp.add(String.valueOf(map.get(localDate)));
+            result.add(temp);
+        }
+        return JsonConverter.jsonOfObject(result);
     }
 
     /**
