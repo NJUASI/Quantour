@@ -4,8 +4,4 @@ target/*
 
 .attachments/*
 
-!.attachments/userInfo.properties
-
-!.attachments/*/*.txt
-
-.idea/dataSources.local.xml
+src/main/resources/quantour.sql

@@ -1,4 +1,4 @@
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 61990
@@ -29,12 +29,6 @@
     <style rel="stylesheet" type="text/css">
 
 
-        .picture {
-            height: 200px;
-            width: 200px;
-            margin: 10px auto;
-        }
-
         .userBlock {
             margin-top: 20px;
             padding-right: 0;
@@ -42,18 +36,12 @@
 
         }
 
-        .messageBlock {
-            margin-top: 10px;
-            padding-right: 0;
-            padding-left: 0;
-        }
-
         .inputBlock {
             margin-top: 20px;
             margin-bottom: 10px;
         }
 
-        .panel-title{
+        .panel-title {
             margin-bottom: 0;
             margin-top: 0;
         }
@@ -289,7 +277,86 @@
     </div>
 
 </form>
+<div class="row">
 
+    <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-tabs" role="tablist">
+        <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
+        <li><a href="#circlePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
+        <li><a href="#detailPanel" role="tab" data-toggle="tab">交易详情</a></li>
+        <li><a href="#winRatePanel" role="tab" data-toggle="tab">赢率分布</a></li>
+    </ul>
+</div>
+<!-- 选项卡面板 -->
+<div id="myTabContent" class="col-md-10 col-lg-offset-1 tab-content">
+
+
+    <div class="tab-pane active" id="chartPanel">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th>投资组合</th>
+                    <th>总收益</th>
+                    <th>年化收益</th>
+                    <th>夏普比率</th>
+                    <th>最大回撤率</th>
+                    <th>收益波动率</th>
+                    <th>贝塔率</th>
+                    <th>阿尔法比率</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>本策略</td>
+                    <td>Bangalore</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                </tr>
+                <tr>
+                    <td>沪深300</td>
+                    <td>Bangalore</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                </tr>
+                <tr>
+                    <td>相对收益</td>
+                    <td>Bangalore</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                    <td>560001</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div id="main" class="col-md-12" style="height:500px"></div>
+        </div>
+    </div>
+    <div class="tab-pane" id="circlePanel">规则内容面板</div>
+    <div class="tab-pane" id="detailPanel">论坛内容面板</div>
+    <div class="tab-pane" id="winRatePanel">
+
+            <div class="row">
+
+
+
+        </div>
+
+    </div>
+</div>
+</div>
+<div id="candlestick" class="col-md-offset-1 col-md-10" style="height:600px"></div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
@@ -297,6 +364,9 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 <script src="../js/traceBack.js"></script>
+
+<script src="../js/echarts.min.js"></script>
+<script src="../js/chart.js"></script>
 
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
@@ -390,6 +460,110 @@
             }
         }
     });
+
+
+    var strategyData = [['2015/7/1', '0'],
+        ['2015/7/2', '0.005'],
+        ['2015/7/3', '0.001'],
+        ['2015/7/4', '-0.002'],
+        ['2015/7/5', '-0.03'],
+        ['2015/7/6', '-0.12'],
+        ['2015/7/7', '-0.05'],
+        ['2015/7/8', '-0.01'],
+        ['2015/7/9', '0.1'],
+        ['2015/7/10', '0.15'],
+        ['2015/7/11', '-0.03'],
+        ['2015/7/12', '-0.09'],
+        ['2015/7/13', '-0.12'],
+        ['2015/7/14', '-0.15'],
+        ['2015/7/15', '0.13'],
+        ['2015/7/16', '0.23'],
+        ['2015/7/17', '0.29'],
+        ['2015/7/18', '0.31'],
+        ['2015/7/19', '0.29'],
+        ['2015/7/20', '0.3'],
+        ['2015/7/21', '0.25'],
+        ['2015/7/22', '0.23'],
+        ['2015/7/23', '0.2'],
+        ['2015/7/24', '0.24'],
+        ['2015/7/25', '0.26'],
+        ['2015/7/26', '0.29'],
+        ['2015/7/27', '0.34'],
+        ['2015/7/28', '0.39'],
+        ['2015/7/29', '0.4'],
+        ['2015/7/30', '0.38'],
+        ['2015/7/31', '0.36']];
+    var baseData = [['2015/7/1', '0'],
+        ['2015/7/2', '0.001'],
+        ['2015/7/3', '0.007'],
+        ['2015/7/4', '-0.012'],
+        ['2015/7/5', '-0.0312'],
+        ['2015/7/6', '-0.23'],
+        ['2015/7/7', '-0.12'],
+        ['2015/7/8', '-0.06'],
+        ['2015/7/9', '0.1'],
+        ['2015/7/10', '0.19'],
+        ['2015/7/11', '0.13'],
+        ['2015/7/12', '0.1'],
+        ['2015/7/13', '0.12'],
+        ['2015/7/14', '0.19'],
+        ['2015/7/15', '0.21'],
+        ['2015/7/16', '0.23'],
+        ['2015/7/17', '0.25'],
+        ['2015/7/18', '0.11'],
+        ['2015/7/19', '0.2'],
+        ['2015/7/20', '0.23'],
+        ['2015/7/21', '0.28'],
+        ['2015/7/22', '0.25'],
+        ['2015/7/23', '0.29'],
+        ['2015/7/24', '0.3'],
+        ['2015/7/25', '0.31'],
+        ['2015/7/26', '0.34'],
+        ['2015/7/27', '0.37'],
+        ['2015/7/28', '0.39'],
+        ['2015/7/29', '0.4'],
+        ['2015/7/30', '0.41'],
+        ['2015/7/31', '0.42']];
+
+    var startX = '2015/7/10';
+    var endX = '2015/7/14';
+    var legend = ['策略', '基准'];
+    var chart = createTraceBackChart('main', strategyData, baseData, legend, startX, endX);
+
+
+    var data = [['0', '0.23'],
+        ['1', '0.12'],
+        ['2', '0.19'],
+        ['3', '0.27'],
+        ['4', '0.31'],
+        ['5', '0.34'],
+        ['6', '0.76'],
+        ['7', '0.45'],
+        ['8', '0.76'],
+        ['9', '0.23'],
+        ['10', '0.18'],
+        ['11', '0.38'],
+        ['12', '0.45'],
+        ['14', '0.27'],
+        ['15', '0.34'],
+        ['16', '0.09'],
+        ['17', '-0.02'],
+        ['18', '-0.12'],
+        ['19', '-0.27'],
+        ['20', '-0.08'],
+        ['21', '0.01'],
+        ['22', '0.06'],
+        ['23', '0.12'],
+        ['24', '0.13'],
+        ['25', '0.18'],
+        ['26', '0.12'],
+        ['27', '0.11'],
+        ['28', '0.1'],
+        ['29', '0.14'],
+        ['30', '0.17'],
+        ['31', '0.15']];
+
+    createAreaChart("candlestick", data, '胜率');
 
 </script>
 
