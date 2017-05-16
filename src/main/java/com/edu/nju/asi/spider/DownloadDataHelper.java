@@ -13,6 +13,7 @@ import com.edu.nju.asi.spider.Model.NormalStock;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class DownloadDataHelper {
             List<Stock> stocks = new ArrayList<>();
 
             try {
-                CsvReader reader = new CsvReader(path+File.separator+files[i].getName());
+                CsvReader reader = new CsvReader(path+File.separator+files[i].getName(),',',Charset.forName("GBK"));
                 //读取表头
                 reader.readHeaders();
                 //逐条读取记录
@@ -50,6 +51,7 @@ public class DownloadDataHelper {
                     }
                     normalStock.setCode(reader.get(1));
                     normalStock.setName(reader.get(2));
+                    System.out.println(reader.get(2));
                     normalStock.setDate(reader.get(0));
                     normalStock.setOpen(reader.get(6));
                     normalStock.setClose(reader.get(3));
@@ -90,7 +92,7 @@ public class DownloadDataHelper {
             List<BaseStock> baseStockEves = new ArrayList<>();
 
             try {
-                CsvReader reader = new CsvReader(path+File.separator+files[i].getName());
+                CsvReader reader = new CsvReader(path+File.separator+files[i].getName(),',',Charset.forName("GBK"));
                 //读取表头
                 reader.readHeaders();
                 //逐条读取记录

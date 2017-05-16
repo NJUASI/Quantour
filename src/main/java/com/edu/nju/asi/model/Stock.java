@@ -112,6 +112,7 @@ public class Stock implements Serializable {
     }
 
     public Stock(NormalStock normalStock) {
+        this.stockID = new StockID(normalStock.getCode(),normalStock.getDate());
         this.name = normalStock.getName();
         //这里默认给深圳
         this.market = Market.SZ;
