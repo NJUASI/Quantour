@@ -1,20 +1,22 @@
 package com.edu.nju.asi.spider;
 
+import com.edu.nju.asi.spider.Model.BaseStock;
+import com.edu.nju.asi.spider.Model.NormalStock;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.Json;
 import us.codecraft.webmagic.utils.HttpConstant;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StockPageProcessor implements PageProcessor {
 
-    static String First_Page = "http://quotes\\.money\\.163\\.com/hs/realtimedata/service/rank.php\\?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query&callback=callback_50111322&req=1428";
+    static String First_Page = "http://quotes\\.money\\.163\\.com/hs/realtimedata/service/rank.php\\?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query";
     static String CODE_LIST = "http://quotes\\.money\\.163\\.com/hs/.*";
     static String ALL_LIST = "http://quotes\\.money\\.163\\.com/trade/lsjysj_\\d{6}.html#01b07";
     static String DETAIL = "http://quotes\\.money\\.163\\.com/trade/lsjysj_\\d{6}.html\\?year=\\d{4}&season=\\d";
@@ -26,7 +28,10 @@ public class StockPageProcessor implements PageProcessor {
 
     int totalStocks = 0;
 
-    SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+    //默认开始年份
+    int default_startYear = 2007;
+    //默认开始季度
+    int default_startSeason = 1;
 
     //结束年份
     int endYear = 2017;
@@ -36,14 +41,9 @@ public class StockPageProcessor implements PageProcessor {
     //部分一：抓取网站的相关配置，包括编码、抓取间隔、重试次数等
     private Site site = Site.me()
             .setCharset("utf-8")
-            //addHeader
-//            .addHeader("Accept","*/*")
-//            .addHeader("Accept-Encoding","gzip, deflate, sdch")
-//            .addHeader("Connection","keep-alive")
-//            .addHeader("Host","money.163.com")
-
             .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36")
-            .setRetryTimes(3)
+            .setTimeOut(600000)
+            .setRetryTimes(5)
             .setSleepTime(100);
 
     @Override
@@ -52,13 +52,8 @@ public class StockPageProcessor implements PageProcessor {
 
         //单只股票单季度的页面
         if (page.getUrl().regex(DETAIL).match()) {
-
-            //名称
-            String name = page.getHtml().xpath("//div[@class=\"stock_info\"]//h1/a/text()").get();
-
             //代码
             String code = page.getHtml().xpath("//div[@class=\"stock_info\"]//h1/span/a/text()").get();
-
             //日期
             List<String> dates = page.getHtml().xpath("//div[@class=\"inner_box\"]//tbody/tr/td[1]/text()").all();
             //开盘价
@@ -82,10 +77,16 @@ public class StockPageProcessor implements PageProcessor {
             //换手率
             List<String> turnOverRate = page.getHtml().xpath("//div[@class=\"inner_box\"]//tbody/tr/td[11]/text()").all();
 
-            //部分二：定义如何抽取页面信息，并保存下来
+            System.out.println(high.size()+"------------------------");
+
+            //保存
+            List<NormalStock> normalStocks = new ArrayList<>();
             for (int i = 0; i < dates.size(); i++) {
-                System.out.println(dates.get(i) + "   " + volume.get(i));
+                normalStocks.add(new NormalStock(code,dates.get(i),open.get(i),close.get(i),high.get(i),low.get(i),fluctuation.get(i),
+                        changRate.get(i),volume.get(i),amount.get(i),swingRate.get(i),turnOverRate.get(i)));
             }
+
+            page.putField("normalStocks", normalStocks);
         }
         //获取单只股票上市日期的页面
         else if (page.getUrl().regex(ALL_LIST).match()) {
@@ -94,11 +95,17 @@ public class StockPageProcessor implements PageProcessor {
             //上市日期
             String startDate = page.getHtml().regex("<input\\stype=\"radio\"\\sname=\"date_start_type\"\\svalue=\"(\\d{4}-\\d{2}-\\d{2})\">").get();
 
+            //说明为今日发行的新股
+            if(startDate.split("-").length == 1){
+                page.setSkip(true);
+            }
+
             System.out.println(startDate);
 
             int startYear = new Integer(startDate.split("-")[0]);
             int startMonth = new Integer(startDate.split("-")[1]);
             int startSeason = 1;
+
             //判断季度
             switch (startMonth){
                 case 1:
@@ -132,9 +139,9 @@ public class StockPageProcessor implements PageProcessor {
                     }
                     else if(i == endYear && j == endSeason){
                         j = endSeason;
+                        page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+code+".html?year=+"+i+"&season="+j);
                         break;
                     }
-                    System.out.println("年份:"+i+"     "+"月份:"+j+"\n"+"-----------------------------------");
                     page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+code+".html?year=+"+i+"&season="+j);
                 }
             }
@@ -142,14 +149,20 @@ public class StockPageProcessor implements PageProcessor {
         //获取所有股票代码的页面
         else if (page.getUrl().regex(CODE_LIST).match() && firstDone){
             List<String> codes = new ArrayList<>();
-            int count = Integer.parseInt(page.getJson().removePadding("callback_50111322").jsonPath("$.count").get());
+
+            Json json = page.getJson();
+            int count = Integer.parseInt(json.jsonPath("$.count").get());
             for(int j = 0; j < count; j++){
-                codes.add(page.getJson().removePadding("callback_50111322").jsonPath("$.list["+j+"].SYMBOL").get());
+                String tempCode = json.jsonPath("$.list["+j+"].SYMBOL").get();
+                //过滤掉基金
+                if(!tempCode.startsWith("150") && !tempCode.startsWith("159") && !tempCode.startsWith("16") && !tempCode.startsWith("50")){
+                    codes.add(tempCode);
+                }
             }
 
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
-                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
+                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
             }
 
             totalStocks += codes.size();
@@ -158,8 +171,11 @@ public class StockPageProcessor implements PageProcessor {
         //获取总页数的页面
         else if (page.getUrl().regex(First_Page).match() && !firstDone){
             System.out.println(page.getJson());
-            int total = Integer.parseInt(page.getJson().removePadding("callback_50111322").jsonPath("$.total").get());
-            int pages = Integer.parseInt(page.getJson().removePadding("callback_50111322").jsonPath("$.pagecount").get());
+
+            Json json = page.getJson();
+
+            int total = Integer.parseInt(json.jsonPath("$.total").get());
+            int pages = Integer.parseInt(json.jsonPath("$.pageCount").get());
             //最后一页显示的股票数
             int lastPageCount = total - (count*(pages-1));
 
@@ -169,19 +185,23 @@ public class StockPageProcessor implements PageProcessor {
                 if(i == pages-1){
                     pagecount = lastPageCount;
                 }
-                page.addTargetRequest("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page="+i+"&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count="+pagecount+"&type=query&callback=callback_50111322&req=1428");
+                page.addTargetRequest("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page="+i+"&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count="+pagecount+"&type=query");
             }
 
             //抓取第一个页面的code，因为之后会被去重
             List<String> codes = new ArrayList<>();
-            int count = Integer.parseInt(page.getJson().removePadding("callback_50111322").jsonPath("$.count").get());
+            int count = Integer.parseInt(json.jsonPath("$.count").get());
             for(int j = 0; j < count; j++){
-                codes.add(page.getJson().removePadding("callback_50111322").jsonPath("$.list["+j+"].SYMBOL").get());
+                String tempCode = json.jsonPath("$.list["+j+"].SYMBOL").get();
+                //过滤掉基金
+                if(!tempCode.startsWith("150")){
+                    codes.add(tempCode);
+                }
             }
 
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
-                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
+                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
             }
 
             totalStocks += codes.size();
@@ -198,7 +218,7 @@ public class StockPageProcessor implements PageProcessor {
 
     public static void main(String[] args) {
         Request request = new Request();
-        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query&callback=callback_50111322&req=1428");
+        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
         request.setMethod(HttpConstant.Method.GET);
 
         Spider.create(new StockPageProcessor())
