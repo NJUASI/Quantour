@@ -312,10 +312,13 @@ public class StockController {
             System.out.println("Success");
             System.out.println(JsonConverter.convertComparision(result.get(0).closes));
             System.out.println(JsonConverter.convertComparision(result.get(1).closes));
-            System.out.println(JsonConverter.jsonOfObject(list1));
 
-            return JsonConverter.jsonOfObject(list1);
-        } else return "-1;服务器开了一个小差。。请稍后重试";
+            return JsonConverter.convertComparision(result.get(0).closes);
+        } else
+
+    {
+        return "-1";
+    }
     }
 
 
