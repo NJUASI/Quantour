@@ -3,7 +3,7 @@
   <component name="dataSourceStorageLocal">
     <data-source name="jdbc:mysql://localhost:3306/quantour?serverTimezone=GMT%2b8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;useServerPrepStmts=false&amp;rewriteBatchedStatements=true" uuid="e955669b-266f-4bdc-b853-2612ef7e2114">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-      <introspection-schemas>*:quantour</introspection-schemas>
+      <secret-storage>memory</secret-storage>
     </data-source>
   </component>
 </project>

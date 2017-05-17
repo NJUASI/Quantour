@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -87,12 +88,21 @@
                 <li><a href="/stocks">大盘详情</a></li>
                 <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
+                <c:choose>
+                    <c:when test="${user}">
+                        <li><a href="#" data-toggle="modal" data-target="#login">用戶管理</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
+                    </c:otherwise>
+                </c:choose>
+
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
 </header>
+
 <div class="content">
     <div class="container-fluid">
         <ul class="media-list">
