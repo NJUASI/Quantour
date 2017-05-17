@@ -8,6 +8,7 @@ import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.StockSituationService;
 import com.edu.nju.asi.utilities.LocalDateHelper;
+import com.edu.nju.asi.utilities.NumberFormat;
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.utilities.tempHolder.StockComparisionCriteriaTempHolder;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -213,6 +215,12 @@ public class StockController {
         if (result != null) {
             ModelAndView mv = new ModelAndView("stockComparision");
             try {
+                // 数值型对比信息
+                mv.addObject("stockCompareNum1", convertcomparisionNumVal(result.get(0)));
+                mv.addObject("stockCompareNum2", convertcomparisionNumVal(result.get(1)));
+
+
+                // 图表型对比信息
                 List<String> closes = new ArrayList<>();
                 closes.add(JsonConverter.jsonOfObject(result.get(0).closes));
                 closes.add(JsonConverter.jsonOfObject(result.get(1).closes));
@@ -277,5 +285,20 @@ public class StockController {
             System.out.println("Success");
             return "1;比较成功";
         } else return "-1;服务器开了一个小差。。请稍后重试";
+    }
+
+
+    private List<String> convertcomparisionNumVal(StockComparision comparision) {
+        List<String> result = new LinkedList<>();
+        result.add(NumberFormat.decimaFormat(comparision.max, 4));
+        result.add(NumberFormat.decimaFormat(comparision.min, 4));
+        result.add(NumberFormat.percentFormat(comparision.increaseMargin, 2));
+        result.add(NumberFormat.decimaFormat(comparision.logarithmicYieldVariance, 4));
+
+        for (String tempStr: result) {
+            System.out.println(tempStr);
+        }
+        return result;
+
     }
 }
