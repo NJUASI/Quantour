@@ -37,11 +37,29 @@ function traceback() {
         success: function (result) {
             alert(result);
             alert(JSON.stringify(jsonData));
-            var array = result.split(";");
 
+            var array = result.split(";");
             if (array[0] == "1") {
                 alert("666");
-                window.location.href = "/trace_back";
+
+                // 处理网页上要显示的信息
+                var numberValues = JSON.parse(array[1]);            // List<String>
+                var abReturnPeriod = JSON.parse(array[2]);          // ReturnPeriod
+                var reReturnPeriod = JSON.parse(array[3]);          // ReturnPeriod
+                var holdingDetails = JSON.parse(array[4]);          // List<HoldingDetail>
+                var certainFormates = JSON.parse(array[5]);         // List<ExcessAndWinRateDist>
+                var certainHoldings = JSON.parse(array[6]);         // List<ExcessAndWinRateDist>
+
+                // 处理图标的信息
+                var strategyData = JSON.parse(array[7]);            //List<List<String>>
+                var baseData = JSON.parse(array[8]);                //List<List<String>>
+                var abReturnPeriod = JSON.parse(array[9]);
+
+
+
+
+
+
             } else if (array[0] == "-1") {
                 // 提示错误信息
                 alert(array[1]);
