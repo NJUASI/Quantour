@@ -34,7 +34,7 @@ function getOneDate() {
 }
 
 
-function getOneStock() {
+function getSingleStockDetail() {
     var wantedStockCode = $("#stocks_id").val();
     alert("查看股票：" + wantedStockCode);
 

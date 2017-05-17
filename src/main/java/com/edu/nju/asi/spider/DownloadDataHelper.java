@@ -9,12 +9,15 @@ import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.spider.Model.BaseStockEve;
 import com.edu.nju.asi.spider.Model.NormalStock;
+import org.assertj.core.internal.BigDecimals;
 import org.assertj.core.internal.cglib.core.Local;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +68,7 @@ public class DownloadDataHelper {
 //                        }
                         normalStock.setCode(reader.get(1));
                         normalStock.setName(reader.get(2));
-                        System.out.println(reader.get(2));
+//                        System.out.println(reader.get(2));
                         normalStock.setDate(reader.get(0));
                         normalStock.setOpen(reader.get(6));
                         normalStock.setClose(reader.get(3));

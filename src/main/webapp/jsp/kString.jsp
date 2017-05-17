@@ -28,7 +28,6 @@
 
     <style rel="stylesheet" type="text/css">
 
-
         .stock {
             font-family: "Microsoft YaHei";
             font-size: large;
@@ -123,10 +122,7 @@
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
-
-        <input type="submit" class="btn btn-info"
-               style="margin-top: 15px;margin-left: -40px;" value="查看区间"/>
-        </button>
+        <input class="btn btn-info" onclick="getSingleStockDetail()" style="margin-top: 15px;margin-left: -40px;" value="查看区间"/>
     </div>
 </div>
 
@@ -167,7 +163,7 @@
             })
         }
     );
-    $("#stockDetail>li").addClass("col-md-3");
+    $("#stockDetail > li").addClass("col-md-3");
     var today = new Date();
 
     var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
@@ -195,11 +191,47 @@
         $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
     });
 
+
+
     var data1 = ${candlestickData};
     var data2 = ${volumeData};
 
     createCandlestickChart('candlestick_chart',data1,data2);
     <%--var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});--%>
+
+    function getSingleStockDetail() {
+        var wantedStockCode = $("#stockCode").val();
+        alert("查看股票：" + wantedStockCode);
+
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/stocks/" + wantedStockCode,
+            data:{
+                "startDate": $("#startDate"),
+                "endDate": $("#endDate")
+            },
+
+            success: function (result) {
+                alert(result);
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    alert("666");
+                    window.location.href = "/stocks/" + wantedStockCode;
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
+                }
+            },
+            error: function (result) {
+                alert(JSON.stringify(jsonData));
+                alert("错误" + result);
+            }
+        });
+    }
 
 
 </script>

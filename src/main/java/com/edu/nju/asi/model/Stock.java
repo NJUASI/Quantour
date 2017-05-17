@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -108,6 +109,8 @@ public class Stock implements Serializable {
     }
 
     public Stock(NormalStock normalStock) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");//格式化设置
+
         this.stockID = new StockID(normalStock.getCode(),normalStock.getDate());
         this.name = normalStock.getName();
         //这里默认给深圳
@@ -116,13 +119,13 @@ public class Stock implements Serializable {
         this.low = normalStock.getLow();
         this.close = normalStock.getClose();
         this.volume = new BigDecimal(normalStock.getVolume()).toString();
-        this.transactionAmount = new BigDecimal(normalStock.getAmount()).toString();
+        this.transactionAmount = decimalFormat.format(normalStock.getAmount());
         this.preClose = normalStock.getPreClose();
         this.increaseMargin = normalStock.getChangeRate();
         this.fluctuation = normalStock.getFluctuation();
         this.turnoverRate = normalStock.getTurnOverRate();
-        this.totalValue = new BigDecimal(normalStock.getMarketCap()).toString();
-        this.circulationMarketValue = new BigDecimal(normalStock.getMarketEquity()).toString();
+        this.totalValue = decimalFormat.format(normalStock.getMarketCap());
+        this.circulationMarketValue = decimalFormat.format(normalStock.getMarketEquity());
     }
 
     public StockID getStockID() {

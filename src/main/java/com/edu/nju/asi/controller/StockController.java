@@ -1,6 +1,7 @@
 package com.edu.nju.asi.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
 import com.edu.nju.asi.infoCarrier.StockComparision;
 import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
 import com.edu.nju.asi.model.Stock;
@@ -15,6 +16,7 @@ import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.utilities.tempHolder.StockComparisionCriteriaTempHolder;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.assertj.core.internal.cglib.core.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -175,23 +177,25 @@ public class StockController {
     @PostMapping(value = "/{id}", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
     String reqGetOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
-        LocalDate thisDate;
-        String date = request.getParameter("date");
+        LocalDate endDate =  LocalDate.parse(request.getParameter("endDate"));
+        LocalDate startDate = null;
 
         // 默认获取当天
-        if (date == null) {
+        if (endDate == null) {
             System.out.println("默认从行情界面进入，显示最新的。。");
-            thisDate = nowDate;
+            endDate = nowDate;
+            startDate = nowDate.minusYears(1);
         }
         else {
             System.out.println("在个股界面选择了日期！！");
-            thisDate = LocalDateHelper.convertString(date);
+            endDate = LocalDate.parse(request.getParameter("endDate"));
+            startDate = LocalDate.parse(request.getParameter("startDate"));
         }
 
 
         List<Stock> stocks = null;
         try {
-            stocks = chartService.getSingleStockRecords(StockCodeHelper.format(stockCode));
+            stocks = chartService.getSingleStockRecords(new ChartShowCriteria(StockCodeHelper.format(stockCode),startDate,endDate));
             HttpSession session = request.getSession(false);
             session.setAttribute("oneStockResult", stocks);
 
@@ -204,6 +208,10 @@ public class StockController {
         } catch (CodeNotFoundException e) {
             e.printStackTrace();
             return "-1;" + e.getMessage();
+        } catch (NoDataWithinException e) {
+            e.printStackTrace();
+        } catch (DateNotWithinException e) {
+            e.printStackTrace();
         }
 
         if (stocks != null) {
