@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.edu.nju.asi.model.User" %><%--
   Created by IntelliJ IDEA.
   User: 61990
@@ -64,16 +65,23 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
-                    <!-- TODO -->
-                    <img alt="Brand" src="">
+                    <img alt="Quantour" src="">
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">大盘详情</a></li>
-                <li><a href="#">量化社区</a></li>
+                <li><a href="/">首页</a></li>
+                <li><a href="/stocks">大盘详情</a></li>
+                <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
-                <li><a href="#" style="color: #4cae4c">用户</a></li>
+                <c:choose>
+                    <c:when test="${sessionScope.user!=null}">
+                        <li><a href="/welcome">用户管理</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div><!-- /.container-fluid -->
     </nav>

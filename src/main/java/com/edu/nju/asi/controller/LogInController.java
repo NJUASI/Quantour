@@ -39,7 +39,7 @@ public class LogInController {
      * 普通用户登录初始界面，需展示用户基本信息和用户自选股列表
      */
     @GetMapping("/welcome")
-    public ModelAndView welcome(@RequestParam("id") String userName, HttpServletRequest request) {
+    public ModelAndView welcome(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return new ModelAndView("index");
@@ -48,7 +48,7 @@ public class LogInController {
         String userType = (String) session.getAttribute("userType");
         if (userType.equals("user")) {
             // 普通用户
-            ModelAndView mv = new ModelAndView("welcome_user");
+            ModelAndView mv = new ModelAndView("userManager");
             List<Stock> psList = (List<Stock>) session.getAttribute("privateStockList");
             mv.addObject("ps_list", psList);
             return mv;
