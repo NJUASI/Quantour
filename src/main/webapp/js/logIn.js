@@ -23,9 +23,11 @@ function login() {
 
             if (array[0] == "1") {
                 alert("666");
-                window.location.href = "/welcome?id=" + userName;
+                alert("666");
+                alert("666");
+                window.location.href = "#" ;
             } else if (array[0] == "-1") {
-                $("#errorMessageField").html("账号或密码错误");
+                $("#errorMessageField").html(array[1]);
             } else {
                 alert("未知错误类型orz");
             }
