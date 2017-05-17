@@ -45,7 +45,7 @@ public class StockController {
 
 
     // 测试用
-    private final static LocalDate nowDate = LocalDate.of(2007,1,11);
+    private final static LocalDate nowDate = LocalDate.now().minusDays(1);
 //    private final static LocalDate nowDate = LocalDate.now();
 
 
@@ -71,7 +71,6 @@ public class StockController {
                 session.setAttribute("oneDateSituation", null);
                 session.setAttribute("oneDateStockList", null);
 
-                // TODO 金玉转换成图
                 mv.addObject("situation", situation);
                 mv.addObject("stockList", stocks);
 
@@ -91,7 +90,6 @@ public class StockController {
             session.setAttribute("oneDateSituation", null);
             session.setAttribute("oneDateStockList", null);
 
-            // TODO 金玉转换成图
             mv.addObject("situation", situation);
             mv.addObject("stockList", stocks);
 
@@ -176,6 +174,20 @@ public class StockController {
     @PostMapping(value = "/{id}", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
     String reqGetOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
+        LocalDate thisDate;
+        String date = request.getParameter("date");
+
+        // 默认获取当天
+        if (date == null) {
+            System.out.println("默认从行情界面进入，显示最新的。。");
+            thisDate = nowDate;
+        }
+        else {
+            System.out.println("在个股界面选择了日期！！");
+            thisDate = LocalDateHelper.convertString(date);
+        }
+
+
         List<Stock> stocks = null;
         try {
             stocks = chartService.getSingleStockRecords(StockCodeHelper.format(stockCode));
@@ -206,13 +218,18 @@ public class StockController {
     public ModelAndView compare(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
+            System.out.println("Session为空");
             return new ModelAndView("index");
         }
 
         List<StockComparision> result = (List<StockComparision>) session.getAttribute("compareResult");
         session.setAttribute("compareResult", null);
 
-        if (result != null) {
+        if (result == null) {
+            // 默认进来的
+            return new ModelAndView("stockComparision");
+        } else {
+            // 通过js进来的
             ModelAndView mv = new ModelAndView("stockComparision");
             try {
                 // 数值型对比信息
@@ -240,8 +257,8 @@ public class StockController {
                 e.printStackTrace();
             }
             return mv;
+
         }
-        return new ModelAndView("index");
     }
 
 
@@ -265,7 +282,6 @@ public class StockController {
 
         StockComparisionCriteria criteria = new StockComparisionCriteria(holder);
         System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
-
 
         List<StockComparision> result = null;
         try {
