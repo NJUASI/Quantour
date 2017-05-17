@@ -1,6 +1,7 @@
 /**
  * Created by cuihua on 2017/5/12.
  */
+
 function login() {
     var userName = $("#login_username").val();
     var password = $("#login_password").val();
