@@ -27,8 +27,7 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
-                    <!-- TODO -->
-                    <img alt="Brand" src="">
+                    <img alt="Quantour" src="">
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
@@ -36,8 +35,15 @@
                 <li><a href="/stocks">大盘详情</a></li>
                 <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
-                <li><a href="#">注册</a></li>
+                <c:choose>
+                    <c:when test="${sessionScope.user!=null}">
+                        <li><a href="/welcome">用户管理</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
@@ -62,13 +68,11 @@
                                         class="glyphicon glyphicon-calendar" onclick="getOneDate()"></span></span>
                             </div>
                         </div>
-                        <div class="col-md-3 col-md-offset-2">
-                            <button type="button" class="btn btn-primary" onclick="directToCompare()">对比</button>
-                        </div>
-                        <div class="col-md-3 col-md-offset-3">
+
+                        <div class="col-md-3 col-md-offset-1">
                             <form role="form">
                                 <div class="input-group">
-                                    <input type="text" id="stocks_id" class="form-control" onkeyup="getOneStock()" placeholder="输入代码/简称/拼音" >
+                                    <input type="text" id="stocks_id" class="form-control"  placeholder="输入代码/简称/拼音" >
                                     <span class="input-group-btn">
                                     <button class="btn btn-default form-control" type="button"  onclick="getOneStock()">
                                         <span class="glyphicon glyphicon-search"> </span>
@@ -76,6 +80,10 @@
                             </span>
                                 </div>
                             </form>
+                        </div>
+
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-primary" onclick="directToCompare()">对比</button>
                         </div>
                     </div>
                 </div>
@@ -202,6 +210,22 @@
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
+    $(document).ready(
+        function() {
+            $("#stocks_id").keydown(function(event) {
+                if (event.keyCode == 13) {
+                    getOneStock();
+                    alert(event.target.value);
+
+                }
+            })
+            $("#searchButton").click(function(event) {
+                alert( $("#stockText").val());
+
+            })
+        }
+    );
+
     $(".form_date").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
