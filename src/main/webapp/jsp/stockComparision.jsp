@@ -141,18 +141,18 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>${stockCompareNum1.get(4)}</td>
                         <td>${stockCompareNum1.get(0)}</td>
                         <td>${stockCompareNum1.get(1)}</td>
                         <td>${stockCompareNum1.get(2)}</td>
                         <td>${stockCompareNum1.get(3)}</td>
+                        <td>${stockCompareNum1.get(4)}</td>
                     </tr>
                     <tr>
-                        <td>${stockCompareNum2.get(4)}</td>
                         <td>${stockCompareNum2.get(0)}</td>
                         <td>${stockCompareNum2.get(1)}</td>
                         <td>${stockCompareNum2.get(2)}</td>
                         <td>${stockCompareNum2.get(3)}</td>
+                        <td>${stockCompareNum2.get(4)}</td>
                     </tr>
                     </tbody>
                 </table>

@@ -60,22 +60,11 @@ public class StockComparision {
     // 初始化涨幅／跌幅
     // 注意：此处stock为时间顺序，即时间小的在前面
     private double getIncreaseMargin(List<Stock> stocks) throws DataSourceFirstDayException {
-//        Map<LocalDate, Double> result = new TreeMap<>();
-//        for (StockPO stockPO : stocks) {
-//            if (stockPO.getPreAdjClose() == -1) {
-//                // 此条数据为数据库中最早的一条，故不能得其涨幅／跌幅
-//                continue;
-//            }
-//            result.put(stockPO.getDate(), stockPO.getAdjClose() / stockPO.getPreAdjClose() - 1);
+//        double denominator = stocks.get(0).getPreClose();
+//        if (denominator == -1) {
+//            throw new DataSourceFirstDayException();
 //        }
-//        return result;
-
-
-        double denominator = stocks.get(0).getPreClose();
-        if (denominator == -1) {
-            throw new DataSourceFirstDayException();
-        }
-        double temp = stocks.get(stocks.size() - 1).getClose() / denominator - 1;
+        double temp = stocks.get(stocks.size() - 1).getClose() / stocks.get(0).getPreClose() - 1;
         return temp;
     }
 
@@ -94,10 +83,10 @@ public class StockComparision {
 
         List<Double> logarithmicYieldList = new LinkedList<>();
         for (Stock stock : stocks) {
-            if (stock.getPreClose() == -1) {
-                // 此条数据为数据库中最早的一条，故不能得其对数收益率
-                continue;
-            }
+//            if (stock.getPreClose() == -1) {
+//                // 此条数据为数据库中最早的一条，故不能得其对数收益率
+//                continue;
+//            }
             double temp = Math.log(stock.getClose() / stock.getPreClose());
             logarithmicYieldList.add(temp);
             logarithmicYield.put(stock.getStockID().getDate(), temp);

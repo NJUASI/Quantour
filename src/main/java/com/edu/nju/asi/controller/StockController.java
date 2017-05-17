@@ -1,6 +1,6 @@
 package com.edu.nju.asi.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
 import com.edu.nju.asi.infoCarrier.StockComparision;
 import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
 import com.edu.nju.asi.model.Stock;
@@ -44,11 +44,9 @@ public class StockController {
     StockSituationService situationService;
 
 
-
     // 测试用
-    private final static LocalDate nowDate = LocalDate.now().minusDays(1);
+    private final static LocalDate nowDate = LocalDate.of(2014, 2, 21);
 //    private final static LocalDate nowDate = LocalDate.now();
-
 
 
     /**
@@ -75,7 +73,7 @@ public class StockController {
                 mv.addObject("situation", situation);
                 mv.addObject("stockList", stocks);
 
-                System.out.println(stocks.size()+"\n\n\n");
+                System.out.println(stocks.size() + "\n\n\n");
             } else {
                 System.out.println("请求失败");
                 return new ModelAndView("errorPage");
@@ -94,7 +92,7 @@ public class StockController {
             mv.addObject("situation", situation);
             mv.addObject("stockList", stocks);
 
-            System.out.println(stocks.size()+"\n\n\n");
+            System.out.println(stocks.size() + "\n\n\n");
 
         }
         return mv;
@@ -115,8 +113,7 @@ public class StockController {
         if (date == null) {
             System.out.println("js没有。。");
             thisDate = nowDate;
-        }
-        else {
+        } else {
             System.out.println("JS有的！！");
             thisDate = LocalDateHelper.convertString(date);
         }
@@ -143,7 +140,8 @@ public class StockController {
         if (stockList != null) {
             System.out.println("Success");
             return "1;获取单只股票成功";
-        } else return "-1;服务器开了一个小差。。请稍后重试";    }
+        } else return "-1;服务器开了一个小差。。请稍后重试";
+    }
 
     /**
      * 单只股票的股票详情
@@ -175,23 +173,25 @@ public class StockController {
     @PostMapping(value = "/{id}", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
     String reqGetOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
-        LocalDate thisDate;
-        String date = request.getParameter("date");
+        LocalDate startDate, endDate;
+        String startDateString = request.getParameter("startDate");
+        String endDateString = request.getParameter("endDate");
 
-        // 默认获取当天
-        if (date == null) {
+        // 默认显示一年内的K线图
+        if (startDateString == null) {
             System.out.println("默认从行情界面进入，显示最新的。。");
-            thisDate = nowDate;
-        }
-        else {
+            startDate = nowDate.minusYears(1);
+            endDate = nowDate;
+        } else {
             System.out.println("在个股界面选择了日期！！");
-            thisDate = LocalDateHelper.convertString(date);
+            startDate = LocalDateHelper.convertString(startDateString);
+            endDate = LocalDateHelper.convertString(endDateString);
         }
 
 
         List<Stock> stocks = null;
         try {
-            stocks = chartService.getSingleStockRecords(StockCodeHelper.format(stockCode));
+            stocks = chartService.getSingleStockRecords(new ChartShowCriteria(StockCodeHelper.format(stockCode), startDate, endDate));
             HttpSession session = request.getSession(false);
             session.setAttribute("oneStockResult", stocks);
 
@@ -201,7 +201,7 @@ public class StockController {
         } catch (IOException e) {
             e.printStackTrace();
             return "-1;IO读取失败！";
-        } catch (CodeNotFoundException e) {
+        } catch (CodeNotFoundException | NoDataWithinException | DateNotWithinException e) {
             e.printStackTrace();
             return "-1;" + e.getMessage();
         }
@@ -321,11 +321,12 @@ public class StockController {
 
     private List<String> convertcomparisionNumVal(StockComparision comparision) {
         List<String> result = new LinkedList<>();
+        result.add(comparision.name);
         result.add(NumberFormat.decimaFormat(comparision.max, 4));
         result.add(NumberFormat.decimaFormat(comparision.min, 4));
         result.add(NumberFormat.percentFormat(comparision.increaseMargin, 2));
         result.add(NumberFormat.decimaFormat(comparision.logarithmicYieldVariance, 4));
-        result.add(comparision.name);
+
         for (String tempStr: result) {
             System.out.println(tempStr);
         }
