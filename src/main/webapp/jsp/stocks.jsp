@@ -65,7 +65,7 @@
                         <div class="col-md-3 col-md-offset-3">
                             <form role="form">
                                 <div class="input-group">
-                                    <input id="stocks_id" type="text" class="form-control" onkeyup="getOneStock()" placeholder="输入代码/简称/拼音">
+                                    <input id="stocks_id" type="text" class="form-control" placeholder="输入代码/简称/拼音">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" onclick="getOneStock()">
                                         <span class="glyphicon glyphicon-search"> </span>
