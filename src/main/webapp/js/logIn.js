@@ -22,10 +22,7 @@ function login() {
             var array = result.split(";");
 
             if (array[0] == "1") {
-                alert("666");
-                alert("666");
-                alert("666");
-                window.location.href = "#" ;
+                window.location.href = "/jsp/index.jsp" ;
             } else if (array[0] == "-1") {
                 $("#errorMessageField").html(array[1]);
             } else {
@@ -60,7 +57,7 @@ function register() {
 
             if (array[0] == "1") {
                 alert("666");
-                window.location.href = "/welcome?id=" + userName;
+                window.location.href = "/welcome_user?id=" + userName;
             } else if (array[0] == "-1") {
                 // 提示错误信息
                 alert(array[1]);

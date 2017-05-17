@@ -9,7 +9,7 @@ footer {
 }
 
 .banner-holder {
-    height: 700px;
+    height: 100%;
     background: #222;
     overflow: hidden;
     position: relative;
@@ -25,7 +25,8 @@ footer {
     background: transparent;
     position: absolute;
     top: 25%;
-    left: 7%;
+    left: 0;
+    right: 0;
 }
 
 .banner-desc h1 {

@@ -29,8 +29,8 @@
                 <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
-                    <c:when test="${user}">
-                        <li><a href="#" data-toggle="modal" data-target="#login">用戶管理</a></li>
+                    <c:when test="${sessionScope.user!=null}">
+                        <li><a href="/stocks">用戶管理</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
