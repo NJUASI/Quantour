@@ -190,7 +190,7 @@ public class JsonConverter {
             temp.add(String.valueOf(map.get(localDate)));
             result.add(temp);
         }
-        return JsonConverter.jsonOfObject(result);
+        return jsonOfObject(result);
     }
 
     /**

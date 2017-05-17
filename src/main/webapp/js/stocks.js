@@ -63,3 +63,8 @@ function getSingleStockDetail() {
         }
     });
 }
+
+
+function directToCompare() {
+    window.location.href = "/stocks/compare";
+}

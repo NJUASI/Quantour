@@ -123,7 +123,7 @@
     </div>
 
 </div>
-
+<div id="closesChart" style="width:500px;height:600px"></div>
 <c:choose>
     <c:when test="${stockCompareNum1 != null}">
         <div class="row">
@@ -141,18 +141,18 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>${stockCompareNum1.get(4)}</td>
                         <td>${stockCompareNum1.get(0)}</td>
                         <td>${stockCompareNum1.get(1)}</td>
                         <td>${stockCompareNum1.get(2)}</td>
                         <td>${stockCompareNum1.get(3)}</td>
+                        <td>${stockCompareNum1.get(4)}</td>
                     </tr>
                     <tr>
-                        <td>${stockCompareNum2.get(4)}</td>
                         <td>${stockCompareNum2.get(0)}</td>
                         <td>${stockCompareNum2.get(1)}</td>
                         <td>${stockCompareNum2.get(2)}</td>
                         <td>${stockCompareNum2.get(3)}</td>
+                        <td>${stockCompareNum2.get(4)}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -169,7 +169,7 @@
         <li>选择条件进行回测吧！！</li>
     </c:otherwise>
 </c:choose>
-<div id="closesChart" style="width:100%;height:600px"></div>
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <script src="../js/jquery.validate.js"></script>
@@ -220,6 +220,7 @@
         }else {
             alert("1111");
         }
+
 
         <%--var ttt = <%=request.getAttribute("closesData")%>;--%>
         <%--if (ttt != null) {--%>

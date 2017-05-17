@@ -22,23 +22,19 @@ function compare() {
         data: JSON.stringify(jsonData),
 
         success: function (result) {
-            // var aa = JSON.parse(result);
-            // alert(aa);
-            alert(result);
-            alert(result[0]);
-            createLineChart('closesChart',result[0],'wfsd','1231231');
-            // alert(JSON.stringify(jsonData));
-            // var array = result.split(";");
 
-            if (true) {
-                alert("666");
-                // createLineChart("closesChart", }, '收盘价', ${comparisionName});
-            } else if (false) {
-                // 提示错误信息
-                // alert(array[1]);
-            } else {
-                alert("未知错误类型orz");
-            }
+            var parts = result.split(";");
+            var closes01 = JSON.parse(parts[0]);
+            var closes02 = JSON.parse(parts[1]);
+            var logarithmicYield01 = JSON.parse(parts[2]);
+            var logarithmicYield02 = JSON.parse(parts[3]);
+            var comparisionName = JSON.parse(parts[4]);
+
+            var closesData = [closes01, closes02];
+            var logarithmicYield = [logarithmicYield01, logarithmicYield02];
+
+            createLineChart("closesChart", closesData, '收盘价', comparisionName);
+            createLineChart("logarithmicYieldChart", logarithmicYield, "对数收益率方差", comparisionName);
         },
         error: function (result) {
             alert(JSON.stringify(jsonData));

@@ -1,6 +1,7 @@
 package com.edu.nju.asi.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
 import com.edu.nju.asi.infoCarrier.StockComparision;
 import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
@@ -16,7 +17,6 @@ import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.utilities.tempHolder.StockComparisionCriteriaTempHolder;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.assertj.core.internal.cglib.core.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,11 +46,9 @@ public class StockController {
     StockSituationService situationService;
 
 
-
     // 测试用
-    private final static LocalDate nowDate = LocalDate.now().minusDays(1);
+    private final static LocalDate nowDate = LocalDate.of(2014, 2, 21);
 //    private final static LocalDate nowDate = LocalDate.now();
-
 
 
     /**
@@ -77,7 +75,7 @@ public class StockController {
                 mv.addObject("situation", situation);
                 mv.addObject("stockList", stocks);
 
-                System.out.println(stocks.size()+"\n\n\n");
+                System.out.println(stocks.size() + "\n\n\n");
             } else {
                 System.out.println("请求失败");
                 return new ModelAndView("errorPage");
@@ -96,7 +94,7 @@ public class StockController {
             mv.addObject("situation", situation);
             mv.addObject("stockList", stocks);
 
-            System.out.println(stocks.size()+"\n\n\n");
+            System.out.println(stocks.size() + "\n\n\n");
 
         }
         return mv;
@@ -117,8 +115,7 @@ public class StockController {
         if (date == null) {
             System.out.println("js没有。。");
             thisDate = nowDate;
-        }
-        else {
+        } else {
             System.out.println("JS有的！！");
             thisDate = LocalDateHelper.convertString(date);
         }
@@ -145,7 +142,8 @@ public class StockController {
         if (stockList != null) {
             System.out.println("Success");
             return "1;获取单只股票成功";
-        } else return "-1;服务器开了一个小差。。请稍后重试";    }
+        } else return "-1;服务器开了一个小差。。请稍后重试";
+    }
 
     /**
      * 单只股票的股票详情
@@ -177,25 +175,25 @@ public class StockController {
     @PostMapping(value = "/{id}", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
     String reqGetOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
-        LocalDate endDate =  LocalDate.parse(request.getParameter("endDate"));
-        LocalDate startDate = null;
+        LocalDate startDate, endDate;
+        String startDateString = request.getParameter("startDate");
+        String endDateString = request.getParameter("endDate");
 
-        // 默认获取当天
-        if (endDate == null) {
+        // 默认显示一年内的K线图
+        if (startDateString == null) {
             System.out.println("默认从行情界面进入，显示最新的。。");
-            endDate = nowDate;
             startDate = nowDate.minusYears(1);
-        }
-        else {
+            endDate = nowDate;
+        } else {
             System.out.println("在个股界面选择了日期！！");
-            endDate = LocalDate.parse(request.getParameter("endDate"));
-            startDate = LocalDate.parse(request.getParameter("startDate"));
+            startDate = LocalDateHelper.convertString(startDateString);
+            endDate = LocalDateHelper.convertString(endDateString);
         }
 
 
         List<Stock> stocks = null;
         try {
-            stocks = chartService.getSingleStockRecords(new ChartShowCriteria(StockCodeHelper.format(stockCode),startDate,endDate));
+            stocks = chartService.getSingleStockRecords(new ChartShowCriteria(StockCodeHelper.format(stockCode), startDate, endDate));
             HttpSession session = request.getSession(false);
             session.setAttribute("oneStockResult", stocks);
 
@@ -205,13 +203,9 @@ public class StockController {
         } catch (IOException e) {
             e.printStackTrace();
             return "-1;IO读取失败！";
-        } catch (CodeNotFoundException e) {
+        } catch (CodeNotFoundException | NoDataWithinException | DateNotWithinException e) {
             e.printStackTrace();
             return "-1;" + e.getMessage();
-        } catch (NoDataWithinException e) {
-            e.printStackTrace();
-        } catch (DateNotWithinException e) {
-            e.printStackTrace();
         }
 
         if (stocks != null) {
@@ -284,9 +278,9 @@ public class StockController {
                 response.sendRedirect("/welcome");
             } catch (IOException e) {
                 e.printStackTrace();
-                return "-1;不给看哈哈哈";
+                return null;
             }
-            return "-1;未知错误";
+            return null;
         }
 
         StockComparisionCriteria criteria = new StockComparisionCriteria(holder);
@@ -295,46 +289,41 @@ public class StockController {
         List<StockComparision> result = null;
 
 //        List<List<String>> results = new ArrayList<>();
-        String[] list1= new String[2];
+        String closes01, closes02, logarithmicYield01,logarithmicYield02,comparisionName;
         try {
             result = chartService.getComparision(criteria);
 //            session.setAttribute("compareResult", result);
             // TODO 加入当日信息显示，与界面沟通
 
-//            List<String> list2= new ArrayList<>();
-            list1[0] = (JsonConverter.convertComparision(result.get(0).closes));
-            list1[1] = (JsonConverter.convertComparision(result.get(1).closes));
-//            list2.add(JsonConverter.convertComparision(result.get(0).logarithmicYield));
-//            list2.add(JsonConverter.convertComparision(result.get(1).logarithmicYield));
-//            results.add(list1);
-//            results.add(list2);
+            closes01 = JsonConverter.convertComparision(result.get(0).closes);
+            closes02 = JsonConverter.convertComparision(result.get(1).closes);
+            logarithmicYield01 = JsonConverter.convertComparision(result.get(0).logarithmicYield);
+            logarithmicYield02 = JsonConverter.convertComparision(result.get(1).logarithmicYield);
+            List<String> name = new ArrayList<>();
+            name.add(result.get(0).name);
+            name.add(result.get(1).name);
+            comparisionName = JsonConverter.jsonOfObject(name);
+
+            return closes01 + ";" + closes02+";"+logarithmicYield01+";"+logarithmicYield02+";"+comparisionName;
         } catch (IOException e) {
             e.printStackTrace();
-            return "-1;IO读取失败！";
+            return null;
         } catch (DataSourceFirstDayException | DateNotWithinException | NoDataWithinException e) {
             e.printStackTrace();
-            return "-1;" + e.getMessage();
+            return null;
         }
-
-        if (result != null) {
-            System.out.println("Success");
-            System.out.println(JsonConverter.convertComparision(result.get(0).closes));
-            System.out.println(JsonConverter.convertComparision(result.get(1).closes));
-            System.out.println(JsonConverter.jsonOfObject(list1));
-
-            return JsonConverter.jsonOfObject(list1);
-        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
 
     private List<String> convertcomparisionNumVal(StockComparision comparision) {
         List<String> result = new LinkedList<>();
+        result.add(comparision.name);
         result.add(NumberFormat.decimaFormat(comparision.max, 4));
         result.add(NumberFormat.decimaFormat(comparision.min, 4));
         result.add(NumberFormat.percentFormat(comparision.increaseMargin, 2));
         result.add(NumberFormat.decimaFormat(comparision.logarithmicYieldVariance, 4));
-        result.add(comparision.name);
-        for (String tempStr: result) {
+
+        for (String tempStr : result) {
             System.out.println(tempStr);
         }
         return result;
