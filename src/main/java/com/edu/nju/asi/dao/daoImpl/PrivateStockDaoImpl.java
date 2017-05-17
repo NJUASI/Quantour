@@ -29,6 +29,20 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
         this.privateStockDataHelper = HelperManager.privateStockDataHelper;
     }
 
+    /**
+     * 获取自选股
+     *
+     * @param userName
+     * @return 用户名称集合
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public List<PrivateStock> getPrivateStock(String userName) {
+        return privateStockDataHelper.getPrivateStock(userName);
+    }
+
     @Override
     public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException {
         List<Stock> result = new ArrayList<>();

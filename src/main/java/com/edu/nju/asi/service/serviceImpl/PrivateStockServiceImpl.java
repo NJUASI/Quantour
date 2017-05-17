@@ -2,6 +2,7 @@ package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.dao.PrivateStockDao;
 import com.edu.nju.asi.model.OptionalStockID;
+import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
@@ -20,6 +21,20 @@ public class PrivateStockServiceImpl implements PrivateStockService {
 
     @Autowired
     PrivateStockDao privateStockDao;
+
+    /**
+     * 获取自选股
+     *
+     * @param userName
+     * @return 用户名称集合
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public List<PrivateStock> getPrivateStock(String userName) {
+        return privateStockDao.getPrivateStock(userName);
+    }
 
     @Override
     public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException {
