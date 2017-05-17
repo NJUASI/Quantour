@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-05-16 12:59:33
+Date: 2017-05-17 13:39:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,7 +27,6 @@ CREATE TABLE `basestock` (
   `high` double NOT NULL,
   `increaseMargin` double NOT NULL,
   `low` double NOT NULL,
-  `market` int(11) DEFAULT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `open` double NOT NULL,
   `preClose` double NOT NULL,
@@ -67,7 +66,6 @@ CREATE TABLE `stock` (
   `high` double NOT NULL,
   `increaseMargin` double NOT NULL,
   `low` double NOT NULL,
-  `market` int(11) DEFAULT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `open` double NOT NULL,
   `preClose` double NOT NULL,
@@ -147,7 +145,3 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('61990', null, 'b7bfe0c070d6fb3d9acc375d317dcfb5');
-INSERT INTO `user` VALUES ('ByronDong', null, '8e523cd5ef475ab6834f0598f4a502f8');
-INSERT INTO `user` VALUES ('CharlesFeng47', null, 'e78a98a93547e180cc7bf5323f1b6b66');
-INSERT INTO `user` VALUES ('Harvey Gong', null, '2fbed987fcaedad037df73d70cd5e422');

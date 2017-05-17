@@ -134,9 +134,12 @@ function createCandlestickChart(id, candlestickData, volumes) {
                 scale: true,
                 gridIndex: 1,
                 splitNumber: 2,
-                axisLabel: {show: false},
+                axisLabel: {
+                    show: false,
+                    formatter: '{value}%'
+                },
                 axisLine: {show: false},
-                axisTick: {show: false},
+                axisTick: {show: false}
             }
         ],
         dataZoom: [
@@ -437,12 +440,6 @@ function createAreaChart(id, areaData, title) {
     areaChart.showLoading();
 
     var option = {
-        tooltip: {
-            trigger: 'axis',
-            position: function (pt) {
-                return [pt[0], '10%'];
-            }
-        },
         title: {
             left: 'center',
             text: title
@@ -493,7 +490,7 @@ function createAreaChart(id, areaData, title) {
         }],
         series: [
             {
-                name: '数据',
+                name: title,
                 type: 'line',
                 smooth: true,
                 symbol: 'none',
@@ -576,7 +573,7 @@ function createHistogramChart(id, data, title) {
             {
                 type: 'value',
                 scale: true,
-                name: '周期数',
+                name: '周期数'
             }
         ],
         dataZoom: [

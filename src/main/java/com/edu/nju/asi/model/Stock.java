@@ -33,10 +33,6 @@ public class Stock implements Serializable {
     @Column(length = 100)
     private String name;
 
-    // 市场名称
-    @Basic
-    private Market market;
-
     // 开盘指数
     @Basic
     private double open;
@@ -92,11 +88,10 @@ public class Stock implements Serializable {
     public Stock() {
     }
 
-    public Stock(String name, Market market, double open, double high, double low, double close,
+    public Stock(String name,double open, double high, double low, double close,
                  String volume, String transactionAmount, double preClose, double increaseMargin,
                  double fluctuation, double turnoverRate, String totalValue, String circulationMarketValue) {
         this.name = name;
-        this.market = market;
         this.open = open;
         this.high = high;
         this.low = low;
@@ -115,7 +110,6 @@ public class Stock implements Serializable {
         this.stockID = new StockID(normalStock.getCode(),normalStock.getDate());
         this.name = normalStock.getName();
         //这里默认给深圳
-        this.market = Market.SZ;
         this.open = normalStock.getOpen();
         this.high = normalStock.getHigh();
         this.low = normalStock.getLow();
@@ -184,14 +178,6 @@ public class Stock implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Market getMarket() {
-        return market;
-    }
-
-    public void setMarket(Market market) {
-        this.market = market;
     }
 
     public double getPreClose() {

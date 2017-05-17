@@ -75,7 +75,7 @@ public class JsonConverter {
         for(Stock stock : stocks){
             List<String> temp = new ArrayList<>();
             temp.add(stock.getStockID().getDate().toString());
-            temp.add(stock.getVolume());
+            temp.add(String.valueOf(Long.parseLong(stock.getVolume())/10000));
             result.add(temp);
         }
         return JsonConverter.jsonOfObject(result);
@@ -97,7 +97,7 @@ public class JsonConverter {
         for(CumulativeReturn cumulativeReturn : list){
             List<String> temp =  new ArrayList<>();
             temp.add(cumulativeReturn.currentDate.toString());
-            temp.add(String.valueOf(cumulativeReturn.cumulativeReturn));
+            temp.add(String.valueOf(cumulativeReturn.cumulativeReturn*100));
             result.add(temp);
         }
 
@@ -120,8 +120,8 @@ public class JsonConverter {
         List<List<String>> winRate = new ArrayList<>();
         for(ExcessAndWinRateDist excessAndWinRateDist: list){
             String relativeCycle = String.valueOf(excessAndWinRateDist.relativeCycle);
-            String excess= String.valueOf(excessAndWinRateDist.excessRate);
-            String win = String.valueOf(excessAndWinRateDist.winRate);
+            String excess= String.valueOf(excessAndWinRateDist.excessRate*100);
+            String win = String.valueOf(excessAndWinRateDist.winRate*100);
             List<String> temp1 = new ArrayList<>();
             List<String> temp2 =  new ArrayList<>();
             temp1.add(relativeCycle);
