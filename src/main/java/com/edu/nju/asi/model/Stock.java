@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -114,14 +115,14 @@ public class Stock implements Serializable {
         this.high = normalStock.getHigh();
         this.low = normalStock.getLow();
         this.close = normalStock.getClose();
-        this.volume = normalStock.getVolume().toString();
-        this.transactionAmount = normalStock.getAmount().toString();
+        this.volume = new BigDecimal(normalStock.getVolume()).toString();
+        this.transactionAmount = new BigDecimal(normalStock.getAmount()).toString();
         this.preClose = normalStock.getPreClose();
         this.increaseMargin = normalStock.getChangeRate();
         this.fluctuation = normalStock.getFluctuation();
         this.turnoverRate = normalStock.getTurnOverRate();
-        this.totalValue = normalStock.getMarketCap().toString();
-        this.circulationMarketValue = normalStock.getMarketEquity().toString();
+        this.totalValue = new BigDecimal(normalStock.getMarketCap()).toString();
+        this.circulationMarketValue = new BigDecimal(normalStock.getMarketEquity()).toString();
     }
 
     public StockID getStockID() {

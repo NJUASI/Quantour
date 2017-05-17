@@ -9,11 +9,13 @@ import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.spider.Model.BaseStockEve;
 import com.edu.nju.asi.spider.Model.NormalStock;
+import org.assertj.core.internal.cglib.core.Local;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +52,10 @@ public class DownloadDataHelper {
                         NormalStock normalStock = new NormalStock();
                         //当天未开盘，不存入数据库中
                         if (reader.get(3).equals("0") || reader.get(8).equals("None")) {
+                            continue;
+                        }
+                        //精简数据,只要12年之后的数据
+                        if (LocalDate.parse(reader.get(0)).isBefore(LocalDate.of(2012,1,1))){
                             continue;
                         }
                         normalStock.setCode(reader.get(1));
@@ -101,6 +107,10 @@ public class DownloadDataHelper {
                 while(reader.readRecord()){
                     //当天未开盘，不存入数据库中
                     if (reader.get(3).equals("0") || reader.get(8).equals("None")){
+                        continue;
+                    }
+                    //精简数据,只要12年以后的数据
+                    if (LocalDate.parse(reader.get(0)).isBefore(LocalDate.of(2012,1,1))){
                         continue;
                     }
                     BaseStockEve baseStockEve = new BaseStockEve();

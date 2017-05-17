@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by Byron Dong on 2017/5/15.
@@ -88,8 +89,8 @@ public class BaseStock implements Serializable{
         this.high = baseStockEve.getHigh();
         this.low = baseStockEve.getLow();
         this.close = baseStockEve.getClose();
-        this.volume = baseStockEve.getVolume().toString();
-        this.transactionAmount = baseStockEve.getAmount().toString();
+        this.volume = new BigDecimal(baseStockEve.getVolume()).toString();
+        this.transactionAmount =  new BigDecimal(baseStockEve.getAmount()).toString();
         this.preClose = baseStockEve.getPreClose();
         this.increaseMargin = baseStockEve.getChangeRate();
         this.fluctuation = baseStockEve.getFluctuation();
