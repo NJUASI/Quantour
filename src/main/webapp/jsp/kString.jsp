@@ -29,7 +29,6 @@
 
     <style rel="stylesheet" type="text/css">
 
-
         .stock {
             font-family: "Microsoft YaHei";
             font-size: large;
@@ -86,23 +85,24 @@
 
 
 <div class="row stock" style="margin-top: -60px">
-    <span class="col-md-2 col-md-offset-2"><span id="stockName">艾派克</span>&nbsp;<i id="stockCode">002180</i></span>
-    <button class="btn btn-primary ">+自选</button>
+    <span class="col-md-2 col-md-offset-2"><span id="stockName">${dataOfEndDay.name}</span>&nbsp;<i id="stockCode">${dataOfEndDay.stockID.code}</i></span>
+    <button id="addBtn" class="btn btn-primary">+自选</button>
 </div>
 
 
 <div class="row">
     <ul id="stockDetail" class="col-md-6 col-md-offset-2 list-inline">
-        <li>开盘 <span class=" font-green ">25.62</span></li>
-        <li>最高 <span class=" font-red ">26.45</span></li>
-        <li>最低 <span class=" font-green ">25.62</span></li>
-        <li>涨停 <span class=" font-red ">28.25</span></li>
-        <li>跌停 <span class=" font-green ">23.11</span></li>
-        <li>昨收 <span class=" font-black ">25.68</span></li>
-        <li>成交量 <span>67.03万</span></li>
-        <li>成交额 <span>1747.02万</span></li>
-        <li>总手 <span>6703.43</span></li>
-        <li>振幅 <span>3.23%</span></li>
+        <li>开盘 <span class=" font-green ">${dataOfEndDay.open}</span></li>
+        <li>最高 <span class=" font-red ">${dataOfEndDay.high}</span></li>
+        <li>最低 <span class=" font-green ">${dataOfEndDay.low}</span></li>
+        <li>昨收 <span class=" font-black ">${dataOfEndDay.preClose}</span></li>
+        <li>成交量 <span>${dataOfEndDay.volume}</span></li>
+        <li>成交额 <span>${dataOfEndDay.transactionAmount}</span></li>
+        <li>涨跌幅 <span>${dataOfEndDay.increaseMargin}</span></li>
+        <li>涨跌额 <span>${dataOfEndDay.fluctuation}</span></li>
+        <li>换手率 <span>${dataOfEndDay.turnoverRate}</span></li>
+        <li>总市值 <span>${dataOfEndDay.totalValue}</span></li>
+        <li>流通市值 <span>${dataOfEndDay.circulationMarketValue}</span></li>
     </ul>
 </div>
 
@@ -132,10 +132,7 @@
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
-
-        <input type="submit" class="btn btn-info"
-               style="margin-top: 15px;margin-left: -40px;" value="查看区间"/>
-        </button>
+        <a class="btn btn-info" onclick="getSingleStockDetail()" style="margin-top: 15px;margin-left: -40px;">查看区间</a>
     </div>
 </div>
 
@@ -165,22 +162,19 @@
         function() {
             $("#stockText").keydown(function(event) {
                 if (event.keyCode == 13) {
-//                  添加回车时间
+//                  添加回测时间
                     alert(event.target.value);
-
                 }
             })
             $("#searchButton").click(function(event) {
                 alert( $("#stockText").val());
-
             })
         }
     );
-    $("#stockDetail>li").addClass("col-md-3");
-    var today = new Date();
+    $("#stockDetail > li").addClass("col-md-3");
 
-    var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
-    var endTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    var startTime = ${dataOfStartDay.stockID.date.year} + "-" + ${dataOfStartDay.stockID.date.monthValue} + "-" + ${dataOfStartDay.stockID.date.dayOfMonth};
+    var endTime = ${dataOfEndDay.stockID.date.year} + "-" + ${dataOfEndDay.stockID.date.monthValue} + "-" + ${dataOfEndDay.stockID.date.dayOfMonth};
     $("#datetimeStart>input").attr('value', startTime);
     $("#datetimeEnd>input").attr('value', endTime);
 
@@ -189,20 +183,18 @@
         minView: 'month',
         language: 'zh-CN',
         autoclose: true,
-        startDate: new Date(2005 - 04 - 03),
+        //数据从12年开始
+        startDate: new Date(2012 - 01 - 01),
         endDate: new Date()
-    }).on("click", function () {
-        $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())
-    });
+    })
+
     $("#datetimeEnd").datetimepicker({
         format: 'yyyy-mm-dd',
         minView: 'month',
         language: 'zh-CN',
         autoclose: true,
         endDate: new Date()
-    }).on("click", function () {
-        $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
-    });
+    })
 
     var data1 = ${candlestickData};
     var data2 = ${volumeData};
@@ -210,7 +202,44 @@
     createCandlestickChart('candlestick_chart',data1,data2);
     <%--var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});--%>
 
+    function getSingleStockDetail() {
+        var wantedStockCode = $("#stockCode").text();
+        alert("查看股票：" + wantedStockCode);
 
+        var start = $("#datetimeStart > input").val();
+        var end = $("#datetimeEnd > input").val();
+
+        alert(start);
+
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/stocks/" + wantedStockCode,
+            data:{
+                "startDate": start,
+                "endDate": end
+            },
+
+            success: function (result) {
+                alert(result);
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    alert("666");
+                    window.location.href = "/stocks/" + wantedStockCode;
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
+                }
+            },
+            error: function (result) {
+                alert(JSON.stringify(result));
+                alert("错误" + result);
+            }
+        });
+    }
 </script>
 </body>
 </html>

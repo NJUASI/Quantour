@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * Created by Byron Dong on 2017/5/15.
@@ -82,6 +83,8 @@ public class BaseStock implements Serializable{
     }
 
     public BaseStock(BaseStockEve baseStockEve) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");//格式化设置
+
         this.stockID = new StockID(baseStockEve.getCode(),baseStockEve.getDate());
         this.name = baseStockEve.getName();
         //这里默认给SZ
@@ -90,7 +93,7 @@ public class BaseStock implements Serializable{
         this.low = baseStockEve.getLow();
         this.close = baseStockEve.getClose();
         this.volume = new BigDecimal(baseStockEve.getVolume()).toString();
-        this.transactionAmount =  new BigDecimal(baseStockEve.getAmount()).toString();
+        this.transactionAmount =  decimalFormat.format(baseStockEve.getAmount());
         this.preClose = baseStockEve.getPreClose();
         this.increaseMargin = baseStockEve.getChangeRate();
         this.fluctuation = baseStockEve.getFluctuation();
