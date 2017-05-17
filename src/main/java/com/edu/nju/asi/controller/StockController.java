@@ -289,7 +289,7 @@ public class StockController {
         List<StockComparision> result = null;
 
 //        List<List<String>> results = new ArrayList<>();
-        List<List<String>> closes01, closes02;
+        String closes01, closes02;
         try {
             result = chartService.getComparision(criteria);
 //            session.setAttribute("compareResult", result);
@@ -299,15 +299,12 @@ public class StockController {
             closes01 = (JsonConverter.convertComparision(result.get(0).closes));
             closes02 = (JsonConverter.convertComparision(result.get(1).closes));
 
-            String jsonString1 = JSONArray.toJSONString(closes01);
-            String jsonString2 = JSONArray.toJSONString(closes02);
-
 
             System.out.println("Success");
             System.out.println(closes01);
             System.out.println(closes02);
 
-            return jsonString1 + ";" + jsonString2;
+            return closes01 + ";" + closes02;
 
 //            list2.add(JsonConverter.convertComparision(result.get(0).logarithmicYield));
 //            list2.add(JsonConverter.convertComparision(result.get(1).logarithmicYield));

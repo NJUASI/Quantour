@@ -181,7 +181,7 @@ public class JsonConverter {
      * @params object 需要转换的对象
      * @return String 转换后的json
      */
-    public static List<List<String>> convertComparision(Map<LocalDate,Double> map) throws JsonProcessingException {
+    public static String convertComparision(Map<LocalDate,Double> map) throws JsonProcessingException {
         List<List<String>> result = new ArrayList<>();
 
         for(LocalDate localDate : map.keySet()){
@@ -190,7 +190,7 @@ public class JsonConverter {
             temp.add(String.valueOf(map.get(localDate)));
             result.add(temp);
         }
-        return result;
+        return jsonOfObject(result);
     }
 
     /**
