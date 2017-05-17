@@ -74,7 +74,7 @@
                                 <div class="input-group">
                                     <input type="text" id="stocks_id" class="form-control"  placeholder="输入代码/简称/拼音" >
                                     <span class="input-group-btn">
-                                    <button class="btn btn-default form-control" type="button"  onclick="getOneStock()">
+                                    <button class="btn btn-default form-control" type="button"  onclick="getSingleStockDetail()">
                                         <span class="glyphicon glyphicon-search"> </span>
                                     </button>
                             </span>
@@ -214,14 +214,13 @@
         function() {
             $("#stocks_id").keydown(function(event) {
                 if (event.keyCode == 13) {
-                    getOneStock();
+                    getSingleStockDetail();
                     alert(event.target.value);
 
                 }
             })
             $("#searchButton").click(function(event) {
-                alert( $("#stockText").val());
-
+                getSingleStockDetail();
             })
         }
     );

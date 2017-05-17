@@ -3,6 +3,7 @@ package com.edu.nju.asi.controller;
 import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
 import com.edu.nju.asi.infoCarrier.StockComparision;
 import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
+import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSituation;
 import com.edu.nju.asi.model.User;
@@ -154,7 +155,9 @@ public class StockController {
     public ModelAndView getOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         List<Stock> stocks = (List<Stock>) session.getAttribute("oneStockResult");
+        boolean isPrivate = (Boolean) session.getAttribute("isPrivate");
         session.setAttribute("oneStockResult", null);
+        session.setAttribute("isPrivate", false);
 
         if (!stockCode.equals(stocks.get(0).getStockID().getCode())) return new ModelAndView("errorPage");
 
@@ -164,6 +167,7 @@ public class StockController {
             mv.addObject("volumeData", JsonConverter.convertVolume(stocks));
             mv.addObject("dataOfEndDay", stocks.get(stocks.size()-1));
             mv.addObject("dataOfStartDay", stocks.get(0));
+            mv.addObject("isPrivate", isPrivate);
             return mv;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -201,7 +205,16 @@ public class StockController {
             HttpSession session = request.getSession(false);
             User user = (User) session.getAttribute("user");
             //TODO 根据用户姓名获取用户对应的所有自选股
+            boolean isPrivate = false;
+            List<PrivateStock> privateCodes = privateStockService.getPrivateStock(user.getUserName());
+            for(int i = 0; i < privateCodes.size(); i++){
+                if(privateCodes.get(i).getOptionalStockID().getStockCode().equals(stockCode)){
+                    isPrivate = true;
+                }
+            }
+
             session.setAttribute("oneStockResult", stocks);
+            session.setAttribute("isPrivate", isPrivate);
 
             System.out.println(stocks.size());
             System.out.println(stocks.get(0).getOpen());

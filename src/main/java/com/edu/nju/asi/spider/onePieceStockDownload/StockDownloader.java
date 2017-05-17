@@ -23,9 +23,11 @@ public class StockDownloader {
 
         List<String> baseCodes = new ArrayList<>();
 
-        baseCodes.add("1000001");
+        baseCodes.add("0000001");
         baseCodes.add("1399001");
-        baseCodes.add("1399300");
+        baseCodes.add("0000300");
+        baseCodes.add("1399005");
+        baseCodes.add("1399006");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
@@ -38,6 +40,8 @@ public class StockDownloader {
         boolean isSuccess1 = false;
         boolean isSuccess2 = false;
         boolean isSuccess3 = false;
+        boolean isSuccess4 = false;
+        boolean isSuccess5 = false;
 
         String url = prefix+"code="+baseCodes.get(0)+"&start="+start+"&end="+end+suffix;
         while(!isSuccess1){
@@ -69,6 +73,25 @@ public class StockDownloader {
             }
         }
 
+        url = prefix+"code="+baseCodes.get(3)+"&start="+start+"&end="+end+suffix;
+        while(!isSuccess4){
+            try {
+                downLoadFromUrl(url,savePath,baseCodes.get(3));
+                isSuccess4 = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        url = prefix+"code="+baseCodes.get(4)+"&start="+start+"&end="+end+suffix;
+        while(!isSuccess5){
+            try {
+                downLoadFromUrl(url,savePath,baseCodes.get(4));
+                isSuccess5 = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

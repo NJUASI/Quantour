@@ -86,7 +86,7 @@
 
 <div class="row stock" style="margin-top: -60px">
     <span class="col-md-2 col-md-offset-2"><span id="stockName">${dataOfEndDay.name}</span>&nbsp;<i id="stockCode">${dataOfEndDay.stockID.code}</i></span>
-    <button id="addBtn" class="btn btn-primary">+自选</button>
+    <span id="addBtn"><button class="btn"></button></span>
 </div>
 
 
@@ -165,12 +165,72 @@
 //                  添加回测时间
                     alert(event.target.value);
                 }
-            })
+            });
             $("#searchButton").click(function(event) {
                 alert( $("#stockText").val());
-            })
+            });
+
+            var isPrivate = ${isPrivate};
+            if(isPrivate){
+                alert("已收藏");
+                $("#addBtn button").html("取消收藏");
+                $("#addBtn").on("click","button", deletePrivateStock);
+            }
+            else {
+                alert("未收藏");
+                $("#addBtn button").addClass("btn-primary");
+                $("#addBtn button").html("加入收藏");
+                $("#addBtn").on("click","button", addPrivateStock);
+            }
         }
     );
+
+    function addPrivateStock () {
+        alert("添加方法执行了");
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "/user/addPrivate/" + $("#stockCode").text(),
+            success: function (result) {
+                alert(result);
+                if (result == "1") {
+                    alert("添加成功");
+                    $("#addBtn button").html("取消收藏");
+//                    $("#addBtn").unbind("click",addPrivateStock());
+                    $("#addBtn button").removeClass("btn-primary");
+                    $("#addBtn").off("click","button");
+                    $("#addBtn").on("click","button",deletePrivateStock);
+//                    $("#addBtn").bind("click",deletePrivateStock());
+                }
+                else {
+                    alert("添加失败");
+                }
+            }
+        });
+    };
+
+    function deletePrivateStock () {
+        alert("删除方法执行了");
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "/user/deletePrivate/" + $("#stockCode").text(),
+            success: function (result) {
+                alert(result);
+                if (result == "1") {
+                    alert("删除成功");
+                    $("#addBtn button").html("加入收藏");
+                    $("#addBtn button").addClass("btn-primary");
+                    $("#addBtn").off("click","button");
+                    $("#addBtn").on("click","button",addPrivateStock);
+                }
+                else {
+                    alert("删除失败");
+                }
+            }
+        });
+    };
+
     $("#stockDetail > li").addClass("col-md-3");
 
     var startTime = ${dataOfStartDay.stockID.date.year} + "-" + ${dataOfStartDay.stockID.date.monthValue} + "-" + ${dataOfStartDay.stockID.date.dayOfMonth};
@@ -186,7 +246,7 @@
         //数据从12年开始
         startDate: new Date(2012 - 01 - 01),
         endDate: new Date()
-    })
+    });
 
     $("#datetimeEnd").datetimepicker({
         format: 'yyyy-mm-dd',
@@ -194,7 +254,7 @@
         language: 'zh-CN',
         autoclose: true,
         endDate: new Date()
-    })
+    });
 
     var data1 = ${candlestickData};
     var data2 = ${volumeData};
