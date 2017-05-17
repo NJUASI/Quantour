@@ -35,49 +35,50 @@ public class DownloadDataHelper {
 
         File dir = new File(path);
         File[] files = dir.listFiles();
-        for(int i = 0; i < files.length; i++){
-            List<Stock> stocks = new ArrayList<>();
+        for(int i = 0; i < files.length; i++) {
+            if (files[i].getName().startsWith("000") || files[i].getName().startsWith("001") || files[i].getName().startsWith("6") || files[i].getName().startsWith("002") || files[i].getName().startsWith("300")) {
 
-            try {
-                CsvReader reader = new CsvReader(path+File.separator+files[i].getName(),',',Charset.forName("GBK"));
-                //读取表头
-                reader.readHeaders();
-                //逐条读取记录
-                while(reader.readRecord()){
-                    NormalStock normalStock = new NormalStock();
-                    //当天未开盘，不存入数据库中
-                    if (reader.get(3).equals("0") || reader.get(8).equals("None")){
-                        continue;
+                List<Stock> stocks = new ArrayList<>();
+
+                try {
+                    CsvReader reader = new CsvReader(path + File.separator + files[i].getName(), ',', Charset.forName("GBK"));
+                    //读取表头
+                    reader.readHeaders();
+                    //逐条读取记录
+                    while (reader.readRecord()) {
+                        NormalStock normalStock = new NormalStock();
+                        //当天未开盘，不存入数据库中
+                        if (reader.get(3).equals("0") || reader.get(8).equals("None")) {
+                            continue;
+                        }
+                        normalStock.setCode(reader.get(1));
+                        normalStock.setName(reader.get(2));
+                        System.out.println(reader.get(2));
+                        normalStock.setDate(reader.get(0));
+                        normalStock.setOpen(reader.get(6));
+                        normalStock.setClose(reader.get(3));
+                        normalStock.setHigh(reader.get(4));
+                        normalStock.setLow(reader.get(5));
+                        normalStock.setPreClose(reader.get(7));
+                        normalStock.setFluctuation(reader.get(8));
+                        normalStock.setChangeRate(reader.get(9));
+                        normalStock.setVolume(reader.get(11));
+                        normalStock.setAmount(reader.get(12));
+                        normalStock.setTurnOverRate(reader.get(10));
+                        normalStock.setMarketCap(reader.get(13));
+                        normalStock.setMarketEquity(reader.get(14));
+
+                        stocks.add(new Stock(normalStock));
                     }
-                    normalStock.setCode(reader.get(1));
-                    normalStock.setName(reader.get(2));
-                    System.out.println(reader.get(2));
-                    normalStock.setDate(reader.get(0));
-                    normalStock.setOpen(reader.get(6));
-                    normalStock.setClose(reader.get(3));
-                    normalStock.setHigh(reader.get(4));
-                    normalStock.setLow(reader.get(5));
-                    normalStock.setPreClose(reader.get(7));
-                    normalStock.setFluctuation(reader.get(8));
-                    normalStock.setChangeRate(reader.get(9));
-                    normalStock.setVolume(reader.get(11));
-                    normalStock.setAmount(reader.get(12));
-                    normalStock.setTurnOverRate(reader.get(10));
-                    normalStock.setMarketCap(reader.get(13));
-                    normalStock.setMarketEquity(reader.get(14));
-
-                    stocks.add(new Stock(normalStock));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+                stockDataHelper.addStockAll(stocks);
             }
-
-            stockDataHelper.addStockAll(stocks);
         }
-
-
     }
 
     /**
