@@ -96,8 +96,6 @@ public class OnePieceDataProcessor implements PageProcessor {
             //市场类型
             String type = page.getHtml().regex("\"type\":\"(\\w+)").get();
 
-            //TODO unicode 转 中文
-
             System.out.println("name"+name);
 
             page.putField("code_name", new Code_Name(code,name,spell,type));

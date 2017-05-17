@@ -11,75 +11,15 @@
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <style rel="stylesheet" type="text/css">
-
-        body {
-            background-color: #f9f9f9;
-        }
-
-        header {
-            width: 100%;
-            height: 500px;
-            background-color: #444444;
-            overflow: hidden;
-        }
-
-        .nav-wrapper {
-            background-color: transparent;
-            border-color: transparent;
-        }
-
-        .nav-wrapper .container {
-            margin-top: 20px;
-        }
-
-        .media-list {
-            margin: 0px 100px;
-        }
-
-        .media {
-            margin-top: 0px;
-            padding: 100px;
-        }
-
-        .modal-dialog {
-            width: 400px;
-        }
-
-        #loginLabel {
-            margin-left: 22px;
-        }
-
-        .modal-body {
-            margin-top: 30px;
-        }
-
-        .modal-body .form-group {
-            margin-bottom: 25px;
-        }
-
-        #rem-password {
-            padding-right: 66px;
-        }
-
-    </style>
-
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-default nav-wrapper">
+    <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
-                    <!-- TODO -->
                     <img alt="Brand" src="">
                 </a>
             </div>
@@ -101,51 +41,70 @@
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
+    <div class="banner-holder">
+        <div class="banner-image-holder">
+            <img alt="Quantour" src="../img/banner.jpg" draggable="false">
+        </div>
+        <div class="jumbotron banner-desc">
+            <div class="container text-center">
+                <h1>Quantour,您的私人量化平台</h1>
+                <br/>
+                <br/>
+                <a class="btn btn-primary btn-lg" role="button">
+                    学习更多</a>
+            </div>
+        </div>
+    </div>
 </header>
-
 <div class="content">
     <div class="container-fluid">
-        <ul class="media-list">
-            <li class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="../img/img01.png"
-                         alt="媒体对象">
+        <ul class="media-list features">
+            <li class="media feature-wrapper-odd">
+                <a class="media-left">
+                    <img class="media-object" src="../img/img01.png" alt="媒体对象">
                 </a>
-                <div class="media-body">
+                <div class="media-body desc">
                     <h4 class="media-heading">媒体标题</h4>
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
+                    <p>高质量的海量金融数据支撑，轻松实现大数据时代的交易策略</p>
+                    <div class="detail">
+                        <ul>
+                            <li> 依托通联数据团队，免费提供股票、基金、债券、研报、宏观、资讯、社交、电商等全量数据；</li>
+                            <li> 专业团队负责数据的收集、清洗、加工及存储，来源权威，数据精准可靠，并定期推出特色数据；</li>
+                            <li> 通过api接口可直接在平台调用，免费提供给优矿用户使用；</li>
+                        </ul>
+                    </div>
                 </div>
             </li>
-            <li class="media">
-                <a class="pull-right" href="#">
-                    <img class="media-object" src="../img/img02.png"
-                         alt="媒体对象">
+            <li class="media feature-wrapper-mean">
+                <a class="media-right pull-right">
+                    <img class="media-object" src="../img/img01.png" alt="媒体对象">
                 </a>
-                <div class="media-body">
+                <div class="media-body desc">
                     <h4 class="media-heading">媒体标题</h4>
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
+                    <p>高质量的海量金融数据支撑，轻松实现大数据时代的交易策略</p>
+                    <div class="detail">
+                        <ul>
+                            <li> 依托通联数据团队，免费提供股票、基金、债券、研报、宏观、资讯、社交、电商等全量数据；</li>
+                            <li> 专业团队负责数据的收集、清洗、加工及存储，来源权威，数据精准可靠，并定期推出特色数据；</li>
+                            <li> 通过api接口可直接在平台调用，免费提供给优矿用户使用；</li>
+                        </ul>
+                    </div>
                 </div>
             </li>
-            <li class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="../img/img03.png"
-                         alt="媒体对象">
+            <li class="media feature-wrapper-odd">
+                <a class="media-left">
+                    <img class="media-object" src="../img/img01.png" alt="媒体对象">
                 </a>
-                <div class="media-body">
+                <div class="media-body desc">
                     <h4 class="media-heading">媒体标题</h4>
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
-                    这是一些示例文本。这是一些示例文本。
+                    <p>高质量的海量金融数据支撑，轻松实现大数据时代的交易策略</p>
+                    <div class="detail">
+                        <ul>
+                            <li> 依托通联数据团队，免费提供股票、基金、债券、研报、宏观、资讯、社交、电商等全量数据；</li>
+                            <li> 专业团队负责数据的收集、清洗、加工及存储，来源权威，数据精准可靠，并定期推出特色数据；</li>
+                            <li> 通过api接口可直接在平台调用，免费提供给优矿用户使用；</li>
+                        </ul>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -174,7 +133,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="login_password">密码：</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" id="login_password" placeholder="请输入密码">
+                            <input type="password" class="form-control" id="login_password" placeholder="请输入密码">
                         </div>
                     </div>
                     <p class="col-md-offset-3" id="errorMessageField"></p>

@@ -17,87 +17,9 @@
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../css/stocks.css" rel="stylesheet">
+    <link href="../css/reset.css" rel="stylesheet">
     <title>股票市场</title>
-
-    <style rel="stylesheet" type="text/css">
-        footer {
-            width: 100%;
-            height: 70px;
-            background-color: #444444;
-            margin-top: 70px;
-        }
-
-        .panel_title_wrapper {
-            margin-top: 30px;
-        }
-
-        .markets_wrapper {
-            margin-top: 45px;
-            padding-bottom: 30px;
-        }
-
-        .panel_title {
-            border-bottom: 1px solid #e6e6e6;
-        }
-
-        .curr {
-            width: auto;
-            height: 48px;
-            font-size: 30px;
-            border-bottom: 2px solid #0287fe;
-        }
-
-        .pagination-wrapper {
-            width: 100%;
-        }
-
-        ul {
-            list-style-type: none;
-            padding-left: 0px;
-        }
-
-        .each_market {
-            padding-left: 4.5%;
-            padding-right: 4.5%;
-            width: auto;
-            display: inline-block;
-        }
-
-        .market-data-extra li {
-            margin-bottom: 8px;
-        }
-
-        .market_high, .market_limit_up, .stock_high {
-            color: #FF5256;
-        }
-
-        .market_low, .market_limit_down, .stock_low {
-            color: #5DCD0B;
-        }
-
-        #stocks_shangzheng, #stocks_shenzheng {
-            border-right: 1px solid #e6e6e6;
-        }
-
-        table th, td {
-            text-align: center;
-        }
-
-        table caption {
-            margin-bottom: 10px;
-            color: #323232;
-        }
-
-        table th {
-            font-size: 15px;
-            font-weight: 500;
-            color: #5e5e5e;
-        }
-
-        table thead {
-            background-color: #EAF5FF;
-        }
-    </style>
 </head>
 <header>
     <nav class="navbar navbar-inverse">

@@ -18,13 +18,14 @@ footer {
 .banner-image-holder img {
     width: 100%;
     margin-top: -7%;
+    filter: brightness(60%);
 }
 
 .banner-desc {
     background: transparent;
     position: absolute;
     top: 25%;
-    left: 10%;
+    left: 7%;
 }
 
 .banner-desc h1 {
