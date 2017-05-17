@@ -274,14 +274,16 @@ public class StockDaoImpl implements StockDao {
         List<String> stockCodes = new ArrayList<>(codeName.keySet());
         List<String> stockNames = new ArrayList<>(codeName.values());
 
-        // TODO 冯俊杰：基准股票怎么搞
-//        stockCodes.removeAll(stockSearchDataHelper.getAllBaseStockCodes());
+        // 手动去除基准股票（沪深300、中小板指、创业板指）
+        stockCodes.remove("000300");
+        stockCodes.remove("399005");
+        stockCodes.remove("399006");
 
         for (int i = 0; i < stockCodes.size(); i++) {
             String tempCode = StockCodeHelper.format(stockCodes.get(i));
 
             BlockType thisBlockType;
-            if (tempCode.startsWith("001") || tempCode.startsWith("000")) {
+            if (tempCode.startsWith("001") || tempCode.startsWith("000") | tempCode.startsWith("6")) {
                 thisBlockType = BlockType.ZB;
             } else if (tempCode.startsWith("002")) {
                 thisBlockType = BlockType.ZXB;

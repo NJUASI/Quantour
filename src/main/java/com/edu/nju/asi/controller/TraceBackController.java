@@ -1,10 +1,17 @@
 package com.edu.nju.asi.controller;
 
+import com.edu.nju.asi.infoCarrier.traceBack.MaxTraceBack;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
+import com.edu.nju.asi.infoCarrier.traceBack.TraceBackNumVal;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.TraceBackStockPoolService;
+import com.edu.nju.asi.utilities.NumberFormat;
+import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import com.edu.nju.asi.utilities.tempHolder.TraceBackCriteriaTempHolder;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -57,8 +65,7 @@ public class TraceBackController {
 
         if (traceBackInfo != null) {
             ModelAndView mv = new ModelAndView("traceBackHome");
-            mv.addObject("traceBackNums", traceBackInfo.traceBackNumVal);
-            mv.addObject("maxTraceBack", traceBackInfo.maxTraceBack);
+            mv.addObject("traceBackNums", convertTraceBackNumVal(traceBackInfo));
             mv.addObject("abReturnPeriod", traceBackInfo.absoluteReturnPeriod);
             mv.addObject("reReturnPeriod", traceBackInfo.relativeReturnPeriod);
             mv.addObject("holdingDetails", traceBackInfo.holdingDetails);
@@ -117,22 +124,63 @@ public class TraceBackController {
 
 
         TraceBackInfo traceBackInfo = null;
-//        try {
-//            traceBackInfo = traceBackService.traceBack(criteria, stockPool);
+        try {
+            traceBackInfo = traceBackService.traceBack(criteria, stockPool);
         session.setAttribute("traceBackResult", traceBackInfo);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return "-1;IO读取失败！";
-//        } catch (DataSourceFirstDayException | DateNotWithinException | NoDataWithinException | UnhandleBlockTypeException e) {
-//            e.printStackTrace();
-//            return "-1;" + e.getMessage();
-//        }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-1;IO读取失败！";
+        } catch (DataSourceFirstDayException | DateNotWithinException | NoDataWithinException | UnhandleBlockTypeException e) {
+            e.printStackTrace();
+            return "-1;" + e.getMessage();
+        }
 
-//        if (traceBackInfo != null) {
-//            System.out.println("Success");
+        if (traceBackInfo != null) {
+            System.out.println("Success");
         return "1;回测成功";
-//        } else return "-1;服务器开了一个小差。。请稍后重试";
+        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
+
+    private List<String> convertTraceBackNumVal(TraceBackInfo info) {
+        TraceBackNumVal val = info.traceBackNumVal;
+        MaxTraceBack maxTraceBack = info.maxTraceBack;
+        List<String> result = new LinkedList<>();
+
+        // 策略部分
+        result.add(NumberFormat.percentFormat(val.sumRate, 2));
+        result.add(NumberFormat.percentFormat(val.annualizedRateOfReturn, 2));
+        result.add(NumberFormat.decimaFormat(val.sharpeRatio, 4));
+        result.add(NumberFormat.percentFormat(maxTraceBack.maxStrategyTraceBackRate, 2));
+        result.add(NumberFormat.percentFormat(val.returnVolatility, 2));
+        result.add(NumberFormat.decimaFormat(val.beta, 4));
+        result.add(NumberFormat.decimaFormat(val.alpha, 4));
+
+        // 基准部分
+        result.add(NumberFormat.percentFormat(val.baseSumRate, 2));
+        result.add(NumberFormat.percentFormat(val.baseAnnualizedRateOfReturn, 2));
+        result.add(NumberFormat.decimaFormat(val.baseSharpeRatio, 4));
+        result.add(NumberFormat.percentFormat(maxTraceBack.maxBaseTraceBackRate, 2));
+        result.add(NumberFormat.percentFormat(val.baseReturnVolatility, 2));
+        result.add("/");
+        result.add("/");
+
+        // 相对部分
+        result.add(NumberFormat.percentFormat(val.sumRate - val.baseSumRate, 2));
+        result.add(NumberFormat.percentFormat(val.annualizedRateOfReturn - val.baseAnnualizedRateOfReturn, 2));
+        result.add(NumberFormat.decimaFormat(val.sharpeRatio - val.baseSharpeRatio, 4));
+        result.add(NumberFormat.percentFormat(maxTraceBack.maxStrategyTraceBackRate - maxTraceBack.maxBaseTraceBackRate, 2));
+        result.add(NumberFormat.percentFormat(val.returnVolatility - val.baseReturnVolatility, 2));
+        result.add(NumberFormat.decimaFormat(val.beta - val.baseReturnVolatility, 4));
+        result.add(NumberFormat.decimaFormat(val.alpha - val.baseReturnVolatility, 4));
+
+
+        for (String tempStr: result) {
+            System.out.println(tempStr);
+        }
+
+
+        return result;
+    }
 
 }

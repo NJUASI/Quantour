@@ -283,13 +283,15 @@
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
         <li><a href="#circlePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
         <li><a href="#detailPanel" role="tab" data-toggle="tab">交易详情</a></li>
-        <li><a href="#winRatePanel" role="tab" data-toggle="tab">赢率分布</a></li>
-        <li><a href="#absoluteRatePanel" role="tab" data-toggle="tab">绝对赢率分布</a></li>
+        <li><a href="#certainFormatePanel" role="tab" data-toggle="tab">固定形成期的赢率分析</a></li>
+        <li><a href="#certainHoldingPanel" role="tab" data-toggle="tab">固定持有期的赢率分析</a></li>
     </ul>
 </div>
+
+<%--<c:choose>--%>
+<%--<c:when test="${traceBackNums != null}">--%>
 <!-- 选项卡面板 -->
 <div id="myTabContent" class="col-md-10 col-lg-offset-1 tab-content">
-
 
     <div class="tab-pane active" id="chartPanel">
         <div class="col-md-12 table-responsive">
@@ -309,33 +311,33 @@
                 <tbody>
                 <tr>
                     <td>本策略</td>
-                    <td>Bangalore</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
+                    <td>${traceBackNums.get(0)}</td>
+                    <td>${traceBackNums.get(1)}</td>
+                    <td>${traceBackNums.get(2)}</td>
+                    <td>${traceBackNums.get(3)}</td>
+                    <td>${traceBackNums.get(4)}</td>
+                    <td>${traceBackNums.get(5)}</td>
+                    <td>${traceBackNums.get(6)}</td>
                 </tr>
                 <tr>
-                    <td>沪深300</td>
-                    <td>Bangalore</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
+                    <td>基准股票</td>
+                    <td>${traceBackNums.get(7)}</td>
+                    <td>${traceBackNums.get(8)}</td>
+                    <td>${traceBackNums.get(9)}</td>
+                    <td>${traceBackNums.get(10)}</td>
+                    <td>${traceBackNums.get(11)}</td>
+                    <td>${traceBackNums.get(12)}</td>
+                    <td>${traceBackNums.get(13)}</td>
                 </tr>
                 <tr>
                     <td>相对收益</td>
-                    <td>Bangalore</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
-                    <td>560001</td>
+                    <td>${traceBackNums.get(14)}</td>
+                    <td>${traceBackNums.get(15)}</td>
+                    <td>${traceBackNums.get(16)}</td>
+                    <td>${traceBackNums.get(17)}</td>
+                    <td>${traceBackNums.get(18)}</td>
+                    <td>${traceBackNums.get(19)}</td>
+                    <td>${traceBackNums.get(20)}</td>
                 </tr>
                 </tbody>
             </table>
@@ -345,15 +347,92 @@
         </div>
     </div>
     <div class="tab-pane" id="circlePanel">
-</div>
+        <div class="row">
+            <div class="col-md-6 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <caption class="text-center"><h3>绝对收益直方图</h3></caption>
+                    <thead>
+                    <tr>
+                        <th>正收益周期数</th>
+                        <th>负收益周期数</th>
+                        <th>赢率</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>${abReturnPeriod.positivePeriodsNum}</td>
+                        <td>${abReturnPeriod.negativePeriodNum}</td>
+                        <td>${abReturnPeriod.winRate}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<div class="tab-pane" id="detailPanel">论坛内容面板</div>
-    <div class="tab-pane" id="winRatePanel">
+        <div class="row">
+            <div class="col-md-6 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <caption class="text-center"><h3>相对收益直方图</h3></caption>
+                    <thead>
+                    <tr>
+                        <th>正收益周期数</th>
+                        <th>负收益周期数</th>
+                        <th>赢率</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>${reReturnPeriod.positivePeriodsNum}</td>
+                        <td>${reReturnPeriod.negativePeriodNum}</td>
+                        <td>${reReturnPeriod.winRate}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="tab-pane" id="detailPanel">
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>周期序号</th>
+                        <th>开始日期</th>
+                        <th>结束日期</th>
+                        <th>股票持有只数</th>
+                        <th>策略收益</th>
+                        <th>基准收益</th>
+                        <th>超额收益</th>
+                        <th>模拟投资</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${holdingDetails}" var="temp" varStatus="vs">
+                        <tr>
+                            <td>${temp.periodSerial}</td>
+                            <td>${temp.startDate}</td>
+                            <td>${temp.endDate}</td>
+                            <td>${temp.holdingNum}</td>
+                            <td>${temp.strategyReturn}</td>
+                            <td>${temp.baseReturn}</td>
+                            <td>${temp.excessReturn}</td>
+                            <td>${temp.remainInvestment}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="certainFormatePanel">
 
         <div class="row">
             <div class="col-md-3 table-responsive">
                 <table class="table table-hover table-condensed">
-                    <caption class="text-center"><h3>相对</h3></caption>
+                    <caption class="text-center"><h3>固定形成期的赢率分析</h3></caption>
                     <thead>
                     <tr>
                         <th>周期</th>
@@ -362,100 +441,86 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Bangalore</td>
-                        <td>560001</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Bangalore</td>
-                        <td>560001</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Bangalore</td>
-                        <td>560001</td>
-                    </tr>
+                    <c:forEach items="${certainFormates}" var="temp" varStatus="vs">
+                        <tr>
+                            <td>${temp.relativeCycle}</td>
+                            <td>${temp.excessRate}</td>
+                            <td>${temp.winRate}</td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
             <div class="col-md-7 col-md-offset-1">
-            <div class="row">
-                <div id="candlestick" class="col-md-12" style="width:800px;height:400px"></div>
-                <div id="candlestick2" class="col-md-12" style="width: 800px;height:400px"></div>
-            </div>
+                <div class="row">
+                    <div id="candlestick" class="col-md-12" style="width:800px;height:400px"></div>
+                    <div id="candlestick2" class="col-md-12" style="width: 800px;height:400px"></div>
+                </div>
             </div>
         </div>
 
     </div>
-    <div class="tab-pane" id="absoluteRatePanel">
+    <div class="tab-pane" id="certainHoldingPanel">
 
-            <div class="row">
-                <div class="col-md-3 table-responsive">
-                    <table class="table table-hover table-condensed">
-                        <caption class="text-center"><h3>绝对</h3></caption>
-                        <thead>
+        <div class="row">
+            <div class="col-md-3 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <caption class="text-center"><h3>固定持有期的赢率分析</h3></caption>
+                    <thead>
+                    <tr>
+                        <th>周期</th>
+                        <th>超额收益</th>
+                        <th>1年内胜率</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${certainHoldings}" var="temp" varStatus="vs">
                         <tr>
-                            <th>周期</th>
-                            <th>超额收益</th>
-                            <th>1年内胜率</th>
+                            <td>${temp.relativeCycle}</td>
+                            <td>${temp.excessRate}</td>
+                            <td>${temp.winRate}</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Bangalore</td>
-                            <td>560001</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Bangalore</td>
-                            <td>560001</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Bangalore</td>
-                            <td>560001</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-7 col-md-offset-1">
-                    <div class="row">
-                        <div id="candlestick3" class="col-md-12" style="width:800px;height:400px"></div>
-                        <div id="candlestick4" class="col-md-12" style="width: 800px;height:400px"></div>
-                    </div>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-7 col-md-offset-1">
+                <div class="row">
+                    <div id="candlestick3" class="col-md-12" style="width:800px;height:400px"></div>
+                    <div id="candlestick4" class="col-md-12" style="width: 800px;height:400px"></div>
                 </div>
             </div>
-
         </div>
 
+    </div>
+
 </div>
-</div>
+<%--</c:when>--%>
+<%--<c:otherwise>--%>
+<%--显示一张图片好了。。--%>
+<%--</c:otherwise>--%>
+<%--</c:choose>--%>
 
 
-
-
-<div id = "trace_back_chart" style="width:100%;height:600px"></div>
-<div id = "absolute_histogram_chart" style="width:100%;height:600px"></div>
-<div id = "relative_histogram_chart" style="width:100%;height:600px"></div>
-<div id = "formates_excess_chart" style="width:100%;height:600px"></div>
-<div id = "formates_win_chart" style="width:100%;height:600px"></div>
-<div id = "holdings_excess_chart" style="width:100%;height:600px"></div>
-<div id = "holdings_win_chart" style="width:100%;height:600px"></div>
+<div id="trace_back_chart" style="width:100%;height:600px"></div>
+<div id="absolute_histogram_chart" style="width:100%;height:600px"></div>
+<div id="relative_histogram_chart" style="width:100%;height:600px"></div>
+<div id="formates_excess_chart" style="width:100%;height:600px"></div>
+<div id="formates_win_chart" style="width:100%;height:600px"></div>
+<div id="holdings_excess_chart" style="width:100%;height:600px"></div>
+<div id="holdings_win_chart" style="width:100%;height:600px"></div>
 <h1>欢迎开始回测</h1>
 
-<script src = "../js/echarts.min.js"></script>
-<script src = "../js/chart.js"></script>
-<script type = "text/javascript">
-    var trace_back_chart = createTraceBackChart("trace_back_chart"${json_strategyData},${json_baseData},['策略','基准'],'1','1');
-    var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart",${json_absoluteHistogramData}, "绝对收益直方图");
-    var relative_histogram_chart = createHistogramChart("relative_histogram_chart",${json_relativeHistogramData}, "相对收益直方图");
-    var formates_excess_chart = createAreaChart("formates_excess_chart",${json_certainFormatesExcessData},'胜率');
-    var formates_win_chart = createAreaChart("formates_win_chart",${json_certainFormatesWinData},'赢率');
-    var holdings_excess_chart = createAreaChart("holdings_excess_chart",${json_certainHoldingsExcessData},'胜率');
-    var holdings_win_chart = createAreaChart("holdings_win_chart",${json_certainHoldingsWinData},'赢率');
+<script src="../js/echarts.min.js"></script>
+<script src="../js/chart.js"></script>
+<script type="text/javascript">
+    var trace_back_chart = createTraceBackChart("trace_back_chart"${json_strategyData}, ${json_baseData}, ['策略', '基准'], '1', '1');
+    var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart", ${json_absoluteHistogramData}, "绝对收益直方图");
+    var relative_histogram_chart = createHistogramChart("relative_histogram_chart", ${json_relativeHistogramData}, "相对收益直方图");
+    var formates_excess_chart = createAreaChart("formates_excess_chart", ${json_certainFormatesExcessData}, '胜率');
+    var formates_win_chart = createAreaChart("formates_win_chart", ${json_certainFormatesWinData}, '赢率');
+    var holdings_excess_chart = createAreaChart("holdings_excess_chart", ${json_certainHoldingsExcessData}, '胜率');
+    var holdings_win_chart = createAreaChart("holdings_win_chart", ${json_certainHoldingsWinData}, '赢率');
 </script>
 
 
@@ -665,9 +730,6 @@
         ['31', '0.15']];
 
     createAreaChart("candlestick", data, '超额收益');
-
-
-
 
 
     var data2 = [['0', '0.23'],
