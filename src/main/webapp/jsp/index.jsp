@@ -20,7 +20,7 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
-                    <img alt="Brand" src="">
+                    <img alt="Quantour" src="">
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
@@ -30,14 +30,13 @@
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">
-                        <li><a href="/stocks">用戶管理</a></li>
+                        <li><a href="/userManager">用戶管理</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
                     </c:otherwise>
                 </c:choose>
-
             </ul>
         </div><!-- /.container-fluid -->
     </nav>

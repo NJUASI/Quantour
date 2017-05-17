@@ -177,9 +177,53 @@
 
                         </div>
                     </div>
-
-
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
+        <div class="panel-heading">
+            <h3 class="panel_title">
+                自选股票
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="table-responsive col-md-12">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th>代码</th>
+                            <th>名称</th>
+                            <th>开盘价</th>
+                            <th>收盘价</th>
+                            <th>最高价</th>
+                            <th>最低价</th>
+                            <th>昨收</th>
+                            <th>交易量</th>
+                            <th>交易额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <%--<c:forEach items="${stockList}" var="stock" varStatus="vs">--%>
+                                <%--<tr>--%>
+                                    <%--<td>${stock.stockID.code}</td>--%>
+                                    <%--<td>${stock.name}</td>--%>
+                                    <%--<td>${stock.open}</td>--%>
+                                    <%--<td>${stock.close}</td>--%>
+                                    <%--<td class="stock_high">${stock.high}</td>--%>
+                                    <%--<td class="stock_low">${stock.low}</td>--%>
+                                    <%--<td>${stock.preClose}</td>--%>
+                                    <%--<td>${stock.volume}</td>--%>
+                                    <%--<td>${stock.transactionAmount}</td>--%>
+                                <%--</tr>--%>
+                            <%--</c:forEach>--%>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

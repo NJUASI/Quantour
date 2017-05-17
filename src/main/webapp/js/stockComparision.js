@@ -22,16 +22,20 @@ function compare() {
         data: JSON.stringify(jsonData),
 
         success: function (result) {
+            // var aa = JSON.parse(result);
+            // alert(aa);
             alert(result);
-            alert(JSON.stringify(jsonData));
-            var array = result.split(";");
+            alert(result[0]);
+            createLineChart('closesChart',result[0],'wfsd','1231231');
+            // alert(JSON.stringify(jsonData));
+            // var array = result.split(";");
 
-            if (array[0] == "1") {
+            if (true) {
                 alert("666");
-                window.location.href = "/stocks/compare";
-            } else if (array[0] == "-1") {
+                // createLineChart("closesChart", }, '收盘价', ${comparisionName});
+            } else if (false) {
                 // 提示错误信息
-                alert(array[1]);
+                // alert(array[1]);
             } else {
                 alert("未知错误类型orz");
             }

@@ -118,7 +118,7 @@
 <div class="row">
 
     <div class="col-md-2 col-md-offset-8">
-        <button type="button" class="btn btn-primary" onclick="compare()"/>
+        <button id="compare-btn" type="button" class="btn btn-primary" onclick="compare()"/>
         开始对比</button>
     </div>
 
@@ -132,6 +132,7 @@
                     <caption class="text-center"><h3>股票比较详情</h3></caption>
                     <thead>
                     <tr>
+                        <th>股票名</th>
                         <th>最大值</th>
                         <th>最小值</th>
                         <th>涨跌幅</th>
@@ -140,12 +141,14 @@
                     </thead>
                     <tbody>
                     <tr>
+                        <td>${stockCompareNum1.get(4)}</td>
                         <td>${stockCompareNum1.get(0)}</td>
                         <td>${stockCompareNum1.get(1)}</td>
                         <td>${stockCompareNum1.get(2)}</td>
                         <td>${stockCompareNum1.get(3)}</td>
                     </tr>
                     <tr>
+                        <td>${stockCompareNum2.get(4)}</td>
                         <td>${stockCompareNum2.get(0)}</td>
                         <td>${stockCompareNum2.get(1)}</td>
                         <td>${stockCompareNum2.get(2)}</td>
@@ -156,17 +159,17 @@
             </div>
         </div>
 
-        <%--<div onload="createChart()">--%>
-            <%--<div id="closesChart" style="width:100%;height:600px"></div>--%>
-            <%--<div id="logarithmicYieldChart" style="width:100%;height:600px"></div>--%>
-        <%--</div>--%>
+        <div>
+
+            <div id="logarithmicYieldChart" style="width:100%;height:600px"></div>
+        </div>
 
     </c:when>
     <c:otherwise>
         <li>选择条件进行回测吧！！</li>
     </c:otherwise>
 </c:choose>
-
+<div id="closesChart" style="width:100%;height:600px"></div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <script src="../js/jquery.validate.js"></script>
@@ -182,6 +185,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
         var today = new Date();
 
         var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
@@ -209,6 +213,13 @@
         }).on("click", function () {
             $("#compare_endDate").datetimepicker("setStartDate", $("#compare_startDate>input").val())
         });
+
+        if(document.getElementById("closesChart")!=null){
+         alert("1222");
+            <%--var closesChart = createLineChart("closesChart", ${closesData}, '收盘价', ${comparisionName});--%>
+        }else {
+            alert("1111");
+        }
 
         <%--var ttt = <%=request.getAttribute("closesData")%>;--%>
         <%--if (ttt != null) {--%>

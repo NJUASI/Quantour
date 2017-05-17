@@ -148,6 +148,7 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         <c:forEach items="${stockList}" var="stock" varStatus="vs">
                             <tr>
                                 <td>${stock.stockID.code}</td>
@@ -161,6 +162,7 @@
                                 <td>${stock.transactionAmount}</td>
                             </tr>
                         </c:forEach>
+
                         </tbody>
                     </table>
                 </div>

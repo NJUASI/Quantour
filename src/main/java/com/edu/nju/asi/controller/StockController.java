@@ -1,5 +1,6 @@
 package com.edu.nju.asi.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.StockComparision;
 import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
 import com.edu.nju.asi.model.Stock;
@@ -267,7 +268,7 @@ public class StockController {
      */
     @PostMapping(value = "/req_compare", produces = "text/html;charset=UTF-8;application/json")
     public @ResponseBody
-    String reqCompare(@RequestBody StockComparisionCriteriaTempHolder holder, HttpServletRequest request, HttpServletResponse response) {
+    String reqCompare(@RequestBody StockComparisionCriteriaTempHolder holder, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
         // 限制进入
         HttpSession session = request.getSession(false);
         if (session == null) {
@@ -284,11 +285,21 @@ public class StockController {
         System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
 
         List<StockComparision> result = null;
+
+//        List<List<String>> results = new ArrayList<>();
+        String[] list1= new String[2];
         try {
             result = chartService.getComparision(criteria);
-            session.setAttribute("compareResult", result);
+//            session.setAttribute("compareResult", result);
             // TODO 加入当日信息显示，与界面沟通
 
+//            List<String> list2= new ArrayList<>();
+            list1[0] = (JsonConverter.convertComparision(result.get(0).closes));
+            list1[1] = (JsonConverter.convertComparision(result.get(1).closes));
+//            list2.add(JsonConverter.convertComparision(result.get(0).logarithmicYield));
+//            list2.add(JsonConverter.convertComparision(result.get(1).logarithmicYield));
+//            results.add(list1);
+//            results.add(list2);
         } catch (IOException e) {
             e.printStackTrace();
             return "-1;IO读取失败！";
@@ -299,7 +310,11 @@ public class StockController {
 
         if (result != null) {
             System.out.println("Success");
-            return "1;比较成功";
+            System.out.println(JsonConverter.convertComparision(result.get(0).closes));
+            System.out.println(JsonConverter.convertComparision(result.get(1).closes));
+            System.out.println(JsonConverter.jsonOfObject(list1));
+
+            return JsonConverter.jsonOfObject(list1);
         } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
@@ -310,7 +325,7 @@ public class StockController {
         result.add(NumberFormat.decimaFormat(comparision.min, 4));
         result.add(NumberFormat.percentFormat(comparision.increaseMargin, 2));
         result.add(NumberFormat.decimaFormat(comparision.logarithmicYieldVariance, 4));
-
+        result.add(comparision.name);
         for (String tempStr: result) {
             System.out.println(tempStr);
         }
