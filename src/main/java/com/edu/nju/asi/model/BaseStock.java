@@ -25,10 +25,6 @@ public class BaseStock implements Serializable{
     @Column(length = 100)
     private String name;
 
-    // 市场名称
-    @Basic
-    private Market market;
-
     // 开盘指数
     @Basic
     private double open;
@@ -70,10 +66,9 @@ public class BaseStock implements Serializable{
     public BaseStock() {
     }
 
-    public BaseStock(String name, Market market, double open, double high, double low, double close,
+    public BaseStock(String name,double open, double high, double low, double close,
                      String volume, String transactionAmount, double preClose, double increaseMargin, double fluctuation) {
         this.name = name;
-        this.market = market;
         this.open = open;
         this.high = high;
         this.low = low;
@@ -89,7 +84,6 @@ public class BaseStock implements Serializable{
         this.stockID = new StockID(baseStockEve.getCode(),baseStockEve.getDate());
         this.name = baseStockEve.getName();
         //这里默认给SZ
-        this.market = Market.SZ;
         this.open = baseStockEve.getOpen();
         this.high = baseStockEve.getHigh();
         this.low = baseStockEve.getLow();
@@ -115,14 +109,6 @@ public class BaseStock implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Market getMarket() {
-        return market;
-    }
-
-    public void setMarket(Market market) {
-        this.market = market;
     }
 
     public double getOpen() {

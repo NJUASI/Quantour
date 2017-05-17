@@ -113,9 +113,9 @@ public class LogInController {
 //            List<Stock> psList = privateStockService.getPrivateStocks(user.getUserName(), LocalDate.now());
 
             List<Stock> psList = new LinkedList<>();
-            psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
-            psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
-            psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
+//            psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
+//            psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
+//            psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
 
             HttpSession session = request.getSession(true);
             session.setAttribute("userType", "user");

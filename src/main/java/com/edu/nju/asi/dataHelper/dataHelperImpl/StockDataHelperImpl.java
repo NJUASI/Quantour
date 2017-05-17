@@ -64,18 +64,41 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<Stock> getStockData(String stockCode, LocalDate start, LocalDate end) {
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "from Stock where stockID.date<=:endDate and stockID.date>=:startDate and stockID.code=:code order by stockID.date";
 
-        Query query = session.createQuery(hql);
-        query.setParameter("endDate",end);
-        query.setParameter("startDate",start);
-        query.setParameter("code",stockCode);
-        List<Stock> list = query.list();
-        transaction.commit();
-        session.close();
-        return list;
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        String sql = "SELECT * FROM stock s WHERE s.code=? AND s.date>=? AND s.date <=? ORDER BY s.date";
+
+        try {
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }finally {
+            JDBCUtil.close(preparedStatement,connection);
+        }
+
+        return null;
+
+//        session = sessionFactory.openSession();
+//        Transaction transaction = session.beginTransaction();
+//        String hql = "from Stock where stockID.date<=:endDate and stockID.date>=:startDate and stockID.code=:code order by stockID.date";
+//
+//        Query query = session.createQuery(hql);
+//        query.setParameter("endDate",end);
+//        query.setParameter("startDate",start);
+//        query.setParameter("code",stockCode);
+//        List<Stock> list = query.list();
+//        transaction.commit();
+//        session.close();
+//        return list;
     }
 
     /**
@@ -138,9 +161,9 @@ public class StockDataHelperImpl implements StockDataHelper {
     public boolean addStockAll(List<Stock> stocks){
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO stock(code, date, close, high, low, market, name, open, preClose, volume," +
+        String sql = "INSERT INTO stock(code, date, close, high, low,name, open, preClose, volume," +
                 "circulationMarketValue, fluctuation, increaseMargin, totalValue, transactionAmount, turnoverRate)" +
-                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         boolean result = true;
 
         try {
@@ -152,17 +175,16 @@ public class StockDataHelperImpl implements StockDataHelper {
                 preparedStatement.setDouble(3,stock.getClose());
                 preparedStatement.setDouble(4,stock.getHigh());
                 preparedStatement.setDouble(5,stock.getLow());
-                preparedStatement.setInt(6,stock.getMarket().getRepre());
-                preparedStatement.setString(7,stock.getName());
-                preparedStatement.setDouble(8,stock.getOpen());
-                preparedStatement.setDouble(9,stock.getPreClose());
-                preparedStatement.setString(10,stock.getVolume());
-                preparedStatement.setString(11,stock.getCirculationMarketValue());
-                preparedStatement.setDouble(12,stock.getFluctuation());
-                preparedStatement.setDouble(13,stock.getIncreaseMargin());
-                preparedStatement.setString(14,stock.getTotalValue());
-                preparedStatement.setString(15,stock.getTransactionAmount());
-                preparedStatement.setDouble(16,stock.getTurnoverRate());
+                preparedStatement.setString(6,stock.getName());
+                preparedStatement.setDouble(7,stock.getOpen());
+                preparedStatement.setDouble(8,stock.getPreClose());
+                preparedStatement.setString(9,stock.getVolume());
+                preparedStatement.setString(10,stock.getCirculationMarketValue());
+                preparedStatement.setDouble(11,stock.getFluctuation());
+                preparedStatement.setDouble(12,stock.getIncreaseMargin());
+                preparedStatement.setString(13,stock.getTotalValue());
+                preparedStatement.setString(14,stock.getTransactionAmount());
+                preparedStatement.setDouble(15,stock.getTurnoverRate());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
