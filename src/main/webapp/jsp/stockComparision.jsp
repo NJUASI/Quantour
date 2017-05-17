@@ -117,10 +117,43 @@
 <div class="row">
 
     <div class="col-md-2 col-md-offset-8">
-        <button type="button" class="btn btn-primary" onclick="compare()"/>开始对比</button>
+        <button type="button" class="btn btn-primary" onclick="compare()"/>
+        开始对比</button>
     </div>
 
 </div>
+
+<div class="row">
+    <div class="col-md-3 table-responsive">
+        <table class="table table-hover table-condensed">
+            <caption class="text-center"><h3>固定持有期的赢率分析</h3></caption>
+            <thead>
+            <tr>
+                <th>最大值</th>
+                <th>最小值</th>
+                <th>涨跌幅</th>
+                <th>对数收益率方差</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>${stockCompareNum1.get(0)}</td>
+                <td>${stockCompareNum1.get(1)}</td>
+                <td>${stockCompareNum1.get(2)}</td>
+                <td>${stockCompareNum1.get(3)}</td>
+            </tr>
+            <tr>
+                <td>${stockCompareNum2.get(0)}</td>
+                <td>${stockCompareNum2.get(1)}</td>
+                <td>${stockCompareNum2.get(2)}</td>
+                <td>${stockCompareNum2.get(3)}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 <div id="closesChart" style="width:100%;height:600px"></div>
 <div id="logarithmicYieldChart" style="width:100%;height:600px"></div>
 
@@ -134,8 +167,8 @@
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
-<script src = "../js/echarts.min.js"></script>
-<script src = "../js/chart.js"></script>
+<script src="../js/echarts.min.js"></script>
+<script src="../js/chart.js"></script>
 <script type="text/javascript">
 
     $("#stockDetail>li").addClass("col-md-3");
@@ -167,8 +200,8 @@
         $("#compare_endDate").datetimepicker("setStartDate", $("#compare_startDate>input").val())
     });
 
-    var closesChart = createLineChart("closesChart",${closesData},'收盘价',${comparisionName});
-    var logarithmicYieldChart = createLineChart("logarithmicYieldChart",${logarithmicYieldData},'对数收益率方差',${comparisionName});
+    var closesChart = createLineChart("closesChart", ${closesData}, '收盘价', ${comparisionName});
+    var logarithmicYieldChart = createLineChart("logarithmicYieldChart", ${logarithmicYieldData}, '对数收益率方差', ${comparisionName});
 
 </script>
 </body>
