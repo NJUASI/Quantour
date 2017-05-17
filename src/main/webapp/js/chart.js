@@ -413,7 +413,6 @@ function createTraceBackChart(id, strategyData, baseData, legend, startX, endX) 
             }
         ]
     };
-
     traceBackChart.setOption(option, true);
     traceBackChart.hideLoading();
     return traceBackChart;

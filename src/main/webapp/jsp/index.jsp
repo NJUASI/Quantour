@@ -13,6 +13,7 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/reset.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/startLoader.css" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -191,13 +192,17 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 <script src="../js/logIn.js"></script>
-
+<script src="../js/startLoaded.js"></script>
 </body>
 </html>

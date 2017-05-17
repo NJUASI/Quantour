@@ -74,5 +74,41 @@ public class JDBCUtil {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 *
+	 * 关闭sql链接
+	 *
+	 * @auther Byron Dong
+	 * @lastUpdatedBy Byron Dong
+	 * @updateTime 2017/4/11
+	 * @param ps sql执行Statement
+	 * @param  conn 链接
+	 */
+	public static void close(PreparedStatement ps, Connection conn,ResultSet rs){
+		try{
+			if(rs!=null){
+				rs.close();
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+
+		try{
+			if(ps!=null){
+				ps.close();
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+
+		try{
+			if(conn!=null){
+				conn.close();
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
 }
 

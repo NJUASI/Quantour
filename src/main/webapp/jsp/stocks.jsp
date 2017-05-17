@@ -180,15 +180,15 @@
 </div>
 <div id="candlestick_chart" style="width:100%;height:600px"></div>
 
+<footer>
+</footer>
+
 <script src="../js/stocks.js"></script>
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
 <script type="text/javascript">
     var candlestickChart = createCandlestickChart("candlestick_chart", ${candlestickData}, ${volumeData});
 </script>
-<footer>
-
-</footer>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
