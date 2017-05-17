@@ -33,6 +33,8 @@ function compare() {
             var closesData = [closes01, closes02];
             var logarithmicYield = [logarithmicYield01, logarithmicYield02];
 
+            var numVals = JSON.parse(parts[5]); //二维数组
+
             createLineChart("closesChart", closesData, '收盘价', comparisionName);
             createLineChart("logarithmicYieldChart", logarithmicYield, "对数收益率方差", comparisionName);
         },

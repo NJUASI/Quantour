@@ -287,9 +287,7 @@ public class StockController {
         System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
 
         List<StockComparision> result = null;
-
-//        List<List<String>> results = new ArrayList<>();
-        String closes01, closes02, logarithmicYield01,logarithmicYield02,comparisionName;
+        String closes01, closes02, logarithmicYield01,logarithmicYield02,comparisionName, numVals;
         try {
             result = chartService.getComparision(criteria);
 //            session.setAttribute("compareResult", result);
@@ -304,7 +302,14 @@ public class StockController {
             name.add(result.get(1).name);
             comparisionName = JsonConverter.jsonOfObject(name);
 
-            return closes01 + ";" + closes02+";"+logarithmicYield01+";"+logarithmicYield02+";"+comparisionName;
+            List<List<String>> numVal = new ArrayList<>();
+            numVal.add(this.convertcomparisionNumVal(result.get(0)));
+            numVal.add(this.convertcomparisionNumVal(result.get(1)));
+            numVals = JsonConverter.jsonOfObject(numVal);
+
+
+
+            return closes01 + ";" + closes02+";"+logarithmicYield01+";"+logarithmicYield02+";"+comparisionName+";"+numVals;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -322,11 +327,8 @@ public class StockController {
         result.add(NumberFormat.decimaFormat(comparision.min, 4));
         result.add(NumberFormat.percentFormat(comparision.increaseMargin, 2));
         result.add(NumberFormat.decimaFormat(comparision.logarithmicYieldVariance, 4));
-
-        for (String tempStr : result) {
-            System.out.println(tempStr);
-        }
         return result;
 
     }
+
 }
