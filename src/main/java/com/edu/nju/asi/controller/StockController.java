@@ -287,29 +287,29 @@ public class StockController {
         System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
 
         List<StockComparision> result = null;
-
-//        List<List<String>> results = new ArrayList<>();
-        String closes01, closes02;
+        String closes01, closes02, logarithmicYield01,logarithmicYield02,comparisionName, numVals;
         try {
             result = chartService.getComparision(criteria);
 //            session.setAttribute("compareResult", result);
             // TODO 加入当日信息显示，与界面沟通
 
-//            List<String> list2= new ArrayList<>();
-            closes01 = (JsonConverter.convertComparision(result.get(0).closes));
-            closes02 = (JsonConverter.convertComparision(result.get(1).closes));
+            closes01 = JsonConverter.convertComparision(result.get(0).closes);
+            closes02 = JsonConverter.convertComparision(result.get(1).closes);
+            logarithmicYield01 = JsonConverter.convertComparision(result.get(0).logarithmicYield);
+            logarithmicYield02 = JsonConverter.convertComparision(result.get(1).logarithmicYield);
+            List<String> name = new ArrayList<>();
+            name.add(result.get(0).name);
+            name.add(result.get(1).name);
+            comparisionName = JsonConverter.jsonOfObject(name);
+
+            List<List<String>> numVal = new ArrayList<>();
+            numVal.add(this.convertcomparisionNumVal(result.get(0)));
+            numVal.add(this.convertcomparisionNumVal(result.get(1)));
+            numVals = JsonConverter.jsonOfObject(numVal);
 
 
-            System.out.println("Success");
-            System.out.println(closes01);
-            System.out.println(closes02);
 
-            return closes01 + ";" + closes02;
-
-//            list2.add(JsonConverter.convertComparision(result.get(0).logarithmicYield));
-//            list2.add(JsonConverter.convertComparision(result.get(1).logarithmicYield));
-//            results.add(list1);
-//            results.add(list2);
+            return closes01 + ";" + closes02+";"+logarithmicYield01+";"+logarithmicYield02+";"+comparisionName+";"+numVals;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -327,11 +327,8 @@ public class StockController {
         result.add(NumberFormat.decimaFormat(comparision.min, 4));
         result.add(NumberFormat.percentFormat(comparision.increaseMargin, 2));
         result.add(NumberFormat.decimaFormat(comparision.logarithmicYieldVariance, 4));
-
-        for (String tempStr : result) {
-            System.out.println(tempStr);
-        }
         return result;
 
     }
+
 }
