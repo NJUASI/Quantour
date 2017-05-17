@@ -36,7 +36,8 @@ public class DownloadDataHelper {
         File dir = new File(path);
         File[] files = dir.listFiles();
         for(int i = 0; i < files.length; i++) {
-            if (files[i].getName().startsWith("000") || files[i].getName().startsWith("001") || files[i].getName().startsWith("6") || files[i].getName().startsWith("002") || files[i].getName().startsWith("300")) {
+            if (files[i].getName().startsWith("000") || files[i].getName().startsWith("001") || files[i].getName().startsWith("600")
+                    || files[i].getName().startsWith("601") || files[i].getName().startsWith("002") || files[i].getName().startsWith("300")) {
 
                 List<Stock> stocks = new ArrayList<>();
 

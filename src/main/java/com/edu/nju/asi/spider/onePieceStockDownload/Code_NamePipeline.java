@@ -16,6 +16,17 @@ import java.sql.SQLException;
  */
 public class Code_NamePipeline implements Pipeline {
 
+    public static void main(String[] args) {
+//        System.out.println(ascii2native("\u4e07  \u79d1\uff21"));
+
+        String ascii = "\u4e07  \u79d1\uff21";
+        int i = ascii.indexOf('\\');
+        System.out.println(i);
+//        System.out.println(ascii.indexOf("\\"));
+//        System.out.println(ascii.indexOf("\\"));
+//        System.out.println(ascii.indexOf("\\"));
+    }
+
     @Override
     public void process(ResultItems resultItems, Task task) {
         if(resultItems.get("code_name")!=null){

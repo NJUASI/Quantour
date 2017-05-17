@@ -68,7 +68,8 @@ public class NormalStockDownloadProcessor implements PageProcessor {
             for(int j = 0; j < count; j++){
                 String tempCode = json.jsonPath("$.list["+j+"].SYMBOL").get();
                 //过滤掉基金
-                if(!tempCode.startsWith("150") && !tempCode.startsWith("159") && !tempCode.startsWith("16") && !(tempCode.startsWith("50"))){
+                if(tempCode.startsWith("000") || tempCode.startsWith("001") || tempCode.startsWith("002")
+                        || tempCode.startsWith("300") || tempCode.startsWith("600") || tempCode.startsWith("601")){
                     codes.add(tempCode);
                 }
             }
