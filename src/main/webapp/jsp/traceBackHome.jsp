@@ -56,16 +56,23 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
-                    <!-- TODO -->
-                    <img alt="Brand" src="">
+                    <img alt="Quantour" src="">
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
                 <li><a href="/stocks">大盘详情</a></li>
-                <li><a href="/trace_back_home" style="color: #4cae4c">量化社区</a></li>
+                <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
-                <li><a href="#">用户</a></li>
+                <c:choose>
+                    <c:when test="${sessionScope.user!=null}">
+                        <li><a href="/welcome">用户管理</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
@@ -281,8 +288,8 @@
 
     <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-tabs" role="tablist">
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
-        <li><a href="#circlePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
-        <li><a href="#detailPanel" role="tab" data-toggle="tab">交易详情</a></li>
+        <li><a href="#cyclePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
+        <li><a href="#holdingDetailPanel" role="tab" data-toggle="tab">交易详情</a></li>
         <li><a href="#certainFormatePanel" role="tab" data-toggle="tab">固定形成期的赢率分析</a></li>
         <li><a href="#certainHoldingPanel" role="tab" data-toggle="tab">固定持有期的赢率分析</a></li>
     </ul>
@@ -308,37 +315,7 @@
                     <th>阿尔法比率</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>本策略</td>
-                    <td>${traceBackNums.get(0)}</td>
-                    <td>${traceBackNums.get(1)}</td>
-                    <td>${traceBackNums.get(2)}</td>
-                    <td>${traceBackNums.get(3)}</td>
-                    <td>${traceBackNums.get(4)}</td>
-                    <td>${traceBackNums.get(5)}</td>
-                    <td>${traceBackNums.get(6)}</td>
-                </tr>
-                <tr>
-                    <td>基准股票</td>
-                    <td>${traceBackNums.get(7)}</td>
-                    <td>${traceBackNums.get(8)}</td>
-                    <td>${traceBackNums.get(9)}</td>
-                    <td>${traceBackNums.get(10)}</td>
-                    <td>${traceBackNums.get(11)}</td>
-                    <td>${traceBackNums.get(12)}</td>
-                    <td>${traceBackNums.get(13)}</td>
-                </tr>
-                <tr>
-                    <td>相对收益</td>
-                    <td>${traceBackNums.get(14)}</td>
-                    <td>${traceBackNums.get(15)}</td>
-                    <td>${traceBackNums.get(16)}</td>
-                    <td>${traceBackNums.get(17)}</td>
-                    <td>${traceBackNums.get(18)}</td>
-                    <td>${traceBackNums.get(19)}</td>
-                    <td>${traceBackNums.get(20)}</td>
-                </tr>
+                <tbody id="tb_chart">
                 </tbody>
             </table>
         </div>
@@ -346,7 +323,7 @@
             <div id="main" class="col-md-12" style="height:500px"></div>
         </div>
     </div>
-    <div class="tab-pane" id="circlePanel">
+    <div class="tab-pane" id="cyclePanel" style="display: none">
         <div class="row">
             <div class="col-md-6 table-responsive">
                 <table class="table table-hover table-condensed">
@@ -358,12 +335,7 @@
                         <th>赢率</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>${abReturnPeriod.positivePeriodsNum}</td>
-                        <td>${abReturnPeriod.negativePeriodNum}</td>
-                        <td>${abReturnPeriod.winRate}</td>
-                    </tr>
+                    <tbody id="tb_cycle_ab">
                     </tbody>
                 </table>
             </div>
@@ -380,12 +352,7 @@
                         <th>赢率</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>${reReturnPeriod.positivePeriodsNum}</td>
-                        <td>${reReturnPeriod.negativePeriodNum}</td>
-                        <td>${reReturnPeriod.winRate}</td>
-                    </tr>
+                    <tbody id="tb_cycle_re">
                     </tbody>
                 </table>
             </div>
@@ -393,7 +360,7 @@
 
 
     </div>
-    <div class="tab-pane" id="detailPanel">
+    <div class="tab-pane" id="holdingDetailPanel" style="display: none">
         <div class="row">
             <div class="col-md-12 table-responsive">
                 <table class="table table-hover table-condensed">
@@ -409,19 +376,7 @@
                         <th>模拟投资</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <c:forEach items="${holdingDetails}" var="temp" varStatus="vs">
-                        <tr>
-                            <td>${temp.periodSerial}</td>
-                            <td>${temp.startDate}</td>
-                            <td>${temp.endDate}</td>
-                            <td>${temp.holdingNum}</td>
-                            <td>${temp.strategyReturn}</td>
-                            <td>${temp.baseReturn}</td>
-                            <td>${temp.excessReturn}</td>
-                            <td>${temp.remainInvestment}</td>
-                        </tr>
-                    </c:forEach>
+                    <tbody id="tb_detail">
                     </tbody>
                 </table>
             </div>
@@ -440,7 +395,7 @@
                         <th>1年内胜率</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tb_certain_formate">
                     <c:forEach items="${certainFormates}" var="temp" varStatus="vs">
                         <tr>
                             <td>${temp.relativeCycle}</td>
@@ -473,7 +428,7 @@
                         <th>1年内胜率</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tb_certain_holding">
                     <c:forEach items="${certainHoldings}" var="temp" varStatus="vs">
                         <tr>
                             <td>${temp.relativeCycle}</td>

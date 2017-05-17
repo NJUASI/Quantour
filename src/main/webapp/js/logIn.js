@@ -23,7 +23,7 @@ function login() {
             var array = result.split(";");
 
             if (array[0] == "1") {
-                window.location.href = "/jsp/index.jsp" ;
+                window.location.href = "/" ;
             } else if (array[0] == "-1") {
                 $("#errorMessageField").html(array[1]);
             } else {

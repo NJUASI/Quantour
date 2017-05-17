@@ -1,6 +1,7 @@
 package com.edu.nju.asi.dao;
 
 import com.edu.nju.asi.model.OptionalStockID;
+import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 
@@ -12,6 +13,16 @@ import java.util.List;
  * Created by cuihua on 2017/5/11.
  */
 public interface PrivateStockDao {
+
+    /**
+     * 获取自选股
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @return 用户名称集合
+     */
+    List<PrivateStock> getPrivateStock(String userName);
 
     /**
      * 显示用户的自选股信息列表
