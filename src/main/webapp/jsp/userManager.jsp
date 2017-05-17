@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.edu.nju.asi.model.User" %><%--
   Created by IntelliJ IDEA.
   User: 61990
   Date: 2017/5/13
@@ -92,7 +92,7 @@
 
                     <div class="form-group">
                         <label>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：</label>
-                        <label style="margin-left: 20px">12345</label>
+                        <label id="userID" style="margin-left: 20px">12345</label>
                     </div>
 
                     <div id="passwordField">
@@ -101,7 +101,7 @@
                             <label style="margin-left: 20px">*******</label>
                         </div>
 
-                        <button type="button" id="modifyBT" class="btn btn-primary">修改密码</button>
+                        <button type="button" id="modifyBT" class="btn btn-primary" onclick="modify()">修改密码</button>
                     </div>
 
                     <div id="passwordModify">
@@ -193,12 +193,13 @@
 
     <script type="text/javascript">
 
+
+
         $(document).ready(function () {
-            $("#modifyBT").click(function () {
-                $("#passwordField").toggle("slow");
-                $("#passwordModify").toggle("slow");
-            });
+            var user="<%= ((User)session.getAttribute("user")).getUserName()%>";
+            $("#userID").html(user);
         });
+
 
 
         function modify() {
