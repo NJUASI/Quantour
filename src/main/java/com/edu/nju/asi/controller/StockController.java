@@ -45,7 +45,7 @@ public class StockController {
 
 
     // 测试用
-    private final static LocalDate nowDate = LocalDate.of(2007,1,11);
+    private final static LocalDate nowDate = LocalDate.now().minusDays(1);
 //    private final static LocalDate nowDate = LocalDate.now();
 
 
@@ -174,6 +174,20 @@ public class StockController {
     @PostMapping(value = "/{id}", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
     String reqGetOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
+        LocalDate thisDate;
+        String date = request.getParameter("date");
+
+        // 默认获取当天
+        if (date == null) {
+            System.out.println("默认从行情界面进入，显示最新的。。");
+            thisDate = nowDate;
+        }
+        else {
+            System.out.println("在个股界面选择了日期！！");
+            thisDate = LocalDateHelper.convertString(date);
+        }
+
+
         List<Stock> stocks = null;
         try {
             stocks = chartService.getSingleStockRecords(StockCodeHelper.format(stockCode));

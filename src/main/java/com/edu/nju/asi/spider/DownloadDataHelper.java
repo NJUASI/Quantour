@@ -58,6 +58,11 @@ public class DownloadDataHelper {
                         if (LocalDate.parse(reader.get(0)).isBefore(LocalDate.of(2012,1,1))){
                             continue;
                         }
+
+                        //TODO 添加16号的数据
+//                        if (!LocalDate.parse(reader.get(0)).equals(LocalDate.of(2017,5,16))){
+//                            continue;
+//                        }
                         normalStock.setCode(reader.get(1));
                         normalStock.setName(reader.get(2));
                         System.out.println(reader.get(2));
@@ -113,6 +118,10 @@ public class DownloadDataHelper {
                     if (LocalDate.parse(reader.get(0)).isBefore(LocalDate.of(2012,1,1))){
                         continue;
                     }
+                    //TODO 添加16号的数据
+//                    if (!LocalDate.parse(reader.get(0)).equals(LocalDate.of(2017,5,16))){
+//                        continue;
+//                    }
                     BaseStockEve baseStockEve = new BaseStockEve();
                     baseStockEve.setCode(reader.get(1));
                     baseStockEve.setName(reader.get(2));

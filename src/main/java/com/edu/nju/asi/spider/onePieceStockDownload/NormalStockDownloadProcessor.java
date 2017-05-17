@@ -26,7 +26,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
     static String ALL_LIST = "http://quotes\\.money\\.163\\.com/trade/lsjysj_\\d{6}.html";
     static String NAME_LIST = "http://quotes\\.money\\.163\\.com/stocksearch/json.do\\?count=1&word=\\d{6}";
 
-    LocalDate today = LocalDate.now();
+    LocalDate today = LocalDate.now().minusDays(1);
 
     //每页取的股票代码个数，最后一页除外
     int pageCount = 25;

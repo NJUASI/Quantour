@@ -20,8 +20,8 @@ public class Code_NamePipeline implements Pipeline {
 //        System.out.println(ascii2native("\u4e07  \u79d1\uff21"));
 
         String ascii = "\u4e07  \u79d1\uff21";
-        int i = ascii.indexOf('\\');
-        System.out.println(i);
+//        int i = ascii.indexOf('\\');
+        System.out.println(ascii2native(ascii));
 //        System.out.println(ascii.indexOf("\\"));
 //        System.out.println(ascii.indexOf("\\"));
 //        System.out.println(ascii.indexOf("\\"));
@@ -35,6 +35,7 @@ public class Code_NamePipeline implements Pipeline {
     }
 
     public static String ascii2native(String ascii) {
+        System.out.println(ascii);
         String needTobeConvert = ascii.substring(ascii.indexOf('\\'));
         int n = needTobeConvert.length() / 6;
         StringBuilder sb = new StringBuilder();
