@@ -2,6 +2,7 @@ package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.dao.StockDao;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
+import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
@@ -95,30 +96,39 @@ public class TraceBackServiceImpl implements TraceBackService {
             setUp(traceBackStockPool);
         }
 
+        System.out.println("---------------set完毕------------");
+
         // 累计基准收益率
         baseCumulativeReturn = getBase(traceBackCriteria);
         traceBackInfo.baseCumulativeReturn = baseCumulativeReturn;
+        System.out.println("---------------1------------");
 
         //选择策略
         traceBackStrategyCalculator = new TraceBackStrategyCalculator(traceBackStockPool, traceBackCriteria, allDatesWithData, stockData);
+        System.out.println("---------------2------------");
 
         //策略回测
         traceBackInfo.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteria);
+        System.out.println("---------------3------------");
 
         //计算策略回撤的相关信息
         traceBackInfo.maxTraceBack = maxRetracement(traceBackInfo.strategyCumulativeReturn, baseCumulativeReturn);
+        System.out.println("---------------4------------");
 
         // 计算持仓详情的基准收益率和超额收益率
         traceBackInfo.holdingDetails = calcuHoldingDetail(traceBackInfo.baseCumulativeReturn, traceBackInfo.strategyCumulativeReturn, traceBackCriteria.holdingPeriod);
+        System.out.println("---------------5------------");
 
         // 计算绝对收益周期和相对收益周期
         traceBackInfo.absoluteReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, true);
         traceBackInfo.relativeReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, false);
+        System.out.println("---------------6------------");
 
         System.out.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // 提前保存TraceBackCriteriaVO，以便后续固定持有期计算形成期时使用
         TraceBackCriteria criteriaVOToHold = new TraceBackCriteria(traceBackCriteria);
+        System.out.println("---------------7------------");
 
         // 计算超额收益率/策略胜率，给定持有期/形成期
         traceBackInfo.certainFormates = findHoldingWithCertainFormate(traceBackCriteria);
@@ -134,6 +144,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         // TraceBackParameter 计算贝塔系数等
         TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteria, traceBackInfo,stockData, traceBackStockPool);
+        System.out.println("---------------8------------");
         return traceBackParameter.getTraceBackInfo();
 
     }
@@ -379,7 +390,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      */
     private List<CumulativeReturn> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) {
 
-        List<Stock> list = null;
+        List<BaseStock> list = null;
         try {
             list = stockService.getBaseStockData(stockName, start, end);
         } catch (IOException e) {
@@ -389,12 +400,12 @@ public class TraceBackServiceImpl implements TraceBackService {
         } catch (DateNotWithinException e) {
             e.printStackTrace();
         }
-
         List<CumulativeReturn> cumulativeReturns = new ArrayList<CumulativeReturn>();
 
         //累计收益率以第一个交易日前一天的收益率来对比计算
         double closeOfFirstDay = list.get(0).getPreClose();
 
+        System.out.println("Begin loop");
         for (int i = 0; i < list.size(); i++) {
             double sucClose = list.get(i).getClose();
             double cumulativeReturn = (sucClose - closeOfFirstDay) / closeOfFirstDay;

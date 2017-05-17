@@ -274,8 +274,10 @@ public class StockDaoImpl implements StockDao {
         List<String> stockCodes = new ArrayList<>(codeName.keySet());
         List<String> stockNames = new ArrayList<>(codeName.values());
 
-        // 手动去除基准股票（沪深300、中小板指、创业板指）
+        // 手动去除基准股票（沪深300、上证指数、深证成指、中小板指、创业板指）
         stockCodes.remove("000300");
+        stockCodes.remove("000001");
+        stockCodes.remove("399001");
         stockCodes.remove("399005");
         stockCodes.remove("399006");
 

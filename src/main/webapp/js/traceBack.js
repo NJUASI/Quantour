@@ -12,7 +12,7 @@ function traceback() {
             "stType": $("#stType").val(),
             "blockTypes": $("#blockTypes").val()
         },
-        "baseStockName": $("#baseStock").val(),
+        "baseStockName": $("#baseStockEve").val(),
         "isCustomized": isCustomized,
         "formateAndPickCriteria": {
             "formateType": $("#formativeStrategy").val(),
@@ -23,7 +23,7 @@ function traceback() {
 
     //
     // alert($("#startDate").val() + "\n" + $("#endDate").val() + "\n" + $("#formativePeriod").val() + "\n" + $("#holdingPeriod").val()
-    //     + "\n" + $("#stType").val() + "\n" +$("#blockTypes").val() + "\n" +$("#baseStock").val() + "\n" + isCustomized
+    //     + "\n" + $("#stType").val() + "\n" +$("#blockTypes").val() + "\n" +$("#baseStockEve").val() + "\n" + isCustomized
     //     + "\n" +$("#formativeStrategy").val() + "\n" +$("#pickStrategy").val() + "\n"+$("#rank").val());
 
     $.ajax({

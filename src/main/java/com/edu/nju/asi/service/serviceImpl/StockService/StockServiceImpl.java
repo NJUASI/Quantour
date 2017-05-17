@@ -1,7 +1,9 @@
 package com.edu.nju.asi.service.serviceImpl.StockService;
 
+import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
 import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
+import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
@@ -32,6 +34,8 @@ public class StockServiceImpl implements StockService {
 
     @Autowired
     StockDao stockDao;
+    @Autowired
+    BaseStockDao baseStockDao;
 
     public StockServiceImpl() {
 //        stockDao = new StockDaoImpl();
@@ -76,10 +80,16 @@ public class StockServiceImpl implements StockService {
      * @return List<StockVO> 基准股票信息的列表
      */
     @Override
-    public List<Stock> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
+    public List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
+        System.out.println("-----------In base----------");
         Map<String, String> map = stockDao.getAllStocksName();
+        for (Map.Entry entry : map.entrySet()) {
+            System.out.println(entry.getKey() + "   " + entry.getValue());
+        }
+
+
         String baseStockCode = StockCodeHelper.format(map.get(stockName));
-        return stockDao.getStockData(baseStockCode, start, end);
+        return baseStockDao.getStockData(baseStockCode, start, end);
     }
 
     /**

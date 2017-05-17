@@ -53,6 +53,7 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         for(int i=0;i<list.size();i++){
             Object[] temp = (Object[]) list.get(i);
             map.put((String)temp[0],(String)temp[1]);
+            System.out.println(temp[0] + "  " + temp[1]);
         }
         return map;
     }
@@ -67,6 +68,7 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         for(int i=0;i<list.size();i++){
             Object[] temp = (Object[])list.get(i);
             map.put((String)temp[1],(String)temp[0]);
+
         }
         return map;
     }

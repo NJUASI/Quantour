@@ -49,19 +49,17 @@ public class TraceBackController {
      * 查看回测结果
      */
     @GetMapping("/trace_back")
-    public ModelAndView traceBack(HttpServletRequest request) {
+    public String traceBack(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
-            return new ModelAndView("index");
+            return "index";
         }
 
-        TraceBackInfo traceBackInfo = (TraceBackInfo) session.getAttribute("traceBackResult");
-        session.setAttribute("traceBackResult", null);
-
-        if (traceBackInfo != null) {
-
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            return "traceBackHome";
         }
-        return new ModelAndView("index");
+        return "index";
     }
 
 

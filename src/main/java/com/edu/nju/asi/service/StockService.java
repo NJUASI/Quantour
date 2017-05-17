@@ -1,5 +1,6 @@
 package com.edu.nju.asi.service;
 
+import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.exceptions.*;
@@ -47,7 +48,7 @@ public interface StockService{
      * @param end 结束日期
      * @return List<StockVO> 基准股票信息的列表
      */
-    List<Stock> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException;
+    List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException;
 
     /**
      * 根据股票池的选择标准，选择符合标准的股票池 非自选股调用此方法

@@ -1,6 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.infoCarrier.traceBack.*;
+import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
@@ -382,10 +383,10 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/10
      */
-    private List<DailyRate> calBaseDailyRate(List<Stock> list) {
+    private List<DailyRate> calBaseDailyRate(List<BaseStock> list) {
         List<DailyRate> result = new ArrayList<>();
 
-        for (Stock stock : list) {
+        for (BaseStock stock : list) {
             if (stock.getPreClose() == -1) {
                 result.add(new DailyRate(0.0, stock.getStockID().getDate()));
             } else {
