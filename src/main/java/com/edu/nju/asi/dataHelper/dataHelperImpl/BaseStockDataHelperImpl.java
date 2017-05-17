@@ -2,7 +2,6 @@ package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.BaseStockDataHelper;
 import com.edu.nju.asi.model.BaseStock;
-import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
 import org.hibernate.Session;
@@ -89,8 +88,8 @@ public class BaseStockDataHelperImpl implements BaseStockDataHelper {
     public boolean addBaseStockAll(List<BaseStock> baseStocks) {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO basestock(code,date,close,fluctuation, high, increaseMargin, low, market, name," +
-                "open,preClose,transactionAmount,volume) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO basestock(code,date,close,fluctuation, high, increaseMargin, low,name," +
+                "open,preClose,transactionAmount,volume) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         boolean result = true;
 
         try {
@@ -104,12 +103,11 @@ public class BaseStockDataHelperImpl implements BaseStockDataHelper {
                 preparedStatement.setDouble(5,stock.getHigh());
                 preparedStatement.setDouble(6,stock.getIncreaseMargin());
                 preparedStatement.setDouble(7,stock.getLow());
-                preparedStatement.setInt(8,stock.getMarket().getRepre());
-                preparedStatement.setString(9,stock.getName());
-                preparedStatement.setDouble(10,stock.getOpen());
-                preparedStatement.setDouble(11,stock.getPreClose());
-                preparedStatement.setString(12,stock.getTransactionAmount());
-                preparedStatement.setString(13,stock.getVolume());
+                preparedStatement.setString(8,stock.getName());
+                preparedStatement.setDouble(9,stock.getOpen());
+                preparedStatement.setDouble(10,stock.getPreClose());
+                preparedStatement.setString(11,stock.getTransactionAmount());
+                preparedStatement.setString(12,stock.getVolume());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();

@@ -39,7 +39,6 @@ public class BaseStockDataHelperImplTest {
         assertEquals("60536", stock.getVolume());
         assertEquals("000001", stock.getStockID().getCode());
         assertEquals("景兴纸业", stock.getName());
-        assertEquals(Market.SZ, stock.getMarket());
         assertEquals(1.58, stock.getPreClose(), 0);
 
     }
@@ -57,7 +56,7 @@ public class BaseStockDataHelperImplTest {
         LocalDate localDate = LocalDate.of(1017,1,1);
         List<BaseStock> stocks = new ArrayList<>();
         for(int i=0;i<100;i++){
-            BaseStock stock = new BaseStock("景兴纸业", Market.SZ,3.29,3.31,3.23,3.26,"60536",
+            BaseStock stock = new BaseStock("景兴纸业",3.29,3.31,3.23,3.26,"60536",
                     "605366",1.58,3.29,1.6);
             stock.setStockID( new StockID(code,localDate));
             stocks.add(stock);

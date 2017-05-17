@@ -11,189 +11,19 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/reset.css" rel="stylesheet">
 
-    <style rel="stylesheet" type="text/css">
-
-        body {
-            background-color: #f9f9f9;
-        }
-
-        footer {
-            width: 100%;
-            height: 100px;
-            background-color: #444444;
-            /*margin-top: 70px;*/
-        }
-
-        header {
-            width: 100%;
-            height: 500px;
-            background-image: url("../img/banner.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            overflow: hidden;
-            filter: blur(5px);
-        }
-
-        .navbar {
-            position: absolute;
-            top: 10px;
-            left: 70px;
-            text-align: center;
-        }
-
-        .nav-wrapper {
-            background-color: transparent;
-            border-color: transparent;
-        }
-
-        .navbar-header {
-            padding-left: 5%;
-        }
-
-        .nav-wrapper .container {
-            margin-top: 20px;
-        }
-
-        .media-list {
-            margin: 0px 10%;
-        }
-
-        .media {
-            margin-top: 0px;
-            padding: 100px;
-        }
-
-        .modal-dialog {
-            width: 400px;
-        }
-
-        #loginLabel {
-            margin-left: 22px;
-        }
-
-        .modal-body {
-            margin-top: 30px;
-        }
-
-        .modal-body .form-group {
-            margin-bottom: 25px;
-        }
-
-        #rem-password {
-            padding-right: 66px;
-        }
-
-        .feature-wrapper-odd ,.feature-wrapper-mean {
-            width: 100%;
-        }
-
-        .media {
-            padding-left: 0px;
-        }
-
-        .media-body {
-            padding-left: 50px;
-        }
-
-        .media-list li a {
-            cursor: default;
-        }
-
-        .features {
-            margin: 0;
-        }
-
-        .feature-wrapper-odd ,.feature-wrapper-mean{
-            padding-left: 10%;
-            padding-right: 10%;
-        }
-
-        .feature-wrapper-odd {
-            background-color: #F1F4F9;
-        }
-
-        .feature-wrapper-mean {
-            background-color: #FFFFFF;
-        }
-
-        .media {
-            padding-bottom: 5%;
-            padding-top: 5%;
-        }
-
-        .desc {
-            padding-left: 7%;
-            padding-top: 4%;
-        }
-
-        .detail {
-            opacity: 0;
-        }
-
-        .detail {
-            opacity: 0;
-            transform: translateX(50%);
-            transition: all .6s ease-out;
-        }
-
-        .media:hover .detail {
-            opacity: 1;
-            transform: translateX(0);
-            transition: all ease-out .6s .4s;
-        }
-
-        .desc {
-            transformY(0);
-            transition: all ease .6s;
-        }
-
-        .media:hover .desc {
-            transform: translateY(-10%);
-            transition: all .6s ease;
-        }
-
-        .detail li {
-            color: #999;
-            line-height: 24px;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .navbar li a{
-            margin-left: 15px;
-            margin-right: 15px;;
-            padding-left: 8px;
-            padding-right: 8px;
-            transition: all .2s;
-        }
-
-        .navbar li a.act {
-            border-bottom: 2px solid #fff;
-            padding-bottom: 6px;
-            opacity: 1;
-        }
-
-        .navbar li a:hover {
-            border-bottom: 2px solid #fff;
-            padding-bottom: 6px;
-            opacity: 1;
-        }
-
-    </style>
+    <link href="../css/index.css" rel="stylesheet">
 
 </head>
 <body>
-<div>
-    <header>
-    </header>
-    <nav class="navbar navbar-default nav-wrapper">
+<header>
+    <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
                     <img alt="Brand" src="">
                 </a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav">
                 <li><a href="#" class="act">首页</a></li>
                 <li><a href="/stocks">大盘详情</a></li>
                 <li><a href="/trace_back_home">量化社区</a></li>
@@ -203,7 +33,21 @@
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
-</div>
+    <div class="banner-holder">
+    <div class="banner-image-holder">
+        <img alt="Quantour" src="../img/banner.jpg" draggable="false">
+    </div>
+    <div class="jumbotron banner-desc">
+        <div class="container text-center">
+            <h1>Quantour,您的私人量化平台</h1>
+            <br/>
+            <br/>
+            <a class="btn btn-primary btn-lg" role="button">
+                学习更多</a>
+        </div>
+    </div>
+    </div>
+</header>
 <div class="content">
     <div class="container-fluid">
         <ul class="media-list features">
