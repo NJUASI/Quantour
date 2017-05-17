@@ -64,41 +64,18 @@ public class StockDataHelperImpl implements StockDataHelper {
      */
     @Override
     public List<Stock> getStockData(String stockCode, LocalDate start, LocalDate end) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        String hql = "from Stock where stockID.date<=:endDate and stockID.date>=:startDate and stockID.code=:code order by stockID.date";
 
-        Connection connection = JDBCUtil.getConnection();
-        PreparedStatement preparedStatement = null;
-        String sql = "SELECT * FROM stock s WHERE s.code=? AND s.date>=? AND s.date <=? ORDER BY s.date";
-
-        try {
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.executeBatch();
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        }finally {
-            JDBCUtil.close(preparedStatement,connection);
-        }
-
-        return null;
-
-//        session = sessionFactory.openSession();
-//        Transaction transaction = session.beginTransaction();
-//        String hql = "from Stock where stockID.date<=:endDate and stockID.date>=:startDate and stockID.code=:code order by stockID.date";
-//
-//        Query query = session.createQuery(hql);
-//        query.setParameter("endDate",end);
-//        query.setParameter("startDate",start);
-//        query.setParameter("code",stockCode);
-//        List<Stock> list = query.list();
-//        transaction.commit();
-//        session.close();
-//        return list;
+        Query query = session.createQuery(hql);
+        query.setParameter("endDate",end);
+        query.setParameter("startDate",start);
+        query.setParameter("code",stockCode);
+        List<Stock> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 
     /**

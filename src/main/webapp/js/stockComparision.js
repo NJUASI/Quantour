@@ -4,8 +4,8 @@
 function compare() {
     var stockCode1 = $("#stock1").val();
     var stockCode2 = $("#stock2").val();
-    var startDate = $("#compare_startDate").val();
-    var endDate = $("#compare_endDate").val();
+    var startDate = $("#compare_startDate>input").val();
+    var endDate = $("#compare_endDate>input").val();
 
     var jsonData = {
         "stockCode1": stockCode1,
@@ -17,7 +17,7 @@ function compare() {
     $.ajax({
         type: "post",
         async: true,
-        url: "/req_compare",
+        url: "/stocks/req_compare",
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(jsonData),
 
@@ -28,7 +28,7 @@ function compare() {
 
             if (array[0] == "1") {
                 alert("666");
-                window.location.href = "/compare";
+                window.location.href = "/stocks/compare";
             } else if (array[0] == "-1") {
                 // 提示错误信息
                 alert(array[1]);

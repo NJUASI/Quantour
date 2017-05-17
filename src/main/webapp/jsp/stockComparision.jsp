@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 61990
@@ -123,39 +124,48 @@
 
 </div>
 
-<div class="row">
-    <div class="col-md-3 table-responsive">
-        <table class="table table-hover table-condensed">
-            <caption class="text-center"><h3>固定持有期的赢率分析</h3></caption>
-            <thead>
-            <tr>
-                <th>最大值</th>
-                <th>最小值</th>
-                <th>涨跌幅</th>
-                <th>对数收益率方差</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>${stockCompareNum1.get(0)}</td>
-                <td>${stockCompareNum1.get(1)}</td>
-                <td>${stockCompareNum1.get(2)}</td>
-                <td>${stockCompareNum1.get(3)}</td>
-            </tr>
-            <tr>
-                <td>${stockCompareNum2.get(0)}</td>
-                <td>${stockCompareNum2.get(1)}</td>
-                <td>${stockCompareNum2.get(2)}</td>
-                <td>${stockCompareNum2.get(3)}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<c:choose>
+    <c:when test="${stockCompareNum1 != null}">
+        <div class="row">
+            <div class="col-md-3 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <caption class="text-center"><h3>股票比较详情</h3></caption>
+                    <thead>
+                    <tr>
+                        <th>最大值</th>
+                        <th>最小值</th>
+                        <th>涨跌幅</th>
+                        <th>对数收益率方差</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>${stockCompareNum1.get(0)}</td>
+                        <td>${stockCompareNum1.get(1)}</td>
+                        <td>${stockCompareNum1.get(2)}</td>
+                        <td>${stockCompareNum1.get(3)}</td>
+                    </tr>
+                    <tr>
+                        <td>${stockCompareNum2.get(0)}</td>
+                        <td>${stockCompareNum2.get(1)}</td>
+                        <td>${stockCompareNum2.get(2)}</td>
+                        <td>${stockCompareNum2.get(3)}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
+        <%--<div onload="createChart()">--%>
+            <%--<div id="closesChart" style="width:100%;height:600px"></div>--%>
+            <%--<div id="logarithmicYieldChart" style="width:100%;height:600px"></div>--%>
+        <%--</div>--%>
 
-<div id="closesChart" style="width:100%;height:600px"></div>
-<div id="logarithmicYieldChart" style="width:100%;height:600px"></div>
+    </c:when>
+    <c:otherwise>
+        <li>选择条件进行回测吧！！</li>
+    </c:otherwise>
+</c:choose>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
@@ -163,7 +173,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 
-
+<script src="../js/stockComparision.js"></script>
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
@@ -171,37 +181,47 @@
 <script src="../js/chart.js"></script>
 <script type="text/javascript">
 
-    $("#stockDetail>li").addClass("col-md-3");
-    var today = new Date();
+    $(document).ready(function () {
+        var today = new Date();
 
-    var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
-    var endTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    $("#compare_startDate>input").attr('value', startTime);
-    $("#compare_endDate>input").attr('value', endTime);
+        var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
+        var endTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+        $("#compare_startDate>input").attr('value', startTime);
+        $("#compare_endDate>input").attr('value', endTime);
 
 
-    $("#datetimeStart").datetimepicker({
-        format: 'yyyy-mm-dd',
-        minView: 'month',
-        language: 'zh-CN',
-        autoclose: true,
-        startDate: new Date(2005 - 04 - 03),
-        endDate: new Date()
-    }).on("click", function () {
-        $("#compare_startDate").datetimepicker('setEndDate', $("#compare_endDate>input").val())
+        $("#compare_startDate").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView: 'month',
+            language: 'zh-CN',
+            autoclose: true,
+            startDate: new Date(2005 - 04 - 03),
+            endDate: new Date()
+        }).on("click", function () {
+            $("#compare_startDate").datetimepicker('setEndDate', $("#compare_endDate>input").val())
+        });
+        $("#compare_endDate").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView: 'month',
+            language: 'zh-CN',
+            autoclose: true,
+            endDate: new Date()
+        }).on("click", function () {
+            $("#compare_endDate").datetimepicker("setStartDate", $("#compare_startDate>input").val())
+        });
+
+        <%--var ttt = <%=request.getAttribute("closesData")%>;--%>
+        <%--if (ttt != null) {--%>
+            <%--alert("hhh");--%>
+            <%--alert(${closesData});--%>
+
+            <%--var closesChart = createLineChart("closesChart", ${closesData}, '收盘价', ${comparisionName});--%>
+            <%--var logarithmicYieldChart = createLineChart("logarithmicYieldChart", ${logarithmicYieldData}, '对数收益率方差', ${comparisionName});--%>
+        <%--}else {--%>
+            <%--alert("kkkkk");--%>
+        <%--}--%>
+
     });
-    $("#datetimeEnd").datetimepicker({
-        format: 'yyyy-mm-dd',
-        minView: 'month',
-        language: 'zh-CN',
-        autoclose: true,
-        endDate: new Date()
-    }).on("click", function () {
-        $("#compare_endDate").datetimepicker("setStartDate", $("#compare_startDate>input").val())
-    });
-
-    var closesChart = createLineChart("closesChart", ${closesData}, '收盘价', ${comparisionName});
-    var logarithmicYieldChart = createLineChart("logarithmicYieldChart", ${logarithmicYieldData}, '对数收益率方差', ${comparisionName});
 
 </script>
 </body>

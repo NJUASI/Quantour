@@ -62,6 +62,9 @@
                                         class="glyphicon glyphicon-calendar" onclick="getOneDate()"></span></span>
                             </div>
                         </div>
+                        <div class="col-md-3 col-md-offset-2">
+                            <button type="button" class="btn btn-primary"><a href="/stocks/compare">对比</a></>
+                        </div>
                         <div class="col-md-3 col-md-offset-3">
                             <form role="form">
                                 <div class="input-group">

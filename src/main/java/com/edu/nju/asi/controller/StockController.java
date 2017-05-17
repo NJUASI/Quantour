@@ -71,7 +71,6 @@ public class StockController {
                 session.setAttribute("oneDateSituation", null);
                 session.setAttribute("oneDateStockList", null);
 
-                // TODO 金玉转换成图
                 mv.addObject("situation", situation);
                 mv.addObject("stockList", stocks);
 
@@ -91,7 +90,6 @@ public class StockController {
             session.setAttribute("oneDateSituation", null);
             session.setAttribute("oneDateStockList", null);
 
-            // TODO 金玉转换成图
             mv.addObject("situation", situation);
             mv.addObject("stockList", stocks);
 
@@ -206,13 +204,18 @@ public class StockController {
     public ModelAndView compare(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
+            System.out.println("Session为空");
             return new ModelAndView("index");
         }
 
         List<StockComparision> result = (List<StockComparision>) session.getAttribute("compareResult");
         session.setAttribute("compareResult", null);
 
-        if (result != null) {
+        if (result == null) {
+            // 默认进来的
+            return new ModelAndView("stockComparision");
+        } else {
+            // 通过js进来的
             ModelAndView mv = new ModelAndView("stockComparision");
             try {
                 // 数值型对比信息
@@ -240,8 +243,8 @@ public class StockController {
                 e.printStackTrace();
             }
             return mv;
+
         }
-        return new ModelAndView("index");
     }
 
 
@@ -265,7 +268,6 @@ public class StockController {
 
         StockComparisionCriteria criteria = new StockComparisionCriteria(holder);
         System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
-
 
         List<StockComparision> result = null;
         try {
