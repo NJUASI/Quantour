@@ -136,9 +136,9 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 60px">
     <div class="col-md-offset-1 col-md-10">
-        <div id="candlestick_chart"class="col-md-12" style="height: 600px"></div>
+        <div id="candlestick_chart"class="col-md-12" style=" height: 600px"></div>
     </div>
 </div>
 

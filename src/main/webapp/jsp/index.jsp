@@ -64,12 +64,12 @@
                     <img class="media-object" src="../img/img01.png" alt="媒体对象">
                 </a>
                 <div class="media-body desc">
-                    <h4 class="media-heading">媒体标题</h4>
-                    <p>高质量的海量金融数据支撑，轻松实现大数据时代的交易策略</p>
+                    <h4 class="media-heading">股票搜索</h4>
+                    <p>高质量的海量金融数据支撑，轻松找到股市信息</p>
                     <div class="detail">
                         <ul>
-                            <li> 依托通联数据团队，免费提供股票、基金、债券、研报、宏观、资讯、社交、电商等全量数据；</li>
-                            <li> 专业团队负责数据的收集、清洗、加工及存储，来源权威，数据精准可靠，并定期推出特色数据；</li>
+                            <li> 实时更新当天全量数据；</li>
+                            <li> 快速搜索；</li>
                             <li> 通过api接口可直接在平台调用，免费提供给优矿用户使用；</li>
                         </ul>
                     </div>
@@ -77,7 +77,7 @@
             </li>
             <li class="media feature-wrapper-mean">
                 <a class="media-right pull-right">
-                    <img class="media-object" src="../img/img01.png" alt="媒体对象">
+                    <img class="media-object" src="../img/img02.png" alt="媒体对象">
                 </a>
                 <div class="media-body desc">
                     <h4 class="media-heading">媒体标题</h4>
@@ -93,7 +93,7 @@
             </li>
             <li class="media feature-wrapper-odd">
                 <a class="media-left">
-                    <img class="media-object" src="../img/img01.png" alt="媒体对象">
+                    <img class="media-object" src="../img/img03.png" alt="媒体对象">
                 </a>
                 <div class="media-body desc">
                     <h4 class="media-heading">媒体标题</h4>
