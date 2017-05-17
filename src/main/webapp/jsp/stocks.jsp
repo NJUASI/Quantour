@@ -68,9 +68,9 @@
                         <div class="col-md-3 col-md-offset-3">
                             <form role="form">
                                 <div class="input-group">
-                                    <input type="text" id="stocks_id" class="form-control" onkeyup="getOneStock()" placeholder="输入代码/简称/拼音" >
+                                    <input type="text" id="stocks_id" class="form-control" onkeyup="getSingleStockDetail()" placeholder="输入代码/简称/拼音" >
                                     <span class="input-group-btn">
-                                    <button class="btn btn-default form-control" type="button"  onclick="getOneStock()">
+                                    <button class="btn btn-default form-control" type="button"  onclick="getSingleStockDetail()">
                                         <span class="glyphicon glyphicon-search"> </span>
                                     </button>
                             </span>

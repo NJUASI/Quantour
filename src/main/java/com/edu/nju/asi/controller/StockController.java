@@ -1,13 +1,13 @@
 package com.edu.nju.asi.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
 import com.edu.nju.asi.infoCarrier.StockComparision;
 import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSituation;
+import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.ChartService;
+import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.StockSituationService;
 import com.edu.nju.asi.utilities.LocalDateHelper;
@@ -44,10 +44,12 @@ public class StockController {
     StockService stockService;
     @Autowired
     StockSituationService situationService;
+    @Autowired
+    PrivateStockService privateStockService;
 
 
-    // 测试用
-    private final static LocalDate nowDate = LocalDate.of(2014, 2, 21);
+    // 因为可能数据库中没有今天的数据
+    private final static LocalDate nowDate = LocalDate.now().minusDays(1);
 //    private final static LocalDate nowDate = LocalDate.now();
 
 
@@ -160,6 +162,8 @@ public class StockController {
         try {
             mv.addObject("candlestickData", JsonConverter.convertCandlestick(stocks));
             mv.addObject("volumeData", JsonConverter.convertVolume(stocks));
+            mv.addObject("dataOfEndDay", stocks.get(stocks.size()-1));
+            mv.addObject("dataOfStartDay", stocks.get(0));
             return mv;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -180,7 +184,7 @@ public class StockController {
         String endDateString = request.getParameter("endDate");
 
         // 默认显示一年内的K线图
-        if (startDateString == null) {
+        if (endDateString == null) {
             System.out.println("默认从行情界面进入，显示最新的。。");
             startDate = nowDate.minusYears(1);
             endDate = nowDate;
@@ -195,6 +199,8 @@ public class StockController {
         try {
             stocks = chartService.getSingleStockRecords(new ChartShowCriteria(StockCodeHelper.format(stockCode), startDate, endDate));
             HttpSession session = request.getSession(false);
+            User user = (User) session.getAttribute("user");
+            //TODO 根据用户姓名获取用户对应的所有自选股
             session.setAttribute("oneStockResult", stocks);
 
             System.out.println(stocks.size());
