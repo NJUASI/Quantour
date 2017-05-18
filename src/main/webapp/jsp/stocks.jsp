@@ -21,6 +21,7 @@
     <link href="../css/stocks.css" rel="stylesheet">
     <link href="../css/reset.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/startLoader.css" rel="stylesheet">
     <title>股票市场</title>
 </head>
 <header>
@@ -49,7 +50,7 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<body>
+<body  class="loaded"   style="margin-top: 60px;">
 <div class="content">
     <div class="container">
         <div class="row panel_title_wrapper">
@@ -210,7 +211,11 @@
 </div>
 <footer>
 </footer>
-
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
 
@@ -260,7 +265,9 @@
 
     $('.form_date')
         .datetimepicker().on("changeDate",function () {
-            alert($(".form_date > input").val());
+
+//            alert($(".form_date > input").val());
+            $("body").removeClass("loaded");
             $.ajax({
                 type: "post",
                 async: true,
@@ -270,6 +277,7 @@
                 },
 
                 success: function (result) {
+                    $("body").removeClass("loaded");
                     alert(result);
                     var array = result.split(";");
 
@@ -291,15 +299,17 @@
         });
 
     function getSingleStockDetail() {
+        $("body").removeClass("loaded");
         var wantedStockCode = $("#search-input").val();
         alert("查票：" + wantedStockCode);
 
         $.ajax({
-            type: "get",
+            type: "post",
             async: true,
             url: "/stocks/" + wantedStockCode,
 
             success: function (result) {
+                $("body").removeClass("loaded");
                 alert(result);
                 var array = result.split(";");
 
@@ -319,7 +329,6 @@
             }
         });
     }
-
 
     function directToCompare() {
         window.location.href = "/stocks/compare";

@@ -79,7 +79,7 @@
     </nav>
 </header>
 
-<form role="form">
+<form role="form" style="margin-top: 60px;">
     <div class="row">
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
             <div class="panel-heading">

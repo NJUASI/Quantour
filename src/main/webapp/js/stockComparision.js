@@ -1,6 +1,8 @@
 /**
  * Created by cuihua on 2017/5/15.
  */
+
+
 function compare() {
     var stockCode1 = $("#stock1").val();
     var stockCode2 = $("#stock2").val();
@@ -22,7 +24,6 @@ function compare() {
         data: JSON.stringify(jsonData),
 
         success: function (result) {
-
             var parts = result.split(";");
             var closes01 = JSON.parse(parts[0]);
             var closes02 = JSON.parse(parts[1]);
