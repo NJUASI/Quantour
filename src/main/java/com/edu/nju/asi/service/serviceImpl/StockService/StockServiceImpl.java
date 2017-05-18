@@ -90,8 +90,10 @@ public class StockServiceImpl implements StockService {
             System.out.println(entry.getKey() + "   " + entry.getValue());
         }
 
+        System.out.println("baseCode: "+map.get(stockName));
 
         String baseStockCode = StockCodeHelper.format(map.get(stockName));
+        System.out.println("finished getBaseStockData--------------"+stockName+"--------------------------");
         return baseStockDao.getStockData(baseStockCode, start, end);
     }
 

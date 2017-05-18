@@ -391,6 +391,8 @@ public class TraceBackServiceImpl implements TraceBackService {
      */
     private List<CumulativeReturn> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) {
 
+        System.out.println("in getCumulativeReturnOfOneStock-------------"+stockName+"--------------");
+
         List<BaseStock> list = null;
         try {
             list = stockService.getBaseStockData(stockName, start, end);
@@ -416,6 +418,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         //将第一天的收益率设置为0
         cumulativeReturns.get(0).cumulativeReturn = 0;
+        System.out.println("finished getCumulativeReturnOfOneStock--------------"+stockName+"----------------");
 
         return cumulativeReturns;
     }
