@@ -41,7 +41,7 @@ function createCandlestickChart(id, candlestickData, volumes) {
     chart.showLoading();
 
     var option = {
-        backgroundColor: '#eee',
+        // backgroundColor: '#eee',
         legend: {
             left: 'center',
             data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
@@ -223,7 +223,16 @@ function createCandlestickChart(id, candlestickData, volumes) {
                 type: 'bar',
                 xAxisIndex: 1,
                 yAxisIndex: 1,
-                data: volumes
+                data: volumes,
+                tooltip: {
+                    formatter: function (param) {
+                        param = param[0];
+                        return [
+                            'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
+                            'Volume: ' + param.data[0] + '<br/>'
+                        ].join('');
+                    }
+                }
             }
         ]
     };
