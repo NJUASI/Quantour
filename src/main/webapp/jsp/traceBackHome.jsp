@@ -18,7 +18,14 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/bootstrap-select.css">
     <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
-    <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/startLoader.css" rel="stylesheet">
+    <style type="text/css" rel="stylesheet">
+        footer {
+            width: 100%;
+            height: 100px;
+            background-color: #444444;
+        }
+    </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -62,7 +69,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
-                <li><a href="/stocks">大盘详情</a></li>
+                <li><a id="stocks" style="cursor: pointer">大盘详情</a></li>
                 <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
@@ -452,9 +459,20 @@
 <div id="holdings_excess_chart" style="width:100%;height:600px"></div>
 <div id="holdings_win_chart" style="width:100%;height:600px"></div>
 <h1>欢迎开始回测</h1>
+<footer>
+
+</footer>
+
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
 
 <script src="../js/echarts.min.js"></script>
 <script src="../js/chart.js"></script>
+<script src = "../js/startLoaded.js"></script>
+<link href="../css/startLoader.css" rel="stylesheet">
 <script type="text/javascript">
     var trace_back_chart = createTraceBackChart("trace_back_chart"${json_strategyData}, ${json_baseData}, ['策略', '基准'], '1', '1');
     var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart", ${json_absoluteHistogramData}, "绝对收益直方图");
@@ -513,6 +531,10 @@
         $("#modifyBT").click(function () {
             $("#passwordField").toggle("slow");
             $("#passwordModify").toggle("slow");
+        });
+
+        $("#stocks").click(function () {
+
         });
 
     });

@@ -60,21 +60,23 @@ ul {
     border-right: 1px solid #e6e6e6;
 }
 
-table th,td{
+.stocks-table th,td{
     text-align: center;
 }
 
-table caption{
+.stocks-table caption{
     margin-bottom: 10px;
     color: #323232;
 }
 
-table th{
+.stocks-table th{
     font-size: 15px;
     font-weight: 500;
     color: #5e5e5e;
 }
 
-table thead{
-    background-color: #EAF5FF;
+.stocks-table th{
+    font-size: 15px;
+    font-weight: 500;
+    color: #5e5e5e;
 }
