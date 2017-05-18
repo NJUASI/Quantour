@@ -1,11 +1,3 @@
-<%@ page import="com.edu.nju.asi.model.StockSearch" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.edu.nju.asi.utilities.util.JsonConverter" %>
-<%@ page import="com.fasterxml.jackson.core.JsonProcessingException" %>
-<%@ page import="com.fasterxml.jackson.databind.JsonNode" %>
-<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
-<%@ page import="java.io.IOException" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -28,10 +20,11 @@
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="../css/stocks.css" rel="stylesheet">
     <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
     <title>股票市场</title>
 </head>
 <header>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
@@ -56,7 +49,7 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<body>
+<body  class="loaded"   style="margin-top: 60px;">
 <div class="content">
     <div class="container">
         <div class="row panel_title_wrapper" style="z-index: 5;">
@@ -223,7 +216,6 @@
 <footer>
 </footer>
 
-<script src="../js/stocks.js"></script>
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
 

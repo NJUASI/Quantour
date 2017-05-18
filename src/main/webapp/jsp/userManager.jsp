@@ -88,7 +88,7 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<div class="row">
+<div class="row" style="margin-top: 60px;">
     <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
         <div class="panel-heading">
             <h3 class="panel_title">

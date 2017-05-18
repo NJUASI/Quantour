@@ -8,7 +8,7 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div>
+<html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -85,7 +85,7 @@
             </div><!-- /.container-fluid -->
         </nav>
     </header>
-    <div class="form-group form">
+    <div class="form-group form" style="margin-top: 80px;">
         <div class="row inputBlock">
             <div class="col-md-2 col-md-offset-2">
                 <label class="control-label" for="stock1">股票1：</label>
