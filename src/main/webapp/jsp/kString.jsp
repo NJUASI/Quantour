@@ -181,12 +181,10 @@
 
             var isPrivate = ${isPrivate};
             if(isPrivate){
-                alert("已收藏");
                 $("#addBtn button").html("取消收藏");
                 $("#addBtn").on("click","button", deletePrivateStock);
             }
             else {
-                alert("未收藏");
                 $("#addBtn button").addClass("btn-primary");
                 $("#addBtn button").html("加入收藏");
                 $("#addBtn").on("click","button", addPrivateStock);
@@ -227,7 +225,7 @@
             url: "/user/addPrivate/" + $("#stockCode").text(),
             success: function (result) {
                 if (result == "1") {
-                    alert("添加成功");
+//                    alert("添加成功");
                     $("#addBtn button").html("取消收藏");
 //                    $("#addBtn").unbind("click",addPrivateStock());
                     $("#addBtn button").removeClass("btn-primary");
@@ -250,7 +248,7 @@
             url: "/user/deletePrivate/" + $("#stockCode").text(),
             success: function (result) {
                 if (result == "1") {
-                    alert("删除成功");
+//                    alert("删除成功");
                     $("#addBtn button").html("加入收藏");
                     $("#addBtn button").addClass("btn-primary");
                     $("#addBtn").off("click","button");
@@ -263,7 +261,7 @@
         });
     };
 
-    $("#stockDetail > li").addClass("col-md-4");
+    $("#stockDetail > li").addClass("col-md-5");
 
     var startTime = ${dataOfStartDay.stockID.date.year} + "-" + ${dataOfStartDay.stockID.date.monthValue} + "-" + ${dataOfStartDay.stockID.date.dayOfMonth};
     var endTime = ${dataOfEndDay.stockID.date.year} + "-" + ${dataOfEndDay.stockID.date.monthValue} + "-" + ${dataOfEndDay.stockID.date.dayOfMonth};
