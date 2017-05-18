@@ -6,6 +6,9 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.exceptions.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -21,9 +24,6 @@ public class TraceBackParameter {
 
     //有效投资时间
     private double effectiveInvestmentTime = 360;
-
-    //逻辑层对象
-    private StockService stockService;
 
     //策略的日收益均值
     private double meanStrategy;
@@ -58,6 +58,10 @@ public class TraceBackParameter {
     //数据信息
     private TraceBackCriteria traceBackCriteria;
 
+
+    public TraceBackParameter() {
+    }
+
     /**
      * 对回测所需要显示参数的初始化
      *
@@ -66,17 +70,18 @@ public class TraceBackParameter {
      * @updateTime 2017/4/9
      */
     public TraceBackParameter(TraceBackCriteria traceBackCriteria, TraceBackInfo traceBackInfo,
-                              Map<String, List<StrategyStock>> stockData, List<String> codes) throws IOException, NoDataWithinException, DateNotWithinException {
-        this.stockService = new StockServiceImpl();
+                              Map<String, List<StrategyStock>> stockData, List<String> codes, List<BaseStock> baseStockList) throws IOException, NoDataWithinException, DateNotWithinException {
         this.stockData = stockData;
         this.traceBackInfo = traceBackInfo;
+
         this.traceBackCriteria = traceBackCriteria;
         traceBackNumVal = new TraceBackNumVal();
         this.codes = codes;
 
-        this.initBase();
+        this.initBase(baseStockList);
         this.initStrategy();
         this.traceBackInfo.traceBackNumVal = this.traceBackNumVal;
+        System.out.println("INIT FINISHED!!");
     }
 
     /**
@@ -159,10 +164,11 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/9
      */
-    private void initBase() throws DateNotWithinException, NoDataWithinException, IOException {
-        baseRate = this.calBaseDailyRate(stockService.getBaseStockData(traceBackCriteria.baseStockName,
-                traceBackCriteria.startDate, traceBackCriteria.endDate));
+    private void initBase(List<BaseStock> baseStockList) throws DateNotWithinException, NoDataWithinException, IOException {
+        System.out.println(traceBackCriteria.baseStockName);
+        baseRate = this.calBaseDailyRate(baseStockList);
 
+        System.out.println("initBase");
         //计算基准的总收益率
         traceBackNumVal.baseSumRate = this.calBaseSumRate();
         //计算基准的日收益率均值
@@ -177,6 +183,8 @@ public class TraceBackParameter {
         //计算基准的夏普比率
         traceBackNumVal.baseSharpeRatio = this.calculateSharpeRatio(
                 traceBackNumVal.baseAnnualizedRateOfReturn, traceBackNumVal.baseReturnVolatility);
+        System.out.println("initBase Over");
+
     }
 
     /**
@@ -384,6 +392,7 @@ public class TraceBackParameter {
      * @updateTime 2017/4/10
      */
     private List<DailyRate> calBaseDailyRate(List<BaseStock> list) {
+        System.out.println("in calculate");
         List<DailyRate> result = new ArrayList<>();
 
         for (BaseStock stock : list) {
@@ -394,6 +403,7 @@ public class TraceBackParameter {
                 result.add(new DailyRate(rate, stock.getStockID().getDate()));
             }
         }
+        System.out.println("over calculate");
         return result;
     }
 
