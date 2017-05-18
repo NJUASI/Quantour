@@ -47,7 +47,7 @@
         </div>
         <div class="jumbotron banner-desc">
             <div class="container text-center">
-                <h1>Quantour,您的私人量化平台</h1>
+                <h1>Quantour, 您的私人量化平台</h1>
                 <br/>
                 <br/>
                 <a class="btn btn-primary btn-lg" role="button">

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,10 +47,12 @@ public class LogInController {
         }
 
         String userType = (String) session.getAttribute("userType");
+        System.out.println(userType);
         if (userType.equals("user")) {
             // 普通用户
             ModelAndView mv = new ModelAndView("userManager");
             List<Stock> psList = (List<Stock>) session.getAttribute("privateStockList");
+            System.out.println("psList size: " + psList.size());
             mv.addObject("ps_list", psList);
             return mv;
         } else if (userType.equals("admin")) {
@@ -110,9 +113,9 @@ public class LogInController {
         try {
             result = userService.logIn(user.getUserName(), user.getPassword());
             // TODO 暂无数据
-//            List<Stock> psList = privateStockService.getPrivateStocks(user.getUserName(), LocalDate.now());
+            List<Stock> psList = privateStockService.getPrivateStocks(user.getUserName(), LocalDate.now().minusDays(1));
 
-            List<Stock> psList = new LinkedList<>();
+//            List<Stock> psList = new LinkedList<>();
 //            psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
 //            psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
 //            psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
@@ -124,9 +127,9 @@ public class LogInController {
         } catch (UserNotExistException | PasswordWrongException | PasswordInputException | InvalidInputException e) {
             e.printStackTrace();
             return "-1;" + e.getMessage();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return "-1;IO读取失败！";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-1;IO读取失败！";
         }
 
         if (result) {

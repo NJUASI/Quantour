@@ -1,6 +1,7 @@
 package com.edu.nju.asi.utilities.tempHolder;
 
 import com.edu.nju.asi.infoCarrier.traceBack.HoldingDetail;
+import com.edu.nju.asi.utilities.NumberFormat;
 
 /**
  * Created by cuihua on 2017/5/18.
@@ -39,22 +40,22 @@ public class HoldingDeatilTempHolder {
     /**
      * 策略收益,相对于上一周期
      */
-    public double strategyReturn;
+    public String strategyReturn;
 
     /**
      * 基准收益，相对上一周期
      */
-    public double baseReturn;
+    public String baseReturn;
 
     /**
      * 超额收益，相对上一周期
      */
-    public double excessReturn;
+    public String excessReturn;
 
     /**
      * 模拟投资
      */
-    public double remainInvestment;
+    public String remainInvestment;
 
 
     public HoldingDeatilTempHolder(HoldingDetail hd) {
@@ -64,9 +65,9 @@ public class HoldingDeatilTempHolder {
         this.holdingNum = hd.holdingNum;
         this.buyNum = hd.buyNum;
         this.sellNum = hd.sellNum;
-        this.strategyReturn = hd.strategyReturn;
-        this.baseReturn = hd.baseReturn;
-        this.excessReturn = hd.excessReturn;
-        this.remainInvestment = hd.remainInvestment;
+        this.strategyReturn = NumberFormat.percentFormat(hd.strategyReturn, 2);
+        this.baseReturn = NumberFormat.percentFormat(hd.baseReturn, 2);
+        this.excessReturn = NumberFormat.percentFormat(hd.excessReturn, 2);
+        this.remainInvestment = NumberFormat.decimaFormat(hd.remainInvestment, 2);
     }
 }

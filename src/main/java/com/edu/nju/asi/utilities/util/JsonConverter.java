@@ -3,6 +3,7 @@ package com.edu.nju.asi.utilities.util;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.NumberFormat;
+import com.edu.nju.asi.utilities.tempHolder.ExcessAndWinRateDistTempHolder;
 import com.edu.nju.asi.utilities.tempHolder.HoldingDeatilTempHolder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -84,13 +85,13 @@ public class JsonConverter {
             // traceBackNums
             holder.append(jsonOfObject(convertTraceBackNumVal(traceBackInfo))).append(";");
             // abReturnPeriod, reReturnPeriod, holdingDetails
-            holder.append(jsonOfObject(traceBackInfo.absoluteReturnPeriod)).append(";");
-            holder.append(jsonOfObject(traceBackInfo.relativeReturnPeriod)).append(";");
+            holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.absoluteReturnPeriod))).append(";");
+            holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
             holder.append(jsonOfObject(convertHoldingDeatilToTempHolder(traceBackInfo.holdingDetails))).append(";");
 
             // certainFormates, certainHoldings
-            holder.append(jsonOfObject(traceBackInfo.certainFormates)).append(";");
-            holder.append(jsonOfObject(traceBackInfo.certainHoldings)).append(";");
+            holder.append(jsonOfObject(formateExcessAndWin_Form(traceBackInfo.certainFormates))).append(";");
+            holder.append(jsonOfObject(formateExcessAndWin_Form(traceBackInfo.certainHoldings))).append(";");
 
 
 
@@ -105,8 +106,8 @@ public class JsonConverter {
             holder.append(convertHistogram(traceBackInfo.absoluteReturnPeriod)).append(";");
             holder.append(convertHistogram(traceBackInfo.relativeReturnPeriod)).append(";");
 
-            List<String> formate = JsonConverter.convertExcessAndWin(traceBackInfo.certainFormates);
-            List<String> holdings = JsonConverter.convertExcessAndWin(traceBackInfo.certainHoldings);
+            List<String> formate = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainFormates);
+            List<String> holdings = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainHoldings);
             // json_certainFormatesExcessData, json_certainFormatesWinData
             holder.append(formate.get(0)).append(";");
             holder.append(formate.get(1)).append(";");
@@ -161,6 +162,11 @@ public class JsonConverter {
                 data[index] = map.get(key);
             }
         }
+    }
+
+    private static ReturnPeriod convertReturnPeriod(ReturnPeriod returnPeriod) {
+        returnPeriod.winRate = Double.parseDouble(NumberFormat.decimaFormat(returnPeriod.winRate,4));
+        return returnPeriod;
     }
 
     private static List<HoldingDeatilTempHolder> convertHoldingDeatilToTempHolder(List<HoldingDetail> holdingDetails) {
@@ -235,6 +241,15 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
+    private static List<ExcessAndWinRateDistTempHolder> formateExcessAndWin_Form(List<ExcessAndWinRateDist> list) {
+        List<ExcessAndWinRateDistTempHolder> holders = new LinkedList<>();
+        for (ExcessAndWinRateDist temp : list) {
+            holders.add(new ExcessAndWinRateDistTempHolder(temp));
+        }
+        return holders;
+    }
+
+
     /**
      * 将数据集合变成json-String(赢率图)
      *
@@ -244,7 +259,7 @@ public class JsonConverter {
      * @updateTime 2017/5/14
      * @params object 需要转换的对象
      */
-    private static List<String> convertExcessAndWin(List<ExcessAndWinRateDist> list) throws JsonProcessingException {
+    private static List<String> convertExcessAndWin_Chart(List<ExcessAndWinRateDist> list) throws JsonProcessingException {
         List<String> result = new ArrayList<>();
         List<List<String>> excessRate = new ArrayList<>();
         List<List<String>> winRate = new ArrayList<>();

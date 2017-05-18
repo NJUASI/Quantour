@@ -218,19 +218,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <%--<c:forEach items="${stockList}" var="stock" varStatus="vs">--%>
-                                <%--<tr>--%>
-                                    <%--<td>${stock.stockID.code}</td>--%>
-                                    <%--<td>${stock.name}</td>--%>
-                                    <%--<td>${stock.open}</td>--%>
-                                    <%--<td>${stock.close}</td>--%>
-                                    <%--<td class="stock_high">${stock.high}</td>--%>
-                                    <%--<td class="stock_low">${stock.low}</td>--%>
-                                    <%--<td>${stock.preClose}</td>--%>
-                                    <%--<td>${stock.volume}</td>--%>
-                                    <%--<td>${stock.transactionAmount}</td>--%>
-                                <%--</tr>--%>
-                            <%--</c:forEach>--%>
+                            <c:forEach items="${ps_list}" var="stock" varStatus="vs">
+                                <tr>
+                                    <td>${stock.stockID.code}</td>
+                                    <td>${stock.name}</td>
+                                    <td>${stock.open}</td>
+                                    <td>${stock.close}</td>
+                                    <td class="stock_high">${stock.high}</td>
+                                    <td class="stock_low">${stock.low}</td>
+                                    <td>${stock.preClose}</td>
+                                    <td>${stock.volume}</td>
+                                    <td>${stock.transactionAmount}</td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
