@@ -3,6 +3,7 @@ package com.edu.nju.asi.utilities.util;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.NumberFormat;
+import com.edu.nju.asi.utilities.tempHolder.HoldingDeatilTempHolder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -85,7 +86,7 @@ public class JsonConverter {
             // abReturnPeriod, reReturnPeriod, holdingDetails
             holder.append(jsonOfObject(traceBackInfo.absoluteReturnPeriod)).append(";");
             holder.append(jsonOfObject(traceBackInfo.relativeReturnPeriod)).append(";");
-            holder.append(jsonOfObject(traceBackInfo.holdingDetails)).append(";");
+            holder.append(jsonOfObject(convertHoldingDeatilToTempHolder(traceBackInfo.holdingDetails))).append(";");
 
             // certainFormates, certainHoldings
             holder.append(jsonOfObject(traceBackInfo.certainFormates)).append(";");
@@ -160,6 +161,14 @@ public class JsonConverter {
                 data[index] = map.get(key);
             }
         }
+    }
+
+    private static List<HoldingDeatilTempHolder> convertHoldingDeatilToTempHolder(List<HoldingDetail> holdingDetails) {
+        List<HoldingDeatilTempHolder> result = new LinkedList<>();
+        for (HoldingDetail hd : holdingDetails) {
+            result.add(new HoldingDeatilTempHolder(hd));
+        }
+        return result;
     }
 
 
