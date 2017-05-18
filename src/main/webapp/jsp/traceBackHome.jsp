@@ -462,11 +462,11 @@
 <%--</c:otherwise>--%>
 <%--</c:choose>--%>
 
-
-
-
-
-
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -478,6 +478,7 @@
 
 <script src="../js/echarts.min.js"></script>
 <script src="../js/chart.js"></script>
+<script src="../js/startLoaded.js"></script>
 
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
