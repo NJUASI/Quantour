@@ -355,7 +355,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 table-responsive">
+            <div class="col-md-4 table-responsive">
                 <table class="table table-hover table-condensed">
                     <caption class="text-center"><h3>相对收益直方图</h3></caption>
                     <thead>
@@ -430,7 +430,7 @@
     <div class="tab-pane" id="certainHoldingPanel">
 
         <div class="row">
-            <div class="col-md-3 table-responsive">
+            <div class="col-md-4 table-responsive">
                 <table class="table table-hover table-condensed">
                     <caption class="text-center"><h3>固定持有期的赢率分析</h3></caption>
                     <thead>

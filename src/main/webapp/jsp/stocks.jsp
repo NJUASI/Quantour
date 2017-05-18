@@ -83,18 +83,21 @@
 
 
                                 </div>
-                                <div class="searchResults  pre-scrollable" style="text-align: center; position: absolute;display: none;height: 200px;max-height: 200px; background-color: whitesmoke;z-index: 20">
-                                    <table class="table table-condensed table-bordered search-table">
-                                        <thead class="search-table-head">
-                                        <tr>
-                                            <th>代码</th>
-                                            <th>名称</th>
-                                            <th>简称</th>
-                                            <th>类型</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="search-body">
-                                        </tbody>
+                                <div class="searchResults  pre-scrollable" style="position: absolute;display: none;height: 200px;max-height: 200px; background-color: whitesmoke;z-index: 20">
+                                    <table class="table table-condensed table-bordered">
+                                        <div class="search-table">
+                                            <thead class="search-table-head">
+                                            <tr>
+                                                <th>代码</th>
+                                                <th>名称</th>
+                                                <th>简称</th>
+                                                <th>类型</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="search-body">
+
+                                            </tbody>
+                                        </div>
                                     </table>
                                 </div>
                             </form>
@@ -256,7 +259,7 @@
                             var code = $(this).find("td:first").text();
                             $("#search-input").html(code);
                         });
-                        $(".searchResults").toggle();
+                        $(".searchResults").show();
                     }
                 })
             });

@@ -146,8 +146,8 @@ function traceback() {
 
 
                 var trace_back_chart = createTraceBackChart("trace_back_chart", strategyData, baseData, ['策略', '基准'], '1', '1');
-                var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart", abHistogramData, "绝对收益直方图");
-                var relative_histogram_chart = createHistogramChart("relative_histogram_chart", reHistogramData, "相对收益直方图");
+                var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart", abHistogramData, " ");
+                var relative_histogram_chart = createHistogramChart("relative_histogram_chart", reHistogramData, " ");
                 var formates_excess_chart = createAreaChart("formates_excess_chart", formateExcessData, '胜率');
                 var formates_win_chart = createAreaChart("formates_win_chart", formateWinData, '赢率');
                 var holdings_excess_chart = createAreaChart("holdings_excess_chart", holdingExcessData, '胜率');
