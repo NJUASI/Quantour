@@ -51,11 +51,17 @@ function traceback() {
                 var certainHoldings = JSON.parse(array[6]);         // List<ExcessAndWinRateDist>
 
 
+                alert(numberValues);
+
+                alert(numberValues + "\n\n" + abReturnPeriod + "\n\n" + reReturnPeriod + "\n\n" + holdingDetails + "\n\n" + certainFormates + "\n\n" + certainHoldings);
+
+
                 // 回测的数值型数据
                 $("#chartPanel").toggle("slow");
                 $("#tb_chart").empty();
-                $("#tb_chart").append("<tr>");
                 for(var i = 0; i < 3; i++) {
+                    $("#tb_chart").append("<tr>");
+
                     switch (i) {
                         case 0:$("#tb_chart").append("<td>本策略</td>");
                             break;
@@ -68,8 +74,8 @@ function traceback() {
                     for (var j = 0; j < 7; j++) {
                         $("#tb_chart").append("<td>" + numberValues.get(i * 7 + j) + "</td>");
                     }
+                    $("#tb_chart").append("</tr>");
                 }
-                $("#tb_chart").append("</tr>");
 
                 // 股票周期的对比图
                 $("#cyclePanel").toggle("slow");
@@ -92,8 +98,8 @@ function traceback() {
                 // 持有周期详情
                 $("#holdingDetailPanel").toggle("slow");
                 $("#tb_detail").empty();
-                $("#tb_detail").append("<tr>");
                 for(var i = 0; i < holdingDetails.size(); i++) {
+                    $("#tb_detail").append("<tr>");
                     $("#tb_detail").append("<td>" + holdingDetails.get(i).periodSerial + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails.get(i).startDate + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails.get(i).endDate + "</td>");
@@ -102,32 +108,32 @@ function traceback() {
                     $("#tb_detail").append("<td>" + holdingDetails.get(i).baseReturn + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails.get(i).excessReturn + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails.get(i).remainInvestment + "</td>");
+                    $("#tb_detail").append("</tr>");
                 }
-                $("#tb_detail").append("</tr>");
 
 
                 // 固定形成期的赢率分析
                 $("#certainFormatePanel").toggle("slow");
                 $("#tb_certain_formate").empty();
-                $("#tb_certain_formate").append("<tr>");
                 for(var i = 0; i < certainFormates.size(); i++) {
+                    $("#tb_certain_formate").append("<tr>");
                     $("#tb_certain_formate").append("<td>" + certainFormates.get(i).relativeCycle + "</td>");
                     $("#tb_certain_formate").append("<td>" + certainFormates.get(i).excessRate + "</td>");
                     $("#tb_certain_formate").append("<td>" + certainFormates.get(i).winRate + "</td>");
+                    $("#tb_certain_formate").append("</tr>");
                 }
-                $("#tb_certain_formate").append("</tr>");
 
 
                 // 固定持有期的赢率分析
                 $("#certainHoldingPanel").toggle("slow");
                 $("#tb_certain_holding").empty();
-                $("#tb_certain_holding").append("<tr>");
                 for(var i = 0; i < certainHoldings.size(); i++) {
+                    $("#tb_certain_holding").append("<tr>");
                     $("#tb_certain_holding").append("<td>" + certainHoldings.get(i).relativeCycle + "</td>");
                     $("#tb_certain_holding").append("<td>" + certainHoldings.get(i).excessRate + "</td>");
                     $("#tb_certain_holding").append("<td>" + certainHoldings.get(i).winRate + "</td>");
+                    $("#tb_certain_holding").append("</tr>");
                 }
-                $("#tb_certain_holding").append("</tr>");
 
 
                 // 处理图标的信息
@@ -139,6 +145,9 @@ function traceback() {
                 var formateWinData = JSON.parse(array[12]);
                 var holdingExcessData = JSON.parse(array[13]);
                 var holdingWinData = JSON.parse(array[14]);
+
+                alert(strategyData + "\n\n" + baseData + "\n\n" + abHistogramData + "\n\n" + reHistogramData + "\n\n" + formateExcessData
+                    + "\n\n" + formateExcessData + "\n\n" + holdingExcessData + "\n\n" + holdingWinData);
 
 
                 var trace_back_chart = createTraceBackChart("trace_back_chart", strategyData, baseData, ['策略', '基准'], '1', '1');
