@@ -3,10 +3,7 @@ package com.edu.nju.asi.controller;
 import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
 import com.edu.nju.asi.infoCarrier.StockComparision;
 import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
-import com.edu.nju.asi.model.PrivateStock;
-import com.edu.nju.asi.model.Stock;
-import com.edu.nju.asi.model.StockSituation;
-import com.edu.nju.asi.model.User;
+import com.edu.nju.asi.model.*;
 import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.service.StockService;
@@ -60,7 +57,6 @@ public class StockController {
     @GetMapping()
     public ModelAndView getStockMarket(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView("stocks");
-
         HttpSession session = request.getSession(false);
         if (session.getAttribute("oneDateStockList") == null) {
             System.out.println("默认进来的");
@@ -72,11 +68,14 @@ public class StockController {
 
                 StockSituation situation = (StockSituation) session.getAttribute("oneDateSituation");
                 List<Stock> stocks = (List<Stock>) session.getAttribute("oneDateStockList");
+                LocalDate date = (LocalDate)  session.getAttribute("date");
                 session.setAttribute("oneDateSituation", null);
                 session.setAttribute("oneDateStockList", null);
+                session.setAttribute("date",null);
 
                 mv.addObject("situation", situation);
                 mv.addObject("stockList", stocks);
+                mv.addObject("date", date);
 
                 System.out.println(stocks.size() + "\n\n\n");
             } else {
@@ -91,11 +90,14 @@ public class StockController {
 
             StockSituation situation = (StockSituation) session.getAttribute("oneDateSituation");
             List<Stock> stocks = (List<Stock>) session.getAttribute("oneDateStockList");
+            LocalDate date = (LocalDate) session.getAttribute("date");
             session.setAttribute("oneDateSituation", null);
             session.setAttribute("oneDateStockList", null);
+            session.setAttribute("date",null);
 
             mv.addObject("situation", situation);
             mv.addObject("stockList", stocks);
+            mv.addObject("date", date);
 
             System.out.println(stocks.size() + "\n\n\n");
 
@@ -120,7 +122,8 @@ public class StockController {
             thisDate = nowDate;
         } else {
             System.out.println("JS有的！！");
-            thisDate = LocalDateHelper.convertString(date);
+            System.out.println("在controller里面");
+            thisDate = LocalDate.parse(date);
         }
 
         StockSituation situation = null;
@@ -132,6 +135,7 @@ public class StockController {
             HttpSession session = request.getSession(false);
             session.setAttribute("oneDateSituation", situation);
             session.setAttribute("oneDateStockList", stockList);
+            session.setAttribute("date", thisDate);
 
             System.out.println(stockList.size());
         } catch (NoSituationDataException e) {
@@ -144,7 +148,7 @@ public class StockController {
 
         if (stockList != null) {
             System.out.println("Success");
-            return "1;获取单只股票成功";
+            return "1;获取市场股票成功";
         } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
@@ -182,7 +186,7 @@ public class StockController {
      */
     @PostMapping(value = "/{id}", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
-    String reqGetOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
+    String reqGetOneStock(@PathVariable(value = "id") String stockCode, HttpServletRequest request) {
         LocalDate startDate, endDate;
         String startDateString = request.getParameter("startDate");
         String endDateString = request.getParameter("endDate");
@@ -336,6 +340,20 @@ public class StockController {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    @GetMapping(value = "/search", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String searchStocks(HttpServletRequest request){
+        String keyword = request.getParameter("key");
+        List<StockSearch> results = stockService.searchStock(keyword);
+        try {
+            return JsonConverter.jsonOfObject(results);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "-1";
     }
 
 

@@ -63,18 +63,18 @@
                         <div class="col-md-3 col-md-offset-1">
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy/mm/dd"
                                  data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                <input id="stocks_date" class="form-control" size="16" type="text" onclick="getOneDate()">
+                                <input id="stocks_date" class="form-control" size="16" type="text" />
                                 <span class="input-group-addon"><span
-                                        class="glyphicon glyphicon-calendar" onclick="getOneDate()"></span></span>
+                                        class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
 
                         <div class="col-md-3 col-md-offset-1">
                             <form role="form">
                                 <div class="input-group">
-                                    <input type="text" id="stocks_id" class="form-control"  placeholder="输入代码/简称/拼音" >
+                                    <input type="text" id="search-input" class="form-control"  placeholder="输入代码/简称/拼音" >
                                     <span class="input-group-btn">
-                                    <button class="btn btn-default form-control" type="button"  onclick="getSingleStockDetail()">
+                                    <button class="btn btn-default form-control search-btn" type="button" onclick="getSingleStockDetail()">
                                         <span class="glyphicon glyphicon-search"> </span>
                                     </button>
                             </span>
@@ -192,16 +192,27 @@
     </div>
 </div>
 <div id="candlestick_chart" style="width:100%;height:600px"></div>
-
+<div class="searchResults">
+    <table class="table table-condensed">
+        <caption>搜索结果</caption>
+        <thead>
+        <tr>
+            <th>代码</th>
+            <th>名称</th>
+            <th>简称</th>
+            <th>类型</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
 <footer>
 </footer>
 
 <script src="../js/stocks.js"></script>
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
-<script type="text/javascript">
-    var candlestickChart = createCandlestickChart("candlestick_chart", ${candlestickData}, ${volumeData});
-</script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
@@ -212,16 +223,25 @@
 <script type="text/javascript">
     $(document).ready(
         function() {
-            $("#stocks_id").keydown(function(event) {
-                if (event.keyCode == 13) {
-                    getSingleStockDetail();
-                    alert(event.target.value);
+            var date = ${date.year} + "-" + ${date.monthValue} + "-" + ${date.dayOfMonth};
+            $(".form_date > input").attr('value', date);
 
-                }
-            })
-            $("#searchButton").click(function(event) {
-                getSingleStockDetail();
-            })
+            alert(1);
+            $('#search-input').bind('input propertychange', function() {
+                var key = $('#search-input').val();
+                alert(key);
+                $.ajax({
+                    type: "get",
+                    async: true,
+                    url: "/stocks/search?key="+key,
+
+                    success:function (result) {
+                        alert(result);
+                        alert(JSON.parse(result));
+                    }
+                })
+            });
+            alert(2);
         }
     );
 
@@ -232,12 +252,42 @@
         language: 'zh-CN',//中文，需要引用zh-CN.js包
         startView: 2,//日视图
         minView: 2,//日期时间选择器所能够提供的最精确的时间选择视图0
-        pickerPosition: "bottom-left"
+        pickerPosition: "bottom-left",
+        startDate: new Date(2012 - 01 - 01),
+        endDate: new Date(),
+        daysOfWeekDisabled: [0,6]
     });
+
     $('.form_date')
-        .datetimepicker()
-        .on('changeDate', function (ev) {
-            alert("今天是" + ev.date.valueOf());
+        .datetimepicker().on("changeDate",function () {
+            alert($(".form_date > input").val());
+            $.ajax({
+                type: "post",
+                async: true,
+                url: "/stocks",
+                data:{
+                    "date": $(".form_date > input").val()
+                },
+
+                success: function (result) {
+                    alert(result);
+                    var array = result.split(";");
+
+                    if (array[0] == "1") {
+                        alert("666");
+                        window.location.href = "/stocks";
+                    } else if (array[0] == "-1") {
+                        // 提示错误信息
+                        alert(array[1]);
+                    } else {
+                        alert("未知错误类型orz");
+                    }
+                },
+                error: function (result) {
+                    alert(JSON.stringify(result));
+                    alert("错误" + result);
+                }
+            });
         });
 </script>
 </body>

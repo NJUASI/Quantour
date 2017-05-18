@@ -189,7 +189,7 @@
         alert("添加方法执行了");
         $.ajax({
             type: "get",
-            async: false,
+            async: true,
             url: "/user/addPrivate/" + $("#stockCode").text(),
             success: function (result) {
                 alert(result);
@@ -213,7 +213,7 @@
         alert("删除方法执行了");
         $.ajax({
             type: "get",
-            async: false,
+            async: true,
             url: "/user/deletePrivate/" + $("#stockCode").text(),
             success: function (result) {
                 alert(result);
@@ -245,7 +245,8 @@
         autoclose: true,
         //数据从12年开始
         startDate: new Date(2012 - 01 - 01),
-        endDate: new Date()
+        endDate: new Date(),
+        daysOfWeekDisabled: [0,6]
     });
 
     $("#datetimeEnd").datetimepicker({
@@ -253,7 +254,9 @@
         minView: 'month',
         language: 'zh-CN',
         autoclose: true,
-        endDate: new Date()
+        startDate: new Date(2012 - 01 - 01),
+        endDate: new Date(),
+        daysOfWeekDisabled: [0,6]
     });
 
     var data1 = ${candlestickData};

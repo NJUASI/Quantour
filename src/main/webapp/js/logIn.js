@@ -2,6 +2,19 @@
  * Created by cuihua on 2017/5/12.
  */
 
+$(document).ready(function () {
+    //显示出白色下划线的效果
+   $("#homePage").addClass("act");
+
+   //切换白色下划线
+   $(".navbar-nav li a").on("click",function () {
+       $(".navbar-nav li a[class~='act']").css("color","#BDBDBD");
+       $(".navbar-nav li a[class~='act']").removeClass("act");
+       $(this).addClass("act");
+       $(this).css("color","#ffffff");
+   });
+});
+
 function login() {
     var userName = $("#login_username").val();
     var password = $("#login_password").val();

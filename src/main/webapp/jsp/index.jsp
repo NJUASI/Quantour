@@ -25,7 +25,7 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">首页</a></li>
+                <li><a id="homePage" href="/">首页</a></li>
                 <li><a href="/stocks">大盘详情</a></li>
                 <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>

@@ -3,13 +3,12 @@ body {
 }
 
 footer {
-    width: 100%;
+    width: 70%;
     height: 100px;
     background-color: #444444;
 }
 
 .banner-holder {
-    height: 100%;
     background: #222;
     overflow: hidden;
     position: relative;
@@ -17,7 +16,8 @@ footer {
 
 .banner-image-holder img {
     width: 100%;
-    margin-top: -7%;
+    background-size: cover;
+    margin-top: -10%;
     filter: brightness(60%);
 }
 
