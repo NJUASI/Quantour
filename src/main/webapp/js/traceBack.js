@@ -1,4 +1,4 @@
-/**
+ /**
  * Created by cuihua on 2017/5/14.
  */
 function traceback() {
@@ -90,7 +90,7 @@ function traceback() {
 
 
                 // 持有周期详情
-                $("#holdingDetailPanel").toggle("slow");
+
                 $("#tb_detail").empty();
                 for(var i = 0; i < holdingDetails.length; i++) {
                     $("#tb_detail").append("<tr>");
@@ -108,7 +108,6 @@ function traceback() {
 
 
                 // 固定形成期的赢率分析
-                $("#certainFormatePanel").toggle("slow");
                 $("#tb_certain_formate").empty();
                 for(var i = 0; i < certainFormates.length; i++) {
                     $("#tb_certain_formate").append("<tr>");
@@ -121,7 +120,6 @@ function traceback() {
 
 
                 // 固定持有期的赢率分析
-                $("#certainHoldingPanel").toggle("slow");
                 $("#tb_certain_holding").empty();
                 for(var i = 0; i < certainHoldings.length; i++) {
                     $("#tb_certain_holding").append("<tr>");
@@ -148,8 +146,8 @@ function traceback() {
 
 
                 var trace_back_chart = createTraceBackChart("trace_back_chart", strategyData, baseData, ['策略', '基准'], '1', '1');
-                var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart", abHistogramData, "绝对收益直方图");
-                var relative_histogram_chart = createHistogramChart("relative_histogram_chart", reHistogramData, "相对收益直方图");
+                var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart", abHistogramData, " ");
+                var relative_histogram_chart = createHistogramChart("relative_histogram_chart", reHistogramData, " ");
                 var formates_excess_chart = createAreaChart("formates_excess_chart", formateExcessData, '胜率');
                 var formates_win_chart = createAreaChart("formates_win_chart", formateWinData, '赢率');
                 var holdings_excess_chart = createAreaChart("holdings_excess_chart", holdingExcessData, '胜率');

@@ -76,19 +76,19 @@
     </nav>
 </header>
 
-<div class="row userBlockLeft">
-    <div class="col-md-2 col-lg-offset-6 input-group">
-        <input type="text" id="stockText" class="form-control form-inline" >
-        <span class="input-group-btn">
-                                    <button class="btn btn-default form-control" id="searchButton" type="button">
-                                        <span class="glyphicon glyphicon-search"> </span>
-                                    </button>
-    </span>
-    </div>
-</div>
+<%--<div class="row userBlockLeft">--%>
+    <%--<div class="col-md-2 col-lg-offset-6 input-group">--%>
+        <%--<input type="text" id="stockText" class="form-control form-inline" >--%>
+        <%--<span class="input-group-btn">--%>
+                                    <%--<button class="btn btn-default form-control" id="searchButton" type="button">--%>
+                                        <%--<span class="glyphicon glyphicon-search"> </span>--%>
+                                    <%--</button>--%>
+    <%--</span>--%>
+    <%--</div>--%>
+<%--</div>--%>
 
 
-<div class="row stock" style="margin-top: -60px">
+<div class="row stock" style="margin-top: 70px">
     <span class="col-md-2 col-md-offset-2"><span id="stockName">${dataOfEndDay.name}</span>&nbsp;<i id="stockCode">${dataOfEndDay.stockID.code}</i></span>
     <span id="addBtn"><button class="btn"></button></span>
 </div>
@@ -263,7 +263,7 @@
         });
     };
 
-    $("#stockDetail > li").addClass("col-md-3");
+    $("#stockDetail > li").addClass("col-md-4");
 
     var startTime = ${dataOfStartDay.stockID.date.year} + "-" + ${dataOfStartDay.stockID.date.monthValue} + "-" + ${dataOfStartDay.stockID.date.dayOfMonth};
     var endTime = ${dataOfEndDay.stockID.date.year} + "-" + ${dataOfEndDay.stockID.date.monthValue} + "-" + ${dataOfEndDay.stockID.date.dayOfMonth};
