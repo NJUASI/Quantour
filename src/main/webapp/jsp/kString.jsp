@@ -302,6 +302,8 @@
         var start = $("#datetimeStart > input").val();
         var end = $("#datetimeEnd > input").val();
 
+        $("body").removeClass("loded");
+
 //        alert(start);
 
         $.ajax({
@@ -314,6 +316,7 @@
             },
 
             success: function (result) {
+                $("body").addClass("loaded");
                 var array = result.split(";");
 
                 if (array[0] == "1") {
