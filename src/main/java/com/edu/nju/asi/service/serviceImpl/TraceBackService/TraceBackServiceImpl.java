@@ -143,7 +143,8 @@ public class TraceBackServiceImpl implements TraceBackService {
         System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等
-        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteria, traceBackInfo,stockData, traceBackStockPool);
+        List<BaseStock> baseStockList = stockService.getBaseStockData(traceBackCriteria.baseStockName, traceBackCriteria.startDate, traceBackCriteria.endDate);
+        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteria, traceBackInfo,stockData, traceBackStockPool, baseStockList);
         System.out.println("---------------8------------");
         return traceBackParameter.getTraceBackInfo();
 
@@ -390,6 +391,8 @@ public class TraceBackServiceImpl implements TraceBackService {
      */
     private List<CumulativeReturn> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) {
 
+        System.out.println("in getCumulativeReturnOfOneStock-------------"+stockName+"--------------");
+
         List<BaseStock> list = null;
         try {
             list = stockService.getBaseStockData(stockName, start, end);
@@ -415,6 +418,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         //将第一天的收益率设置为0
         cumulativeReturns.get(0).cumulativeReturn = 0;
+        System.out.println("finished getCumulativeReturnOfOneStock--------------"+stockName+"----------------");
 
         return cumulativeReturns;
     }

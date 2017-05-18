@@ -53,6 +53,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<Stock> getAllStocks(LocalDate date) throws IOException {
+        System.out.println("getAllStocks" + stockDao);
         return stockDao.getStockData(date);
     }
 
@@ -68,6 +69,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<StockSearch> searchStock(String searchString){
+        System.out.println("searchStock" + stockDao);
         return stockDao.searchStock(searchString);
     }
 
@@ -82,13 +84,16 @@ public class StockServiceImpl implements StockService {
     @Override
     public List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
         System.out.println("-----------In base----------");
+        System.out.println("getBaseStockData" + stockDao);
         Map<String, String> map = stockDao.getAllStocksName();
         for (Map.Entry entry : map.entrySet()) {
             System.out.println(entry.getKey() + "   " + entry.getValue());
         }
 
+        System.out.println("baseCode: "+map.get(stockName));
 
         String baseStockCode = StockCodeHelper.format(map.get(stockName));
+        System.out.println("finished getBaseStockData--------------"+stockName+"--------------------------");
         return baseStockDao.getStockData(baseStockCode, start, end);
     }
 
@@ -100,6 +105,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<String> getStockPool(StockPoolCriteria stockPoolCriteria) throws IOException, UnhandleBlockTypeException {
+        System.out.println("getStockPool" + stockDao);
 
         //新建所有filter对象
         StockPoolFilter stockPoolFilter = new StockPoolFilter();
