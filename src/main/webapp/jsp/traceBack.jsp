@@ -11,9 +11,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 Bootstrap -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/startLoader.css" rel="stylesheet">
+    <style type="text/css" rel="stylesheet">
+        footer {
+            width: 100%;
+            height: 100px;
+            background-color: #444444;
+        }
+    </style>
     <title>回测系统</title>
 </head>
-<body>
+<body class="loaded">
 <div id = "trace_back_chart" style="width:100%;height:600px"></div>
 <div id = "absolute_histogram_chart" style="width:100%;height:600px"></div>
 <div id = "relative_histogram_chart" style="width:100%;height:600px"></div>
@@ -22,9 +30,11 @@
 <div id = "holdings_excess_chart" style="width:100%;height:600px"></div>
 <div id = "holdings_win_chart" style="width:100%;height:600px"></div>
 <h1>欢迎开始回测</h1>
-
+<footer>
+</footer>
 <script src = "../js/echarts.min.js"></script>
 <script src = "../js/chart.js"></script>
+<script src = "../js/startLoaded.js"></script>
 <script type = "text/javascript">
     var trace_back_chart = createTraceBackChart("trace_back_chart"${json_strategyData},${json_baseData},['策略','基准'],'1','1');
     var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart",${json_absoluteHistogramData}, "绝对收益直方图");

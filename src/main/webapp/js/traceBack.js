@@ -21,6 +21,9 @@ function traceback() {
         }
     };
 
+    $("body").removeClass("loaded");
+
+
     //
     // alert($("#startDate").val() + "\n" + $("#endDate").val() + "\n" + $("#formativePeriod").val() + "\n" + $("#holdingPeriod").val()
     //     + "\n" + $("#stType").val() + "\n" +$("#blockTypes").val() + "\n" +$("#baseStockEve").val() + "\n" + isCustomized
@@ -35,6 +38,7 @@ function traceback() {
 
 
         success: function (result) {
+            $("body").addClass("loaded");
             var array = result.split(";");
             if (array[0] == "1") {
 

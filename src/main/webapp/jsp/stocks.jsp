@@ -83,21 +83,18 @@
 
 
                                 </div>
-                                <div class="searchResults  pre-scrollable" style="position: absolute;display: none;height: 200px;max-height: 200px; background-color: whitesmoke;z-index: 20">
-                                    <table class="table table-condensed table-bordered">
-                                        <div class="search-table">
-                                            <thead class="search-table-head">
-                                            <tr>
-                                                <th>代码</th>
-                                                <th>名称</th>
-                                                <th>简称</th>
-                                                <th>类型</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="search-body">
-
-                                            </tbody>
-                                        </div>
+                                <div class="searchResults  pre-scrollable" style="text-align: center; position: absolute;display: none;height: 200px;max-height: 200px; background-color: whitesmoke;z-index: 20">
+                                    <table class="table table-condensed table-bordered search-table">
+                                        <thead class="search-table-head">
+                                        <tr>
+                                            <th>代码</th>
+                                            <th>名称</th>
+                                            <th>简称</th>
+                                            <th>类型</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="search-body">
+                                        </tbody>
                                     </table>
                                 </div>
                             </form>
@@ -161,7 +158,7 @@
         <div class="row" style="z-index:3">
             <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
-                    <table class="table table-hover table-condensed">
+                    <table class="table table-hover table-condensed stocks-table">
                         <caption class="text-center"><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
@@ -218,6 +215,7 @@
 
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
+<script src="../js/stocks.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
@@ -254,6 +252,10 @@
                             $("#search-body").append("<td>"+obj[i]["searchID"]["market"]+"</td>");
                             $("#search-body").append("</tr>");
                         }
+                        $("#search-body tr").on("click",function () {
+                            var code = $(this).find("td:first").text();
+                            $("#search-input").html(code);
+                        });
                         $(".searchResults").toggle();
                     }
                 })

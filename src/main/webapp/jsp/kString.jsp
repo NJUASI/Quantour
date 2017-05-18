@@ -20,11 +20,7 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
     <![endif]-->
     <title>个股</title>
 
@@ -40,6 +36,12 @@
 
         .userBlockLeft {
             margin-top: 60px;
+        }
+
+        footer {
+            width: 100%;
+            height: 100px;
+            background-color: #444444;
         }
     </style>
 
