@@ -20,10 +20,11 @@
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="../css/stocks.css" rel="stylesheet">
     <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
     <title>股票市场</title>
 </head>
 <header>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">

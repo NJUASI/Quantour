@@ -18,6 +18,7 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/bootstrap-select.css">
     <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
+    <link href="../css/index.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -52,7 +53,7 @@
 <body>
 
 <header>
-    <nav class="navbar navbar-inverse    nav-wrapper">
+    <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand brand" href="#">
