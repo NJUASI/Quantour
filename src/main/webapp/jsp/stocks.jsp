@@ -292,7 +292,9 @@
 
     $('.form_date')
         .datetimepicker().on("changeDate", function () {
-        alert($(".form_date > input").val());
+//        alert($(".form_date > input").val());
+        $("body").removeClass("loaded");
+
         $.ajax({
             type: "post",
             async: true,
@@ -303,6 +305,7 @@
 
             success: function (result) {
 //                alert(result);
+                $("body").addClass("loaded");
                 var array = result.split(";");
 
                 if (array[0] == "1") {
