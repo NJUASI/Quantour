@@ -23,6 +23,7 @@ footer {
 
 .banner-desc {
     background: transparent;
+
     position: absolute;
     top: 25%;
     left: 0;
@@ -41,7 +42,7 @@ footer {
 .nav-wrapper {
     text-align: center;
     width: 100%;
-    background: rgba(30,30,30,.4);
+    background: rgba(30,30,30,.8);
     transition: all .7s ease;
     border-color: transparent;
 }
