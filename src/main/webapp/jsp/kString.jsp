@@ -20,6 +20,14 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/startLoader.css" rel="stylesheet">
+    <style type="text/css" rel="stylesheet">
+        footer {
+            width: 100%;
+            height: 100px;
+            background-color: #444444;
+        }
+    </style>
 
     <![endif]-->
     <title>个股</title>
@@ -37,17 +45,10 @@
         .userBlockLeft {
             margin-top: 60px;
         }
-
-        footer {
-            width: 100%;
-            height: 100px;
-            background-color: #444444;
-        }
     </style>
 
 </head>
-
-
+<body class="loaded">
 <header>
     <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
         <div class="container">
@@ -58,7 +59,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
-                <li><a href="/stocks">大盘详情</a></li>
+                <li><a id="stocks">大盘详情</a></li>
                 <li><a href="/trace_back_home">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
@@ -145,6 +146,10 @@
     </div>
 </div>
 
+<footer>
+
+</footer>
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <script src="../js/jquery.validate.js"></script>
@@ -158,6 +163,7 @@
 
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
+<script src="../js/startLoaded.js"></script>
 
 <script type="text/javascript">
 
@@ -187,6 +193,31 @@
             }
         }
     );
+
+    $("#stocks").click(function () {
+        $("body").removeClass("loaded");
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/stocks",
+
+            success: function (result) {
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    window.location.href = "/stocks";
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
+                }
+            },
+            error: function (result) {
+                alert("错误" + result);
+            }
+        }) ;
+    });
 
     function addPrivateStock () {
 //        alert("添加方法执行了");

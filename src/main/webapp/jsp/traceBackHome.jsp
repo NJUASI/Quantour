@@ -57,7 +57,7 @@
 
 
 </head>
-<body>
+<body class="loaded">
 
 <header>
     <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
@@ -527,14 +527,35 @@
         $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
     });
 
-    $(document).ready(function () {
-        $("#modifyBT").click(function () {
+        $(document).ready(function () {
+            $("#modifyBT").click(function () {
             $("#passwordField").toggle("slow");
             $("#passwordModify").toggle("slow");
         });
 
         $("#stocks").click(function () {
+            $("body").removeClass("loaded");
+            $.ajax({
+                type: "post",
+                async: true,
+                url: "/stocks",
 
+                success: function (result) {
+                    var array = result.split(";");
+
+                    if (array[0] == "1") {
+                        window.location.href = "/stocks";
+                    } else if (array[0] == "-1") {
+                        // 提示错误信息
+                        alert(array[1]);
+                    } else {
+                        alert("未知错误类型orz");
+                    }
+                },
+                error: function (result) {
+                    alert("错误" + result);
+                }
+            }) ;
         });
 
     });
