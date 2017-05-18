@@ -323,7 +323,7 @@
             <div id="main" class="col-md-12" style="height:500px"></div>
         </div>
     </div>
-    <div class="tab-pane" id="cyclePanel" style="display: none">
+    <div class="tab-pane" id="cyclePanel">
         <div class="row">
             <div class="col-md-6 table-responsive">
                 <table class="table table-hover table-condensed">
@@ -396,13 +396,6 @@
                     </tr>
                     </thead>
                     <tbody id="tb_certain_formate">
-                    <c:forEach items="${certainFormates}" var="temp" varStatus="vs">
-                        <tr>
-                            <td>${temp.relativeCycle}</td>
-                            <td>${temp.excessRate}</td>
-                            <td>${temp.winRate}</td>
-                        </tr>
-                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -429,13 +422,6 @@
                     </tr>
                     </thead>
                     <tbody id="tb_certain_holding">
-                    <c:forEach items="${certainHoldings}" var="temp" varStatus="vs">
-                        <tr>
-                            <td>${temp.relativeCycle}</td>
-                            <td>${temp.excessRate}</td>
-                            <td>${temp.winRate}</td>
-                        </tr>
-                    </c:forEach>
                     </tbody>
                 </table>
             </div>
