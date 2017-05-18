@@ -1,3 +1,11 @@
+<%@ page import="com.edu.nju.asi.model.StockSearch" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.edu.nju.asi.utilities.util.JsonConverter" %>
+<%@ page import="com.fasterxml.jackson.core.JsonProcessingException" %>
+<%@ page import="com.fasterxml.jackson.databind.JsonNode" %>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
+<%@ page import="java.io.IOException" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -51,7 +59,7 @@
 <body>
 <div class="content">
     <div class="container">
-        <div class="row panel_title_wrapper">
+        <div class="row panel_title_wrapper" style="z-index: 5;">
             <div class="col-md-offset-1 col-md-10">
                 <div class="panel_title">
                     <div class="row">
@@ -63,7 +71,7 @@
                         <div class="col-md-3 col-md-offset-1">
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy/mm/dd"
                                  data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                <input id="stocks_date" class="form-control" size="16" type="text" />
+                                <input id="stocks_date" class="form-control" size="16" type="text"/>
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-calendar"></span></span>
                             </div>
@@ -71,13 +79,33 @@
 
                         <div class="col-md-3 col-md-offset-1">
                             <form role="form">
-                                <div class="input-group">
-                                    <input type="text" id="search-input" class="form-control"  placeholder="输入代码/简称/拼音" >
+                                <div class="input-group" style="position: relative">
+                                    <input type="text" id="search-input" class="form-control" placeholder="输入代码/简称/拼音">
                                     <span class="input-group-btn">
-                                    <button class="btn btn-default form-control search-btn" type="button" onclick="getSingleStockDetail()">
+                                    <button class="btn btn-default form-control search-btn" type="button"
+                                            onclick="getSingleStockDetail()">
                                         <span class="glyphicon glyphicon-search"> </span>
                                     </button>
-                            </span>
+                                    </span>
+
+
+                                </div>
+                                <div class="searchResults  pre-scrollable" style="position: absolute;display: none;height: 200px;max-height: 200px; background-color: whitesmoke;z-index: 20">
+                                    <table class="table table-condensed table-bordered">
+                                        <div class="search-table">
+                                            <thead class="search-table-head">
+                                            <tr>
+                                                <th>代码</th>
+                                                <th>名称</th>
+                                                <th>简称</th>
+                                                <th>类型</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="search-body">
+
+                                            </tbody>
+                                        </div>
+                                    </table>
                                 </div>
                             </form>
                         </div>
@@ -89,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="row markets_wrapper">
+        <div class="row markets_wrapper "  style="z-index:3">
             <div class="col-md-offset-1 col-md-10">
                 <ul class="market">
                     <li class="each_market" id="stocks_shangzheng">
@@ -137,7 +165,7 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="z-index:3">
             <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
                     <table class="table table-hover table-condensed">
@@ -191,22 +219,7 @@
         </div>
     </div>
 </div>
-<div id="candlestick_chart" style="width:100%;height:600px"></div>
-<div class="searchResults">
-    <table class="table table-condensed">
-        <caption>搜索结果</caption>
-        <thead>
-        <tr>
-            <th>代码</th>
-            <th>名称</th>
-            <th>简称</th>
-            <th>类型</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
+
 <footer>
 </footer>
 
@@ -222,26 +235,48 @@
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
     $(document).ready(
-        function() {
-            var date = ${date.year} + "-" + ${date.monthValue} + "-" + ${date.dayOfMonth};
+        function () {
+            var date = ${date.year} +"-" + ${date.monthValue} +"-" + ${date.dayOfMonth};
             $(".form_date > input").attr('value', date);
 
-            alert(1);
-            $('#search-input').bind('input propertychange', function() {
+
+            $('#search-input').bind('input propertychange', function () {
+
                 var key = $('#search-input').val();
-                alert(key);
+//                alert(key);
                 $.ajax({
                     type: "get",
                     async: true,
-                    url: "/stocks/search?key="+key,
+                    url: "/stocks/search?key=" + key,
 
-                    success:function (result) {
+                    success: function (result) {
                         alert(result);
-                        alert(JSON.parse(result));
+                        var obj = eval("("+result+")");
+                        var len = obj.length;
+                        $("#search-body").empty();
+                        for(var i = 0; i < len; i++){
+                            $("#search-body").append("<tr>");
+                            $("#search-body").append("<td>"+obj[i]["searchID"]["code"]+"</td>");
+                            $("#search-body").append("<td>"+obj[i]["searchID"]["name"]+"</td>");
+                            $("#search-body").append("<td>"+obj[i]["firstLetters"]+"</td>");
+                            $("#search-body").append("<td>"+obj[i]["searchID"]["market"]+"</td>");
+                            $("#search-body").append("</tr>");
+                        }
+                        $(".searchResults").toggle();
                     }
                 })
             });
-            alert(2);
+
+
+
+            $(".searchResults").click(function(e) {
+                e.stopPropagation();
+            });
+            $(document).click(function() {
+                $(".searchResults").hide();
+            });
+
+            $(".searchResults")
         }
     );
 
@@ -255,40 +290,40 @@
         pickerPosition: "bottom-left",
         startDate: new Date(2012 - 01 - 01),
         endDate: new Date(),
-        daysOfWeekDisabled: [0,6]
+        daysOfWeekDisabled: [0, 6]
     });
 
     $('.form_date')
-        .datetimepicker().on("changeDate",function () {
-            alert($(".form_date > input").val());
-            $.ajax({
-                type: "post",
-                async: true,
-                url: "/stocks",
-                data:{
-                    "date": $(".form_date > input").val()
-                },
+        .datetimepicker().on("changeDate", function () {
+        alert($(".form_date > input").val());
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/stocks",
+            data: {
+                "date": $(".form_date > input").val()
+            },
 
-                success: function (result) {
-                    alert(result);
-                    var array = result.split(";");
+            success: function (result) {
+                alert(result);
+                var array = result.split(";");
 
-                    if (array[0] == "1") {
-                        alert("666");
-                        window.location.href = "/stocks";
-                    } else if (array[0] == "-1") {
-                        // 提示错误信息
-                        alert(array[1]);
-                    } else {
-                        alert("未知错误类型orz");
-                    }
-                },
-                error: function (result) {
-                    alert(JSON.stringify(result));
-                    alert("错误" + result);
+                if (array[0] == "1") {
+                    alert("666");
+                    window.location.href = "/stocks";
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
                 }
-            });
+            },
+            error: function (result) {
+                alert(JSON.stringify(result));
+                alert("错误" + result);
+            }
         });
+    });
 </script>
 </body>
 </html>

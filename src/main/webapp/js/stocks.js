@@ -7,7 +7,7 @@ function getSingleStockDetail() {
         alert("查看股票：" + wantedStockCode);
 
         $.ajax({
-            type: "get",
+            type: "post",
             async: true,
             url: "/stocks/" + wantedStockCode,
 

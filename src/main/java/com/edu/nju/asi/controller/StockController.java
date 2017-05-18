@@ -349,7 +349,8 @@ public class StockController {
         String keyword = request.getParameter("key");
         List<StockSearch> results = stockService.searchStock(keyword);
         try {
-            return JsonConverter.jsonOfObject(results);
+            String result = JsonConverter.jsonOfObject(results);
+            return result;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
