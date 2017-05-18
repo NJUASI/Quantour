@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../css/bootstrap-select.css">
     <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
     <link href="../css/startLoader.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
     <style type="text/css" rel="stylesheet">
         footer {
             width: 100%;
