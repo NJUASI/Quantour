@@ -35,12 +35,8 @@ function traceback() {
 
 
         success: function (result) {
-            alert(result);
-            alert(JSON.stringify(jsonData));
-
             var array = result.split(";");
             if (array[0] == "1") {
-                alert("666");
 
                 // 处理网页上要显示的信息
                 var numberValues = eval("(" + array[1] + ")")               // List<String>
@@ -164,7 +160,6 @@ function traceback() {
             }
         },
         error: function (result) {
-            alert(JSON.stringify(jsonData));
             alert("错误" + result);
         }
     });

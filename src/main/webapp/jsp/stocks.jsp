@@ -242,7 +242,7 @@
                     url: "/stocks/search?key=" + key,
 
                     success: function (result) {
-                        alert(result);
+//                        alert(result);
                         var obj = eval("("+result+")");
                         var len = obj.length;
                         $("#search-body").empty();
@@ -297,11 +297,10 @@
             },
 
             success: function (result) {
-                alert(result);
+//                alert(result);
                 var array = result.split(";");
 
                 if (array[0] == "1") {
-                    alert("666");
                     window.location.href = "/stocks";
                 } else if (array[0] == "-1") {
                     // 提示错误信息
@@ -311,7 +310,7 @@
                 }
             },
             error: function (result) {
-                alert(JSON.stringify(result));
+//                alert(JSON.stringify(result));
                 alert("错误" + result);
             }
         });

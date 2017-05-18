@@ -52,7 +52,6 @@ function compare() {
 
         },
         error: function (result) {
-            alert(JSON.stringify(jsonData));
             alert("错误" + result);
         }
 

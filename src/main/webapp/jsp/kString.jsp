@@ -187,13 +187,12 @@
     );
 
     function addPrivateStock () {
-        alert("添加方法执行了");
+//        alert("添加方法执行了");
         $.ajax({
             type: "get",
             async: true,
             url: "/user/addPrivate/" + $("#stockCode").text(),
             success: function (result) {
-                alert(result);
                 if (result == "1") {
                     alert("添加成功");
                     $("#addBtn button").html("取消收藏");
@@ -211,13 +210,12 @@
     };
 
     function deletePrivateStock () {
-        alert("删除方法执行了");
+//        alert("删除方法执行了");
         $.ajax({
             type: "get",
             async: true,
             url: "/user/deletePrivate/" + $("#stockCode").text(),
             success: function (result) {
-                alert(result);
                 if (result == "1") {
                     alert("删除成功");
                     $("#addBtn button").html("加入收藏");
@@ -268,12 +266,12 @@
 
     function getSingleStockDetail() {
         var wantedStockCode = $("#stockCode").text();
-        alert("查看股票：" + wantedStockCode);
+//        alert("查看股票：" + wantedStockCode);
 
         var start = $("#datetimeStart > input").val();
         var end = $("#datetimeEnd > input").val();
 
-        alert(start);
+//        alert(start);
 
         $.ajax({
             type: "post",
@@ -285,11 +283,9 @@
             },
 
             success: function (result) {
-                alert(result);
                 var array = result.split(";");
 
                 if (array[0] == "1") {
-                    alert("666");
                     window.location.href = "/stocks/" + wantedStockCode;
                 } else if (array[0] == "-1") {
                     // 提示错误信息
@@ -299,7 +295,6 @@
                 }
             },
             error: function (result) {
-                alert(JSON.stringify(result));
                 alert("错误" + result);
             }
         });

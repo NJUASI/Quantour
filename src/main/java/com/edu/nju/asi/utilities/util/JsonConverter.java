@@ -71,7 +71,7 @@ public class JsonConverter {
         for (Stock stock : stocks) {
             List<String> temp = new ArrayList<>();
             temp.add(stock.getStockID().getDate().toString());
-            temp.add(String.valueOf(Long.parseLong(stock.getVolume()) / 10000));
+            temp.add(String.valueOf(Long.parseLong(stock.getVolume()) / 10000)+"万");
             result.add(temp);
         }
         return JsonConverter.jsonOfObject(result);
