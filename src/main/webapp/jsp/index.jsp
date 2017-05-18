@@ -139,7 +139,7 @@
                     <p class="col-md-offset-3" id="errorMessageField"></p>
                     <div class="checkbox text-right">
                         <label id="rem-password">
-                            <input type="checkbox">记住密码
+                            <input type="checkbox" checked>记住密码
                         </label>
                     </div>
                 </form>

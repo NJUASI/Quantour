@@ -1,4 +1,4 @@
-/**
+ /**
  * Created by cuihua on 2017/5/14.
  */
 function traceback() {
@@ -86,7 +86,7 @@ function traceback() {
 
 
                 // 持有周期详情
-                $("#holdingDetailPanel").toggle("slow");
+
                 $("#tb_detail").empty();
                 for(var i = 0; i < holdingDetails.length; i++) {
                     $("#tb_detail").append("<tr>");
@@ -104,7 +104,6 @@ function traceback() {
 
 
                 // 固定形成期的赢率分析
-                $("#certainFormatePanel").toggle("slow");
                 $("#tb_certain_formate").empty();
                 for(var i = 0; i < certainFormates.length; i++) {
                     $("#tb_certain_formate").append("<tr>");
@@ -117,7 +116,6 @@ function traceback() {
 
 
                 // 固定持有期的赢率分析
-                $("#certainHoldingPanel").toggle("slow");
                 $("#tb_certain_holding").empty();
                 for(var i = 0; i < certainHoldings.length; i++) {
                     $("#tb_certain_holding").append("<tr>");
