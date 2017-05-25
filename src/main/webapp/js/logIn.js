@@ -36,7 +36,7 @@ function login() {
             var array = result.split(";");
 
             if (array[0] == "1") {
-                window.location.href = "/" ;
+                window.location.reload();
             } else if (array[0] == "-1") {
                 $("#errorMessageField").html(array[1]);
             } else {
@@ -68,7 +68,7 @@ function register() {
             var array = result.split(";");
 
             if (array[0] == "1") {
-                window.location.href = "/welcome_user?id=" + userName;
+                window.location.reload();
             } else if (array[0] == "-1") {
                 // 提示错误信息
                 alert(array[1]);

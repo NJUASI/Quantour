@@ -39,7 +39,7 @@ function compare() {
             createLineChart("closesChart", closesData, '收盘价', comparisionName);
             createLineChart("logarithmicYieldChart", logarithmicYield, "对数收益率方差", comparisionName);
 
-            $("#analysePanel").toggle("slow");
+            $("#analysePanel").fadeIn("slow");
 
             $("#compareChart").empty();
             for(var i=0;i<2;i++){

@@ -330,7 +330,7 @@
             </table>
         </div>
         <div class="row">
-            <div id="trace_back_chart" style="width:100%;height:600px"></div>
+            <div id="trace_back_chart" style="width:1100px;height:500px"></div>
         </div>
     </div>
     <div class="tab-pane" id="cyclePanel">
@@ -464,6 +464,84 @@
 <%--</c:otherwise>--%>
 <%--</c:choose>--%>
 
+<!-- 登录模态框（Modal） -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="loginLabel">登录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="login_username">用户名：</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="login_username" placeholder="请输入用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="login_password">密码：</label>
+                        <div class="col-md-7">
+                            <input type="password" class="form-control" id="login_password" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <p class="col-md-offset-3" id="errorMessageField"></p>
+                    <div class="checkbox text-right">
+                        <label id="rem-password">
+                            <input type="checkbox" checked>记住密码
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="login-btn-group">
+                    <button type="button" class="btn btn-primary" onclick="login()">登录</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="registerLabel">注册</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="reg_username">用户名：</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="reg_username" placeholder="请输入用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="reg_password">密码：</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="reg_password" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="reg_password2" style="padding-left: 0">确认密码：</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="reg_password2" placeholder="请再次输入密码">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="login-btn-group">
+                    <button type="button" class="btn btn-primary" onclick="register()">注册</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <div id="loader-wrapper">
     <div id="loader"></div>
     <div class="loader-section section-left"></div>
@@ -481,6 +559,7 @@
 <script src="../js/echarts.min.js"></script>
 <script src="../js/chart.js"></script>
 <script src="../js/startLoaded.js"></script>
+<script src="../js/logIn.js"></script>
 
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
