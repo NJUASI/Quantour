@@ -27,6 +27,10 @@ public class StockSearch implements Serializable {
     @Column(length = 100)
     private String firstLetters;
 
+    @Basic
+    @Column(columnDefinition = "int default 0")
+    private int clickAmount;
+
     public StockSearch() {
         //TODO gcm
     }
@@ -54,5 +58,13 @@ public class StockSearch implements Serializable {
 
     public void setFirstLetters(String firstLetters) {
         this.firstLetters = firstLetters;
+    }
+
+    public int getClickAmount() {
+        return clickAmount;
+    }
+
+    public void setClickAmount(int clickAmount) {
+        this.clickAmount = clickAmount;
     }
 }

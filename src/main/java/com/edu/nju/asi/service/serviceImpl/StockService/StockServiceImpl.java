@@ -129,4 +129,37 @@ public class StockServiceImpl implements StockService {
         return stockPoolCodes;
 
     }
+
+    /**
+     * 增加指定股票的点击量（+1）
+     *
+     * @param searchID
+     * @return boolean
+     */
+    @Override
+    public boolean addClickAmount(SearchID searchID) {
+        return stockDao.addClickAmount(searchID);
+    }
+
+    /**
+     * 获取指定股票的点击率
+     *
+     * @param searchID
+     * @return double
+     */
+    @Override
+    public double getClickAmount(SearchID searchID) {
+        return stockDao.getClickAmount(searchID);
+    }
+
+    /**
+     * 获取股票排名前N（number）
+     *
+     * @param number
+     * @return List<StockSearch>
+     */
+    @Override
+    public List<StockSearch> getRankingList(int number) {
+        return stockDao.getRankingList(number);
+    }
 }

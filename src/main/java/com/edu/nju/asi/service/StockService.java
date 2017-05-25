@@ -1,6 +1,7 @@
 package com.edu.nju.asi.service;
 
 import com.edu.nju.asi.model.BaseStock;
+import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.exceptions.*;
@@ -56,4 +57,25 @@ public interface StockService{
      * @return List<String> 符合标准的股票池中所有股票的股票代码
      */
     List<String> getStockPool(StockPoolCriteria stockPoolVO) throws IOException, UnhandleBlockTypeException;
+
+    /**
+     * 增加指定股票的点击量（+1）
+     * @param  searchID
+     * @return boolean
+     */
+    boolean addClickAmount(SearchID searchID);
+
+    /**
+     * 获取指定股票的点击率
+     * @param  searchID
+     * @return double
+     */
+    double getClickAmount(SearchID searchID);
+
+    /**
+     * 获取股票排名前N（number）
+     * @param number
+     * @return List<StockSearch>
+     */
+    List<StockSearch> getRankingList(int number);
 }

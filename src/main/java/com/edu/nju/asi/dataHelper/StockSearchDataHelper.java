@@ -1,5 +1,6 @@
 package com.edu.nju.asi.dataHelper;
 
+import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.StockSearch;
 import java.util.List;
 import java.util.Map;
@@ -33,4 +34,19 @@ public interface StockSearchDataHelper {
      * 添加StockSearch列表
      */
     List<StockSearch> search(String info);
+
+    /**
+     * 增加指定股票的点击量（+1）
+     */
+    boolean addClickAmount(SearchID searchID);
+
+    /**
+     * 获取指定股票的点击率
+     */
+    double getClickAmount(SearchID searchID);
+
+    /**
+     * 获取股票排名前N（number）
+     */
+    List<StockSearch> getRankingList(int number);
 }
