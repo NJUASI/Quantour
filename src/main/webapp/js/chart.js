@@ -615,3 +615,46 @@ function createHistogramChart(id, data, title) {
     histogramChart.hideLoading();
     return histogramChart;
 }
+
+function createClickChart(id,data,strData){
+
+    var clickChart = echarts.init(document.getElementById(id));
+
+    var option = {
+        series: [{
+            animation: true,
+            waveAnimation: true,
+            type: 'liquidFill',
+            data: data,
+            color: [ 'rgb(20,142,222)'],
+            center: ['75%', '50%'],
+            radius: '70%',
+            amplitude: 8,
+            label: {
+                normal: {
+                    formatter: function() {
+                        return '热搜率'+strData;
+                    },
+                    textStyle: {
+                        fontSize: 22
+                    },
+                    position: ['50%', '30%']
+                }
+            },
+            outline: {
+                itemStyle: {
+                    borderWidth: 5,
+                    borderColor: [ 'rgb(20,142,222)']
+                },
+                borderDistance: 0
+            },
+            itemStyle: {
+                normal: {
+                    backgroundColor: '#fff'
+                }
+            }
+        }]
+    };
+    clickChart.setOption(option);
+    return clickChart;
+}
