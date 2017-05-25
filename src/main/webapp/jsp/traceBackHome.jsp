@@ -402,59 +402,8 @@
     </div>
 
 
-    <div class="tab-pane" id="certainFormatePanel">
 
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1 table-responsive">
-                <table class="table table-hover table-condensed">
-                    <caption class="text-center"><h3>固定形成期的赢率分析</h3></caption>
-                    <thead>
-                    <tr>
-                        <th>周期</th>
-                        <th>超额收益</th>
-                        <th>1年内胜率</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tb_certain_formate">
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6 col-md-offset-1">
-                <div class="row">
-                    <div id="formates_excess_chart" style="width:500px;height:400px"></div>
-                    <div id="formates_win_chart" style="width:500px;height:400px"></div>
 
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="tab-pane" id="certainHoldingPanel">
-
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1 table-responsive">
-                <table class="table table-hover table-condensed">
-                    <caption class="text-center"><h3>固定持有期的赢率分析</h3></caption>
-                    <thead>
-                    <tr>
-                        <th>周期</th>
-                        <th>超额收益</th>
-                        <th>1年内胜率</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tb_certain_holding">
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6 col-md-offset-1">
-                <div class="row">
-                    <div id="holdings_excess_chart" style=" width:500px;height:400px"></div>
-                    <div id="holdings_win_chart" style=" width:500px;height:400px"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 
 
 </div>
