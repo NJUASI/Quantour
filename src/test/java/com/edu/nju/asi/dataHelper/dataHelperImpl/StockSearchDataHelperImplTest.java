@@ -105,4 +105,20 @@ public class StockSearchDataHelperImplTest {
         stockSearchDataHelper.addStockSearchAll(stockSearches);
     }
 
+    @Test
+    public void addClickAmount() throws Exception {
+        stockSearchDataHelper.addClickAmount(new SearchID("000001","平安银行",Market.SZ));
+    }
+
+    @Test
+    public void getRankingList() throws Exception {
+        List<StockSearch> list = stockSearchDataHelper.getRankingList(2);
+        assertEquals(2,list.get(0).getClickAmount());
+    }
+
+    @Test
+    public void getClickAmount() throws Exception {
+        assertEquals(1.0,stockSearchDataHelper.getClickAmount(new SearchID("000001","平安银行",Market.SZ)),0);
+    }
+
 }

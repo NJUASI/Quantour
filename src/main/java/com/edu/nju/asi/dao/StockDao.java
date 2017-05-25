@@ -1,5 +1,6 @@
 package com.edu.nju.asi.dao;
 
+import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.model.PrivateStock;
@@ -110,6 +111,21 @@ public interface StockDao {
      * @return 所有的交易日期
      */
     List<LocalDate> getDateWithData() throws IOException;
+
+    /**
+     * 增加指定股票的点击量（+1）
+     */
+    boolean addClickAmount(SearchID searchID);
+
+    /**
+     * 获取指定股票的点击率
+     */
+    double getClickAmount(SearchID searchID);
+
+    /**
+     * 获取股票排名前N（number）
+     */
+    List<StockSearch> getRankingList(int number);
 
     /*
     暂定

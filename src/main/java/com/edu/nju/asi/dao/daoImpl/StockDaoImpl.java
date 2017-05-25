@@ -5,6 +5,7 @@ import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.dataHelper.UserDataHelper;
+import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.StockCodeHelper;
@@ -208,6 +209,36 @@ public class StockDaoImpl implements StockDao {
     @Override
     public List<LocalDate> getDateWithData() throws IOException {
         return stockDataHelper.getDateWithData();
+    }
+
+    /**
+     * 增加指定股票的点击量（+1）
+     *
+     * @param searchID
+     */
+    @Override
+    public boolean addClickAmount(SearchID searchID) {
+        return stockSearchDataHelper.addClickAmount(searchID);
+    }
+
+    /**
+     * 获取指定股票的点击率
+     *
+     * @param searchID
+     */
+    @Override
+    public double getClickAmount(SearchID searchID) {
+        return stockSearchDataHelper.getClickAmount(searchID);
+    }
+
+    /**
+     * 获取股票排名前N（number）
+     *
+     * @param number
+     */
+    @Override
+    public List<StockSearch> getRankingList(int number) {
+        return stockSearchDataHelper.getRankingList(number);
     }
 
 
