@@ -51,6 +51,8 @@
             <set>
                 <bean class="com.edu.nju.asi.utilities.spring.LocalDateFormatter">
                 </bean>
+                <bean class="com.edu.nju.asi.utilities.spring.TraceBackCriteriaFormatter">
+                </bean>
             </set>
         </property>
     </bean>

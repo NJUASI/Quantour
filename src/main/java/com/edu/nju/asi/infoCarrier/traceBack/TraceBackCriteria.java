@@ -2,6 +2,7 @@ package com.edu.nju.asi.infoCarrier.traceBack;
 
 import com.edu.nju.asi.utilities.LocalDateHelper;
 import com.edu.nju.asi.utilities.tempHolder.TraceBackCriteriaTempHolder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -15,11 +16,13 @@ public class TraceBackCriteria {
     /**
      * 回测区间的起始时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate startDate;
 
     /**
      * 回测区间的结束时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate endDate;
 
     /**

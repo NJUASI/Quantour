@@ -34,8 +34,10 @@ function traceback() {
         type: "post",
         async: true,
         url: "/req_trace_back",
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(jsonData),
+        // contentType: 'charset=UTF-8',
+        data: {
+            criteriaData: JSON.stringify(jsonData)
+        },
 
 
         success: function (result) {

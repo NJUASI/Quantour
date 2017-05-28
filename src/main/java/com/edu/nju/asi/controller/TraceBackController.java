@@ -13,10 +13,7 @@ import com.edu.nju.asi.utilities.tempHolder.TraceBackCriteriaTempHolder;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,9 +63,9 @@ public class TraceBackController {
     /**
      * 通过选择的条件，请求进行股票回测
      */
-    @PostMapping(value = "/req_trace_back", produces = "text/html;charset=UTF-8;application/json")
+    @PostMapping(value = "/req_trace_back", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
-    String reqTraceBack(@RequestBody TraceBackCriteria criteria, HttpServletRequest request, HttpServletResponse response) {
+    String reqTraceBack(@RequestParam("criteriaData") TraceBackCriteria criteria, HttpServletRequest request, HttpServletResponse response) {
         // 限制进入
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -85,14 +82,9 @@ public class TraceBackController {
 
         User thisUser = (User) request.getSession().getAttribute("user");
         System.out.println("已登录：" + thisUser.getUserName());
-
-        System.out.println(criteria.startDate + "\n" + criteria.endDate);
-//        TraceBackCriteria criteria = new TraceBackCriteria(criteriaTempHolder);
-        List<String> stockPool = stockPoolService.getTraceBackStockPoolCodes(thisUser.getUserName());
-
         System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.formateAndPickCriteria.rank + "  " + criteria.holdingPeriod);
 
-
+        List<String> stockPool = stockPoolService.getTraceBackStockPoolCodes(thisUser.getUserName());
         TraceBackInfo traceBackInfo = null;
         try {
             traceBackInfo = traceBackService.traceBack(criteria, stockPool);
