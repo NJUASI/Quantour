@@ -40,7 +40,6 @@ function traceback() {
 
 
         success: function (result) {
-            alert(result);
             $("body").addClass("loaded");
             var array = result.split(";");
             if (array[0] == "1") {
@@ -103,22 +102,22 @@ function traceback() {
                     $("#tb_detail").append("<td>" + holdingDetails[i]["startDate"] + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails[i]["endDate"] + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails[i]["holdingNum"] + "</td>");
-                    $("#tb_detail").append("<td>" + holdingDetails[i]["strategyReturn"] + "</td>");
-                    $("#tb_detail").append("<td>" + holdingDetails[i]["baseReturn"] + "</td>");
-                    $("#tb_detail").append("<td>" + holdingDetails[i]["excessReturn"] + "</td>");
-                    $("#tb_detail").append("<td>" + holdingDetails[i]["remainInvestment"] + "</td>");
+                    $("#tb_detail").append("<td>" + (holdingDetails[i]["strategyReturn"]*100).toFixed(2) + "%" + "</td>");
+                    $("#tb_detail").append("<td>" + (holdingDetails[i]["baseReturn"]*100).toFixed(2) + "%" + "</td>");
+                    $("#tb_detail").append("<td>" + (holdingDetails[i]["excessReturn"]*100).toFixed(2) + "%" + "</td>");
+                    $("#tb_detail").append("<td>" + holdingDetails[i]["remainInvestment"].toFixed(2) + "</td>");
                     $("#tb_detail").append("</tr>");
                 }
                 // alert("--------------------3----------------");
 
 
-                // 固定形成期的赢率分析
+                // // 固定形成期的赢率分析
                 // $("#tb_certain_formate").empty();
                 // for(var i = 0; i < certainFormates.length; i++) {
                 //     $("#tb_certain_formate").append("<tr>");
                 //     $("#tb_certain_formate").append("<td>" + certainFormates[i]["relativeCycle"] + "</td>");
-                //     $("#tb_certain_formate").append("<td>" + (certainFormates[i]["excessRate"]*100) + "%" + "</td>");
-                //     $("#tb_certain_formate").append("<td>" + (certainFormates[i]["winRate"]*100) + "%" + "</td>");
+                //     $("#tb_certain_formate").append("<td>" + (certainFormates[i]["excessRate"]*100).toFixed(2) + "%" + "</td>");
+                //     $("#tb_certain_formate").append("<td>" + (certainFormates[i]["winRate"]*100).toFixed(2) + "%" + "</td>");
                 //     $("#tb_certain_formate").append("</tr>");
                 // }
                 // // alert("--------------------4----------------");
@@ -129,8 +128,8 @@ function traceback() {
                 // for(var i = 0; i < certainHoldings.length; i++) {
                 //     $("#tb_certain_holding").append("<tr>");
                 //     $("#tb_certain_holding").append("<td>" + certainHoldings[i]["relativeCycle"] + "</td>");
-                //     $("#tb_certain_holding").append("<td>" + (certainHoldings[i]["excessRate"]*100) + "%" + "</td>");
-                //     $("#tb_certain_holding").append("<td>" + (certainHoldings[i]["winRate"]*100) + "%" + "</td>");
+                //     $("#tb_certain_holding").append("<td>" + (certainHoldings[i]["excessRate"]*100).toFixed(2) + "%" + "</td>");
+                //     $("#tb_certain_holding").append("<td>" + (certainHoldings[i]["winRate"]*100).toFixed(2) + "%" + "</td>");
                 //     $("#tb_certain_holding").append("</tr>");
                 // }
                 // // alert("--------------------5----------------");

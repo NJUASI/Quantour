@@ -3,7 +3,6 @@ package com.edu.nju.asi.utilities.util;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.NumberFormat;
-import com.edu.nju.asi.utilities.tempHolder.HoldingDeatilTempHolder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -90,7 +89,7 @@ public class JsonConverter {
             holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
             System.out.println("numbers2 over");
 
-            holder.append(jsonOfObject(convertHoldingDeatilToTempHolder(traceBackInfo.holdingDetails))).append(";");
+            holder.append(jsonOfObject(traceBackInfo.holdingDetails)).append(";");
             System.out.println("numbers3 over");
 
             // certainFormates, certainHoldings
@@ -181,15 +180,6 @@ public class JsonConverter {
         return returnPeriod;
     }
 
-    private static List<HoldingDeatilTempHolder> convertHoldingDeatilToTempHolder(List<HoldingDetail> holdingDetails) {
-        List<HoldingDeatilTempHolder> result = new LinkedList<>();
-        for (HoldingDetail hd : holdingDetails) {
-            result.add(new HoldingDeatilTempHolder(hd));
-        }
-        return result;
-    }
-
-
     private static List<String> convertTraceBackNumVal(TraceBackInfo info) {
         TraceBackNumVal val = info.traceBackNumVal;
         MaxTraceBack maxTraceBack = info.maxTraceBack;
@@ -249,7 +239,6 @@ public class JsonConverter {
             temp.add(String.valueOf(cumulativeReturn.cumulativeReturn * 100));
             result.add(temp);
         }
-
         return JsonConverter.jsonOfObject(result);
     }
 

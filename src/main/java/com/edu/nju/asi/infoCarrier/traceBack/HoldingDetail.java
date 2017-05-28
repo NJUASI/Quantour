@@ -19,12 +19,12 @@ public class HoldingDetail {
     /**
      * 开始日期
      */
-    public LocalDate startDate;
+    public String startDate;
 
     /**
      * 结束日期
      */
-    public LocalDate endDate;
+    public String endDate;
 
     /**
      * 股票持有只数
@@ -63,8 +63,8 @@ public class HoldingDetail {
 
     public HoldingDetail(int periodSerial, LocalDate startDate, LocalDate endDate, double strategyReturn, double baseReturn, double excessReturn, double remainInvestment) {
         this.periodSerial = periodSerial;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = startDate.toString();
+        this.endDate = endDate.toString();
         this.strategyReturn = Double.parseDouble(NumberFormat.decimaFormat(strategyReturn, 4));
         this.baseReturn = Double.parseDouble(NumberFormat.decimaFormat(baseReturn, 4));
         this.excessReturn = Double.parseDouble(NumberFormat.decimaFormat(excessReturn, 4));
