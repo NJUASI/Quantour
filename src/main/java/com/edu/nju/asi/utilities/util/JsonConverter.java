@@ -1,5 +1,6 @@
 package com.edu.nju.asi.utilities.util;
 
+import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.NumberFormat;
@@ -76,59 +77,64 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
-    public static String convertTraceBackInfo(TraceBackInfo traceBackInfo) {
+    /**
+     * 将回测结果变为可读取的表格和图表集合String
+     *
+     * @param traceBackInfo 回测结果
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/5/18
+     */
+    public static String convertTraceBackInfo(TraceBackInfo traceBackInfo) throws JsonProcessingException {
         StringBuffer holder = new StringBuffer();
 
-        try {
-            // traceBackNums
-            holder.append(jsonOfObject(convertTraceBackNumVal(traceBackInfo))).append(";");
-            System.out.println("numbers1 over");
+        // traceBackNums
+        holder.append(jsonOfObject(convertTraceBackNumVal(traceBackInfo))).append(";");
+        System.out.println("numbers1 over");
 
-            // abReturnPeriod, reReturnPeriod, holdingDetails
-            holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.absoluteReturnPeriod))).append(";");
-            holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
-            System.out.println("numbers2 over");
+        // abReturnPeriod, reReturnPeriod, holdingDetails
+        holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.absoluteReturnPeriod))).append(";");
+        holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
+        System.out.println("numbers2 over");
 
-            holder.append(jsonOfObject(traceBackInfo.holdingDetails)).append(";");
-            System.out.println("numbers3 over");
+        holder.append(jsonOfObject(traceBackInfo.holdingDetails)).append(";");
+        System.out.println("numbers3 over");
 
-            // certainFormates, certainHoldings
-//            holder.append(jsonOfObject(traceBackInfo.certainFormates)).append(";");
-//            holder.append(jsonOfObject(traceBackInfo.certainHoldings)).append(";");
-            System.out.println("numbers4 over");
+        // certainFormates, certainHoldings
+//        holder.append(jsonOfObject(traceBackInfo.certainFormates)).append(";");
+//        holder.append(jsonOfObject(traceBackInfo.certainHoldings)).append(";");
+        System.out.println("numbers4 over");
 
-            System.out.println("numbers all over");
+        System.out.println("numbers all over");
 
-            /*
-             加入画图所需的信息
-              */
-            // json_strategyData, json_baseData
-            holder.append(convertTraceBack(traceBackInfo.strategyCumulativeReturn)).append(";");
-            holder.append(convertTraceBack(traceBackInfo.baseCumulativeReturn)).append(";");
-            System.out.println("charts1 over");
+        /*
+        加入画图所需的信息
+        */
+        // json_strategyData, json_baseData
+        holder.append(convertTraceBack(traceBackInfo.strategyCumulativeReturn)).append(";");
+        holder.append(convertTraceBack(traceBackInfo.baseCumulativeReturn)).append(";");
+        System.out.println("charts1 over");
 
-            // json_absoluteHistogramData, json_relativeHistogramData
-            holder.append(convertHistogram(traceBackInfo.absoluteReturnPeriod)).append(";");
-            holder.append(convertHistogram(traceBackInfo.relativeReturnPeriod)).append(";");
-            System.out.println("charts2 over");
+        // json_absoluteHistogramData, json_relativeHistogramData
+        holder.append(convertHistogram(traceBackInfo.absoluteReturnPeriod)).append(";");
+        holder.append(convertHistogram(traceBackInfo.relativeReturnPeriod)).append(";");
+        System.out.println("charts2 over");
 
-//            List<String> formate = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainFormates);
-//            List<String> holdings = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainHoldings);
-//            // json_certainFormatesExcessData, json_certainFormatesWinData
-//            holder.append(formate.get(0)).append(";");
-//            holder.append(formate.get(1)).append(";");
-//            System.out.println("charts3 over");
+//        List<String> formate = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainFormates);
+//        List<String> holdings = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainHoldings);
+//        // json_certainFormatesExcessData, json_certainFormatesWinData
+//        holder.append(formate.get(0)).append(";");
+//        holder.append(formate.get(1)).append(";");
+//        System.out.println("charts3 over");
 //
-//            // json_certainHoldingsExcessData, json_certainHoldingsWinData
-//            holder.append(holdings.get(0)).append(";");
-//            holder.append(holdings.get(1)).append(";");
-//            System.out.println("charts4 over");
+//        // json_certainHoldingsExcessData, json_certainHoldingsWinData
+//        holder.append(holdings.get(0)).append(";");
+//        holder.append(holdings.get(1)).append(";");
+//        System.out.println("charts4 over");
 
-            System.out.println("charts all over");
+        System.out.println("charts all over");
 
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+
         return holder.toString();
     }
 
@@ -154,6 +160,22 @@ public class JsonConverter {
     }
 
     /**
+     * 将股票市场变为JSON字符串传输
+     *
+     * @param stocks 股票市场
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/5/18
+     */
+    public static String convertStockMarket(List<Stock> stocks, LocalDate date) throws JsonProcessingException {
+        StringBuffer holder = new StringBuffer();
+        holder.append(JSON.toJSONString(stocks)).append(";");
+        holder.append(JSON.toJSONString(date));
+        return holder.toString();
+    }
+
+
+    /**
      * 数据填充
      *
      * @return String 转换后的json
@@ -176,7 +198,7 @@ public class JsonConverter {
     }
 
     private static ReturnPeriod convertReturnPeriod(ReturnPeriod returnPeriod) {
-        returnPeriod.winRate = Double.parseDouble(NumberFormat.decimaFormat(returnPeriod.winRate,4));
+        returnPeriod.winRate = Double.parseDouble(NumberFormat.decimaFormat(returnPeriod.winRate, 4));
         return returnPeriod;
     }
 

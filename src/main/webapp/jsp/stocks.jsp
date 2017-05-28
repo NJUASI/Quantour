@@ -34,7 +34,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
                 <li><a href="/stocks">大盘详情</a></li>
-                <li><a href="/trace_back_home">量化社区</a></li>
+                <li><a href="/trace_back">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">
@@ -49,7 +49,7 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<body  class="loaded"   style="margin-top: 60px;">
+<body class="loaded" style="margin-top: 60px;">
 <div class="content">
     <div class="container">
         <div class="row panel_title_wrapper" style="z-index: 5;">
@@ -83,7 +83,8 @@
 
 
                                 </div>
-                                <div class="searchResults  pre-scrollable" style="position: absolute;display: none;max-height: 200px; background-color: whitesmoke;z-index: 20">
+                                <div class="searchResults  pre-scrollable"
+                                     style="position: absolute;display: none;max-height: 200px; background-color: whitesmoke;z-index: 20">
                                     <table class="table table-condensed table-bordered">
                                         <div class="search-table">
                                             <thead class="search-table-head">
@@ -110,7 +111,7 @@
                 </div>
             </div>
         </div>
-        <div class="row markets_wrapper "  style="z-index:3">
+        <div class="row markets_wrapper " style="z-index:3">
             <div class="col-md-offset-1 col-md-10">
                 <ul class="market">
                     <li class="each_market" id="stocks_shangzheng">
@@ -176,9 +177,9 @@
                             <th>交易额</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="stocks_all">
 
-                        <c:forEach items="${stockList}" var="stock" varStatus="vs">
+                        <c:forEach items="${stock_list}" var="stock" varStatus="vs">
                             <tr>
                                 <td>${stock.stockID.code}</td>
                                 <td>${stock.name}</td>
@@ -329,18 +330,18 @@
 
                         }
 
-                        var obj = eval("("+result+")");
+                        var obj = eval("(" + result + ")");
                         var len = obj.length;
                         $("#search-body").empty();
-                        for(var i = 0; i < 10; i++){
+                        for (var i = 0; i < 10; i++) {
                             $("#search-body").append("<tr>");
-                            $("#search-body").append("<td>"+obj[i]["searchID"]["code"]+"</td>");
-                            $("#search-body").append("<td>"+obj[i]["searchID"]["name"]+"</td>");
-                            $("#search-body").append("<td>"+obj[i]["firstLetters"]+"</td>");
-                            $("#search-body").append("<td>"+obj[i]["searchID"]["market"]+"</td>");
+                            $("#search-body").append("<td>" + obj[i]["searchID"]["code"] + "</td>");
+                            $("#search-body").append("<td>" + obj[i]["searchID"]["name"] + "</td>");
+                            $("#search-body").append("<td>" + obj[i]["firstLetters"] + "</td>");
+                            $("#search-body").append("<td>" + obj[i]["searchID"]["market"] + "</td>");
                             $("#search-body").append("</tr>");
                         }
-                        $("#search-body tr").on("click",function () {
+                        $("#search-body tr").on("click", function () {
                             var code = $(this).find("td:first").text();
                             $("#search-input").html(code);
                         });
@@ -350,11 +351,10 @@
             });
 
 
-
-            $(".searchResults").click(function(e) {
+            $(".searchResults").click(function (e) {
                 e.stopPropagation();
             });
-            $(document).click(function() {
+            $(document).click(function () {
                 $(".searchResults").hide();
             });
 
@@ -396,7 +396,26 @@
 
                 if (array[0] == "1") {
                     // js修改jsp中数据
+                    // TODO 高源 这里有个bug 就是我点了日期，修改页面之后，他自己又跳回原来的默认日期去了
 
+                    var stock_list = eval("(" + array[1] + ")");
+                    var nowDate = eval("(" + array[2] + ")");
+
+
+                    $("#stocks_all").empty();
+                    for (var i = 0; i < stock_list.length; i++) {
+                        $("#stocks_all").append("<tr>");
+                        $("#stocks_all").append("<td>" + stock_list[i]["stockID"]["code"] + "</td>");
+                        $("#stocks_all").append("<td>" + stock_list[i]["name"] + "</td>");
+                        $("#stocks_all").append("<td>" + stock_list[i]["open"] + "</td>");
+                        $("#stocks_all").append("<td>" + stock_list[i]["close"] + "</td>");
+                        $("#stocks_all").append("<td class=\"stock_high\">" + stock_list[i]["high"] + "</td>");
+                        $("#stocks_all").append("<td class=\"stock_low\">" + stock_list[i]["low"] + "</td>");
+                        $("#stocks_all").append("<td>" + stock_list[i]["preClose"] + "</td>");
+                        $("#stocks_all").append("<td>" + stock_list[i]["volume"] + "</td>");
+                        $("#stocks_all").append("<td>" + stock_list[i]["transactionAmount"] + "</td>");
+                        $("#stocks_all").append("</tr>");
+                    }
 
 
                     window.location.href = "/stocks";

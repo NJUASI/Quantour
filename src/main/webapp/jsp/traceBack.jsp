@@ -72,7 +72,7 @@
                 <li><a href="/">首页</a></li>
                 <li><a id="stocks" style="cursor:
                  pointer">大盘详情</a></li>
-                <li><a href="/trace_back_home">量化社区</a></li>
+                <li><a href="/trace_back">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">

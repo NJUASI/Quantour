@@ -31,9 +31,8 @@ public class UserController {
     PrivateStockService privateStockService;
 
 
-    // 因为可能数据库中没有今天的数据，所以默认显示昨日 TODO 实际应用时改回去
+    // 因为可能数据库中没有今天的数据，所以默认显示昨日
     private final static LocalDate defaultDate = LocalDate.now().minusDays(1);
-//    private final static LocalDate defaultDate = LocalDate.of(2017,2,3);
 
     /**
      * 普通用户登录初始界面，需展示用户基本信息和用户自选股列表

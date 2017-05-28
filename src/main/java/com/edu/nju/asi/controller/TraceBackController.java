@@ -10,9 +10,13 @@ import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import com.edu.nju.asi.utilities.util.JsonConverter;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,32 +38,14 @@ public class TraceBackController {
     /**
      * 通过选择的条件进行股票回测
      */
-    @GetMapping("/trace_back_home")
-    public String traceBackHome() {
-        return "traceBackHome";
-    }
-
-
-    /**
-     * 查看回测结果
-     */
     @GetMapping("/trace_back")
-    public String traceBack(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "index";
-        }
-
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            return "traceBackHome";
-        }
-        return "index";
+    public String traceBackHome() {
+        return "traceBack";
     }
 
 
     /**
-     * 通过选择的条件，请求进行股票回测
+     * 【请求】通过选择的条件，进行股票回测，返回后JS修改页面的数据
      */
     @PostMapping(value = "/req_trace_back", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
@@ -94,10 +80,17 @@ public class TraceBackController {
             return "-1;" + e.getMessage();
         }
 
+
         if (traceBackInfo != null) {
-            System.out.println("Success");
-            return "1;" + JsonConverter.convertTraceBackInfo(traceBackInfo);
+            try {
+                System.out.println("Success");
+                return "1;" + JsonConverter.convertTraceBackInfo(traceBackInfo);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                return "-1;JSON转换失败";
+            }
         } else return "-1;服务器开了一个小差。。请稍后重试";
+
     }
 
 
