@@ -1,7 +1,5 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
-import com.edu.nju.asi.utilities.LocalDateHelper;
-import com.edu.nju.asi.utilities.tempHolder.TraceBackCriteriaTempHolder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -86,16 +84,5 @@ public class TraceBackCriteria {
         this.baseStockName = criteria.baseStockName;
         this.isCustomized = criteria.isCustomized;
         this.formateAndPickCriteria = criteria.formateAndPickCriteria;
-    }
-
-    public TraceBackCriteria(TraceBackCriteriaTempHolder tempHolder) {
-        this.startDate = LocalDateHelper.convertString(tempHolder.startDate);
-        this.endDate = LocalDateHelper.convertString(tempHolder.endDate);
-        this.formativePeriod = tempHolder.formativePeriod;
-        this.holdingPeriod = tempHolder.holdingPeriod;
-        this.stockPoolCriteria = tempHolder.stockPoolCriteria;
-        this.baseStockName = tempHolder.baseStockName;
-        this.isCustomized = tempHolder.isCustomized;
-        this.formateAndPickCriteria = tempHolder.formateAndPickCriteria;
     }
 }

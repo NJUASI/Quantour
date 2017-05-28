@@ -53,6 +53,8 @@
                 </bean>
                 <bean class="com.edu.nju.asi.utilities.spring.TraceBackCriteriaFormatter">
                 </bean>
+                <bean class="com.edu.nju.asi.utilities.spring.StockComparisionCriteriaFormatter">
+                </bean>
             </set>
         </property>
     </bean>

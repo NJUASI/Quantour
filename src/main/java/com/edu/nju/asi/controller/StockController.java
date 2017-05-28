@@ -12,7 +12,6 @@ import com.edu.nju.asi.utilities.LocalDateHelper;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.utilities.tempHolder.StockComparisionCriteriaTempHolder;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -287,9 +286,9 @@ public class StockController {
     /**
      * 【请求】比较两只股票
      */
-    @PostMapping(value = "/req_compare", produces = "text/html;charset=UTF-8;application/json")
+    @PostMapping(value = "/req_compare", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
-    String reqCompare(@RequestBody StockComparisionCriteriaTempHolder holder, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+    String reqCompare(@RequestParam("comparisionCriteria") StockComparisionCriteria criteria, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
         // 限制进入
         HttpSession session = request.getSession(false);
         if (session == null) {
@@ -297,12 +296,12 @@ public class StockController {
                 response.sendRedirect("/welcome");
             } catch (IOException e) {
                 e.printStackTrace();
-                return null;
+                return "-1;不给看哈哈哈";
             }
-            return null;
+            return "-1;未知错误";
         }
 
-        StockComparisionCriteria criteria = new StockComparisionCriteria(holder);
+//        StockComparisionCriteria criteria = new StockComparisionCriteria(holder);
         System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
 
         List<StockComparision> result = null;
@@ -331,10 +330,10 @@ public class StockController {
             return closes01 + ";" + closes02+";"+logarithmicYield01+";"+logarithmicYield02+";"+comparisionName+";"+numVals;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return "-1;IO读取失败！";
         } catch (DataSourceFirstDayException | DateNotWithinException | NoDataWithinException e) {
             e.printStackTrace();
-            return null;
+            return "-1;" + e.getMessage();
         }
     }
 

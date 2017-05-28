@@ -84,16 +84,22 @@ public class JsonConverter {
         try {
             // traceBackNums
             holder.append(jsonOfObject(convertTraceBackNumVal(traceBackInfo))).append(";");
+            System.out.println("numbers1 over");
+
             // abReturnPeriod, reReturnPeriod, holdingDetails
             holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.absoluteReturnPeriod))).append(";");
             holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
+            System.out.println("numbers2 over");
+
             holder.append(jsonOfObject(convertHoldingDeatilToTempHolder(traceBackInfo.holdingDetails))).append(";");
+            System.out.println("numbers3 over");
 
             // certainFormates, certainHoldings
-            holder.append(jsonOfObject(formateExcessAndWin_Form(traceBackInfo.certainFormates))).append(";");
-            holder.append(jsonOfObject(formateExcessAndWin_Form(traceBackInfo.certainHoldings))).append(";");
+//            holder.append(jsonOfObject(formateExcessAndWin_Form(traceBackInfo.certainFormates))).append(";");
+//            holder.append(jsonOfObject(formateExcessAndWin_Form(traceBackInfo.certainHoldings))).append(";");
+//            System.out.println("numbers4 over");
 
-
+            System.out.println("numbers all over");
 
             /*
              加入画图所需的信息
@@ -101,20 +107,27 @@ public class JsonConverter {
             // json_strategyData, json_baseData
             holder.append(convertTraceBack(traceBackInfo.strategyCumulativeReturn)).append(";");
             holder.append(convertTraceBack(traceBackInfo.baseCumulativeReturn)).append(";");
+            System.out.println("charts1 over");
 
             // json_absoluteHistogramData, json_relativeHistogramData
             holder.append(convertHistogram(traceBackInfo.absoluteReturnPeriod)).append(";");
             holder.append(convertHistogram(traceBackInfo.relativeReturnPeriod)).append(";");
+            System.out.println("charts2 over");
 
-            List<String> formate = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainFormates);
-            List<String> holdings = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainHoldings);
-            // json_certainFormatesExcessData, json_certainFormatesWinData
-            holder.append(formate.get(0)).append(";");
-            holder.append(formate.get(1)).append(";");
+//            List<String> formate = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainFormates);
+//            List<String> holdings = JsonConverter.convertExcessAndWin_Chart(traceBackInfo.certainHoldings);
+//            // json_certainFormatesExcessData, json_certainFormatesWinData
+//            holder.append(formate.get(0)).append(";");
+//            holder.append(formate.get(1)).append(";");
+//            System.out.println("charts3 over");
+//
+//            // json_certainHoldingsExcessData, json_certainHoldingsWinData
+//            holder.append(holdings.get(0)).append(";");
+//            holder.append(holdings.get(1)).append(";");
+//            System.out.println("charts4 over");
 
-            // json_certainHoldingsExcessData, json_certainHoldingsWinData
-            holder.append(holdings.get(0)).append(";");
-            holder.append(holdings.get(1)).append(";");
+            System.out.println("charts all over");
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -241,13 +254,13 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
-    private static List<ExcessAndWinRateDistTempHolder> formateExcessAndWin_Form(List<ExcessAndWinRateDist> list) {
-        List<ExcessAndWinRateDistTempHolder> holders = new LinkedList<>();
-        for (ExcessAndWinRateDist temp : list) {
-            holders.add(new ExcessAndWinRateDistTempHolder(temp));
-        }
-        return holders;
-    }
+//    private static List<ExcessAndWinRateDistTempHolder> formateExcessAndWin_Form(List<ExcessAndWinRateDist> list) {
+//        List<ExcessAndWinRateDistTempHolder> holders = new LinkedList<>();
+//        for (ExcessAndWinRateDist temp : list) {
+//            holders.add(new ExcessAndWinRateDistTempHolder(temp));
+//        }
+//        return holders;
+//    }
 
 
     /**

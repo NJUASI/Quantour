@@ -34,19 +34,19 @@ function traceback() {
         type: "post",
         async: true,
         url: "/req_trace_back",
-        // contentType: 'charset=UTF-8',
         data: {
             criteriaData: JSON.stringify(jsonData)
         },
 
 
         success: function (result) {
+            alert(result);
             $("body").addClass("loaded");
             var array = result.split(";");
             if (array[0] == "1") {
 
                 // 处理网页上要显示的信息
-                var numberValues = eval("(" + array[1] + ")")               // List<String>
+                var numberValues = eval("(" + array[1] + ")");              // List<String>
                 var abReturnPeriod = eval("(" + array[2] + ")");            // ReturnPeriod
                 var reReturnPeriod = eval("(" + array[3] + ")");            // ReturnPeriod
                 var holdingDetails = eval("(" + array[4] + ")");            // List<HoldingDetail>
@@ -137,14 +137,14 @@ function traceback() {
 
 
                 // 处理图标的信息
-                var strategyData = JSON.parse(array[7]);            //List<List<String>>
-                var baseData = JSON.parse(array[8]);                //List<List<String>>
-                var abHistogramData = JSON.parse(array[9]);
-                var reHistogramData = JSON.parse(array[10]);
-                var formateExcessData = JSON.parse(array[11]);
-                var formateWinData = JSON.parse(array[12]);
-                var holdingExcessData = JSON.parse(array[13]);
-                var holdingWinData = JSON.parse(array[14]);
+                var strategyData = JSON.parse(array[5]);            //List<List<String>>
+                var baseData = JSON.parse(array[6]);                //List<List<String>>
+                var abHistogramData = JSON.parse(array[7]);
+                var reHistogramData = JSON.parse(array[8]);
+                // var formateExcessData = JSON.parse(array[11]);
+                // var formateWinData = JSON.parse(array[12]);
+                // var holdingExcessData = JSON.parse(array[13]);
+                // var holdingWinData = JSON.parse(array[14]);
 
                 // alert(strategyData + "\n\n" + baseData + "\n\n" + abHistogramData + "\n\n" + reHistogramData + "\n\n" + formateExcessData
                 //     + "\n\n" + formateExcessData + "\n\n" + holdingExcessData + "\n\n" + holdingWinData);
@@ -153,10 +153,10 @@ function traceback() {
                 var trace_back_chart = createTraceBackChart("trace_back_chart", strategyData, baseData, ['策略', '基准'], '1', '1');
                 var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart", abHistogramData, " ");
                 var relative_histogram_chart = createHistogramChart("relative_histogram_chart", reHistogramData, " ");
-                var formates_excess_chart = createAreaChart("formates_excess_chart", formateExcessData, '胜率');
-                var formates_win_chart = createAreaChart("formates_win_chart", formateWinData, '赢率');
-                var holdings_excess_chart = createAreaChart("holdings_excess_chart", holdingExcessData, '胜率');
-                var holdings_win_chart = createAreaChart("holdings_win_chart", holdingWinData, '赢率');
+                // var formates_excess_chart = createAreaChart("formates_excess_chart", formateExcessData, '胜率');
+                // var formates_win_chart = createAreaChart("formates_win_chart", formateWinData, '赢率');
+                // var holdings_excess_chart = createAreaChart("holdings_excess_chart", holdingExcessData, '胜率');
+                // var holdings_win_chart = createAreaChart("holdings_win_chart", holdingWinData, '赢率');
 
 
             } else if (array[0] == "-1") {
@@ -166,6 +166,7 @@ function traceback() {
                 alert("未知错误类型orz");
             }
         },
+
         error: function (result) {
             alert("错误" + result);
         }
