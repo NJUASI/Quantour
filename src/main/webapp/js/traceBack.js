@@ -112,13 +112,13 @@ function traceback() {
                 // alert("--------------------3----------------");
 
 
-                // // 固定形成期的赢率分析
+                // 固定形成期的赢率分析
                 // $("#tb_certain_formate").empty();
                 // for(var i = 0; i < certainFormates.length; i++) {
                 //     $("#tb_certain_formate").append("<tr>");
                 //     $("#tb_certain_formate").append("<td>" + certainFormates[i]["relativeCycle"] + "</td>");
-                //     $("#tb_certain_formate").append("<td>" + certainFormates[i]["excessRate"] + "</td>");
-                //     $("#tb_certain_formate").append("<td>" + certainFormates[i]["winRate"] + "</td>");
+                //     $("#tb_certain_formate").append("<td>" + (certainFormates[i]["excessRate"]*100) + "%" + "</td>");
+                //     $("#tb_certain_formate").append("<td>" + (certainFormates[i]["winRate"]*100) + "%" + "</td>");
                 //     $("#tb_certain_formate").append("</tr>");
                 // }
                 // // alert("--------------------4----------------");
@@ -129,8 +129,8 @@ function traceback() {
                 // for(var i = 0; i < certainHoldings.length; i++) {
                 //     $("#tb_certain_holding").append("<tr>");
                 //     $("#tb_certain_holding").append("<td>" + certainHoldings[i]["relativeCycle"] + "</td>");
-                //     $("#tb_certain_holding").append("<td>" + certainHoldings[i]["excessRate"] + "</td>");
-                //     $("#tb_certain_holding").append("<td>" + certainHoldings[i]["winRate"] + "</td>");
+                //     $("#tb_certain_holding").append("<td>" + (certainHoldings[i]["excessRate"]*100) + "%" + "</td>");
+                //     $("#tb_certain_holding").append("<td>" + (certainHoldings[i]["winRate"]*100) + "%" + "</td>");
                 //     $("#tb_certain_holding").append("</tr>");
                 // }
                 // // alert("--------------------5----------------");

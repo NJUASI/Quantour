@@ -124,7 +124,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackInfo.relativeReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, false);
         System.out.println("---------------6------------");
 
-        System.out.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
+        System.out.println("计算目标策略算法给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // 提前保存TraceBackCriteriaVO，以便后续固定持有期计算形成期时使用
         TraceBackCriteria criteriaVOToHold = new TraceBackCriteria(traceBackCriteria);
@@ -144,7 +144,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         // TraceBackParameter 计算贝塔系数等
         List<BaseStock> baseStockList = stockService.getBaseStockData(traceBackCriteria.baseStockName, traceBackCriteria.startDate, traceBackCriteria.endDate);
-        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteria, traceBackInfo,stockData, traceBackStockPool, baseStockList);
+        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStockList);
         System.out.println("---------------8------------");
         return traceBackParameter.getTraceBackInfo();
 
@@ -200,7 +200,6 @@ public class TraceBackServiceImpl implements TraceBackService {
         int initFormativePeriod = traceBackCriteria.formativePeriod;
 
         for (int i = 2; i <= 50; i = i+2) {
-            ExcessAndWinRateDist excessAndWinRateDist = new ExcessAndWinRateDist();
             //给定形成期
             if (certainFormate) {
                 //持有期太大，不能形成一个周期
@@ -234,15 +233,15 @@ public class TraceBackServiceImpl implements TraceBackService {
             traceBackInfo.relativeReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, false);
 
             //相对强弱计算周期
-            excessAndWinRateDist.relativeCycle = i;
+            int thisRelativeCycle = i;
             //总超额收益
             double strategyLastRate = traceBackInfo.strategyCumulativeReturn.get(traceBackInfo.strategyCumulativeReturn.size() - 1).cumulativeReturn;
             double baseLastRate = traceBackInfo.baseCumulativeReturn.get(traceBackInfo.baseCumulativeReturn.size() - 1).cumulativeReturn;
-            excessAndWinRateDist.excessRate = strategyLastRate - baseLastRate;
+            double thisExcessRate = strategyLastRate - baseLastRate;
             //策略胜率
-            excessAndWinRateDist.winRate = traceBackInfo.relativeReturnPeriod.winRate;
+            double thisWinRate = traceBackInfo.relativeReturnPeriod.winRate;
 
-            certainHoldings.add(excessAndWinRateDist);
+            certainHoldings.add(new ExcessAndWinRateDist(thisRelativeCycle, thisExcessRate, thisWinRate));
         }
 
         return certainHoldings;
@@ -289,21 +288,12 @@ public class TraceBackServiceImpl implements TraceBackService {
             // 超额收益率
             double excessReturn = strategyReturn - baseReturn;
 
-            HoldingDetail holdingDetail = new HoldingDetail();
-            holdingDetail.periodSerial = holdingSerial;
-            holdingDetail.startDate = baseCumulativeReturn.get(i).currentDate;
-            holdingDetail.endDate = baseCumulativeReturn.get(periodIndex).currentDate;
-            holdingDetail.strategyReturn = strategyReturn;
-            holdingDetail.baseReturn = baseReturn;
-            holdingDetail.excessReturn = excessReturn;
-            holdingDetail.remainInvestment = investment * (1 + lastStrategyRate);
-
             preBaseCumulativeReturn = curBaseCumulativeReturn;
             preStrategyCumulativeReturn = curStrategyCumulativeReturn;
-
             holdingSerial++;
 
-            holdingDetails.add(holdingDetail);
+            holdingDetails.add(new HoldingDetail(holdingSerial, baseCumulativeReturn.get(i).currentDate, baseCumulativeReturn.get(periodIndex).currentDate,
+                    strategyReturn, baseReturn, excessReturn, investment * (1 + lastStrategyRate)));
         }
         return holdingDetails;
     }

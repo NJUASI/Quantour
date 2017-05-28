@@ -3,7 +3,6 @@ package com.edu.nju.asi.utilities.util;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.NumberFormat;
-import com.edu.nju.asi.utilities.tempHolder.ExcessAndWinRateDistTempHolder;
 import com.edu.nju.asi.utilities.tempHolder.HoldingDeatilTempHolder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -95,9 +94,9 @@ public class JsonConverter {
             System.out.println("numbers3 over");
 
             // certainFormates, certainHoldings
-//            holder.append(jsonOfObject(formateExcessAndWin_Form(traceBackInfo.certainFormates))).append(";");
-//            holder.append(jsonOfObject(formateExcessAndWin_Form(traceBackInfo.certainHoldings))).append(";");
-//            System.out.println("numbers4 over");
+//            holder.append(jsonOfObject(traceBackInfo.certainFormates)).append(";");
+//            holder.append(jsonOfObject(traceBackInfo.certainHoldings)).append(";");
+            System.out.println("numbers4 over");
 
             System.out.println("numbers all over");
 
@@ -253,15 +252,6 @@ public class JsonConverter {
 
         return JsonConverter.jsonOfObject(result);
     }
-
-//    private static List<ExcessAndWinRateDistTempHolder> formateExcessAndWin_Form(List<ExcessAndWinRateDist> list) {
-//        List<ExcessAndWinRateDistTempHolder> holders = new LinkedList<>();
-//        for (ExcessAndWinRateDist temp : list) {
-//            holders.add(new ExcessAndWinRateDistTempHolder(temp));
-//        }
-//        return holders;
-//    }
-
 
     /**
      * 将数据集合变成json-String(赢率图)
