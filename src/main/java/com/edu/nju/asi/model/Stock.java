@@ -2,7 +2,6 @@ package com.edu.nju.asi.model;
 
 
 import com.edu.nju.asi.spider.Model.NormalStock;
-import com.edu.nju.asi.utilities.enums.Market;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,14 +9,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Byron Dong on 2017/5/7.
- *
+ * <p>
  * 股票
  */
 @Entity
@@ -26,7 +21,7 @@ public class Stock implements Serializable {
 
     // 股票代码
     @Id
-    @GenericGenerator(name="myGenerator",strategy = "assigned")
+    @GenericGenerator(name = "myGenerator", strategy = "assigned")
     @GeneratedValue(generator = "myGenerator")
     private StockID stockID;
 
@@ -90,7 +85,25 @@ public class Stock implements Serializable {
     public Stock() {
     }
 
-    public Stock(String name,double open, double high, double low, double close,
+    // 个人界面当天股票没有信息只显示有此自选股
+    public Stock(String code, LocalDate date, String name) {
+        this.stockID = new StockID(code, date);
+        this.name = name;
+        this.open = -1;
+        this.high = -1;
+        this.low = -1;
+        this.close = -1;
+        this.volume = null;
+        this.transactionAmount = null;
+        this.preClose = -1;
+        this.increaseMargin = -1;
+        this.fluctuation = -1;
+        this.turnoverRate = -1;
+        this.totalValue = null;
+        this.circulationMarketValue = null;
+    }
+
+    public Stock(String name, double open, double high, double low, double close,
                  String volume, String transactionAmount, double preClose, double increaseMargin,
                  double fluctuation, double turnoverRate, String totalValue, String circulationMarketValue) {
         this.name = name;
@@ -111,7 +124,7 @@ public class Stock implements Serializable {
     public Stock(NormalStock normalStock) {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");//格式化设置
 
-        this.stockID = new StockID(normalStock.getCode(),normalStock.getDate());
+        this.stockID = new StockID(normalStock.getCode(), normalStock.getDate());
         this.name = normalStock.getName();
         //这里默认给深圳
         this.open = normalStock.getOpen();

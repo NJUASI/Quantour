@@ -19,6 +19,7 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
 
     <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/stocks.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -77,7 +78,7 @@
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">
-                        <li><a href="/welcome">用户管理</a></li>
+                        <li><a href="/user/welcome">用户管理</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
@@ -219,17 +220,36 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${ps_list}" var="stock" varStatus="vs">
-                                <tr>
-                                    <td>${stock.stockID.code}</td>
-                                    <td>${stock.name}</td>
-                                    <td>${stock.open}</td>
-                                    <td>${stock.close}</td>
-                                    <td class="stock_high">${stock.high}</td>
-                                    <td class="stock_low">${stock.low}</td>
-                                    <td>${stock.preClose}</td>
-                                    <td>${stock.volume}</td>
-                                    <td>${stock.transactionAmount}</td>
-                                </tr>
+                                <c:choose>
+                                    <c:when test="${stock.volume == null}">
+                                        <%--此只股票没有当日信息，则仍需显示，只是显示为／--%>
+                                        <tr>
+                                            <td class="stock_no_value">${stock.stockID.code}</td>
+                                            <td class="stock_no_value">${stock.name}</td>
+                                            <td class="stock_no_value">/</td>
+                                            <td class="stock_no_value">/</td>
+                                            <td class="stock_no_value">/</td>
+                                            <td class="stock_no_value">/</td>
+                                            <td class="stock_no_value">/</td>
+                                            <td class="stock_no_value">/</td>
+                                            <td class="stock_no_value">/</td>
+                                        </tr>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <%--正常显示--%>
+                                        <tr>
+                                            <td>${stock.stockID.code}</td>
+                                            <td>${stock.name}</td>
+                                            <td>${stock.open}</td>
+                                            <td>${stock.close}</td>
+                                            <td class="stock_high">${stock.high}</td>
+                                            <td class="stock_low">${stock.low}</td>
+                                            <td>${stock.preClose}</td>
+                                            <td>${stock.volume}</td>
+                                            <td>${stock.transactionAmount}</td>
+                                        </tr>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:forEach>
                         </tbody>
                     </table>

@@ -26,41 +26,11 @@ import java.util.List;
 public class LogInController {
 
     @Autowired
-    PrivateStockService privateStockService;
-    @Autowired
     UserService userService;
 
     @GetMapping
     public String home(){
         return "index";
-    }
-
-
-    /**
-     * 普通用户登录初始界面，需展示用户基本信息和用户自选股列表
-     */
-    @GetMapping("/welcome")
-    public ModelAndView welcome(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return new ModelAndView("index");
-        }
-
-        String userType = (String) session.getAttribute("userType");
-        System.out.println(userType);
-        if (userType.equals("user")) {
-            // 普通用户
-            ModelAndView mv = new ModelAndView("userManager");
-            List<Stock> psList = (List<Stock>) session.getAttribute("privateStockList");
-            System.out.println("psList size: " + psList.size());
-            mv.addObject("ps_list", psList);
-            return mv;
-        } else if (userType.equals("admin")) {
-            // 管理员 TODO
-            return new ModelAndView("welcome_admin");
-        }
-
-        return new ModelAndView("index");
     }
 
 
@@ -84,7 +54,6 @@ public class LogInController {
             HttpSession session = request.getSession(true);
             session.setAttribute("userType", "user");
             session.setAttribute("user", thisUser);
-            session.setAttribute("privateStockList", null);
         } catch (IOException e) {
             return "-1;服务器开了一个小差。。请稍后重试";
         } catch (DuplicatedNameException | PasswordNotSameException | PasswordInputException | InvalidInputException e) {
@@ -112,24 +81,13 @@ public class LogInController {
         boolean result = false;
         try {
             result = userService.logIn(user.getUserName(), user.getPassword());
-            // TODO 暂无数据
-            List<Stock> psList = privateStockService.getPrivateStocks(user.getUserName(), LocalDate.now().minusDays(1));
-
-//            List<Stock> psList = new LinkedList<>();
-//            psList.add(new Stock("哈哈哈1", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
-//            psList.add(new Stock("哈哈哈2", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
-//            psList.add(new Stock("哈哈哈3", Market.SZ, 1, 1, 1, 1, "100","1000", 1, 1, 1,1,"2", "2"));
 
             HttpSession session = request.getSession(true);
             session.setAttribute("userType", "user");
             session.setAttribute("user", user);
-            session.setAttribute("privateStockList", psList);
         } catch (UserNotExistException | PasswordWrongException | PasswordInputException | InvalidInputException e) {
             e.printStackTrace();
             return "-1;" + e.getMessage();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "-1;IO读取失败！";
         }
 
         if (result) {

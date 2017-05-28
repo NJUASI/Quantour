@@ -56,6 +56,10 @@ ul {
     color: #5DCD0B;
 }
 
+.stock_no_value {
+    color: #999;
+}
+
 #stocks_shangzheng, #stocks_shenzheng{
     border-right: 1px solid #e6e6e6;
 }
