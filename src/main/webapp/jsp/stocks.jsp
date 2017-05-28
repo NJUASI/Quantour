@@ -396,11 +396,11 @@
 
                 if (array[0] == "1") {
                     // js修改jsp中数据
-                    // TODO 高源 这里有个bug 就是我点了日期，修改页面之后，他自己又跳回原来的默认日期去了
-
                     var stock_list = eval("(" + array[1] + ")");
                     var nowDate = eval("(" + array[2] + ")");
 
+                    alert(stock_list[0]["stockID"]["code"] + "\n" + stock_list[0]["stockID"]["date"] + "\n" + stock_list[0]["name"]
+                        + "\n" + stock_list[0]["open"] + "\n" + stock_list[0]["close"] + "\n" + stock_list[0]["high"]);
 
                     $("#stocks_all").empty();
                     for (var i = 0; i < stock_list.length; i++) {
@@ -416,9 +416,6 @@
                         $("#stocks_all").append("<td>" + stock_list[i]["transactionAmount"] + "</td>");
                         $("#stocks_all").append("</tr>");
                     }
-
-
-                    window.location.href = "/stocks";
                 } else if (array[0] == "-1") {
                     // 提示错误信息
                     alert(array[1]);
