@@ -46,23 +46,21 @@ public class StockController {
     PrivateStockService privateStockService;
 
 
-    // 因为可能数据库中没有今天的数据
-    private final static LocalDate nowDate = LocalDate.now().minusDays(1);
-//    private final static LocalDate nowDate = LocalDate.now();
-
+    // 因为可能数据库中没有今天的数据，所以默认显示昨日
+    private final static LocalDate defaultDate = LocalDate.now().minusDays(1);
 
     /**
-     * 指定日期（默认当日）股票市场查看（所有股票数据、市场温度计）
+     * 指定日期（默认前一日）股票市场查看（所有股票数据、市场温度计）
      */
     @GetMapping()
     public ModelAndView getStockMarket(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView("stocks");
         HttpSession session = request.getSession(false);
         if (session.getAttribute("oneDateStockList") == null) {
-            System.out.println("默认进来的");
+            System.out.println("默认页面跳转进来的");
 
             // 刚进来默认访问此方法，默认显示当日，先调用请求方法
-            String reqResult = reqGetStockMarket(request, response);
+            String reqResult = reqGetStockMarket(null, request, response);
             if (reqResult.split(";")[0].equals("1")) {
                 System.out.println("请求成功");
 
@@ -111,20 +109,18 @@ public class StockController {
      */
     @PostMapping(produces = "text/html;charset=UTF-8;")
     public @ResponseBody
-    String reqGetStockMarket(HttpServletRequest request, HttpServletResponse response) {
+    String reqGetStockMarket(@RequestParam("date") LocalDate thisDate, HttpServletRequest request, HttpServletResponse response) {
         System.out.println("--------在req中-----------");
-        LocalDate thisDate;
-        String date = request.getParameter("date");
 
-        // 默认获取当天
-        if (date == null) {
-            System.out.println("js没有。。");
-            thisDate = nowDate;
+        // 默认获取当天第一页的信息
+        if (thisDate == null) {
+            System.out.println("页面跳转进来的");
+            thisDate = defaultDate;
         } else {
-            System.out.println("JS有的！！");
-            System.out.println("在controller里面");
-            thisDate = LocalDate.parse(date);
+            System.out.println("JS调用的");
         }
+
+        System.out.println(thisDate);
 
         StockSituation situation = null;
         List<Stock> stockList = null;
@@ -194,8 +190,8 @@ public class StockController {
         // 默认显示一年内的K线图
         if (endDateString == null) {
             System.out.println("默认从行情界面进入，显示最新的。。");
-            startDate = nowDate.minusYears(1);
-            endDate = nowDate;
+            startDate = defaultDate.minusYears(1);
+            endDate = defaultDate;
         } else {
             System.out.println("在个股界面选择了日期！！");
             startDate = LocalDateHelper.convertString(startDateString);

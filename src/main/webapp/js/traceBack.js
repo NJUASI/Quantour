@@ -1,4 +1,4 @@
- /**
+/**
  * Created by cuihua on 2017/5/14.
  */
 function traceback() {
@@ -23,6 +23,7 @@ function traceback() {
 
     $("body").removeClass("loaded");
 
+    alert(JSON.stringify(jsonData));
 
     //
     // alert($("#startDate").val() + "\n" + $("#endDate").val() + "\n" + $("#formativePeriod").val() + "\n" + $("#holdingPeriod").val()
@@ -52,15 +53,18 @@ function traceback() {
 
                 // 回测的数值型数据
                 $("#tb_chart").empty();
-                for(var i = 0; i < 3; i++) {
+                for (var i = 0; i < 3; i++) {
                     $("#tb_chart").append("<tr>");
 
                     switch (i) {
-                        case 0:$("#tb_chart").append("<td>本策略</td>");
+                        case 0:
+                            $("#tb_chart").append("<td>本策略</td>");
                             break;
-                        case 1:$("#tb_chart").append("<td>基准股票</td>");
+                        case 1:
+                            $("#tb_chart").append("<td>基准股票</td>");
                             break;
-                        case 2:$("#tb_chart").append("<td>相对收益</td>");
+                        case 2:
+                            $("#tb_chart").append("<td>相对收益</td>");
                             break;
                     }
 
@@ -88,11 +92,10 @@ function traceback() {
                 // alert("--------------------2----------------");
 
 
-
                 // 持有周期详情
 
                 $("#tb_detail").empty();
-                for(var i = 0; i < holdingDetails.length; i++) {
+                for (var i = 0; i < holdingDetails.length; i++) {
                     $("#tb_detail").append("<tr>");
                     $("#tb_detail").append("<td>" + holdingDetails[i]["periodSerial"] + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails[i]["startDate"] + "</td>");

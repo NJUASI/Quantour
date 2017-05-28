@@ -24,6 +24,9 @@ public class StockComparisionCriteria {
     // 区间内结束时间
     public LocalDate end;
 
+    public StockComparisionCriteria() {
+    }
+
     public StockComparisionCriteria(String stockCode1, String stockCode2, LocalDate start, LocalDate end) {
         this.stockCode1 = stockCode1;
         this.stockCode2 = stockCode2;

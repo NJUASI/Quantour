@@ -12,11 +12,23 @@
 
 
     <!-- 注册用于支持基于注解的控制器请求处理方法的bean对象，激活@Controller模式 -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
     <!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
     <context:component-scan base-package="com.edu.nju.asi.controller"/>
 
 
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <!--<list>-->
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+                <!--<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>-->
+                <!--<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>-->
+                <!--<bean class="org.springframework.http.converter.FormHttpMessageConverter"/>-->
+                <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>-->
+            <!--</list>-->
+        </property>
+
+    </bean>
     <!-- 声明一个拦截器 -->
     <!--<mvc:interceptors>-->
     <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
@@ -27,6 +39,21 @@
     <!--<bean class="org.wx.weixiao.interceptor.URLDecodeInterceptor"/>-->
     <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="com.edu.nju.asi.utilities.spring.MyBindingInitializer" />
+        </property>
+    </bean>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="com.edu.nju.asi.utilities.spring.LocalDateFormatter">
+                </bean>
+            </set>
+        </property>
+    </bean>
 
     <!-- don't handle the static resource -->
     <mvc:default-servlet-handler/>

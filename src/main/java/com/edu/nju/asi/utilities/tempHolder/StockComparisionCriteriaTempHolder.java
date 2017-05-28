@@ -1,7 +1,5 @@
 package com.edu.nju.asi.utilities.tempHolder;
 
-import java.time.LocalDate;
-
 /**
  * Created by cuihua on 2017/5/15.
  */

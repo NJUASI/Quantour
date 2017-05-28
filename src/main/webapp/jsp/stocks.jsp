@@ -324,6 +324,11 @@
 
                     success: function (result) {
 //                        alert(result);
+                        if (result == "-1") {
+                            // 调取失败处理
+
+                        }
+
                         var obj = eval("("+result+")");
                         var len = obj.length;
                         $("#search-body").empty();
@@ -381,6 +386,7 @@
             url: "/stocks",
             data: {
                 "date": $(".form_date > input").val()
+                // TODO 高源 page信息传输，排序条件
             },
 
             success: function (result) {
@@ -389,6 +395,10 @@
                 var array = result.split(";");
 
                 if (array[0] == "1") {
+                    // js修改jsp中数据
+
+
+
                     window.location.href = "/stocks";
                 } else if (array[0] == "-1") {
                     // 提示错误信息

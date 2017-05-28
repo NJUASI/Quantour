@@ -68,7 +68,7 @@ public class TraceBackController {
      */
     @PostMapping(value = "/req_trace_back", produces = "text/html;charset=UTF-8;application/json")
     public @ResponseBody
-    String reqTraceBack(@RequestBody TraceBackCriteriaTempHolder criteriaTempHolder, HttpServletRequest request, HttpServletResponse response) {
+    String reqTraceBack(@RequestBody TraceBackCriteria criteria, HttpServletRequest request, HttpServletResponse response) {
         // 限制进入
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -86,7 +86,8 @@ public class TraceBackController {
         User thisUser = (User) request.getSession().getAttribute("user");
         System.out.println("已登录：" + thisUser.getUserName());
 
-        TraceBackCriteria criteria = new TraceBackCriteria(criteriaTempHolder);
+        System.out.println(criteria.startDate + "\n" + criteria.endDate);
+//        TraceBackCriteria criteria = new TraceBackCriteria(criteriaTempHolder);
         List<String> stockPool = stockPoolService.getTraceBackStockPoolCodes(thisUser.getUserName());
 
         System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.formateAndPickCriteria.rank + "  " + criteria.holdingPeriod);

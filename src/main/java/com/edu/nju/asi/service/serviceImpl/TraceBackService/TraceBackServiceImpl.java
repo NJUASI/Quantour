@@ -131,16 +131,16 @@ public class TraceBackServiceImpl implements TraceBackService {
         System.out.println("---------------7------------");
 
         // 计算超额收益率/策略胜率，给定持有期/形成期
-        traceBackInfo.certainFormates = findHoldingWithCertainFormate(traceBackCriteria);
-        System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
+//        traceBackInfo.certainFormates = findHoldingWithCertainFormate(traceBackCriteria);
+//        System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
 
 //        System.out.println("--------------------------------");
 //        System.out.println(traceBackCriteria.formativePeriod +  "    " + traceBackCriteria.holdingPeriod);
 //        System.out.println(criteriaVOToHold.formativePeriod +  "    " + criteriaVOToHold.holdingPeriod);
 //        System.out.println("--------------------------------");
 
-        traceBackInfo.certainHoldings = findFormateWithCertainHolding(criteriaVOToHold);
-        System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
+//        traceBackInfo.certainHoldings = findFormateWithCertainHolding(criteriaVOToHold);
+//        System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等
         List<BaseStock> baseStockList = stockService.getBaseStockData(traceBackCriteria.baseStockName, traceBackCriteria.startDate, traceBackCriteria.endDate);
