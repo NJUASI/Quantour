@@ -97,7 +97,7 @@ public class JsonConverter {
         holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
         System.out.println("numbers2 over");
 
-        holder.append(jsonOfObject(traceBackInfo.holdingDetails)).append(";");
+        holder.append(JSON.toJSONString(traceBackInfo.holdingDetails)).append(";");
         System.out.println("numbers3 over");
 
         // certainFormates, certainHoldings

@@ -94,7 +94,6 @@ function traceback() {
 
 
                 // 持有周期详情
-
                 $("#tb_detail").empty();
                 for (var i = 0; i < holdingDetails.length; i++) {
                     $("#tb_detail").append("<tr>");
