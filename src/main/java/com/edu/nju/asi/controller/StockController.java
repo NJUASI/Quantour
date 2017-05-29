@@ -12,6 +12,7 @@ import com.edu.nju.asi.service.StockSituationService;
 import com.edu.nju.asi.utilities.LocalDateHelper;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.edu.nju.asi.utilities.StockCodeHelper;
+import com.edu.nju.asi.utilities.enums.StocksComparisionCriteria;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -59,7 +60,7 @@ public class StockController {
         HttpSession session = request.getSession(false);
         System.out.println("默认页面跳转进来的");
 
-        String reqResult = reqGetStockMarket(defaultDate, request, response);
+        String reqResult = reqGetStockMarket(defaultDate, StocksComparisionCriteria.CODE_ASC, 1);
         System.out.println("请求成功");
 
         String[] parts = reqResult.split(";");
@@ -86,14 +87,15 @@ public class StockController {
      */
     @PostMapping(produces = "text/html;charset=UTF-8;")
     public @ResponseBody
-    String reqGetStockMarket(@RequestParam("date") LocalDate thisDate, HttpServletRequest request, HttpServletResponse response) {
+    String reqGetStockMarket(@RequestParam("date") LocalDate thisDate, @RequestParam("sortCriteria") StocksComparisionCriteria comparisionCriteria,
+                             @RequestParam("wantedPage") int wantedPage) {
         System.out.println("--------在req中-----------" + thisDate);
 
         StockSituation situation = null;
         List<Stock> stockList = null;
         try {
             situation = situationService.getStockStituation(thisDate);
-            stockList = stockService.getAllStocks(thisDate);
+            stockList = stockService.getAllStocks(thisDate, comparisionCriteria);
             System.out.println(stockList.size());
         } catch (NoSituationDataException e) {
             e.printStackTrace();
@@ -106,7 +108,9 @@ public class StockController {
         if (stockList != null) {
             try {
                 System.out.println("Success");
-                return "1;" + JsonConverter.convertStockMarket(stockList, thisDate);
+                StocksPage result = new StocksPage(thisDate, 80, wantedPage, stockList.size() / 80 + 1,
+                        stockList.size(), null, stockList);
+                return "1;" + JsonConverter.convertStockMarket(result);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 return "-1;JSON转换失败";

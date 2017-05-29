@@ -4,6 +4,7 @@ import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.enums.StocksComparisionCriteria;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 
@@ -27,10 +28,11 @@ public interface StockService{
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @params date 用户选择日期
+     * @param comparisionCriteria 对所有股票的比较排序条件
      * @return 股票信息列表
      * @throws IOException IO
      */
-    List<Stock> getAllStocks(LocalDate date) throws IOException;
+    List<Stock> getAllStocks(LocalDate date, StocksComparisionCriteria comparisionCriteria) throws IOException;
 
     /**
      * 用户输入代码或者股票首字母或股票名称，查找符合条件的股票

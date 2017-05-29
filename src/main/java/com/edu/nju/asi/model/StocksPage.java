@@ -1,11 +1,15 @@
 package com.edu.nju.asi.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * Created by cuihua on 2017/5/26.
  */
 public class StocksPage {
+
+    // 当日日期
+    public LocalDate thisDate;
 
     // 每页有多少条记录
     public int numOfEachPage;
@@ -25,7 +29,8 @@ public class StocksPage {
     // 一页的结果数据
     public List<Stock> stocks;
 
-    public StocksPage(int numOfEachPage, int curPageNum, int totalPageNum, int totalRecordNum, List<BaseStock> baseStocks, List<Stock> stocks) {
+    public StocksPage(LocalDate thisDate, int numOfEachPage, int curPageNum, int totalPageNum, int totalRecordNum, List<BaseStock> baseStocks, List<Stock> stocks) {
+        this.thisDate = thisDate;
         this.numOfEachPage = numOfEachPage;
         this.curPageNum = curPageNum;
         this.totalPageNum = totalPageNum;
