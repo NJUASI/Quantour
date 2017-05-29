@@ -59,7 +59,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
-                <li><a id="stocks">大盘详情</a></li>
+                <li><a id="stocks"  href="/stocks">大盘详情</a></li>
                 <li><a href="/trace_back">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>

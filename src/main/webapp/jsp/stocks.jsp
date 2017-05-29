@@ -86,17 +86,18 @@
                                 <div class="searchResults  pre-scrollable"
                                      style="position: absolute;display: none;width: 300px;max-height: 200px; background-color: whitesmoke;z-index: 20">
                                     <table class="table table-hover table-bordered search-table">
-                                            <thead class="search-table-head">
-                                            <tr>
-                                                <th width="60px">代码</th>
-                                                <th width="70px">名称</th>
-                                                <th>简称</th>
-                                                <th>类型</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="search-body">
-
-                                            </tbody>
+                                        <thead class="search-table-head">
+                                        <tr>
+                                            <th width="60px">代码</th>
+                                            <th width="70px">名称</th>
+                                            <th>简称</th>
+                                            <th>类型</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="search-body">
+                                        <tr class="colomnsOfTable">
+                                        </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </form>
@@ -196,15 +197,18 @@
                 </div>
                 <div class="pagination-wrapper text-right">
                     <ul class="pagination">
-                        <li><a href="#">&laquo;</a></li>
                         <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
+
+                        <li value="left"><span>&middot;&middot;&middot;</span></li>
                         <li><a href="#">3</a></li>
                         <li><a href="#">4</a></li>
                         <li><a href="#">5</a></li>
-                        <li><span>&middot;&middot;&middot;</span></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">8</a></li>
+                        <li><span>9</span>></li>
+                        <li value="right"><span>&middot;&middot;&middot;</span></li>
                         <li><a href="#">30</a></li>
-                        <li><a href="#">&raquo;</a></li>
                     </ul>
                 </div>
             </div>
@@ -332,25 +336,40 @@
                         var len = obj.length;
                         $("#search-body").empty();
                         for (var i = 0; i < 10; i++) {
-                            $("#search-body").append("<tr><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                            $("#search-body").append("<tr class='colomnsOfTable' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
+
+                        $("#search-body").find(".colomnsOfTable").click(function() {
+                          var num=($(".colomnsOfTable").index($(this)));
+                            var code=$("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(0).html();
+
+                            $("#search-input").val(code);
+                            $(".searchResults").hide();
+                        });
+
+                        $("#search-body").find("tr").hover(function(){
+                            $(this).css("background-color","#A3B1D1");
+                        },function(){
+                            $(this).css("background-color","#F5F5F5");
+                        });
 
                         $(".searchResults").show();
                     }
                 })
             });
-//            $("#search-body").find("tr").click(function() {
-//                alert(($("tr").index($(this))+1));
-//            }
-            $("#search-body").click(function() {
-                alert("123");
+
+//            $("tbody").click(function () {
+//
 //                      var code = $(this).find("td:first").text();
 //                            $("#search-input").html(code);
-            });
+//            });
+
+
             $(".searchResults").click(function (e) {
                 e.stopPropagation();
             });
+
             $(document).click(function () {
                 $(".searchResults").hide();
             });
@@ -358,7 +377,10 @@
             $(".searchResults")
         }
     );
-
+    function setCode() {
+        alert("123123")
+//        alert($("tr").find("td").eq(1).html());
+    }
     $(".form_date").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -373,44 +395,44 @@
     });
 
 
-    $("th").find("span").css("cursor","pointer");
-    var nowpage=1;
-    var numOfColumn=0;
-    var numOfClick=1;
-    var sortNum=0;
-    $("th").find("span").click(function() {
-        if(($(".cTable").index($(this)))!=numOfColumn){
-            numOfColumn=($(".cTable").index($(this)));
-            numOfClick=1;
-        }else if(numOfClick==1){
-            numOfClick=2;
-        }else if(numOfClick==2){
-            numOfClick=1;
+    $("th").find("span").css("cursor", "pointer");
+    var nowpage = 1;
+    var numOfColumn = 0;
+    var numOfClick = 1;
+    var sortNum = 0;
+    $("th").find("span").click(function () {
+        if (($(".cTable").index($(this))) != numOfColumn) {
+            numOfColumn = ($(".cTable").index($(this)));
+            numOfClick = 1;
+        } else if (numOfClick == 1) {
+            numOfClick = 2;
+        } else if (numOfClick == 2) {
+            numOfClick = 1;
         }
-        for(var i=0;i<15;i++){
+        for (var i = 0; i < 15; i++) {
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");
         }
 
-        if(numOfClick==1){
-            $("thead>tr>th").eq(numOfColumn+4).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
-        }else if(numOfClick==2){
-            $("thead>tr>th").eq(numOfColumn+4).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
+        if (numOfClick == 1) {
+            $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
+        } else if (numOfClick == 2) {
+            $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
         }
 
         //TODO fjj   直接用下面这个 sortNum和  nowPage
-        sortNum=numOfColumn*2+numOfClick-1;
+        sortNum = numOfColumn * 2 + numOfClick - 1;
 //        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowpage+"页");
 //        alert(sortNum);
     });
-    $("li").click(function() {
+    $("li").click(function () {
         //alert("你单击的是第"+($("li").index($(this))+1)+"个span")
-        nowpage=$(this).find("a").html();
+        nowpage = $(this).find("a").html();
         alert(nowpage);
     });
 
-//        var numOfColumn=1;
-//    var numOfClick=1;
+    //        var numOfColumn=1;
+    //    var numOfClick=1;
 
     $('.form_date')
         .datetimepicker().on("changeDate", function () {
