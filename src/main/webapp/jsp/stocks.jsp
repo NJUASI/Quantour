@@ -373,20 +373,19 @@
     });
 
 
-
     $("th").find("span").css("cursor","pointer");
     var nowpage=1;
-    var numOfColumn=1;
+    var numOfColumn=0;
     var numOfClick=1;
+    var sortNum=0;
     $("th").find("span").click(function() {
-        if(($(".cTable").index($(this))+1)!=numOfColumn){
-            numOfColumn=($(".cTable").index($(this))+1);
+        if(($(".cTable").index($(this)))!=numOfColumn){
+            numOfColumn=($(".cTable").index($(this)));
             numOfClick=1;
         }else if(numOfClick==1){
             numOfClick=2;
         }else if(numOfClick==2){
             numOfClick=1;
-            numOfColumn=1;
         }
         for(var i=0;i<9;i++){
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
@@ -394,18 +393,22 @@
         }
 
         if(numOfClick==1){
-            $("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
+            $("thead>tr>th").eq(numOfColumn+4).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
         }else if(numOfClick==2){
-            $("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
+            $("thead>tr>th").eq(numOfColumn+4).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
         }
 
-        // alert("你第"+numOfClick+"次点了第"+numOfColumn+"列");
+        //TODO fjj   直接用下面这个 sortNum和  nowPage
+        sortNum=numOfColumn*2+numOfClick-1;
+//        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowpage+"页");
+//        alert(sortNum);
     });
     $("li").click(function() {
         //alert("你单击的是第"+($("li").index($(this))+1)+"个span")
         nowpage=$(this).find("a").html();
+        alert(nowpage);
     });
-    //TODO fjj   var nowpage=1;   已经得到
+
 //        var numOfColumn=1;
 //    var numOfClick=1;
 
