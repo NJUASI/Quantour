@@ -387,7 +387,7 @@
         }else if(numOfClick==2){
             numOfClick=1;
         }
-        for(var i=0;i<9;i++){
+        for(var i=0;i<15;i++){
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");
         }
