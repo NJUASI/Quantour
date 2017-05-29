@@ -84,13 +84,12 @@
 
                                 </div>
                                 <div class="searchResults  pre-scrollable"
-                                     style="position: absolute;display: none;max-height: 200px; background-color: whitesmoke;z-index: 20">
-                                    <table class="table table-condensed table-bordered">
-                                        <div class="search-table">
+                                     style="position: absolute;display: none;width: 300px;max-height: 200px; background-color: whitesmoke;z-index: 20">
+                                    <table class="table table-hover table-bordered search-table">
                                             <thead class="search-table-head">
                                             <tr>
-                                                <th>代码</th>
-                                                <th>名称</th>
+                                                <th width="60px">代码</th>
+                                                <th width="70px">名称</th>
                                                 <th>简称</th>
                                                 <th>类型</th>
                                             </tr>
@@ -98,7 +97,6 @@
                                             <tbody id="search-body">
 
                                             </tbody>
-                                        </div>
                                     </table>
                                 </div>
                             </form>
@@ -334,23 +332,22 @@
                         var len = obj.length;
                         $("#search-body").empty();
                         for (var i = 0; i < 10; i++) {
-                            $("#search-body").append("<tr>");
-                            $("#search-body").append("<td>" + obj[i]["searchID"]["code"] + "</td>");
-                            $("#search-body").append("<td>" + obj[i]["searchID"]["name"] + "</td>");
-                            $("#search-body").append("<td>" + obj[i]["firstLetters"] + "</td>");
-                            $("#search-body").append("<td>" + obj[i]["searchID"]["market"] + "</td>");
-                            $("#search-body").append("</tr>");
+                            $("#search-body").append("<tr><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                                "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
-                        $("#search-body tr").on("click", function () {
-                            var code = $(this).find("td:first").text();
-                            $("#search-input").html(code);
-                        });
+
                         $(".searchResults").show();
                     }
                 })
             });
-
-
+//            $("#search-body").find("tr").click(function() {
+//                alert(($("tr").index($(this))+1));
+//            }
+            $("#search-body").click(function() {
+                alert("123");
+//                      var code = $(this).find("td:first").text();
+//                            $("#search-input").html(code);
+            });
             $(".searchResults").click(function (e) {
                 e.stopPropagation();
             });
@@ -374,6 +371,7 @@
         endDate: new Date(),
         daysOfWeekDisabled: [0, 6]
     });
+
 
 
     $("th").find("span").css("cursor","pointer");

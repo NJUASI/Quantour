@@ -1,150 +1,475 @@
 
-<html lang="zh-CN">
+<!--<html lang="zh-CN">-->
+<!--<head>-->
+    <!--<meta charset="utf-8">-->
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!--&lt;!&ndash; 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ &ndash;&gt;-->
+    <!--<title>Bootstrap 101 Template</title>-->
+
+    <!--&lt;!&ndash; Bootstrap &ndash;&gt;-->
+    <!--<link href="../css/bootstrap.css" rel="stylesheet">-->
+    <!--<link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">-->
+    <!--<link href="../css/stocks.css" rel="stylesheet">-->
+    <!--<link href="../css/reset.css" rel="stylesheet">-->
+    <!--<link href="../css/index.css" rel="stylesheet">-->
+    <!--<title>股票市场</title>-->
+<!--</head>-->
+
+<!--<body  class="loaded"   style="margin-top: 60px;">-->
+<!--<div class="content">-->
+    <!--<div class="container">-->
+
+        <!--<div class="row" style="z-index:3">-->
+            <!--<div class="col-md-10 col-md-offset-1">-->
+                <!--<div class="table-responsive">-->
+                    <!--<table class="table table-hover table-condensed stocks-table">-->
+                        <!--<caption class="text-center"><h3>市场行情</h3></caption>-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>-->
+                            <!--<th width="10%"><span class="cTable">名称</span><span class="tLabel"></span></th>-->
+                            <!--<th width="10%"><span class="cTable">开盘价</span><span class="tLabel"></span></th>-->
+                            <!--<th width="10%"><span class="cTable">收盘价</span><span class="tLabel"></span></th>-->
+                            <!--<th width="10%"><span class="cTable">最高价</span><span class="tLabel"></span></th>-->
+                            <!--<th width="10%"><span class="cTable">最低价</span><span class="tLabel"></span></th>-->
+                            <!--<th width="10%"><span class="cTable">昨收</span><span class="tLabel"></span></th>-->
+                            <!--<th width="10%"><span class="cTable">交易量</span><span class="tLabel"></span></th>-->
+                            <!--<th width="10%"><span class="cTable">交易额</span><span class="tLabel"></span></th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                            <!--<tr>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                                <!--<td>12</td>-->
+                            <!--</tr>-->
+
+
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+                <!--<div class="pagination-wrapper text-right">-->
+                    <!--<ul class="pagination">-->
+                        <!--<li><a>&laquo;</a></li>-->
+                        <!--<li><a>1</a></li>-->
+                        <!--<li><a>2</a></li>-->
+                        <!--<li><a>3</a></li>-->
+                        <!--<li><a>4</a></li>-->
+                        <!--<li><a>5</a></li>-->
+                        <!--<li><span>&middot;&middot;&middot;</span></li>-->
+                        <!--<li><a href="#">30</a></li>-->
+                        <!--<li><a href="#">&raquo;</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+<!--<script src="../js/chart.js"></script>-->
+<!--<script src="../js/echarts.min.js"></script>-->
+<!--<script src="../js/stocks.js"></script>-->
+
+<!--&lt;!&ndash; jQuery (necessary for Bootstrap's JavaScript plugins) &ndash;&gt;-->
+<!--<script src="../js/jquery-3.2.1.min.js"></script>-->
+<!--&lt;!&ndash; Include all compiled plugins (below), or include individual files as needed &ndash;&gt;-->
+<!--<script src="../js/bootstrap.js"></script>-->
+<!--<script src="../js/bootstrap-datetimepicker.js"></script>-->
+<!--<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>-->
+<!--<script src="../js/logIn.js"></script>-->
+<!--<script type="text/javascript">-->
+
+    <!--$("th").find("span").css("cursor","pointer");-->
+    <!--var nowpage=1;-->
+    <!--var numOfColumn=1;-->
+    <!--var numOfClick=1;-->
+    <!--$("th").find("span").click(function() {-->
+        <!--if(($(".cTable").index($(this))+1)!=numOfColumn){-->
+            <!--numOfColumn=($(".cTable").index($(this))+1);-->
+            <!--numOfClick=1;-->
+        <!--}else if(numOfClick==1){-->
+            <!--numOfClick=2;-->
+        <!--}else if(numOfClick==2){-->
+            <!--numOfClick=1;-->
+            <!--numOfColumn=1;-->
+        <!--}-->
+        <!--for(var i=0;i<9;i++){-->
+            <!--$("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");-->
+            <!--$("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");-->
+        <!--}-->
+
+            <!--if(numOfClick==1){-->
+                <!--$("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");-->
+            <!--}else if(numOfClick==2){-->
+                <!--$("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");-->
+            <!--}-->
+
+       <!--// alert("你第"+numOfClick+"次点了第"+numOfColumn+"列");-->
+    <!--});-->
+    <!--$("li").click(function() {-->
+        <!--//alert("你单击的是第"+($("li").index($(this))+1)+"个span")-->
+        <!--nowpage=$(this).find("a").html();-->
+        <!--alert(nowpage);a-->
+    <!--});-->
+
+<!--//    numOfColumn 默认是第1列也就是代码列 点击之后-->
+<!--//                1 代码排序-->
+<!--//               2 开盘价-->
+<!--//            3收盘价-->
+<!--//            4       最高价-->
+<!--//            5     最低价-->
+<!--//            6     昨收-->
+<!--//            7    交易量-->
+<!--//            8   交易额-->
+<!--//-->
+<!--//    numOfClick =1的时候是第n列的升序-->
+<!--//                =2 的时候是第n列的降序-->
+<!--//    page当前页数-->
+
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.edu.nju.asi.model.User" %><%--
+Created by IntelliJ IDEA.
+User: 61990
+Date: 2017/5/13
+Time: 11:25
+To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Bootstrap 101 Template</title>
+
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
-    <link href="../css/stocks.css" rel="stylesheet">
-    <link href="../css/reset.css" rel="stylesheet">
+
     <link href="../css/index.css" rel="stylesheet">
-    <title>股票市场</title>
+    <link href="../css/stocks.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>用户管理</title>
+
+    <style rel="stylesheet" type="text/css">
+
+
+        .picture {
+            height: 200px;
+            width: 200px;
+            margin: 10px auto;
+        }
+
+        .userBlock {
+            margin-top: 20px;
+            padding-right: 0;
+            padding-left: 0;
+
+        }
+
+        .messageBlock {
+            margin-top: 10px;
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        .userBlockLeft {
+            margin-top: 50px;
+        }
+
+        #passwordModify {
+            display: none;
+        }
+    </style>
+
+
 </head>
+<body>
 
-<body  class="loaded"   style="margin-top: 60px;">
-<div class="content">
-    <div class="container">
+<header>
+    <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand brand" href="#">
+                    <img alt="Quantour" src="">
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">首页</a></li>
+                <li><a href="/stocks">大盘详情</a></li>
+                <li><a href="/trace_back">量化社区</a></li>
+                <li><a href="#">帮助</a></li>
+                <c:choose>
+                    <c:when test="${sessionScope.user!=null}">
+                        <li><a href="/user/welcome">用户管理</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>
+<div class="row" style="margin-top: 60px;">
+    <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
+        <div class="panel-heading">
+            <h3 class="panel_title">
+                用户信息
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
 
-        <div class="row" style="z-index:3">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="table-responsive">
-                    <table class="table table-hover table-condensed stocks-table">
-                        <caption class="text-center"><h3>市场行情</h3></caption>
+                <div class="col-md-4 col-md-offset-1 userBlockLeft" id="modify">
+
+                    <div class="form-group">
+                        <label>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：</label>
+                        <label id="userID" style="margin-left: 20px">12345</label>
+                    </div>
+
+                    <div id="passwordField">
+                        <div class="form-group">
+                            <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                            <label style="margin-left: 20px">*******</label>
+                        </div>
+
+                        <button type="button" id="modifyBT" class="btn btn-primary" onclick="modify()">修改密码</button>
+                    </div>
+
+                    <div id="passwordModify">
+                        <form id="modifyForm">
+
+                            <div class="form-group form-inline">
+                                <label for="password1">输入密码：</label>
+                                <input type="password" style="width:200px;" class="form-control" id="password1"
+                                       name="password1" placeholder="请输入您的密码">
+                            </div>
+                            <div class="form-group form-inline">
+                                <label for="password2">确认密码：</label>
+                                <input type="password" style="width:200px;" class="form-control" id="password2"
+                                       name="password2" placeholder="再次输入您的密码">
+                            </div>
+
+                            <input type="submit" class="btn btn-info" onclick="modify()"
+                                   style="margin-top: 15px;margin-left: 80px;" value="确认修改"/>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                <form id="normalForm" class="row">
+                    <div class="col-md-5">
+                        <div class="form-group form-inline">
+                            <label for="nickName" class="">昵称：</label>
+                            <input type="text" class="form-control" id="nickName"
+                                   name="nickName" placeholder="请输入昵称">
+                        </div>
+
+                        <div class="form-group form-inline">
+                            <label for="nickName" class="">QQ ：</label>
+                            <input type="text" class="form-control" id="qq"
+                                   name="qq" placeholder="请输入QQ号码">
+                        </div>
+
+                    </div>
+                    <div class="col-md-5 col-md-offset-2">
+
+                        <div>
+
+
+                            <div class="form-group form-inline">
+                                <label for="phone">手机号码：</label>
+                                <input type="text" style="width:200px;" class="form-control" id="phone"
+                                       name="phone" placeholder="请输入手机号码">
+                            </div>
+
+                            <div class="form-group form-inline">
+                                <label for="email">电子邮箱：</label>
+                                <input type="text" style="width:200px;" class="form-control" id="email"
+                                       name="email" placeholder="请输入电子邮箱">
+                            </div>
+
+                            <input type="submit" class="btn btn-info"
+                                   style="margin-top: 15px;margin-left: -40px;" value="保存信息"/>
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="row">
+    <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
+        <div class="panel-heading">
+            <h3 class="panel_title">
+                自选股票
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="table-responsive col-md-12">
+                    <table class="table table-hover table-condensed">
                         <thead>
                         <tr>
-                            <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">名称</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">开盘价</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">收盘价</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">最高价</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">最低价</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">昨收</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">交易量</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">交易额</span><span class="tLabel"></span></th>
+                            <th>代码</th>
+                            <th>名称</th>
+                            <th>开盘价</th>
+                            <th>收盘价</th>
+                            <th>最高价</th>
+                            <th>最低价</th>
+                            <th>昨收</th>
+                            <th>交易量</th>
+                            <th>交易额</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                            </tr>
-                            <tr>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                            </tr>
-
-
+                        <c:forEach items="${ps_list}" var="stock" varStatus="vs">
+                            <c:choose>
+                                <c:when test="${stock.volume == null}">
+                                    <%--此只股票没有当日信息，则仍需显示，只是显示为／--%>
+                                    <tr>
+                                        <td class="stock_no_value">${stock.stockID.code}</td>
+                                        <td class="stock_no_value">${stock.name}</td>
+                                        <td class="stock_no_value">/</td>
+                                        <td class="stock_no_value">/</td>
+                                        <td class="stock_no_value">/</td>
+                                        <td class="stock_no_value">/</td>
+                                        <td class="stock_no_value">/</td>
+                                        <td class="stock_no_value">/</td>
+                                        <td class="stock_no_value">/</td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <%--正常显示--%>
+                                    <tr>
+                                        <td>${stock.stockID.code}</td>
+                                        <td>${stock.name}</td>
+                                        <td>${stock.open}</td>
+                                        <td>${stock.close}</td>
+                                        <td class="stock_high">${stock.high}</td>
+                                        <td class="stock_low">${stock.low}</td>
+                                        <td>${stock.preClose}</td>
+                                        <td>${stock.volume}</td>
+                                        <td>${stock.transactionAmount}</td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
                         </tbody>
                     </table>
-                </div>
-                <div class="pagination-wrapper text-right">
-                    <ul class="pagination">
-                        <li><a>&laquo;</a></li>
-                        <li><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>3</a></li>
-                        <li><a>4</a></li>
-                        <li><a>5</a></li>
-                        <li><span>&middot;&middot;&middot;</span></li>
-                        <li><a href="#">30</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<script src="../js/chart.js"></script>
-<script src="../js/echarts.min.js"></script>
-<script src="../js/stocks.js"></script>
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/jquery.validate.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
-<script src="../js/bootstrap-datetimepicker.js"></script>
-<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
-<script src="../js/logIn.js"></script>
+
 <script type="text/javascript">
 
-    $("th").find("span").css("cursor","pointer");
-    var nowpage=1;
-    var numOfColumn=1;
-    var numOfClick=1;
-    $("th").find("span").click(function() {
-        if(($(".cTable").index($(this))+1)!=numOfColumn){
-            numOfColumn=($(".cTable").index($(this))+1);
-            numOfClick=1;
-        }else if(numOfClick==1){
-            numOfClick=2;
-        }else if(numOfClick==2){
-            numOfClick=1;
-            numOfColumn=1;
-        }
-        for(var i=0;i<9;i++){
-            $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
-            $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");
-        }
 
-            if(numOfClick==1){
-                $("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
-            }else if(numOfClick==2){
-                $("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
+
+    $(document).ready(function () {
+        var user="<%= ((User)session.getAttribute("user")).getUserName()%>";
+        $("#userID").html(user);
+    });
+
+
+
+    function modify() {
+        $("#passwordField").toggle("slow");
+        $("#passwordModify").toggle("slow");
+    }
+
+    $("#modifyForm").validate({
+        rules: {
+            password1: {
+                required: true,
+                minlength: 5,
+                maxlength: 15
+            },
+            password2: {
+                equalTo: "#password1"
+            },
+        },
+        messages: {
+
+            password1: {
+                required: "密码不能为空",
+                minlength: "密码不能少于5位",
+                maxlength: "密码不能高于15位"
+            },
+            password2: {
+                equalTo: "两次密码不一样"
             }
-
-       // alert("你第"+numOfClick+"次点了第"+numOfColumn+"列");
+        }
     });
-    $("li").click(function() {
-        //alert("你单击的是第"+($("li").index($(this))+1)+"个span")
-        nowpage=$(this).find("a").html();
-        alert(nowpage);
-    });
+    $("#normalForm").validate({
+        rules: {
+            phone: {
+                minlength: 11,
+                maxlength: 11
+            },
+            email: {
+                email: true
+            },
+        },
+        messages: {
 
-//    numOfColumn 默认是第1列也就是代码列 点击之后
-//                1 代码排序
-//               2 开盘价
-//            3收盘价
-//            4       最高价
-//            5     最低价
-//            6     昨收
-//            7    交易量
-//            8   交易额
-//
-//    numOfClick =1的时候是第n列的升序
-//                =2 的时候是第n列的降序
-//    page当前页数
+            phone: {
+                minlength: "手机错误",
+                maxlength: "手机错误"
+
+            },
+            email: {
+                email: "邮箱错误"
+            }
+        }
+    });
 
 </script>
+
 </body>
 </html>

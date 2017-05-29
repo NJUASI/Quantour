@@ -26,6 +26,12 @@
             height: 100px;
             background-color: #444444;
         }
+        #myTab{
+            display: none;
+        }
+        #chartPanel{
+            display: none;
+        }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -99,17 +105,11 @@
             <div class="panel-body">
                 <div class="row">
 
-                    <div class="col-lg-2 col-lg-offset-1 inputBlock">
+                    <div class="col-lg-2 col-lg-offset-1 inputBlock" style="display: none">
                         <div class="radio">
                             <label>
                                 <input type="radio" name="optionsRadios" id="optionsRadios1" value="false" checked>
                                 按板块选
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="true">
-                                自选股池
                             </label>
                         </div>
                     </div>
@@ -300,8 +300,7 @@
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
         <li><a href="#cyclePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
         <li><a href="#holdingDetailPanel" role="tab" data-toggle="tab">交易详情</a></li>
-        <li><a href="#certainFormatePanel" role="tab" data-toggle="tab">固定形成期的赢率分析</a></li>
-        <li><a href="#certainHoldingPanel" role="tab" data-toggle="tab">固定持有期的赢率分析</a></li>
+
     </ul>
 </div>
 
@@ -497,6 +496,10 @@
     <div class="loader-section section-right"></div>
 </div>
 
+<footer>
+
+
+</footer>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>

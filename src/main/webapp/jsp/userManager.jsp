@@ -31,10 +31,9 @@
     <style rel="stylesheet" type="text/css">
 
 
-        .picture {
-            height: 200px;
-            width: 200px;
-            margin: 10px auto;
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle!important;
         }
 
         .userBlock {
@@ -93,13 +92,13 @@
     <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
         <div class="panel-heading">
             <h3 class="panel_title">
-                登录信息
+                用户信息
             </h3>
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="panel-body col-md-3 col-md-offset-1"><img src="../img/sad.png" class="picture"/></div>
-                <div class="col-md-7 col-md-offset-1 userBlockLeft" id="modify">
+
+                <div class="col-md-4 col-md-offset-1 userBlockLeft" id="modify">
 
                     <div class="form-group">
                         <label>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：</label>
@@ -135,63 +134,53 @@
                         </form>
                     </div>
                 </div>
+                <div class="col-md-5 userBlockLeft">
+                    <form id="normalForm" class="row">
+                        <div class="col-md-5">
+                            <div class="form-group form-inline">
+                                <label for="nickName" class="">昵称：</label>
+                                <input type="text" class="form-control" id="nickName"
+                                       name="nickName" placeholder="请输入昵称">
+                            </div>
+
+                            <div class="form-group form-inline">
+                                <label for="nickName" class="">QQ ：</label>
+                                <input type="text" class="form-control" id="qq"
+                                       name="qq" placeholder="请输入QQ号码">
+                            </div>
+
+                        </div>
+                        <div class="col-md-5 col-md-offset-2">
+
+                            <div>
+
+
+                                <div class="form-group form-inline">
+                                    <label for="phone">手机号码：</label>
+                                    <input type="text" style="width:200px;" class="form-control" id="phone"
+                                           name="phone" placeholder="请输入手机号码">
+                                </div>
+
+                                <div class="form-group form-inline">
+                                    <label for="email">电子邮箱：</label>
+                                    <input type="text" style="width:200px;" class="form-control" id="email"
+                                           name="email" placeholder="请输入电子邮箱">
+                                </div>
+
+                                <input type="submit" class="btn btn-info"
+                                       style="margin-top: 15px;margin-left: -40px;" value="保存信息"/>
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+
+
         </div>
     </div>
 </div>
-
-
-<div class="row">
-    <div class="panel panel-default col-md-8 col-md-offset-2 messageBlock">
-        <div class="panel-heading">
-            <h3 class="panel_title">
-                基本信息
-            </h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <form id="normalForm">
-                    <div class="col-md-4 col-md-offset-2">
-                        <div class="form-group form-inline">
-                            <label for="nickName" class="">昵称：</label>
-                            <input type="text" class="form-control" id="nickName"
-                                   name="nickName" placeholder="请输入昵称">
-                        </div>
-
-                        <div class="form-group form-inline">
-                            <label for="nickName" class="">QQ ：</label>
-                            <input type="text" class="form-control" id="qq"
-                                   name="qq" placeholder="请输入QQ号码">
-                        </div>
-
-                    </div>
-                    <div class="col-md-5">
-
-                        <div>
-
-
-                            <div class="form-group form-inline">
-                                <label for="phone">手机号码：</label>
-                                <input type="text" style="width:200px;" class="form-control" id="phone"
-                                       name="phone" placeholder="请输入手机号码">
-                            </div>
-
-                            <div class="form-group form-inline">
-                                <label for="email">电子邮箱：</label>
-                                <input type="text" style="width:200px;" class="form-control" id="email"
-                                       name="email" placeholder="请输入电子邮箱">
-                            </div>
-
-                            <input type="submit" class="btn btn-info"
-                                   style="margin-top: 15px;margin-left: -40px;" value="保存信息"/>
-                            </button>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="row">
