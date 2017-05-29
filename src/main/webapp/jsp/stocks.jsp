@@ -166,15 +166,15 @@
                         <caption class="text-center"><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
-                            <th>代码</th>
-                            <th>名称</th>
-                            <th>开盘价</th>
-                            <th>收盘价</th>
-                            <th>最高价</th>
-                            <th>最低价</th>
-                            <th>昨收</th>
-                            <th>交易量</th>
-                            <th>交易额</th>
+                            <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">名称</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">开盘价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">收盘价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">最高价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">最低价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">昨收</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">交易量</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">交易额</span><span class="tLabel"></span></th>
                         </tr>
                         </thead>
                         <tbody id="stocks_all">
@@ -375,6 +375,42 @@
         daysOfWeekDisabled: [0, 6]
     });
 
+
+    $("th").find("span").css("cursor","pointer");
+    var nowpage=1;
+    var numOfColumn=1;
+    var numOfClick=1;
+    $("th").find("span").click(function() {
+        if(($(".cTable").index($(this))+1)!=numOfColumn){
+            numOfColumn=($(".cTable").index($(this))+1);
+            numOfClick=1;
+        }else if(numOfClick==1){
+            numOfClick=2;
+        }else if(numOfClick==2){
+            numOfClick=1;
+            numOfColumn=1;
+        }
+        for(var i=0;i<9;i++){
+            $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
+            $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");
+        }
+
+        if(numOfClick==1){
+            $("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
+        }else if(numOfClick==2){
+            $("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
+        }
+
+        // alert("你第"+numOfClick+"次点了第"+numOfColumn+"列");
+    });
+    $("li").click(function() {
+        //alert("你单击的是第"+($("li").index($(this))+1)+"个span")
+        nowpage=$(this).find("a").html();
+    });
+    //TODO fjj   var nowpage=1;   已经得到
+//        var numOfColumn=1;
+//    var numOfClick=1;
+
     $('.form_date')
         .datetimepicker().on("changeDate", function () {
 //        alert($(".form_date > input").val());
@@ -429,6 +465,8 @@
             }
         });
     });
+
+
 </script>
 </body>
 </html>
