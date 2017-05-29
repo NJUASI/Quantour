@@ -409,9 +409,6 @@
         alert(nowpage);
     });
 
-//        var numOfColumn=1;
-//    var numOfClick=1;
-
     $('.form_date')
         .datetimepicker().on("changeDate", function () {
 //        alert($(".form_date > input").val());
@@ -422,8 +419,9 @@
             async: true,
             url: "/stocks",
             data: {
-                "date": $(".form_date > input").val()
-                // TODO 高源 page信息传输，排序条件
+                "date": $(".form_date > input").val(),
+                "sortCriteria": numOfColumn*2+numOfClick,
+                "wantedPage": nowpage
             },
 
             success: function (result) {
@@ -433,24 +431,38 @@
 
                 if (array[0] == "1") {
                     // js修改jsp中数据
-                    var stock_list = eval("(" + array[1] + ")");
-                    var nowDate = eval("(" + array[2] + ")");
+                    var stock_page = eval("(" + array[1] + ")");
 
-                    alert(stock_list[0]["stockID"]["code"] + "\n" + stock_list[0]["stockID"]["date"] + "\n" + stock_list[0]["name"]
-                        + "\n" + stock_list[0]["open"] + "\n" + stock_list[0]["close"] + "\n" + stock_list[0]["high"]);
+                    /**
+                     * TODO 高源
+                     * 改了接口之后我还没测过，不知道传过来的数据对不对，我之后再改
+                     */
+                    var newDate = stock_page["thisDate"];
+                    var numOfEachPage = stock_page["numOfEachPage"];
+                    var curPageNum = stock_page["curPageNum"];
+                    var totalPageNum = stock_page["totalPageNum"];
+                    var totalRecordNum = stock_page["totalRecordNum"];
+                    var baseStocks = stock_page["baseStocks"];
+                    var stocks = stock_page["stocks"];
+
+
+
+                    alert(newDate);
+                    alert(stocks[0]["stockID"]["code"] + "\n" + stocks[0]["stockID"]["date"] + "\n" + stocks[0]["name"]
+                        + "\n" + stocks[0]["open"] + "\n" + stocks[0]["close"] + "\n" + stocks[0]["high"]);
 
                     $("#stocks_all").empty();
                     for (var i = 0; i < stock_list.length; i++) {
                         $("#stocks_all").append("<tr>");
-                        $("#stocks_all").append("<td>" + stock_list[i]["stockID"]["code"] + "</td>");
-                        $("#stocks_all").append("<td>" + stock_list[i]["name"] + "</td>");
-                        $("#stocks_all").append("<td>" + stock_list[i]["open"] + "</td>");
-                        $("#stocks_all").append("<td>" + stock_list[i]["close"] + "</td>");
-                        $("#stocks_all").append("<td class=\"stock_high\">" + stock_list[i]["high"] + "</td>");
-                        $("#stocks_all").append("<td class=\"stock_low\">" + stock_list[i]["low"] + "</td>");
-                        $("#stocks_all").append("<td>" + stock_list[i]["preClose"] + "</td>");
-                        $("#stocks_all").append("<td>" + stock_list[i]["volume"] + "</td>");
-                        $("#stocks_all").append("<td>" + stock_list[i]["transactionAmount"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["stockID"]["code"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["name"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["open"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["close"] + "</td>");
+                        $("#stocks_all").append("<td class='stock_high'>" + stocks[i]["high"] + "</td>");
+                        $("#stocks_all").append("<td class='stock_low'>" + stocks[i]["low"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["preClose"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["volume"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["transactionAmount"] + "</td>");
                         $("#stocks_all").append("</tr>");
                     }
                 } else if (array[0] == "-1") {

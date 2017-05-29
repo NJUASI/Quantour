@@ -2,7 +2,6 @@ package com.edu.nju.asi.service.serviceImpl.StockService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
@@ -11,6 +10,7 @@ import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
 import com.edu.nju.asi.utilities.StockCodeHelper;
+import com.edu.nju.asi.utilities.enums.StocksComparisionCriteria;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
@@ -52,9 +52,13 @@ public class StockServiceImpl implements StockService {
      * @params date 用户选择日期
      */
     @Override
-    public List<Stock> getAllStocks(LocalDate date) throws IOException {
+    public List<Stock> getAllStocks(LocalDate date, StocksComparisionCriteria comparisionCriteria) throws IOException {
         System.out.println("getAllStocks" + stockDao);
-        return stockDao.getStockData(date);
+        List<Stock> allStocks =  stockDao.getStockData(date);
+
+
+
+        return null;
     }
 
 
