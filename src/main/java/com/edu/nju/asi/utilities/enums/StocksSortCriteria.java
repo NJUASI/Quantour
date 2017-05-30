@@ -6,7 +6,7 @@ import com.edu.nju.asi.utilities.exceptions.NoMatchEnumException;
  * Created by cuihua on 2017/5/29.
  * 股票市场的排序条件
  */
-public enum StocksComparisionCriteria {
+public enum StocksSortCriteria {
 
     // ASC升序，DES降序
     CODE_ASC(0),
@@ -30,7 +30,7 @@ public enum StocksComparisionCriteria {
 
     int repre;
 
-    private StocksComparisionCriteria(int repre) {
+    private StocksSortCriteria(int repre) {
         this.repre = repre;
     }
 
@@ -38,8 +38,8 @@ public enum StocksComparisionCriteria {
         return repre;
     }
 
-    public static StocksComparisionCriteria getEnum(int a) throws NoMatchEnumException {
-        for (StocksComparisionCriteria criteria : StocksComparisionCriteria.values()) {
+    public static StocksSortCriteria getEnum(int a) throws NoMatchEnumException {
+        for (StocksSortCriteria criteria : StocksSortCriteria.values()) {
             if (criteria.repre == a) {
                 return criteria;
             }

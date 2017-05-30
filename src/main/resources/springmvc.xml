@@ -55,6 +55,8 @@
                 </bean>
                 <bean class="com.edu.nju.asi.utilities.spring.StockComparisionCriteriaFormatter">
                 </bean>
+                <bean class="com.edu.nju.asi.utilities.spring.StocksSortCriteriaFormatter">
+                </bean>
             </set>
         </property>
     </bean>

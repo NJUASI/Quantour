@@ -340,18 +340,18 @@
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
 
-                        $("#search-body").find(".colomnsOfTable").click(function() {
-                          var num=($(".colomnsOfTable").index($(this)));
-                            var code=$("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(0).html();
+                        $("#search-body").find(".colomnsOfTable").click(function () {
+                            var num = ($(".colomnsOfTable").index($(this)));
+                            var code = $("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(0).html();
 
                             $("#search-input").val(code);
                             $(".searchResults").hide();
                         });
 
-                        $("#search-body").find("tr").hover(function(){
-                            $(this).css("background-color","#A3B1D1");
-                        },function(){
-                            $(this).css("background-color","#F5F5F5");
+                        $("#search-body").find("tr").hover(function () {
+                            $(this).css("background-color", "#A3B1D1");
+                        }, function () {
+                            $(this).css("background-color", "#F5F5F5");
                         });
 
                         $(".searchResults").show();
@@ -392,7 +392,7 @@
 
 
     $("th").find("span").css("cursor", "pointer");
-    var nowpage = 1;
+    var nowPage = 1;
     var numOfColumn = 0;
     var numOfClick = 1;
     var sortNum = 0;
@@ -416,15 +416,75 @@
             $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
         }
 
-        //TODO fjj   直接用下面这个 sortNum和  nowPage
         sortNum = numOfColumn * 2 + numOfClick - 1;
-//        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowpage+"页");
+//        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowPage+"页");
 //        alert(sortNum);
     });
     $("li").click(function () {
         //alert("你单击的是第"+($("li").index($(this))+1)+"个span")
-        nowpage = $(this).find("a").html();
-        alert(nowpage);
+        nowPage = $(this).find("a").html();
+        alert(nowPage);
+
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/stocks",
+            data: {
+                "date": $(".form_date > input").val(),
+                "sortCriteria": sortNum,
+                "wantedPage": nowPage
+            },
+
+            success: function (result) {
+//                alert(result);
+                $("body").addClass("loaded");
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    // js修改jsp中数据
+                    var stock_page = eval("(" + array[1] + ")");
+
+                    // TODO 高源 添加对日期等界面元素的修改
+                    var newDate = stock_page["thisDate"];
+                    var numOfEachPage = stock_page["numOfEachPage"];
+                    var curPageNum = stock_page["curPageNum"];
+                    var totalPageNum = stock_page["totalPageNum"];
+                    var totalRecordNum = stock_page["totalRecordNum"];
+                    var baseStocks = stock_page["baseStocks"];
+                    var stocks = stock_page["stocks"];
+
+                    alert(newDate);
+                    alert(stocks[0]["stockID"]["code"] + "\n" + stocks[0]["stockID"]["date"] + "\n" + stocks[0]["name"]
+                        + "\n" + stocks[0]["open"] + "\n" + stocks[0]["close"] + "\n" + stocks[0]["high"]);
+
+                    $("#stocks_all").empty();
+                    for (var i = 0; i < stocks.length; i++) {
+                        $("#stocks_all").append("<tr>");
+                        $("#stocks_all").append("<td>" + stocks[i]["stockID"]["code"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["name"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["open"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["close"] + "</td>");
+                        $("#stocks_all").append("<td class='stock_high'>" + stocks[i]["high"] + "</td>");
+                        $("#stocks_all").append("<td class='stock_low'>" + stocks[i]["low"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["preClose"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["volume"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["transactionAmount"] + "</td>");
+                        $("#stocks_all").append("</tr>");
+                    }
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
+                }
+            },
+            error: function (result) {
+//                alert(JSON.stringify(result));
+                alert("错误" + result);
+            }
+        });
+
+
     });
 
     $('.form_date')
@@ -438,8 +498,8 @@
             url: "/stocks",
             data: {
                 "date": $(".form_date > input").val(),
-                "sortCriteria": numOfColumn*2+numOfClick,
-                "wantedPage": nowpage
+                "sortCriteria": sortNum,
+                "wantedPage": nowPage
             },
 
             success: function (result) {
@@ -451,10 +511,7 @@
                     // js修改jsp中数据
                     var stock_page = eval("(" + array[1] + ")");
 
-                    /**
-                     * TODO 高源
-                     * 改了接口之后我还没测过，不知道传过来的数据对不对，我之后再改
-                     */
+                    // TODO 高源 添加对日期等界面元素的修改
                     var newDate = stock_page["thisDate"];
                     var numOfEachPage = stock_page["numOfEachPage"];
                     var curPageNum = stock_page["curPageNum"];
@@ -463,14 +520,12 @@
                     var baseStocks = stock_page["baseStocks"];
                     var stocks = stock_page["stocks"];
 
-
-
                     alert(newDate);
                     alert(stocks[0]["stockID"]["code"] + "\n" + stocks[0]["stockID"]["date"] + "\n" + stocks[0]["name"]
                         + "\n" + stocks[0]["open"] + "\n" + stocks[0]["close"] + "\n" + stocks[0]["high"]);
 
                     $("#stocks_all").empty();
-                    for (var i = 0; i < stock_list.length; i++) {
+                    for (var i = 0; i < stocks.length; i++) {
                         $("#stocks_all").append("<tr>");
                         $("#stocks_all").append("<td>" + stocks[i]["stockID"]["code"] + "</td>");
                         $("#stocks_all").append("<td>" + stocks[i]["name"] + "</td>");

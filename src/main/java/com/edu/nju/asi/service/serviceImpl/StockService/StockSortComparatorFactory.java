@@ -2,16 +2,16 @@ package com.edu.nju.asi.service.serviceImpl.StockService;
 
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.serviceImpl.StockService.stocksComparators.*;
-import com.edu.nju.asi.utilities.enums.StocksComparisionCriteria;
+import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
 
 import java.util.Comparator;
 
 /**
  * Created by cuihua on 2017/5/29.
  */
-public class StockComparatorFactory {
+public class StockSortComparatorFactory {
 
-    public Comparator<Stock> createSortComparator(StocksComparisionCriteria comparisionCriteria) {
+    public Comparator<Stock> createSortComparator(StocksSortCriteria comparisionCriteria) {
         switch (comparisionCriteria) {
             case CODE_ASC:
                 return new CodeAscComparator();

@@ -10,7 +10,7 @@ import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
 import com.edu.nju.asi.utilities.StockCodeHelper;
-import com.edu.nju.asi.utilities.enums.StocksComparisionCriteria;
+import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
@@ -52,13 +52,13 @@ public class StockServiceImpl implements StockService {
      * @params date 用户选择日期
      */
     @Override
-    public List<Stock> getAllStocks(LocalDate date, StocksComparisionCriteria comparisionCriteria) throws IOException {
+    public List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria) throws IOException {
         System.out.println("getAllStocks" + stockDao);
         List<Stock> allStocks =  stockDao.getStockData(date);
 
         // 按指定要求排好序
-        StockComparatorFactory factory = new StockComparatorFactory();
-        Comparator<Stock> comparator = factory.createSortComparator(comparisionCriteria);
+        StockSortComparatorFactory factory = new StockSortComparatorFactory();
+        Comparator<Stock> comparator = factory.createSortComparator(sortCriteria);
         allStocks.sort(comparator);
 
         return allStocks;
