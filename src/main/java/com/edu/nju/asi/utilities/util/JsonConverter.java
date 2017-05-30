@@ -3,7 +3,7 @@ package com.edu.nju.asi.utilities.util;
 import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
-import com.edu.nju.asi.model.StocksPage;
+import com.edu.nju.asi.infoCarrier.StocksPage;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

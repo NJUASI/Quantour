@@ -1,5 +1,7 @@
-package com.edu.nju.asi.model;
+package com.edu.nju.asi.infoCarrier;
 
+import com.edu.nju.asi.model.BaseStock;
+import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.enums.BlockType;
 import org.springframework.format.annotation.DateTimeFormat;
 

@@ -445,6 +445,7 @@
                     var stock_page = eval("(" + array[1] + ")");
 
                     // TODO 高源 添加对日期等界面元素的修改
+                    // TODO 高源 股指的展现（一共五个，可以做成它一直慢慢啊左移的吗。。）
                     var newDate = stock_page["thisDate"];
                     var numOfEachPage = stock_page["numOfEachPage"];
                     var curPageNum = stock_page["curPageNum"];
@@ -512,6 +513,7 @@
                     var stock_page = eval("(" + array[1] + ")");
 
                     // TODO 高源 添加对日期等界面元素的修改
+                    // TODO 高源 股指的展现（一共五个，可以做成它一直慢慢啊左移的吗。。）
                     var newDate = stock_page["thisDate"];
                     var numOfEachPage = stock_page["numOfEachPage"];
                     var curPageNum = stock_page["curPageNum"];

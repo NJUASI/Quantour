@@ -36,6 +36,14 @@ public interface BaseStockDao {
     List<BaseStock> getStockData(String stockCode, LocalDate start, LocalDate end);
 
     /**
+     * @author cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/5/30
+     * @return 所有基准股票的代码
+     */
+    List<String> getAllBaseStocksCode();
+
+    /**
      * 添加股票列表
      *
      * @author Byron Dong

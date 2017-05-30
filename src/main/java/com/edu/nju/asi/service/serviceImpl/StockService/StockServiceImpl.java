@@ -104,6 +104,17 @@ public class StockServiceImpl implements StockService {
         return baseStockDao.getStockData(baseStockCode, start, end);
     }
 
+    @Override
+    public List<BaseStock> getBaseStockDataOfOneDay(LocalDate thisDate) {
+        List<String> baseStocksCode = baseStockDao.getAllBaseStocksCode();
+
+        List<BaseStock> result = new ArrayList<>();
+        for (String tempBaseStock : baseStocksCode) {
+            result.add(baseStockDao.getStockData(tempBaseStock, thisDate));
+        }
+        return result;
+    }
+
     /**
      * 根据股票池的选择标准，选择符合标准的股票池 非自选股调用此方法
      *
