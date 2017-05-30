@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.ChartShowCriteria;
 import com.edu.nju.asi.infoCarrier.StockComparision;
 import com.edu.nju.asi.infoCarrier.StockComparisionCriteria;
+import com.edu.nju.asi.infoCarrier.StocksPage;
 import com.edu.nju.asi.model.*;
 import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.service.PrivateStockService;
@@ -100,9 +101,12 @@ public class StockController {
         System.out.println(thisDate + "\n" + comparisionCriteria.getRepre() + "\n" + wantedPage);
 
         List<Stock> allStocks = null;
+        List<BaseStock> baseStocks = null;
         try {
             allStocks = stockService.getAllStocks(thisDate, comparisionCriteria);
-            System.out.println(allStocks.size());
+            baseStocks = stockService.getBaseStockDataOfOneDay(thisDate);
+
+            System.out.println(allStocks.size() + "   " + baseStocks.size());
         } catch (IOException e) {
             e.printStackTrace();
             return "-1;IO读取失败！";
@@ -119,7 +123,7 @@ public class StockController {
                 }
 
                 StocksPage result = new StocksPage(thisDate, 80, wantedPage, allStocks.size() / 80 + 1,
-                        allStocks.size(), null, wantedStocks);
+                        allStocks.size(), baseStocks, wantedStocks);
                 return "1;" + JsonConverter.convertStockMarket(result);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
