@@ -374,7 +374,6 @@
                 $(".searchResults").hide();
             });
 
-            $(".searchResults")
         }
     );
 

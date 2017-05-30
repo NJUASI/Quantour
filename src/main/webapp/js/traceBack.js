@@ -40,9 +40,9 @@ function traceback() {
 
 
         success: function (result) {
-            $("#myTab").fadeIn("slow");
-            $("#chartPanel").fadeIn("slow");
-
+            // $("#myTab").fadeIn("slow");
+            // $("#chartPanel").fadeIn("slow");
+            $("#coverPanel").hide();
             $("body").addClass("loaded");
             var array = result.split(";");
             if (array[0] == "1") {

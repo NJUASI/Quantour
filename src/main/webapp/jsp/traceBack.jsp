@@ -22,16 +22,17 @@
     <link href="../css/index.css" rel="stylesheet">
     <style type="text/css" rel="stylesheet">
         footer {
+            margin-top: 700px;
             width: 100%;
             height: 100px;
             background-color: #444444;
         }
-        #myTab{
-            display: none;
-        }
-        #chartPanel{
-            display: none;
-        }
+        /*#myTab{*/
+            /*display: none;*/
+        /*}*/
+        /*#chartPanel{*/
+            /*display: none;*/
+        /*}*/
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -94,7 +95,7 @@
     </nav>
 </header>
 
-<form role="form" style="margin-top: 60px;">
+<form role="form" style="position:relative;margin-top: 60px;">
     <div class="row">
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
             <div class="panel-heading">
@@ -201,7 +202,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" >
         <div class="panel panel-default col-md-10 col-md-offset-1 userBlock">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -294,7 +295,12 @@
     </div>
 
 </form>
-<div class="row">
+
+<div id="coverPanel" style="position: absolute;background: #EBEFF0;width: 100%;height: 90px;z-index: 20">
+
+</div>
+
+<div class="row" style="z-index: 2">
 
     <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-tabs" role="tablist">
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
@@ -379,8 +385,8 @@
     </div>
     <div class="tab-pane" id="holdingDetailPanel">
         <div class="row">
-            <div class="col-md-12 table-responsive">
-                <table class="table table-hover table-condensed">
+            <div class="col-md-12 table-responsive pre-scrollable" style="max-height: 640px">
+                <table class="table table-hover table-condensed" >
                     <thead>
                     <tr>
                         <th>周期序号</th>
@@ -399,12 +405,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
 </div>
 <%--</c:when>--%>
 <%--<c:otherwise>--%>
@@ -497,7 +497,6 @@
 </div>
 
 <footer>
-
 
 </footer>
 
