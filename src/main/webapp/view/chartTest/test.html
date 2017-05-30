@@ -1,0 +1,150 @@
+
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+    <link href="../../css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../../css/stocks.css" rel="stylesheet">
+    <link href="../../css/reset.css" rel="stylesheet">
+    <link href="../../css/index.css" rel="stylesheet">
+    <title>股票市场</title>
+</head>
+
+<body  class="loaded"   style="margin-top: 60px;">
+<div class="content">
+    <div class="container">
+
+        <div class="row" style="z-index:3">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="table-responsive">
+                    <table class="table table-hover table-condensed stocks-table">
+                        <caption class="text-center"><h3>市场行情</h3></caption>
+                        <thead>
+                        <tr>
+                            <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">名称</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">开盘价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">收盘价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">最高价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">最低价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">昨收</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">交易量</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">交易额</span><span class="tLabel"></span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                                <td>12</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-wrapper text-right">
+                    <ul class="pagination">
+                        <li><a>&laquo;</a></li>
+                        <li><a>1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                        <li><a>5</a></li>
+                        <li><span>&middot;&middot;&middot;</span></li>
+                        <li><a href="#">30</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../js/chart.js"></script>
+<script src="../../js/echarts.min.js"></script>
+<script src="../../js/stocks.js"></script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../js/bootstrap.js"></script>
+<script src="../../js/bootstrap-datetimepicker.js"></script>
+<script src="../../js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../../js/logIn.js"></script>
+<script type="text/javascript">
+
+    $("th").find("span").css("cursor","pointer");
+    var nowpage=1;
+    var numOfColumn=1;
+    var numOfClick=1;
+    $("th").find("span").click(function() {
+        if(($(".cTable").index($(this))+1)!=numOfColumn){
+            numOfColumn=($(".cTable").index($(this))+1);
+            numOfClick=1;
+        }else if(numOfClick==1){
+            numOfClick=2;
+        }else if(numOfClick==2){
+            numOfClick=1;
+            numOfColumn=1;
+        }
+        for(var i=0;i<9;i++){
+            $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
+            $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");
+        }
+
+            if(numOfClick==1){
+                $("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
+            }else if(numOfClick==2){
+                $("thead>tr>th").eq(numOfColumn-1).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
+            }
+
+       // alert("你第"+numOfClick+"次点了第"+numOfColumn+"列");
+    });
+    $("li").click(function() {
+        //alert("你单击的是第"+($("li").index($(this))+1)+"个span")
+        nowpage=$(this).find("a").html();
+        alert(nowpage);
+    });
+
+//    numOfColumn 默认是第1列也就是代码列 点击之后
+//                1 代码排序
+//               2 开盘价
+//            3收盘价
+//            4       最高价
+//            5     最低价
+//            6     昨收
+//            7    交易量
+//            8   交易额
+//
+//    numOfClick =1的时候是第n列的升序
+//                =2 的时候是第n列的降序
+//    page当前页数
+
+</script>
+</body>
+</html>

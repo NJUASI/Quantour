@@ -70,11 +70,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/">首页</a></li>
                     <li><a href="/stocks">大盘详情</a></li>
-                    <li><a href="/trace_back_home">量化社区</a></li>
+                    <li><a href="/trace_back">量化社区</a></li>
                     <li><a href="#">帮助</a></li>
                     <c:choose>
                         <c:when test="${sessionScope.user!=null}">
-                            <li><a href="/welcome">用户管理</a></li>
+                            <li><a href="/user/welcome">用户管理</a></li>
                         </c:when>
                         <c:otherwise>
                             <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
@@ -87,9 +87,27 @@
     </header>
     <div class="form-group form" style="margin-top: 80px;">
         <div class="row inputBlock">
-            <div class="col-md-2 col-md-offset-2">
-                <label class="control-label" for="stock1">股票1：</label>
-                <input type='text' id="stock1" class="form-control" placeholder="输入股票1名称/代码/拼音"/>
+            <div class="col-md-2 col-md-offset-2"  style="position: relative">
+                <label class="control-label" for="search-input1">股票1：</label>
+                <input type='text' id="search-input1" class="form-control" placeholder="输入股票1名称/代码/拼音"/>
+            </div>
+
+            <div class="searchResults1  pre-scrollable"
+                 style="position: absolute;display: none;width: 300px;max-height: 200px; background-color: whitesmoke;z-index: 20">
+                <table class="table table-hover table-bordered search-table">
+                    <thead class="search-table-head">
+                    <tr>
+                        <th width="60px">代码</th>
+                        <th width="70px">名称</th>
+                        <th>简称</th>
+                        <th>类型</th>
+                    </tr>
+                    </thead>
+                    <tbody id="search-body1">
+                    <tr class="colomnsOfTable1">
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="col-md-2 ">
@@ -300,6 +318,63 @@
             <%--alert("kkkkk");--%>
             <%--}--%>
 
+            $('#search-input1').bind('input propertychange', function () {
+
+                var key = $('#search-input1').val();
+//                alert(key);
+                $.ajax({
+                    type: "get",
+                    async: true,
+                    url: "/stocks/search?key=" + key,
+
+                    success: function (result) {
+//                        alert(result);
+                        if (result == "-1") {
+                            // 调取失败处理
+
+                        }
+
+                        var obj = eval("(" + result + ")");
+                        var len = obj.length;
+                        $("#search-body1").empty();
+                        for (var i = 0; i < 10; i++) {
+                            $("#search-body1").append("<tr class='colomnsOfTable1' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                                "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
+                        }
+
+                        $("#search-body1").find(".colomnsOfTable1").click(function() {
+                            var num=($(".colomnsOfTable1").index($(this)));
+                            var code=$("#search-body1").find(".colomnsOfTable1").eq(num).find("td").eq(0).html();
+
+                            $("#search-input1").val(code);
+                            $(".searchResults1").hide();
+                        });
+
+                        $("#search-body1").find("tr").hover(function(){
+                            $(this).css("background-color","#A3B1D1");
+                        },function(){
+                            $(this).css("background-color","#F5F5F5");
+                        });
+
+                        $(".searchResults1").show();
+                    }
+                })
+            });
+
+//            $("tbody").click(function () {
+//
+//                      var code = $(this).find("td:first").text();
+//                            $("#search-input1").html(code);
+//            });
+
+
+            $(".searchResults1").click(function (e) {
+                e.stopPropagation();
+            });
+
+            $(document).click(function () {
+                $(".searchResults1").hide();
+            });
         });
 
     </script>

@@ -1,5 +1,7 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
+import com.edu.nju.asi.utilities.NumberFormat;
+
 import java.time.LocalDate;
 
 /**
@@ -59,15 +61,13 @@ public class HoldingDetail {
      */
     public double remainInvestment;
 
-    public HoldingDetail(int periodSerial, LocalDate startDate, LocalDate endDate, int holdingNum, double strategyReturn, double remainInvestment) {
+    public HoldingDetail(int periodSerial, LocalDate startDate, LocalDate endDate, double strategyReturn, double baseReturn, double excessReturn, double remainInvestment) {
         this.periodSerial = periodSerial;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.holdingNum = holdingNum;
-        this.strategyReturn = strategyReturn;
-        this.remainInvestment = remainInvestment;
-    }
-
-    public HoldingDetail() {
+        this.strategyReturn = Double.parseDouble(NumberFormat.decimaFormat(strategyReturn, 4));
+        this.baseReturn = Double.parseDouble(NumberFormat.decimaFormat(baseReturn, 4));
+        this.excessReturn = Double.parseDouble(NumberFormat.decimaFormat(excessReturn, 4));
+        this.remainInvestment = Double.parseDouble(NumberFormat.decimaFormat(remainInvestment, 2));
     }
 }

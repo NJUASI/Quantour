@@ -2,8 +2,6 @@ package com.edu.nju.asi.service.serviceImpl.StockService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.BaseStockDaoImpl;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
@@ -12,6 +10,7 @@ import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
 import com.edu.nju.asi.utilities.StockCodeHelper;
+import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
@@ -33,15 +32,13 @@ import java.util.*;
 @Service("StockService")
 public class StockServiceImpl implements StockService {
 
-//    @Autowired
+    @Autowired
     StockDao stockDao;
-//    @Autowired
+    @Autowired
     BaseStockDao baseStockDao;
 
     public StockServiceImpl() {
-        //TODO gcm 原来注释掉了
-        stockDao = new StockDaoImpl();
-        baseStockDao = new BaseStockDaoImpl();
+//        stockDao = new StockDaoImpl();
     }
 
     /**
@@ -55,9 +52,16 @@ public class StockServiceImpl implements StockService {
      * @params date 用户选择日期
      */
     @Override
-    public List<Stock> getAllStocks(LocalDate date) throws IOException {
+    public List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria) throws IOException {
         System.out.println("getAllStocks" + stockDao);
-        return stockDao.getStockData(date);
+        List<Stock> allStocks =  stockDao.getStockData(date);
+
+        // 按指定要求排好序
+        StockSortComparatorFactory factory = new StockSortComparatorFactory();
+        Comparator<Stock> comparator = factory.createSortComparator(sortCriteria);
+        allStocks.sort(comparator);
+
+        return allStocks;
     }
 
 
@@ -98,6 +102,17 @@ public class StockServiceImpl implements StockService {
         String baseStockCode = StockCodeHelper.format(map.get(stockName));
         System.out.println("finished getBaseStockData--------------"+stockName+"--------------------------");
         return baseStockDao.getStockData(baseStockCode, start, end);
+    }
+
+    @Override
+    public List<BaseStock> getBaseStockDataOfOneDay(LocalDate thisDate) {
+        List<String> baseStocksCode = baseStockDao.getAllBaseStocksCode();
+
+        List<BaseStock> result = new ArrayList<>();
+        for (String tempBaseStock : baseStocksCode) {
+            result.add(baseStockDao.getStockData(tempBaseStock, thisDate));
+        }
+        return result;
     }
 
     /**

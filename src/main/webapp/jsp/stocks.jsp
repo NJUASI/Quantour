@@ -34,11 +34,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
                 <li><a href="/stocks">大盘详情</a></li>
-                <li><a href="/trace_back_home">量化社区</a></li>
+                <li><a href="/trace_back">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">
-                        <li><a href="/welcome">用户管理</a></li>
+                        <li><a href="/user/welcome">用户管理</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
@@ -49,7 +49,7 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<body  class="loaded"   style="margin-top: 60px;">
+<body class="loaded" style="margin-top: 60px;">
 <div class="content">
     <div class="container">
         <div class="row panel_title_wrapper" style="z-index: 5;">
@@ -83,21 +83,21 @@
 
 
                                 </div>
-                                <div class="searchResults  pre-scrollable" style="position: absolute;display: none;max-height: 200px; background-color: whitesmoke;z-index: 20">
-                                    <table class="table table-condensed table-bordered">
-                                        <div class="search-table">
-                                            <thead class="search-table-head">
-                                            <tr>
-                                                <th>代码</th>
-                                                <th>名称</th>
-                                                <th>简称</th>
-                                                <th>类型</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="search-body">
-
-                                            </tbody>
-                                        </div>
+                                <div class="searchResults  pre-scrollable"
+                                     style="position: absolute;display: none;width: 300px;max-height: 200px; background-color: whitesmoke;z-index: 20">
+                                    <table class="table table-hover table-bordered search-table">
+                                        <thead class="search-table-head">
+                                        <tr>
+                                            <th width="60px">代码</th>
+                                            <th width="70px">名称</th>
+                                            <th>简称</th>
+                                            <th>类型</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="search-body">
+                                        <tr class="colomnsOfTable">
+                                        </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </form>
@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-        <div class="row markets_wrapper "  style="z-index:3">
+        <div class="row markets_wrapper " style="z-index:3">
             <div class="col-md-offset-1 col-md-10">
                 <ul class="market">
                     <li class="each_market" id="stocks_shangzheng">
@@ -165,20 +165,20 @@
                         <caption class="text-center"><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
-                            <th>代码</th>
-                            <th>名称</th>
-                            <th>开盘价</th>
-                            <th>收盘价</th>
-                            <th>最高价</th>
-                            <th>最低价</th>
-                            <th>昨收</th>
-                            <th>交易量</th>
-                            <th>交易额</th>
+                            <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">名称</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">开盘价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">收盘价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">最高价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">最低价</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">昨收</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">交易量</span><span class="tLabel"></span></th>
+                            <th width="10%"><span class="cTable">交易额</span><span class="tLabel"></span></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="stocks_all">
 
-                        <c:forEach items="${stockList}" var="stock" varStatus="vs">
+                        <c:forEach items="${stock_list}" var="stock" varStatus="vs">
                             <tr>
                                 <td>${stock.stockID.code}</td>
                                 <td>${stock.name}</td>
@@ -197,15 +197,18 @@
                 </div>
                 <div class="pagination-wrapper text-right">
                     <ul class="pagination">
-                        <li><a href="#">&laquo;</a></li>
                         <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
+
+                        <li value="left"><span>&middot;&middot;&middot;</span></li>
                         <li><a href="#">3</a></li>
                         <li><a href="#">4</a></li>
                         <li><a href="#">5</a></li>
-                        <li><span>&middot;&middot;&middot;</span></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">8</a></li>
+                        <li><span>9</span>></li>
+                        <li value="right"><span>&middot;&middot;&middot;</span></li>
                         <li><a href="#">30</a></li>
-                        <li><a href="#">&raquo;</a></li>
                     </ul>
                 </div>
             </div>
@@ -324,36 +327,53 @@
 
                     success: function (result) {
 //                        alert(result);
-                        var obj = eval("("+result+")");
+                        if (result == "-1") {
+                            // 调取失败处理
+
+                        }
+
+                        var obj = eval("(" + result + ")");
                         var len = obj.length;
                         $("#search-body").empty();
-                        for(var i = 0; i < 10; i++){
-                            $("#search-body").append("<tr>");
-                            $("#search-body").append("<td>"+obj[i]["searchID"]["code"]+"</td>");
-                            $("#search-body").append("<td>"+obj[i]["searchID"]["name"]+"</td>");
-                            $("#search-body").append("<td>"+obj[i]["firstLetters"]+"</td>");
-                            $("#search-body").append("<td>"+obj[i]["searchID"]["market"]+"</td>");
-                            $("#search-body").append("</tr>");
+                        for (var i = 0; i < 10; i++) {
+                            $("#search-body").append("<tr class='colomnsOfTable' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                                "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
-                        $("#search-body tr").on("click",function () {
-                            var code = $(this).find("td:first").text();
-                            $("#search-input").html(code);
+
+                        $("#search-body").find(".colomnsOfTable").click(function () {
+                            var num = ($(".colomnsOfTable").index($(this)));
+                            var code = $("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(0).html();
+
+                            $("#search-input").val(code);
+                            $(".searchResults").hide();
                         });
+
+                        $("#search-body").find("tr").hover(function () {
+                            $(this).css("background-color", "#A3B1D1");
+                        }, function () {
+                            $(this).css("background-color", "#F5F5F5");
+                        });
+
                         $(".searchResults").show();
                     }
                 })
             });
 
+//            $("tbody").click(function () {
+//
+//                      var code = $(this).find("td:first").text();
+//                            $("#search-input").html(code);
+//            });
 
 
-            $(".searchResults").click(function(e) {
+            $(".searchResults").click(function (e) {
                 e.stopPropagation();
             });
-            $(document).click(function() {
+
+            $(document).click(function () {
                 $(".searchResults").hide();
             });
 
-            $(".searchResults")
         }
     );
 
@@ -370,6 +390,104 @@
         daysOfWeekDisabled: [0, 6]
     });
 
+
+    $("th").find("span").css("cursor", "pointer");
+    var nowPage = 1;
+    var numOfColumn = 0;
+    var numOfClick = 1;
+    var sortNum = 0;
+    $("th").find("span").click(function () {
+        if (($(".cTable").index($(this))) != numOfColumn) {
+            numOfColumn = ($(".cTable").index($(this)));
+            numOfClick = 1;
+        } else if (numOfClick == 1) {
+            numOfClick = 2;
+        } else if (numOfClick == 2) {
+            numOfClick = 1;
+        }
+        for (var i = 0; i < 15; i++) {
+            $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
+            $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");
+        }
+
+        if (numOfClick == 1) {
+            $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
+        } else if (numOfClick == 2) {
+            $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
+        }
+
+        sortNum = numOfColumn * 2 + numOfClick - 1;
+//        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowPage+"页");
+//        alert(sortNum);
+    });
+    $("li").click(function () {
+        //alert("你单击的是第"+($("li").index($(this))+1)+"个span")
+        nowPage = $(this).find("a").html();
+        alert(nowPage);
+
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/stocks",
+            data: {
+                "date": $(".form_date > input").val(),
+                "sortCriteria": sortNum,
+                "wantedPage": nowPage
+            },
+
+            success: function (result) {
+//                alert(result);
+                $("body").addClass("loaded");
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    // js修改jsp中数据
+                    var stock_page = eval("(" + array[1] + ")");
+
+                    // TODO 高源 添加对日期等界面元素的修改
+                    // TODO 高源 股指的展现（一共五个，可以做成它一直慢慢啊左移的吗。。）
+                    var newDate = stock_page["thisDate"];
+                    var numOfEachPage = stock_page["numOfEachPage"];
+                    var curPageNum = stock_page["curPageNum"];
+                    var totalPageNum = stock_page["totalPageNum"];
+                    var totalRecordNum = stock_page["totalRecordNum"];
+                    var baseStocks = stock_page["baseStocks"];
+                    var stocks = stock_page["stocks"];
+
+                    alert(newDate);
+                    alert(stocks[0]["stockID"]["code"] + "\n" + stocks[0]["stockID"]["date"] + "\n" + stocks[0]["name"]
+                        + "\n" + stocks[0]["open"] + "\n" + stocks[0]["close"] + "\n" + stocks[0]["high"]);
+
+                    $("#stocks_all").empty();
+                    for (var i = 0; i < stocks.length; i++) {
+                        $("#stocks_all").append("<tr>");
+                        $("#stocks_all").append("<td>" + stocks[i]["stockID"]["code"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["name"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["open"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["close"] + "</td>");
+                        $("#stocks_all").append("<td class='stock_high'>" + stocks[i]["high"] + "</td>");
+                        $("#stocks_all").append("<td class='stock_low'>" + stocks[i]["low"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["preClose"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["volume"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["transactionAmount"] + "</td>");
+                        $("#stocks_all").append("</tr>");
+                    }
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
+                }
+            },
+            error: function (result) {
+//                alert(JSON.stringify(result));
+                alert("错误" + result);
+            }
+        });
+
+
+    });
+
     $('.form_date')
         .datetimepicker().on("changeDate", function () {
 //        alert($(".form_date > input").val());
@@ -380,7 +498,9 @@
             async: true,
             url: "/stocks",
             data: {
-                "date": $(".form_date > input").val()
+                "date": $(".form_date > input").val(),
+                "sortCriteria": sortNum,
+                "wantedPage": nowPage
             },
 
             success: function (result) {
@@ -389,7 +509,37 @@
                 var array = result.split(";");
 
                 if (array[0] == "1") {
-                    window.location.href = "/stocks";
+                    // js修改jsp中数据
+                    var stock_page = eval("(" + array[1] + ")");
+
+                    // TODO 高源 添加对日期等界面元素的修改
+                    // TODO 高源 股指的展现（一共五个，可以做成它一直慢慢啊左移的吗。。）
+                    var newDate = stock_page["thisDate"];
+                    var numOfEachPage = stock_page["numOfEachPage"];
+                    var curPageNum = stock_page["curPageNum"];
+                    var totalPageNum = stock_page["totalPageNum"];
+                    var totalRecordNum = stock_page["totalRecordNum"];
+                    var baseStocks = stock_page["baseStocks"];
+                    var stocks = stock_page["stocks"];
+
+                    alert(newDate);
+                    alert(stocks[0]["stockID"]["code"] + "\n" + stocks[0]["stockID"]["date"] + "\n" + stocks[0]["name"]
+                        + "\n" + stocks[0]["open"] + "\n" + stocks[0]["close"] + "\n" + stocks[0]["high"]);
+
+                    $("#stocks_all").empty();
+                    for (var i = 0; i < stocks.length; i++) {
+                        $("#stocks_all").append("<tr>");
+                        $("#stocks_all").append("<td>" + stocks[i]["stockID"]["code"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["name"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["open"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["close"] + "</td>");
+                        $("#stocks_all").append("<td class='stock_high'>" + stocks[i]["high"] + "</td>");
+                        $("#stocks_all").append("<td class='stock_low'>" + stocks[i]["low"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["preClose"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["volume"] + "</td>");
+                        $("#stocks_all").append("<td>" + stocks[i]["transactionAmount"] + "</td>");
+                        $("#stocks_all").append("</tr>");
+                    }
                 } else if (array[0] == "-1") {
                     // 提示错误信息
                     alert(array[1]);
@@ -403,6 +553,8 @@
             }
         });
     });
+
+
 </script>
 </body>
 </html>

@@ -658,3 +658,105 @@ function createClickChart(id,data,strData){
     clickChart.setOption(option);
     return clickChart;
 }
+
+function createPieChart(id,data,seriesTitle){
+
+    function splitePieData(rawData) {
+        var categoryData = [];
+        var values = [];
+
+        for (var i = 0; i < rawData.length; i++) {
+            var name = rawData[i].splice(0, 1)[0];
+            var value = rawData[i].splice(0, 1)[0];
+            categoryData.push(name);
+            values.push({
+                value: value,
+                name: name
+            });
+        }
+        return {
+            categoryData: categoryData,
+            values: values
+        };
+    }
+
+    var pieData = splitePieData(data);
+    var pieChart = echarts.init(document.getElementById(id));
+
+    var option = {
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            x : 'center',
+            y : 'bottom',
+            data:pieData.categoryData
+        },
+        calculable : true,
+        series : [{
+                name: seriesTitle,
+                type:'pie',
+                radius : [30, 110],
+                center : ['50%', '50%'],
+                roseType : 'area',
+                data:pieData.values
+            }]
+    };
+
+    pieChart.setOption(option);
+    return pieChart;
+}
+
+function createRadarChart(id,data,legend,paramter){
+
+    function spliteRadarData(rawData,category) {
+        var values = [];
+
+        for (var i = 0; i < category.length; i++) {
+            values.push({
+                name: category[i],
+                value: rawData[i]
+            });
+        }
+        return {
+            values: values
+        };
+    }
+
+    var radarData = spliteRadarData(data,legend);
+    var radarChart = echarts.init(document.getElementById(id));
+
+    var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            x: 'center',
+            data:legend
+        },
+        radar: [
+            {
+                indicator: (function (){
+                    var res = [];
+                    for (var i = 0; i <paramter.length; i++) {
+                        res.push({text:paramter[i],max:100});
+                    }
+                    return res;
+                })(),
+                center: ['50%','50%'],
+                radius: 80
+            }
+        ],
+        series: [
+            {
+                type: 'radar',
+                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                data: radarData.values
+            }
+        ]
+    };
+
+    radarChart.setOption(option);
+    return radarChart;
+}

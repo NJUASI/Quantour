@@ -26,12 +26,12 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a id="homePage" href="/">首页</a></li>
-                <li><a id="stocks" style="cursor: pointer">大盘详情</a></li>
-                <li><a href="/trace_back_home">量化社区</a></li>
+                <li><a id="stocks" href="/stocks" style="cursor: pointer">大盘详情</a></li>
+                <li><a href="/trace_back">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">
-                        <li><a href="/welcome">用户管理</a></li>
+                        <li><a href="/user/welcome">用户管理</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
@@ -203,31 +203,5 @@
 <script src="../js/bootstrap.js"></script>
 <script src="../js/logIn.js"></script>
 <script src="../js/startLoaded.js"></script>
-<script type="application/javascript">
-    $("#stocks").click(function () {
-        $("body").removeClass("loaded");
-        $.ajax({
-           type: "post",
-           async: true,
-           url: "/stocks",
-
-            success: function (result) {
-                var array = result.split(";");
-
-                if (array[0] == "1") {
-                    window.location.href = "/stocks";
-                } else if (array[0] == "-1") {
-                    // 提示错误信息
-                    alert(array[1]);
-                } else {
-                    alert("未知错误类型orz");
-                }
-            },
-            error: function (result) {
-                alert("错误" + result);
-            }
-       }) ;
-    });
-</script>
 </body>
 </html>

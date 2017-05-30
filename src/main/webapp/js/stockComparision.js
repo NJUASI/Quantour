@@ -12,16 +12,19 @@ function compare() {
     var jsonData = {
         "stockCode1": stockCode1,
         "stockCode2": stockCode2,
-        "startDate": startDate,
-        "endDate": endDate
+        "start": startDate,
+        "end": endDate
     };
+
+    alert(JSON.stringify(jsonData));
 
     $.ajax({
         type: "post",
         async: true,
         url: "/stocks/req_compare",
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(jsonData),
+        data: {
+            comparisionCriteria: JSON.stringify(jsonData)
+        },
 
         success: function (result) {
             var parts = result.split(";");
@@ -42,19 +45,22 @@ function compare() {
             $("#analysePanel").fadeIn("slow");
 
             $("#compareChart").empty();
-            for(var i=0;i<2;i++){
+            for (var i = 0; i < 2; i++) {
                 $("#compareChart").append("<tr>");
-                for(var j=0;j<5;j++){
-                    $("#compareChart").append("<td>"+numVals[i][j]+"</td>");
+                for (var j = 0; j < 5; j++) {
+                    $("#compareChart").append("<td>" + numVals[i][j] + "</td>");
                 }
                 $("#compareChart").append("</tr>");
             }
 
-        },
+        }
+
+        ,
         error: function (result) {
             alert("错误" + result);
         }
 
-    });
+    })
+    ;
 
 }

@@ -4,6 +4,7 @@ import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 
@@ -27,10 +28,11 @@ public interface StockService{
      * @lastUpdatedBy Harvey
      * @updateTime 2017/3/5
      * @params date 用户选择日期
+     * @param sortCriteria 对所有股票的比较排序条件
      * @return 股票信息列表
      * @throws IOException IO
      */
-    List<Stock> getAllStocks(LocalDate date) throws IOException;
+    List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria) throws IOException;
 
     /**
      * 用户输入代码或者股票首字母或股票名称，查找符合条件的股票
@@ -47,9 +49,16 @@ public interface StockService{
      * @param stockName 股票名称
      * @param start 起始日期
      * @param end 结束日期
-     * @return List<StockVO> 基准股票信息的列表
+     * @return 基准股票信息的列表
      */
     List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException;
+
+    /**
+     * 根据需要查看的日期，获得所有基准股票在此日的数据
+     * @param thisDate 需要查看的日期
+     * @return 基准股票信息的列表
+     */
+    List<BaseStock> getBaseStockDataOfOneDay(LocalDate thisDate);
 
     /**
      * 根据股票池的选择标准，选择符合标准的股票池 非自选股调用此方法

@@ -4,6 +4,7 @@ import com.edu.nju.asi.dao.PrivateStockDao;
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.PrivateStockDataHelper;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
+import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.model.Stock;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cuihua on 2017/5/11.
@@ -22,11 +24,13 @@ import java.util.List;
 public class PrivateStockDaoImpl implements PrivateStockDao {
 
     StockDataHelper stockDataHelper;
+    StockSearchDataHelper searchDataHelper;
     PrivateStockDataHelper privateStockDataHelper;
 
     public PrivateStockDaoImpl() {
         stockDataHelper = HelperManager.stockDataHelper;
-        this.privateStockDataHelper = HelperManager.privateStockDataHelper;
+        searchDataHelper = HelperManager.stockSearchDataHelper;
+        privateStockDataHelper = HelperManager.privateStockDataHelper;
     }
 
     /**
@@ -48,9 +52,18 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
         List<Stock> result = new ArrayList<>();
 
         List<PrivateStock> privateStockIDList = privateStockDataHelper.getPrivateStock(userName);
+
+        Map<String,String> codeAndName = searchDataHelper.getAllStocksCode();
+
         for (PrivateStock temp : privateStockIDList) {
             OptionalStockID id = temp.getOptionalStockID();
-            result.add(stockDataHelper.getStockData(id.getStockCode(), date));
+            Stock tempStock = stockDataHelper.getStockData(id.getStockCode(), date);
+            if (tempStock == null) {
+                // 如果此只股票没有当日信息，则仍需显示，只是显示为／
+                result.add(new Stock(id.getStockCode(), date, codeAndName.get(id.getStockCode())));
+            } else {
+                result.add(tempStock);
+            }
         }
 
         return result;

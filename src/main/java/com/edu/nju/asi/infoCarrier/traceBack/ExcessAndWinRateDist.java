@@ -1,5 +1,7 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
+import com.edu.nju.asi.utilities.NumberFormat;
+
 /**
  * Created by Harvey on 2017/4/15.
  *
@@ -22,4 +24,10 @@ public class ExcessAndWinRateDist {
      * TODO 绝对还是相对？
      */
     public double winRate;
+
+    public ExcessAndWinRateDist(int relativeCycle, double excessRate, double winRate) {
+        this.relativeCycle = relativeCycle;
+        this.excessRate = Double.parseDouble(NumberFormat.decimaFormat(excessRate, 4));
+        this.winRate = Double.parseDouble(NumberFormat.decimaFormat(winRate, 4));
+    }
 }

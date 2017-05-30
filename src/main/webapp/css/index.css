@@ -121,7 +121,9 @@ footer {
 .media-body {
     padding-left: 50px;
 }
-
+body{
+    background: #EBEFF0;
+}
 .media-list li a {
     cursor: default;
 }

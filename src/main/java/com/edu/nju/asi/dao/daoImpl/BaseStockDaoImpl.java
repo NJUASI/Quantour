@@ -7,6 +7,7 @@ import com.edu.nju.asi.model.BaseStock;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +56,18 @@ public class BaseStockDaoImpl implements BaseStockDao {
     @Override
     public List<BaseStock> getStockData(String stockCode, LocalDate start, LocalDate end) {
         return baseStockDataHelper.getStockData(stockCode,start,end);
+    }
+
+    @Override
+    public List<String> getAllBaseStocksCode() {
+        // 数据库中只有这五只基准股票，因为无baseStockSearch的相关表，故写死
+        List<String> baseStocksCode = new ArrayList<>();
+        baseStocksCode.add("000300");
+        baseStocksCode.add("000001");
+        baseStocksCode.add("399001");
+        baseStocksCode.add("399005");
+        baseStocksCode.add("399006");
+        return baseStocksCode;
     }
 
     /**

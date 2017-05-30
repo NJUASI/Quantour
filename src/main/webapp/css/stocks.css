@@ -8,6 +8,11 @@ footer {
     margin-top: 70px;
 }
 
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle!important;
+}
+
 .panel_title_wrapper {
     margin-top: 30px;
 }
@@ -54,6 +59,10 @@ ul {
 
 .market_low, .market_limit_down, .stock_low{
     color: #5DCD0B;
+}
+
+.stock_no_value {
+    color: #999;
 }
 
 #stocks_shangzheng, #stocks_shenzheng{

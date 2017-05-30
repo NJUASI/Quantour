@@ -60,11 +60,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
                 <li><a id="stocks">大盘详情</a></li>
-                <li><a href="/trace_back_home">量化社区</a></li>
+                <li><a href="/trace_back">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">
-                        <li><a href="/welcome">用户管理</a></li>
+                        <li><a href="/user/welcome">用户管理</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
