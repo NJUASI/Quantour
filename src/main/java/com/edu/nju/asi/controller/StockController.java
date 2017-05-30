@@ -63,7 +63,7 @@ public class StockController {
         HttpSession session = request.getSession(false);
         System.out.println("默认页面跳转进来的");
 
-        String reqResult = reqGetStockMarket(defaultDate, StocksComparisionCriteria.CODE_ASC, 1);
+        String reqResult = reqGetStockMarket(defaultDate, StocksComparisionCriteria.CODE_DES, 1);
         System.out.println("请求成功");
 
         String[] parts = reqResult.split(";");
@@ -71,8 +71,13 @@ public class StockController {
             // 解析JSON对象
             StocksPage page = JSON.parseObject(parts[1], StocksPage.class);
 
+            mv.addObject("base_stock_list", page.baseStocks);
             mv.addObject("stock_list", page.stocks);
             mv.addObject("date", page.thisDate);
+            mv.addObject("numOfEachPage", page.numOfEachPage);
+            mv.addObject("curPageNum", page.curPageNum);
+            mv.addObject("totalPageNum", page.totalPageNum);
+            mv.addObject("totalRecordNum", page.totalRecordNum);
 
             System.out.println(page.stocks.size() + "\n\n\n");
         } else {

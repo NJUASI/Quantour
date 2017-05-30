@@ -42,13 +42,13 @@ public class StockComparatorFactory {
             case PRE_CLOSE_DES:
                 return new PreCloseDesComparator();
             case VOLUME_ASC:
-                return new VolumeAscComaparator();
+                return new VolumeAscComparator();
             case VOLUME_DES:
-                return new VolumeDesComaparator();
+                return new VolumeDesComparator();
             case TRANSACTION_AMOUNT_ASC:
-                return new TransactionAmountAscComaparator();
+                return new TransactionAmountAscComparator();
             case TRANSACTION_AMOUNT_DES:
-                return new TransactionAmountDesComaparator();
+                return new TransactionAmountDesComparator();
         }
         return null;
     }

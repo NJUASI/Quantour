@@ -1,5 +1,6 @@
 package com.edu.nju.asi.model;
 
+import com.edu.nju.asi.utilities.enums.BlockType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.util.List;
 public class StocksPage {
 
     // 当日日期
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     public LocalDate thisDate;
 
     // 每页有多少条记录
@@ -31,6 +32,9 @@ public class StocksPage {
 
     // 一页的结果数据
     public List<Stock> stocks;
+
+    public StocksPage() {
+    }
 
     public StocksPage(LocalDate thisDate, int numOfEachPage, int curPageNum, int totalPageNum, int totalRecordNum, List<BaseStock> baseStocks, List<Stock> stocks) {
         this.thisDate = thisDate;

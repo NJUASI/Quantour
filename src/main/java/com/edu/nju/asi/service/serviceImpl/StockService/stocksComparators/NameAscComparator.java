@@ -8,6 +8,7 @@ import java.util.Comparator;
  * Created by cuihua on 2017/5/29.
  */
 public class NameAscComparator implements Comparator<Stock> {
+
     @Override
     public int compare(Stock o1, Stock o2) {
         int tempResult = o1.getName().compareTo(o2.getName());

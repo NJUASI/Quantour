@@ -35,7 +35,7 @@ function traceback() {
         async: true,
         url: "/req_trace_back",
         data: {
-            criteriaData: JSON.stringify(jsonData)
+            "criteriaData": JSON.stringify(jsonData)
         },
 
 
@@ -104,9 +104,9 @@ function traceback() {
                     $("#tb_detail").append("<td>" + holdingDetails[i]["startDate"] + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails[i]["endDate"] + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails[i]["holdingNum"] + "</td>");
-                    $("#tb_detail").append("<td>" + (holdingDetails[i]["strategyReturn"]*100).toFixed(2) + "%" + "</td>");
-                    $("#tb_detail").append("<td>" + (holdingDetails[i]["baseReturn"]*100).toFixed(2) + "%" + "</td>");
-                    $("#tb_detail").append("<td>" + (holdingDetails[i]["excessReturn"]*100).toFixed(2) + "%" + "</td>");
+                    $("#tb_detail").append("<td>" + (holdingDetails[i]["strategyReturn"] * 100).toFixed(2) + "%" + "</td>");
+                    $("#tb_detail").append("<td>" + (holdingDetails[i]["baseReturn"] * 100).toFixed(2) + "%" + "</td>");
+                    $("#tb_detail").append("<td>" + (holdingDetails[i]["excessReturn"] * 100).toFixed(2) + "%" + "</td>");
                     $("#tb_detail").append("<td>" + holdingDetails[i]["remainInvestment"].toFixed(2) + "</td>");
                     $("#tb_detail").append("</tr>");
                 }
