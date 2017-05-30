@@ -10,7 +10,6 @@ import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.StockSituationService;
-import com.edu.nju.asi.utilities.LocalDateHelper;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
@@ -60,7 +59,6 @@ public class StockController {
      */
     @GetMapping()
     public ModelAndView getStockMarket(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndView("stocks");
         HttpSession session = request.getSession(false);
         System.out.println("默认页面跳转进来的");
 
@@ -71,7 +69,9 @@ public class StockController {
         if (parts[0].equals("1")) {
             // 解析JSON对象
             StocksPage page = JSON.parseObject(parts[1], StocksPage.class);
+            System.out.println(page.stocks.size() + "\n\n\n");
 
+            ModelAndView mv = new ModelAndView("stocks");
             mv.addObject("base_stock_list", page.baseStocks);
             mv.addObject("stock_list", page.stocks);
             mv.addObject("date", page.thisDate);
@@ -79,14 +79,11 @@ public class StockController {
             mv.addObject("curPageNum", page.curPageNum);
             mv.addObject("totalPageNum", page.totalPageNum);
             mv.addObject("totalRecordNum", page.totalRecordNum);
-
-            System.out.println(page.stocks.size() + "\n\n\n");
+            return mv;
         } else {
             System.out.println("请求失败");
             return new ModelAndView("errorPage");
         }
-
-        return mv;
     }
 
 
@@ -100,36 +97,31 @@ public class StockController {
         System.out.println("--------在req中-----------");
         System.out.println(thisDate + "\n" + comparisionCriteria.getRepre() + "\n" + wantedPage);
 
-        List<Stock> allStocks = null;
-        List<BaseStock> baseStocks = null;
+        String result = null;
         try {
-            allStocks = stockService.getAllStocks(thisDate, comparisionCriteria);
-            baseStocks = stockService.getBaseStockDataOfOneDay(thisDate);
+            List<Stock> allStocks = stockService.getAllStocks(thisDate, comparisionCriteria);
+            List<BaseStock> baseStocks = stockService.getBaseStockDataOfOneDay(thisDate);
 
             System.out.println(allStocks.size() + "   " + baseStocks.size());
+
+            List<Stock> wantedStocks;
+            if ((wantedPage - 1 == allStocks.size() / 80) && (allStocks.size() % 80 != 0)) {
+                wantedStocks = allStocks.subList((wantedPage - 1) * 80, allStocks.size());
+            } else {
+                wantedStocks = allStocks.subList((wantedPage - 1) * 80, wantedPage * 80);
+            }
+
+            StocksPage wanted = new StocksPage(thisDate, 80, wantedPage, allStocks.size() / 80 + 1,
+                    allStocks.size(), baseStocks, wantedStocks);
+            result = JsonConverter.convertStockMarket(wanted);
+
+            System.out.println("Success\nwantedStocks size: " + wantedStocks.size());
+            return "1;" + result;
+
         } catch (IOException e) {
             e.printStackTrace();
             return "-1;IO读取失败！";
         }
-
-        if (allStocks != null) {
-            try {
-                System.out.println("Success");
-                List<Stock> wantedStocks;
-                if ((wantedPage - 1 == allStocks.size() / 80) && (allStocks.size() % 80 != 0)) {
-                    wantedStocks = allStocks.subList((wantedPage - 1) * 80, allStocks.size());
-                } else {
-                    wantedStocks = allStocks.subList((wantedPage - 1) * 80, wantedPage * 80);
-                }
-
-                StocksPage result = new StocksPage(thisDate, 80, wantedPage, allStocks.size() / 80 + 1,
-                        allStocks.size(), baseStocks, wantedStocks);
-                return "1;" + JsonConverter.convertStockMarket(result);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                return "-1;JSON转换失败";
-            }
-        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
     /**
@@ -138,70 +130,71 @@ public class StockController {
     @GetMapping("/{id}")
     public ModelAndView getOneStock(@PathVariable("id") String stockCode, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        List<Stock> stocks = (List<Stock>) session.getAttribute("oneStockResult");
-        boolean isPrivate = (Boolean) session.getAttribute("isPrivate");
-        session.setAttribute("oneStockResult", null);
-        session.setAttribute("isPrivate", false);
+        System.out.println("默认页面跳转进来的");
 
-        if (!stockCode.equals(stocks.get(0).getStockID().getCode())) return new ModelAndView("errorPage");
+        // 默认显示默认日期以前一年的K线图
+        String reqResult = reqGetOneStock(stockCode, defaultDate.minusYears(1), defaultDate, request);
 
-        ModelAndView mv = new ModelAndView("kString");
-        try {
-            mv.addObject("candlestickData", JsonConverter.convertCandlestick(stocks));
-            mv.addObject("volumeData", JsonConverter.convertVolume(stocks));
-            mv.addObject("dataOfEndDay", stocks.get(stocks.size() - 1));
-            mv.addObject("dataOfStartDay", stocks.get(0));
+        String[] parts = reqResult.split(";");
+        if (parts[0].equals("1")) {
+            System.out.println("请求成功");
+
+            // 解析JSON对象
+            String candlestickData = parts[1];
+            String volumeData = parts[2];
+            Stock stockOfEndDay = JSON.parseObject(parts[3], Stock.class);
+            LocalDate startDate = JSON.parseObject(parts[4], LocalDate.class);
+            boolean isPrivate = JSON.parseObject(parts[5], Boolean.class);
+
+            ModelAndView mv = new ModelAndView("kString");
+            mv.addObject("candlestickData", candlestickData);
+            mv.addObject("volumeData", volumeData);
+            mv.addObject("stockOfEndDay", stockOfEndDay);
+            mv.addObject("startDate", startDate);
             mv.addObject("isPrivate", isPrivate);
             return mv;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        } else {
+            System.out.println("请求失败");
+            return new ModelAndView("errorPage");
         }
-
-        return new ModelAndView("index");
     }
 
 
     /**
-     * 【请求】单只股票的股票详情
+     * 【请求】单只股票的股票详情，返回后JS修改页面的数据
      */
     @PostMapping(value = "/{id}", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
-    String reqGetOneStock(@PathVariable(value = "id") String stockCode, HttpServletRequest request) {
-        LocalDate startDate, endDate;
-        String startDateString = request.getParameter("startDate");
-        String endDateString = request.getParameter("endDate");
+    String reqGetOneStock(@PathVariable("id") String stockCode, @RequestParam("startDate") LocalDate startDate,
+                          @RequestParam("endDate") LocalDate endDate, HttpServletRequest request) {
+        System.out.println("--------在req中-----------");
+        System.out.println(stockCode + "\n" + startDate + "\n" + endDate);
 
-        // 默认显示一年内的K线图
-        if (endDateString == null) {
-            System.out.println("默认从行情界面进入，显示最新的。。");
-            startDate = defaultDate.minusYears(1);
-            endDate = defaultDate;
-        } else {
-            System.out.println("在个股界面选择了日期！！");
-            startDate = LocalDateHelper.convertString(startDateString);
-            endDate = LocalDateHelper.convertString(endDateString);
-        }
-
-
-        List<Stock> stocks = null;
+        String result = null;
         try {
-            stocks = chartService.getSingleStockRecords(new ChartShowCriteria(StockCodeHelper.format(stockCode), startDate, endDate));
+            List<Stock> stocks = chartService.getSingleStockRecords(new ChartShowCriteria(StockCodeHelper.format(stockCode), startDate, endDate));
+
             HttpSession session = request.getSession(false);
             User user = (User) session.getAttribute("user");
-            //TODO 根据用户姓名获取用户对应的所有自选股
+
             boolean isPrivate = false;
-            List<PrivateStock> privateCodes = privateStockService.getPrivateStock(user.getUserName());
-            for (int i = 0; i < privateCodes.size(); i++) {
-                if (privateCodes.get(i).getOptionalStockID().getStockCode().equals(stockCode)) {
-                    isPrivate = true;
+            if (user == null) {
+                // 用户未登录，默认isPrivate为false
+            } else {
+                // 根据用户姓名获取用户对应的所有自选股，实时显示
+                List<PrivateStock> privateCodes = privateStockService.getPrivateStock(user.getUserName());
+                for (int i = 0; i < privateCodes.size(); i++) {
+                    if (privateCodes.get(i).getOptionalStockID().getStockCode().equals(stockCode)) {
+                        isPrivate = true;
+                        break;
+                    }
                 }
             }
 
-            session.setAttribute("oneStockResult", stocks);
-            session.setAttribute("isPrivate", isPrivate);
+            result = JsonConverter.convertOneStock(stocks, isPrivate);
 
-            System.out.println(stocks.size());
-            System.out.println(stocks.get(0).getOpen());
+            System.out.println("Success\nstocks size: " + stocks.size());
+            return "1;" + result;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -210,11 +203,6 @@ public class StockController {
             e.printStackTrace();
             return "-1;" + e.getMessage();
         }
-
-        if (stocks != null) {
-            System.out.println("Success");
-            return "1;获取单只股票成功";
-        } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
     /**

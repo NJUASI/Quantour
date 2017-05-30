@@ -89,24 +89,24 @@
 
 
 <div class="row stock" style="margin-top: 70px">
-    <span class="col-md-2 col-md-offset-2"><span id="stockName">${dataOfEndDay.name}</span>&nbsp;<i id="stockCode">${dataOfEndDay.stockID.code}</i></span>
+    <span class="col-md-2 col-md-offset-2"><span id="stockName">${stockOfEndDay.name}</span>&nbsp;<i id="stockCode">${stockOfEndDay.stockID.code}</i></span>
     <span id="addBtn"><button class="btn"></button></span>
 </div>
 
 
 <div class="row">
     <ul id="stockDetail" class="col-md-6 col-md-offset-2 list-inline">
-        <li>开盘 <span class=" font-green ">${dataOfEndDay.open}</span></li>
-        <li>最高 <span class=" font-red ">${dataOfEndDay.high}</span></li>
-        <li>最低 <span class=" font-green ">${dataOfEndDay.low}</span></li>
-        <li>昨收 <span class=" font-black ">${dataOfEndDay.preClose}</span></li>
-        <li>成交量 <span>${dataOfEndDay.volume}</span></li>
-        <li>成交额 <span>${dataOfEndDay.transactionAmount}</span></li>
-        <li>涨跌幅 <span>${dataOfEndDay.increaseMargin}</span></li>
-        <li>涨跌额 <span>${dataOfEndDay.fluctuation}</span></li>
-        <li>换手率 <span>${dataOfEndDay.turnoverRate}</span></li>
-        <li>总市值 <span>${dataOfEndDay.totalValue}</span></li>
-        <li>流通市值 <span>${dataOfEndDay.circulationMarketValue}</span></li>
+        <li>开盘 <span class=" font-green ">${stockOfEndDay.open}</span></li>
+        <li>最高 <span class=" font-red ">${stockOfEndDay.high}</span></li>
+        <li>最低 <span class=" font-green ">${stockOfEndDay.low}</span></li>
+        <li>昨收 <span class=" font-black ">${stockOfEndDay.preClose}</span></li>
+        <li>成交量 <span>${stockOfEndDay.volume}</span></li>
+        <li>成交额 <span>${stockOfEndDay.transactionAmount}</span></li>
+        <li>涨跌幅 <span>${stockOfEndDay.increaseMargin}</span></li>
+        <li>涨跌额 <span>${stockOfEndDay.fluctuation}</span></li>
+        <li>换手率 <span>${stockOfEndDay.turnoverRate}</span></li>
+        <li>总市值 <span>${stockOfEndDay.totalValue}</span></li>
+        <li>流通市值 <span>${stockOfEndDay.circulationMarketValue}</span></li>
     </ul>
 </div>
 
@@ -136,7 +136,7 @@
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
-        <a class="btn btn-info" onclick="getSingleStockDetail()" style="margin-top: 15px;margin-left: -40px;">查看区间</a>
+        <a class="btn btn-info" onclick="changeSingleStockDetail()" style="margin-top: 15px;margin-left: -40px;">查看区间</a>
     </div>
 </div>
 
@@ -243,6 +243,7 @@
 <script src="../js/echarts.min.js"></script>
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
+<script src="../js/stocks.js"></script>
 
 <script type="text/javascript">
 
@@ -342,8 +343,8 @@
 
     $("#stockDetail > li").addClass("col-md-5");
 
-    var startTime = ${dataOfStartDay.stockID.date.year} + "-" + ${dataOfStartDay.stockID.date.monthValue} + "-" + ${dataOfStartDay.stockID.date.dayOfMonth};
-    var endTime = ${dataOfEndDay.stockID.date.year} + "-" + ${dataOfEndDay.stockID.date.monthValue} + "-" + ${dataOfEndDay.stockID.date.dayOfMonth};
+    var startTime = ${startDate.year} + "-" + ${startDate.monthValue} + "-" + ${startDate.dayOfMonth};
+    var endTime = ${stockOfEndDay.stockID.date.year} + "-" + ${stockOfEndDay.stockID.date.monthValue} + "-" + ${stockOfEndDay.stockID.date.dayOfMonth};
     $("#datetimeStart>input").attr('value', startTime);
     $("#datetimeEnd>input").attr('value', endTime);
 
@@ -368,50 +369,11 @@
         daysOfWeekDisabled: [0,6]
     });
 
-    var data1 = ${candlestickData};
-    var data2 = ${volumeData};
 
-    createCandlestickChart('candlestick_chart',data1,data2);
+    createCandlestickChart('candlestick_chart', ${candlestickData}, ${volumeData});
+
     <%--var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});--%>
 
-    function getSingleStockDetail() {
-        var wantedStockCode = $("#stockCode").text();
-//        alert("查看股票：" + wantedStockCode);
-
-        var start = $("#datetimeStart > input").val();
-        var end = $("#datetimeEnd > input").val();
-
-        $("body").removeClass("loded");
-
-//        alert(start);
-
-        $.ajax({
-            type: "post",
-            async: true,
-            url: "/stocks/" + wantedStockCode,
-            data:{
-                "startDate": start,
-                "endDate": end
-            },
-
-            success: function (result) {
-                $("body").addClass("loaded");
-                var array = result.split(";");
-
-                if (array[0] == "1") {
-                    window.location.href = "/stocks/" + wantedStockCode;
-                } else if (array[0] == "-1") {
-                    // 提示错误信息
-                    alert(array[1]);
-                } else {
-                    alert("未知错误类型orz");
-                }
-            },
-            error: function (result) {
-                alert("错误" + result);
-            }
-        });
-    }
 </script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 package com.edu.nju.asi.utilities.util;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.nju.asi.infoCarrier.StocksPage;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
-import com.edu.nju.asi.infoCarrier.StocksPage;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +33,26 @@ public class JsonConverter {
         return objectMapper.writeValueAsString(object);
     }
 
+
+    /**
+     * 将数据集合变成json-String(用于K线图和交易量)
+     *
+     * @return String 转换后的json
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/5/30
+     * @params object 需要转换的对象
+     */
+    public static String convertOneStock(List<Stock> stocks, boolean isPrivate) throws JsonProcessingException {
+        StringBuffer holder = new StringBuffer();
+        holder.append(convertCandlestick(stocks)).append(";");
+        holder.append(convertVolume(stocks)).append(";");
+        holder.append(JSON.toJSONString(stocks.get(stocks.size() - 1))).append(";");
+        holder.append(JSON.toJSONString(stocks.get(0).getStockID().getDate())).append(";");
+        holder.append(JSON.toJSONString(isPrivate));
+        return holder.toString();
+    }
+
     /**
      * 将数据集合变成json-String(用于K线图)
      *
@@ -42,7 +62,7 @@ public class JsonConverter {
      * @updateTime 2017/5/14
      * @params object 需要转换的对象
      */
-    public static String convertCandlestick(List<Stock> stocks) throws JsonProcessingException {
+    private static String convertCandlestick(List<Stock> stocks) throws JsonProcessingException {
         List<List<String>> result = new ArrayList<>();
 
         for (Stock stock : stocks) {
@@ -66,7 +86,7 @@ public class JsonConverter {
      * @updateTime 2017/5/14
      * @params object 需要转换的对象
      */
-    public static String convertVolume(List<Stock> stocks) throws JsonProcessingException {
+    private static String convertVolume(List<Stock> stocks) throws JsonProcessingException {
         List<List<String>> result = new ArrayList<>();
 
         for (Stock stock : stocks) {
@@ -77,6 +97,40 @@ public class JsonConverter {
         }
         return JsonConverter.jsonOfObject(result);
     }
+
+    /**
+     * 将数据集合变成json-String(用于比较的图)
+     *
+     * @return String 转换后的json
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     */
+    public static String convertComparision(Map<LocalDate, Double> map) throws JsonProcessingException {
+        List<List<String>> result = new ArrayList<>();
+
+        for (LocalDate localDate : map.keySet()) {
+            List<String> temp = new ArrayList<>();
+            temp.add(localDate.toString());
+            temp.add(String.valueOf(map.get(localDate)));
+            result.add(temp);
+        }
+        return jsonOfObject(result);
+    }
+
+    /**
+     * 将股票市场变为JSON字符串传输
+     *
+     * @param stocksPage 需要的一页股票数据
+     * @auther cuihua
+     * @lastUpdatedBy cuihua
+     * @updateTime 2017/5/18
+     */
+    public static String convertStockMarket(StocksPage stocksPage) throws JsonProcessingException {
+        return JSON.toJSONString(stocksPage);
+    }
+
 
     /**
      * 将回测结果变为可读取的表格和图表集合String
@@ -137,62 +191,6 @@ public class JsonConverter {
 
 
         return holder.toString();
-    }
-
-    /**
-     * 将数据集合变成json-String(用于比较的图)
-     *
-     * @return String 转换后的json
-     * @auther Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/14
-     * @params object 需要转换的对象
-     */
-    public static String convertComparision(Map<LocalDate, Double> map) throws JsonProcessingException {
-        List<List<String>> result = new ArrayList<>();
-
-        for (LocalDate localDate : map.keySet()) {
-            List<String> temp = new ArrayList<>();
-            temp.add(localDate.toString());
-            temp.add(String.valueOf(map.get(localDate)));
-            result.add(temp);
-        }
-        return jsonOfObject(result);
-    }
-
-    /**
-     * 将股票市场变为JSON字符串传输
-     *
-     * @param stocksPage 需要的一页股票数据
-     * @auther cuihua
-     * @lastUpdatedBy cuihua
-     * @updateTime 2017/5/18
-     */
-    public static String convertStockMarket(StocksPage stocksPage) throws JsonProcessingException {
-        return JSON.toJSONString(stocksPage);
-    }
-
-
-    /**
-     * 数据填充
-     *
-     * @return String 转换后的json
-     * @auther Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/5/14
-     * @params object 需要转换的对象
-     */
-    private static void setData(Map<Double, Integer> map, Object[] data) {
-        for (Double key : map.keySet()) {
-            int index = key.intValue() - 1;
-            if (index >= 11) {
-                int sum = (int) data[11];
-                sum = sum + map.get(key);
-                data[11] = sum;
-            } else if (index >= 1) {
-                data[index] = map.get(key);
-            }
-        }
     }
 
     private static ReturnPeriod convertReturnPeriod(ReturnPeriod returnPeriod) {
@@ -327,5 +325,26 @@ public class JsonConverter {
         return result;
     }
 
+    /**
+     * 数据填充
+     *
+     * @return String 转换后的json
+     * @auther Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/14
+     * @params object 需要转换的对象
+     */
+    private static void setData(Map<Double, Integer> map, Object[] data) {
+        for (Double key : map.keySet()) {
+            int index = key.intValue() - 1;
+            if (index >= 11) {
+                int sum = (int) data[11];
+                sum = sum + map.get(key);
+                data[11] = sum;
+            } else if (index >= 1) {
+                data[index] = map.get(key);
+            }
+        }
+    }
 
 }
