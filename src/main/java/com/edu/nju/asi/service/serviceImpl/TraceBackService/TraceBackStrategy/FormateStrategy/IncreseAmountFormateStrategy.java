@@ -29,8 +29,8 @@ public class IncreseAmountFormateStrategy extends AllFormateStrategy {
         LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
         LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
 
-
         List<FormativePeriodRate> formativePeriodRate = new ArrayList<>();
+
         for(int i = 0; i < stockCodes.size(); i++){
             List<StrategyStock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
             //说明为该形成期没有数据
@@ -38,7 +38,7 @@ public class IncreseAmountFormateStrategy extends AllFormateStrategy {
                 continue;
             }
 
-            double rate = (stockVOList.get(stockVOList.size()-1).close - stockVOList.get(0).close) / stockVOList.get(0).close;
+            double rate = (stockVOList.get(stockVOList.size()-1).close - stockVOList.get(0).preClose) / stockVOList.get(0).preClose;
 
             formativePeriodRate.add(new FormativePeriodRate(stockCodes.get(i), rate));
         }

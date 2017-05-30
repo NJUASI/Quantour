@@ -109,7 +109,7 @@ public class TraceBackStrategyCalculator {
 
         // 回测时间太短，不足一个持有期
         if (cycles == 0) {
-            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles));
+            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex+1, allEndIndex, cycles));
             return strategyCumulativeReturn;
         }
 
@@ -117,6 +117,9 @@ public class TraceBackStrategyCalculator {
         for (int i = 0; i < cycles; i++) {
             int startIndex = allStartIndex + i * holdingPeriod;
             int endIndex = startIndex + holdingPeriod - 1;
+            if(i == 0){
+                startIndex = allStartIndex+1;
+            }
             strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i));
         }
 
@@ -128,7 +131,7 @@ public class TraceBackStrategyCalculator {
         }
 
         // 根据果仁网，第一天数据设置为0
-        strategyCumulativeReturn.get(0).cumulativeReturn = 0;
+        strategyCumulativeReturn.add(0,new CumulativeReturn(allDatesWithData.get(allStartIndex), 0 , false));
 
         return strategyCumulativeReturn;
     }
@@ -173,7 +176,7 @@ public class TraceBackStrategyCalculator {
             for (StrategyStock stock : ss) {
                 if (isDateWithinWanted(periodStart, periodEnd, stock.date)) {
                     LocalDate thisDate = stock.date;
-                    double profit = getProfit(stock);
+                    double profit = stock.close / stock.preClose - 1;
 
                     if (forCalcu.keySet().contains(thisDate)) {
                         forCalcu.get(thisDate).add(profit);
@@ -196,12 +199,6 @@ public class TraceBackStrategyCalculator {
             strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), cumulativeYield, false));
         }
         return strategyCumulativeReturn;
-    }
-
-
-    // 计算单只股票在单日对此日造成的收益率影响
-    private double getProfit(StrategyStock stock) {
-        return stock.close / stock.preClose - 1;
     }
 
     // 计算value的平均值

@@ -1,10 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
-import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
-import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.BiasFormateStrategy;
-import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.IncreseAmountFormateStrategy;
-import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.VolumeFormateStrategy;
+import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.*;
 import com.edu.nju.asi.utilities.enums.FormateType;
 
 import java.time.LocalDate;
@@ -26,6 +23,9 @@ public class FormateStrategyFactory {
                 return new BiasFormateStrategy(allDatesWithData, stockData);
             case VOLUME:
                 return new VolumeFormateStrategy(allDatesWithData, stockData);
+            case CIRCULATIONMARKETVALUEFORMATESTRATEGY:
+                return new CirculationMarketValueFormateStrategy(allDatesWithData, stockData);
+
         }
         return null;
     }

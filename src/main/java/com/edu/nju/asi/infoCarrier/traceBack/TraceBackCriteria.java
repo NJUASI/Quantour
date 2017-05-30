@@ -47,10 +47,10 @@ public class TraceBackCriteria {
      */
     public String baseStockName;
 
-    /**
-     * 指出是否是自选股
-     */
-    public boolean isCustomized;
+//    /**
+//     * 指出是否是自选股
+//     */
+//    public boolean isCustomized;
 
     /**
      * 形成期的形成和挑选类型以及rank
@@ -68,7 +68,7 @@ public class TraceBackCriteria {
         this.stockPoolCriteria = stockPoolCriteria;
 //        this.holdingNum = holdingNum;
         this.baseStockName = baseStockName;
-        this.isCustomized = isCustomized;
+//        this.isCustomized = isCustomized;
         this.formateAndPickCriteria = formateAndPickCriteria;
     }
 
@@ -81,7 +81,7 @@ public class TraceBackCriteria {
         this.stockPoolCriteria = criteria.stockPoolCriteria;
 //        this.holdingNum = holdingNum;
         this.baseStockName = criteria.baseStockName;
-        this.isCustomized = criteria.isCustomized;
+//        this.isCustomized = criteria.isCustomized;
         this.formateAndPickCriteria = criteria.formateAndPickCriteria;
     }
 
@@ -92,7 +92,7 @@ public class TraceBackCriteria {
         this.holdingPeriod = tempHolder.holdingPeriod;
         this.stockPoolCriteria = tempHolder.stockPoolCriteria;
         this.baseStockName = tempHolder.baseStockName;
-        this.isCustomized = tempHolder.isCustomized;
+//        this.isCustomized = tempHolder.isCustomized;
         this.formateAndPickCriteria = tempHolder.formateAndPickCriteria;
     }
 }

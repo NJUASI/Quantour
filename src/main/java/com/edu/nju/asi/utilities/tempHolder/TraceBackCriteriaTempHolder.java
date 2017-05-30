@@ -42,10 +42,10 @@ public class TraceBackCriteriaTempHolder {
      */
     public String baseStockName;
 
-    /**
-     * 指出是否是自选股
-     */
-    public boolean isCustomized;
+//    /**
+//     * 指出是否是自选股
+//     */
+//    public boolean isCustomized;
 
     /**
      * 形成期的形成和挑选类型以及rank

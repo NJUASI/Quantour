@@ -94,7 +94,7 @@ public class TraceBackController {
 
         TraceBackInfo traceBackInfo = null;
         try {
-            traceBackInfo = traceBackService.traceBack(criteria, stockPool);
+            traceBackInfo = traceBackService.traceBack(criteria);
         } catch (IOException e) {
             e.printStackTrace();
             return "-1;IO读取失败！";

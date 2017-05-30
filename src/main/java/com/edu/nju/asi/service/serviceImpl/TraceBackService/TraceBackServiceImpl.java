@@ -1,11 +1,13 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
+import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.StrategyStockList;
 import com.edu.nju.asi.utilities.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +23,18 @@ import java.util.*;
 @Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
-    @Autowired
+//    @Autowired
     private StockService stockService;
-    @Autowired
+//    @Autowired
     private StockDao stockDao;
 
     //自选股票池，用户回测自选股票池时才对此成员变量赋值
-    private List<String> baseStockPool;
+//    private List<String> baseStockPool;
 
     private List<String> traceBackStockPool;
 
     //自选股票池的所有数据
-    private Map<String, List<StrategyStock>> baseStockData;
+//    private Map<String, List<StrategyStock>> baseStockData;
 
     private List<CumulativeReturn> baseCumulativeReturn;
 
@@ -53,10 +55,11 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     public TraceBackServiceImpl() throws IOException {
-//        stockService = new StockServiceImpl();
-//        stockDao = new StockDaoImpl();
-//
-//        //获取所有数据的日期
+        //TODO gcm 原来有注释
+        stockService = new StockServiceImpl();
+        stockDao = new StockDaoImpl();
+
+        //获取所有数据的日期
 //        allDatesWithData = stockDao.getDateWithData();
     }
 
@@ -72,7 +75,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     @Override
-    public TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria, List<String> stockPool) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException {
+    public TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException {
         init();
 
         long enter = System.currentTimeMillis();
@@ -81,20 +84,20 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         // 选取回测的股票池为自选股票池／板块股票池
 
-        //是自选股票池
-        if (traceBackCriteria.isCustomized){
-            traceBackStockPool = stockPool;
-            //给基准股票池赋值，即为自选股票池
-            baseStockPool = stockPool;
-            setUp(traceBackStockPool);
-            //获取所有自选股的所有数据
-            baseStockData = stockData;
-        }
-        //不是自选股票池
-        else {
+//        //是自选股票池
+//        if (traceBackCriteria.isCustomized){
+//            traceBackStockPool = stockPool;
+//            //给基准股票池赋值，即为自选股票池
+//            baseStockPool = stockPool;
+//            setUp(traceBackStockPool);
+//            //获取所有自选股的所有数据
+//            baseStockData = stockData;
+//        }
+//        //不是自选股票池
+//        else {
             traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
             setUp(traceBackStockPool);
-        }
+//        }
 
         System.out.println("---------------set完毕------------");
 
@@ -126,7 +129,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         System.out.println("计算给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
-        // 提前保存TraceBackCriteriaVO，以便后续固定持有期计算形成期时使用
+//         提前保存TraceBackCriteriaVO，以便后续固定持有期计算形成期时使用
         TraceBackCriteria criteriaVOToHold = new TraceBackCriteria(traceBackCriteria);
         System.out.println("---------------7------------");
 
@@ -319,14 +322,12 @@ public class TraceBackServiceImpl implements TraceBackService {
         LocalDate start = traceBackCriteria.startDate;
         LocalDate end = traceBackCriteria.endDate;
 
-        if (!traceBackCriteria.isCustomized) {
+//        if (!traceBackCriteria.isCustomized) {
             return getCumulativeReturnOfOneStock(traceBackCriteria.baseStockName, start, end);
-        } else {
-            return getCustomizedCumulativeReturn(traceBackCriteria, start, end);
-        }
+//        } else {
+//            return getCustomizedCumulativeReturn(traceBackCriteria, start, end);
+//        }
     }
-
-    //TODO gcm 看看自选股和非自选股可否分开两个类，帮忙看
 
     /**
      * 获取基准累计收益率，自选股
@@ -335,52 +336,52 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @param end   回测区间结束日期
      * @return List<CumulativeReturn> 基准累计收益率的列表
      */
-    private List<CumulativeReturn>  getCustomizedCumulativeReturn(TraceBackCriteria traceBackCriteria, LocalDate start, LocalDate end) {
-
-        List<CumulativeReturn> cumulativeReturns = new ArrayList<>();
-
-        LocalDate thisStart = traceBackCriteria.startDate;
-        LocalDate thisEnd = traceBackCriteria.endDate;
-
-        while(!allDatesWithData.contains(thisStart) || !allDatesWithData.contains(thisEnd)){
-            if(!allDatesWithData.contains(thisStart)){
-                thisStart = thisStart.plusDays(1);
-            }
-            if(!allDatesWithData.contains(thisEnd)){
-                thisEnd = thisEnd.minusDays(1);
-            }
-        }
-
-        LocalDate temp = thisStart;
-        double baseStockCumulative = 1;
-        while(temp.isBefore(thisEnd) || temp.isEqual(thisEnd)){
-            StrategyStock stock = null;
-            double totalCumulativeReturn = 0;
-            int notSuspend = 0;
-            for(int j = 0; j < baseStockPool.size(); j++){
-                int index = baseStockData.get(baseStockPool.get(j)).indexOf(temp);
-                //当天有数据
-                if(-1 != index){
-                    stock = baseStockData.get(baseStockPool.get(j)).get(index);
-                    totalCumulativeReturn += (stock.close/stock.preClose - 1);
-                    notSuspend += 1;
-                }
-            }
-
-            //即该天有股票开盘
-            if(notSuspend != 0){
-                baseStockCumulative = baseStockCumulative * (1 + (totalCumulativeReturn / notSuspend));
-                cumulativeReturns.add(new CumulativeReturn(stock.date, baseStockCumulative-1, false));
-            }
-
-            temp = temp.plusDays(1);
-        }
-
-        //修改第一天的基准收益率为0
-        cumulativeReturns.get(0).cumulativeReturn = 0;
-
-        return cumulativeReturns;
-    }
+//    private List<CumulativeReturn>  getCustomizedCumulativeReturn(TraceBackCriteria traceBackCriteria, LocalDate start, LocalDate end) {
+//
+//        List<CumulativeReturn> cumulativeReturns = new ArrayList<>();
+//
+//        LocalDate thisStart = traceBackCriteria.startDate;
+//        LocalDate thisEnd = traceBackCriteria.endDate;
+//
+//        while(!allDatesWithData.contains(thisStart) || !allDatesWithData.contains(thisEnd)){
+//            if(!allDatesWithData.contains(thisStart)){
+//                thisStart = thisStart.plusDays(1);
+//            }
+//            if(!allDatesWithData.contains(thisEnd)){
+//                thisEnd = thisEnd.minusDays(1);
+//            }
+//        }
+//
+//        LocalDate temp = thisStart;
+//        double baseStockCumulative = 1;
+//        while(temp.isBefore(thisEnd) || temp.isEqual(thisEnd)){
+//            StrategyStock stock = null;
+//            double totalCumulativeReturn = 0;
+//            int notSuspend = 0;
+//            for(int j = 0; j < baseStockPool.size(); j++){
+//                int index = baseStockData.get(baseStockPool.get(j)).indexOf(temp);
+//                //当天有数据
+//                if(-1 != index){
+//                    stock = baseStockData.get(baseStockPool.get(j)).get(index);
+//                    totalCumulativeReturn += (stock.close/stock.preClose - 1);
+//                    notSuspend += 1;
+//                }
+//            }
+//
+//            //即该天有股票开盘
+//            if(notSuspend != 0){
+//                baseStockCumulative = baseStockCumulative * (1 + (totalCumulativeReturn / notSuspend));
+//                cumulativeReturns.add(new CumulativeReturn(stock.date, baseStockCumulative-1, false));
+//            }
+//
+//            temp = temp.plusDays(1);
+//        }
+//
+//        //修改第一天的基准收益率为0
+//        cumulativeReturns.get(0).cumulativeReturn = 0;
+//
+//        return cumulativeReturns;
+//    }
 
     /**
      * 当不是回测自选股时，计算一只基准股的累计收益率
@@ -405,8 +406,8 @@ public class TraceBackServiceImpl implements TraceBackService {
         }
         List<CumulativeReturn> cumulativeReturns = new ArrayList<CumulativeReturn>();
 
-        //累计收益率以第一个交易日前一天的收益率来对比计算
-        double closeOfFirstDay = list.get(0).getPreClose();
+        //累计收益率以第一个交易日的收益率来对比计算
+        double closeOfFirstDay = list.get(0).getClose();
 
         System.out.println("Begin loop");
         for (int i = 0; i < list.size(); i++) {

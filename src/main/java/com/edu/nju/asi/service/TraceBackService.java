@@ -18,9 +18,8 @@ public interface TraceBackService {
     /**
      *
      * @param traceBackCriteria 回测标准
-     * @param stockPool 自选股的代码列表
      * @return 回测所要展示的数据
      */
-    TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria, List<String> stockPool)  throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException;
+    TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria)  throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException;
 
 }

@@ -1,5 +1,7 @@
 package com.edu.nju.asi.utilities.enums;
 
+import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.CirculationMarketValueFormateStrategy;
+
 /**
  * Created by Harvey on 2017/4/19.
  *
@@ -9,7 +11,8 @@ public enum FormateType {
 
     INCEREASE_AMOUNT("涨幅"),
     BIAS("乖离率"),
-    VOLUME("成交量");
+    VOLUME("成交量"),
+    CIRCULATIONMARKETVALUEFORMATESTRATEGY("流通市值");
 
     private String repre;
 

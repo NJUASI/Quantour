@@ -11,23 +11,37 @@ import java.time.LocalDate;
  */
 public class StrategyStock {
 
-    // 日期(月/日/年)
+    /**
+     * 日期(月/日/年)
+     */
     public LocalDate date;
 
-    // 收盘指数
+    /**
+     * 收盘指数
+     */
     public double close;
 
-    // 昨收
+    /**
+     * 昨收
+     */
     public double preClose;
 
-    // 交易量
+    /**
+     * 交易量
+     */
     public double volume;
+
+    /**
+     * 流通市值
+     */
+    public double circulationMarketValue;
 
     public StrategyStock(Stock stock) {
         this.date = stock.getStockID().getDate();
         this.close = stock.getClose();
         this.preClose = stock.getPreClose();
         this.volume = new Double(stock.getVolume());
+        this.circulationMarketValue = new Double(stock.getCirculationMarketValue());
     }
 
 }
