@@ -56,12 +56,12 @@ public class TraceBackController {
             System.out.println("未登录");
 
             try {
-                response.sendRedirect("/welcome");
+                response.sendRedirect("");
+                return "-1;喵喵喵";
             } catch (IOException e) {
                 e.printStackTrace();
                 return "-1;不给看";
             }
-            return "-1;未知错误";
         }
 
         User thisUser = (User) request.getSession().getAttribute("user");

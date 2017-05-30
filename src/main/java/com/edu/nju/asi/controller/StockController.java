@@ -13,7 +13,10 @@ import com.edu.nju.asi.utilities.LocalDateHelper;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.StocksComparisionCriteria;
-import com.edu.nju.asi.utilities.exceptions.*;
+import com.edu.nju.asi.utilities.exceptions.CodeNotFoundException;
+import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +52,7 @@ public class StockController {
 
     // 因为可能数据库中没有今天的数据，所以默认显示昨日
 //    private final static LocalDate defaultDate = LocalDate.now().minusDays(1);
-    private final static LocalDate defaultDate = LocalDate.of(2017,2,3);
+    private final static LocalDate defaultDate = LocalDate.of(2017, 2, 3);
 
     /**
      * 默认页面跳转，默认日期股票市场查看（所有股票数据、市场温度计）
@@ -66,13 +69,12 @@ public class StockController {
         String[] parts = reqResult.split(";");
         if (parts[0].equals("1")) {
             // 解析JSON对象
-            List<Stock> stocks = JSON.parseArray(parts[1], Stock.class);
-            LocalDate date = JSON.parseObject(parts[2], LocalDate.class);
+            StocksPage page = JSON.parseObject(parts[1], StocksPage.class);
 
-            mv.addObject("stock_list", stocks);
-            mv.addObject("date", date);
+            mv.addObject("stock_list", page.stocks);
+            mv.addObject("date", page.thisDate);
 
-            System.out.println(stocks.size() + "\n\n\n");
+            System.out.println(page.stocks.size() + "\n\n\n");
         } else {
             System.out.println("请求失败");
             return new ModelAndView("errorPage");
@@ -91,25 +93,27 @@ public class StockController {
                              @RequestParam("wantedPage") int wantedPage) {
         System.out.println("--------在req中-----------" + thisDate);
 
-        StockSituation situation = null;
-        List<Stock> stockList = null;
+        List<Stock> allStocks = null;
         try {
-            situation = situationService.getStockStituation(thisDate);
-            stockList = stockService.getAllStocks(thisDate, comparisionCriteria);
-            System.out.println(stockList.size());
-        } catch (NoSituationDataException e) {
-            e.printStackTrace();
-            return "-1;" + e.getMessage();
+            allStocks = stockService.getAllStocks(thisDate, comparisionCriteria);
+            System.out.println(allStocks.size());
         } catch (IOException e) {
             e.printStackTrace();
             return "-1;IO读取失败！";
         }
 
-        if (stockList != null) {
+        if (allStocks != null) {
             try {
                 System.out.println("Success");
-                StocksPage result = new StocksPage(thisDate, 80, wantedPage, stockList.size() / 80 + 1,
-                        stockList.size(), null, stockList);
+                List<Stock> wantedStocks;
+                if ((wantedPage - 1 == allStocks.size() / 80) && (allStocks.size() % 80 != 0)) {
+                    wantedStocks = allStocks.subList((wantedPage - 1) * 80, allStocks.size());
+                } else {
+                    wantedStocks = allStocks.subList((wantedPage - 1) * 80, wantedPage * 80);
+                }
+
+                StocksPage result = new StocksPage(thisDate, 80, wantedPage, allStocks.size() / 80 + 1,
+                        allStocks.size(), null, wantedStocks);
                 return "1;" + JsonConverter.convertStockMarket(result);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();

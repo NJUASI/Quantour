@@ -14,13 +14,13 @@ public class TraceBackCriteria {
     /**
      * 回测区间的起始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     public LocalDate startDate;
 
     /**
      * 回测区间的结束时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     public LocalDate endDate;
 
     /**

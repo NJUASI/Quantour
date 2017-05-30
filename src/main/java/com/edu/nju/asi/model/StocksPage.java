@@ -1,5 +1,7 @@
 package com.edu.nju.asi.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
 public class StocksPage {
 
     // 当日日期
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate thisDate;
 
     // 每页有多少条记录

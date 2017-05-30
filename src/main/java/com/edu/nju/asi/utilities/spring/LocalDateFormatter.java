@@ -14,6 +14,8 @@ public class LocalDateFormatter implements Formatter<LocalDate> {
 
     @Override
     public LocalDate parse(String text, Locale locale) throws ParseException {
+        System.out.println("--------------FORMAT LocalDate--------------");
+        System.out.println(text);
         return LocalDateHelper.convertString(text);
     }
 

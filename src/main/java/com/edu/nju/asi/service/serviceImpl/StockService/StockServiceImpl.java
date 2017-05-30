@@ -56,9 +56,12 @@ public class StockServiceImpl implements StockService {
         System.out.println("getAllStocks" + stockDao);
         List<Stock> allStocks =  stockDao.getStockData(date);
 
+        // 按指定要求排好序
+        StockComparatorFactory factory = new StockComparatorFactory();
+        Comparator<Stock> comparator = factory.createSortComparator(comparisionCriteria);
+        allStocks.sort(comparator);
 
-
-        return null;
+        return allStocks;
     }
 
 

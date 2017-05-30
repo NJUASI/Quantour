@@ -13,6 +13,8 @@ import java.util.Locale;
 public class TraceBackCriteriaFormatter implements Formatter<TraceBackCriteria> {
     @Override
     public TraceBackCriteria parse(String text, Locale locale) throws ParseException {
+        System.out.println("--------------FORMAT TraceBackCriteria--------------");
+        System.out.println(text);
         return JSON.parseObject(text, TraceBackCriteria.class);
     }
 

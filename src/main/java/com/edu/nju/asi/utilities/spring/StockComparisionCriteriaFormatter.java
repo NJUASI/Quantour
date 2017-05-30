@@ -13,6 +13,8 @@ import java.util.Locale;
 public class StockComparisionCriteriaFormatter implements Formatter<StockComparisionCriteria> {
     @Override
     public StockComparisionCriteria parse(String text, Locale locale) throws ParseException {
+        System.out.println("--------------FORMAT StockComparisionCriteria--------------");
+        System.out.println(text);
         return JSON.parseObject(text, StockComparisionCriteria.class);
     }
 
