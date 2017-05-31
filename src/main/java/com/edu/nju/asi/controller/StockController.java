@@ -69,7 +69,7 @@ public class StockController {
         if (parts[0].equals("1")) {
             // 解析JSON对象
             StocksPage page = JSON.parseObject(parts[1], StocksPage.class);
-//            String topClicksChart = parts[2];
+            String topClicksChart = parts[2];
             System.out.println(page.stocks.size() + "\n\n\n");
 
             ModelAndView mv = new ModelAndView("stocks");
@@ -81,7 +81,7 @@ public class StockController {
             mv.addObject("totalPageNum", page.totalPageNum);
             mv.addObject("totalRecordNum", page.totalRecordNum);
             mv.addObject("topClicks", page.topClicks);
-//            mv.addObject("topClicksChartData", topClicksChart);
+            mv.addObject("topClicksChartData", topClicksChart);
             return mv;
         } else {
             System.out.println("请求失败");
@@ -151,7 +151,7 @@ public class StockController {
             Stock stockOfEndDay = JSON.parseObject(parts[3], Stock.class);
             LocalDate startDate = JSON.parseObject(parts[4], LocalDate.class);
             boolean isPrivate = JSON.parseObject(parts[5], Boolean.class);
-//            String clickedData = parts[6];
+            String clickedData = parts[6];
 
             // 搜索量加一
             SearchID thisStock = new SearchID(stockOfEndDay.getStockID().getCode(), stockOfEndDay.getName());
@@ -167,7 +167,7 @@ public class StockController {
             mv.addObject("stockOfEndDay", stockOfEndDay);
             mv.addObject("startDate", startDate);
             mv.addObject("isPrivate", isPrivate);
-//            mv.addObject("clickedData", clickedData);
+            mv.addObject("clickedData", clickedData);
             return mv;
         } else {
             System.out.println("请求失败");

@@ -227,6 +227,13 @@
     </div><!-- /.modal -->
 </div>
 
+
+<%--TODO 高源 图表位置--%>
+<div id="one_stock_click_chart">
+
+</div>
+
+
 <footer>
 
 </footer>
@@ -249,6 +256,9 @@
 <script src="../js/stocks.js"></script>
 
 <script type="text/javascript">
+
+    // 画出点击率的图
+    createClickChart("one_stock_click_chart", ${clickedData});
 
     $(document).ready(
         function() {

@@ -104,7 +104,7 @@ public class JsonConverter {
         List<String> result = new ArrayList<>();
         result.add(NumberFormat.decimaFormat(nowClickNum,4));
         result.add(NumberFormat.percentFormat(nowClickNum,2));
-        return JsonConverter.jsonOfObject(result);
+        return jsonOfObject(result);
     }
 
 
@@ -153,7 +153,7 @@ public class JsonConverter {
             temp.add(String.valueOf(stockSearch.getClickAmount()));
             result.add(temp);
         }
-        return JsonConverter.jsonOfObject(result);
+        return jsonOfObject(result);
     }
 
 

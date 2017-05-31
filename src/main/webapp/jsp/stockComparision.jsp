@@ -379,11 +379,11 @@
                 })
             });
 
-            $('#search-input2').click(function(){
-                $("#search-body1").hide();
+            $('#search-input2').blur(function(){
+                $(".searchResults2").hide();
             })
-            $('#search-input1').click(function(){
-                $("#search-body2").hide();
+            $('#search-input1').blur(function(){
+                $(".searchResults1").hide();
             })
             $('#search-input2').bind('input propertychange', function () {
                 $("#search-body2").show();

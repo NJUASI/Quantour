@@ -120,26 +120,27 @@
                         <li data-target="#myCarousel" data-slide-to="4"></li>
                     </ol>
                     <!-- 轮播（Carousel）项目 -->
+                    <%--TODO 高源 没画出来--%>
                     <div class="carousel-inner row">
-                        <c:forEach items="${base_stock_list}" var="basestock" varStatus="vs">
+                        <c:forEach items="${base_stock_list}" var="base_stock" varStatus="vs">
                             <div class="item col-md-offset-4 col-md-6" >
                                 <div class="row">
-                                    <h4 class="stockName">${basestock.name}</h4>
+                                    <h4 class="stockName">${base_stock.name}</h4>
                                 </div>
                                 <div class="row">
-                                    <h3 class="col-md-5" style="margin-top: 0px"><span class="volume">${basestock.volume}</span></h3>
+                                    <h3 class="col-md-5" style="margin-top: 0px"><span class="volume">${base_stock.volume}</span></h3>
 
-                                    <h4 class="col-md-4" style="margin-top: 5px"><span class="transactionAmount">${basestock.transactionAmount}</span></h4>
+                                    <h4 class="col-md-4" style="margin-top: 5px"><span class="transactionAmount">${base_stock.transactionAmount}</span></h4>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4">开盘:<span class="market_open">${basestock.open}</span></div>
-                                    <div class="col-md-4">最高:<span class="market_high">${basestock.high}</span></div>
-                                    <div class="col-md-4">涨跌幅:<span class="increaseMargin">${basestock.increaseMargin}</span></div>
+                                    <div class="col-md-4">开盘:<span class="market_open">${base_stock.open}</span></div>
+                                    <div class="col-md-4">最高:<span class="market_high">${base_stock.high}</span></div>
+                                    <div class="col-md-4">涨跌幅:<span class="increaseMargin">${base_stock.increaseMargin}</span></div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4">收盘:<span class="market_close">${basestock.close}</span></div>
-                                    <div class="col-md-4">最低:<span class="market_low">${basestock.low}</span></div>
-                                    <div class="col-md-4">涨跌额:<span class="fluctuation">${basestock.fluctuation}</span></div>
+                                    <div class="col-md-4">收盘:<span class="market_close">${base_stock.close}</span></div>
+                                    <div class="col-md-4">最低:<span class="market_low">${base_stock.low}</span></div>
+                                    <div class="col-md-4">涨跌额:<span class="fluctuation">${base_stock.fluctuation}</span></div>
                                 </div>
                             </div>
                         </c:forEach>
@@ -312,6 +313,11 @@
     </div><!-- /.modal -->
 </div>
 
+<%--TODO 高源 图表位置--%>
+<div id="hot_search_chart">
+
+</div>
+
 <footer>
 </footer>
 
@@ -327,6 +333,11 @@
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="../js/logIn.js"></script>
 <script type="text/javascript">
+
+    // 画出热搜榜的图
+    createPieChart("hot_search_chart", ${topClicksChartData});
+
+
     $(document).ready(
         function () {
             var date = ${date.year}+"-";
@@ -502,6 +513,9 @@
 
                 if (array[0] == "1") {
                     // js修改jsp中数据
+
+                    // 处理图表数据
+                    // TODO 高源 股指没有修改
                     var stock_page = eval("(" + array[1] + ")");
 
                     var numOfEachPage = stock_page["numOfEachPage"];
@@ -609,6 +623,11 @@
                             "<td>" + stocks[i]["volume"] + "</td>" +
                             "<td>" + stocks[i]["transactionAmount"] + "</td></tr>");
                     }
+
+
+                    // 处理表格数据
+                    var top_search_chart_data = array[2];
+                    createPieChart("hot_search_chart", top_search_chart_data);
 
                 } else if (array[0] == "-1") {
                     // 提示错误信息
