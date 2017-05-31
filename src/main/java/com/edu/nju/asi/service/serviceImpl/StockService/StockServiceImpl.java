@@ -177,7 +177,12 @@ public class StockServiceImpl implements StockService {
      * @return List<StockSearch>
      */
     @Override
-    public List<StockSearch> getRankingList(int number) {
-        return stockDao.getRankingList(number);
+    public List<StockSearch> getTopRankingList(int number) {
+        return stockDao.getTopRankingList(number);
+    }
+
+    @Override
+    public List<StockSearch> getAllRankingList() {
+        return stockDao.getAllRankingList();
     }
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.StocksPage;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,13 +44,14 @@ public class JsonConverter {
      * @updateTime 2017/5/30
      * @params object 需要转换的对象
      */
-    public static String convertOneStock(List<Stock> stocks, boolean isPrivate) throws JsonProcessingException {
+    public static String convertOneStock(List<Stock> stocks, boolean isPrivate, double nowClickNum) throws JsonProcessingException {
         StringBuffer holder = new StringBuffer();
         holder.append(convertCandlestick(stocks)).append(";");
         holder.append(convertVolume(stocks)).append(";");
         holder.append(JSON.toJSONString(stocks.get(stocks.size() - 1))).append(";");
         holder.append(JSON.toJSONString(stocks.get(0).getStockID().getDate())).append(";");
-        holder.append(JSON.toJSONString(isPrivate));
+        holder.append(JSON.toJSONString(isPrivate)).append(";");
+        holder.append(convertClickSearch(nowClickNum)).append(";");
         return holder.toString();
     }
 
@@ -98,6 +100,13 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
+    private static String convertClickSearch(double nowClickNum){
+        // TODO 金玉 个股热搜比例水球 我觉得还需要一个总的点击量数据吧。。。。
+
+        return null;
+    }
+
+
     /**
      * 将数据集合变成json-String(用于比较的图)
      *
@@ -128,7 +137,16 @@ public class JsonConverter {
      * @updateTime 2017/5/18
      */
     public static String convertStockMarket(StocksPage stocksPage) throws JsonProcessingException {
-        return JSON.toJSONString(stocksPage);
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(JSON.toJSONString(stocksPage)).append(";");
+        buffer.append(convertTopSearchedChart(stocksPage.topClicks));
+        return buffer.toString();
+    }
+
+    private static String convertTopSearchedChart(List<StockSearch> topClicks) {
+        // TODO 金玉 南丁格尔的图需要的数据String
+
+        return null;
     }
 
 

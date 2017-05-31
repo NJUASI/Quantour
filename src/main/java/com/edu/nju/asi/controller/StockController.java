@@ -69,6 +69,7 @@ public class StockController {
         if (parts[0].equals("1")) {
             // 解析JSON对象
             StocksPage page = JSON.parseObject(parts[1], StocksPage.class);
+            String topClicksChart = parts[2];
             System.out.println(page.stocks.size() + "\n\n\n");
 
             ModelAndView mv = new ModelAndView("stocks");
@@ -79,6 +80,8 @@ public class StockController {
             mv.addObject("curPageNum", page.curPageNum);
             mv.addObject("totalPageNum", page.totalPageNum);
             mv.addObject("totalRecordNum", page.totalRecordNum);
+            mv.addObject("topClicks", page.topClicks);
+            mv.addObject("topClicksChartData", topClicksChart);
             return mv;
         } else {
             System.out.println("请求失败");
@@ -101,7 +104,6 @@ public class StockController {
         try {
             List<Stock> allStocks = stockService.getAllStocks(thisDate, comparisionCriteria);
             List<BaseStock> baseStocks = stockService.getBaseStockDataOfOneDay(thisDate);
-
             System.out.println(allStocks.size() + "   " + baseStocks.size());
 
             List<Stock> wantedStocks;
@@ -111,8 +113,12 @@ public class StockController {
                 wantedStocks = allStocks.subList((wantedPage - 1) * 80, wantedPage * 80);
             }
 
+            // 显示热搜榜（前10和图表）
+            List<StockSearch> topSearched = stockService.getTopRankingList(10);
+
+
             StocksPage wanted = new StocksPage(thisDate, 80, wantedPage, allStocks.size() / 80 + 1,
-                    allStocks.size(), baseStocks, wantedStocks);
+                    allStocks.size(), baseStocks, wantedStocks, topSearched);
             result = JsonConverter.convertStockMarket(wanted);
 
             System.out.println("Success\nwantedStocks size: " + wantedStocks.size());
@@ -145,6 +151,15 @@ public class StockController {
             Stock stockOfEndDay = JSON.parseObject(parts[3], Stock.class);
             LocalDate startDate = JSON.parseObject(parts[4], LocalDate.class);
             boolean isPrivate = JSON.parseObject(parts[5], Boolean.class);
+            String clickedData = parts[6];
+
+            // 搜索量加一
+            SearchID thisStock = new SearchID(stockOfEndDay.getStockID().getCode(), stockOfEndDay.getName());
+            boolean clicked = stockService.addClickAmount(thisStock);
+            if (!clicked) {
+                System.err.println("getOneStock：搜索量未加一！！");
+            }
+
 
             ModelAndView mv = new ModelAndView("kString");
             mv.addObject("candlestickData", candlestickData);
@@ -152,6 +167,7 @@ public class StockController {
             mv.addObject("stockOfEndDay", stockOfEndDay);
             mv.addObject("startDate", startDate);
             mv.addObject("isPrivate", isPrivate);
+            mv.addObject("clickedData", clickedData);
             return mv;
         } else {
             System.out.println("请求失败");
@@ -172,16 +188,17 @@ public class StockController {
 
         String result = null;
         try {
+            // 股票数据
             List<Stock> stocks = chartService.getSingleStockRecords(new ChartShowCriteria(StockCodeHelper.format(stockCode), startDate, endDate));
 
             HttpSession session = request.getSession(false);
             User user = (User) session.getAttribute("user");
 
+            // 是否为自选股
             boolean isPrivate = false;
-            if (user == null) {
+            if (user != null) {
                 // 用户未登录，默认isPrivate为false
-            } else {
-                // 根据用户姓名获取用户对应的所有自选股，实时显示
+                // 用户登录才进行处理：根据用户姓名获取用户对应的所有自选股，实时显示
                 List<PrivateStock> privateCodes = privateStockService.getPrivateStock(user.getUserName());
                 for (int i = 0; i < privateCodes.size(); i++) {
                     if (privateCodes.get(i).getOptionalStockID().getStockCode().equals(stockCode)) {
@@ -191,7 +208,10 @@ public class StockController {
                 }
             }
 
-            result = JsonConverter.convertOneStock(stocks, isPrivate);
+            // 当前股票热度
+            double nowClickNum = stockService.getClickAmount(new SearchID(stockCode, stocks.get(0).getName()));
+
+            result = JsonConverter.convertOneStock(stocks, isPrivate, nowClickNum);
 
             System.out.println("Success\nstocks size: " + stocks.size());
             return "1;" + result;
@@ -227,8 +247,8 @@ public class StockController {
             ModelAndView mv = new ModelAndView("stockComparision");
             try {
                 // 数值型对比信息
-                mv.addObject("stockCompareNum1", convertcomparisionNumVal(result.get(0)));
-                mv.addObject("stockCompareNum2", convertcomparisionNumVal(result.get(1)));
+                mv.addObject("stockCompareNum1", convertComparisionNumVal(result.get(0)));
+                mv.addObject("stockCompareNum2", convertComparisionNumVal(result.get(1)));
 
 
                 // 图表型对比信息
@@ -294,8 +314,8 @@ public class StockController {
             comparisionName = JsonConverter.jsonOfObject(name);
 
             List<List<String>> numVal = new ArrayList<>();
-            numVal.add(this.convertcomparisionNumVal(result.get(0)));
-            numVal.add(this.convertcomparisionNumVal(result.get(1)));
+            numVal.add(this.convertComparisionNumVal(result.get(0)));
+            numVal.add(this.convertComparisionNumVal(result.get(1)));
             numVals = JsonConverter.jsonOfObject(numVal);
 
 
@@ -325,7 +345,7 @@ public class StockController {
     }
 
 
-    private List<String> convertcomparisionNumVal(StockComparision comparision) {
+    private List<String> convertComparisionNumVal(StockComparision comparision) {
         List<String> result = new LinkedList<>();
         result.add(comparision.name);
         result.add(NumberFormat.decimaFormat(comparision.max, 4));

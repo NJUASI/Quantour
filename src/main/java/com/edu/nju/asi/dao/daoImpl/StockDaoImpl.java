@@ -237,8 +237,13 @@ public class StockDaoImpl implements StockDao {
      * @param number
      */
     @Override
-    public List<StockSearch> getRankingList(int number) {
+    public List<StockSearch> getTopRankingList(int number) {
         return stockSearchDataHelper.getRankingList(number);
+    }
+
+    @Override
+    public List<StockSearch> getAllRankingList() {
+        return stockSearchDataHelper.getAllRankingList();
     }
 
 

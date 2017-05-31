@@ -49,4 +49,9 @@ public interface StockSearchDataHelper {
      * 获取股票排名前N（number）
      */
     List<StockSearch> getRankingList(int number);
+
+    /**
+     * @return 全部的搜索排行榜
+     */
+    List<StockSearch> getAllRankingList();
 }

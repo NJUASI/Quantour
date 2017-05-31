@@ -197,6 +197,12 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         return result;
     }
 
+    // TODO 金玉  实现接口
+    @Override
+    public List<StockSearch> getAllRankingList() {
+        return null;
+    }
+
     /**
      * 统一获取Code和名字
      */
