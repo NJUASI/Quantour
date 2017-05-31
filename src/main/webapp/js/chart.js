@@ -616,7 +616,9 @@ function createHistogramChart(id, data, title) {
     return histogramChart;
 }
 
-function createClickChart(id,data,strData){
+function createClickChart(id,data){
+
+    var strData = data.splice(1,2)[0];
 
     var clickChart = echarts.init(document.getElementById(id));
 

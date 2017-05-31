@@ -118,7 +118,7 @@ public class StockSearchDataHelperImplTest {
 
     @Test
     public void getClickAmount() throws Exception {
-        assertEquals(1.0,stockSearchDataHelper.getClickAmount(new SearchID("000001","平安银行",Market.SZ)),0);
+        assertEquals(1.0,stockSearchDataHelper.getClickRate(new SearchID("000001","平安银行",Market.SZ)),0);
     }
 
 }

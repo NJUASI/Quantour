@@ -100,10 +100,11 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
-    private static String convertClickSearch(double nowClickNum){
-        // TODO 金玉 个股热搜比例水球 我觉得还需要一个总的点击量数据吧。。。。
-
-        return null;
+    private static String convertClickSearch(double nowClickNum) throws JsonProcessingException {
+        List<String> result = new ArrayList<>();
+        result.add(NumberFormat.decimaFormat(nowClickNum,4));
+        result.add(NumberFormat.percentFormat(nowClickNum,2));
+        return JsonConverter.jsonOfObject(result);
     }
 
 
@@ -143,10 +144,16 @@ public class JsonConverter {
         return buffer.toString();
     }
 
-    private static String convertTopSearchedChart(List<StockSearch> topClicks) {
-        // TODO 金玉 南丁格尔的图需要的数据String
+    private static String convertTopSearchedChart(List<StockSearch> topClicks) throws JsonProcessingException {
+        List<List<String>> result = new ArrayList<>();
 
-        return null;
+        for(StockSearch stockSearch: topClicks){
+            List<String> temp = new ArrayList<>();
+            temp.add(stockSearch.getSearchID().getName());
+            temp.add(String.valueOf(stockSearch.getClickAmount()));
+            result.add(temp);
+        }
+        return JsonConverter.jsonOfObject(result);
     }
 
 

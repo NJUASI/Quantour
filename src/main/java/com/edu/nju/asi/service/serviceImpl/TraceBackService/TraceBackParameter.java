@@ -81,7 +81,6 @@ public class TraceBackParameter {
         this.initBase(baseStockList);
         this.initStrategy();
         this.traceBackInfo.traceBackNumVal = this.traceBackNumVal;
-        System.out.println("INIT FINISHED!!");
     }
 
     /**
@@ -165,10 +164,7 @@ public class TraceBackParameter {
      * @updateTime 2017/4/9
      */
     private void initBase(List<BaseStock> baseStockList) throws DateNotWithinException, NoDataWithinException, IOException {
-        System.out.println(traceBackCriteria.baseStockName);
         baseRate = this.calBaseDailyRate(baseStockList);
-
-        System.out.println("initBase");
         //计算基准的总收益率
         traceBackNumVal.baseSumRate = this.calBaseSumRate();
         //计算基准的日收益率均值
@@ -183,8 +179,6 @@ public class TraceBackParameter {
         //计算基准的夏普比率
         traceBackNumVal.baseSharpeRatio = this.calculateSharpeRatio(
                 traceBackNumVal.baseAnnualizedRateOfReturn, traceBackNumVal.baseReturnVolatility);
-        System.out.println("initBase Over");
-
     }
 
     /**

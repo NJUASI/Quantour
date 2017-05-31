@@ -120,7 +120,7 @@ public interface StockDao {
     /**
      * 获取指定股票的点击率
      */
-    double getClickAmount(SearchID searchID);
+    double getClickRate(SearchID searchID);
 
     /**
      * 获取股票排名前N（number）

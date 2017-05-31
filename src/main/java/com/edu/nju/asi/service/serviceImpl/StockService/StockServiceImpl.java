@@ -166,8 +166,8 @@ public class StockServiceImpl implements StockService {
      * @return double
      */
     @Override
-    public double getClickAmount(SearchID searchID) {
-        return stockDao.getClickAmount(searchID);
+    public double getClickRate(SearchID searchID) {
+        return stockDao.getClickRate(searchID);
     }
 
     /**

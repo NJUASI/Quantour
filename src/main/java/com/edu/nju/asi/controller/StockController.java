@@ -209,7 +209,7 @@ public class StockController {
             }
 
             // 当前股票热度
-            double nowClickNum = stockService.getClickAmount(new SearchID(stockCode, stocks.get(0).getName()));
+            double nowClickNum = stockService.getClickRate(new SearchID(stockCode, stocks.get(0).getName()));
 
             result = JsonConverter.convertOneStock(stocks, isPrivate, nowClickNum);
 

@@ -227,8 +227,8 @@ public class StockDaoImpl implements StockDao {
      * @param searchID
      */
     @Override
-    public double getClickAmount(SearchID searchID) {
-        return stockSearchDataHelper.getClickAmount(searchID);
+    public double getClickRate(SearchID searchID) {
+        return stockSearchDataHelper.getClickRate(searchID);
     }
 
     /**

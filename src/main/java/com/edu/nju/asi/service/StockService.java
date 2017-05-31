@@ -79,7 +79,7 @@ public interface StockService{
      * @param  searchID
      * @return double
      */
-    double getClickAmount(SearchID searchID);
+    double getClickRate(SearchID searchID);
 
     /**
      * 获取股票排名前N（number）

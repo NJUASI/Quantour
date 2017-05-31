@@ -160,7 +160,7 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
      * @param searchID
      */
     @Override
-    public double getClickAmount(SearchID searchID) {
+    public double getClickRate(SearchID searchID) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -197,10 +197,25 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         return result;
     }
 
-    // TODO 金玉  实现接口
+    /**
+     * 获取所有股票排名
+     */
     @Override
     public List<StockSearch> getAllRankingList() {
-        return null;
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "from StockSearch order by clickAmount desc";
+        Query query = session.createQuery(hql);
+        List<StockSearch> result = query.list();
+
+        if(result==null||result.isEmpty()){
+            return null;
+        }
+
+        transaction.commit();
+        session.close();
+        return result;
     }
 
     /**
