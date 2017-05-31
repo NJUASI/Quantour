@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.Enumeration" %>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -112,57 +113,55 @@
         </div>
         <div class="row markets_wrapper " style="z-index:3">
             <div class="col-md-offset-1 col-md-10">
-                <ul class="market">
-                    <li class="each_market" id="stocks_shangzheng">
-                        <h4>上证指数</h4>
-                        <h3>3083.51&nbsp;&nbsp;
-                            <small>+22.01&nbsp;&nbsp;</small>
-                            <small>+0.71%</small>
-                        </h3>
-                        <ul class="market-data-extra">
-                            <li><span>最高:<span class="market_high">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最低:<span
-                                    class="market_low">3051.87</span></span></li>
-                            <li><span>涨停:<span class="market_limit_up">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;跌停:<span
-                                    class="market_limit_down">3051.87</span></span></li>
-                            <li><span>成交量:<span class="volume">3090</span></span></li>
-                        </ul>
-                    </li>
-                    <li class="each_market" id="stocks_shenzheng">
-                        <h4>深证指数</h4>
-                        <h3>3083.51&nbsp;&nbsp;
-                            <small>+22.01&nbsp;&nbsp;</small>
-                            <small>+0.71%</small>
-                        </h3>
-                        <ul class="market-data-extra">
-                            <li><span>最高:<span class="market_high">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最低:<span
-                                    class="market_low">3051.87</span></span></li>
-                            <li><span>涨停:<span class="market_limit_up">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;跌停:<span
-                                    class="market_limit_down">3051.87</span></span></li>
-                            <li><span>成交量:<span class="volume">3090</span></span></li>
-                        </ul>
-                    </li>
-                    <li class="each_market" id="stocks_chuangzhi">
-                        <h4>创业指数</h4>
-                        <h3>3083.51&nbsp;&nbsp;
-                            <small>+22.01&nbsp;&nbsp;</small>
-                            <small>+0.71%</small>
-                        </h3>
-                        <ul class="market-data-extra">
-                            <li><span>最高:<span class="market_high">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最低:<span
-                                    class="market_low">3051.87</span></span></li>
-                            <li><span>涨停:<span class="market_limit_up">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;跌停:<span
-                                    class="market_limit_down">3051.87</span></span></li>
-                            <li><span>成交量:<span class="volume">3090</span></span></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div id="myCarousel" class="carousel slide" style="padding-top: 15px;padding-bottom: 15px">
+                    <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators" style="top:-15px">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                        <li data-target="#myCarousel" data-slide-to="3"></li>
+                        <li data-target="#myCarousel" data-slide-to="4"></li>
+                    </ol>
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner row">
+                        <c:forEach items="${base_stock_list}" var="basestock" varStatus="vs">
+                            <div class="item col-md-offset-4 col-md-6" >
+                                <div class="row">
+                                    <h4 class="stockName">${basestock.name}</h4>
+                                </div>
+                                <div class="row">
+                                    <h3 class="col-md-5" style="margin-top: 0px"><span class="volume">${basestock.volume}</span></h3>
+
+                                    <h4 class="col-md-4" style="margin-top: 5px"><span class="transactionAmount">${basestock.transactionAmount}</span></h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">开盘:<span class="market_open">${basestock.open}</span></div>
+                                    <div class="col-md-4">最高:<span class="market_high">${basestock.high}</span></div>
+                                    <div class="col-md-4">涨跌幅:<span class="increaseMargin">${basestock.increaseMargin}</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">收盘:<span class="market_close">${basestock.close}</span></div>
+                                    <div class="col-md-4">最低:<span class="market_low">${basestock.low}</span></div>
+                                    <div class="col-md-4">涨跌额:<span class="fluctuation">${basestock.fluctuation}</span></div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <!-- 轮播（Carousel）导航 -->
+                    <a class="carousel-control left" href="#myCarousel"
+                       data-slide="prev">
+                    </a>
+                    <a class="carousel-control right" href="#myCarousel"
+                       data-slide="next">
+                    </a>
+                </div>
             </div>
         </div>
         <div class="row" style="z-index:3">
             <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
                     <table class="table table-hover table-condensed stocks-table">
-                        <caption class="text-center"><h3>市场行情</h3></caption>
+                        <caption class="text-center" id="headTitle"><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
                             <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
@@ -195,23 +194,44 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="pagination-wrapper text-right">
-                    <ul class="pagination">
-                        <li><a href="#">1</a></li>
-
-                        <li value="left"><span>&middot;&middot;&middot;</span></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">7</a></li>
-                        <li><a href="#">8</a></li>
-                        <li><span>9</span>></li>
-                        <li value="right"><span>&middot;&middot;&middot;</span></li>
-                        <li><a href="#">30</a></li>
-                    </ul>
-                </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-5">
+                <ul class="pagination">
+                    <li><a class="pageBt curPage">1</a></li>
+                    <%--<c:if test="${totalPageNum}>9">--%>
+
+                    <%
+                        int pagetol = (int) request.getSession().getAttribute("totalPageNum");
+                        if (pagetol <= 9) {
+                            for (int i = 2; i <= pagetol; i++) {
+                                out.println(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                            }
+                        } else {
+                            for (int i = 2; i <= 8; i++) {
+                                out.println(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                            }
+                            out.println("<li><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            out.println(" <li><a   href=\"#headTitle\" class=\"pageBt\">" + pagetol + "</a></li>");
+
+                        }
+                    %>
+                    <%--</c:if>--%>
+
+                </ul>
+            </div>
+            <div class="input-group col-md-1" style="margin-top: 21px">
+                <input type="text" id="goPage" style="padding-left:4px;padding-right: 4px ;text-align: center"
+                       value=1 class="form-control">
+                <span class="input-group-btn">
+                                    <button class="btn btn-default form-control search-btn" id="pageChoose" type="button">
+                                        <a href="#headTitle" style='text-decoration:none;'><span style="color:blueviolet">go</span></a>
+                                    </button>
+                                    </span>
+            </div>
+
+
         </div>
     </div>
 </div>
@@ -312,7 +332,19 @@
 <script type="text/javascript">
     $(document).ready(
         function () {
-            var date = ${date.year} +"-" + ${date.monthValue} +"-" + ${date.dayOfMonth};
+            var date = ${date.year}+"-";
+            var month=${date.monthValue};
+            var dayOfMonth=${date.dayOfMonth};
+            if( month<10){
+                date+="0"+month;
+            }else{
+                date+=month;
+            }
+            if(dayOfMonth<10){
+                date+="-0"+dayOfMonth;
+            }else{
+                date+="-"+dayOfMonth;
+            }
             $(".form_date > input").attr('value', date);
 
 
@@ -419,80 +451,43 @@
         sortNum = numOfColumn * 2 + numOfClick - 1;
 //        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowPage+"页");
 //        alert(sortNum);
+        updatePanel();
     });
-    $("li").click(function () {
-        //alert("你单击的是第"+($("li").index($(this))+1)+"个span")
-        nowPage = $(this).find("a").html();
-        alert(nowPage);
 
-        $.ajax({
-            type: "post",
-            async: true,
-            url: "/stocks",
-            data: {
-                "date": $(".form_date > input").val(),
-                "sortCriteria": sortNum,
-                "wantedPage": nowPage
-            },
+    //设置第一个显示
+    $(".item").eq(0).addClass("active");
+    //开始轮播
+    $('.carousel').carousel();
 
-            success: function (result) {
-//                alert(result);
-                $("body").addClass("loaded");
-                var array = result.split(";");
+    $("#pageChoose").click(function () {
+        var pageNumber=$("#goPage").val();
+        nowPage=pageNumber;
+        updatePanel();
+    });
 
-                if (array[0] == "1") {
-                    // js修改jsp中数据
-                    var stock_page = eval("(" + array[1] + ")");
-
-                    // TODO 高源 添加对日期等界面元素的修改
-                    // TODO 高源 股指的展现（一共五个，可以做成它一直慢慢啊左移的吗。。）
-                    var newDate = stock_page["thisDate"];
-                    var numOfEachPage = stock_page["numOfEachPage"];
-                    var curPageNum = stock_page["curPageNum"];
-                    var totalPageNum = stock_page["totalPageNum"];
-                    var totalRecordNum = stock_page["totalRecordNum"];
-                    var baseStocks = stock_page["baseStocks"];
-                    var stocks = stock_page["stocks"];
-
-                    alert(newDate);
-                    alert(stocks[0]["stockID"]["code"] + "\n" + stocks[0]["stockID"]["date"] + "\n" + stocks[0]["name"]
-                        + "\n" + stocks[0]["open"] + "\n" + stocks[0]["close"] + "\n" + stocks[0]["high"]);
-
-                    $("#stocks_all").empty();
-                    for (var i = 0; i < stocks.length; i++) {
-                        $("#stocks_all").append("<tr>");
-                        $("#stocks_all").append("<td>" + stocks[i]["stockID"]["code"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["name"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["open"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["close"] + "</td>");
-                        $("#stocks_all").append("<td class='stock_high'>" + stocks[i]["high"] + "</td>");
-                        $("#stocks_all").append("<td class='stock_low'>" + stocks[i]["low"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["preClose"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["volume"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["transactionAmount"] + "</td>");
-                        $("#stocks_all").append("</tr>");
-                    }
-                } else if (array[0] == "-1") {
-                    // 提示错误信息
-                    alert(array[1]);
-                } else {
-                    alert("未知错误类型orz");
-                }
-            },
-            error: function (result) {
-//                alert(JSON.stringify(result));
-                alert("错误" + result);
+    $(".pagination").find("li").click(function () {
+        if ($(this).find("a").html() == "···") {
+//            alert($(this).next("li").find("a").html());
+            if (($(this).next("li").find("a").html()) == totalPageNum) {
+                nowPage = curPageNum + 4;
+            } else {
+                nowPage = curPageNum - 4;
             }
-        });
-
-
+        } else {
+            nowPage = $(this).find("a").html();
+        }
+        updatePanel();
     });
 
     $('.form_date')
         .datetimepicker().on("changeDate", function () {
 //        alert($(".form_date > input").val());
         $("body").removeClass("loaded");
+        nowPage = 1;
+        updatePanel();
+    });
 
+    function updatePanel() {
         $.ajax({
             type: "post",
             async: true,
@@ -512,34 +507,112 @@
                     // js修改jsp中数据
                     var stock_page = eval("(" + array[1] + ")");
 
-                    // TODO 高源 添加对日期等界面元素的修改
-                    // TODO 高源 股指的展现（一共五个，可以做成它一直慢慢啊左移的吗。。）
-                    var newDate = stock_page["thisDate"];
                     var numOfEachPage = stock_page["numOfEachPage"];
                     var curPageNum = stock_page["curPageNum"];
                     var totalPageNum = stock_page["totalPageNum"];
                     var totalRecordNum = stock_page["totalRecordNum"];
+
                     var baseStocks = stock_page["baseStocks"];
-                    var stocks = stock_page["stocks"];
-
-                    alert(newDate);
-                    alert(stocks[0]["stockID"]["code"] + "\n" + stocks[0]["stockID"]["date"] + "\n" + stocks[0]["name"]
-                        + "\n" + stocks[0]["open"] + "\n" + stocks[0]["close"] + "\n" + stocks[0]["high"]);
-
-                    $("#stocks_all").empty();
-                    for (var i = 0; i < stocks.length; i++) {
-                        $("#stocks_all").append("<tr>");
-                        $("#stocks_all").append("<td>" + stocks[i]["stockID"]["code"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["name"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["open"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["close"] + "</td>");
-                        $("#stocks_all").append("<td class='stock_high'>" + stocks[i]["high"] + "</td>");
-                        $("#stocks_all").append("<td class='stock_low'>" + stocks[i]["low"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["preClose"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["volume"] + "</td>");
-                        $("#stocks_all").append("<td>" + stocks[i]["transactionAmount"] + "</td>");
-                        $("#stocks_all").append("</tr>");
+                    for(var j=0;j<baseStocks.length;j++){
+                        $(".stockName").eq(j).html(baseStocks[j]["name"]);
+                        $(".volume").eq(j).html(baseStocks[j]["volume"]);
+                        $(".transactionAmount").eq(j).html(baseStocks[j]["transactionAmount"]);
+                        $(".market_open").eq(j).html(baseStocks[j]["open"]);
+                        $(".market_close").eq(j).html(baseStocks[j]["close"]);
+                        $(".market_high").eq(j).html(baseStocks[j]["high"]);
+                        $(".market_low").eq(j).html(baseStocks[j]["low"]);
+                        $(".increaseMargin").eq(j).html(baseStocks[j]["increaseMargin"]);
+                        $(".fluctuation").eq(j).html(baseStocks[j]["fluctuation"]);
                     }
+//                <h4>上证指数</h4>
+//                    <h3>3083.51&nbsp;&nbsp;
+//                <small>+22.01&nbsp;&nbsp;</small>
+//                    <small>+0.71%</small>
+//                    </h3>
+//                    <ul class="market-data-extra">
+//
+//                        <li><span>涨停:<span class="market_limit_up">3090</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;跌停:<span
+//                class="market_limit_down">3051.87</span></span></li>
+//                        <li><span>成交量:<span class="volume">3090</span></span></li>
+//                        </ul>
+                    var stocks = stock_page["stocks"];
+                    $(".pagination").empty();
+                    if (totalPageNum <= 9) {
+                        for (var i = 1; i <= totalPageNum; i++) {
+                            if (curPageNum == i) {
+                                $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt curPage\">" + i + "</a></li>");
+                            } else {
+                                $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                            }
+                        }
+                    } else {
+//                        alert(curPageNum);
+                        if (curPageNum <= 5) {
+                            for (var i = 1; i <= 9; i++) {
+                                if (curPageNum == i) {
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt curPage\">" + i + "</a></li>");
+                                } else {
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                }
+                            }
+                            $(".pagination").append("<li value=\"right\"><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + totalPageNum + "</a></li>");
+                        } else if (curPageNum >= totalPageNum - 4) {
+                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + 1 + "</a></li>");
+                            $(".pagination").append("<li value=\"left\"><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            for (var i = totalPageNum - 7; i <= totalPageNum; i++) {
+                                if (curPageNum == i) {
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt curPage\">" + i + "</a></li>");
+                                } else {
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                }
+                            }
+                        } else {
+                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + 1 + "</a></li>");
+                            $(".pagination").append("<li value=\"left\"><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+
+                            for (var i = curPageNum - 3; i <= curPageNum + 3; i++) {
+                                if (curPageNum == i) {
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt curPage\">" + i + "</a></li>");
+                                } else {
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                }
+                            }
+
+                            $(".pagination").append("<li><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + totalPageNum + "</a></li>");
+                        }
+
+                    }
+                    $("#goPage").val(curPageNum);
+                    $(".pagination").find("li").click(function () {
+
+                        if ($(this).find("a").html() == "···") {
+
+                            if (($(this).next("li").find("a").html()) == totalPageNum) {
+                                nowPage = curPageNum + 4;
+                            } else {
+                                nowPage = curPageNum - 4;
+                            }
+                        } else {
+                            nowPage = $(this).find("a").html();
+                        }
+                        updatePanel();
+                    });
+                    $("#stocks_all").empty();
+
+                    for (var i = 0; i < stocks.length; i++) {
+                        $("#stocks_all").append("<tr><td>" + stocks[i]["stockID"]["code"] + "</td>" +
+                            "<td>" + stocks[i]["name"] + "</td>" +
+                            "<td>" + stocks[i]["open"] + "</td>" +
+                            "<td>" + stocks[i]["close"] + "</td>" +
+                            "<td class='stock_high'>" + stocks[i]["high"] + "</td>" +
+                            "<td class='stock_low'>" + stocks[i]["low"] + "</td>" +
+                            "<td>" + stocks[i]["preClose"] + "</td>" +
+                            "<td>" + stocks[i]["volume"] + "</td>" +
+                            "<td>" + stocks[i]["transactionAmount"] + "</td></tr>");
+                    }
+
                 } else if (array[0] == "-1") {
                     // 提示错误信息
                     alert(array[1]);
@@ -552,7 +625,13 @@
                 alert("错误" + result);
             }
         });
-    });
+    }
+
+    function getSingleStockDetail() {
+        var wantedStockCode = $("#search-input").val();
+        alert(wantedStockCode);
+        window.location.href = "/stocks/" + wantedStockCode;
+    }
 
 
 </script>

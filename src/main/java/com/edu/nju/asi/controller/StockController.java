@@ -79,6 +79,8 @@ public class StockController {
             mv.addObject("curPageNum", page.curPageNum);
             mv.addObject("totalPageNum", page.totalPageNum);
             mv.addObject("totalRecordNum", page.totalRecordNum);
+            session.setAttribute("totalPageNum", page.totalPageNum);
+            System.out.println(page.stocks.size() + "\n\n\n");
             return mv;
         } else {
             System.out.println("请求失败");
