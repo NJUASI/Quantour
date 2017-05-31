@@ -53,14 +53,11 @@ function compare() {
                 $("#compareChart").append("</tr>");
             }
 
-        }
+        },
 
-        ,
         error: function (result) {
             alert("错误" + result);
         }
-
-    })
-    ;
+    });
 
 }

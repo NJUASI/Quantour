@@ -69,7 +69,7 @@ public class StockController {
         if (parts[0].equals("1")) {
             // 解析JSON对象
             StocksPage page = JSON.parseObject(parts[1], StocksPage.class);
-            String topClicksChart = parts[2];
+//            String topClicksChart = parts[2];
             System.out.println(page.stocks.size() + "\n\n\n");
 
             ModelAndView mv = new ModelAndView("stocks");
@@ -81,7 +81,7 @@ public class StockController {
             mv.addObject("totalPageNum", page.totalPageNum);
             mv.addObject("totalRecordNum", page.totalRecordNum);
             mv.addObject("topClicks", page.topClicks);
-            mv.addObject("topClicksChartData", topClicksChart);
+//            mv.addObject("topClicksChartData", topClicksChart);
             return mv;
         } else {
             System.out.println("请求失败");
@@ -151,7 +151,7 @@ public class StockController {
             Stock stockOfEndDay = JSON.parseObject(parts[3], Stock.class);
             LocalDate startDate = JSON.parseObject(parts[4], LocalDate.class);
             boolean isPrivate = JSON.parseObject(parts[5], Boolean.class);
-            String clickedData = parts[6];
+//            String clickedData = parts[6];
 
             // 搜索量加一
             SearchID thisStock = new SearchID(stockOfEndDay.getStockID().getCode(), stockOfEndDay.getName());
@@ -167,7 +167,7 @@ public class StockController {
             mv.addObject("stockOfEndDay", stockOfEndDay);
             mv.addObject("startDate", startDate);
             mv.addObject("isPrivate", isPrivate);
-            mv.addObject("clickedData", clickedData);
+//            mv.addObject("clickedData", clickedData);
             return mv;
         } else {
             System.out.println("请求失败");
@@ -236,43 +236,8 @@ public class StockController {
             return new ModelAndView("index");
         }
 
-        List<StockComparision> result = (List<StockComparision>) session.getAttribute("compareResult");
-        session.setAttribute("compareResult", null);
-
-        if (result == null) {
-            // 默认进来的
-            return new ModelAndView("stockComparision");
-        } else {
-            // 通过js进来的
-            ModelAndView mv = new ModelAndView("stockComparision");
-            try {
-                // 数值型对比信息
-                mv.addObject("stockCompareNum1", convertComparisionNumVal(result.get(0)));
-                mv.addObject("stockCompareNum2", convertComparisionNumVal(result.get(1)));
-
-
-                // 图表型对比信息
-                List<String> closes = new ArrayList<>();
-                closes.add(JsonConverter.jsonOfObject(result.get(0).closes));
-                closes.add(JsonConverter.jsonOfObject(result.get(1).closes));
-
-                List<String> logarithmicYield = new ArrayList<>();
-                logarithmicYield.add(JsonConverter.jsonOfObject(result.get(0).logarithmicYield));
-                logarithmicYield.add(JsonConverter.jsonOfObject(result.get(1).logarithmicYield));
-
-                List<String> name = new ArrayList<>();
-                name.add(result.get(0).name);
-                name.add(result.get(1).name);
-
-                mv.addObject("closesData", JsonConverter.jsonOfObject(closes));
-                mv.addObject("logarithmicYieldData", JsonConverter.jsonOfObject(logarithmicYield));
-                mv.addObject("comparisionName", JsonConverter.jsonOfObject(name));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            return mv;
-
-        }
+        // 默认界面跳转进来的
+        return new ModelAndView("stockComparision");
     }
 
 
@@ -294,14 +259,12 @@ public class StockController {
             return "-1;未知错误";
         }
 
-//        StockComparisionCriteria criteria = new StockComparisionCriteria(holder);
         System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
 
         List<StockComparision> result = null;
         String closes01, closes02, logarithmicYield01, logarithmicYield02, comparisionName, numVals;
         try {
             result = chartService.getComparision(criteria);
-//            session.setAttribute("compareResult", result);
             // TODO 加入当日信息显示，与界面沟通
 
             closes01 = JsonConverter.convertComparision(result.get(0).closes);
@@ -332,8 +295,7 @@ public class StockController {
 
     @GetMapping(value = "/search", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String searchStocks(HttpServletRequest request) {
-        String keyword = request.getParameter("key");
+    public String searchStocks(@RequestParam("key") String keyword, HttpServletRequest request) {
         List<StockSearch> results = stockService.searchStock(keyword);
         try {
             String result = JsonConverter.jsonOfObject(results);
