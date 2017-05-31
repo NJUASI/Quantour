@@ -519,8 +519,26 @@
 
     var today = new Date();
 
-    var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
-    var endTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    var endTime = today.getFullYear() + "-";
+    var startTime = today.getFullYear()+"-";
+
+    var month=today.getMonth() + 1;
+    var dayOfMonth=today.getDate()-1;
+    if( month<10){
+        startTime+="0"+month;
+        endTime+="0"+month;
+    }else{
+        startTime+=month;
+        endTime+=+month;
+    }
+    if(dayOfMonth<10){
+        startTime+="-0"+dayOfMonth;
+        endTime+="-0"+dayOfMonth;
+    }else{
+        startTime+="-"+dayOfMonth;
+        endTime+="-"+(dayOfMonth+1);
+    }
+
     $("#datetimeStart>input").attr('value', startTime);
     $("#datetimeEnd>input").attr('value', endTime);
 

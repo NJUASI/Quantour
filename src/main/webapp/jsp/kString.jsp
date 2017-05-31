@@ -90,7 +90,10 @@
 
 <div class="row stock" style="margin-top: 70px">
     <span class="col-md-2 col-md-offset-2"><span id="stockName">${stockOfEndDay.name}</span>&nbsp;<i id="stockCode">${stockOfEndDay.stockID.code}</i></span>
-    <span id="addBtn"><button class="btn"></button></span>
+    <c:if test="${sessionScope.user!=null}">
+        <span id="addBtn"><button class="btn"></button></span>
+    </c:if>
+
 </div>
 
 

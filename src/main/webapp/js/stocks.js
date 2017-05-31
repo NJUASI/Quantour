@@ -3,11 +3,6 @@
  */
 
 // 行情界面跳转至个股界面
-function getSingleStockDetail() {
-    var wantedStockCode = $("#search-input").val();
-    alert(wantedStockCode);
-    window.location.href = "/stocks/" + wantedStockCode;
-}
 
 // 在个股界面修改查看条件后修改界面数据
 function changeSingleStockDetail() {

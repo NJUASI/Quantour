@@ -87,32 +87,50 @@
     </header>
     <div class="form-group form" style="margin-top: 80px;">
         <div class="row inputBlock">
-            <div class="col-md-2 col-md-offset-2"  style="position: relative">
+            <div class="col-md-2 col-md-offset-2"  >
                 <label class="control-label" for="search-input1">股票1：</label>
-                <input type='text' id="search-input1" class="form-control" placeholder="输入股票1名称/代码/拼音"/>
+                <input type='text' id="search-input1" style="position: relative" class="form-control" placeholder="输入股票1名称/代码/拼音"/>
+                <div class="searchResults1  pre-scrollable"
+                     style="position: absolute;display: none;width: 300px;max-height: 200px; background-color: whitesmoke;z-index: 20">
+                    <table class="table table-hover table-bordered search-table">
+                        <thead class="search-table-head">
+                        <tr>
+                            <th width="60px">代码</th>
+                            <th width="70px">名称</th>
+                            <th>简称</th>
+                            <th>类型</th>
+                        </tr>
+                        </thead>
+                        <tbody id="search-body1">
+                        <tr class="colomnsOfTable1">
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
-            <div class="searchResults1  pre-scrollable"
-                 style="position: absolute;display: none;width: 300px;max-height: 200px; background-color: whitesmoke;z-index: 20">
-                <table class="table table-hover table-bordered search-table">
-                    <thead class="search-table-head">
-                    <tr>
-                        <th width="60px">代码</th>
-                        <th width="70px">名称</th>
-                        <th>简称</th>
-                        <th>类型</th>
-                    </tr>
-                    </thead>
-                    <tbody id="search-body1">
-                    <tr class="colomnsOfTable1">
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
 
             <div class="col-md-2 ">
-                <label>股票2：</label>
-                <input type='text' id="stock2" class="form-control" placeholder="输入股票2名称/代码/拼音"/>
+                <label class="control-label" for="search-input2">股票2：</label>
+                <input type='text' id="search-input2" style="position: relative" class="form-control" placeholder="输入股票2名称/代码/拼音"/>
+                <div class="searchResults2  pre-scrollable"
+                     style="position: absolute;display: none;width: 300px;max-height: 200px; background-color: whitesmoke;z-index: 21">
+                    <table class="table table-hover table-bordered search-table">
+                        <thead class="search-table-head">
+                        <tr>
+                            <th width="60px">代码</th>
+                            <th width="70px">名称</th>
+                            <th>简称</th>
+                            <th>类型</th>
+                        </tr>
+                        </thead>
+                        <tbody id="search-body2">
+                        <tr class="colomnsOfTable2">
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="col-md-2">
@@ -361,6 +379,49 @@
                 })
             });
 
+
+            $('#search-input2').bind('input propertychange', function () {
+
+                var key = $('#search-input2').val();
+//                alert(key);
+                $.ajax({
+                    type: "get",
+                    async: true,
+                    url: "/stocks/search?key=" + key,
+
+                    success: function (result) {
+//                        alert(result);
+                        if (result == "-1") {
+                            // 调取失败处理
+
+                        }
+
+                        var obj = eval("(" + result + ")");
+                        var len = obj.length;
+                        $("#search-body1").empty();
+                        for (var i = 0; i < 10; i++) {
+                            $("#search-body2").append("<tr class='colomnsOfTable2' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                                "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
+                        }
+
+                        $("#search-body2").find(".colomnsOfTable2").click(function() {
+                            var num=($(".colomnsOfTable2").index($(this)));
+                            var code=$("#search-body2").find(".colomnsOfTable2").eq(num).find("td").eq(0).html();
+
+                            $("#search-input2").val(code);
+                            $(".searchResults2").hide();
+                        });
+
+                        $("#search-body2").find("tr").hover(function(){
+                            $(this).css("background-color","#A3B1D1");
+                        },function(){
+                            $(this).css("background-color","#F5F5F5");
+                        });
+
+                        $(".searchResults2").show();
+                    }
+                })
+            });
 //            $("tbody").click(function () {
 //
 //                      var code = $(this).find("td:first").text();

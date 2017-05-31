@@ -12,7 +12,9 @@ footer {
     text-align: center;
     vertical-align: middle!important;
 }
-
+.curPage{
+    background: blanchedalmond;
+}
 .panel_title_wrapper {
     margin-top: 30px;
 }
@@ -34,7 +36,7 @@ footer {
 }
 
 .pagination-wrapper {
-    width: 100%;
+
 }
 
 ul {
@@ -49,6 +51,13 @@ ul {
     display: inline-block;
 }
 
+.carousel-indicators .active {
+    background-color: darkorange;
+}
+.carousel-indicators li {
+    background-color: darkgray;
+    border: 1px solid darkgrey;
+}
 .market-data-extra li {
     margin-bottom: 8px;
 }
