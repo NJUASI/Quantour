@@ -337,7 +337,7 @@
             <%--}--%>
 
             $('#search-input1').bind('input propertychange', function () {
-
+                $("#search-body1").show();
                 var key = $('#search-input1').val();
 //                alert(key);
                 $.ajax({
@@ -379,9 +379,14 @@
                 })
             });
 
-
+            $('#search-input2').click(function(){
+                $("#search-body1").hide();
+            })
+            $('#search-input1').click(function(){
+                $("#search-body2").hide();
+            })
             $('#search-input2').bind('input propertychange', function () {
-
+                $("#search-body2").show();
                 var key = $('#search-input2').val();
 //                alert(key);
                 $.ajax({
@@ -398,7 +403,7 @@
 
                         var obj = eval("(" + result + ")");
                         var len = obj.length;
-                        $("#search-body1").empty();
+                        $("#search-body2").empty();
                         for (var i = 0; i < 10; i++) {
                             $("#search-body2").append("<tr class='colomnsOfTable2' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
@@ -432,9 +437,14 @@
             $(".searchResults1").click(function (e) {
                 e.stopPropagation();
             });
+            $(".searchResults2").click(function (e) {
+                e.stopPropagation();
+            });
 
             $(document).click(function () {
                 $(".searchResults1").hide();
+
+                $(".searchResults2").hide();
             });
         });
 
