@@ -199,7 +199,6 @@
                 <ul class="pagination">
                     <li><a class="pageBt curPage">1</a></li>
                     <%--<c:if test="${totalPageNum}>9">--%>
-
                     <%
                         int pagetol = (int) request.getSession().getAttribute("totalPageNum");
                         if (pagetol <= 9) {
@@ -212,7 +211,6 @@
                             }
                             out.println("<li><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
                             out.println(" <li><a   href=\"#headTitle\" class=\"pageBt\">" + pagetol + "</a></li>");
-
                         }
                     %>
                     <%--</c:if>--%>

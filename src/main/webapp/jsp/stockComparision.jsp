@@ -379,12 +379,13 @@
                 })
             });
 
-            $('#search-input2').blur(function(){
-                $(".searchResults2").hide();
-            })
-            $('#search-input1').blur(function(){
+            $('#search-input2').focus(function(){
                 $(".searchResults1").hide();
             })
+            $('#compare_startDate').focus(function(){
+                $(".searchResults2").hide();
+            })
+
             $('#search-input2').bind('input propertychange', function () {
                 $("#search-body2").show();
                 var key = $('#search-input2').val();
