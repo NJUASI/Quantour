@@ -107,37 +107,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-1" role="complementary">
-                <nav class="hidden-print hidden-xs hidden-sm affix">
-
-                    <table class="table">
-
-                        <caption style="text-align: center"><h4>热搜榜</h4></caption>
-                        <thead>
-
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Tanmay</td>
-                            <td>Bangalore</td>
-                        </tr>
-                        <tr>
-                            <td>Sachin</td>
-                            <td>Mumbai</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <%--<a class="back-to-top" href="#top">--%>
-                    <%--返回顶部--%>
-                    <%--</a>--%>
-
-                    <%--<a href="#" class="bs-docs-theme-toggle" role="button">--%>
-                    <%--主题预览--%>
-                    <%--</a>--%>
-
-                </nav>
-            </div>
         </div>
         <div class="row markets_wrapper " style="z-index:3">
             <div class="col-md-offset-1 col-md-10">
@@ -186,6 +155,46 @@
                 </div>
             </div>
 
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <table class="table table-hover" style="text-align: center">
+                    <caption><h4  style="text-align: center">热搜榜</h4></caption>
+                    <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>股票</th>
+                        <th>点击量</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%--<c:foreach items="${topClicksChartData}" var="topClickDate" varStatus="vs">--%>
+                        <%--<tr>--%>
+                            <%--<td>1</td>--%>
+                            <%--<td>${topClickDate[0]}</td>--%>
+                            <%--<td>${topClickDate[1]}</td>--%>
+                        <%--</tr>--%>
+                    <%--</c:foreach>--%>
+                    <tr>
+
+                        <td>Tanmay</td>
+                        <td>000001 沪深300</td>
+                        <td>560001</td>
+                    </tr>
+                    <tr>
+                        <td>Sachin</td>
+                        <td>Mumbai</td>
+                        <td>400003</td>
+                    </tr>
+                    <tr>
+                        <td>Uma</td>
+                        <td>Pune</td>
+                        <td>411027</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
         </div>
         <div class="row" style="z-index:3">
             <div class="col-md-10 col-md-offset-1">
@@ -405,7 +414,10 @@
                         var obj = eval("(" + result + ")");
                         var len = obj.length;
                         $("#search-body").empty();
-                        for (var i = 0; i < 10; i++) {
+                        if(len>10){
+                            len=10;
+                        }
+                        for (var i = 0; i < len; i++) {
                             $("#search-body").append("<tr class='colomnsOfTable' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
@@ -545,7 +557,6 @@
                     // js修改jsp中数据
 
                     // 处理图表数据
-                    // TODO 高源 股指没有修改
                     var stock_page = eval("(" + array[1] + ")");
 
                     var numOfEachPage = stock_page["numOfEachPage"];

@@ -298,8 +298,38 @@
 
             var today = new Date();
 
-            var startTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() - 1);
-            var endTime = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+            var today = new Date();
+            var yesterday=new Date();
+            yesterday.setTime(today.getTime()-24*60*60*1000);
+
+            var endTime = today.getFullYear() + "-";
+            var startTime = yesterday.getFullYear()+"-";
+
+            var month=today.getMonth() + 1;
+            var dayOfMonth=today.getDate();
+            if( month<10){
+                endTime+="0"+month;
+            }else{
+                endTime+=month;
+            }
+            if(dayOfMonth<10){
+                endTime+="-0"+dayOfMonth;
+            }else{
+                endTime+="-"+dayOfMonth;
+            }
+
+            month=yesterday.getMonth() + 1;
+            dayOfMonth=yesterday.getDate();
+            if( month<10){
+                startTime+="0"+month;
+            }else{
+                startTime+=month;
+            }
+            if(dayOfMonth<10){
+                startTime+="-0"+dayOfMonth;
+            }else{
+                startTime+="-"+dayOfMonth;
+            }
             $("#compare_startDate>input").attr('value', startTime);
             $("#compare_endDate>input").attr('value', endTime);
 
