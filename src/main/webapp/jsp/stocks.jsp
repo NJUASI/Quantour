@@ -107,6 +107,37 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-1" role="complementary">
+                <nav class="hidden-print hidden-xs hidden-sm affix">
+
+                    <table class="table">
+
+                        <caption style="text-align: center"><h4>热搜榜</h4></caption>
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Sachin</td>
+                            <td>Mumbai</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <%--<a class="back-to-top" href="#top">--%>
+                    <%--返回顶部--%>
+                    <%--</a>--%>
+
+                    <%--<a href="#" class="bs-docs-theme-toggle" role="button">--%>
+                    <%--主题预览--%>
+                    <%--</a>--%>
+
+                </nav>
+            </div>
         </div>
         <div class="row markets_wrapper " style="z-index:3">
             <div class="col-md-offset-1 col-md-10">
@@ -120,7 +151,7 @@
                         <li data-target="#myCarousel" data-slide-to="4"></li>
                     </ol>
                     <!-- 轮播（Carousel）项目 -->
-                    <%--TODO 高源 没画出来--%>
+
                     <div class="carousel-inner row">
                         <c:forEach items="${base_stock_list}" var="base_stock" varStatus="vs">
                             <div class="item col-md-offset-4 col-md-6" >
@@ -154,12 +185,13 @@
                     </a>
                 </div>
             </div>
+
         </div>
         <div class="row" style="z-index:3">
             <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
                     <table class="table table-hover table-condensed stocks-table">
-                        <caption class="text-center" id="headTitle"><h3>市场行情</h3></caption>
+                        <caption class="text-center" id=""><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
                             <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
@@ -197,20 +229,20 @@
         <div class="row">
             <div class="col-md-5 col-md-offset-5">
                 <ul class="pagination">
-                    <li><a class="pageBt curPage">1</a></li>
+                    <li class="active"><a>1</a></li>
                     <%--<c:if test="${totalPageNum}>9">--%>
                     <%
                         int pagetol = (int) request.getSession().getAttribute("totalPageNum");
                         if (pagetol <= 9) {
                             for (int i = 2; i <= pagetol; i++) {
-                                out.println(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                out.println(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
                             }
                         } else {
                             for (int i = 2; i <= 8; i++) {
-                                out.println(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                out.println(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
                             }
-                            out.println("<li><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
-                            out.println(" <li><a   href=\"#headTitle\" class=\"pageBt\">" + pagetol + "</a></li>");
+                            out.println("<li><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            out.println(" <li><a   href=\"#headTitle\" class=\"\">" + pagetol + "</a></li>");
                         }
                     %>
                     <%--</c:if>--%>
@@ -290,13 +322,13 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="reg_password">密码：</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" id="reg_password" placeholder="请输入密码">
+                            <input type="password" class="form-control" id="reg_password" placeholder="请输入密码">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="reg_password2" style="padding-left: 0">确认密码：</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" id="reg_password2" placeholder="请再次输入密码">
+                            <input type="password" class="form-control" id="reg_password2" placeholder="请再次输入密码">
                         </div>
                     </div>
                 </form>
@@ -549,9 +581,9 @@
                     if (totalPageNum <= 9) {
                         for (var i = 1; i <= totalPageNum; i++) {
                             if (curPageNum == i) {
-                                $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt curPage\">" + i + "</a></li>");
+                                $(".pagination").append(" <li class=\"active\"><a  href=\"#headTitle\" >" + i + "</a></li>");
                             } else {
-                                $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
                             }
                         }
                     } else {
@@ -559,37 +591,37 @@
                         if (curPageNum <= 5) {
                             for (var i = 1; i <= 9; i++) {
                                 if (curPageNum == i) {
-                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt curPage\">" + i + "</a></li>");
+                                    $(".pagination").append(" <li class=\" active\"><a  href=\"#headTitle\" >" + i + "</a></li>");
                                 } else {
-                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
                                 }
                             }
-                            $(".pagination").append("<li value=\"right\"><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
-                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + totalPageNum + "</a></li>");
+                            $(".pagination").append("<li value=\"right\"><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + totalPageNum + "</a></li>");
                         } else if (curPageNum >= totalPageNum - 4) {
-                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + 1 + "</a></li>");
-                            $(".pagination").append("<li value=\"left\"><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + 1 + "</a></li>");
+                            $(".pagination").append("<li value=\"left\"><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
                             for (var i = totalPageNum - 7; i <= totalPageNum; i++) {
                                 if (curPageNum == i) {
-                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt curPage\">" + i + "</a></li>");
+                                    $(".pagination").append(" <li class=\" active\"><a  href=\"#headTitle\" >" + i + "</a></li>");
                                 } else {
-                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
                                 }
                             }
                         } else {
-                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + 1 + "</a></li>");
-                            $(".pagination").append("<li value=\"left\"><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + 1 + "</a></li>");
+                            $(".pagination").append("<li value=\"left\"><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
 
                             for (var i = curPageNum - 3; i <= curPageNum + 3; i++) {
                                 if (curPageNum == i) {
-                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt curPage\">" + i + "</a></li>");
+                                    $(".pagination").append(" <li class=\"active\"><a  href=\"#headTitle\" >" + i + "</a></li>");
                                 } else {
-                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + i + "</a></li>");
+                                    $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
                                 }
                             }
 
-                            $(".pagination").append("<li><a class=\"pageBt\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
-                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"pageBt\">" + totalPageNum + "</a></li>");
+                            $(".pagination").append("<li><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+                            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + totalPageNum + "</a></li>");
                         }
 
                     }

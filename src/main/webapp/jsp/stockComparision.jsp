@@ -257,13 +257,13 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="reg_password">密码：</label>
                             <div class="col-md-7">
-                                <input type="text" class="form-control" id="reg_password" placeholder="请输入密码">
+                                <input type="password" class="form-control" id="reg_password" placeholder="请输入密码">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="reg_password2" style="padding-left: 0">确认密码：</label>
                             <div class="col-md-7">
-                                <input type="text" class="form-control" id="reg_password2" placeholder="请再次输入密码">
+                                <input type="password" class="form-control" id="reg_password2" placeholder="请再次输入密码">
                             </div>
                         </div>
                     </form>
