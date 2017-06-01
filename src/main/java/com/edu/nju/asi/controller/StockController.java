@@ -9,7 +9,6 @@ import com.edu.nju.asi.model.*;
 import com.edu.nju.asi.service.ChartService;
 import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.service.StockService;
-import com.edu.nju.asi.service.StockSituationService;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
@@ -44,8 +43,6 @@ public class StockController {
     ChartService chartService;
     @Autowired
     StockService stockService;
-    @Autowired
-    StockSituationService situationService;
     @Autowired
     PrivateStockService privateStockService;
 

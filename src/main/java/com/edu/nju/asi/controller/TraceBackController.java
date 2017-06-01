@@ -4,7 +4,6 @@ import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.TraceBackService;
-import com.edu.nju.asi.service.TraceBackStockPoolService;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
@@ -32,8 +31,6 @@ public class TraceBackController {
 
     @Autowired
     TraceBackService traceBackService;
-    @Autowired
-    TraceBackStockPoolService stockPoolService;
 
     /**
      * 通过选择的条件进行股票回测
@@ -68,7 +65,6 @@ public class TraceBackController {
         System.out.println("已登录：" + thisUser.getUserName());
         System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.formateAndPickCriteria.rank + "  " + criteria.holdingPeriod);
 
-        List<String> stockPool = stockPoolService.getTraceBackStockPoolCodes(thisUser.getUserName());
         TraceBackInfo traceBackInfo = null;
         try {
             traceBackInfo = traceBackService.traceBack(criteria);
