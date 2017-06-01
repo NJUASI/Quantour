@@ -616,9 +616,15 @@ function createHistogramChart(id, data, title) {
     return histogramChart;
 }
 
-function createClickChart(id, data, percentString){
+function createClickChart(id, data1, percentString){
 
     var clickChart = echarts.init(document.getElementById(id));
+    var data = [];
+    alert("1231");
+    data.push(data1);
+    var strData = [];
+    strData.push(percentString);
+
 
     var option = {
         series: [{
@@ -633,10 +639,10 @@ function createClickChart(id, data, percentString){
             label: {
                 normal: {
                     formatter: function() {
-                        return '热搜率'+percentString;
+                        return '热搜率'+strData;
                     },
                     textStyle: {
-                        fontSize: 22
+                        fontSize: 19
                     },
                     position: ['50%', '30%']
                 }

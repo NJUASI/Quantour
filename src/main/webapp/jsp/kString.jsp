@@ -98,7 +98,7 @@
 
 
 <div class="row">
-    <ul id="stockDetail" class="col-md-6 col-md-offset-2 list-inline">
+    <ul id="stockDetail" class="col-md-5 col-md-offset-2 list-inline">
         <li>开盘 <span class=" font-green ">${stockOfEndDay.open}</span></li>
         <li>最高 <span class=" font-red ">${stockOfEndDay.high}</span></li>
         <li>最低 <span class=" font-green ">${stockOfEndDay.low}</span></li>
@@ -111,6 +111,11 @@
         <li>总市值 <span>${stockOfEndDay.totalValue}</span></li>
         <li>流通市值 <span>${stockOfEndDay.circulationMarketValue}</span></li>
     </ul>
+    <div class="col-md-4" style="margin-top: -70px;margin-left: -80px">
+        <div id="one_stock_click_chart" style=" width:300px;height: 200px"></div>
+    </div>
+</div>
+
 </div>
 
 
@@ -146,9 +151,6 @@
 <div class="row" style="margin-top: 60px">
     <div class="col-md-offset-1 col-md-10">
         <div id="candlestick_chart"class="col-md-12" style=" height: 600px"></div>
-
-        <%--TODO 高源 图表位置--%>
-        <div id="one_stock_click_chart"class="col-md-12" style=" height: 600px"></div>
     </div>
 </div>
 
@@ -257,9 +259,7 @@
 <script type="text/javascript">
 
     // 画出点击率的图
-    alert(${clickedData} + "\n" + ${clickedDataStringRepre});
-    createClickChart("one_stock_click_chart", ${clickedData}, ${clickedDataStringRepre}});
-
+    createClickChart("one_stock_click_chart", ${clickedData}, ${clickedDataStringRepre});
     $(document).ready(
         function() {
             $("#stockText").keydown(function(event) {
@@ -331,8 +331,39 @@
 
     $("#stockDetail > li").addClass("col-md-5");
 
-    var startTime = ${startDate.year} + "-" + ${startDate.monthValue} + "-" + ${startDate.dayOfMonth};
-    var endTime = ${stockOfEndDay.stockID.date.year} + "-" + ${stockOfEndDay.stockID.date.monthValue} + "-" + ${stockOfEndDay.stockID.date.dayOfMonth};
+    var today = new Date();
+    var yesterday=new Date();
+    yesterday.setTime(today.getTime()-24*60*60*1000);
+
+    var endTime = today.getFullYear() + "-";
+    var startTime = yesterday.getFullYear()+"-";
+
+    var month=today.getMonth() + 1;
+    var dayOfMonth=today.getDate();
+    if( month<10){
+        endTime+="0"+month;
+    }else{
+        endTime+=month;
+    }
+    if(dayOfMonth<10){
+        endTime+="-0"+dayOfMonth;
+    }else{
+        endTime+="-"+dayOfMonth;
+    }
+
+    month=yesterday.getMonth() + 1;
+    dayOfMonth=yesterday.getDate();
+    if( month<10){
+        startTime+="0"+month;
+    }else{
+        startTime+=month;
+    }
+    if(dayOfMonth<10){
+        startTime+="-0"+dayOfMonth;
+    }else{
+        startTime+="-"+dayOfMonth;
+    }
+
     $("#datetimeStart>input").attr('value', startTime);
     $("#datetimeEnd>input").attr('value', endTime);
 
