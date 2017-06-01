@@ -191,91 +191,96 @@ date</ColNames>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="50" parent="10" name="PRIMARY">
+    <column id="50" parent="10" name="clickAmount">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="51" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code
 market
 name</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="51" parent="11" name="date">
+    <column id="52" parent="11" name="date">
       <Position>1</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="52" parent="11" name="climbingNum">
+    <column id="53" parent="11" name="climbingNum">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="53" parent="11" name="limitDownNum">
+    <column id="54" parent="11" name="limitDownNum">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="54" parent="11" name="limitUpNum">
+    <column id="55" parent="11" name="limitUpNum">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="55" parent="11" name="slipingNum">
+    <column id="56" parent="11" name="slipingNum">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="56" parent="11" name="slumpingNum">
+    <column id="57" parent="11" name="slumpingNum">
       <Position>6</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="57" parent="11" name="surgingNum">
+    <column id="58" parent="11" name="surgingNum">
       <Position>7</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="58" parent="11" name="volume">
+    <column id="59" parent="11" name="volume">
       <Position>8</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <key id="59" parent="11" name="PRIMARY">
+    <key id="60" parent="11" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>date</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="60" parent="12" name="stockCode">
+    <column id="61" parent="12" name="stockCode">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="61" parent="12" name="userName">
+    <column id="62" parent="12" name="userName">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="62" parent="12" name="stockName">
+    <column id="63" parent="12" name="stockName">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <key id="63" parent="12" name="PRIMARY">
+    <key id="64" parent="12" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>stockCode
 userName</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="64" parent="13" name="userName">
+    <column id="65" parent="13" name="userName">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="65" parent="13" name="password">
+    <column id="66" parent="13" name="password">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="66" parent="13" name="headPotrait">
+    <column id="67" parent="13" name="headPotrait">
       <Position>2</Position>
       <DataType>blob|0</DataType>
     </column>
-    <key id="67" parent="13" name="PRIMARY">
+    <key id="68" parent="13" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>userName</ColNames>
       <Primary>1</Primary>

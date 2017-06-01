@@ -31,17 +31,37 @@ public class StockSearch implements Serializable {
     @Column(columnDefinition = "int default 0")
     private int clickAmount;
 
-    public StockSearch() {
-        //TODO gcm
-    }
+    //是否为基准股票
+    @Basic
+    private boolean isBase;
+
+    //行业
+    @Basic
+    @Column(length = 100)
+    private String industry;
+
+    //地域
+    @Basic
+    @Column(length = 100)
+    private String area;
+
+    public StockSearch() {}
 
     public StockSearch(SearchID searchID) {
         this.searchID = searchID;
     }
 
-    public StockSearch(SearchID searchID,String firstLetters) {
+    public StockSearch(SearchID searchID, String firstLetters) {
         this.searchID = searchID;
         this.firstLetters = firstLetters;
+    }
+
+    public StockSearch(SearchID searchID,String firstLetters, boolean isBase, String industry, String area) {
+        this.searchID = searchID;
+        this.firstLetters = firstLetters;
+        this.isBase = isBase;
+        this.industry = industry;
+        this.area = area;
     }
 
     public SearchID getSearchID() {
@@ -66,5 +86,29 @@ public class StockSearch implements Serializable {
 
     public void setClickAmount(int clickAmount) {
         this.clickAmount = clickAmount;
+    }
+
+    public boolean isBase() {
+        return isBase;
+    }
+
+    public void setBase(boolean base) {
+        isBase = base;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -23,7 +24,7 @@ public class TraceBackParameter {
     private double riskFreeRate = 0.04;
 
     //有效投资时间
-    private double effectiveInvestmentTime = 360;
+    private double effectiveInvestmentTime;
 
     //策略的日收益均值
     private double meanStrategy;
@@ -73,11 +74,12 @@ public class TraceBackParameter {
                               Map<String, List<StrategyStock>> stockData, List<String> codes, List<BaseStock> baseStockList) throws IOException, NoDataWithinException, DateNotWithinException {
         this.stockData = stockData;
         this.traceBackInfo = traceBackInfo;
-
         this.traceBackCriteria = traceBackCriteria;
         traceBackNumVal = new TraceBackNumVal();
         this.codes = codes;
-
+        this.effectiveInvestmentTime = traceBackInfo.baseCumulativeReturn.get(0).currentDate.
+                until(traceBackInfo.baseCumulativeReturn.get(traceBackInfo.baseCumulativeReturn.size()-1).
+                        currentDate,ChronoUnit.DAYS);
         this.initBase(baseStockList);
         this.initStrategy();
         this.traceBackInfo.traceBackNumVal = this.traceBackNumVal;
@@ -171,9 +173,13 @@ public class TraceBackParameter {
         this.meanBase = this.calMeanOfDaily(baseRate);
         //计算基准的日收益率标准差
         this.stdevBase = this.calStdevOfDaily(baseRate, meanBase);
+        System.out.println("------------------------基准日收益-----------------------------------");
+        System.out.println("标准差："+this.stdevBase);
+        System.out.println("------------------------基准日收益-----------------------------------");
         //计算基准的年化收益率
         traceBackNumVal.baseAnnualizedRateOfReturn = this.calculateAnnualizedReturn(
                 traceBackNumVal.baseSumRate, this.effectiveInvestmentTime);
+        System.out.println("基准年化收益:"+traceBackNumVal.baseAnnualizedRateOfReturn);
         //计算基准的年化波动率
         traceBackNumVal.baseReturnVolatility = this.calculateReturnVolatility(stdevBase);
         //计算基准的夏普比率

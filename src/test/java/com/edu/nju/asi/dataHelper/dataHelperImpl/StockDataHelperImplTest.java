@@ -84,21 +84,21 @@ public class StockDataHelperImplTest {
 
     @Test
     public void addStockAll() throws Exception {
-        String code = "000001";
-        LocalDate localDate = LocalDate.of(1017,1,1);
-        List<Stock> stocks = new ArrayList<>();
-        for(int i=0;i<100;i++){
-            Stock stock = new Stock("景兴纸业",3.29,3.31,3.23,3.26,"60536",
-                    "605366",1.58,3.29,1.6,0.23,
-                    "48976","4876589");
-            stock.setStockID( new StockID(code,localDate));
-            stocks.add(stock);
-            code = addOne(code);
-            localDate = localDate.plusDays(1);
-        }
-        long start = System.currentTimeMillis();
-        stockDataHelper.addStockAll(stocks);
-        System.out.println("添加使用时间： "+(System.currentTimeMillis()-start));
+//        String code = "000001";
+//        LocalDate localDate = LocalDate.of(1017,1,1);
+//        List<Stock> stocks = new ArrayList<>();
+//        for(int i=0;i<100;i++){
+//            Stock stock = new Stock("景兴纸业",3.29,3.31,3.23,3.26,"60536",
+//                    "605366",1.58,3.29,1.6,0.23,
+//                    "48976","4876589");
+//            stock.setStockID( new StockID(code,localDate));
+//            stocks.add(stock);
+//            code = addOne(code);
+//            localDate = localDate.plusDays(1);
+//        }
+//        long start = System.currentTimeMillis();
+//        stockDataHelper.addStockAll(stocks);
+//        System.out.println("添加使用时间： "+(System.currentTimeMillis()-start));
     }
 
     @Test
