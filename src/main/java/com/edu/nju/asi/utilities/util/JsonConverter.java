@@ -100,11 +100,11 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
-    private static String convertClickSearch(double nowClickNum) throws JsonProcessingException {
-        List<String> result = new ArrayList<>();
-        result.add(NumberFormat.decimaFormat(nowClickNum,4));
-        result.add(NumberFormat.percentFormat(nowClickNum,2));
-        return jsonOfObject(result);
+    public static String convertClickSearch(double nowClickNum) throws JsonProcessingException {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(JSON.toJSONString(NumberFormat.decimaFormat(nowClickNum,4))).append(";");
+        buffer.append(JSON.toJSONString("\"" + NumberFormat.percentFormat(nowClickNum,2) + "\""));
+        return buffer.toString();
     }
 
 
@@ -153,7 +153,7 @@ public class JsonConverter {
             temp.add(String.valueOf(stockSearch.getClickAmount()));
             result.add(temp);
         }
-        return jsonOfObject(result);
+        return JsonConverter.jsonOfObject(result);
     }
 
 

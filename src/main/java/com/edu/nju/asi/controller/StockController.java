@@ -152,11 +152,12 @@ public class StockController {
             Stock stockOfEndDay = JSON.parseObject(parts[3], Stock.class);
             LocalDate startDate = JSON.parseObject(parts[4], LocalDate.class);
             boolean isPrivate = JSON.parseObject(parts[5], Boolean.class);
-            String clickedData = parts[6];
+            double clickedData = JSON.parseObject(parts[6], Double.class);
+            String clickedDataStringRepre = JSON.parseObject(parts[7], String.class);
 
             // 搜索量加一
-            SearchID thisStock = new SearchID(stockOfEndDay.getStockID().getCode(), stockOfEndDay.getName());
-            boolean clicked = stockService.addClickAmount(thisStock);
+            SearchID nowSearchID = (SearchID) session.getAttribute("nowSearchID");
+            boolean clicked = stockService.addClickAmount(nowSearchID);
             if (!clicked) {
                 System.err.println("getOneStock：搜索量未加一！！");
             }
@@ -169,6 +170,7 @@ public class StockController {
             mv.addObject("startDate", startDate);
             mv.addObject("isPrivate", isPrivate);
             mv.addObject("clickedData", clickedData);
+            mv.addObject("clickedDataStringRepre", clickedDataStringRepre);
             return mv;
         } else {
             System.out.println("请求失败");
@@ -210,9 +212,11 @@ public class StockController {
             }
 
             // 当前股票热度
-            double nowClickNum = stockService.getClickRate(new SearchID(stockCode, stocks.get(0).getName()));
+            SearchID nowSearchID = stockService.searchStock(stockCode).get(0).getSearchID();
+            session.setAttribute("nowSearchID", nowSearchID);
+            double nowClickRate = stockService.getClickRate(nowSearchID);
 
-            result = JsonConverter.convertOneStock(stocks, isPrivate, nowClickNum);
+            result = JsonConverter.convertOneStock(stocks, isPrivate, nowClickRate);
 
             System.out.println("Success\nstocks size: " + stocks.size());
             return "1;" + result;

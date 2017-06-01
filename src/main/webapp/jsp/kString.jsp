@@ -59,7 +59,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
-                <li><a id="stocks">大盘详情</a></li>
+                <li><a href="/stocks">大盘详情</a></li>
                 <li><a href="/trace_back">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
@@ -146,6 +146,9 @@
 <div class="row" style="margin-top: 60px">
     <div class="col-md-offset-1 col-md-10">
         <div id="candlestick_chart"class="col-md-12" style=" height: 600px"></div>
+
+        <%--TODO 高源 图表位置--%>
+        <div id="one_stock_click_chart"class="col-md-12" style=" height: 600px"></div>
     </div>
 </div>
 
@@ -228,12 +231,6 @@
 </div>
 
 
-<%--TODO 高源 图表位置--%>
-<div id="one_stock_click_chart">
-
-</div>
-
-
 <footer>
 
 </footer>
@@ -251,6 +248,8 @@
 
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
+<script src="../js/echarts-liquidfill.js"></script>
+
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
 <script src="../js/stocks.js"></script>
@@ -258,7 +257,8 @@
 <script type="text/javascript">
 
     // 画出点击率的图
-    createClickChart("one_stock_click_chart", ${clickedData});
+    alert(${clickedData} + "\n" + ${clickedDataStringRepre});
+    createClickChart("one_stock_click_chart", ${clickedData}, ${clickedDataStringRepre}});
 
     $(document).ready(
         function() {
@@ -284,31 +284,6 @@
             }
         }
     );
-
-    $("#stocks").click(function () {
-        $("body").removeClass("loaded");
-        $.ajax({
-            type: "post",
-            async: true,
-            url: "/stocks",
-
-            success: function (result) {
-                var array = result.split(";");
-
-                if (array[0] == "1") {
-                    window.location.href = "/stocks";
-                } else if (array[0] == "-1") {
-                    // 提示错误信息
-                    alert(array[1]);
-                } else {
-                    alert("未知错误类型orz");
-                }
-            },
-            error: function (result) {
-                alert("错误" + result);
-            }
-        }) ;
-    });
 
     function addPrivateStock () {
 //        alert("添加方法执行了");

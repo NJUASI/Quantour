@@ -27,11 +27,6 @@ public class SearchID  implements Serializable{
     public SearchID() {
     }
 
-    public SearchID(String code, String name) {
-        this.code = code;
-        this.name = name;
-    }
-
     public SearchID(String code, String name, Market market) {
         this.code = code;
         this.name = name;
