@@ -1,7 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.*;
-import com.edu.nju.asi.utilities.enums.ComparotorType;
+import com.edu.nju.asi.utilities.enums.ComparatorType;
 
 
 /**
@@ -11,8 +11,8 @@ import com.edu.nju.asi.utilities.enums.ComparotorType;
  */
 public class PickStrategyFactory {
 
-    public static AllPickStrategy createPickStrategy(ComparotorType comparotorType, int value, double weight){
-        switch (comparotorType){
+    public static AllPickStrategy createPickStrategy(ComparatorType comparatorType, int value, double weight){
+        switch (comparatorType){
             case RANK_MAX:
                 return new RankMaxPickStrategy(value, weight);
             case RANK_MAX_PERCENT:

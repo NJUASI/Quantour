@@ -1,10 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.infoCarrier.traceBack.*;
-import com.edu.nju.asi.utilities.enums.BlockType;
-import com.edu.nju.asi.utilities.enums.IndicatorType;
-import com.edu.nju.asi.utilities.enums.ComparotorType;
-import com.edu.nju.asi.utilities.enums.StType;
+import com.edu.nju.asi.utilities.enums.*;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
@@ -41,7 +38,7 @@ public class TraceBackServiceImplTest {
         blockTypes.add(BlockType.ZB);
 
         List<FilterCondition> filterConditions = new ArrayList<>();
-        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparotorType.RANK_MAX, 5, 1, 5));
+        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparatorType.RANK_MAX, 5, 1, 5));
 
         TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, 10, new StockPoolCriteria(StType.INCLUDE, blockTypes),
                 "沪深300", filterConditions);

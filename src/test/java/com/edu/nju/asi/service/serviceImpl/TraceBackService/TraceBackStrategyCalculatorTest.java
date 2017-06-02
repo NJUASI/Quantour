@@ -7,10 +7,7 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.StrategyStockList;
-import com.edu.nju.asi.utilities.enums.BlockType;
-import com.edu.nju.asi.utilities.enums.IndicatorType;
-import com.edu.nju.asi.utilities.enums.ComparotorType;
-import com.edu.nju.asi.utilities.enums.StType;
+import com.edu.nju.asi.utilities.enums.*;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +39,7 @@ public class TraceBackStrategyCalculatorTest {
         List<BlockType> blockTypes = new LinkedList<>();
         blockTypes.add(BlockType.ZB);
         List<FilterCondition> filterConditions = new ArrayList<>();
-        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparotorType.RANK_MAX, 5, 1, 5));
+        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparatorType.RANK_MAX, 5, 1, 5));
 
         traceBackCriteria = new TraceBackCriteria(LocalDate.of(2017,4,1), LocalDate.of(2017,5,1), 5, 10, new StockPoolCriteria(StType.INCLUDE, blockTypes),
                 "沪深300", filterConditions);

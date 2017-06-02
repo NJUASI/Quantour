@@ -1,7 +1,7 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
 import com.edu.nju.asi.utilities.enums.IndicatorType;
-import com.edu.nju.asi.utilities.enums.ComparotorType;
+import com.edu.nju.asi.utilities.enums.ComparatorType;
 
 /**
  * Created by Harvey on 2017/4/19.
@@ -18,7 +18,7 @@ public class FilterCondition {
     /**
      * 比较符
      */
-    public ComparotorType comparotorType;
+    public ComparatorType comparatorType;
 
     /**
      * 比较符的值
@@ -38,9 +38,9 @@ public class FilterCondition {
     public FilterCondition() {
     }
 
-    public FilterCondition(IndicatorType indicatorType, ComparotorType comparotorType, int value, double weight, int formativePeriod) {
+    public FilterCondition(IndicatorType indicatorType, ComparatorType comparatorType, int value, double weight, int formativePeriod) {
         this.indicatorType = indicatorType;
-        this.comparotorType = comparotorType;
+        this.comparatorType = comparatorType;
         this.value = value;
         this.weight = weight;
         this.formativePeriod = formativePeriod;

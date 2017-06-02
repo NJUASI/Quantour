@@ -129,7 +129,7 @@ public class TraceBackStrategyCalculator {
         // 通过不同的筛选条件进行筛选
         for(FilterCondition filterCondition : filterConditions){
             AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData);
-            AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparotorType, filterCondition.value, filterCondition.weight);
+            AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value, filterCondition.weight);
             filterConditionRates.add(pickStrategy.pick(formateStrategy.formate(traceBackStockPool, periodStart, filterCondition.formativePeriod)));
         }
 

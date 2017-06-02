@@ -40,7 +40,6 @@ public class TraceBackCriteria {
      */
     public String baseStockName;
 
-
     /**
      * 所有的筛选条件（仿果仁网）
      */
