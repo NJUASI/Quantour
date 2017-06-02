@@ -78,7 +78,9 @@ public class NormalStockDownloadProcessor implements PageProcessor {
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
                 //添加股票代码今天的数据页面
-                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
+//                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
+                //添加通过代码搜索股票的界面
+                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
             }
 
             totalStocks += codes.size();
@@ -103,7 +105,9 @@ public class NormalStockDownloadProcessor implements PageProcessor {
 
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
-                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
+//                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
+                //添加通过代码搜索股票的界面
+                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
             }
 
             totalStocks += codes.size();
@@ -135,12 +139,9 @@ public class NormalStockDownloadProcessor implements PageProcessor {
                 prefix = 0;
             }
             //添加当天数据的下载链接
-            page.putField("url","http://quotes.money.163.com/service/chddata.html?code="+prefix+code+"&start="+start+"&end="+end+"&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP");
-            page.putField("code",code);
-            page.putField("isNormal", true);
-
-            //添加通过代码搜索股票的界面
-            page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+code);
+//            page.putField("url","http://quotes.money.163.com/service/chddata.html?code="+prefix+code+"&start="+start+"&end="+end+"&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP");
+//            page.putField("code",code);
+//            page.putField("isNormal", true);
         }
         //获取对应代码的正确名称、简称、所属市场类型
         else if (page.getUrl().regex(NAME_LIST).match()){

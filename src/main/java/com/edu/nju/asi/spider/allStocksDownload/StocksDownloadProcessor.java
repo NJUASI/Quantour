@@ -1,18 +1,16 @@
 package com.edu.nju.asi.spider.allStocksDownload;
 
 import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
-import us.codecraft.webmagic.utils.HttpConstant;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Harvey on 2017/5/15.
@@ -25,7 +23,7 @@ public class StocksDownloadProcessor implements PageProcessor {
     static String ALL_LIST = "http://quotes\\.money\\.163\\.com/trade/lsjysj_\\d{6}.html";
 
     LocalDate today = LocalDate.now();
-    LocalDate default_StartDay = LocalDate.of(2007,1,1);
+    LocalDate default_StartDay = LocalDate.of(2012,1,1);
 
     //每页取的股票代码个数，最后一页除外
     int pageCount = 25;
@@ -44,8 +42,6 @@ public class StocksDownloadProcessor implements PageProcessor {
             .setTimeOut(600000)
             .setRetryTimes(5)
             .setSleepTime(100);
-
-    //
 
     @Override
     // process是定制爬虫逻辑的核心接口，在这里编写抽取逻辑
@@ -67,16 +63,41 @@ public class StocksDownloadProcessor implements PageProcessor {
             for(int j = 0; j < count; j++){
                 String tempCode = json.jsonPath("$.list["+j+"].SYMBOL").get();
                 //过滤掉基金
-                if(!tempCode.startsWith("150") && !tempCode.startsWith("159") && !tempCode.startsWith("16") && !(tempCode.startsWith("50"))){
+                if(tempCode.startsWith("000") || tempCode.startsWith("001") || tempCode.startsWith("002")
+                        || tempCode.startsWith("300") || tempCode.startsWith("600") || tempCode.startsWith("601")){
                     codes.add(tempCode);
                 }
             }
 
+//            Map<String,Map<String,String>> allCwzb = new TreeMap<>();
+//
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
                 //添加股票代码今天的数据页面
                 page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
+//
+//                //添加财务指标的url
+//                Map<String,String> cwzb = new TreeMap<>();
+//                //主要财务指标url
+//                cwzb.put("zycwzb","http://quotes.money.163.com/service/zycwzb_"+codes.get(i)+".html?type=report");
+//                //盈利能力
+//                cwzb.put("ylnl","http://quotes.money.163.com/service/zycwzb_"+codes.get(i)+".html?type=report&part=ylnl");
+//                //偿还能力
+//                cwzb.put("chnl","http://quotes.money.163.com/service/zycwzb_"+codes.get(i)+".html?type=report&part=chnl");
+//                //成长能力
+//                cwzb.put("cznl","http://quotes.money.163.com/service/zycwzb_"+codes.get(i)+".html?type=report&part=cznl");
+//                //营运能力
+//                cwzb.put("yynl","http://quotes.money.163.com/service/zycwzb_"+codes.get(i)+".html?type=report&part=chnl");
+//                //资产负债表
+//                cwzb.put("zcfzb","http://quotes.money.163.com/service/zcfzb_"+codes.get(i)+".html");
+//                //利润表
+//                cwzb.put("lrn","http://quotes.money.163.com/service/lrb_"+codes.get(i)+".html");
+//                //现金流量表
+//                cwzb.put("xjllb","http://quotes.money.163.com/service/xjllb_"+codes.get(i)+".html");
+//
+//                allCwzb.put(codes.get(i),cwzb);
             }
+//            page.putField("allCwzb",allCwzb);
 
             totalStocks += codes.size();
             System.out.println(totalStocks);
@@ -98,10 +119,34 @@ public class StocksDownloadProcessor implements PageProcessor {
                 codes.add(page.getJson().jsonPath("$.list["+j+"].SYMBOL").get());
             }
 
-            for(int i = 0; i < codes.size(); i++){
-                System.out.println("股票代码:"+codes.get(i));
-                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
+
+            Map<String,Map<String,String>> allCwzb = new TreeMap<>();
+            for(int i = 0; i < codes.size(); i++) {
+                System.out.println("股票代码:" + codes.get(i));
+                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_" + codes.get(i) + ".html#01b07");
+//
+//                //添加财务指标的url
+//                Map<String, String> cwzb = new TreeMap<>();
+//                //主要财务指标url
+//                cwzb.put("zycwzb", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report");
+//                //盈利能力
+//                cwzb.put("ylnl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=ylnl");
+//                //偿还能力
+//                cwzb.put("chnl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=chnl");
+//                //成长能力
+//                cwzb.put("cznl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=cznl");
+//                //营运能力
+//                cwzb.put("yynl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=chnl");
+//                //资产负债表
+//                cwzb.put("zcfzb", "http://quotes.money.163.com/service/zcfzb_" + codes.get(i) + ".html");
+//                //利润表
+//                cwzb.put("lrn", "http://quotes.money.163.com/service/lrb_" + codes.get(i) + ".html");
+//                //现金流量表
+//                cwzb.put("xjllb", "http://quotes.money.163.com/service/xjllb_" + codes.get(i) + ".html");
+//
+//                allCwzb.put(codes.get(i), cwzb);
             }
+//            page.putField("allCwzb",allCwzb);
 
             totalStocks += codes.size();
             System.out.println(totalStocks);
