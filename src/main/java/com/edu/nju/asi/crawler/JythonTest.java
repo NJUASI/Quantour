@@ -2,9 +2,12 @@ package com.edu.nju.asi.crawler;
 
 import org.python.core.PyFunction;
 import org.python.core.PyInteger;
+import org.python.core.PyList;
 import org.python.core.PyObject;
 import org.python.util.PythonInterpreter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -22,12 +25,17 @@ public class JythonTest {
 
         PythonInterpreter.initialize(pre,properties,new String[0]);
         PythonInterpreter pythonInterpreter = new PythonInterpreter();
+        System.out.println("------------------test1 -------------------");
         pythonInterpreter.execfile("D:/Python_Workspace/HelloWorld.py");
         System.out.println("------------------Hello end -------------------");
 
-        PyFunction function = (PyFunction)pythonInterpreter.get("test",PyFunction.class);
-        int a = 2017,b=2;
-        PyObject pyObject = function.__call__(new PyInteger(a),new PyInteger(b));
+        PyFunction function = (PyFunction)pythonInterpreter.get("test1",PyFunction.class);
+        List<String> list =  new ArrayList<>();
+        list.add("Dong");
+        list.add("Gong");
+        list.add("Feng");
+        list.add("Ling");
+        PyObject pyObject = function.__call__(new PyList(list));
         double result = pyObject.asDouble();
         String ret = "a+b = "+pyObject.toString();
         System.out.println(ret);

@@ -48,6 +48,26 @@ public class SrategyDataHelperImpl implements StrategyDataHelper {
     }
 
     /**
+     * 获取单个策略
+     *
+     * @param strategyID
+     * @return 指定策略
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/2
+     */
+    @Override
+    public Strategy getStrategy(String strategyID) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Strategy strategy = (Strategy)session.get(Strategy.class,strategyID);
+        transaction.commit();
+        session.close();
+        return strategy;
+    }
+
+    /**
      * 判断策略是否已经创建
      *
      * @param strategyID

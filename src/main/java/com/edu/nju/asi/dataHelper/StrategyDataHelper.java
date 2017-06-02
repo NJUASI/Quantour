@@ -20,6 +20,16 @@ public interface StrategyDataHelper {
     List<Strategy> getAllStrategy();
 
     /**
+     * 获取单个策略
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/2
+     * @return  指定策略
+     */
+    Strategy getStrategy(String strategyID);
+
+    /**
      * 判断策略是否已经创建
      *
      * @author Byron Dong
