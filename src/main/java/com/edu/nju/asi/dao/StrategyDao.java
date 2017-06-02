@@ -16,7 +16,7 @@ public interface StrategyDao {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      * @param strategy 策略信息载体
-     * @param userID 用户名
+     * @param userName 用户名
      * @return 是否成功添加策略
      */
     boolean addStrategy(String userID,Strategy strategy);
@@ -28,7 +28,7 @@ public interface StrategyDao {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      * @param strategy 策略信息载体
-     * @param userID 用户名
+     * @param userName 用户名
      * @return 是否成功更新策略
      */
     boolean updateStrategy(String userID,Strategy strategy);
@@ -40,10 +40,10 @@ public interface StrategyDao {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      * @param strategyID 策略ID
-     * @param userID 用户名
+     * @param userName 用户名
      * @return 是否成功删除策略
      */
-    boolean deleteStrategy(String userID,String strategyID);
+    boolean deleteStrategy(String userName,String strategyID);
 
     /**
      * 获取策略信息
@@ -52,10 +52,20 @@ public interface StrategyDao {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      * @param strategyID 策略ID
-     * @param userID 用户名
      * @return Strategy 策略信息载体
      */
-    Strategy getStrategy(String userID,String strategyID);
+    Strategy getStrategy(String strategyID);
+
+    /**
+     * 获取用户的所有策略（创建和订阅）
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/2
+     * @param userID 用户ID
+     * @return  List<Strategy> 是否成功添加用户
+     */
+    List<Strategy> getAllStrategy(String userID);
 
     /**
      * 获取所有策略
