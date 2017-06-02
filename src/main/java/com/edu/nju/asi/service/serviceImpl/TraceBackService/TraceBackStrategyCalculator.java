@@ -152,8 +152,19 @@ public class TraceBackStrategyCalculator {
             }
         }
 
-        //
         List<String> wantedStockCodes = new ArrayList<>();
+
+        // 筛选出来的股票大于最大持有股票数,应该按评分排名
+        if(wantedFilterConditionRates.size() > maxHoldingNum){
+            wantedFilterConditionRates.sort(new Comparator<FilterConditionRate>() {
+                @Override
+                public int compare(FilterConditionRate o1, FilterConditionRate o2) {
+                    return (int) Math.ceil(o1.score-o2.score);
+                }
+            });
+
+            wantedFilterConditionRates = wantedFilterConditionRates.subList(0,maxHoldingNum);
+        }
         for(FilterConditionRate filterConditionRate : wantedFilterConditionRates){
             wantedStockCodes.add(filterConditionRate.stockCode);
         }
