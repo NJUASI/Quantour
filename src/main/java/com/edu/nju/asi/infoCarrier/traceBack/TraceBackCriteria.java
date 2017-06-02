@@ -1,6 +1,7 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by harvey on 17-3-28.
@@ -20,11 +21,6 @@ public class TraceBackCriteria {
     public LocalDate endDate;
 
     /**
-     * 形成期（MS）／多少天均值（MR）
-     */
-    public int formativePeriod;
-
-    /**
      * 持有期
      */
     public int holdingPeriod;
@@ -34,51 +30,43 @@ public class TraceBackCriteria {
      */
     public StockPoolCriteria stockPoolCriteria;
 
-//    /**
-//     * 持有股票数
-//     */
-//    public int holdingNum;
+    /**
+     * 最大持有股票数
+     */
+    public int maxHoldingNum;
 
     /**
      * 基准股票的名称，如沪深300
      */
     public String baseStockName;
 
-//    /**
-//     * 指出是否是自选股
-//     */
-//    public boolean isCustomized;
 
     /**
-     * 形成期的形成和挑选类型以及rank
+     * 所有的筛选条件（仿果仁网）
      */
-    public FormateAndPickCriteria formateAndPickCriteria;
+    public List<FilterCondition> filterConditions;
 
     public TraceBackCriteria(){
 
     }
-    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int formativePeriod, int holdingPeriod, StockPoolCriteria stockPoolCriteria, String baseStockName, boolean isCustomized, FormateAndPickCriteria formateAndPickCriteria) {
+    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int holdingPeriod, int maxHoldingNum, StockPoolCriteria stockPoolCriteria, String baseStockName, List<FilterCondition> filterConditions) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.formativePeriod = formativePeriod;
         this.holdingPeriod = holdingPeriod;
+        this.maxHoldingNum = maxHoldingNum;
         this.stockPoolCriteria = stockPoolCriteria;
-//        this.holdingNum = holdingNum;
         this.baseStockName = baseStockName;
-//        this.isCustomized = isCustomized;
-        this.formateAndPickCriteria = formateAndPickCriteria;
+        this.filterConditions = filterConditions;
     }
 
 
     public TraceBackCriteria(TraceBackCriteria criteria) {
         this.startDate = criteria.startDate;
         this.endDate = criteria.endDate;
-        this.formativePeriod = criteria.formativePeriod;
         this.holdingPeriod = criteria.holdingPeriod;
+        this.maxHoldingNum = criteria.maxHoldingNum;
         this.stockPoolCriteria = criteria.stockPoolCriteria;
-//        this.holdingNum = holdingNum;
         this.baseStockName = criteria.baseStockName;
-//        this.isCustomized = criteria.isCustomized;
-        this.formateAndPickCriteria = criteria.formateAndPickCriteria;
+        this.filterConditions = criteria.filterConditions;
     }
 }

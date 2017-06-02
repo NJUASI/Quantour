@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by cuihua on 2017/5/13.
@@ -63,7 +62,7 @@ public class TraceBackController {
 
         User thisUser = (User) request.getSession().getAttribute("user");
         System.out.println("已登录：" + thisUser.getUserName());
-        System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.formateAndPickCriteria.rank + "  " + criteria.holdingPeriod);
+        System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.filterCondition.value + "  " + criteria.holdingPeriod);
 
         TraceBackInfo traceBackInfo = null;
         try {

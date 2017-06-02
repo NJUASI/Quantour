@@ -5,7 +5,7 @@ package com.edu.nju.asi.utilities.enums;
  *
  * 回测时， 形成期中的选择策略
  */
-public enum PickType {
+public enum ComparotorType {
 
     RANK_MAX_PERCENT("排名%最大"),
     RANK_MIN_PERCENT("排名%最小"),
@@ -15,7 +15,7 @@ public enum PickType {
 
     private String repre;
 
-    PickType(String repre) {
+    ComparotorType(String repre) {
         this.repre = repre;
     }
 
@@ -37,8 +37,8 @@ public enum PickType {
      * String TO enum
      * 便于从数据库读入
      */
-    public static PickType getEnum(String a) {
-        for (PickType thisEnum : PickType.values()){
+    public static ComparotorType getEnum(String a) {
+        for (ComparotorType thisEnum : ComparotorType.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }

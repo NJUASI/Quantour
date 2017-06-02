@@ -1,7 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
 
 import java.time.LocalDate;
@@ -28,8 +28,8 @@ public class BiasFormateStrategy extends AllFormateStrategy {
      * @return 形成的
      */
     @Override
-    public List<FormativePeriodRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
-        List<FormativePeriodRate> result = new LinkedList<>();
+    public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+        List<FilterConditionRate> result = new LinkedList<>();
 
         for (String s : stockCodes) {
             List<StrategyStock> thisStockData = stockData.get(s);
@@ -61,7 +61,7 @@ public class BiasFormateStrategy extends AllFormateStrategy {
             double average = sum / temp.size();
 
             double biasRatio = (average - thisStockData.get(neededMRStockIndex).close) / average;
-            result.add(new FormativePeriodRate(s, biasRatio));
+            result.add(new FilterConditionRate(s, biasRatio));
         }
         return result;
     }

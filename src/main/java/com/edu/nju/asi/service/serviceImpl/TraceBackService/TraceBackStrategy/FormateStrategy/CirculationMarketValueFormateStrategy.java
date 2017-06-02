@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 
@@ -26,7 +26,7 @@ public class CirculationMarketValueFormateStrategy extends AllFormateStrategy{
      * @return 形成的数据
      */
     @Override
-    public List<FormativePeriodRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+    public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         return null;
     }
 }
