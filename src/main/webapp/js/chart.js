@@ -3,6 +3,7 @@
  */
 function createCandlestickChart(id, candlestickData, volumes) {
 
+    alert("1231");
     function splitCandlestickData(rawData) {
         var categoryData = [];
         var values = [];
@@ -323,7 +324,7 @@ function createLineChart(id, lineData, title, legend) {
         ],
         series: lineSeries
     };
-
+    alert("end");
     lineChart.setOption(option);
     lineChart.hideLoading();
     return lineChart;
@@ -620,7 +621,6 @@ function createClickChart(id, data1, percentString){
 
     var clickChart = echarts.init(document.getElementById(id));
     var data = [];
-    alert("1231");
     data.push(data1);
     var strData = [];
     strData.push(percentString);

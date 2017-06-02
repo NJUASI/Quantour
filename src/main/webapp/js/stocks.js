@@ -55,7 +55,7 @@ function changeSingleStockDetail() {
 
                 $("#stockDetail > li").addClass("col-md-5");
 
-
+                alert(candlestickData);
                  createCandlestickChart('candlestick_chart', candlestickData, volumeData);
 
 
