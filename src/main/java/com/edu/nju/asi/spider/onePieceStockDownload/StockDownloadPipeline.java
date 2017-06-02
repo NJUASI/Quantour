@@ -1,11 +1,7 @@
 package com.edu.nju.asi.spider.onePieceStockDownload;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Map;
 
-import com.edu.nju.asi.spider.DownloadDataHelper;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;

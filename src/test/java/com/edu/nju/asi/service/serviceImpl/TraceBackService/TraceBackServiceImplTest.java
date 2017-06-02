@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,8 +40,11 @@ public class TraceBackServiceImplTest {
         List<BlockType> blockTypes = new LinkedList<>();
         blockTypes.add(BlockType.ZB);
 
-        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, , new StockPoolCriteria(StType.INCLUDE, blockTypes),
-                "沪深300", new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparotorType.RANK_MAX, 5, , 5));
+        List<FilterCondition> filterConditions = new ArrayList<>();
+        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparotorType.RANK_MAX, 5, 1, 5));
+
+        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, 10, new StockPoolCriteria(StType.INCLUDE, blockTypes),
+                "沪深300", filterConditions);
 
         try {
              TraceBackInfo traceBackInfo = traceBackService.traceBack(criteria);

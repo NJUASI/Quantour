@@ -17,10 +17,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Harvey on 2017/5/29.
@@ -44,9 +41,11 @@ public class TraceBackStrategyCalculatorTest {
 
         List<BlockType> blockTypes = new LinkedList<>();
         blockTypes.add(BlockType.ZB);
+        List<FilterCondition> filterConditions = new ArrayList<>();
+        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparotorType.RANK_MAX, 5, 1, 5));
 
-        traceBackCriteria = new TraceBackCriteria(LocalDate.of(2017,4,1), LocalDate.of(2017,5,1), 5, , new StockPoolCriteria(StType.INCLUDE, blockTypes),
-                "沪深300", new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparotorType.RANK_MAX, 5, , 5));
+        traceBackCriteria = new TraceBackCriteria(LocalDate.of(2017,4,1), LocalDate.of(2017,5,1), 5, 10, new StockPoolCriteria(StType.INCLUDE, blockTypes),
+                "沪深300", filterConditions);
 
         try {
             traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);

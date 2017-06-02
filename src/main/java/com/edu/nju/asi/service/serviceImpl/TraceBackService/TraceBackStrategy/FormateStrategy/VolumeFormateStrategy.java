@@ -52,7 +52,7 @@ public class VolumeFormateStrategy extends AllFormateStrategy {
                 totalVolume += stockVOList.get(j).volume;
             }
 
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), totalVolume));
+            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), totalVolume, 0));
         }
 
         return filterConditionRate;

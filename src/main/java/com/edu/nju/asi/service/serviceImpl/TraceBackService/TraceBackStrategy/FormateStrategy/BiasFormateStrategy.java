@@ -61,7 +61,7 @@ public class BiasFormateStrategy extends AllFormateStrategy {
             double average = sum / temp.size();
 
             double biasRatio = (average - thisStockData.get(neededMRStockIndex).close) / average;
-            result.add(new FilterConditionRate(s, biasRatio));
+            result.add(new FilterConditionRate(s, biasRatio, 0));
         }
         return result;
     }
