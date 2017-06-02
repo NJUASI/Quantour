@@ -87,9 +87,4 @@ public interface StockService{
      * @return List<StockSearch>
      */
     List<StockSearch> getTopRankingList(int number);
-
-    /**
-     * @return 全部的搜索排行榜
-     */
-    List<StockSearch> getAllRankingList();
 }
