@@ -38,7 +38,7 @@ public class UserDataHelperImpl implements UserDataHelper {
     @Override
     public boolean add(User user) {
         //用户信息已存在无须添加
-        if(get(user.getUserName())!=null){
+        if (get(user.getUserName()) != null) {
             return false;
         }
 
@@ -64,7 +64,7 @@ public class UserDataHelperImpl implements UserDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User)session.get(User.class,username);
+        User user = (User) session.get(User.class, username);
         transaction.commit();
         session.close();
         return user;
@@ -82,7 +82,7 @@ public class UserDataHelperImpl implements UserDataHelper {
     @Override
     public boolean update(User user) {
         //用户不存在，拒绝修改
-        if(get(user.getUserName())==null){
+        if (get(user.getUserName()) == null) {
             return false;
         }
 
@@ -126,11 +126,11 @@ public class UserDataHelperImpl implements UserDataHelper {
      */
     @Override
     public boolean addStrategy(String userName, Strategy strategy) {
-       if(strategy.getCreater().equals(userName)){
-           return addStrategyByCreater(userName,strategy);
-       } else{
-           return addStrategyByChecker(userName,strategy);
-       }
+        if (strategy.getCreater().equals(userName)) {
+            return addStrategyByCreater(userName, strategy);
+        } else {
+            return addStrategyByChecker(userName, strategy);
+        }
     }
 
     /**
@@ -148,15 +148,15 @@ public class UserDataHelperImpl implements UserDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User)session.get(User.class,userName);
-        if(!isContain(user.getStrategies(),strategy)){
+        User user = (User) session.get(User.class, userName);
+        if (!isContain(user.getStrategies(), strategy)) {
             transaction.commit();
             session.close();
             return false;
         }
 
-        for(Strategy strategy1:user.getStrategies()){
-            if(strategy1.getStrategyID().equals(strategy.getStrategyID())){
+        for (Strategy strategy1 : user.getStrategies()) {
+            if (strategy1.getStrategyID().equals(strategy.getStrategyID())) {
                 strategy1.setContent(strategy.getContent());
                 strategy1.setDescription(strategy.getDescription());
                 strategy1.setPrivate(strategy.isPrivate());
@@ -183,17 +183,17 @@ public class UserDataHelperImpl implements UserDataHelper {
     public boolean deleteStrategy(String userName, String strategyID) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        User user = (User)session.get(User.class,userName);
+        User user = (User) session.get(User.class, userName);
         List<Strategy> strategies = user.getStrategies();
         transaction.commit();
         session.close();
 
-        for(Strategy strategy:strategies){
-            if(strategy.getStrategyID().equals(strategyID)){
-                if(strategy.getCreater().equals(userName)){
+        for (Strategy strategy : strategies) {
+            if (strategy.getStrategyID().equals(strategyID)) {
+                if (strategy.getCreater().equals(userName)) {
                     return this.deleteStrategyByCreater(strategyID);
-                } else{
-                    return this.deleteStrategyByChecker(userName,strategyID);
+                } else {
+                    return this.deleteStrategyByChecker(userName, strategyID);
                 }
             }
         }
@@ -203,35 +203,29 @@ public class UserDataHelperImpl implements UserDataHelper {
     /**
      * 获取策略信息
      *
-     * @param userName   用户名
-     * @param strategyID 策略ID
+     * @param userName 用户名
      * @return Strategy 策略信息载体
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/6/1
+     * @updateTime 2017/6/2
      */
     @Override
-    public Strategy getStrategy(String userName, String strategyID) {
+    public List<Strategy> getStrategy(String userName) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User)session.get(User.class,userName);
-
-        for(Strategy strategy:user.getStrategies()){
-            if(strategy.getStrategyID().equals(strategyID)){
-                return strategy;
-            }
-        }
+        User user = (User) session.get(User.class, userName);
+        List<Strategy> strategies = user.getStrategies();
         transaction.commit();
         session.close();
-        return null;
+        return strategies;
     }
 
-    private boolean addStrategyByCreater(String userName, Strategy strategy){
+    private boolean addStrategyByCreater(String userName, Strategy strategy) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        if(session.get(Strategy.class,strategy.getStrategyID())!=null){
+        if (session.get(Strategy.class, strategy.getStrategyID()) != null) {
             transaction.commit();
             session.close();
             return false;
@@ -239,15 +233,15 @@ public class UserDataHelperImpl implements UserDataHelper {
         session.save(strategy);
         transaction.commit();
         session.close();
-        return addStrategyByChecker(userName,strategy);
+        return addStrategyByChecker(userName, strategy);
     }
 
-    private boolean addStrategyByChecker(String userName, Strategy strategy){
+    private boolean addStrategyByChecker(String userName, Strategy strategy) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User)session.get(User.class,userName);
-        if(isContain(user.getStrategies(),strategy)){
+        User user = (User) session.get(User.class, userName);
+        if (isContain(user.getStrategies(), strategy)) {
             transaction.commit();
             session.close();
             return false;
@@ -260,17 +254,17 @@ public class UserDataHelperImpl implements UserDataHelper {
         return true;
     }
 
-    private boolean deleteStrategyByCreater(String strategyID){
+    private boolean deleteStrategyByCreater(String strategyID) {
         boolean result = false;
         List<String> userNames = this.getAllUserNames();
-        for(String userName:userNames){
-            deleteStrategyByChecker(userName,strategyID);
+        for (String userName : userNames) {
+            deleteStrategyByChecker(userName, strategyID);
         }
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        Strategy strategy = session.get(Strategy.class,strategyID);
-        if(strategy!=null){
+        Strategy strategy = session.get(Strategy.class, strategyID);
+        if (strategy != null) {
             session.delete(strategy);
             result = true;
         }
@@ -280,14 +274,14 @@ public class UserDataHelperImpl implements UserDataHelper {
         return result;
     }
 
-    private boolean deleteStrategyByChecker(String userName, String strategyID){
+    private boolean deleteStrategyByChecker(String userName, String strategyID) {
         boolean result = false;
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User)session.get(User.class,userName);
-        for(Strategy strategy:user.getStrategies()){
-            if(strategy.getStrategyID().equals(strategyID)){
+        User user = (User) session.get(User.class, userName);
+        for (Strategy strategy : user.getStrategies()) {
+            if (strategy.getStrategyID().equals(strategyID)) {
                 user.getStrategies().remove(strategy);
                 result = true;
                 break;
@@ -299,9 +293,9 @@ public class UserDataHelperImpl implements UserDataHelper {
         return result;
     }
 
-    private boolean isContain(List<Strategy> strategies, Strategy strategy){
-        for(Strategy strategy1:strategies){
-            if(strategy1.getStrategyID().equals(strategy.getStrategyID())){
+    private boolean isContain(List<Strategy> strategies, Strategy strategy) {
+        for (Strategy strategy1 : strategies) {
+            if (strategy1.getStrategyID().equals(strategy.getStrategyID())) {
                 return true;
             }
         }

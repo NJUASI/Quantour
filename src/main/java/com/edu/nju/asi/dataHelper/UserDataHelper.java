@@ -100,9 +100,8 @@ public interface UserDataHelper {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
-     * @param strategyID 策略ID
      * @param userID 用户名
      * @return Strategy 策略信息载体
      */
-    Strategy getStrategy(String userID,String strategyID);
+    List<Strategy> getStrategy(String userID);
 }
