@@ -82,47 +82,47 @@ public class Stock implements Serializable {
     @Column(length = 100)
     private String circulationMarketValue;
 
-//    //复权数据
-//
-//    //前复权开盘指数
-//    @Basic
-//    private double frontAdjOpen;
-//
-//    //前复权收盘指数
-//    @Basic
-//    private double frontAdjClose;
-//
-//    //前复权当日最高指数
-//    @Basic
-//    private double frontAdjHigh;
-//
-//    //前复权当日最低指数
-//    @Basic
-//    private double frontAdjLow;
-//
-//    //昨日前复权收盘指数
-//    @Basic
-//    private double preFrontAdjClose;
-//
-//    //后复权开盘指数
-//    @Basic
-//    private double afterAdjOpen;
-//
-//    //后复权收盘指数
-//    @Basic
-//    private double afterAdjClose;
-//
-//    //后复权当日最高指数
-//    @Basic
-//    private double afterAdjHigh;
-//
-//    //后复权当日最低指数
-//    @Basic
-//    private double afterAdjLow;
-//
-//    //昨日后复权收盘指数
-//    @Basic
-//    private double preAfterAdjClose;
+    //复权数据
+
+    //前复权开盘指数
+    @Basic
+    private double frontAdjOpen;
+
+    //前复权收盘指数
+    @Basic
+    private double frontAdjClose;
+
+    //前复权当日最高指数
+    @Basic
+    private double frontAdjHigh;
+
+    //前复权当日最低指数
+    @Basic
+    private double frontAdjLow;
+
+    //昨日前复权收盘指数
+    @Basic
+    private double preFrontAdjClose;
+
+    //后复权开盘指数
+    @Basic
+    private double afterAdjOpen;
+
+    //后复权收盘指数
+    @Basic
+    private double afterAdjClose;
+
+    //后复权当日最高指数
+    @Basic
+    private double afterAdjHigh;
+
+    //后复权当日最低指数
+    @Basic
+    private double afterAdjLow;
+
+    //昨日后复权收盘指数
+    @Basic
+    private double preAfterAdjClose;
 
     public Stock() {
     }
@@ -145,35 +145,35 @@ public class Stock implements Serializable {
         this.circulationMarketValue = null;
     }
 
-//    public Stock(String name, double open, double high, double low, double close, String volume, String transactionAmount,
-//                 double preClose, double increaseMargin, double fluctuation, double turnoverRate, String totalValue,
-//                 String circulationMarketValue, double frontAdjOpen, double frontAdjClose, double frontAdjHigh,
-//                 double frontAdjLow, double preFrontAdjClose, double afterAdjOpen, double afterAdjClose,
-//                 double afterAdjHigh, double afterAdjLow, double preAfterAdjClose) {
-//        this.name = name;
-//        this.open = open;
-//        this.high = high;
-//        this.low = low;
-//        this.close = close;
-//        this.volume = volume;
-//        this.transactionAmount = transactionAmount;
-//        this.preClose = preClose;
-//        this.increaseMargin = increaseMargin;
-//        this.fluctuation = fluctuation;
-//        this.turnoverRate = turnoverRate;
-//        this.totalValue = totalValue;
-//        this.circulationMarketValue = circulationMarketValue;
-//        this.frontAdjOpen = frontAdjOpen;
-//        this.frontAdjClose = frontAdjClose;
-//        this.frontAdjHigh = frontAdjHigh;
-//        this.frontAdjLow = frontAdjLow;
-//        this.preFrontAdjClose = preFrontAdjClose;
-//        this.afterAdjOpen = afterAdjOpen;
-//        this.afterAdjClose = afterAdjClose;
-//        this.afterAdjHigh = afterAdjHigh;
-//        this.afterAdjLow = afterAdjLow;
-//        this.preAfterAdjClose = preAfterAdjClose;
-//    }
+    public Stock(String name, double open, double high, double low, double close, String volume, String transactionAmount,
+                 double preClose, double increaseMargin, double fluctuation, double turnoverRate, String totalValue,
+                 String circulationMarketValue, double frontAdjOpen, double frontAdjClose, double frontAdjHigh,
+                 double frontAdjLow, double preFrontAdjClose, double afterAdjOpen, double afterAdjClose,
+                 double afterAdjHigh, double afterAdjLow, double preAfterAdjClose) {
+        this.name = name;
+        this.open = open;
+        this.high = high;
+        this.low = low;
+        this.close = close;
+        this.volume = volume;
+        this.transactionAmount = transactionAmount;
+        this.preClose = preClose;
+        this.increaseMargin = increaseMargin;
+        this.fluctuation = fluctuation;
+        this.turnoverRate = turnoverRate;
+        this.totalValue = totalValue;
+        this.circulationMarketValue = circulationMarketValue;
+        this.frontAdjOpen = frontAdjOpen;
+        this.frontAdjClose = frontAdjClose;
+        this.frontAdjHigh = frontAdjHigh;
+        this.frontAdjLow = frontAdjLow;
+        this.preFrontAdjClose = preFrontAdjClose;
+        this.afterAdjOpen = afterAdjOpen;
+        this.afterAdjClose = afterAdjClose;
+        this.afterAdjHigh = afterAdjHigh;
+        this.afterAdjLow = afterAdjLow;
+        this.preAfterAdjClose = preAfterAdjClose;
+    }
 
     public Stock(NormalStock normalStock) {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");//格式化设置
@@ -307,83 +307,83 @@ public class Stock implements Serializable {
         this.circulationMarketValue = circulationMarketValue;
     }
 
-//    public double getFrontAdjOpen() {
-//        return frontAdjOpen;
-//    }
-//
-//    public void setFrontAdjOpen(double frontAdjOpen) {
-//        this.frontAdjOpen = frontAdjOpen;
-//    }
-//
-//    public double getFrontAdjClose() {
-//        return frontAdjClose;
-//    }
-//
-//    public void setFrontAdjClose(double frontAdjClose) {
-//        this.frontAdjClose = frontAdjClose;
-//    }
-//
-//    public double getFrontAdjHigh() {
-//        return frontAdjHigh;
-//    }
-//
-//    public void setFrontAdjHigh(double frontAdjHigh) {
-//        this.frontAdjHigh = frontAdjHigh;
-//    }
-//
-//    public double getFrontAdjLow() {
-//        return frontAdjLow;
-//    }
-//
-//    public void setFrontAdjLow(double frontAdjLow) {
-//        this.frontAdjLow = frontAdjLow;
-//    }
-//
-//    public double getPreFrontAdjClose() {
-//        return preFrontAdjClose;
-//    }
-//
-//    public void setPreFrontAdjClose(double preFrontAdjClose) {
-//        this.preFrontAdjClose = preFrontAdjClose;
-//    }
-//
-//    public double getAfterAdjOpen() {
-//        return afterAdjOpen;
-//    }
-//
-//    public void setAfterAdjOpen(double afterAdjOpen) {
-//        this.afterAdjOpen = afterAdjOpen;
-//    }
-//
-//    public double getAfterAdjClose() {
-//        return afterAdjClose;
-//    }
-//
-//    public void setAfterAdjClose(double afterAdjClose) {
-//        this.afterAdjClose = afterAdjClose;
-//    }
-//
-//    public double getAfterAdjHigh() {
-//        return afterAdjHigh;
-//    }
-//
-//    public void setAfterAdjHigh(double afterAdjHigh) {
-//        this.afterAdjHigh = afterAdjHigh;
-//    }
-//
-//    public double getAfterAdjLow() {
-//        return afterAdjLow;
-//    }
-//
-//    public void setAfterAdjLow(double afterAdjLow) {
-//        this.afterAdjLow = afterAdjLow;
-//    }
-//
-//    public double getPreAfterAdjClose() {
-//        return preAfterAdjClose;
-//    }
-//
-//    public void setPreAfterAdjClose(double preAfterAdjClose) {
-//        this.preAfterAdjClose = preAfterAdjClose;
-//    }
+    public double getFrontAdjOpen() {
+        return frontAdjOpen;
+    }
+
+    public void setFrontAdjOpen(double frontAdjOpen) {
+        this.frontAdjOpen = frontAdjOpen;
+    }
+
+    public double getFrontAdjClose() {
+        return frontAdjClose;
+    }
+
+    public void setFrontAdjClose(double frontAdjClose) {
+        this.frontAdjClose = frontAdjClose;
+    }
+
+    public double getFrontAdjHigh() {
+        return frontAdjHigh;
+    }
+
+    public void setFrontAdjHigh(double frontAdjHigh) {
+        this.frontAdjHigh = frontAdjHigh;
+    }
+
+    public double getFrontAdjLow() {
+        return frontAdjLow;
+    }
+
+    public void setFrontAdjLow(double frontAdjLow) {
+        this.frontAdjLow = frontAdjLow;
+    }
+
+    public double getPreFrontAdjClose() {
+        return preFrontAdjClose;
+    }
+
+    public void setPreFrontAdjClose(double preFrontAdjClose) {
+        this.preFrontAdjClose = preFrontAdjClose;
+    }
+
+    public double getAfterAdjOpen() {
+        return afterAdjOpen;
+    }
+
+    public void setAfterAdjOpen(double afterAdjOpen) {
+        this.afterAdjOpen = afterAdjOpen;
+    }
+
+    public double getAfterAdjClose() {
+        return afterAdjClose;
+    }
+
+    public void setAfterAdjClose(double afterAdjClose) {
+        this.afterAdjClose = afterAdjClose;
+    }
+
+    public double getAfterAdjHigh() {
+        return afterAdjHigh;
+    }
+
+    public void setAfterAdjHigh(double afterAdjHigh) {
+        this.afterAdjHigh = afterAdjHigh;
+    }
+
+    public double getAfterAdjLow() {
+        return afterAdjLow;
+    }
+
+    public void setAfterAdjLow(double afterAdjLow) {
+        this.afterAdjLow = afterAdjLow;
+    }
+
+    public double getPreAfterAdjClose() {
+        return preAfterAdjClose;
+    }
+
+    public void setPreAfterAdjClose(double preAfterAdjClose) {
+        this.preAfterAdjClose = preAfterAdjClose;
+    }
 }
