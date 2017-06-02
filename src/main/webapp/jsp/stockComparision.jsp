@@ -384,8 +384,11 @@
 
                         var obj = eval("(" + result + ")");
                         var len = obj.length;
+                        if(len>10){
+                            len=10;
+                        }
                         $("#search-body1").empty();
-                        for (var i = 0; i < 10; i++) {
+                        for (var i = 0; i < len; i++) {
                             $("#search-body1").append("<tr class='colomnsOfTable1' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
@@ -434,8 +437,11 @@
 
                         var obj = eval("(" + result + ")");
                         var len = obj.length;
+                        if(len>10){
+                            len=10;
+                        }
                         $("#search-body2").empty();
-                        for (var i = 0; i < 10; i++) {
+                        for (var i = 0; i < len; i++) {
                             $("#search-body2").append("<tr class='colomnsOfTable2' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }

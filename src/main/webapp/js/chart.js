@@ -642,7 +642,7 @@ function createClickChart(id, data1, percentString){
                         return '热搜率'+strData;
                     },
                     textStyle: {
-                        fontSize: 19
+                        fontSize: 17
                     },
                     position: ['50%', '30%']
                 }

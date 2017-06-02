@@ -175,24 +175,20 @@
                             <%--<td>${topClickDate[1]}</td>--%>
                         <%--</tr>--%>
                     <%--</c:foreach>--%>
-                    <tr>
-
-                        <td>Tanmay</td>
-                        <td>000001 沪深300</td>
-                        <td>560001</td>
-                    </tr>
-                    <tr>
-                        <td>Sachin</td>
-                        <td>Mumbai</td>
-                        <td>400003</td>
-                    </tr>
-                    <tr>
-                        <td>Uma</td>
-                        <td>Pune</td>
-                        <td>411027</td>
-                    </tr>
+                    <c:set var="index" value="1" />
+                    <c:forEach items="${topClicks}" var="topStock"  varStatus="vs">
+                        <tr>
+                            <td>${index}</td>
+                            <td>${topStock.searchID.code} ${topStock.searchID.name}</td>
+                            <td>${topStock.clickAmount}</td>
+                        </tr>
+                        <c:set var="index" value="${index+1}" />
+                    </c:forEach>
                     </tbody>
                 </table>
+
+            </div>
+            <div class="col-md-6 col-md-offset-1" id="hot_search_chart" style="width: 40%;height: 420px">
 
             </div>
         </div>
@@ -200,7 +196,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
                     <table class="table table-hover table-condensed stocks-table">
-                        <caption class="text-center" id=""><h3>市场行情</h3></caption>
+                        <caption class="text-center" id="headTitle"><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
                             <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
@@ -240,20 +236,7 @@
                 <ul class="pagination">
                     <li class="active"><a>1</a></li>
                     <%--<c:if test="${totalPageNum}>9">--%>
-                    <%
-                        int pagetol = (int) request.getSession().getAttribute("totalPageNum");
-                        if (pagetol <= 9) {
-                            for (int i = 2; i <= pagetol; i++) {
-                                out.println(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
-                            }
-                        } else {
-                            for (int i = 2; i <= 8; i++) {
-                                out.println(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
-                            }
-                            out.println("<li><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
-                            out.println(" <li><a   href=\"#headTitle\" class=\"\">" + pagetol + "</a></li>");
-                        }
-                    %>
+
                     <%--</c:if>--%>
 
                 </ul>
@@ -352,10 +335,7 @@
     </div><!-- /.modal -->
 </div>
 
-<%--TODO 高源 图表位置--%>
-<div id="hot_search_chart">
 
-</div>
 
 <footer>
 </footer>
@@ -363,6 +343,7 @@
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
 <script src="../js/stocks.js"></script>
+<script src="../js/echarts-liquidfill.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
@@ -375,6 +356,20 @@
 
     // 画出热搜榜的图
     createPieChart("hot_search_chart", ${topClicksChartData});
+
+    <%--alert(${topClicks.});--%>
+    var pagetol=${totalPageNum};
+    if (pagetol <= 9) {
+        for (var i = 2; i <= pagetol; i++) {
+            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
+        }
+    } else {
+        for (var i = 2; i <= 8; i++) {
+            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
+        }
+        $(".pagination").append("<li><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+        $(".pagination").append(" <li><a   href=\"#headTitle\" class=\"\">" + pagetol + "</a></li>");
+    }
 
 
     $(document).ready(
@@ -398,7 +393,7 @@
             $('#search-input').bind('input propertychange', function () {
 
                 var key = $('#search-input').val();
-//                alert(key);
+
                 $.ajax({
                     type: "get",
                     async: true,
@@ -487,18 +482,21 @@
         } else if (numOfClick == 2) {
             numOfClick = 1;
         }
-        for (var i = 0; i < 15; i++) {
+        for (var i = 0; i < 16; i++) {
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");
         }
 
         if (numOfClick == 1) {
-            $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
+            $("thead>tr>th").eq(numOfColumn + 7).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
         } else if (numOfClick == 2) {
-            $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
+            $("thead>tr>th").eq(numOfColumn + 7).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
         }
 
         sortNum = numOfColumn * 2 + numOfClick - 1;
+
+//        TODO fjj 当sortNum等于16或者17的时候不能排序，就是最后一列
+//        alert(sortNum);
 //        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowPage+"页");
 //        alert(sortNum);
         updatePanel();
@@ -534,6 +532,7 @@
 //        alert($(".form_date > input").val());
         $("body").removeClass("loaded");
         nowPage = 1;
+        sortNum=0;
         updatePanel();
     });
 
@@ -686,7 +685,7 @@
 
     function getSingleStockDetail() {
         var wantedStockCode = $("#search-input").val();
-        alert(wantedStockCode);
+       // alert(wantedStockCode);
         window.location.href = "/stocks/" + wantedStockCode;
     }
 

@@ -79,7 +79,6 @@ public class StockController {
             mv.addObject("totalRecordNum", page.totalRecordNum);
             mv.addObject("topClicks", page.topClicks);
             mv.addObject("topClicksChartData", topClicksChart);
-            session.setAttribute("totalPageNum", page.totalPageNum);
             return mv;
         } else {
             System.out.println("请求失败");

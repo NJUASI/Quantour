@@ -265,7 +265,7 @@
             $("#stockText").keydown(function(event) {
                 if (event.keyCode == 13) {
 //                  添加回测时间
-                    alert(event.target.value);
+                   //alert(event.target.value);
                 }
             });
             $("#searchButton").click(function(event) {
@@ -389,7 +389,7 @@
     });
 
 
-    createCandlestickChart('candlestick_chart', ${candlestickData}, ${volumeData});
+    <%--createCandlestickChart('candlestick_chart', ${candlestickData}, ${volumeData});--%>
 
     <%--var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});--%>
 
