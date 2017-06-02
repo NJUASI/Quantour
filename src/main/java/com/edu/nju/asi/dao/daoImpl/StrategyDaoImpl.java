@@ -71,7 +71,6 @@ public class StrategyDaoImpl implements StrategyDao {
     /**
      * 获取策略信息
      *
-     * @param userID   用户名
      * @param strategyID 策略ID
      * @return Strategy 策略信息载体
      * @author Byron Dong
@@ -79,8 +78,22 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/1
      */
     @Override
-    public Strategy getStrategy(String userID, String strategyID) {
-        return userDataHelper.getStrategy(userID,strategyID);
+    public Strategy getStrategy(String strategyID) {
+        return strategyDataHelper.getStrategy(strategyID);
+    }
+
+    /**
+     * 获取用户的所有策略（创建和订阅）
+     *
+     * @param userID 用户ID
+     * @return List<Strategy> 是否成功添加用户
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/2
+     */
+    @Override
+    public List<Strategy> getAllStrategies(String userID) {
+        return userDataHelper.getStrategy(userID);
     }
 
     /**
@@ -92,7 +105,7 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/2
      */
     @Override
-    public List<Strategy> getAllStrategy() {
+    public List<Strategy> getAllStrategies() {
         return strategyDataHelper.getAllStrategy();
     }
 

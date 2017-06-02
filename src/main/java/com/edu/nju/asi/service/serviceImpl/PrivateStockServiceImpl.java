@@ -9,7 +9,6 @@ import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class PrivateStockServiceImpl implements PrivateStockService {
     }
 
     @Override
-    public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException {
+    public List<Stock> getPrivateStocks(String userName, LocalDate date) {
         return privateStockDao.getPrivateStocks(userName, date);
     }
 
@@ -52,7 +51,7 @@ public class PrivateStockServiceImpl implements PrivateStockService {
     }
 
     @Override
-    public boolean deletePrivateStock(OptionalStockID privateStockID){
+    public boolean deletePrivateStock(OptionalStockID privateStockID) {
         return privateStockDao.deletePrivateStock(privateStockID);
     }
 

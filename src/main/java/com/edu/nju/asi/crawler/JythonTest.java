@@ -26,6 +26,7 @@ public class JythonTest {
         PythonInterpreter.initialize(pre,properties,new String[0]);
         PythonInterpreter pythonInterpreter = new PythonInterpreter();
         System.out.println("------------------test1 -------------------");
+        System.out.println(Thread.currentThread().getContextClassLoader().getResource("HelloWorld.py").getPath());
         pythonInterpreter.execfile("D:/Python_Workspace/HelloWorld.py");
         System.out.println("------------------Hello end -------------------");
 
