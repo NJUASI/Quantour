@@ -1,6 +1,7 @@
 package com.edu.nju.asi.dataHelper;
 
 import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 
 import java.util.List;
@@ -56,4 +57,51 @@ public interface UserDataHelper {
      * @return 用户名称集合
      */
     List<String> getAllUserNames();
+
+    /**
+     * 添加策略信息
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     * @param strategy 策略信息载体
+     * @param userID 用户名
+     * @return 是否成功添加策略
+     */
+    boolean addStrategy(String userID,Strategy strategy);
+
+    /**
+     * 更新策略信息
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     * @param strategy 策略信息载体
+     * @param userID 用户名
+     * @return 是否成功更新策略
+     */
+    boolean updateStrategy(String userID,Strategy strategy);
+
+    /**
+     * 删除策略信息
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     * @param strategyID 策略ID
+     * @param userID 用户名
+     * @return 是否成功删除策略
+     */
+    boolean deleteStrategy(String userID,String strategyID);
+
+    /**
+     * 获取策略信息
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     * @param userID 用户名
+     * @return Strategy 策略信息载体
+     */
+    List<Strategy> getStrategy(String userID);
 }
