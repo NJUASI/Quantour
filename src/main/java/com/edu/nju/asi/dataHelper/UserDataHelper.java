@@ -58,6 +58,12 @@ public interface UserDataHelper {
      */
     List<String> getAllUserNames();
 
+
+
+
+    /*
+    策略相关
+     */
     /**
      * 添加策略信息
      *

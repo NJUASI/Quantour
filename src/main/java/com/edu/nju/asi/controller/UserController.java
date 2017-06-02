@@ -82,6 +82,9 @@ public class UserController {
         return null;
     }
 
+    /**
+     * 增加自选股
+     */
     @GetMapping("addPrivate/{stockCode}")
     @ResponseBody
     public String addPrivateStock(@PathVariable String stockCode, HttpServletRequest request) {
@@ -101,6 +104,9 @@ public class UserController {
         return "1";
     }
 
+    /**
+     * 删除自选股
+     */
     @GetMapping("deletePrivate/{stockCode}")
     @ResponseBody
     public String deletePrivateStock(@PathVariable String stockCode, HttpServletRequest request) {
@@ -118,5 +124,8 @@ public class UserController {
         }
 
     }
+
+
+
 
 }
