@@ -19,9 +19,9 @@ public class Code_NamePipeline implements Pipeline {
     public static void main(String[] args) {
 //        System.out.println(ascii2native("\u4e07  \u79d1\uff21"));
 
-        String ascii = "\u4e07  \u79d1\uff21";
-//        int i = ascii.indexOf('\\');
+        String ascii = "\\u4e07  \\u79d1\\uff21";
         System.out.println(ascii2native(ascii));
+//        int i = ascii.indexOf('\\');
 //        System.out.println(ascii.indexOf("\\"));
 //        System.out.println(ascii.indexOf("\\"));
 //        System.out.println(ascii.indexOf("\\"));
@@ -35,17 +35,34 @@ public class Code_NamePipeline implements Pipeline {
     }
 
     public static String ascii2native(String ascii) {
-        System.out.println(ascii);
-        String needTobeConvert = ascii.substring(ascii.indexOf('\\'));
-        int n = needTobeConvert.length() / 6;
+//        ascii.replaceAll(" ","");
+
         StringBuilder sb = new StringBuilder();
-        sb.append(ascii.substring(0,ascii.indexOf('\\')));
-        for (int i = 0, j = 2; i < n; i++, j += 6) {
-            String code = needTobeConvert.substring(j, j + 4);
+        String[] strings = ascii.split("\\\\");
+        for(int i = 0; i < strings.length; i++){
+            if (strings[i].length() < 5){
+                sb.append(strings[i].substring(0));
+                continue;
+            }
+            String code = strings[i].substring(1,5);
             char ch = (char) Integer.parseInt(code, 16);
             sb.append(ch);
+            if(strings[i].length() > 5){
+                sb.append(strings[i].substring(5));
+            }
         }
-        return sb.toString();
+
+        char c[] = sb.toString().toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == '\u3000') {
+                c[i] = ' ';
+            } else if (c[i] > '\uFF00' && c[i] < '\uFF5F') {
+                c[i] = (char) (c[i] - 65248);
+
+            }
+        }
+
+        return new String(c);
     }
 
     public boolean addCode_Name(Code_Name code_name){
@@ -60,8 +77,8 @@ public class Code_NamePipeline implements Pipeline {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,code_name.getCode());
             preparedStatement.setInt(2,Market.valueOf(code_name.getType()).getRepre());
+            System.out.println(code_name.getName());
             preparedStatement.setString(3,ascii2native(code_name.getName()));
-            System.out.println(ascii2native(code_name.getName()));
             preparedStatement.setString(4,code_name.getSpell());
             preparedStatement.addBatch();
             preparedStatement.executeBatch();
