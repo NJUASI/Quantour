@@ -49,19 +49,12 @@ public class TraceBackController {
     String reqTraceBack(@RequestParam("criteriaData") TraceBackCriteria criteria, HttpServletRequest request, HttpServletResponse response) {
         // 限制进入
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
+        User thisUser = (User) request.getSession().getAttribute("user");
+        if (session == null || thisUser == null) {
             System.out.println("未登录");
-
-            try {
-                response.sendRedirect("");
-                return "-1;喵喵喵";
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "-1;不给看";
-            }
+            return "-1;未登录";
         }
 
-        User thisUser = (User) request.getSession().getAttribute("user");
         System.out.println("已登录：" + thisUser.getUserName());
         System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.formateAndPickCriteria.rank + "  " + criteria.holdingPeriod);
 

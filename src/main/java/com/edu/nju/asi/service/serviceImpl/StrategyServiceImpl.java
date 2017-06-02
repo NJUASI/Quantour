@@ -21,12 +21,12 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public List<Strategy> getAllStrategies() {
-        return null;
+        return strategyDao.getAllStrategies();
     }
 
     @Override
     public List<Strategy> getMyStrategies(User curUser) {
-        return null;
+        return strategyDao.getAllStrategies(curUser.getUserName());
     }
 
     @Override
@@ -34,33 +34,37 @@ public class StrategyServiceImpl implements StrategyService {
         return null;
     }
 
+    // 只有创建者能够操作（修改／删除）策略
     @Override
-    public boolean canModify(String strategyID, User curUser) {
-        return false;
+    public boolean canUpdate(Strategy strategy, User curUser) {
+        return isCreator(strategy, curUser);
     }
 
     @Override
-    public boolean modify(Strategy modified) {
-        return false;
+    public boolean modify(Strategy modified, User curUser) {
+        return strategyDao.updateStrategy(curUser.getUserName(), modified);
     }
 
     @Override
-    public boolean canDeleteString(String strategyID, User curUser) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(String strategyID) {
-        return false;
+    public boolean delete(String strategyID, User curUser) {
+        return strategyDao.deleteStrategy(curUser.getUserName(), strategyID);
     }
 
     @Override
     public boolean subscribe(String strategyID, User curUser) {
+//        return strategyDao.addStrategy(curUser.getUserName(), );
         return false;
     }
 
     @Override
     public boolean revokeSubscribe(String strategyID, User curUser) {
-        return false;
+        return strategyDao.deleteStrategy(curUser.getUserName(), strategyID);
     }
+
+
+    private boolean isCreator(Strategy strategy, User user) {
+        if (strategy.getCreater().equals(user.getUserName())) return true;
+        else return false;
+    }
+
 }

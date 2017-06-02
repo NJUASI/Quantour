@@ -42,38 +42,32 @@ public interface StrategyService {
 
     /**
      *
-     * @param strategyID 当前用户想要修改的策略实体ID
-     * @param curUser 当前想要修改策略的用户
-     * @return 当前用户能否修改此策略（只有创建者可以）
+     * @param strategy 当前用户想要操作（修改／删除）的策略实体
+     * @param curUser 当前想要操作（修改／删除）策略的用户
+     * @return 当前用户能否操作（修改／删除）此策略（只有创建者可以）
      */
-    boolean canModify(String strategyID, User curUser);
+    boolean canUpdate(Strategy strategy, User curUser);
 
     /**
      *
      * @param modified 被修改后的策略实体
+     * @param curUser 策略的创建者
      * @return 是否成功被修改
      */
-    boolean modify(Strategy modified);
-
-    /**
-     *
-     * @param strategyID 当前用户想要删除的策略实体ID
-     * @param curUser 当前想要删除策略的用户
-     * @return 当前用户能否删除此策略（只有创建者可以）
-     */
-    boolean canDeleteString(String strategyID, User curUser);
+    boolean modify(Strategy modified, User curUser);
 
     /**
      *
      * @param strategyID 被删除的策略实体ID
+     * @param curUser 策略的创建者
      * @return
      */
-    boolean delete(String strategyID);
+    boolean delete(String strategyID, User curUser);
 
     /**
      *
      * @param strategyID 要被用户订阅的策略实体ID
-     * @param curUser 要订阅的用户
+     * @param curUser 要订阅的用户（非创建者）
      * @return 当前用户是否成功订阅此策略
      */
     boolean subscribe(String strategyID, User curUser);
@@ -81,7 +75,7 @@ public interface StrategyService {
     /**
      *
      * @param strategyID 要被用户取消订阅的策略实体ID
-     * @param curUser 要取消订阅的用户
+     * @param curUser 要取消订阅的用户（非创建者）
      * @return 当前用户是否成功取消订阅此策略
      */
     boolean revokeSubscribe(String strategyID, User curUser);
