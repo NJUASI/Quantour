@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,12 @@ public class User implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "headPotrait",columnDefinition = "BLOB",nullable = true)
     private Blob headPortrait;
+
+    @ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name = "user_strategy",
+            joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "userName")},
+            inverseJoinColumns = {@JoinColumn(name = "strategy_id",referencedColumnName = "strategyID")})
+    private List<Strategy> strategies = new ArrayList<>();
 
     public User() {
     }
@@ -70,4 +77,11 @@ public class User implements Serializable {
         this.headPortrait = headPortrait;
     }
 
+    public List<Strategy> getStrategies() {
+        return strategies;
+    }
+
+    public void setStrategies(List<Strategy> strategies) {
+        this.strategies = strategies;
+    }
 }

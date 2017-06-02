@@ -107,7 +107,7 @@ public class Stock implements Serializable {
 //    //后复权开盘指数
 //    @Basic
 //    private double afterAdjOpen;
-
+//
 //    //后复权收盘指数
 //    @Basic
 //    private double afterAdjClose;
