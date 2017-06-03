@@ -10,16 +10,28 @@ import java.util.List;
 public interface StrategyDao {
 
     /**
-     * 添加策略信息
+     * 添加策略信息(创建者)
      *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/6/1
      * @param userName 用户名
      * @param strategy 策略信息载体
      * @return 是否成功添加策略
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
      */
-    boolean addStrategy(String userName,Strategy strategy);
+    boolean saveStrategy(String userName, Strategy strategy);
+
+    /**
+     * 添加策略信息（订阅者）
+     *
+     * @param userName 用户名
+     * @param strategyID 策略ID
+     * @return 是否成功添加策略
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     */
+    boolean addStrategyLink(String userName, String strategyID);
 
     /**
      * 更新策略信息
@@ -27,11 +39,11 @@ public interface StrategyDao {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
-     * @param userName 用户名
      * @param strategy 策略信息载体
+     * @param userID 用户名
      * @return 是否成功更新策略
      */
-    boolean updateStrategy(String userName,Strategy strategy);
+    boolean updateStrategy(String userID,Strategy strategy);
 
     /**
      * 删除策略信息
@@ -40,10 +52,10 @@ public interface StrategyDao {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      * @param strategyID 策略ID
-     * @param userName 用户名
+     * @param userID 用户名
      * @return 是否成功删除策略
      */
-    boolean deleteStrategy(String userName,String strategyID);
+    boolean deleteStrategy(String userID,String strategyID);
 
     /**
      * 获取策略信息
@@ -57,21 +69,23 @@ public interface StrategyDao {
     Strategy getStrategy(String strategyID);
 
     /**
-     * 获取该用户的所有策略（创建和订阅）
+     * 获取用户的所有策略（创建和订阅）
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/2
      * @param userID 用户ID
+     * @return  List<Strategy> 是否成功添加用户
      */
     List<Strategy> getAllStrategies(String userID);
 
     /**
-     * 获取所有用户的所有共享策略
+     * 获取所有策略
      *
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/2
+     * @return  List<Strategy> 是否成功添加用户
      */
     List<Strategy> getAllStrategies();
 

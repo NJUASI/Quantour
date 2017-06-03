@@ -58,23 +58,29 @@ public interface UserDataHelper {
      */
     List<String> getAllUserNames();
 
-
-
-
-    /*
-    策略相关
-     */
     /**
-     * 添加策略信息
+     * 添加策略信息(创建者)
      *
+     * @param userName 用户名
+     * @param strategy 策略信息载体
+     * @return 是否成功添加策略
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
-     * @param userID 用户名
-     * @param strategy 策略信息载体
-     * @return 是否成功添加策略
      */
-    boolean addStrategy(String userID,Strategy strategy);
+     boolean addStrategyByCreator(String userName, Strategy strategy);
+
+    /**
+     * 添加策略信息（订阅者）
+     *
+     * @param userName 用户名
+     * @param strategyID 策略ID
+     * @return 是否成功添加策略
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     */
+     boolean addStrategyByChecker(String userName, String strategyID);
 
     /**
      * 更新策略信息

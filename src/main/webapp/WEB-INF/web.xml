@@ -21,7 +21,7 @@
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!-- contextConfigLocation配置springmvc加载的配置文件（配置映射器处理器，适配器等）
-         如果不配置，加载的是/WEB-INF/servlet名称-servlet.xml-->
+         如果不配置，加载的是/WEB-INF/name-of-your-servlet-servlet.xml-->
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:springmvc.xml</param-value>

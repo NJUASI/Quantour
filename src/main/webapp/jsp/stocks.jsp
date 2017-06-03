@@ -121,6 +121,7 @@
                     </ol>
                     <!-- 轮播（Carousel）项目 -->
 
+                    <%--TODO 高源 没数据的话怎么显示--%>
                     <div class="carousel-inner row">
                         <c:forEach items="${base_stock_list}" var="base_stock" varStatus="vs">
                             <div class="item col-md-offset-4 col-md-6" >
@@ -196,6 +197,8 @@
 
             </div>
         </div>
+
+        <%--TODO 高源 没数据的话怎么显示--%>
         <div class="row" style="z-index:3">
             <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
