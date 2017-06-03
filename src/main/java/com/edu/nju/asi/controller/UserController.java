@@ -2,8 +2,10 @@ package com.edu.nju.asi.controller;
 
 import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.PrivateStockService;
+import com.edu.nju.asi.service.StrategyService;
 import com.edu.nju.asi.service.UserService;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     PrivateStockService privateStockService;
+
+    @Autowired
+    StrategyService strategyService;
 
 
     // 因为可能数据库中没有今天的数据，所以默认显示昨日
@@ -50,21 +55,34 @@ public class UserController {
         if (userType.equals("user")) {
             // 普通用户
             ModelAndView mv = new ModelAndView("userManager");
-
             User user = (User) session.getAttribute("user");
-            try {
-                List<Stock> psList = privateStockService.getPrivateStocks(user.getUserName(), defaultDate);
 
-                for (Stock stock : psList) {
-                    System.out.println(stock.getStockID().getCode() + " " + stock.getName());
-                }
-
-                System.out.println("psList size: " + psList.size());
-                mv.addObject("ps_list", psList);
-                return mv;
-            } catch (IOException e) {
-                e.printStackTrace();
+            // 自选股信息
+            List<Stock> psList = privateStockService.getPrivateStocks(user.getUserName(), defaultDate);
+            for (Stock stock : psList) {
+                System.out.println(stock.getStockID().getCode() + " " + stock.getName());
             }
+
+
+            // 股票策略信息
+            List<Strategy> myOwn = new LinkedList<>();
+            List<Strategy> mySubscribe = new LinkedList<>();
+
+            List<Strategy> myStrategies = strategyService.getMyStrategies(user);
+            for (Strategy temp : myStrategies) {
+                if (temp.isPrivate()) myOwn.add(temp);
+                else mySubscribe.add(temp);
+            }
+
+            System.out.println("psList size: " + psList.size());
+            System.out.println("myOwn size: " + myOwn.size());
+            System.out.println("mySubscribe size: " + mySubscribe.size());
+
+            mv.addObject("ps_list", psList);
+            mv.addObject("myOwn", myOwn);
+            mv.addObject("mySubscribe", mySubscribe);
+            return mv;
+
         } else if (userType.equals("admin")) {
             // 管理员 TODO
             return new ModelAndView("welcome_admin");
@@ -82,6 +100,9 @@ public class UserController {
         return null;
     }
 
+    /**
+     * 增加自选股
+     */
     @GetMapping("addPrivate/{stockCode}")
     @ResponseBody
     public String addPrivateStock(@PathVariable String stockCode, HttpServletRequest request) {
@@ -98,9 +119,12 @@ public class UserController {
             System.out.println("添加自选股失败");
             e.printStackTrace();
         }
-        return "1";
+        return "-1";
     }
 
+    /**
+     * 删除自选股
+     */
     @GetMapping("deletePrivate/{stockCode}")
     @ResponseBody
     public String deletePrivateStock(@PathVariable String stockCode, HttpServletRequest request) {
@@ -114,9 +138,10 @@ public class UserController {
             System.out.println("删除自选股成功");
             return "1";
         } else {
-            return "0";
+            return "-1";
         }
 
     }
+
 
 }

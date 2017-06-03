@@ -18,21 +18,22 @@ import java.time.LocalDate;
  */
 public class SpiderController {
 
-    static String allNormalStocksPath = "D:/Quantour/stocks";
-    static String allBaseStocksPath = "D:/Quantour/baseStocks";
-    static String todayNormalStocksPath = "D:/Quantour/todayNormalStock";
-    static String todayBaseStocksPath = "D:/Quantour/todayBaseStock";
+
+    static String allNormalStocksPath = "D:/Quant/stocks";
+    static String allBaseStocksPath = "D:/Quant/baseStocks";
+    static String todayNormalStocksPath = "D:/Quant/todayNormalStock";
+    static String todayBaseStocksPath = "D:/Quant/todayBaseStock";
 
 
     public static void main(String[] args) {
         DownloadDataHelper downloadDataHelper = new DownloadDataHelper();
         StockDownloader stockDownloader = new StockDownloader();
 
-        //先下载全部的普通股票数据
+//        先下载全部的普通股票数据(包括主要财务指标中所有表、资产负债表、利润表、现金流量表)
 //        downloadAllNormalStocks(allNormalStocksPath);
         //保存全部的普通数据
 //        downloadDataHelper.normalStockStore(allNormalStocksPath);
-        //下载全部的基准股票数据
+//        下载全部的基准股票数据
 //        stockDownloader.downLoadBaseStock(allBaseStocksPath, LocalDate.of(2012,1,1), LocalDate.now().minusDays(1));
         //保存全部的基准股票数据
 //        downloadDataHelper.baseStockStore(allBaseStocksPath);
@@ -41,7 +42,7 @@ public class SpiderController {
         //保存当天的普通股票数据
 //        downloadDataHelper.normalStockStore(todayNormalStocksPath);
         //下载当天的基准股票数据
-//        stockDownloader.downLoadBaseStock(todayBaseStocksPath, LocalDate.now(), LocalDate.now());
+//        stockDownloader.downLoadBaseStock(todayBaseStocksPath, LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
         //保存当天的基准股票数据
 //        downloadDataHelper.baseStockStore(todayBaseStocksPath);
 
@@ -50,7 +51,7 @@ public class SpiderController {
     public static void downloadTodayNormalStocks(String todayNormalStocksPath){
         Request request = new Request();
         request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
-//        request.setUrl("http://quotes.money.163.com/trade/lsjysj_000001.html");
+//        request.setUrl("http://quotes.money.163.com/trade/lsjysj_000002.html");
 //        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=142&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
         request.setMethod(HttpConstant.Method.GET);
 
@@ -63,7 +64,7 @@ public class SpiderController {
                 //更新代码和名称
                 .addPipeline(new Code_NamePipeline())
                 //开启1个线程抓取
-                .thread(1)
+                .thread(5)
                 //启动爬虫
                 .run();
     }
@@ -73,7 +74,7 @@ public class SpiderController {
         Request request = new Request();
         request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
 //        request.setUrl("http://quotes.money.163.com/trade/lsjysj_000001.html");
-//        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=142&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
+//        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=1&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
         request.setMethod(HttpConstant.Method.GET);
 
         Spider.create(new StocksDownloadProcessor())
@@ -81,8 +82,8 @@ public class SpiderController {
                 //可以有多个pipeline
                 .addPipeline(new ConsolePipeline())
                 .addPipeline(new StockDownloadPipeline(downloadPath))
-                //开启1个线程抓取
-                .thread(1)
+                //开启5个线程抓取
+                .thread(5)
                 //启动爬虫
                 .run();
     }

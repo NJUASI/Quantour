@@ -81,10 +81,10 @@ public class UserDataHelperImplTest {
         Strategy strategy2 = new Strategy(LocalDate.of(2017,3,1)
                 ,"Dong",false,"乖离率","aaaaaaaaaaaaaa");
         strategy2.setStrategyID("大策略");
-        userDataHelper.addStrategy("Byron",strategy1);
-        userDataHelper.addStrategy("Dong",strategy2);
-        userDataHelper.addStrategy("Gong",strategy1);
-        userDataHelper.addStrategy("Gong",strategy2);
+        userDataHelper.addStrategyByCreator("Byron",strategy1);
+        userDataHelper.addStrategyByChecker("Dong","小策略");
+//        userDataHelper.addStrategy("Gong",strategy1);
+//        userDataHelper.addStrategy("Gong","大策略");
     }
 
     @Test
@@ -108,7 +108,8 @@ public class UserDataHelperImplTest {
 
     @Test
     public void getStrategy() throws Exception {
-        Strategy strategy = userDataHelper.getStrategy("Gong","大策略");
+        List<Strategy> strategies = userDataHelper.getStrategy("Gong");
+        Strategy strategy = strategies.get(0);
         assertEquals("乖离率",strategy.getContent());
         assertEquals("Dong",strategy.getCreater());
         assertEquals(LocalDate.of(2017,3,1),strategy.getDate());

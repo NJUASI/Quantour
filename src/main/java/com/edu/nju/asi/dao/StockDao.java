@@ -127,11 +127,6 @@ public interface StockDao {
      */
     List<StockSearch> getTopRankingList(int number);
 
-    /**
-     * @return 全部的搜索排行榜
-     */
-    List<StockSearch> getAllRankingList();
-
     /*
     暂定
      */

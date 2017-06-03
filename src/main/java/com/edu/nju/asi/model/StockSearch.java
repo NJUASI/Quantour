@@ -1,7 +1,5 @@
 package com.edu.nju.asi.model;
 
-import com.edu.nju.asi.utilities.enums.Market;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -33,16 +31,17 @@ public class StockSearch implements Serializable {
 
     //是否为基准股票
     @Basic
+    @Column(columnDefinition = "bit default 0")
     private boolean isBase;
 
     //行业
     @Basic
-    @Column(length = 100)
+    @Column(length = 100,nullable = true)
     private String industry;
 
     //地域
     @Basic
-    @Column(length = 100)
+    @Column(length = 100,nullable = true)
     private String area;
 
     public StockSearch() {}

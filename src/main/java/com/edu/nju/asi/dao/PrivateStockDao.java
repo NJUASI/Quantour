@@ -34,7 +34,7 @@ public interface PrivateStockDao {
      * @param date 用户选择日期
      * @return the iterator 自选股信息列表
      */
-    List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException;
+    List<Stock> getPrivateStocks(String userName, LocalDate date);
 
     /**
      * 用户添加自选股

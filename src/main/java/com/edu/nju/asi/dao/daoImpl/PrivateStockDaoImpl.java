@@ -5,13 +5,12 @@ import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.PrivateStockDataHelper;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
-import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.model.OptionalStockID;
+import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +47,12 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
     }
 
     @Override
-    public List<Stock> getPrivateStocks(String userName, LocalDate date) throws IOException {
+    public List<Stock> getPrivateStocks(String userName, LocalDate date) {
         List<Stock> result = new ArrayList<>();
 
         List<PrivateStock> privateStockIDList = privateStockDataHelper.getPrivateStock(userName);
 
-        Map<String,String> codeAndName = searchDataHelper.getAllStocksCode();
+        Map<String, String> codeAndName = searchDataHelper.getAllStocksCode();
 
         for (PrivateStock temp : privateStockIDList) {
             OptionalStockID id = temp.getOptionalStockID();
@@ -70,7 +69,7 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
     }
 
     @Override
-    public boolean addPrivateStock(OptionalStockID privateStockID) throws PrivateStockExistedException {
+    public boolean addPrivateStock(OptionalStockID privateStockID) {
         return privateStockDataHelper.addPrivateStock(privateStockID);
     }
 

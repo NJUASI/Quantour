@@ -23,18 +23,12 @@ import java.util.*;
 @Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
-    @Autowired
+//    @Autowired
     private StockService stockService;
-    @Autowired
+//    @Autowired
     private StockDao stockDao;
 
-    //自选股票池，用户回测自选股票池时才对此成员变量赋值
-//    private List<String> baseStockPool;
-
     private List<String> traceBackStockPool;
-
-    //自选股票池的所有数据
-//    private Map<String, List<StrategyStock>> baseStockData;
 
     private List<CumulativeReturn> baseCumulativeReturn;
 
@@ -55,8 +49,8 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     public TraceBackServiceImpl() throws IOException {
-//        stockService = new StockServiceImpl();
-//        stockDao = new StockDaoImpl();
+        stockService = new StockServiceImpl();
+        stockDao = new StockDaoImpl();
 
         //获取所有数据的日期
 //        allDatesWithData = stockDao.getDateWithData();
@@ -81,22 +75,8 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         TraceBackInfo traceBackInfo = new TraceBackInfo();
 
-        // 选取回测的股票池为自选股票池／板块股票池
-
-//        //是自选股票池
-//        if (traceBackCriteria.isCustomized){
-//            traceBackStockPool = stockPool;
-//            //给基准股票池赋值，即为自选股票池
-//            baseStockPool = stockPool;
-//            setUp(traceBackStockPool);
-//            //获取所有自选股的所有数据
-//            baseStockData = stockData;
-//        }
-//        //不是自选股票池
-//        else {
-            traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
-            setUp(traceBackStockPool);
-//        }
+        traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
+        setUp(traceBackStockPool);
 
         System.out.println("---------------set完毕------------");
 
@@ -128,26 +108,10 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         System.out.println("计算目标策略算法给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
-//         提前保存TraceBackCriteriaVO，以便后续固定持有期计算形成期时使用
-        TraceBackCriteria criteriaVOToHold = new TraceBackCriteria(traceBackCriteria);
-        System.out.println("---------------7------------");
-
-        // 计算超额收益率/策略胜率，给定持有期/形成期
-//        traceBackInfo.certainFormates = findHoldingWithCertainFormate(traceBackCriteria);
-//        System.out.println("计算给定形成期所用时间: "+ (System.currentTimeMillis()-enter));
-
-//        System.out.println("--------------------------------");
-//        System.out.println(traceBackCriteria.formativePeriod +  "    " + traceBackCriteria.holdingPeriod);
-//        System.out.println(criteriaVOToHold.formativePeriod +  "    " + criteriaVOToHold.holdingPeriod);
-//        System.out.println("--------------------------------");
-
-//        traceBackInfo.certainHoldings = findFormateWithCertainHolding(criteriaVOToHold);
-//        System.out.println("计算给定持有期所用时间: "+ (System.currentTimeMillis()-enter));
-
         // TraceBackParameter 计算贝塔系数等
         List<BaseStock> baseStockList = stockService.getBaseStockData(traceBackCriteria.baseStockName, traceBackCriteria.startDate, traceBackCriteria.endDate);
         TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStockList);
-        System.out.println("---------------8------------");
+        System.out.println("---------------7------------");
         return traceBackParameter.getTraceBackInfo();
 
     }
@@ -168,85 +132,6 @@ public class TraceBackServiceImpl implements TraceBackService {
             result.add(new StrategyStock(thisStock));
         }
         return result;
-    }
-
-    /**
-     * 给定持有期，计算不同形成期下，超额收益和策略胜率的分布信息
-     *
-     * @return
-     * @throws DateNotWithinException
-     * @throws NoDataWithinException
-     * @throws IOException
-     * @throws CodeNotFoundException
-     */
-    private List<ExcessAndWinRateDist> findFormateWithCertainHolding(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException {
-        return findBestFormateOrHolding(traceBackCriteria, false);
-    }
-
-    /**
-     * 给定形成期，计算不同持有期下，超额收益和策略胜率的分布信息
-     *
-     * @return
-     * @throws CodeNotFoundException
-     * @throws DateNotWithinException
-     * @throws NoDataWithinException
-     * @throws IOException
-     */
-    private List<ExcessAndWinRateDist> findHoldingWithCertainFormate(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException {
-        return findBestFormateOrHolding(traceBackCriteria,true);
-    }
-
-    private List<ExcessAndWinRateDist> findBestFormateOrHolding(TraceBackCriteria traceBackCriteria, boolean certainFormate) throws DataSourceFirstDayException {
-        List<ExcessAndWinRateDist> certainHoldings = new ArrayList<>();
-        int initHoldingPeriod = traceBackCriteria.holdingPeriod;
-        int initFormativePeriod = traceBackCriteria.formativePeriod;
-
-        for (int i = 2; i <= 50; i = i+2) {
-            //给定形成期
-            if (certainFormate) {
-                //持有期太大，不能形成一个周期
-                if((initHoldingPeriod * i) > baseCumulativeReturn.size() )
-                {
-                    break;
-                }
-                //新的持有期
-                traceBackCriteria.holdingPeriod = initHoldingPeriod * i;
-                System.out.println("形成期：" + traceBackCriteria.formativePeriod +"持有期: " + traceBackCriteria.holdingPeriod);
-            }
-            //给定持有期
-            else {
-                //新的形成期
-                traceBackCriteria.formativePeriod = initFormativePeriod * i;
-                System.out.println("形成期：" + traceBackCriteria.formativePeriod +"持有期: " + traceBackCriteria.holdingPeriod);
-            }
-
-            TraceBackInfo traceBackInfo = new TraceBackInfo();
-
-            //累计基准收益率,直接赋值即可，不用再次计算
-            traceBackInfo.baseCumulativeReturn = baseCumulativeReturn;
-
-            //策略回测
-            traceBackInfo.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteria);
-            System.out.println();
-            System.out.println();
-
-            traceBackInfo.holdingDetails = calcuHoldingDetail(traceBackInfo.baseCumulativeReturn, traceBackInfo.strategyCumulativeReturn, traceBackCriteria.holdingPeriod);
-            //计算相对收益周期
-            traceBackInfo.relativeReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, false);
-
-            //相对强弱计算周期
-            int thisRelativeCycle = i;
-            //总超额收益
-            double strategyLastRate = traceBackInfo.strategyCumulativeReturn.get(traceBackInfo.strategyCumulativeReturn.size() - 1).cumulativeReturn;
-            double baseLastRate = traceBackInfo.baseCumulativeReturn.get(traceBackInfo.baseCumulativeReturn.size() - 1).cumulativeReturn;
-            double thisExcessRate = strategyLastRate - baseLastRate;
-            //策略胜率
-            double thisWinRate = traceBackInfo.relativeReturnPeriod.winRate;
-
-            certainHoldings.add(new ExcessAndWinRateDist(thisRelativeCycle, thisExcessRate, thisWinRate));
-        }
-
-        return certainHoldings;
     }
 
     /**
@@ -311,69 +196,11 @@ public class TraceBackServiceImpl implements TraceBackService {
         LocalDate start = traceBackCriteria.startDate;
         LocalDate end = traceBackCriteria.endDate;
 
-//        if (!traceBackCriteria.isCustomized) {
-            return getCumulativeReturnOfOneStock(traceBackCriteria.baseStockName, start, end);
-//        } else {
-//            return getCustomizedCumulativeReturn(traceBackCriteria, start, end);
-//        }
+        return getCumulativeReturnOfOneStock(traceBackCriteria.baseStockName, start, end);
     }
 
     /**
-     * 获取基准累计收益率，自选股
-     *
-     * @param start 回测区间起始日期
-     * @param end   回测区间结束日期
-     * @return List<CumulativeReturn> 基准累计收益率的列表
-     */
-//    private List<CumulativeReturn>  getCustomizedCumulativeReturn(TraceBackCriteria traceBackCriteria, LocalDate start, LocalDate end) {
-//
-//        List<CumulativeReturn> cumulativeReturns = new ArrayList<>();
-//
-//        LocalDate thisStart = traceBackCriteria.startDate;
-//        LocalDate thisEnd = traceBackCriteria.endDate;
-//
-//        while(!allDatesWithData.contains(thisStart) || !allDatesWithData.contains(thisEnd)){
-//            if(!allDatesWithData.contains(thisStart)){
-//                thisStart = thisStart.plusDays(1);
-//            }
-//            if(!allDatesWithData.contains(thisEnd)){
-//                thisEnd = thisEnd.minusDays(1);
-//            }
-//        }
-//
-//        LocalDate temp = thisStart;
-//        double baseStockCumulative = 1;
-//        while(temp.isBefore(thisEnd) || temp.isEqual(thisEnd)){
-//            StrategyStock stock = null;
-//            double totalCumulativeReturn = 0;
-//            int notSuspend = 0;
-//            for(int j = 0; j < baseStockPool.size(); j++){
-//                int index = baseStockData.get(baseStockPool.get(j)).indexOf(temp);
-//                //当天有数据
-//                if(-1 != index){
-//                    stock = baseStockData.get(baseStockPool.get(j)).get(index);
-//                    totalCumulativeReturn += (stock.close/stock.preClose - 1);
-//                    notSuspend += 1;
-//                }
-//            }
-//
-//            //即该天有股票开盘
-//            if(notSuspend != 0){
-//                baseStockCumulative = baseStockCumulative * (1 + (totalCumulativeReturn / notSuspend));
-//                cumulativeReturns.add(new CumulativeReturn(stock.date, baseStockCumulative-1, false));
-//            }
-//
-//            temp = temp.plusDays(1);
-//        }
-//
-//        //修改第一天的基准收益率为0
-//        cumulativeReturns.get(0).cumulativeReturn = 0;
-//
-//        return cumulativeReturns;
-//    }
-
-    /**
-     * 当不是回测自选股时，计算一只基准股的累计收益率
+     * 计算一只基准股的累计收益率
      * @param stockName 单一股票的信息
      * @param start     起始日期
      * @param end       结束日期

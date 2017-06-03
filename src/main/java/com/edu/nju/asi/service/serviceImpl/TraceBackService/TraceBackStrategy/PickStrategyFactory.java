@@ -1,7 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.*;
-import com.edu.nju.asi.utilities.enums.PickType;
+import com.edu.nju.asi.utilities.enums.ComparatorType;
 
 
 /**
@@ -11,16 +11,16 @@ import com.edu.nju.asi.utilities.enums.PickType;
  */
 public class PickStrategyFactory {
 
-    public static AllPickStrategy createPickStrategy(PickType pickType, int rank){
-        switch (pickType){
+    public static AllPickStrategy createPickStrategy(ComparatorType comparatorType, int value, double weight, int poolSize){
+        switch (comparatorType){
             case RANK_MAX:
-                return new RankMaxPickStrategy(rank);
+                return new RankMaxPickStrategy(value, weight, poolSize);
             case RANK_MAX_PERCENT:
-                return new RankMaxPercentPickStrategy(rank);
+                return new RankMaxPercentPickStrategy(value, weight, poolSize);
             case RANK_MIN:
-                return new RankMinPickStrategy(rank);
+                return new RankMinPickStrategy(value, weight, poolSize);
             case RANK_MIN_PERCENT:
-                return new RankMinPercentPickStrategy(rank);
+                return new RankMinPercentPickStrategy(value, weight, poolSize);
         }
         return null;
     }

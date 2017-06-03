@@ -3,19 +3,18 @@ package com.edu.nju.asi.utilities.enums;
 /**
  * Created by Harvey on 2017/4/19.
  *
- * 回测时， 形成期中的选择策略
+ * 回测时， 形成期的形成策略， 暂定只有涨幅、乖离率 分别对应 动量策略和均值回归策略
  */
-public enum PickType {
+public enum IndicatorType {
 
-    RANK_MAX_PERCENT("排名%最大"),
-    RANK_MIN_PERCENT("排名%最小"),
-    RANK_MAX("排名最大"),
-    RANK_MIN("排名最小");
-
+    INCEREASE_AMOUNT("涨幅"),
+    BIAS("乖离率"),
+    VOLUME("成交量"),
+    CIRCULATIONMARKETVALUEFORMATESTRATEGY("流通市值");
 
     private String repre;
 
-    PickType(String repre) {
+    IndicatorType(String repre) {
         this.repre = repre;
     }
 
@@ -37,8 +36,8 @@ public enum PickType {
      * String TO enum
      * 便于从数据库读入
      */
-    public static PickType getEnum(String a) {
-        for (PickType thisEnum : PickType.values()){
+    public static IndicatorType getEnum(String a) {
+        for (IndicatorType thisEnum : IndicatorType.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }

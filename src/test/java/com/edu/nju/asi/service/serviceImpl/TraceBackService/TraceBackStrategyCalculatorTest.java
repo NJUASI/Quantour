@@ -7,23 +7,14 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.StrategyStockList;
-import com.edu.nju.asi.utilities.enums.BlockType;
-import com.edu.nju.asi.utilities.enums.FormateType;
-import com.edu.nju.asi.utilities.enums.PickType;
-import com.edu.nju.asi.utilities.enums.StType;
+import com.edu.nju.asi.utilities.enums.*;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
-import org.assertj.core.internal.cglib.core.Local;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.*;
+import java.util.*;
 
 /**
  * Created by Harvey on 2017/5/29.
@@ -47,9 +38,11 @@ public class TraceBackStrategyCalculatorTest {
 
         List<BlockType> blockTypes = new LinkedList<>();
         blockTypes.add(BlockType.ZB);
+        List<FilterCondition> filterConditions = new ArrayList<>();
+        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparatorType.RANK_MAX, 5, 1, 5));
 
-        traceBackCriteria = new TraceBackCriteria(LocalDate.of(2017,4,1), LocalDate.of(2017,5,1), 5, 5, new StockPoolCriteria(StType.INCLUDE, blockTypes),"沪深300",false,
-                new FormateAndPickCriteria(FormateType.INCEREASE_AMOUNT, PickType.RANK_MAX, 5));
+        traceBackCriteria = new TraceBackCriteria(LocalDate.of(2017,4,1), LocalDate.of(2017,5,1), 5, 10, new StockPoolCriteria(StType.INCLUDE, blockTypes),
+                "沪深300", filterConditions);
 
         try {
             traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);

@@ -1,6 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FilterCondition;
+import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,32 +19,57 @@ public abstract class AllPickStrategy {
      */
     protected int rank;
 
+    /**
+     * 打分的权重
+     */
+    protected double weight;
 
-    public AllPickStrategy(int rank) {
+    /**
+     * 总股票只数，用于打分
+     */
+    protected int poolSize;
+
+
+    public AllPickStrategy(int rank, double weight, int poolSize) {
         this.rank = rank;
+        this.weight = weight;
+        this.poolSize = poolSize;
     }
 
     /**
      * 根据FormativePeriodRateVO中的periodReturn对股票代码进行排序并选择
-     * @param formativePeriodRates
+     * @param filterConditionRates
      * @return List<String> 选择好的持有期的股票代码
      */
-    public abstract List<String> pick(List<FormativePeriodRate> formativePeriodRates);
+    public List<FilterConditionRate> pick(List<FilterConditionRate> filterConditionRates){
+           //打分后返回
+           return marking(eachPick(filterConditionRates));
+    }
 
-    protected List<String> ascSort(List<FormativePeriodRate> formativePeriodRates){
-        List<String> sortedStockCodes = new ArrayList<>();
-        formativePeriodRates.sort(new AscSorter());
-        for(int i = 0; i < formativePeriodRates.size(); i++){
-            sortedStockCodes.add(formativePeriodRates.get(i).stockCode);
+    protected abstract List<FilterConditionRate> eachPick(List<FilterConditionRate> filterConditionRates);
+
+    // 根据排名和权重打分
+    private List<FilterConditionRate> marking(List<FilterConditionRate> filterConditionRates){
+        for(int i = 0; i < filterConditionRates.size(); i++){
+            filterConditionRates.get(i).score = (poolSize - i) / (double)poolSize * 100 * weight;
+        }
+        return filterConditionRates;
+    }
+
+    protected List<FilterConditionRate> ascSort(List<FilterConditionRate> filterConditionRates){
+        List<FilterConditionRate> sortedStockCodes = new ArrayList<>();
+        filterConditionRates.sort(new AscSorter());
+        for(int i = 0; i < filterConditionRates.size(); i++){
+            sortedStockCodes.add(filterConditionRates.get(i));
         }
         return sortedStockCodes;
     }
 
-    protected List<String> descSort(List<FormativePeriodRate> formativePeriodRates){
-        List<String> sortedStockCodes = new ArrayList<>();
-        formativePeriodRates.sort(new DescSorter());
-        for(int i = 0; i < formativePeriodRates.size(); i++){
-            sortedStockCodes.add(formativePeriodRates.get(i).stockCode);
+    protected List<FilterConditionRate> descSort(List<FilterConditionRate> filterConditionRates){
+        List<FilterConditionRate> sortedStockCodes = new ArrayList<>();
+        filterConditionRates.sort(new DescSorter());
+        for(int i = 0; i < filterConditionRates.size(); i++){
+            sortedStockCodes.add(filterConditionRates.get(i));
         }
         return sortedStockCodes;
     }
@@ -53,14 +79,14 @@ public abstract class AllPickStrategy {
 /**
  * 升序排序器
  */
-class AscSorter implements Comparator<FormativePeriodRate> {
+class AscSorter implements Comparator<FilterConditionRate> {
 
     @Override
-    public int compare(FormativePeriodRate o1, FormativePeriodRate o2) {
-        if(o1.periodReturn > o2.periodReturn){
+    public int compare(FilterConditionRate o1, FilterConditionRate o2) {
+        if(o1.indicator > o2.indicator){
             return -1;
         }
-        else if(o1.periodReturn == o2.periodReturn){
+        else if(o1.indicator == o2.indicator){
             return 0;
         }
         else {
@@ -72,13 +98,13 @@ class AscSorter implements Comparator<FormativePeriodRate> {
 /**
  * 降序排序器
  */
-class DescSorter implements Comparator<FormativePeriodRate>{
+class DescSorter implements Comparator<FilterConditionRate>{
     @Override
-    public int compare(FormativePeriodRate o1, FormativePeriodRate o2) {
-        if(o1.periodReturn > o2.periodReturn){
+    public int compare(FilterConditionRate o1, FilterConditionRate o2) {
+        if(o1.indicator > o2.indicator){
             return 1;
         }
-        else if(o1.periodReturn == o2.periodReturn){
+        else if(o1.indicator == o2.indicator){
             return 0;
         }
         else {

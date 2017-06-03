@@ -1,22 +1,21 @@
 package com.edu.nju.asi.utilities.enums;
 
-import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.CirculationMarketValueFormateStrategy;
-
 /**
  * Created by Harvey on 2017/4/19.
  *
- * 回测时， 形成期的形成策略， 暂定只有涨幅、乖离率 分别对应 动量策略和均值回归策略
+ * 回测时， 形成期中的选择策略
  */
-public enum FormateType {
+public enum ComparatorType {
 
-    INCEREASE_AMOUNT("涨幅"),
-    BIAS("乖离率"),
-    VOLUME("成交量"),
-    CIRCULATIONMARKETVALUEFORMATESTRATEGY("流通市值");
+    RANK_MAX_PERCENT("排名%最大"),
+    RANK_MIN_PERCENT("排名%最小"),
+    RANK_MAX("排名最大"),
+    RANK_MIN("排名最小");
+
 
     private String repre;
 
-    FormateType(String repre) {
+    ComparatorType(String repre) {
         this.repre = repre;
     }
 
@@ -38,8 +37,8 @@ public enum FormateType {
      * String TO enum
      * 便于从数据库读入
      */
-    public static FormateType getEnum(String a) {
-        for (FormateType thisEnum : FormateType.values()){
+    public static ComparatorType getEnum(String a) {
+        for (ComparatorType thisEnum : ComparatorType.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }

@@ -2,7 +2,7 @@ package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.F
 
 
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
 
 import java.time.LocalDate;
@@ -30,7 +30,7 @@ public class VolumeFormateStrategy extends AllFormateStrategy {
      * @return 形成的数据
      */
     @Override
-    public List<FormativePeriodRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+    public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
@@ -38,7 +38,7 @@ public class VolumeFormateStrategy extends AllFormateStrategy {
         LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
         LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
 
-        List<FormativePeriodRate> formativePeriodRate = new ArrayList<>();
+        List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
         for(int i = 0; i < stockCodes.size(); i++){
             double totalVolume = 0;
@@ -52,9 +52,9 @@ public class VolumeFormateStrategy extends AllFormateStrategy {
                 totalVolume += stockVOList.get(j).volume;
             }
 
-            formativePeriodRate.add(new FormativePeriodRate(stockCodes.get(i), totalVolume));
+            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), totalVolume, 0));
         }
 
-        return formativePeriodRate;
+        return filterConditionRate;
     }
 }

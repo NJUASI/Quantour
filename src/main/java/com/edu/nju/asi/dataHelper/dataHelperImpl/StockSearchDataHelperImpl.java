@@ -4,6 +4,7 @@ import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.enums.Market;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,8 +13,10 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +87,8 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
     public boolean addStockSearchAll(List<StockSearch> list) {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO stocksearch(code, firstLetters, name, market) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO stocksearch(code, firstLetters, name, market,isBase,industry,area) " +
+                "VALUES(?,?,?,?,?,?,?)";
         boolean result = true;
 
         try {
@@ -95,6 +99,9 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
                 preparedStatement.setString(2,stockSearch.getFirstLetters());
                 preparedStatement.setString(3,stockSearch.getSearchID().getName());
                 preparedStatement.setInt(4,stockSearch.getSearchID().getMarket().getRepre());
+                preparedStatement.setBoolean(5,stockSearch.isBase());
+                preparedStatement.setString(6,stockSearch.getIndustry());
+                preparedStatement.setString(7,stockSearch.getArea());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
@@ -192,27 +199,6 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         if(result==null||result.isEmpty()){
             return null;
         }
-        transaction.commit();
-        session.close();
-        return result;
-    }
-
-    /**
-     * 获取所有股票排名
-     */
-    @Override
-    public List<StockSearch> getAllRankingList() {
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        String hql = "from StockSearch order by clickAmount desc";
-        Query query = session.createQuery(hql);
-        List<StockSearch> result = query.list();
-
-        if(result==null||result.isEmpty()){
-            return null;
-        }
-
         transaction.commit();
         session.close();
         return result;

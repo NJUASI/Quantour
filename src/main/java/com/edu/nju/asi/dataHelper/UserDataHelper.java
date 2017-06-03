@@ -59,16 +59,28 @@ public interface UserDataHelper {
     List<String> getAllUserNames();
 
     /**
-     * 添加策略信息
+     * 添加策略信息(创建者)
      *
+     * @param userName 用户名
+     * @param strategy 策略信息载体
+     * @return 是否成功添加策略
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
-     * @param strategy 策略信息载体
-     * @param userName 用户名
-     * @return 是否成功添加策略
      */
-    boolean addStrategy(String userName,Strategy strategy);
+     boolean addStrategyByCreator(String userName, Strategy strategy);
+
+    /**
+     * 添加策略信息（订阅者）
+     *
+     * @param userName 用户名
+     * @param strategyID 策略ID
+     * @return 是否成功添加策略
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     */
+     boolean addStrategyByChecker(String userName, String strategyID);
 
     /**
      * 更新策略信息
@@ -77,10 +89,10 @@ public interface UserDataHelper {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      * @param strategy 策略信息载体
-     * @param userName 用户名
+     * @param userID 用户名
      * @return 是否成功更新策略
      */
-    boolean updateStrategy(String userName,Strategy strategy);
+    boolean updateStrategy(String userID,Strategy strategy);
 
     /**
      * 删除策略信息
@@ -89,10 +101,10 @@ public interface UserDataHelper {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      * @param strategyID 策略ID
-     * @param userName 用户名
+     * @param userID 用户名
      * @return 是否成功删除策略
      */
-    boolean deleteStrategy(String userName,String strategyID);
+    boolean deleteStrategy(String userID,String strategyID);
 
     /**
      * 获取策略信息
@@ -100,9 +112,8 @@ public interface UserDataHelper {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
-     * @param strategyID 策略ID
-     * @param userName 用户名
+     * @param userID 用户名
      * @return Strategy 策略信息载体
      */
-    Strategy getStrategy(String userName,String strategyID);
+    List<Strategy> getStrategy(String userID);
 }

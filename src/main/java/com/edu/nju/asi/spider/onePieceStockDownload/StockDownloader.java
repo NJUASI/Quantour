@@ -37,59 +37,17 @@ public class StockDownloader {
         String start = startDay.format(formatter);
         String end = today.format(formatter);
 
-        boolean isSuccess1 = false;
-        boolean isSuccess2 = false;
-        boolean isSuccess3 = false;
-        boolean isSuccess4 = false;
-        boolean isSuccess5 = false;
+        boolean[] isSucces = {false,false,false,false,false};
 
-        String url = prefix+"code="+baseCodes.get(0)+"&start="+start+"&end="+end+suffix;
-        while(!isSuccess1){
-            try {
-                downLoadFromUrl(url,savePath,baseCodes.get(0));
-                isSuccess1 = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        url = prefix+"code="+baseCodes.get(1)+"&start="+start+"&end="+end+suffix;
-        while(!isSuccess2){
-            try {
-                downLoadFromUrl(url,savePath,baseCodes.get(1));
-                isSuccess2 = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        url = prefix+"code="+baseCodes.get(2)+"&start="+start+"&end="+end+suffix;
-        while(!isSuccess3){
-            try {
-                downLoadFromUrl(url,savePath,baseCodes.get(2));
-                isSuccess3 = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        url = prefix+"code="+baseCodes.get(3)+"&start="+start+"&end="+end+suffix;
-        while(!isSuccess4){
-            try {
-                downLoadFromUrl(url,savePath,baseCodes.get(3));
-                isSuccess4 = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        url = prefix+"code="+baseCodes.get(4)+"&start="+start+"&end="+end+suffix;
-        while(!isSuccess5){
-            try {
-                downLoadFromUrl(url,savePath,baseCodes.get(4));
-                isSuccess5 = true;
-            } catch (IOException e) {
-                e.printStackTrace();
+        for(int i = 0; i < baseCodes.size(); i++){
+            String url = prefix+"code="+baseCodes.get(i)+"&start="+start+"&end="+end+suffix;
+            while(!isSucces[i]){
+                try {
+                    downLoadFromUrl(url,savePath,baseCodes.get(i));
+                    isSucces[i] = true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

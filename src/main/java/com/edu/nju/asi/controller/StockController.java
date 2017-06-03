@@ -67,7 +67,6 @@ public class StockController {
             // 解析JSON对象
             StocksPage page = JSON.parseObject(parts[1], StocksPage.class);
             String topClicksChart = parts[2];
-            System.out.println(page.stocks.size() + "\n\n\n");
 
             ModelAndView mv = new ModelAndView("stocks");
             mv.addObject("base_stock_list", page.baseStocks);
@@ -103,11 +102,14 @@ public class StockController {
             List<BaseStock> baseStocks = stockService.getBaseStockDataOfOneDay(thisDate);
             System.out.println(allStocks.size() + "   " + baseStocks.size());
 
-            List<Stock> wantedStocks;
+            List<Stock> wantedStocks = null;
             if ((wantedPage - 1 == allStocks.size() / 80) && (allStocks.size() % 80 != 0)) {
                 wantedStocks = allStocks.subList((wantedPage - 1) * 80, allStocks.size());
             } else {
-                wantedStocks = allStocks.subList((wantedPage - 1) * 80, wantedPage * 80);
+                // 80的非最后一页整数倍
+                if (allStocks.size() != 0) {
+                    wantedStocks = allStocks.subList((wantedPage - 1) * 80, wantedPage * 80);
+                }
             }
 
             // 显示热搜榜（前10和图表）
@@ -118,7 +120,8 @@ public class StockController {
                     allStocks.size(), baseStocks, wantedStocks, topSearched);
             result = JsonConverter.convertStockMarket(wanted);
 
-            System.out.println("Success\nwantedStocks size: " + wantedStocks.size());
+            if (wantedStocks != null) System.out.println("Success\nwantedStocks size: " + wantedStocks.size());
+            else System.out.println("Success\n没取到数据");
             return "1;" + result;
 
         } catch (IOException e) {
