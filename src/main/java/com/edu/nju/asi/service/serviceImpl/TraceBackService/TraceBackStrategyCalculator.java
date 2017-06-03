@@ -1,12 +1,16 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
+import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
+import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategyFactory;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.AllPickStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategyFactory;
 import com.edu.nju.asi.utilities.exceptions.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -43,10 +47,22 @@ public class TraceBackStrategyCalculator {
     protected Map<String, List<StrategyStock>> stockData;
 
     /**
+     * 当前持有的股票
+     */
+    protected List<HoldOrSoldStocks> currentHoldingStocks = new ArrayList<>();
+
+    /**
+     * 最近卖出的股票
+     */
+    protected List<HoldOrSoldStocks> lastSoldStocks = new ArrayList<>();
+
+    /**
      * 形成策略和选择策略工厂
      */
     FormateStrategyFactory formateStrategyFactory = new FormateStrategyFactory();
     PickStrategyFactory pickStrategyFactory = new PickStrategyFactory();
+
+    StockDao stockDao = new StockDaoImpl();
 
 
     public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
@@ -54,7 +70,6 @@ public class TraceBackStrategyCalculator {
         this.traceBackCriteria = traceBackCriteria;
         this.allDatesWithData = allDatesWithData;
         this.stockData = stockData;
-
     }
 
     /**
@@ -91,7 +106,7 @@ public class TraceBackStrategyCalculator {
 
         // 回测时间太短，不足一个持有期
         if (cycles == 0) {
-            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex+1, allEndIndex,traceBackCriteria.maxHoldingNum, cycles,traceBackCriteria.filterConditions));
+            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex+1, allEndIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
             return strategyCumulativeReturn;
         }
 
@@ -102,14 +117,14 @@ public class TraceBackStrategyCalculator {
             if(i == 0){
                 startIndex = allStartIndex+1;
             }
-            strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, traceBackCriteria.maxHoldingNum, i, traceBackCriteria.filterConditions));
+            strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
         }
 
         // 最后一个不足周期的计算
         if ((allEndIndex - allStartIndex + 1) % holdingPeriod != 0) {
             int startIndex = allStartIndex + cycles * holdingPeriod;
             int endIndex = allEndIndex;
-            strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, traceBackCriteria.maxHoldingNum, cycles, traceBackCriteria.filterConditions));
+            strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
         }
 
         // 根据果仁网，第一天数据设置为0
@@ -129,7 +144,7 @@ public class TraceBackStrategyCalculator {
         // 通过不同的筛选条件进行筛选
         for(FilterCondition filterCondition : filterConditions){
             AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData);
-            AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value, filterCondition.weight);
+            AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value, filterCondition.weight, traceBackStockPool.size());
             filterConditionRates.add(pickStrategy.pick(formateStrategy.formate(traceBackStockPool, periodStart, filterCondition.formativePeriod)));
         }
 
@@ -138,15 +153,20 @@ public class TraceBackStrategyCalculator {
         //多于一个筛选条件
         if(filterConditions.size() > 1){
             for(int i = 1 ; i < filterConditionRates.size();i++){
-                for(int k = 0; k < filterConditionRates.get(i).size(); k++){
-                    for(int j = 0; j < wantedFilterConditionRates.size();){
-                        if(wantedFilterConditionRates.get(j).compareTo(filterConditionRates.get(i).get(k)) == 0){
+                for(int j = 0; j < wantedFilterConditionRates.size();){
+                    boolean isFound = false;
+                    for(int k = 0; k < filterConditionRates.get(i).size(); k++){
+                        if(wantedFilterConditionRates.get(j).stockCode.equals(filterConditionRates.get(i).get(k).stockCode)){
                             wantedFilterConditionRates.get(j).score += filterConditionRates.get(i).get(k).score;
-                            j++;
+                            isFound = true;
+                            break;
                         }
-                        else {
-                            wantedFilterConditionRates.remove(j);
-                        }
+                    }
+                    if(isFound){
+                        j++;
+                    }
+                    else {
+                        wantedFilterConditionRates.remove(j);
                     }
                 }
             }
@@ -167,6 +187,43 @@ public class TraceBackStrategyCalculator {
         }
         for(FilterConditionRate filterConditionRate : wantedFilterConditionRates){
             wantedStockCodes.add(filterConditionRate.stockCode);
+        }
+
+        //第一个周期，没有卖出的股票
+        if(periodSerial == 1){
+            for(int i = 0; i < wantedStockCodes.size(); i++){
+                Stock stock = null;
+                try {
+                    stock = stockDao.getStockData(wantedStockCodes.get(i), allDatesWithData.get(startIndex-1));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                currentHoldingStocks.add(new HoldOrSoldStocks(stock.getName(),wantedStockCodes.get(i),allDatesWithData.get(startIndex-1),stock.getFrontAdjClose()));
+            }
+        }
+        //不是第一个周期
+        else {
+            for(int i = 0; i < currentHoldingStocks.size();){
+                boolean isSold = false;
+                for(int j = 0; j < wantedStockCodes.size(); j++){
+                    if(currentHoldingStocks.get(i).stockCode.equals(wantedStockCodes.get(j))){
+                        isSold = true;
+                        i++;
+                        break;
+                    }
+                }
+                //被卖出，加入最近被卖出的队列
+                if(!isSold){
+                    Stock stock = null;
+                    try {
+                         stock = stockDao.getStockData(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(endIndex));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    lastSoldStocks.add(new HoldOrSoldStocks(currentHoldingStocks.get(i), allDatesWithData.get(endIndex), stock.getFrontAdjClose()));
+                    currentHoldingStocks.remove(i);
+                }
+            }
         }
 
         return calculate(wantedStockCodes, periodStart, periodEnd);

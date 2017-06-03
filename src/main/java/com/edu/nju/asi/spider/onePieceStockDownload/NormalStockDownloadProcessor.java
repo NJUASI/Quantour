@@ -27,7 +27,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
     static String ALL_LIST = "http://quotes\\.money\\.163\\.com/trade/lsjysj_\\d{6}.html";
     static String NAME_LIST = "http://quotes\\.money\\.163\\.com/stocksearch/json.do\\?count=1&word=\\d{6}";
 
-    LocalDate today = LocalDate.now();
+    LocalDate today = LocalDate.now().minusDays(1);
 
     //每页取的股票代码个数，最后一页除外
     int pageCount = 25;
@@ -70,13 +70,14 @@ public class NormalStockDownloadProcessor implements PageProcessor {
                 String tempCode = json.jsonPath("$.list["+j+"].SYMBOL").get();
                 //过滤掉基金
                 if(tempCode.startsWith("000") || tempCode.startsWith("001") || tempCode.startsWith("002")
-                        || tempCode.startsWith("300") || tempCode.startsWith("600") || tempCode.startsWith("601")){
+                        || tempCode.startsWith("300") || tempCode.startsWith("600") || tempCode.startsWith("601") || tempCode.startsWith("603")){
                     codes.add(tempCode);
                 }
             }
 
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
+                //TODO
                 //添加股票代码今天的数据页面
 //                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
                 //添加通过代码搜索股票的界面
@@ -105,6 +106,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
 
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
+                //TODO
 //                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
                 //添加通过代码搜索股票的界面
                 page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
@@ -138,6 +140,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
             if(code.startsWith("6") || (code.startsWith("900"))){
                 prefix = 0;
             }
+            //TODO
             //添加当天数据的下载链接
 //            page.putField("url","http://quotes.money.163.com/service/chddata.html?code="+prefix+code+"&start="+start+"&end="+end+"&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP");
 //            page.putField("code",code);

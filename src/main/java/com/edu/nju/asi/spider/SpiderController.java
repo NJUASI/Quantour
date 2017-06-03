@@ -37,12 +37,12 @@ public class SpiderController {
 //        stockDownloader.downLoadBaseStock(allBaseStocksPath, LocalDate.of(2012,1,1), LocalDate.now().minusDays(1));
         //保存全部的基准股票数据
 //        downloadDataHelper.baseStockStore(allBaseStocksPath);
-        //下载当天的普通股票数据(如果当天是季度指标更新的那天，还要更新主要财务指标中的所有表、资产负债表、利润表、现金流量表)
-        downloadTodayNormalStocks(todayNormalStocksPath);
+        //下载当天的普通股票数据
+//        downloadTodayNormalStocks(todayNormalStocksPath);
         //保存当天的普通股票数据
 //        downloadDataHelper.normalStockStore(todayNormalStocksPath);
         //下载当天的基准股票数据
-//        stockDownloader.downLoadBaseStock(todayBaseStocksPath, LocalDate.now(), LocalDate.now());
+//        stockDownloader.downLoadBaseStock(todayBaseStocksPath, LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
         //保存当天的基准股票数据
 //        downloadDataHelper.baseStockStore(todayBaseStocksPath);
 

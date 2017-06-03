@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class RankMinPickStrategy extends AllPickStrategy {
 
-    public RankMinPickStrategy(int rank, double weight) {
-        super(rank, weight);
+    public RankMinPickStrategy(int rank, double weight, int poolSize) {
+        super(rank, weight, poolSize);
     }
 
     @Override

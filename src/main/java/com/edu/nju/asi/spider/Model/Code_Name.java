@@ -23,6 +23,16 @@ public class Code_Name {
      */
     String name;
 
+    /**
+
+     * 简称
+     */
+    String spell;
+    /**
+     * 市场类型
+     */
+    String type;
+
     public String getCode() {
         return code;
     }
@@ -54,14 +64,4 @@ public class Code_Name {
     public void setType(String type) {
         this.type = type;
     }
-
-    /**
-
-     * 简称
-     */
-    String spell;
-    /**
-     * 市场类型
-     */
-    String type;
 }

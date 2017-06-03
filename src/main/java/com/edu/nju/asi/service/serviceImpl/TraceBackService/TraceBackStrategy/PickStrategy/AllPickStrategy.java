@@ -30,9 +30,10 @@ public abstract class AllPickStrategy {
     protected int poolSize;
 
 
-    public AllPickStrategy(int rank, double weight) {
+    public AllPickStrategy(int rank, double weight, int poolSize) {
         this.rank = rank;
         this.weight = weight;
+        this.poolSize = poolSize;
     }
 
     /**
@@ -41,7 +42,6 @@ public abstract class AllPickStrategy {
      * @return List<String> 选择好的持有期的股票代码
      */
     public List<FilterConditionRate> pick(List<FilterConditionRate> filterConditionRates){
-           poolSize = filterConditionRates.size();
            //打分后返回
            return marking(eachPick(filterConditionRates));
     }
@@ -51,7 +51,7 @@ public abstract class AllPickStrategy {
     // 根据排名和权重打分
     private List<FilterConditionRate> marking(List<FilterConditionRate> filterConditionRates){
         for(int i = 0; i < filterConditionRates.size(); i++){
-            filterConditionRates.get(i).score = (poolSize - i) / poolSize * 100 * weight;
+            filterConditionRates.get(i).score = (poolSize - i) / (double)poolSize * 100 * weight;
         }
         return filterConditionRates;
     }

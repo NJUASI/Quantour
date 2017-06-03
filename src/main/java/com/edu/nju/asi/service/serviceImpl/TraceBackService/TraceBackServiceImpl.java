@@ -23,18 +23,12 @@ import java.util.*;
 @Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
-    @Autowired
+//    @Autowired
     private StockService stockService;
-    @Autowired
+//    @Autowired
     private StockDao stockDao;
 
-    //自选股票池，用户回测自选股票池时才对此成员变量赋值
-//    private List<String> baseStockPool;
-
     private List<String> traceBackStockPool;
-
-    //自选股票池的所有数据
-//    private Map<String, List<StrategyStock>> baseStockData;
 
     private List<CumulativeReturn> baseCumulativeReturn;
 
@@ -55,8 +49,8 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     public TraceBackServiceImpl() throws IOException {
-//        stockService = new StockServiceImpl();
-//        stockDao = new StockDaoImpl();
+        stockService = new StockServiceImpl();
+        stockDao = new StockDaoImpl();
 
         //获取所有数据的日期
 //        allDatesWithData = stockDao.getDateWithData();
@@ -81,22 +75,8 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         TraceBackInfo traceBackInfo = new TraceBackInfo();
 
-        // 选取回测的股票池为自选股票池／板块股票池
-
-//        //是自选股票池
-//        if (traceBackCriteria.isCustomized){
-//            traceBackStockPool = stockPool;
-//            //给基准股票池赋值，即为自选股票池
-//            baseStockPool = stockPool;
-//            setUp(traceBackStockPool);
-//            //获取所有自选股的所有数据
-//            baseStockData = stockData;
-//        }
-//        //不是自选股票池
-//        else {
-            traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
-            setUp(traceBackStockPool);
-//        }
+        traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
+        setUp(traceBackStockPool);
 
         System.out.println("---------------set完毕------------");
 

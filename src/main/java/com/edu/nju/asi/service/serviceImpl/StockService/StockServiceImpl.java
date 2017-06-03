@@ -2,6 +2,8 @@ package com.edu.nju.asi.service.serviceImpl.StockService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dao.daoImpl.BaseStockDaoImpl;
+import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
@@ -32,13 +34,14 @@ import java.util.*;
 @Service("StockService")
 public class StockServiceImpl implements StockService {
 
-    @Autowired
+//    @Autowired
     StockDao stockDao;
-    @Autowired
+//    @Autowired
     BaseStockDao baseStockDao;
 
     public StockServiceImpl() {
-//        stockDao = new StockDaoImpl();
+        stockDao = new StockDaoImpl();
+        baseStockDao = new BaseStockDaoImpl();
     }
 
     /**

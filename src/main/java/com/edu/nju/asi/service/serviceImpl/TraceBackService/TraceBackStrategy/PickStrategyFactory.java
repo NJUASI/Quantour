@@ -11,16 +11,16 @@ import com.edu.nju.asi.utilities.enums.ComparatorType;
  */
 public class PickStrategyFactory {
 
-    public static AllPickStrategy createPickStrategy(ComparatorType comparatorType, int value, double weight){
+    public static AllPickStrategy createPickStrategy(ComparatorType comparatorType, int value, double weight, int poolSize){
         switch (comparatorType){
             case RANK_MAX:
-                return new RankMaxPickStrategy(value, weight);
+                return new RankMaxPickStrategy(value, weight, poolSize);
             case RANK_MAX_PERCENT:
-                return new RankMaxPercentPickStrategy(value, weight);
+                return new RankMaxPercentPickStrategy(value, weight, poolSize);
             case RANK_MIN:
-                return new RankMinPickStrategy(value, weight);
+                return new RankMinPickStrategy(value, weight, poolSize);
             case RANK_MIN_PERCENT:
-                return new RankMinPercentPickStrategy(value, weight);
+                return new RankMinPercentPickStrategy(value, weight, poolSize);
         }
         return null;
     }

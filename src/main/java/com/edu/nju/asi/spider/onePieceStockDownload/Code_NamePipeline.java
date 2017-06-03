@@ -1,5 +1,6 @@
 package com.edu.nju.asi.spider.onePieceStockDownload;
 
+import com.csvreader.CsvWriter;
 import com.edu.nju.asi.spider.Model.Code_Name;
 import com.edu.nju.asi.utilities.enums.Market;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
@@ -7,6 +8,8 @@ import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
+import java.io.*;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,17 +19,6 @@ import java.sql.SQLException;
  */
 public class Code_NamePipeline implements Pipeline {
 
-    public static void main(String[] args) {
-//        System.out.println(ascii2native("\u4e07  \u79d1\uff21"));
-
-        String ascii = "\\u4e07  \\u79d1\\uff21";
-        System.out.println(ascii2native(ascii));
-//        int i = ascii.indexOf('\\');
-//        System.out.println(ascii.indexOf("\\"));
-//        System.out.println(ascii.indexOf("\\"));
-//        System.out.println(ascii.indexOf("\\"));
-    }
-
     @Override
     public void process(ResultItems resultItems, Task task) {
         if(resultItems.get("code_name")!=null){
@@ -35,7 +27,6 @@ public class Code_NamePipeline implements Pipeline {
     }
 
     public static String ascii2native(String ascii) {
-//        ascii.replaceAll(" ","");
 
         StringBuilder sb = new StringBuilder();
         String[] strings = ascii.split("\\\\");
@@ -65,38 +56,20 @@ public class Code_NamePipeline implements Pipeline {
         return new String(c);
     }
 
-    public boolean addCode_Name(Code_Name code_name){
-        Connection connection = JDBCUtil.getConnection();
-        PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO stocksearch(code, market, name, firstLetters)" +
-                "VALUES(?,?,?,?)";
-        boolean result = true;
-
+    public void addCode_Name(Code_Name code_name){
+        FileWriter fw = null;
         try {
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,code_name.getCode());
-            preparedStatement.setInt(2,Market.valueOf(code_name.getType()).getRepre());
-            System.out.println(code_name.getName());
-            preparedStatement.setString(3,ascii2native(code_name.getName()));
-            preparedStatement.setString(4,code_name.getSpell());
-            preparedStatement.addBatch();
-            preparedStatement.executeBatch();
-            connection.commit();
-            System.out.println("名称写入成功");
-            System.out.println("-----------------------------------------");
-        } catch (SQLException e) {
+            fw = new FileWriter(new File("D:/Quant/stockSearch.txt"), true);
+        } catch (IOException e) {
             e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            result = false;
-        }finally {
-            JDBCUtil.close(preparedStatement,connection);
         }
-
-        return result;
+        try {
+            fw.write(code_name.getCode()+";"+Market.valueOf(code_name.getType()).getRepre()+";"
+                    + ascii2native(code_name.getName()) + ";" + code_name.getSpell()+"\n");
+            fw.flush();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
