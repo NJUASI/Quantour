@@ -33,16 +33,17 @@ public class StockSearch implements Serializable {
 
     //是否为基准股票
     @Basic
+    @Column(columnDefinition = "bit default 0")
     private boolean isBase;
 
     //行业
     @Basic
-    @Column(length = 100)
+    @Column(length = 100,nullable = true)
     private String industry;
 
     //地域
     @Basic
-    @Column(length = 100)
+    @Column(length = 100,nullable = true)
     private String area;
 
     public StockSearch() {}

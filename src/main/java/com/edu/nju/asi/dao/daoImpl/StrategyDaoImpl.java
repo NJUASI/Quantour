@@ -23,10 +23,11 @@ public class StrategyDaoImpl implements StrategyDao {
         strategyDataHelper = HelperManager.strategyDataHelper;
     }
 
+
     /**
-     * 添加策略信息
+     * 添加策略信息(创建者)
      *
-     * @param userID 用户名
+     * @param userName 用户名
      * @param strategy 策略信息载体
      * @return 是否成功添加策略
      * @author Byron Dong
@@ -34,8 +35,23 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/1
      */
     @Override
-    public boolean addStrategy(String userID, Strategy strategy) {
-        return userDataHelper.addStrategy(userID,strategy);
+    public boolean addStrategyByCreator(String userName, Strategy strategy) {
+        return userDataHelper.addStrategyByCreator(userName,strategy);
+    }
+
+    /**
+     * 添加策略信息（订阅者）
+     *
+     * @param userName   用户名
+     * @param strategyID 策略ID
+     * @return 是否成功添加策略
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     */
+    @Override
+    public boolean addStrategyByChecker(String userName, String strategyID) {
+        return userDataHelper.addStrategyByChecker(userName,strategyID);
     }
 
     /**

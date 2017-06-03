@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Byron Dong on 2017/6/2.
  */
 @Repository
-public class SrategyDataHelperImpl implements StrategyDataHelper {
+public class StrategyDataHelperImpl implements StrategyDataHelper {
 
     @Autowired
     protected SessionFactory sessionFactory;

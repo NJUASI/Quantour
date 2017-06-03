@@ -115,25 +115,6 @@ public class UserDataHelperImpl implements UserDataHelper {
     }
 
     /**
-     * 添加策略信息
-     *
-     * @param userName 用户名
-     * @param strategy 策略信息载体
-     * @return 是否成功添加策略
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/6/1
-     */
-    @Override
-    public boolean addStrategy(String userName, Strategy strategy) {
-        if (strategy.getCreater().equals(userName)) {
-            return addStrategyByCreater(userName, strategy);
-        } else {
-            return addStrategyByChecker(userName, strategy);
-        }
-    }
-
-    /**
      * 更新策略信息
      *
      * @param userName 用户名
@@ -191,7 +172,7 @@ public class UserDataHelperImpl implements UserDataHelper {
         for (Strategy strategy : strategies) {
             if (strategy.getStrategyID().equals(strategyID)) {
                 if (strategy.getCreater().equals(userName)) {
-                    return this.deleteStrategyByCreater(strategyID);
+                    return this.deleteStrategyByCreator(strategyID);
                 } else {
                     return this.deleteStrategyByChecker(userName, strategyID);
                 }
@@ -221,7 +202,17 @@ public class UserDataHelperImpl implements UserDataHelper {
         return strategies;
     }
 
-    private boolean addStrategyByCreater(String userName, Strategy strategy) {
+    /**
+     * 添加策略信息(创建者)
+     *
+     * @param userName 用户名
+     * @param strategy 策略信息载体
+     * @return 是否成功添加策略
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     */
+    public boolean addStrategyByCreator(String userName, Strategy strategy) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -233,19 +224,25 @@ public class UserDataHelperImpl implements UserDataHelper {
         session.save(strategy);
         transaction.commit();
         session.close();
-        return addStrategyByChecker(userName, strategy);
+        return addStrategyByChecker(userName, strategy.getStrategyID());
     }
 
-    private boolean addStrategyByChecker(String userName, Strategy strategy) {
+    /**
+     * 添加策略信息（订阅者）
+     *
+     * @param userName 用户名
+     * @param strategyID 策略ID
+     * @return 是否成功添加策略
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/1
+     */
+    public boolean addStrategyByChecker(String userName, String strategyID) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
         User user = (User) session.get(User.class, userName);
-        if (isContain(user.getStrategies(), strategy)) {
-            transaction.commit();
-            session.close();
-            return false;
-        }
+        Strategy strategy = (Strategy)session.get(Strategy.class,strategyID);
 
         user.getStrategies().add(strategy);
         session.save(user);
@@ -254,7 +251,7 @@ public class UserDataHelperImpl implements UserDataHelper {
         return true;
     }
 
-    private boolean deleteStrategyByCreater(String strategyID) {
+    private boolean deleteStrategyByCreator(String strategyID) {
         boolean result = false;
         List<String> userNames = this.getAllUserNames();
         for (String userName : userNames) {
