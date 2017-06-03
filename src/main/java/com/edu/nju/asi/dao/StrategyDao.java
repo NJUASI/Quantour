@@ -19,7 +19,7 @@ public interface StrategyDao {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      */
-    boolean addStrategyByCreator(String userName, Strategy strategy);
+    boolean saveStrategy(String userName, Strategy strategy);
 
     /**
      * 添加策略信息（订阅者）
@@ -31,7 +31,7 @@ public interface StrategyDao {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      */
-    boolean addStrategyByChecker(String userName, String strategyID);
+    boolean addStrategyLink(String userName, String strategyID);
 
     /**
      * 更新策略信息
@@ -77,7 +77,7 @@ public interface StrategyDao {
      * @param userID 用户ID
      * @return  List<Strategy> 是否成功添加用户
      */
-    List<Strategy> getAllStrategy(String userID);
+    List<Strategy> getAllStrategies(String userID);
 
     /**
      * 获取所有策略
@@ -87,7 +87,7 @@ public interface StrategyDao {
      * @updateTime 2017/6/2
      * @return  List<Strategy> 是否成功添加用户
      */
-    List<Strategy> getAllStrategy();
+    List<Strategy> getAllStrategies();
 
     /**
      * 判断策略是否已经创建

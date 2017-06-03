@@ -35,7 +35,7 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/1
      */
     @Override
-    public boolean addStrategyByCreator(String userName, Strategy strategy) {
+    public boolean saveStrategy(String userName, Strategy strategy) {
         return userDataHelper.addStrategyByCreator(userName,strategy);
     }
 
@@ -50,7 +50,7 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/1
      */
     @Override
-    public boolean addStrategyByChecker(String userName, String strategyID) {
+    public boolean addStrategyLink(String userName, String strategyID) {
         return userDataHelper.addStrategyByChecker(userName,strategyID);
     }
 
