@@ -1,7 +1,5 @@
 package com.edu.nju.asi.model;
 
-import com.edu.nju.asi.utilities.enums.Market;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

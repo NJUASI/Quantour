@@ -108,7 +108,7 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/2
      */
     @Override
-    public List<Strategy> getAllStrategy(String userID) {
+    public List<Strategy> getAllStrategies(String userID) {
         return userDataHelper.getStrategy(userID);
     }
 
@@ -121,7 +121,7 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/2
      */
     @Override
-    public List<Strategy> getAllStrategy() {
+    public List<Strategy> getAllStrategies() {
         return strategyDataHelper.getAllStrategy();
     }
 

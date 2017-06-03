@@ -1,22 +1,23 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FormativePeriodRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 
 import java.util.List;
 
 /**
  * Created by Harvey on 2017/4/20.
  *
+ * 排名最小百分比
  */
 public class RankMinPercentPickStrategy extends AllPickStrategy{
 
-    public RankMinPercentPickStrategy(int rank) {
-        super(rank);
+    public RankMinPercentPickStrategy(int rank, double weight) {
+        super(rank, weight);
     }
 
     @Override
-    public List<String> pick(List<FormativePeriodRate> formativePeriodRates) {
-        List<String> sortedStockPool = descSort(formativePeriodRates);
+    protected List<FilterConditionRate> eachPick(List<FilterConditionRate> filterConditionRates) {
+        List<FilterConditionRate> sortedStockPool = descSort(filterConditionRates);
 
         int size = sortedStockPool.size();
         int pickedNum =  (int)Math.ceil((double)size * rank / 100);

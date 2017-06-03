@@ -1,16 +1,12 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.infoCarrier.traceBack.*;
-import com.edu.nju.asi.utilities.enums.BlockType;
-import com.edu.nju.asi.utilities.enums.FormateType;
-import com.edu.nju.asi.utilities.enums.PickType;
-import com.edu.nju.asi.utilities.enums.StType;
+import com.edu.nju.asi.utilities.enums.*;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import org.junit.Before;
-import org.junit.Ignore;
 import com.edu.nju.asi.service.TraceBackService;
 import org.junit.Test;
 
@@ -41,8 +37,11 @@ public class TraceBackServiceImplTest {
         List<BlockType> blockTypes = new LinkedList<>();
         blockTypes.add(BlockType.ZB);
 
-        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, 5, new StockPoolCriteria(StType.INCLUDE, blockTypes),"沪深300",false,
-                new FormateAndPickCriteria(FormateType.INCEREASE_AMOUNT, PickType.RANK_MAX, 5));
+        List<FilterCondition> filterConditions = new ArrayList<>();
+        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparatorType.RANK_MAX, 5, 1, 5));
+
+        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, 10, new StockPoolCriteria(StType.INCLUDE, blockTypes),
+                "沪深300", filterConditions);
 
         try {
              TraceBackInfo traceBackInfo = traceBackService.traceBack(criteria);
