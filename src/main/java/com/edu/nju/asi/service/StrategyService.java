@@ -31,6 +31,14 @@ public interface StrategyService {
 
 
     /*
+    新建策略
+     */
+    boolean saveStrategy(Strategy newStrategy);
+
+
+
+
+    /*
     单只策略详情界面
      */
     /**
@@ -51,18 +59,18 @@ public interface StrategyService {
     /**
      *
      * @param modified 被修改后的策略实体
-     * @param curUser 策略的创建者
      * @return 是否成功被修改
      */
-    boolean modify(Strategy modified, User curUser);
+    boolean modify(Strategy modified);
 
     /**
      *
-     * @param strategyID 被删除的策略实体ID
+     *
      * @param curUser 策略的创建者
+     * @param strategyID 被删除的策略实体ID
      * @return
      */
-    boolean delete(String strategyID, User curUser);
+    boolean delete(User curUser, String strategyID);
 
     /**
      *

@@ -30,8 +30,13 @@ public class StrategyServiceImpl implements StrategyService {
     }
 
     @Override
+    public boolean saveStrategy(Strategy newStrategy) {
+        return strategyDao.saveStrategy(newStrategy.getContent(), newStrategy);
+    }
+
+    @Override
     public Strategy getOneStrategy(String strategyID) {
-        return null;
+        return strategyDao.getStrategy(strategyID);
     }
 
     // 只有创建者能够操作（修改／删除）策略
@@ -41,19 +46,18 @@ public class StrategyServiceImpl implements StrategyService {
     }
 
     @Override
-    public boolean modify(Strategy modified, User curUser) {
-        return strategyDao.updateStrategy(curUser.getUserName(), modified);
+    public boolean modify(Strategy modified) {
+        return strategyDao.updateStrategy(modified.getCreater(), modified);
     }
 
     @Override
-    public boolean delete(String strategyID, User curUser) {
+    public boolean delete(User curUser, String strategyID) {
         return strategyDao.deleteStrategy(curUser.getUserName(), strategyID);
     }
 
     @Override
     public boolean subscribe(String strategyID, User curUser) {
-//        return strategyDao.addStrategy(curUser.getUserName(), );
-        return false;
+        return strategyDao.addStrategyLink(curUser.getUserName(), strategyID);
     }
 
     @Override

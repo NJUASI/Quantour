@@ -46,8 +46,8 @@ public class TraceBackCriteria {
     public List<FilterCondition> filterConditions;
 
     public TraceBackCriteria(){
-
     }
+
     public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int holdingPeriod, int maxHoldingNum, StockPoolCriteria stockPoolCriteria, String baseStockName, List<FilterCondition> filterConditions) {
         this.startDate = startDate;
         this.endDate = endDate;
