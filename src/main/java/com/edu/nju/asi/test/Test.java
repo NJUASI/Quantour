@@ -19,13 +19,14 @@ public class Test {
 
         Session session = Session.getInstance(props);
         Message msg = new MimeMessage(session);
-        msg.setSubject("迭代三");
-        msg.setText("今天晚上见");
+        msg.setSubject("见面事宜");
+        msg.setText("助教你好！");
         msg.setFrom(new InternetAddress("fdfjj0407@163.com"));
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress("151250037@smail.nju.edu.cn"));
 
         Transport transport = session.getTransport();
         transport.connect("smtp.163.com", "fdfjj0407", "qazxswedc123456");
-        transport.sendMessage(msg, new Address[]{new InternetAddress("151250037@smail.edu.nju.cn")});
+        transport.sendMessage(msg, new Address[]{new InternetAddress("151250037@smail.nju.edu.cn")});
         transport.close();
 
     }
