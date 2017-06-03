@@ -147,13 +147,17 @@ public class JsonConverter {
     private static String convertTopSearchedChart(List<StockSearch> topClicks) throws JsonProcessingException {
         List<List<String>> result = new ArrayList<>();
 
-        for(StockSearch stockSearch: topClicks){
-            List<String> temp = new ArrayList<>();
-            temp.add(stockSearch.getSearchID().getName());
-            temp.add(String.valueOf(stockSearch.getClickAmount()));
-            result.add(temp);
+        if (topClicks != null) {
+            for(StockSearch stockSearch: topClicks){
+                List<String> temp = new ArrayList<>();
+                temp.add(stockSearch.getSearchID().getName());
+                temp.add(String.valueOf(stockSearch.getClickAmount()));
+                result.add(temp);
+            }
+            return JsonConverter.jsonOfObject(result);
+        } else {
+            return null;
         }
-        return JsonConverter.jsonOfObject(result);
     }
 
 
