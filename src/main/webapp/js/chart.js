@@ -3,7 +3,7 @@
  */
 function createCandlestickChart(id, candlestickData, volumes) {
 
-    alert("1231");
+
     function splitCandlestickData(rawData) {
         var categoryData = [];
         var values = [];
@@ -324,7 +324,6 @@ function createLineChart(id, lineData, title, legend) {
         ],
         series: lineSeries
     };
-    alert("end");
     lineChart.setOption(option);
     lineChart.hideLoading();
     return lineChart;
@@ -739,14 +738,15 @@ function createRadarChart(id,data,legend,paramter){
         },
         legend: {
             x: 'center',
-            data:legend
+            data:legend,
+            show: false
         },
         radar: [
             {
                 indicator: (function (){
                     var res = [];
                     for (var i = 0; i <paramter.length; i++) {
-                        res.push({text:paramter[i],max:100});
+                        res.push({text:paramter[i],max:50});
                     }
                     return res;
                 })(),

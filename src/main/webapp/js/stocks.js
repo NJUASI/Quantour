@@ -30,14 +30,11 @@ function changeSingleStockDetail() {
 
             if (array[0] == "1") {
 
-                var candlestickData = array[1];
-                var volumeData = array[2];
+                var candlestickData = eval("(" + array[1] + ")");
+                var volumeData = eval("(" + array[2] + ")");
                 var stockOfEndDay = eval("(" + array[3] + ")");
                 var startDate = eval("(" + array[4] + ")");
                 var isPrivate = eval("(" + array[5] + ")");
-
-
-                // TODO 高源 前端修改数据，画图
 
 
                 $("#stockDetail").empty();
@@ -55,7 +52,6 @@ function changeSingleStockDetail() {
 
                 $("#stockDetail > li").addClass("col-md-5");
 
-                alert(candlestickData);
                  createCandlestickChart('candlestick_chart', candlestickData, volumeData);
 
 

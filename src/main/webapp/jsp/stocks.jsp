@@ -167,7 +167,7 @@
                         <th>点击量</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="rank-list">
                     <%--<c:foreach items="${topClicksChartData}" var="topClickDate" varStatus="vs">--%>
                         <%--<tr>--%>
                             <%--<td>1</td>--%>
@@ -413,16 +413,18 @@
                             len=10;
                         }
                         for (var i = 0; i < len; i++) {
-                            $("#search-body").append("<tr class='colomnsOfTable' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                            $("#search-body").append("<tr class='colomnsOfTable' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
 
                         $("#search-body").find(".colomnsOfTable").click(function () {
                             var num = ($(".colomnsOfTable").index($(this)));
                             var code = $("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(0).html();
+                            var name = $("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(1).html();
 
-                            $("#search-input").val(code);
+                            $("#search-input").val(code+" "+name);
                             $(".searchResults").hide();
+                            $("#search-input").focus();
                         });
 
                         $("#search-body").find("tr").hover(function () {
@@ -535,7 +537,7 @@
         sortNum=0;
         updatePanel();
     });
-
+//通过界面的数据post更改界面内容
     function updatePanel() {
         $.ajax({
             type: "post",
@@ -663,6 +665,10 @@
                             "<td>" + stocks[i]["volume"] + "</td>" +
                             "<td>" + stocks[i]["transactionAmount"] + "</td></tr>");
                     }
+                    $("#stocks_all").find("tr").dblclick(function () {
+                        var code=$(this).find("td").eq(0).html();
+                        window.location.href = "/stocks/" + code;
+                    });
 
 
                     // 处理表格数据
@@ -682,14 +688,36 @@
             }
         });
     }
-
+//查看股票详情
     function getSingleStockDetail() {
-        var wantedStockCode = $("#search-input").val();
+        var str = $("#search-input").val();
+        var wantedStockCode=str.split(" ")[0];
        // alert(wantedStockCode);
         window.location.href = "/stocks/" + wantedStockCode;
     }
 
+    $("#search-input").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var str = $("#search-input").val();
+            var wantedStockCode=str.split(" ")[0];
+            window.location.href = "/stocks/" + wantedStockCode;
+        }
+    });
+//双击后查看详情
+    $("#rank-list").find("tr").dblclick(function () {
+        var code=$(this).find("td").eq(1).html().split(" ")[0];
+        window.location.href = "/stocks/" + code;
+    });
 
+    $("#stocks_all").find("tr").dblclick(function () {
+        var code=$(this).find("td").eq(0).html();
+        window.location.href = "/stocks/" + code;
+    });
+    $("td").hover(function () {
+        $(this).css({"cursor": "default"});
+    }, function () {
+        $(this).css({"margin-top": "0px", "margin-bottom": "40px","border": "none"});
+    });
 </script>
 </body>
 </html>

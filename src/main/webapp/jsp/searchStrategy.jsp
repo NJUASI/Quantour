@@ -1,12 +1,11 @@
-<!--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>-->
-<!--<%&#45;&#45;-->
-<!--Created by IntelliJ IDEA.-->
-<!--User: 61990-->
-<!--Date: 2017/5/13-->
-<!--Time: 11:25-->
-<!--To change this template use File | Settings | File Templates.-->
-<!--&#45;&#45;%>-->
-<!--<%@ page contentType="text/html;charset=UTF-8" language="java" %>-->
+<%--
+  Created by IntelliJ IDEA.
+  User: 61990
+  Date: 2017/6/3
+  Time: 15:19
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -45,10 +44,10 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <title>股票策略</title>
+    <title>策略详情</title>
 </head>
 
-
+<body>
 <header>
     <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
         <div class="container">
@@ -70,12 +69,12 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<body>
+
 
 <div class="row ">
     <div class="col-md-8 col-md-offset-2">
         <div class="row">
-            <h3 class="col-md-2">中小板股指</h3>
+            <h3 class="col-md-2" style="color:#4890c8">中小板股指</h3>
             <button class="btn btn-primary btn-sm col-md-1 col-md-offset-1" style="margin-top: 20px">
                 <span class="glyphicon glyphicon-heart"></span>
                 <span class="txt">收藏</span>
@@ -111,7 +110,7 @@
                         不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的 </p>
                 </div>
                 <div class="col-md-4">
-                <div id="candlestick" style=" width:100%;height:220px"></div>
+                    <div id="candlestick" style=" width:100%;height:220px"></div>
                 </div>
             </div>
         </div>
@@ -227,8 +226,6 @@
     </div>
 </div>
 
-</body>
-
 
 <footer>
 
@@ -253,10 +250,10 @@
 
     $("#strategyDetail").find("li").addClass("col-md-6 small");
     $("#strategyDetail").find("li").find("span").css("color", "#9e9e9e");
-    $("#strategyDetail").find("li").css("margin-bottom","10px")
-    var paramter = ["我去",2,3,4,5];
-    var data1 =[[2.6, 5.9, 9.0, 26.4, 28.7]];
-    createRadarChart('candlestick',data1,['1'],paramter);
+    $("#strategyDetail").find("li").css("margin-bottom", "10px")
+    var paramter = ["我去", 2, 3, 4, 5];
+    var data1 = [[2.6, 5.9, 9.0, 26.4, 28.7]];
+    createRadarChart('candlestick', data1, ['1'], paramter);
 </script>
 
 </body>

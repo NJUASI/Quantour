@@ -97,7 +97,7 @@
 </div>
 
 
-<div class="row">
+<div class="row">z
     <ul id="stockDetail" class="col-md-5 col-md-offset-2 list-inline">
         <li>开盘 <span class=" font-green ">${stockOfEndDay.open}</span></li>
         <li>最高 <span class=" font-red ">${stockOfEndDay.high}</span></li>
@@ -388,8 +388,7 @@
         daysOfWeekDisabled: [0,6]
     });
 
-
-    <%--createCandlestickChart('candlestick_chart', ${candlestickData}, ${volumeData});--%>
+    createCandlestickChart('candlestick_chart', ${candlestickData}, ${volumeData});
 
     <%--var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});--%>
 

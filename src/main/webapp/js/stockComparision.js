@@ -4,8 +4,9 @@
 
 
 function compare() {
-    var stockCode1 = $("#search-input1").val();
-    var stockCode2 = $("#search-input2").val();
+    var stockCode1 = $("#search-input1").val().split(" ").html();;
+    var stockCode2 = $("#search-input2").val().split(" ").html();;
+    alert(stockCode1);
     var startDate = $("#compare_startDate>input").val();
     var endDate = $("#compare_endDate>input").val();
 
