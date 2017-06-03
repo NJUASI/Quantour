@@ -3,8 +3,6 @@ package com.edu.nju.asi.task;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalTime;
-
 /**
  * Created by cuihua on 2017/6/3.
  *
@@ -16,7 +14,7 @@ public class DataSourceUpdateTask {
 
     // TODO 每晚23点整更新数据源
     @Scheduled(cron = "0 0 23 * * ?")
-    public void update(){
+    public void update() {
 
     }
 
