@@ -7,10 +7,10 @@ package com.edu.nju.asi.utilities.enums;
  */
 public enum IndicatorType {
 
-    INCEREASE_AMOUNT("涨幅"),
+    MOMENTUM("动量"),
     BIAS("乖离率"),
     VOLUME("成交量"),
-    CIRCULATIONMARKETVALUEFORMATESTRATEGY("流通市值");
+    INCREASE_AMOUNT("涨幅");
 
     private String repre;
 
