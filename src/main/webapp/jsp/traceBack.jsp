@@ -497,8 +497,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-
-<div class="modal" id="mymodal">
+<div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:70%">
         <div class="modal-content">
             <div class="modal-header">
@@ -594,7 +593,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-</div>
+
 <div id="loader-wrapper">
     <div id="loader"></div>
     <div class="loader-section section-left"></div>
