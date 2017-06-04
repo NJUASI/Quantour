@@ -17,14 +17,14 @@ public class FormateStrategyFactory {
 
     public static AllFormateStrategy createFormateStrategy(IndicatorType indicatorType, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData){
         switch (indicatorType){
-            case INCEREASE_AMOUNT:
-                return new IncreseAmountFormateStrategy(allDatesWithData, stockData);
+            case MOMENTUM:
+                return new MomentumFormateStrategy(allDatesWithData, stockData);
             case BIAS:
                 return new BiasFormateStrategy(allDatesWithData, stockData);
             case VOLUME:
                 return new VolumeFormateStrategy(allDatesWithData, stockData);
-            case CIRCULATIONMARKETVALUEFORMATESTRATEGY:
-                return new CirculationMarketValueFormateStrategy(allDatesWithData, stockData);
+            case INCREASE_AMOUNT:
+                return new IncreaseAmountStrategy(allDatesWithData, stockData);
 
         }
         return null;

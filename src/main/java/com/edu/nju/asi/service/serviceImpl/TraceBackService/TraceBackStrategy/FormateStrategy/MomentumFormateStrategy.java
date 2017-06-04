@@ -12,11 +12,11 @@ import java.util.Map;
 /**
  * Created by Harvey on 2017/4/19.
  *
- * 形成期的涨幅策略
+ * 形成期的动量策略
  */
-public class IncreseAmountFormateStrategy extends AllFormateStrategy {
+public class MomentumFormateStrategy extends AllFormateStrategy {
 
-    public IncreseAmountFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+    public MomentumFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
         super(allDatesWithData, stockData);
     }
 
@@ -38,6 +38,7 @@ public class IncreseAmountFormateStrategy extends AllFormateStrategy {
                 continue;
             }
 
+            //形成期内收益率
             double rate = (stockVOList.get(stockVOList.size()-1).close - stockVOList.get(0).preClose) / stockVOList.get(0).preClose;
 
             //初始得分为0
