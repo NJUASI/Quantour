@@ -235,7 +235,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5 col-md-offset-5">
+            <div class="col-md-5 col-md-offset-4">
                 <ul class="pagination">
                     <li class="active"><a>1</a></li>
                     <%--<c:if test="${totalPageNum}>9">--%>
@@ -244,14 +244,12 @@
 
                 </ul>
             </div>
-            <div class="input-group col-md-1" style="margin-top: 21px">
-                <input type="text" id="goPage" style="padding-left:4px;padding-right: 4px ;text-align: center"
-                       value=1 class="form-control">
-                <span class="input-group-btn">
-                                    <button class="btn btn-default form-control search-btn" id="pageChoose" type="button">
-                                        <a href="#headTitle" style='text-decoration:none;'><span style="color:blueviolet">go</span></a>
-                                    </button>
-                                    </span>
+            <div class=" row col-md-3" style="margin-top: 21px">
+                <input type="text" id="goPage"  style="max-width:20%;padding-left:4px;margin-right:10px;padding-right: 4px ;text-align: center"
+                       value=1 class="form-control col-md-2"/>
+                <button class="btn btn-default col-md-3" id="pageChoose" type="button">
+                    <a href="#headTitle" style='text-decoration:none;'><span style="color:blueviolet">跳转</span></a>
+                </button>
             </div>
 
 
