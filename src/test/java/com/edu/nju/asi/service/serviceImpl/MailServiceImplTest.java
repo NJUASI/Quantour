@@ -41,7 +41,7 @@ public class MailServiceImplTest {
         List<String> subscribers = new LinkedList<>();
         subscribers.add("fdfengjunjie@126.com");
         subscribers.add("fdfengjunjie970407@gmail.com");
-        MailInfo nowMailInfo = new MailInfo("151250037@smail.nju.edu.cn", subscribers, MailNotificationType.UPDATE,
+        MailInfo nowMailInfo = new MailInfo("151250037@smail.nju.edu.cn", subscribers, MailNotificationType.MODIFY,
                 "赚不到钱的策略哈哈哈");
         boolean result = service.notify(nowMailInfo);
         assertEquals(true, result);

@@ -27,7 +27,7 @@ public class User implements Serializable {
     @Column(length = 100)
     private String password;
 
-    //用户头像
+    // 用户邮箱
     @Basic
     @Column(length = 100,nullable = true)
     private String email;
