@@ -18,12 +18,17 @@ public class BasicDataID implements Serializable{
     @Column(length = 4)
     private int year;
 
+    //股票代号
+    @Column(length = 100)
+    private String code;
+
     public BasicDataID() {
     }
 
-    public BasicDataID(int quarter, int year) {
+    public BasicDataID(int quarter, int year, String code) {
         this.quarter = quarter;
         this.year = year;
+        this.code = code;
     }
 
     public int getQuarter() {
@@ -42,6 +47,14 @@ public class BasicDataID implements Serializable{
         this.year = year;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,13 +63,15 @@ public class BasicDataID implements Serializable{
         BasicDataID that = (BasicDataID) o;
 
         if (quarter != that.quarter) return false;
-        return year == that.year;
+        if (year != that.year) return false;
+        return code != null ? code.equals(that.code) : that.code == null;
     }
 
     @Override
     public int hashCode() {
         int result = quarter;
         result = 31 * result + year;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
         return result;
     }
 }
