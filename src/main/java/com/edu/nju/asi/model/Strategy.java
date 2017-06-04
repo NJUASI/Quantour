@@ -3,6 +3,7 @@ package com.edu.nju.asi.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "strategy")
-public class Strategy {
+public class Strategy implements Serializable{
 
     //策略ID
     @Id

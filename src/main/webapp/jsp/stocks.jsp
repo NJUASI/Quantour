@@ -168,7 +168,7 @@
                         <th>点击量</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="rank-list">
                     <%--<c:foreach items="${topClicksChartData}" var="topClickDate" varStatus="vs">--%>
                         <%--<tr>--%>
                             <%--<td>1</td>--%>
@@ -176,24 +176,20 @@
                             <%--<td>${topClickDate[1]}</td>--%>
                         <%--</tr>--%>
                     <%--</c:foreach>--%>
-                    <tr>
-
-                        <td>Tanmay</td>
-                        <td>000001 沪深300</td>
-                        <td>560001</td>
-                    </tr>
-                    <tr>
-                        <td>Sachin</td>
-                        <td>Mumbai</td>
-                        <td>400003</td>
-                    </tr>
-                    <tr>
-                        <td>Uma</td>
-                        <td>Pune</td>
-                        <td>411027</td>
-                    </tr>
+                    <c:set var="index" value="1" />
+                    <c:forEach items="${topClicks}" var="topStock"  varStatus="vs">
+                        <tr>
+                            <td>${index}</td>
+                            <td>${topStock.searchID.code} ${topStock.searchID.name}</td>
+                            <td>${topStock.clickAmount}</td>
+                        </tr>
+                        <c:set var="index" value="${index+1}" />
+                    </c:forEach>
                     </tbody>
                 </table>
+
+            </div>
+            <div class="col-md-6 col-md-offset-1" id="hot_search_chart" style="width: 40%;height: 420px">
 
             </div>
         </div>
@@ -203,7 +199,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
                     <table class="table table-hover table-condensed stocks-table">
-                        <caption class="text-center" id=""><h3>市场行情</h3></caption>
+                        <caption class="text-center" id="headTitle"><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
                             <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
@@ -243,20 +239,7 @@
                 <ul class="pagination">
                     <li class="active"><a>1</a></li>
                     <%--<c:if test="${totalPageNum}>9">--%>
-                    <%
-                        int pagetol = (int) request.getSession().getAttribute("totalPageNum");
-                        if (pagetol <= 9) {
-                            for (int i = 2; i <= pagetol; i++) {
-                                out.println(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
-                            }
-                        } else {
-                            for (int i = 2; i <= 8; i++) {
-                                out.println(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
-                            }
-                            out.println("<li><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
-                            out.println(" <li><a   href=\"#headTitle\" class=\"\">" + pagetol + "</a></li>");
-                        }
-                    %>
+
                     <%--</c:if>--%>
 
                 </ul>
@@ -355,10 +338,7 @@
     </div><!-- /.modal -->
 </div>
 
-<%--TODO 高源 图表位置--%>
-<div id="hot_search_chart">
 
-</div>
 
 <footer>
 </footer>
@@ -366,6 +346,7 @@
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
 <script src="../js/stocks.js"></script>
+<script src="../js/echarts-liquidfill.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
@@ -378,6 +359,20 @@
 
     // 画出热搜榜的图
     createPieChart("hot_search_chart", ${topClicksChartData});
+
+    <%--alert(${topClicks.});--%>
+    var pagetol=${totalPageNum};
+    if (pagetol <= 9) {
+        for (var i = 2; i <= pagetol; i++) {
+            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
+        }
+    } else {
+        for (var i = 2; i <= 8; i++) {
+            $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
+        }
+        $(".pagination").append("<li><a class=\"\" href=\"#headTitle\">&middot;&middot;&middot;</a></li>");
+        $(".pagination").append(" <li><a   href=\"#headTitle\" class=\"\">" + pagetol + "</a></li>");
+    }
 
 
     $(document).ready(
@@ -401,7 +396,7 @@
             $('#search-input').bind('input propertychange', function () {
 
                 var key = $('#search-input').val();
-//                alert(key);
+
                 $.ajax({
                     type: "get",
                     async: true,
@@ -421,16 +416,18 @@
                             len=10;
                         }
                         for (var i = 0; i < len; i++) {
-                            $("#search-body").append("<tr class='colomnsOfTable' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                            $("#search-body").append("<tr class='colomnsOfTable' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
 
                         $("#search-body").find(".colomnsOfTable").click(function () {
                             var num = ($(".colomnsOfTable").index($(this)));
                             var code = $("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(0).html();
+                            var name = $("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(1).html();
 
-                            $("#search-input").val(code);
+                            $("#search-input").val(code+" "+name);
                             $(".searchResults").hide();
+                            $("#search-input").focus();
                         });
 
                         $("#search-body").find("tr").hover(function () {
@@ -490,18 +487,21 @@
         } else if (numOfClick == 2) {
             numOfClick = 1;
         }
-        for (var i = 0; i < 15; i++) {
+        for (var i = 0; i < 16; i++) {
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-up");
             $("thead>tr>th").eq(i).find(".tlabel").removeClass("glyphicon glyphicon-chevron-down");
         }
 
         if (numOfClick == 1) {
-            $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
+            $("thead>tr>th").eq(numOfColumn + 7).find(".tlabel").addClass("glyphicon glyphicon-chevron-up");
         } else if (numOfClick == 2) {
-            $("thead>tr>th").eq(numOfColumn + 4).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
+            $("thead>tr>th").eq(numOfColumn + 7).find(".tlabel").addClass("glyphicon glyphicon-chevron-down");
         }
 
         sortNum = numOfColumn * 2 + numOfClick - 1;
+
+//        TODO fjj 当sortNum等于16或者17的时候不能排序，就是最后一列
+//        alert(sortNum);
 //        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowPage+"页");
 //        alert(sortNum);
         updatePanel();
@@ -537,9 +537,10 @@
 //        alert($(".form_date > input").val());
         $("body").removeClass("loaded");
         nowPage = 1;
+        sortNum=0;
         updatePanel();
     });
-
+//通过界面的数据post更改界面内容
     function updatePanel() {
         $.ajax({
             type: "post",
@@ -667,6 +668,10 @@
                             "<td>" + stocks[i]["volume"] + "</td>" +
                             "<td>" + stocks[i]["transactionAmount"] + "</td></tr>");
                     }
+                    $("#stocks_all").find("tr").dblclick(function () {
+                        var code=$(this).find("td").eq(0).html();
+                        window.location.href = "/stocks/" + code;
+                    });
 
 
                     // 处理表格数据
@@ -686,14 +691,36 @@
             }
         });
     }
-
+//查看股票详情
     function getSingleStockDetail() {
-        var wantedStockCode = $("#search-input").val();
-        alert(wantedStockCode);
+        var str = $("#search-input").val();
+        var wantedStockCode=str.split(" ")[0];
+       // alert(wantedStockCode);
         window.location.href = "/stocks/" + wantedStockCode;
     }
 
+    $("#search-input").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var str = $("#search-input").val();
+            var wantedStockCode=str.split(" ")[0];
+            window.location.href = "/stocks/" + wantedStockCode;
+        }
+    });
+//双击后查看详情
+    $("#rank-list").find("tr").dblclick(function () {
+        var code=$(this).find("td").eq(1).html().split(" ")[0];
+        window.location.href = "/stocks/" + code;
+    });
 
+    $("#stocks_all").find("tr").dblclick(function () {
+        var code=$(this).find("td").eq(0).html();
+        window.location.href = "/stocks/" + code;
+    });
+    $("td").hover(function () {
+        $(this).css({"cursor": "default"});
+    }, function () {
+        $(this).css({"margin-top": "0px", "margin-bottom": "40px","border": "none"});
+    });
 </script>
 </body>
 </html>

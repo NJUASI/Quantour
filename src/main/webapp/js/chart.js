@@ -3,6 +3,7 @@
  */
 function createCandlestickChart(id, candlestickData, volumes) {
 
+
     function splitCandlestickData(rawData) {
         var categoryData = [];
         var values = [];
@@ -323,7 +324,6 @@ function createLineChart(id, lineData, title, legend) {
         ],
         series: lineSeries
     };
-
     lineChart.setOption(option);
     lineChart.hideLoading();
     return lineChart;
@@ -620,7 +620,6 @@ function createClickChart(id, data1, percentString){
 
     var clickChart = echarts.init(document.getElementById(id));
     var data = [];
-    alert("1231");
     data.push(data1);
     var strData = [];
     strData.push(percentString);
@@ -642,7 +641,7 @@ function createClickChart(id, data1, percentString){
                         return '热搜率'+strData;
                     },
                     textStyle: {
-                        fontSize: 19
+                        fontSize: 17
                     },
                     position: ['50%', '30%']
                 }
@@ -739,14 +738,15 @@ function createRadarChart(id,data,legend,paramter){
         },
         legend: {
             x: 'center',
-            data:legend
+            data:legend,
+            show: false
         },
         radar: [
             {
                 indicator: (function (){
                     var res = [];
                     for (var i = 0; i <paramter.length; i++) {
-                        res.push({text:paramter[i],max:100});
+                        res.push({text:paramter[i],max:50});
                     }
                     return res;
                 })(),

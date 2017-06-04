@@ -97,7 +97,7 @@
 </div>
 
 
-<div class="row">
+<div class="row">z
     <ul id="stockDetail" class="col-md-5 col-md-offset-2 list-inline">
         <li>开盘 <span class=" font-green ">${stockOfEndDay.open}</span></li>
         <li>最高 <span class=" font-red ">${stockOfEndDay.high}</span></li>
@@ -265,7 +265,7 @@
             $("#stockText").keydown(function(event) {
                 if (event.keyCode == 13) {
 //                  添加回测时间
-                    alert(event.target.value);
+                   //alert(event.target.value);
                 }
             });
             $("#searchButton").click(function(event) {
@@ -387,7 +387,6 @@
         endDate: new Date(),
         daysOfWeekDisabled: [0,6]
     });
-
 
     createCandlestickChart('candlestick_chart', ${candlestickData}, ${volumeData});
 

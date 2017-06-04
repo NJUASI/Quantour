@@ -28,10 +28,9 @@ public class User implements Serializable {
     private String password;
 
     //用户头像
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "headPotrait",columnDefinition = "BLOB",nullable = true)
-    private Blob headPortrait;
+    @Basic
+    @Column(length = 100,nullable = true)
+    private String email;
 
     @ManyToMany(cascade={CascadeType.ALL})
     @JoinTable(name = "user_strategy",
@@ -47,10 +46,10 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public User(String userName, String password, Blob headPortrait) {
+    public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
-        this.headPortrait = headPortrait;
+        this.email = email;
     }
 
     public String getUserName() {
@@ -69,12 +68,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Blob getHeadPortrait() {
-        return headPortrait;
+    public String getEmail() {
+        return email;
     }
 
-    public void setHeadPortrait(Blob headPortrait) {
-        this.headPortrait = headPortrait;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Strategy> getStrategies() {

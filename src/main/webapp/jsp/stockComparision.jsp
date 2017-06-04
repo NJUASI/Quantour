@@ -384,17 +384,21 @@
 
                         var obj = eval("(" + result + ")");
                         var len = obj.length;
+                        if(len>10){
+                            len=10;
+                        }
                         $("#search-body1").empty();
-                        for (var i = 0; i < 10; i++) {
-                            $("#search-body1").append("<tr class='colomnsOfTable1' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                        for (var i = 0; i < len; i++) {
+                            $("#search-body1").append("<tr class='colomnsOfTable1' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
 
                         $("#search-body1").find(".colomnsOfTable1").click(function() {
                             var num=($(".colomnsOfTable1").index($(this)));
                             var code=$("#search-body1").find(".colomnsOfTable1").eq(num).find("td").eq(0).html();
+                            var name=$("#search-body1").find(".colomnsOfTable1").eq(num).find("td").eq(1).html();
 
-                            $("#search-input1").val(code);
+                            $("#search-input1").val(code+" "+name);
                             $(".searchResults1").hide();
                         });
 
@@ -434,17 +438,20 @@
 
                         var obj = eval("(" + result + ")");
                         var len = obj.length;
+                        if(len>10){
+                            len=10;
+                        }
                         $("#search-body2").empty();
-                        for (var i = 0; i < 10; i++) {
-                            $("#search-body2").append("<tr class='colomnsOfTable2' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>&nbsp;" + obj[i]["searchID"]["name"] + "</td>" +
+                        for (var i = 0; i < len; i++) {
+                            $("#search-body2").append("<tr class='colomnsOfTable2' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>" + obj[i]["searchID"]["name"] + "</td>" +
                                 "<td>" + obj[i]["firstLetters"] + "</td><td>" + obj[i]["searchID"]["market"] + "</td></tr>");
                         }
 
                         $("#search-body2").find(".colomnsOfTable2").click(function() {
                             var num=($(".colomnsOfTable2").index($(this)));
                             var code=$("#search-body2").find(".colomnsOfTable2").eq(num).find("td").eq(0).html();
-
-                            $("#search-input2").val(code);
+                            var name=$("#search-body2").find(".colomnsOfTable2").eq(num).find("td").eq(1).html();
+                            $("#search-input2").val(code+ " " + name);
                             $(".searchResults2").hide();
                         });
 

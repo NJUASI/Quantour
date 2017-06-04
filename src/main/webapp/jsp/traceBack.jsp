@@ -27,11 +27,12 @@
             height: 100px;
             background-color: #444444;
         }
+
         /*#myTab{*/
-            /*display: none;*/
+        /*display: none;*/
         /*}*/
         /*#chartPanel{*/
-            /*display: none;*/
+        /*display: none;*/
         /*}*/
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -77,7 +78,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">首页</a></li>
-                <li><a id="stocks" style="cursor:
+                <li><a href="/stocks" style="cursor:
                  pointer">大盘详情</a></li>
                 <li><a href="/trace_back">量化社区</a></li>
                 <li><a href="#">帮助</a></li>
@@ -144,65 +145,7 @@
     </div>
     </div>
 
-
     <div class="row">
-        <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    回测条件
-                </h4>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-
-                    <div class="col-md-2 col-md-offset-1 inputBlock">
-
-                        <label>开始日期：</label>
-                        <!--指定 date标记-->
-                        <div class='input-group date' id='datetimeStart'>
-                            <input id="startDate" type='text' class="form-control form_datetime"/>
-                            <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-md-offset-1 inputBlock">
-                        <label>结束日期：</label>
-                        <!--指定 date标记-->
-                        <div class='input-group date' id='datetimeEnd'>
-                            <input id="endDate" type='text' class="form-control form_datetime"/>
-                            <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 col-md-offset-1 inputBlock">
-
-                        <label>收益基准：</label>
-
-                        <select id="baseStockEve" name="baseStockEve" class="selectpicker show-tick form-control">
-                            <option value="沪深300" selected>沪深300</option>
-                            <option value="创业板指">创业板指</option>
-                            <option value="中小板指">中小板指</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-2 col-md-offset-1 inputBlock">
-
-                        <button type="button" class="btn btn-info" onclick="traceback()"
-                                style="margin-top: 15px;margin-left: -40px;">开始回测
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row" >
         <div class="panel panel-default col-md-10 col-md-offset-1 userBlock">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -216,8 +159,8 @@
                             <div class="col-md-5"><label>形成指标</label></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-2">形成期</div>
-                            <div class="col-md-3">
+                            <div class="col-md-2" style="padding-right: 0px">形成期</div>
+                            <div class="col-md-3" style="padding-right: 0px">
                                 <select id="formativePeriod" name="" class="selectpicker show-tick form-control">
                                     <option value="5" selected>5</option>
                                     <option value="10">10</option>
@@ -226,7 +169,7 @@
                                     <option value="60">60</option>
                                 </select>
                             </div>
-                            <div class="col-md-1">日</div>
+                            <div class="col-md-1" style="margin-top: 7px">日</div>
                             <div class="col-md-4">
                                 <select id="formativeStrategy" name="" class="selectpicker show-tick form-control">
                                     <option value="INCEREASE_AMOUNT" selected>涨幅</option>
@@ -293,6 +236,70 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    回测条件
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="col-md-2 col-md-offset-1 inputBlock">
+
+                        <label>开始日期：</label>
+                        <!--指定 date标记-->
+                        <div class='input-group date' id='datetimeStart'>
+                            <input id="startDate" type='text' class="form-control form_datetime"/>
+                            <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-md-offset-1 inputBlock">
+                        <label>结束日期：</label>
+                        <!--指定 date标记-->
+                        <div class='input-group date' id='datetimeEnd'>
+                            <input id="endDate" type='text' class="form-control form_datetime"/>
+                            <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-md-offset-1 inputBlock">
+
+                        <label>收益基准：</label>
+
+                        <select id="baseStockEve" name="baseStockEve" class="selectpicker show-tick form-control">
+                            <option value="沪深300" selected>沪深300</option>
+                            <option value="创业板指">创业板指</option>
+                            <option value="中小板指">中小板指</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 col-md-offset-1 inputBlock">
+
+                        <button type="button" class="btn btn-info" onclick="traceback()"
+                                style="margin-left: -40px;">开始回测
+                        </button>
+                    </div>
+                    <div class="col-md-2 col-md-offset-1">
+
+                        <button type="button" class="btn btn-info" id="createStrategy"
+                                style="margin-top: 10px;margin-left: -40px;margin-bottom: 20px">创建策略
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </form>
 
@@ -386,7 +393,7 @@
     <div class="tab-pane" id="holdingDetailPanel">
         <div class="row">
             <div class="col-md-12 table-responsive pre-scrollable" style="max-height: 640px">
-                <table class="table table-hover table-condensed" >
+                <table class="table table-hover table-condensed">
                     <thead>
                     <tr>
                         <th>周期序号</th>
@@ -452,7 +459,8 @@
     </div><!-- /.modal -->
 </div>
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog">
+
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -489,6 +497,102 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+<div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">创建策略</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="form-group col-md-offset-1 col-md-6">
+                        <label class="col-md-3 control-label">策略名称：</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" style="margin-top: -7px;margin-left: -30px"
+                                   placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="width:90%;margin:0 auto;2px;margin-bottom: 30px;border-top:1px solid #ddd"></div>
+
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col-md-offset-1 col-md-11">
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label">板块：</label><span>主板，创业板，中小板</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">ST：</label><span>主板，创业板，中小板</span>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 15px">
+                                <div class="col-md-4 ">
+                                    <label class="control-label">开始日期：</label><span>2017-01-01</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">结束日期：</label><span>2019-21-21</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">收益基准：</label><span>沪深300</span>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 15px; margin-bottom: 15px"
+                            ">
+                            <div class="col-md-2">
+                                <label class="control-label">筛选条件：</label>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    ss
+                                </div>
+                                <div class="row">
+                                    ss
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px">
+                            <div class="col-md-2">
+                                <label class="control-label">策略描述：</label>
+                            </div>
+                            <div class="col-md-10">
+                                <textarea rows="4" style="width: 90%; margin-left: -20px"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class=" col-md-offset-8 col-md-1" style="padding-right: 0px">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="radios" id="radios1" value="false" checked>
+                                私密
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1" style="padding-left: 0px">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="radios" id="radios2" value="false">
+                                公开
+                            </label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">创建策略</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <div id="loader-wrapper">
     <div id="loader"></div>
@@ -517,37 +621,44 @@
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
 
+
+    $(function () {
+        $("#createStrategy").click(function () {
+            $("#mymodal").modal("toggle");
+        });
+    });
+
     var today = new Date();
-    var yesterday=new Date();
-    yesterday.setTime(today.getTime()-24*60*60*1000);
+    var yesterday = new Date();
+    yesterday.setTime(today.getTime() - 24 * 60 * 60 * 1000);
 
     var endTime = today.getFullYear() + "-";
-    var startTime = yesterday.getFullYear()+"-";
+    var startTime = yesterday.getFullYear() + "-";
 
-    var month=today.getMonth() + 1;
-    var dayOfMonth=today.getDate();
-    if( month<10){
-        endTime+="0"+month;
-    }else{
-        endTime+=month;
+    var month = today.getMonth() + 1;
+    var dayOfMonth = today.getDate();
+    if (month < 10) {
+        endTime += "0" + month;
+    } else {
+        endTime += month;
     }
-    if(dayOfMonth<10){
-        endTime+="-0"+dayOfMonth;
-    }else{
-        endTime+="-"+dayOfMonth;
+    if (dayOfMonth < 10) {
+        endTime += "-0" + dayOfMonth;
+    } else {
+        endTime += "-" + dayOfMonth;
     }
 
-    month=yesterday.getMonth() + 1;
-    dayOfMonth=yesterday.getDate();
-    if( month<10){
-        startTime+="0"+month;
-    }else{
-        startTime+=month;
+    month = yesterday.getMonth() + 1;
+    dayOfMonth = yesterday.getDate();
+    if (month < 10) {
+        startTime += "0" + month;
+    } else {
+        startTime += month;
     }
-    if(dayOfMonth<10){
-        startTime+="-0"+dayOfMonth;
-    }else{
-        startTime+="-"+dayOfMonth;
+    if (dayOfMonth < 10) {
+        startTime += "-0" + dayOfMonth;
+    } else {
+        startTime += "-" + dayOfMonth;
     }
 
     $("#datetimeStart>input").attr('value', startTime);
@@ -574,8 +685,8 @@
         $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
     });
 
-        $(document).ready(function () {
-            $("#modifyBT").click(function () {
+    $(document).ready(function () {
+        $("#modifyBT").click(function () {
             $("#passwordField").toggle("slow");
             $("#passwordModify").toggle("slow");
         });
@@ -602,7 +713,7 @@
                 error: function (result) {
                     alert("错误" + result);
                 }
-            }) ;
+            });
         });
 
     });
@@ -659,75 +770,74 @@
         }
     });
 
-//
-//    var strategyData = [['2015/7/1', '0'],
-//        ['2015/7/2', '0.005'],
-//        ['2015/7/3', '0.001'],
-//        ['2015/7/4', '-0.002'],
-//        ['2015/7/5', '-0.03'],
-//        ['2015/7/6', '-0.12'],
-//        ['2015/7/7', '-0.05'],
-//        ['2015/7/8', '-0.01'],
-//        ['2015/7/9', '0.1'],
-//        ['2015/7/10', '0.15'],
-//        ['2015/7/11', '-0.03'],
-//        ['2015/7/12', '-0.09'],
-//        ['2015/7/13', '-0.12'],
-//        ['2015/7/14', '-0.15'],
-//        ['2015/7/15', '0.13'],
-//        ['2015/7/16', '0.23'],
-//        ['2015/7/17', '0.29'],
-//        ['2015/7/18', '0.31'],
-//        ['2015/7/19', '0.29'],
-//        ['2015/7/20', '0.3'],
-//        ['2015/7/21', '0.25'],
-//        ['2015/7/22', '0.23'],
-//        ['2015/7/23', '0.2'],
-//        ['2015/7/24', '0.24'],
-//        ['2015/7/25', '0.26'],
-//        ['2015/7/26', '0.29'],
-//        ['2015/7/27', '0.34'],
-//        ['2015/7/28', '0.39'],
-//        ['2015/7/29', '0.4'],
-//        ['2015/7/30', '0.38'],
-//        ['2015/7/31', '0.36']];
-//    var baseData = [['2015/7/1', '0'],
-//        ['2015/7/2', '0.001'],
-//        ['2015/7/3', '0.007'],
-//        ['2015/7/4', '-0.012'],
-//        ['2015/7/5', '-0.0312'],
-//        ['2015/7/6', '-0.23'],
-//        ['2015/7/7', '-0.12'],
-//        ['2015/7/8', '-0.06'],
-//        ['2015/7/9', '0.1'],
-//        ['2015/7/10', '0.19'],
-//        ['2015/7/11', '0.13'],
-//        ['2015/7/12', '0.1'],
-//        ['2015/7/13', '0.12'],
-//        ['2015/7/14', '0.19'],
-//        ['2015/7/15', '0.21'],
-//        ['2015/7/16', '0.23'],
-//        ['2015/7/17', '0.25'],
-//        ['2015/7/18', '0.11'],
-//        ['2015/7/19', '0.2'],
-//        ['2015/7/20', '0.23'],
-//        ['2015/7/21', '0.28'],
-//        ['2015/7/22', '0.25'],
-//        ['2015/7/23', '0.29'],
-//        ['2015/7/24', '0.3'],
-//        ['2015/7/25', '0.31'],
-//        ['2015/7/26', '0.34'],
-//        ['2015/7/27', '0.37'],
-//        ['2015/7/28', '0.39'],
-//        ['2015/7/29', '0.4'],
-//        ['2015/7/30', '0.41'],
-//        ['2015/7/31', '0.42']];
-//
-//    var startX = '2015/7/10';
-//    var endX = '2015/7/14';
-//    var legend = ['策略', '基准'];
-//    var chart = createTraceBackChart('main', strategyData, baseData, legend, startX, endX);
-
+    //
+    //    var strategyData = [['2015/7/1', '0'],
+    //        ['2015/7/2', '0.005'],
+    //        ['2015/7/3', '0.001'],
+    //        ['2015/7/4', '-0.002'],
+    //        ['2015/7/5', '-0.03'],
+    //        ['2015/7/6', '-0.12'],
+    //        ['2015/7/7', '-0.05'],
+    //        ['2015/7/8', '-0.01'],
+    //        ['2015/7/9', '0.1'],
+    //        ['2015/7/10', '0.15'],
+    //        ['2015/7/11', '-0.03'],
+    //        ['2015/7/12', '-0.09'],
+    //        ['2015/7/13', '-0.12'],
+    //        ['2015/7/14', '-0.15'],
+    //        ['2015/7/15', '0.13'],
+    //        ['2015/7/16', '0.23'],
+    //        ['2015/7/17', '0.29'],
+    //        ['2015/7/18', '0.31'],
+    //        ['2015/7/19', '0.29'],
+    //        ['2015/7/20', '0.3'],
+    //        ['2015/7/21', '0.25'],
+    //        ['2015/7/22', '0.23'],
+    //        ['2015/7/23', '0.2'],
+    //        ['2015/7/24', '0.24'],
+    //        ['2015/7/25', '0.26'],
+    //        ['2015/7/26', '0.29'],
+    //        ['2015/7/27', '0.34'],
+    //        ['2015/7/28', '0.39'],
+    //        ['2015/7/29', '0.4'],
+    //        ['2015/7/30', '0.38'],
+    //        ['2015/7/31', '0.36']];
+    //    var baseData = [['2015/7/1', '0'],
+    //        ['2015/7/2', '0.001'],
+    //        ['2015/7/3', '0.007'],
+    //        ['2015/7/4', '-0.012'],
+    //        ['2015/7/5', '-0.0312'],
+    //        ['2015/7/6', '-0.23'],
+    //        ['2015/7/7', '-0.12'],
+    //        ['2015/7/8', '-0.06'],
+    //        ['2015/7/9', '0.1'],
+    //        ['2015/7/10', '0.19'],
+    //        ['2015/7/11', '0.13'],
+    //        ['2015/7/12', '0.1'],
+    //        ['2015/7/13', '0.12'],
+    //        ['2015/7/14', '0.19'],
+    //        ['2015/7/15', '0.21'],
+    //        ['2015/7/16', '0.23'],
+    //        ['2015/7/17', '0.25'],
+    //        ['2015/7/18', '0.11'],
+    //        ['2015/7/19', '0.2'],
+    //        ['2015/7/20', '0.23'],
+    //        ['2015/7/21', '0.28'],
+    //        ['2015/7/22', '0.25'],
+    //        ['2015/7/23', '0.29'],
+    //        ['2015/7/24', '0.3'],
+    //        ['2015/7/25', '0.31'],
+    //        ['2015/7/26', '0.34'],
+    //        ['2015/7/27', '0.37'],
+    //        ['2015/7/28', '0.39'],
+    //        ['2015/7/29', '0.4'],
+    //        ['2015/7/30', '0.41'],
+    //        ['2015/7/31', '0.42']];
+    //
+    //    var startX = '2015/7/10';
+    //    var endX = '2015/7/14';
+    //    var legend = ['策略', '基准'];
+    //    var chart = createTraceBackChart('main', strategyData, baseData, legend, startX, endX);
 
 
 </script>
