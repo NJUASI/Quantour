@@ -139,9 +139,11 @@ public class StockDataHelperImpl implements StockDataHelper {
     public boolean addStockAll(List<Stock> stocks){
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO stock(code, date, close, high, low,name, open, preClose, volume," +
-                "circulationMarketValue, fluctuation, increaseMargin, totalValue, transactionAmount, turnoverRate)" +
-                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO stock(code, date, close, high, low, name, open, preClose, volume, " +
+                "circulationMarketValue, fluctuation, increaseMargin, totalValue, transactionAmount, turnoverRate," +
+                "afterAdjClose, afterAdjHigh, afterAdjLow, afterAdjOpen, frontAdjClose, frontAdjHigh, frontAdjLow, " +
+                "frontAdjOpen, preAfterAdjClose, preFrontAdjClose)" +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         boolean result = true;
 
         try {
@@ -163,6 +165,16 @@ public class StockDataHelperImpl implements StockDataHelper {
                 preparedStatement.setString(13,stock.getTotalValue());
                 preparedStatement.setString(14,stock.getTransactionAmount());
                 preparedStatement.setDouble(15,stock.getTurnoverRate());
+                preparedStatement.setDouble(16,stock.getAfterAdjClose());
+                preparedStatement.setDouble(17,stock.getAfterAdjHigh());
+                preparedStatement.setDouble(18,stock.getAfterAdjLow());
+                preparedStatement.setDouble(19,stock.getAfterAdjOpen());
+                preparedStatement.setDouble(20,stock.getFrontAdjClose());
+                preparedStatement.setDouble(21,stock.getFrontAdjHigh());
+                preparedStatement.setDouble(22,stock.getFrontAdjLow());
+                preparedStatement.setDouble(23,stock.getFrontAdjOpen());
+                preparedStatement.setDouble(24,stock.getPreAfterAdjClose());
+                preparedStatement.setDouble(25,stock.getPreFrontAdjClose());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
@@ -211,6 +223,11 @@ public class StockDataHelperImpl implements StockDataHelper {
     public List<LocalDate> getFirstAndLastDay(String stockCode) {
 
         List<LocalDate> dates = getAllDateByCode(stockCode);
+
+        if(dates==null||dates.isEmpty()){
+            return null;
+        }
+
         List<LocalDate> result = new ArrayList<>();
         result.add(dates.get(0));
         result.add(dates.get(dates.size()-1));
@@ -230,5 +247,4 @@ public class StockDataHelperImpl implements StockDataHelper {
 
         return dates;
     }
-
 }
