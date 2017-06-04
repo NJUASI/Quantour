@@ -12,6 +12,16 @@ import java.time.LocalDate;
 public class StrategyStock {
 
     /**
+     * 名称
+     */
+    public String stockName;
+
+    /**
+     * 代号
+     */
+    public String stockCode;
+
+    /**
      * 日期(月/日/年)
      */
     public LocalDate date;

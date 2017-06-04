@@ -60,8 +60,9 @@ public abstract class AllFormateStrategy {
             if(!dates.contains(thisEnd)){
                 thisEnd = thisEnd.minusDays(1);
             }
+            //中间没有数据
             if(thisStart.isAfter(thisEnd)){
-                break;
+                return null;
             }
         }
         int startIndex = dates.indexOf(thisStart);

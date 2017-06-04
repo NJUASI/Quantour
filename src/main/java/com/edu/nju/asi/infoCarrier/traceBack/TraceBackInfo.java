@@ -38,16 +38,6 @@ public class TraceBackInfo {
     public ReturnPeriod absoluteReturnPeriod;
 
     /**
-     * 给定形成期的超额收益率和策略胜率的分布信息
-     */
-    public List<ExcessAndWinRateDist> certainFormates;
-
-    /**
-     * 给定持有期的超额收益率和策略胜率的分布信息
-     */
-    public List<ExcessAndWinRateDist> certainHoldings;
-
-    /**
      * 保存最大回撤率的数据
      */
     public MaxTraceBack maxTraceBack;

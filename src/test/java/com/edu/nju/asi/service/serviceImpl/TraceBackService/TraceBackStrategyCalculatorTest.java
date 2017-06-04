@@ -39,7 +39,7 @@ public class TraceBackStrategyCalculatorTest {
         List<BlockType> blockTypes = new LinkedList<>();
         blockTypes.add(BlockType.ZB);
         List<FilterCondition> filterConditions = new ArrayList<>();
-        filterConditions.add(new FilterCondition(IndicatorType.INCEREASE_AMOUNT, ComparatorType.RANK_MAX, 5, 1, 5));
+        filterConditions.add(new FilterCondition(IndicatorType.MOMENTUM, ComparatorType.RANK_MAX, 5, 1, 5));
 
         traceBackCriteria = new TraceBackCriteria(LocalDate.of(2017,4,1), LocalDate.of(2017,5,1), 5, 10, new StockPoolCriteria(StType.INCLUDE, blockTypes),
                 "沪深300", filterConditions);
