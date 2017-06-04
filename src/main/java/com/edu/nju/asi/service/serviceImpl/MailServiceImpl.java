@@ -16,7 +16,7 @@ import java.util.Properties;
 public class MailServiceImpl implements MailService {
 
     // 系统发件人的账户密码
-    private final String senderName = "fdfjj0407";
+    private final String senderName = "asiquantour";
     private final String password = "qazxswedc123456";
 
     public MailServiceImpl() {
@@ -57,9 +57,18 @@ public class MailServiceImpl implements MailService {
         else action = "订阅";
 
         Message msg = new MimeMessage(session);
-        msg.setSubject("asi");
+        msg.setSubject("asiquantour_" + mailInfo.strategyID);
 
         StringBuffer mailContent = new StringBuffer();
+
+//        mailContent.append("<p>亲爱的asiquantour用户你好！</p><br>");
+//        mailContent.append("<p>你" + action + "的策略 <strong><em><u>" + mailInfo.strategyID + "</u></em></strong> 已更" + mailInfo.type.getRepre()
+//                + "！详情请点击查看<a href=\"" + mailInfo.url + "\">" + mailInfo.strategyID + "</a>。</p><br>");
+//        mailContent.append("<p>asiquantour感谢您一直以来的支持，谢谢！</p>");
+//        msg.setContent(mailContent.toString(), "text/html;charset=UTF-8");
+
+
+
         mailContent.append("亲爱的asiquantour用户你好！\n\n");
         mailContent.append("您" + action + "的策略" + mailInfo.strategyID + "已" + mailInfo.type.getRepre() + "！详情请查看" + mailInfo.url + "\n\n");
         mailContent.append("asiquantour感谢您一直以来的支持，谢谢！");
