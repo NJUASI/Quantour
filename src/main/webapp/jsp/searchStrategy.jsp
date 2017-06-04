@@ -64,7 +64,6 @@
                 <li><a href="#">帮助</a></li>
                 <li><a href="/user/welcome">用户管理</a></li>
 
-                </c:choose>
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
@@ -79,7 +78,7 @@
                 <span class="glyphicon glyphicon-heart"></span>
                 <span class="txt">收藏</span>
             </button>
-            <button class="btn btn-primary btn-sm col-md-1 col-md-offset-1" style="margin-top: 20px">
+            <button id="modifyBt" class="btn btn-primary btn-sm col-md-1 col-md-offset-1" style="margin-top: 20px">
                 <span class="txt">编辑</span>
             </button>
         </div>
@@ -227,6 +226,137 @@
 </div>
 
 
+<div class="modal fade" id="modifyPanel" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改策略</h4>
+            </div>
+            <div class="modal-body" style="margin-top:0px ">
+
+                <div class="row">
+                    <div class="form-group col-md-offset-1 col-md-4" style="margin-bottom:0px">
+                        <label class="col-md-4 control-label" style="margin-top:10px">策略名称</label>
+                        <div class="col-md-7">
+                            <h4>中小板股指</h4>
+                        </div>
+                    </div>
+
+                        <div class="form-group col-md-5" style="margin-top: 5px">
+                            <label for="baseStockEve">收益基准：</label>
+
+                            <select id="baseStockEve" name="baseStockEve" class=" col-md-5  selectpicker show-tick form-inline">
+                                <option value="沪深300" selected>沪深300</option>
+                                <option value="创业板指">创业板指</option>
+                                <option value="中小板指">中小板指</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                <div style="width:90%;margin:0 auto;2px;margin-bottom: 30px;border-top:1px solid #ddd"></div>
+                <form>
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col-md-offset-1 col-md-11">
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for="blockTypes">板块：</label>
+                                    <select id="blockTypes" name="blockTypes" class="col-md-9 selectpicker show-tick form-inline" style="padding-left: 0px"
+                                            multiple data-live-search="false" placeholder="请选择板块">
+                                        <option value="ZB" selected>主板</option>
+                                        <option value="ZXB" selected>中小板</option>
+                                        <option value="CYB" selected>创业板</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>ST：</label>
+                                    <select id="stType"  class="col-md-9 col-md-offset-1 selectpicker show-tick form-inline">
+                                            <option value="INCLUDE" selected>包含ST</option>
+                                            <option value="EXCLUDE">排除ST</option>
+                                            <option value="ONLY">仅有ST</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group row col-md-5 ">
+                                    <label class="col-md-5" style="margin-top: 7px">开始日期：</label>
+                                    <div class='col-md-7 input-group date'   id='datetimeStart'>
+                                        <input id="startDate" type='text' class="form-control form_datetime"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-5 ">
+                                    <label class="col-md-5" style="margin-top: 7px">结束日期：</label>
+                                    <div class=' col-md-7 input-group date' id='datetimeEnd'>
+                                        <input id="endDate" type='text' class="form-control form_datetime"/>
+                                        <span class="input-group-addon">
+                                              <span class="glyphicon glyphicon-calendar"></span>
+                                         </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                            <div class="col-md-2">
+                                <label class="control-label">筛选条件：</label>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    ss
+                                </div>
+                                <div class="row">
+                                    ss
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="margin-top: 15px; margin-bottom: 15px">
+                            <div class="col-md-2">
+                                <label class="control-label">策略描述：</label>
+                            </div>
+                            <div class="col-md-10">
+                                <textarea rows="4" style="width: 90%; margin-left: -20px">不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的</textarea>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="row" style="margin-right:0px">
+                    <div class=" col-md-offset-8 col-md-1" style="padding-right: 0px">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="radios" id="radios1" value="false" checked>
+                                私密
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1" style="padding-left: 0px">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="radios" id="radios2" value="false">
+                                公开
+                            </label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <footer>
 
 </footer>
@@ -254,6 +384,32 @@
     var paramter = ["我去", 2, 3, 4, 5];
     var data1 = [[2.6, 5.9, 9.0, 26.4, 28.7]];
     createRadarChart('candlestick', data1, ['1'], paramter);
+    $(function () {
+        $("#modifyBt").click(function () {
+            $("#modifyPanel").modal("toggle");
+        });
+    });
+
+    $("#datetimeStart").datetimepicker({
+        format: 'yyyy-mm-dd',
+        minView: 'month',
+        language: 'zh-CN',
+        autoclose: true,
+        startDate: new Date(2005 - 04 - 03),
+        endDate: new Date()
+    }).on("click", function () {
+        $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())
+    });
+    $("#datetimeEnd").datetimepicker({
+        format: 'yyyy-mm-dd',
+        minView: 'month',
+        language: 'zh-CN',
+        autoclose: true,
+        endDate: new Date()
+    }).on("click", function () {
+        $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
+    });
+
 </script>
 
 </body>
