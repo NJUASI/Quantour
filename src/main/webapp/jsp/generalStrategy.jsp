@@ -77,7 +77,6 @@
                 <li><a href="#">帮助</a></li>
                 <li><a href="/user/welcome">用户管理</a></li>
 
-                </c:choose>
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
