@@ -201,13 +201,21 @@
             <version>3.6.1</version>
         </dependency>
 
+        <!-- mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
+
         <!--
        maven远程库并没有下列依赖，需要先本地安装，到目录(/lib)下用maven安装到本地仓库中
        $ mvn install:install-file -DgroupId=com.github.stuxuhai -DartifactId=jpinyin -Dversion=1.1.8 -Dpackaging=jar -Dfile=jpinyin-1.1.8.jar
        $ mvn install:install-file -DgroupId=org.jb2011 -DartifactId=beautyeye_lnf -Dversion=4.1 -Dpackaging=jar -Dfile=beautyeye_lnf-4.1.jar
        -->
 
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.github.stuxuhai/jpinyin &ndash;&gt;-->
+        <!-- https://mvnrepository.com/artifact/com.github.stuxuhai/jpinyin -->
         <dependency>
             <groupId>com.github.stuxuhai</groupId>
             <artifactId>jpinyin</artifactId>

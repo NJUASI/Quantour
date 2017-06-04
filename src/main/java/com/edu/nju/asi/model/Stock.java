@@ -86,42 +86,52 @@ public class Stock implements Serializable {
 
     //前复权开盘指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double frontAdjOpen;
 
     //前复权收盘指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double frontAdjClose;
 
     //前复权当日最高指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double frontAdjHigh;
 
     //前复权当日最低指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double frontAdjLow;
 
     //昨日前复权收盘指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double preFrontAdjClose;
 
     //后复权开盘指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double afterAdjOpen;
 
     //后复权收盘指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double afterAdjClose;
 
     //后复权当日最高指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double afterAdjHigh;
 
     //后复权当日最低指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double afterAdjLow;
 
     //昨日后复权收盘指数
     @Basic
+    @Column(columnDefinition = "double default 0")
     private double preAfterAdjClose;
 
     public Stock() {
@@ -193,6 +203,17 @@ public class Stock implements Serializable {
         this.turnoverRate = normalStock.getTurnOverRate();
         this.totalValue = decimalFormat.format(normalStock.getMarketCap());
         this.circulationMarketValue = decimalFormat.format(normalStock.getMarketEquity());
+        this.afterAdjClose = 0;
+        this.afterAdjHigh = 0;
+        this.afterAdjLow = 0;
+        this.afterAdjOpen = 0;
+        this.frontAdjClose = 0;
+        this.frontAdjHigh = 0;
+        this.frontAdjLow = 0;
+        this.frontAdjOpen = 0;
+        this.preAfterAdjClose = 0;
+        this.preFrontAdjClose = 0;
+
     }
 
     public StockID getStockID() {
