@@ -7,6 +7,7 @@ import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.service.StrategyService;
 import com.edu.nju.asi.service.UserService;
+import com.edu.nju.asi.utilities.exceptions.PasswordInputException;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -95,9 +96,27 @@ public class UserController {
     /**
      * 修改用户信息
      */
-    @PostMapping
-    public ModelAndView modify() {
-        return null;
+    @PostMapping("modify")
+    public ModelAndView modify(@RequestParam("user") User modifiedUser, HttpServletRequest request) {
+        // 限制进入
+        HttpSession session = request.getSession(false);
+        User thisUser = (User) request.getSession().getAttribute("user");
+        if (session == null || thisUser == null) {
+            System.out.println("未登录");
+            return new ModelAndView("index");
+        }
+
+        boolean modifyResult = false;
+        try {
+            modifyResult = userService.modifyUser(modifiedUser);
+        } catch (PasswordInputException e) {
+            e.printStackTrace();
+            return new ModelAndView("errorPage");
+        }
+
+        // 修改成功跳转至成功界面
+        if (modifyResult) return new ModelAndView("");
+        else return new ModelAndView("errorPage");
     }
 
     /**
