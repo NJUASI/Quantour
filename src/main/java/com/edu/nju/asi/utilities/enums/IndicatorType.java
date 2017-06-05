@@ -14,7 +14,6 @@ public enum IndicatorType {
     VOLUME("成交量"),
     TRANSACTION_AMOUNT("成交额"),
     PRE_CLOSE("前日收盘价"),
-    TURNOVER_RATE("换手率"),
     TOTAL_VALUE("总市值"),
     CIRCULATION_MARKET_VALUE("流通市值"),
     AFTER_ADJ_OPEN("后复权开盘价"),
@@ -24,12 +23,21 @@ public enum IndicatorType {
 
 
     INCREASE_MARGIN("涨跌幅"),
-    FLUCTION("涨跌额"),
+    TURNOVER_RATE("换手率"),
+
+
+    GENERAL_CAPITAL("总股本"),
+    NEGOTIABLE_CAPITAL("流通股本"),
+
+    SWING_RATE("振幅"),
 
     DAILY_AVE_PRICE("日均成交价"),
 
     MOMENTUM("动量"),
-    BIAS("乖离率");
+
+
+    BIAS("乖离率"),
+    RETURN_VOLATILITY("收益波动率");
 
     private String repre;
 
