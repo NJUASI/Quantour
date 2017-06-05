@@ -118,11 +118,15 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     private void setUp(List<String> traceBackStockPool) throws IOException {
 
+        System.out.println("enter");
+
         stockData = new HashMap<>();
         for (String thisStockCode : traceBackStockPool) {
             List<Stock> stocks = stockDao.getStockData(thisStockCode);
             stockData.put(thisStockCode, convertStocks(stocks));
         }
+
+        System.out.println("out");
 
     }
 
@@ -144,43 +148,36 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         double investment = 1000;
 
+        //初始化持仓详情周期的起始日期和结束日期
+        int holdingPeriodStart = 0;
+        int holdingPeriodEnd = 0;
+
         int holdingSerial = 1;
 
-        //保存之前一个周期的最后一天的基准累计收益率, 初始值为1
-        double curBaseCumulativeReturn = 1;
-        double preBaseCumulativeReturn = 1;
-        //最后一天的策略累计收益率, 初始值为1
-        double curStrategyCumulativeReturn = 1;
-        double preStrategyCumulativeReturn = 1;
-
-        for (int i = 0; i < baseCumulativeReturn.size(); i += holdingPeriod) {
-            double lastBaseRate;
-            double lastStrategyRate;
-            int periodIndex = 0;
-            if ((i + holdingPeriod - 1) < baseCumulativeReturn.size()) {
-                //满持仓周期数
-                periodIndex = i + holdingPeriod -1;
-            } else {
-                //不满持仓周期数
-                periodIndex = baseCumulativeReturn.size() - 1;
+        //每个持仓周期包含进起始和末尾的调仓日
+        for (int i = 0; i < baseCumulativeReturn.size(); i += (holdingPeriod+1)) {
+            holdingPeriodStart = i;
+            holdingPeriodEnd = i + holdingPeriod + 1;
+            if(holdingPeriodEnd > baseCumulativeReturn.size()-1){
+                holdingPeriodEnd = baseCumulativeReturn.size()-1;
             }
-            lastBaseRate = baseCumulativeReturn.get(periodIndex).cumulativeReturn;
-            lastStrategyRate = strategyCumulativeReturn.get(periodIndex).cumulativeReturn;
 
-            // 当前持仓期的基准收益率
-            curBaseCumulativeReturn = 1+lastBaseRate;
-            curStrategyCumulativeReturn = 1+lastStrategyRate;
-            double baseReturn = curBaseCumulativeReturn / preBaseCumulativeReturn - 1;
-            double strategyReturn = curStrategyCumulativeReturn / preStrategyCumulativeReturn - 1;
+            double startBaseReturn = baseCumulativeReturn.get(holdingPeriodStart).cumulativeReturn;
+            double startStrategyReturn = strategyCumulativeReturn.get(holdingPeriodStart).cumulativeReturn;
+            double endBaseReturn = baseCumulativeReturn.get(holdingPeriodEnd).cumulativeReturn;
+            double endStrategyReturn = strategyCumulativeReturn.get(holdingPeriodEnd).cumulativeReturn;
+
+
+            double periodBaseReturn = (endBaseReturn - startBaseReturn) / (1 + startBaseReturn);
+            double periodStrategyReturn = (endStrategyReturn - startStrategyReturn) / (1 + startStrategyReturn);
+
             // 超额收益率
-            double excessReturn = strategyReturn - baseReturn;
+            double excessReturn = periodStrategyReturn - periodBaseReturn;
 
-            preBaseCumulativeReturn = curBaseCumulativeReturn;
-            preStrategyCumulativeReturn = curStrategyCumulativeReturn;
+            holdingDetails.add(new HoldingDetail(holdingSerial, baseCumulativeReturn.get(holdingPeriodStart).currentDate, baseCumulativeReturn.get(holdingPeriodEnd).currentDate,
+                    periodStrategyReturn, periodBaseReturn, excessReturn, investment * (1 + endStrategyReturn)));
+
             holdingSerial++;
-
-            holdingDetails.add(new HoldingDetail(holdingSerial, baseCumulativeReturn.get(i).currentDate, baseCumulativeReturn.get(periodIndex).currentDate,
-                    strategyReturn, baseReturn, excessReturn, investment * (1 + lastStrategyRate)));
         }
         return holdingDetails;
     }
