@@ -128,7 +128,7 @@
 
                     </div>
 
-                    <div class="col-lg-2 col-lg-offset-1 inputBlock">
+                    <div class="col-lg-2 inputBlock">
 
                         <label>ST：</label>
                         <div style="display: inline">
@@ -139,90 +139,35 @@
                             </select>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <div class="row">
-        <div class="panel panel-default col-md-10 col-md-offset-1 userBlock">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    选择策略
-                </h4>
-            </div>
-            <div class="panel-body inputBlock">
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-1">
-                        <div class="row">
-                            <div class="col-md-5"><label>形成指标</label></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2" style="padding-right: 0px">形成期</div>
-                            <div class="col-md-3" style="padding-right: 0px">
-                                <select id="formativePeriod" name="" class="selectpicker show-tick form-control">
-                                    <option value="5" selected>5</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="60">60</option>
-                                </select>
-                            </div>
-                            <div class="col-md-1" style="margin-top: 7px">日</div>
-                            <div class="col-md-4">
-                                <select id="formativeStrategy" name="" class="selectpicker show-tick form-control">
-                                    <option value="INCEREASE_AMOUNT" selected>涨幅</option>
-                                    <option value="BIAS">乖离率</option>
-                                    <option value="VOLUME">成交量</option>
-
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-5"><label>筛选条件</label></div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-4">
-                                <select id="pickStrategy" name="" class="selectpicker show-tick form-control">
-                                    <option value="RANK_MAX_PERCENT" selected>排名最大</option>
-                                    <option value="RANK_MIN_PERCENT">排名最小</option>
-                                    <option value="RANK_MAX">排名%最大</option>
-                                    <option value="RANK_MIN">排名%最小</option>
-                                </select>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <input id="rank" type="text" class="form-control col-md-1"
-                                               name="rank" placeholder="请输入排名条件">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label for="rank" class="col-md-2">只/%</label>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2  inputBlock">
                         <div class="row">
                             <div class="col-md-5"><label>调仓周期</label></div>
                         </div>
                         <div class="row">
 
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <input id="holdingPeriod" type="text" class="form-control col-md-1"
                                                name="holdingPeriod" placeholder="请输入天数">
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="holdingPeriod" class="col-md-2">天</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2  inputBlock">
+                        <div class="row">
+                            <div class="col-md-6"><label>最大持仓数</label></div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input id="maxHolding" type="text" class="form-control col-md-1"
+                                               name="maxHolding" placeholder="请输入股票数">
                                     </div>
                                 </div>
 
@@ -231,11 +176,11 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
+    </div>
+
 
     <div class="row">
         <div class="panel panel-default col-md-10 col-md-offset-1 userBlock">
@@ -247,13 +192,15 @@
             <div class="panel-body">
                 <div class="row" style="margin-top: 20px">
                     <!--左边选择栏  -->
-                    <div class="col-md-5 col-xs-12" >
+                    <div class="col-md-4 col-md-offset-1 col-xs-12">
                         <label class="">
                             选股指标:
                         </label>
 
-                        <select id="searchQuota" class="selectpicker col-md-6"  onchange=quotaChange(); data-live-search="true" data-size="10" data-live-search-placeholder="Search" data-actions-box="true"title="搜索指标">
-                            <option><span  class="quota">N日平均成交额</span></option>
+                        <select id="searchQuota" class="selectpicker col-md-6" onchange=quotaChange();
+                                data-live-search="true" data-size="10" data-live-search-placeholder="Search"
+                                data-actions-box="true" title="搜索指标">
+                            <option><span class="quota">N日平均成交额</span></option>
                             <option class="quota">N日平均成交量</option>
                             <option class="quota">N日乖离率</option>
                             <option class="quota">N日波动率</option>
@@ -286,7 +233,7 @@
                         </select>
 
                         <!-- 选项卡组件（菜单项nav-tabs）-->
-                        <ul id="myTab" class="nav nav-tabs col-md-12 col-xs-12" style="margin-top: 20px" role="tablist">
+                        <ul id="myTab1" class="nav nav-tabs col-md-12 col-xs-12" style="margin-top: 20px" role="tablist">
                             <li class="active"><a href="#bulletin" role="tab" data-toggle="tab">行情</a></li>
                             <li><a href="#rule" role="tab" data-toggle="tab">技术指标</a></li>
                             <li><a href="#forum" role="tab" data-toggle="tab">股指</a></li>
@@ -297,26 +244,27 @@
                             <div class="tab-pane fade in active" id="bulletin">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"  style="border: 0px solid white" data-toggle="dropdown">股票价格
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                style="border: 0px solid white" data-toggle="dropdown">股票价格
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                             <li role="presentation" class="dropdown-header">当日价格</li>
                                             <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1" >开盘价</a>
+                                                <a role="menuitem" class="quota" tabindex="-1">开盘价</a>
                                             </li>
                                             <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1" >收盘价</a>
+                                                <a role="menuitem" class="quota" tabindex="-1">收盘价</a>
                                             </li>
                                             <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1"  >最高价</a>
+                                                <a role="menuitem" class="quota" tabindex="-1">最高价</a>
                                             </li>
                                             <li role="presentation">
                                                 <a role="menuitem" class="quota" tabindex="-1">最低价</a>
                                             </li>
                                             <li role="presentation" class="dropdown-header">其他价格</li>
                                             <li role="presentation">
-                                                <a role="menuitem" class="quota"  tabindex="-1">前日收盘价</a>
+                                                <a role="menuitem" class="quota" tabindex="-1">前日收盘价</a>
                                             </li>
                                             <li role="presentation">
                                                 <a role="menuitem" class="quota" tabindex="-1">日均成交价</a>
@@ -330,7 +278,8 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"  style="border: 0px solid white" data-toggle="dropdown">成交额
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                style="border: 0px solid white" data-toggle="dropdown">成交额
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
@@ -352,7 +301,8 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"  style="border: 0px solid white" data-toggle="dropdown">成交量
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                style="border: 0px solid white" data-toggle="dropdown">成交量
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
@@ -374,7 +324,8 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"  style="border: 0px solid white" data-toggle="dropdown">股价涨幅
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                style="border: 0px solid white" data-toggle="dropdown">股价涨幅
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
@@ -396,7 +347,8 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"  style="border: 0px solid white" data-toggle="dropdown">累计换手率
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                style="border: 0px solid white" data-toggle="dropdown">累计换手率
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
@@ -418,7 +370,8 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"  style="border: 0px solid white" data-toggle="dropdown">股本和市值
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                style="border: 0px solid white" data-toggle="dropdown">股本和市值
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
@@ -437,7 +390,8 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default quota"  style="border: 0px solid white" >股价涨幅
+                                        <button type="button" class="btn btn-default quota"
+                                                style="border: 0px solid white">股价涨幅
                                         </button>
 
                                     </div>
@@ -446,7 +400,8 @@
                             <div class="tab-pane fade" id="rule">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"  style="border: 0px solid white" data-toggle="dropdown">乖离率
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                style="border: 0px solid white" data-toggle="dropdown">乖离率
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
@@ -468,7 +423,8 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"  style="border: 0px solid white" data-toggle="dropdown">波动率
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                style="border: 0px solid white" data-toggle="dropdown">波动率
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
@@ -495,27 +451,32 @@
                             </div>
                             <div class="tab-pane fade" id="forum">
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota"  style="border: 0px solid white" >市盈率
+                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                        市盈率
                                     </button>
 
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota"  style="border: 0px solid white" >市净率
+                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                        市净率
                                     </button>
 
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota"  style="border: 0px solid white" >市销率
+                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                        市销率
                                     </button>
 
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota"  style="border: 0px solid white" >静态市盈率
+                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                        静态市盈率
                                     </button>
 
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota"  style="border: 0px solid white" >动态市盈率
+                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                        动态市盈率
                                     </button>
 
                                 </div>
@@ -527,7 +488,8 @@
 
 
                     <!--右边数据框-->
-                    <div class="col-md-7 col-xs-12 pre-scrollable" style="height:300px;border-left: 1px solid slategray;max-height: 300px;">
+                    <div class="col-md-6 col-xs-12 pre-scrollable"
+                         style="height:300px;border-left: 1px solid slategray;max-height: 300px;">
                         <label class="">
                             选股条件:
                         </label>
@@ -844,8 +806,14 @@
                                 <div class="col-md-4">
                                     <label class="control-label">板块：</label><span>主板，创业板，中小板</span>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="control-label">ST：</label><span>主板，创业板，中小板</span>
+                                <div class="col-md-2">
+                                    <label class="control-label">ST：</label><span>仅为ST</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">调仓周期：</label><span>10</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">最大持股：</label><span>50</span>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 15px">
@@ -859,427 +827,436 @@
                                     <label class="control-label">收益基准：</label><span>沪深300</span>
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: 15px; margin-bottom: 15px"
-                            ">
-                            <div class="col-md-2">
-                                <label class="control-label">筛选条件：</label>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="row">
-                                    ss
+                            <div class="row" style="margin-top: 15px; margin-bottom: 15px">
+                                <div class="col-md-2">
+                                    <label class="control-label">筛选条件：</label>
                                 </div>
-                                <div class="row">
-                                    ss
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 15px; margin-bottom: 15px">
-                            <div class="col-md-2">
-                                <label class="control-label">策略描述：</label>
-                            </div>
-                            <div class="col-md-10">
-                                <textarea rows="4" style="width: 90%; margin-left: -20px"></textarea>
-                            </div>
-                        </div>
+                                <div class="col-md-8" >
+                                    <div class="row "style="border: 1px solid darkslategrey">
 
+                                        <div class=" col-md-12">
+                                            <strong class="col-md-4">指标</strong><strong class="col-md-3">比较符</strong>
+                                            <strong class="col-md-2">值</strong> <strong class="col-md-2">权重</strong>
+                                        </div>
+                                        <div class=" col-md-12">
+                                            <span class="col-md-4">10日平均成交量</span><span class="col-md-3">排名最大</span>
+                                            <span class="col-md-2">20</span> <span class="col-md-2">1</span>
+                                        </div>
+                                        <div class=" col-md-12">
+                                            <span class="col-md-4">10日平均成交量</span><span class="col-md-3">排名最大</span>
+                                            <span class="col-md-2">20</span> <span class="col-md-2">1</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 15px; margin-bottom: 15px">
+                                <div class="col-md-2">
+                                    <label class="control-label">策略描述：</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <textarea rows="4" style="width: 90%; margin-left: -20px"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class=" col-md-offset-8 col-md-1" style="padding-right: 0px">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="radios" id="radios1" value="false" checked>
+                                    私密
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="padding-left: 0px">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="radios" id="radios2" value="false">
+                                    公开
+                                </label>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary">创建策略</button>
                     </div>
                 </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class=" col-md-offset-8 col-md-1" style="padding-right: 0px">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="radios" id="radios1" value="false" checked>
-                                私密
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1" style="padding-left: 0px">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="radios" id="radios2" value="false">
-                                公开
-                            </label>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">创建策略</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
 
-<div id="loader-wrapper">
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-</div>
+    <footer>
 
-<footer>
+    </footer>
 
-</footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/jquery.validate.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/traceBack.js"></script>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="../js/jquery-3.2.1.min.js"></script>
-<script src="../js/jquery.validate.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../js/bootstrap.js"></script>
-<script src="../js/traceBack.js"></script>
+    <script src="../js/echarts.min.js"></script>
+    <script src="../js/chart.js"></script>
+    <script src="../js/startLoaded.js"></script>
+    <script src="../js/logIn.js"></script>
 
-<script src="../js/echarts.min.js"></script>
-<script src="../js/chart.js"></script>
-<script src="../js/startLoaded.js"></script>
-<script src="../js/logIn.js"></script>
-
-<script src="../js/bootstrap-select.js"></script>
-<script src="../js/bootstrap-datetimepicker.js"></script>
-<script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
-<script type="text/javascript">
+    <script src="../js/bootstrap-select.js"></script>
+    <script src="../js/bootstrap-datetimepicker.js"></script>
+    <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript">
 
 
-    $(function () {
-        $("#createStrategy").click(function () {
-            $("#mymodal").modal("toggle");
-        });
-    });
-
-    var today = new Date();
-    var yesterday = new Date();
-    yesterday.setTime(today.getTime() - 24 * 60 * 60 * 1000);
-
-    var endTime = today.getFullYear() + "-";
-    var startTime = yesterday.getFullYear() + "-";
-
-    var month = today.getMonth() + 1;
-    var dayOfMonth = today.getDate();
-    if (month < 10) {
-        endTime += "0" + month;
-    } else {
-        endTime += month;
-    }
-    if (dayOfMonth < 10) {
-        endTime += "-0" + dayOfMonth;
-    } else {
-        endTime += "-" + dayOfMonth;
-    }
-
-    month = yesterday.getMonth() + 1;
-    dayOfMonth = yesterday.getDate();
-    if (month < 10) {
-        startTime += "0" + month;
-    } else {
-        startTime += month;
-    }
-    if (dayOfMonth < 10) {
-        startTime += "-0" + dayOfMonth;
-    } else {
-        startTime += "-" + dayOfMonth;
-    }
-
-    $("#datetimeStart>input").attr('value', startTime);
-    $("#datetimeEnd>input").attr('value', endTime);
-
-
-    $("#datetimeStart").datetimepicker({
-        format: 'yyyy-mm-dd',
-        minView: 'month',
-        language: 'zh-CN',
-        autoclose: true,
-        startDate: new Date(2005 - 04 - 03),
-        endDate: new Date()
-    }).on("click", function () {
-        $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())
-    });
-    $("#datetimeEnd").datetimepicker({
-        format: 'yyyy-mm-dd',
-        minView: 'month',
-        language: 'zh-CN',
-        autoclose: true,
-        endDate: new Date()
-    }).on("click", function () {
-        $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
-    });
-
-    $(document).ready(function () {
-        $("#modifyBT").click(function () {
-            $("#passwordField").toggle("slow");
-            $("#passwordModify").toggle("slow");
-        });
-
-        $("#stocks").click(function () {
-            $("body").removeClass("loaded");
-            $.ajax({
-                type: "post",
-                async: true,
-                url: "/stocks",
-
-                success: function (result) {
-                    var array = result.split(";");
-
-                    if (array[0] == "1") {
-                        window.location.href = "/stocks";
-                    } else if (array[0] == "-1") {
-                        // 提示错误信息
-                        alert(array[1]);
-                    } else {
-                        alert("未知错误类型orz");
-                    }
-                },
-                error: function (result) {
-                    alert("错误" + result);
-                }
+        $(function () {
+            $("#createStrategy").click(function () {
+                $("#mymodal").modal("toggle");
             });
         });
 
-    });
+        var today = new Date();
+        var yesterday = new Date();
+        yesterday.setTime(today.getTime() - 24 * 60 * 60 * 1000);
 
+        var endTime = today.getFullYear() + "-";
+        var startTime = yesterday.getFullYear() + "-";
 
-    function modify() {
-        $("#passwordField").toggle("slow");
-        $("#passwordModify").toggle("slow");
-    }
-
-    $("#modifyForm").validate({
-        rules: {
-            password1: {
-                required: true,
-                minlength: 5,
-                maxlength: 15
-            },
-            password2: {
-                equalTo: "#password1"
-            },
-        },
-        messages: {
-
-            password1: {
-                required: "密码不能为空",
-                minlength: "密码不能少于5位",
-                maxlength: "密码不能高于15位"
-            },
-            password2: {
-                equalTo: "两次密码不一样"
-            }
+        var month = today.getMonth() + 1;
+        var dayOfMonth = today.getDate();
+        if (month < 10) {
+            endTime += "0" + month;
+        } else {
+            endTime += month;
         }
-    });
-    $("#normalForm").validate({
-        rules: {
-            phone: {
-                minlength: 11,
-                maxlength: 11
-            },
-            email: {
-                email: true
-            },
-        },
-        messages: {
-
-            phone: {
-                minlength: "手机错误",
-                maxlength: "手机错误"
-
-            },
-            email: {
-                email: "邮箱错误"
-            }
-        }
-    });
-
-    //
-    //    var strategyData = [['2015/7/1', '0'],
-    //        ['2015/7/2', '0.005'],
-    //        ['2015/7/3', '0.001'],
-    //        ['2015/7/4', '-0.002'],
-    //        ['2015/7/5', '-0.03'],
-    //        ['2015/7/6', '-0.12'],
-    //        ['2015/7/7', '-0.05'],
-    //        ['2015/7/8', '-0.01'],
-    //        ['2015/7/9', '0.1'],
-    //        ['2015/7/10', '0.15'],
-    //        ['2015/7/11', '-0.03'],
-    //        ['2015/7/12', '-0.09'],
-    //        ['2015/7/13', '-0.12'],
-    //        ['2015/7/14', '-0.15'],
-    //        ['2015/7/15', '0.13'],
-    //        ['2015/7/16', '0.23'],
-    //        ['2015/7/17', '0.29'],
-    //        ['2015/7/18', '0.31'],
-    //        ['2015/7/19', '0.29'],
-    //        ['2015/7/20', '0.3'],
-    //        ['2015/7/21', '0.25'],
-    //        ['2015/7/22', '0.23'],
-    //        ['2015/7/23', '0.2'],
-    //        ['2015/7/24', '0.24'],
-    //        ['2015/7/25', '0.26'],
-    //        ['2015/7/26', '0.29'],
-    //        ['2015/7/27', '0.34'],
-    //        ['2015/7/28', '0.39'],
-    //        ['2015/7/29', '0.4'],
-    //        ['2015/7/30', '0.38'],
-    //        ['2015/7/31', '0.36']];
-    //    var baseData = [['2015/7/1', '0'],
-    //        ['2015/7/2', '0.001'],
-    //        ['2015/7/3', '0.007'],
-    //        ['2015/7/4', '-0.012'],
-    //        ['2015/7/5', '-0.0312'],
-    //        ['2015/7/6', '-0.23'],
-    //        ['2015/7/7', '-0.12'],
-    //        ['2015/7/8', '-0.06'],
-    //        ['2015/7/9', '0.1'],
-    //        ['2015/7/10', '0.19'],
-    //        ['2015/7/11', '0.13'],
-    //        ['2015/7/12', '0.1'],
-    //        ['2015/7/13', '0.12'],
-    //        ['2015/7/14', '0.19'],
-    //        ['2015/7/15', '0.21'],
-    //        ['2015/7/16', '0.23'],
-    //        ['2015/7/17', '0.25'],
-    //        ['2015/7/18', '0.11'],
-    //        ['2015/7/19', '0.2'],
-    //        ['2015/7/20', '0.23'],
-    //        ['2015/7/21', '0.28'],
-    //        ['2015/7/22', '0.25'],
-    //        ['2015/7/23', '0.29'],
-    //        ['2015/7/24', '0.3'],
-    //        ['2015/7/25', '0.31'],
-    //        ['2015/7/26', '0.34'],
-    //        ['2015/7/27', '0.37'],
-    //        ['2015/7/28', '0.39'],
-    //        ['2015/7/29', '0.4'],
-    //        ['2015/7/30', '0.41'],
-    //        ['2015/7/31', '0.42']];
-    //
-    //    var startX = '2015/7/10';
-    //    var endX = '2015/7/14';
-    //    var legend = ['策略', '基准'];
-    //    var chart = createTraceBackChart('main', strategyData, baseData, legend, startX, endX);
-
-
-</script>
-
-<script type="text/javascript">
-
-    $(".quota").hover(function () {
-        $(this).css({"cursor": "pointer"});
-    });
-
-    $(".quota").click(function () {
-        var quotaName;
-//       alert($(this).html())
-        if($(this).html().substring(0,1)=="N"){
-            quotaName="<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>"+$(this).html().substring(1,)+"</div>"
-        }else{
-            quotaName="<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>"+$(this).html()+"</div>"
+        if (dayOfMonth < 10) {
+            endTime += "-0" + dayOfMonth;
+        } else {
+            endTime += "-" + dayOfMonth;
         }
 
-        $("#quotaList").append( "<tr class='quotaRow'>"+
-            "<td class=\"col-md-4\"><div class='row'>"+quotaName+"</div></td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">"+
-            "<option>排名最大</option>"+
-            "<option>排名最小</option>"+
-            "<option>排名%最大</option>"+
-            "<option>排名%最小</option>"+
-            "</select>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<div class=\"col-md-10\">"+
-            "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>"+
-            "</div>"+
-            "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<div class=\"col-md-9\">"+
-            "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>"+
-            "</div>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>"+
-            "</tr>");
+        month = yesterday.getMonth() + 1;
+        dayOfMonth = yesterday.getDate();
+        if (month < 10) {
+            startTime += "0" + month;
+        } else {
+            startTime += month;
+        }
+        if (dayOfMonth < 10) {
+            startTime += "-0" + dayOfMonth;
+        } else {
+            startTime += "-" + dayOfMonth;
+        }
 
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click( function() {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-            commit();
+        $("#datetimeStart>input").attr('value', startTime);
+        $("#datetimeEnd>input").attr('value', endTime);
+
+
+        $("#datetimeStart").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView: 'month',
+            language: 'zh-CN',
+            autoclose: true,
+            startDate: new Date(2005 - 04 - 03),
+            endDate: new Date()
+        }).on("click", function () {
+            $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())
         });
-        $(".quotaRank").unbind("input propertychange");
-        $(".quotaRank").bind('input propertychange', function () {
-            if($(this).val()=="排名最大"||$(this).val()=="排名最小"){
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility","hidden");
-            }else{
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility","visible");
+        $("#datetimeEnd").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView: 'month',
+            language: 'zh-CN',
+            autoclose: true,
+            endDate: new Date()
+        }).on("click", function () {
+            $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
+        });
+
+        $(document).ready(function () {
+            $("#modifyBT").click(function () {
+                $("#passwordField").toggle("slow");
+                $("#passwordModify").toggle("slow");
+            });
+
+            $("#stocks").click(function () {
+                $("body").removeClass("loaded");
+                $.ajax({
+                    type: "post",
+                    async: true,
+                    url: "/stocks",
+
+                    success: function (result) {
+                        var array = result.split(";");
+
+                        if (array[0] == "1") {
+                            window.location.href = "/stocks";
+                        } else if (array[0] == "-1") {
+                            // 提示错误信息
+                            alert(array[1]);
+                        } else {
+                            alert("未知错误类型orz");
+                        }
+                    },
+                    error: function (result) {
+                        alert("错误" + result);
+                    }
+                });
+            });
+
+        });
+
+
+        function modify() {
+            $("#passwordField").toggle("slow");
+            $("#passwordModify").toggle("slow");
+        }
+
+        $("#modifyForm").validate({
+            rules: {
+                password1: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 15
+                },
+                password2: {
+                    equalTo: "#password1"
+                },
+            },
+            messages: {
+
+                password1: {
+                    required: "密码不能为空",
+                    minlength: "密码不能少于5位",
+                    maxlength: "密码不能高于15位"
+                },
+                password2: {
+                    equalTo: "两次密码不一样"
+                }
             }
-        })
+        });
+        $("#normalForm").validate({
+            rules: {
+                phone: {
+                    minlength: 11,
+                    maxlength: 11
+                },
+                email: {
+                    email: true
+                },
+            },
+            messages: {
 
-    });
+                phone: {
+                    minlength: "手机错误",
+                    maxlength: "手机错误"
 
-    function commit() {
-        $(".quotaRow").each(function () {
+                },
+                email: {
+                    email: "邮箱错误"
+                }
+            }
+        });
+
+        //
+        //    var strategyData = [['2015/7/1', '0'],
+        //        ['2015/7/2', '0.005'],
+        //        ['2015/7/3', '0.001'],
+        //        ['2015/7/4', '-0.002'],
+        //        ['2015/7/5', '-0.03'],
+        //        ['2015/7/6', '-0.12'],
+        //        ['2015/7/7', '-0.05'],
+        //        ['2015/7/8', '-0.01'],
+        //        ['2015/7/9', '0.1'],
+        //        ['2015/7/10', '0.15'],
+        //        ['2015/7/11', '-0.03'],
+        //        ['2015/7/12', '-0.09'],
+        //        ['2015/7/13', '-0.12'],
+        //        ['2015/7/14', '-0.15'],
+        //        ['2015/7/15', '0.13'],
+        //        ['2015/7/16', '0.23'],
+        //        ['2015/7/17', '0.29'],
+        //        ['2015/7/18', '0.31'],
+        //        ['2015/7/19', '0.29'],
+        //        ['2015/7/20', '0.3'],
+        //        ['2015/7/21', '0.25'],
+        //        ['2015/7/22', '0.23'],
+        //        ['2015/7/23', '0.2'],
+        //        ['2015/7/24', '0.24'],
+        //        ['2015/7/25', '0.26'],
+        //        ['2015/7/26', '0.29'],
+        //        ['2015/7/27', '0.34'],
+        //        ['2015/7/28', '0.39'],
+        //        ['2015/7/29', '0.4'],
+        //        ['2015/7/30', '0.38'],
+        //        ['2015/7/31', '0.36']];
+        //    var baseData = [['2015/7/1', '0'],
+        //        ['2015/7/2', '0.001'],
+        //        ['2015/7/3', '0.007'],
+        //        ['2015/7/4', '-0.012'],
+        //        ['2015/7/5', '-0.0312'],
+        //        ['2015/7/6', '-0.23'],
+        //        ['2015/7/7', '-0.12'],
+        //        ['2015/7/8', '-0.06'],
+        //        ['2015/7/9', '0.1'],
+        //        ['2015/7/10', '0.19'],
+        //        ['2015/7/11', '0.13'],
+        //        ['2015/7/12', '0.1'],
+        //        ['2015/7/13', '0.12'],
+        //        ['2015/7/14', '0.19'],
+        //        ['2015/7/15', '0.21'],
+        //        ['2015/7/16', '0.23'],
+        //        ['2015/7/17', '0.25'],
+        //        ['2015/7/18', '0.11'],
+        //        ['2015/7/19', '0.2'],
+        //        ['2015/7/20', '0.23'],
+        //        ['2015/7/21', '0.28'],
+        //        ['2015/7/22', '0.25'],
+        //        ['2015/7/23', '0.29'],
+        //        ['2015/7/24', '0.3'],
+        //        ['2015/7/25', '0.31'],
+        //        ['2015/7/26', '0.34'],
+        //        ['2015/7/27', '0.37'],
+        //        ['2015/7/28', '0.39'],
+        //        ['2015/7/29', '0.4'],
+        //        ['2015/7/30', '0.41'],
+        //        ['2015/7/31', '0.42']];
+        //
+        //    var startX = '2015/7/10';
+        //    var endX = '2015/7/14';
+        //    var legend = ['策略', '基准'];
+        //    var chart = createTraceBackChart('main', strategyData, baseData, legend, startX, endX);
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(".quota").hover(function () {
+            $(this).css({"cursor": "pointer"});
+        });
+
+        $(".quota").click(function () {
+            var quotaName;
+//       alert($(this).html())
+            if ($(this).html().substring(0, 1) == "N") {
+                quotaName = "<div class='col-md-4'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $(this).html().substring(1,) + "</div>"
+            } else {
+                quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $(this).html() + "</div>"
+            }
+
+            $("#quotaList").append("<tr class='quotaRow'>" +
+                "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
+                "<td class=\"col-md-2\">" +
+                "<div class=\"row\">" +
+                "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
+                "<option>排名最大</option>" +
+                "<option>排名最小</option>" +
+                "<option>排名%最大</option>" +
+                "<option>排名%最小</option>" +
+                "</select>" +
+                "</div>" +
+                "</td>" +
+                "<td class=\"col-md-2\">" +
+                "<div class=\"row\">" +
+                "<div class=\"col-md-10\">" +
+                "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
+                "</div>" +
+                "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
+                "</div>" +
+                "</td>" +
+                "<td class=\"col-md-2\">" +
+                "<div class=\"row\">" +
+                "<div class=\"col-md-9\">" +
+                "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
+                "</div>" +
+                "</div>" +
+                "</td>" +
+                "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>" +
+                "</tr>");
+
+            $(".quotaBt").unbind("click");
+            $(".quotaBt").click(function () {
+                $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
+                commit();
+            });
+            $(".quotaRank").unbind("input propertychange");
+            $(".quotaRank").bind('input propertychange', function () {
+                if ($(this).val() == "排名最大" || $(this).val() == "排名最小") {
+                    $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
+                } else {
+                    $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
+                }
+            })
+
+        });
+
+        function commit() {
+            $(".quotaRow").each(function () {
 //           分别对应指标名称 指标排名方式 选股的多少 权重
-            alert($(this).find(".numOfN").val()+$(this).find(".quotaName").html());
-            alert($(this).find(".quotaRank").val());
-            alert($(this).find(".quotaNum").val());
-            alert($(this).find(".quotaWeight").val());
-        });
-    }
-    $('#searchQuota').bind('input propertychange', function() {
-        alert("11");
-    });
-    function quotaChange() {
-        var quotaName;
-//       alert($(this).html())
-        if($('#searchQuota').val().substring(0,1)=="N"){
-            quotaName="<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>"+$('#searchQuota').val().substring(1,)+"</div>"
-        }else{
-            quotaName="<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>"+$('#searchQuota').val()+"</div>"
+                alert($(this).find(".numOfN").val() + $(this).find(".quotaName").html());
+                alert($(this).find(".quotaRank").val());
+                alert($(this).find(".quotaNum").val());
+                alert($(this).find(".quotaWeight").val());
+            });
         }
-
-        $("#quotaList").append( "<tr class='quotaRow'>"+
-            "<td class=\"col-md-4\"><div class='row'>"+quotaName+"</div></td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">"+
-            "<option>排名最大</option>"+
-            "<option>排名最小</option>"+
-            "<option>排名%最大</option>"+
-            "<option>排名%最小</option>"+
-            "</select>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<div class=\"col-md-10\">"+
-            "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>"+
-            "</div>"+
-            "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<div class=\"col-md-9\">"+
-            "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>"+
-            "</div>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>"+
-            "</tr>");
-
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click( function() {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-            commit();
+        $('#searchQuota').bind('input propertychange', function () {
+            alert("11");
         });
+        function quotaChange() {
+            var quotaName;
+//       alert($(this).html())
+            if ($('#searchQuota').val().substring(0, 1) == "N") {
+                quotaName = "<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $('#searchQuota').val().substring(1,) + "</div>"
+            } else {
+                quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $('#searchQuota').val() + "</div>"
+            }
 
-    }
-</script>
+            $("#quotaList").append("<tr class='quotaRow'>" +
+                "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
+                "<td class=\"col-md-2\">" +
+                "<div class=\"row\">" +
+                "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
+                "<option>排名最大</option>" +
+                "<option>排名最小</option>" +
+                "<option>排名%最大</option>" +
+                "<option>排名%最小</option>" +
+                "</select>" +
+                "</div>" +
+                "</td>" +
+                "<td class=\"col-md-2\">" +
+                "<div class=\"row\">" +
+                "<div class=\"col-md-10\">" +
+                "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
+                "</div>" +
+                "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
+                "</div>" +
+                "</td>" +
+                "<td class=\"col-md-2\">" +
+                "<div class=\"row\">" +
+                "<div class=\"col-md-9\">" +
+                "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
+                "</div>" +
+                "</div>" +
+                "</td>" +
+                "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>" +
+                "</tr>");
+
+            $(".quotaBt").unbind("click");
+            $(".quotaBt").click(function () {
+                $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
+                commit();
+            });
+
+        }
+    </script>
 
 </body>
 </html>

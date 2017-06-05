@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * Created by Byron Dong on 2017/6/3.
  */
-public class Main {
+public class FileHelper {
 
     public static void main(String[] args) {
         StockDataHelper stockDataHelper = HelperManager.stockDataHelper;
         List<String> tempInfo = null;
         List<String> info = new ArrayList<>();
-        Main main = new Main();
+        FileHelper main = new FileHelper();
         tempInfo = main.readeInfo();
         for(String line: tempInfo){
             List<LocalDate> date = stockDataHelper.getFirstAndLastDay(line.substring(0,6));
