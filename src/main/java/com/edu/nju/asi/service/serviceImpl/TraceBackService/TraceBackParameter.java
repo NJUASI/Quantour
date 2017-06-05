@@ -3,12 +3,7 @@ package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
-import com.edu.nju.asi.service.StockService;
-import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.exceptions.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -51,7 +46,7 @@ public class TraceBackParameter {
     private List<DailyRate> baseRate;
 
     //股票池中所有信息
-    protected Map<String, List<StrategyStock>> stockData;
+    protected Map<String, List<Stock>> stockData;
 
     //需要计算数据的所有股票代码
     private List<String> codes;
@@ -71,7 +66,7 @@ public class TraceBackParameter {
      * @updateTime 2017/4/9
      */
     public TraceBackParameter(TraceBackCriteria traceBackCriteria, TraceBackInfo traceBackInfo,
-                              Map<String, List<StrategyStock>> stockData, List<String> codes, List<BaseStock> baseStockList) throws IOException, NoDataWithinException, DateNotWithinException {
+                              Map<String, List<Stock>> stockData, List<String> codes, List<BaseStock> baseStockList) throws IOException, NoDataWithinException, DateNotWithinException {
         this.stockData = stockData;
         this.traceBackInfo = traceBackInfo;
         this.traceBackCriteria = traceBackCriteria;
@@ -130,7 +125,7 @@ public class TraceBackParameter {
      */
     private void initStrategy() {
 
-        List<List<StrategyStock>> list = new ArrayList<>();
+        List<List<Stock>> list = new ArrayList<>();
 
         for (String code : codes) {
             list.add(stockData.get(code));
@@ -345,7 +340,7 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/14
      */
-    private List<DailyRate> calStrategyDailyRateAll(List<List<StrategyStock>> list) {
+    private List<DailyRate> calStrategyDailyRateAll(List<List<Stock>> list) {
         Map<LocalDate, DailyRate> map = this.convert(list);
         List<DailyRate> result = new ArrayList<>();
 
@@ -368,15 +363,15 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/10
      */
-    private List<DailyRate> calStrategyDailyRate(List<StrategyStock> list) {
+    private List<DailyRate> calStrategyDailyRate(List<Stock> list) {
         List<DailyRate> result = new ArrayList<>();
 
-        for (StrategyStock strategyStock : list) {
-            if (strategyStock.preClose == -1) {
-                result.add(new DailyRate(0.0, strategyStock.date));
+        for (Stock stock : list) {
+            if (stock.getPreClose() == -1) {
+                result.add(new DailyRate(0.0, stock.getStockID().getDate()));
             } else {
-                double rate = (strategyStock.close - strategyStock.preClose) / strategyStock.preClose;
-                result.add(new DailyRate(rate, strategyStock.date));
+                double rate = (stock.getClose() - stock.getPreClose()) / stock.getPreClose();
+                result.add(new DailyRate(rate, stock.getStockID().getDate()));
             }
         }
         return result;
@@ -416,11 +411,11 @@ public class TraceBackParameter {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/4/14
      */
-    private Map<LocalDate, DailyRate> convert(List<List<StrategyStock>> list) {
+    private Map<LocalDate, DailyRate> convert(List<List<Stock>> list) {
 
         Map<LocalDate, DailyRate> map = new TreeMap<>();
 
-        for (List<StrategyStock> stock : list) {
+        for (List<Stock> stock : list) {
             List<DailyRate> temp = this.calStrategyDailyRate(stock);
             for (DailyRate dailyRate : temp) {
                 if (map.containsKey(dailyRate.date)) {

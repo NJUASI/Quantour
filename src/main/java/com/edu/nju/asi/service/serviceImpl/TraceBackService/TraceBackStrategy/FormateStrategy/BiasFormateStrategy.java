@@ -1,8 +1,8 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
+import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
-import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -15,7 +15,7 @@ import java.util.Map;
  * 形成期的乖离率策略
  */
 public class BiasFormateStrategy extends AllFormateStrategy {
-    public BiasFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+    public BiasFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
         super(allDatesWithData, stockData);
     }
 
@@ -32,7 +32,7 @@ public class BiasFormateStrategy extends AllFormateStrategy {
         List<FilterConditionRate> result = new LinkedList<>();
 
         for (String s : stockCodes) {
-            List<StrategyStock> thisStockData = stockData.get(s);
+            List<Stock> thisStockData = stockData.get(s);
 
             // 获得前一个交易日
             LocalDate periodJudge;
@@ -47,7 +47,7 @@ public class BiasFormateStrategy extends AllFormateStrategy {
             }
 
             // 前一交易日的均值（一定能够计算）
-            List<StrategyStock> temp = thisStockData;
+            List<Stock> temp = thisStockData;
             if (neededMRStockIndex + 1 >= formativePeriod) {
                 // 之前的数据充足
                 temp = temp.subList(neededMRStockIndex - formativePeriod + 1, neededMRStockIndex + 1);
@@ -55,12 +55,12 @@ public class BiasFormateStrategy extends AllFormateStrategy {
 
             //计算数据的平均值
             double sum = 0;
-            for (StrategyStock stock : temp) {
-                sum += stock.close;
+            for (Stock stock : temp) {
+                sum += stock.getClose();
             }
             double average = sum / temp.size();
 
-            double biasRatio = (average - thisStockData.get(neededMRStockIndex).close) / average;
+            double biasRatio = (average - thisStockData.get(neededMRStockIndex).getClose()) / average;
             result.add(new FilterConditionRate(s, biasRatio, 0));
         }
         return result;

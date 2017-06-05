@@ -44,7 +44,7 @@ public class TraceBackStrategyCalculator {
     /**
      * 所有股票池中的股票数据
      */
-    protected Map<String, List<StrategyStock>> stockData;
+    protected Map<String, List<Stock>> stockData;
 
     /**
      * 当前持有的股票
@@ -65,7 +65,7 @@ public class TraceBackStrategyCalculator {
     StockDao stockDao = new StockDaoImpl();
 
 
-    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
         this.traceBackStockPool = traceBackStockPool;
         this.traceBackCriteria = traceBackCriteria;
         this.allDatesWithData = allDatesWithData;
@@ -103,7 +103,7 @@ public class TraceBackStrategyCalculator {
         int cycles = (allEndIndex - allStartIndex + 1) / holdingPeriod;
 
         // 回测时间太短，不足一个持有期 或者刚好满一个周期，则没有末尾的调仓期
-        if (cycles == 0 || (cycles == 1 && (allEndIndex - allStartIndex + 1) % holdingPeriod == 0)) {
+        if (cycles == 0) {
             strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
         }
         else {
@@ -111,6 +111,10 @@ public class TraceBackStrategyCalculator {
             for (int i = 0; i < cycles; i++) {
                 int startIndex = allStartIndex + i * holdingPeriod;
                 int endIndex = startIndex + holdingPeriod;
+                //最后一个周期且刚好满足整数的周期,没有末尾的调仓日
+                if(i == cycles-1 && (allEndIndex - allStartIndex + 1) % holdingPeriod == 0){
+                    endIndex = endIndex - 1;
+                }
                 strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
             }
 
@@ -199,7 +203,7 @@ public class TraceBackStrategyCalculator {
         //第一个周期，没有卖出的股票
         if(periodSerial == 1){
             for(int i = 0; i < pickedStockCodes.size(); i++){
-                Stock stock = null;
+                com.edu.nju.asi.model.Stock stock = null;
                 try {
                     stock = stockDao.getStockData(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
                 } catch (IOException e) {
@@ -218,7 +222,7 @@ public class TraceBackStrategyCalculator {
                         isNew = false;
                     }
                     if(isNew){
-                        Stock stock = null;
+                        com.edu.nju.asi.model.Stock stock = null;
                         try {
                             stock = stockDao.getStockData(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
                         } catch (IOException e) {
@@ -233,7 +237,7 @@ public class TraceBackStrategyCalculator {
             // 若挑选的股票代码中没有当前持有股票的代码，则将该股票加入卖出的队列
             for(int i = 0; i < currentHoldingStocks.size();){
                 boolean isSold = true;
-                for(int j = 0; j < pickedStockCodes.size(); ){
+                for(int j = 0; j < pickedStockCodes.size(); j++){
                     if(currentHoldingStocks.get(i).stockCode.equals(pickedStockCodes.get(j))){
                         isSold = false;
                         i++;
@@ -242,7 +246,7 @@ public class TraceBackStrategyCalculator {
                 }
                 //被卖出，加入最近被卖出的队列
                 if(isSold){
-                    Stock stock = null;
+                    com.edu.nju.asi.model.Stock stock = null;
                     try {
                         stock = stockDao.getStockData(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
                     } catch (IOException e) {
@@ -264,11 +268,11 @@ public class TraceBackStrategyCalculator {
 
         // 对阶段内的每只股票进行数据读取
         for (String s : pickedStockCodes) {
-            List<StrategyStock> ss = stockData.get(s);
-            for (StrategyStock stock : ss) {
-                if (isDateWithinWanted(periodStart, periodEnd, stock.date)) {
-                    LocalDate thisDate = stock.date;
-                    double profit = stock.close / stock.preClose - 1;
+            List<Stock> ss = stockData.get(s);
+            for (Stock stock : ss) {
+                if (isDateWithinWanted(periodStart, periodEnd, stock.getStockID().getDate())) {
+                    LocalDate thisDate = stock.getStockID().getDate();
+                    double profit = stock.getClose() / stock.getPreClose() - 1;
 
                     if (forCalcu.keySet().contains(thisDate)) {
                         forCalcu.get(thisDate).add(profit);

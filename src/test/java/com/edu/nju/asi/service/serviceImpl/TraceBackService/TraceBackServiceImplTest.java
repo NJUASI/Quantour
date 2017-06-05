@@ -29,7 +29,7 @@ public class TraceBackServiceImplTest {
     public void setUp() throws IOException {
         traceBackService = new TraceBackServiceImpl();
         start = LocalDate.of(2017,4,18);
-        end = LocalDate.of(2017,4,24);
+        end = LocalDate.of(2017,5,2);
     }
 
     @Test
@@ -38,6 +38,7 @@ public class TraceBackServiceImplTest {
         blockTypes.add(BlockType.ZB);
 
         List<FilterCondition> filterConditions = new ArrayList<>();
+        filterConditions.add(new FilterCondition(IndicatorType.TRANSACTION_AMOUNT, ComparatorType.RANK_MAX, 5, 1, 1));
         filterConditions.add(new FilterCondition(IndicatorType.VOLUME, ComparatorType.RANK_MAX, 5, 1, 1));
 
         TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, 1, new StockPoolCriteria(StType.INCLUDE, blockTypes),

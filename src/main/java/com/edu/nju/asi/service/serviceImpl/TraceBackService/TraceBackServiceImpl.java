@@ -8,9 +8,7 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
-import com.edu.nju.asi.utilities.StrategyStockList;
 import com.edu.nju.asi.utilities.exceptions.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -45,8 +43,7 @@ public class TraceBackServiceImpl implements TraceBackService {
     /**
      * 所有股票池中的股票数据
      */
-    protected Map<String, List<StrategyStock>> stockData;
-
+    protected Map<String, List<Stock>> stockData;
 
     public TraceBackServiceImpl() throws IOException {
         stockService = new StockServiceImpl();
@@ -122,20 +119,12 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         stockData = new HashMap<>();
         for (String thisStockCode : traceBackStockPool) {
-            List<Stock> stocks = stockDao.getStockData(thisStockCode);
-            stockData.put(thisStockCode, convertStocks(stocks));
+            List<com.edu.nju.asi.model.Stock> stocks = stockDao.getStockData(thisStockCode);
+            stockData.put(thisStockCode, stocks);
         }
 
         System.out.println("out");
 
-    }
-
-    private List<StrategyStock> convertStocks(List<Stock> stocks) {
-        StrategyStockList result = new StrategyStockList();
-        for (Stock thisStock : stocks) {
-            result.add(new StrategyStock(thisStock));
-        }
-        return result;
     }
 
     /**
