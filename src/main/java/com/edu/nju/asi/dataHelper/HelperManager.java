@@ -20,6 +20,8 @@ public class HelperManager {
 
     public final static StrategyDataHelper strategyDataHelper;
 
+    public final static BasicDataHelper basicDataHelper;
+
     static {
         ApplicationContext applicationContext = ApplicationContextHelper.getApplicationContext();
         stockDataHelper = applicationContext.getBean(StockDataHelper.class);
@@ -28,6 +30,7 @@ public class HelperManager {
         privateStockDataHelper = applicationContext.getBean(PrivateStockDataHelper.class);
         baseStockDataHelper = applicationContext.getBean(BaseStockDataHelper.class);
         strategyDataHelper = applicationContext.getBean(StrategyDataHelper.class);
+        basicDataHelper = applicationContext.getBean(BasicDataHelper.class);
     }
 
 }
