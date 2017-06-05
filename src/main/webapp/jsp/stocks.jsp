@@ -19,6 +19,7 @@
     <link href="../css/stocks.css" rel="stylesheet">
     <link href="../css/reset.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/startLoader.css" rel="stylesheet">
     <title>股票市场</title>
 </head>
 <header>
@@ -336,7 +337,11 @@
     </div><!-- /.modal -->
 </div>
 
-
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
 
 <footer>
 </footer>
@@ -345,6 +350,7 @@
 <script src="../js/echarts.min.js"></script>
 <script src="../js/stocks.js"></script>
 <script src="../js/echarts-liquidfill.js"></script>
+<script src="../js/startLoaded.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
