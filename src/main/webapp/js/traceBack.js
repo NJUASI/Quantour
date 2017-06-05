@@ -5,8 +5,7 @@ load("nashorn:mozilla_compat.js");
 importPackage("com.edu.nju.asi.utilities.enums");
 
 function traceback() {
-    var isCustomized = $(":radio[name='optionsRadios']:checked").val();
-
+    // var isCustomized = $(":radio[name='optionsRadios']:checked").val();
 
     // 添加选股条件
     var filterConditions = new Array();
@@ -14,10 +13,7 @@ function traceback() {
     $(".quotaRow").each(function () {
         var dateOfIndicator = $(this).find(".numOfN").val();
         var separatorResult = separateIndicator($(this).find(".quotaName").html());
-
         alert(separatorResult);
-        alert(separatorResult[0]);
-        alert(separatorResult[1]);
 
         if (dateOfIndicator == "") {
             alert("无N日");
@@ -31,7 +27,6 @@ function traceback() {
             };
         } else {
             alert("有N日");
-
             // 输入框输入
             filterConditions[filterNum] = {
                 "indicatorType": separatorResult,
@@ -46,6 +41,7 @@ function traceback() {
 
     // "formativePeriod": $("#formativePeriod").val();
 
+    alert("ok");
     var jsonData = {
         "startDate": $("#startDate").val(),
         "endDate": $("#endDate").val(),
@@ -216,87 +212,93 @@ function traceback() {
 
 function separateIndicator(indicatorType) {
     var separator = indicatorType.indexOf("日");
+
+    if (separator == -1) {
+        // 指标中不含有日字
+        alert("指标中不含有日字\n" + indicatorType);
+        alert(convertIndicator(indicatorType));
+        return new Array(0, convertIndicator(indicatorType));
+    }
     if (separator == 0) {
         // 为 N日** 类型
-        alert(indicatorType.substr(1));
-
-        var ArrayList = IndicatorType.getEnum();
-
-
-        return indicatorType.substr(1);
+        return convertIndicator(indicatorType.substr(1));
     } else {
-        alert(indicatorType.substr(0, separator - 1));
-        alert(indicatorType.substr(separator + 1, indicatorType.length));
-
         var reg = /^[0-9]*$/;
         if (!reg.test(indicatorType.substr(0, separator - 1))) {
             // 为 5日开盘价 类型
-            return new Array(indicatorType.substr(0, separator - 1), indicatorType.substr(separator + 1, indicatorType.length));
+            return new Array(indicatorType.substr(0, separator - 1), convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         } else {
             // 为 当／前日开盘价 类型
-            return new Array(0, indicatorType.substr(separator + 1, indicatorType.length));
+            return new Array(0, convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         }
     }
 }
 
 
+/**
+ * 在JS中实现 IndicatorType.getEnum()方法，能够在JS中调用Java代码后修改
+ */
 function convertIndicator(indicatorType) {
     switch (indicatorType) {
-        // case "开盘价":
-        //     return "OPEN";
-        // case "收盘价":
-        //     return "CLOSE";
-        // case "最高价":
-        //     return "HIGH";
-        // case "最低价":
-        //     return "LOW";
-        // case "前日收盘价":
-        //     return "PRE_CLOSE";
+        case "开盘价":
+            return "OPEN";
+        case "收盘价":
+            return "CLOSE";
+        case "最高价":
+            return "HIGH";
+        case "最低价":
+            return "LOW";
+        case "前日收盘价":
+            return "PRE_CLOSE";
         case "日均成交价":
-            return "OPEN";
+            return "DAILY_AVE_PRICE";
+        case "后复权开盘价":
+            return "AFTER_ADJ_OPEN";
         case "后复权收盘价":
-            return "OPEN";
+            return "AFTER_ADJ_HIGH";
+        case "后复权最高价":
+            return "AFTER_ADJ_OPEN";
+        case "后复权最低价":
+            return "AFTER_ADJ_LOW";
+        case "前日后复权收盘价":
+            return "AFTER_ADJ_PRE_CLOSE";
         case "后复权均价":
-            return "OPEN";
-        // case "成交额":
-        //     return "TRANSACTION_AMOUNT";
-        // case "平均成交额":
-        //     return "TRANSACTION_AMOUNT";
-        // case "成交量":
-        //     return "VOLUME";
-        // case "平均成交量":
-        //     return "VOLUME";
-        // case "涨幅":
-        //     return "INCREASE_MARGIN";
-        // case "涨跌额":
-        //     return "FLUCTION";
-        // case "换手率":
-        //     return "TURNOVER_RATE";
+            return "AFTER_ADJ_DAILY_AVE_PRICE";
+        case "成交额":
+            return "TRANSACTION_AMOUNT";
+        case "平均成交额":
+            return "TRANSACTION_AMOUNT";
+        case "成交量":
+            return "VOLUME";
+        case "平均成交量":
+            return "VOLUME";
+        case "涨幅":
+            return "INCREASE_MARGIN";
+        case "换手率":
+            return "TURNOVER_RATE";
         case "总股本":
-            return "OPEN";
+            return "GENERAL_CAPITAL";
         case "流通股本":
-            return "OPEN";
+            return "NEGOTIABLE_CAPITAL";
         case "总市值":
             return "TOTAL_VALUE";
         case "流通市值":
             return "CIRCULATION_MARKET_VALUE";
-        case "股价涨幅":
-            return "OPEN";
+        case "股价振幅":
+            return "SWING_RATE";
         case "乖离率":
-            return "OPEN";
+            return "BIAS";
         case "波动率":
-            return "OPEN";
+            return "RETURN_VOLATILITY";
         case "市盈率":
-            return "OPEN";
+            return "PE_TTM";
         case "市净率":
-            return "OPEN";
+            return "PB";
         case "市销率":
-            return "OPEN";
+            return "PS_TTM";
         case "静态市盈率":
-            return "OPEN";
+            return "S_PE_TTM";
         case "动态市盈率":
-            return "OPEN";
+            return "D_PE_TTM";
     }
-
-
 }

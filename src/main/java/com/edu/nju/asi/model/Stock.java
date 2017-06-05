@@ -82,8 +82,9 @@ public class Stock implements Serializable {
     @Column(length = 100)
     private String circulationMarketValue;
 
-    //复权数据
-
+    /*
+    复权数据
+     */
     //前复权开盘指数
     @Basic
     @Column(columnDefinition = "double default 0")
