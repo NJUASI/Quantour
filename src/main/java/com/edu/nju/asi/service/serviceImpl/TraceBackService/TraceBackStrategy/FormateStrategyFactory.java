@@ -17,9 +17,6 @@ public class FormateStrategyFactory {
 
     public static AllFormateStrategy createFormateStrategy(IndicatorType indicatorType, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData){
         switch (indicatorType){
-            case MOMENTUM:
-                return new MomentumFormateStrategy(allDatesWithData, stockData);
-
 
                 //可直接拿到的数据，并通过均值形成
             case OPEN:
@@ -36,8 +33,6 @@ public class FormateStrategyFactory {
                 return new MeanFormateStrategy(allDatesWithData, stockData, "transactionAmount");
             case PRE_CLOSE:
                 return new MeanFormateStrategy(allDatesWithData, stockData, "preClose");
-            case TURNOVER_RATE:
-                return new MeanFormateStrategy(allDatesWithData, stockData, "turnoverRate");
             case TOTAL_VALUE:
                 return new MeanFormateStrategy(allDatesWithData, stockData, "totalValue");
             case CIRCULATION_MARKET_VALUE:
@@ -51,13 +46,45 @@ public class FormateStrategyFactory {
             case AFTER_ADJ_CLOSE:
                 return new MeanFormateStrategy(allDatesWithData, stockData, "afterAdjClose");
 
+
+                // 可直接拿到的数据，并累计形成（涨幅、换手率）
+            case INCREASE_MARGIN:
+                return new AccumulateFormateStrategy(allDatesWithData, stockData, "increaseMargin");
+            case TURNOVER_RATE:
+                return new AccumulateFormateStrategy(allDatesWithData, stockData, "turnoverRate");
+
+
+                // 总股本/流通股本 形成
+            case GENERAL_CAPITAL:
+                return new CapitalFormateStrategy(allDatesWithData, stockData, "totalValue");
+            case NEGOTIABLE_CAPITAL:
+                return new CapitalFormateStrategy(allDatesWithData, stockData, "circulationMarketValue");
+
+
+                // 振幅
+            case SWING_RATE:
+                return new SwingRateFormateStrategy(allDatesWithData, stockData);
+
+
                 // 日均成交价
             case DAILY_AVE_PRICE:
                 return new DailyAvePriceFormateStrategy(allDatesWithData, stockData);
 
-                // 累计涨幅
-            case INCREASE_MARGIN:
-                return new IncreaseAmountFormateStrategy(allDatesWithData, stockData);
+
+                // 动量策略
+            case MOMENTUM:
+                return new MomentumFormateStrategy(allDatesWithData, stockData);
+
+            /**
+             * 技术指标
+             */
+                // 乖离率
+            case BIAS:
+                return new BiasFormateStrategy(allDatesWithData, stockData);
+                //收益波动率
+            case RETURN_VOLATILITY:
+                return new ReturnVolatilityFormateStrategy(allDatesWithData, stockData);
+
 
 
         }
