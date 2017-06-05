@@ -100,6 +100,8 @@
                         <li>ST&nbsp;&nbsp;&nbsp;信息:&nbsp; <span>123333</span></li>
                         <li>开始日期:&nbsp; <span>13</span></li>
                         <li>结束日期:&nbsp; <span>14</span></li>
+                        <li>调仓周期:&nbsp; <span>1233</span></li>
+                        <li>最大持仓:&nbsp; <span>1233</span></li>
                         <li>收益基准:&nbsp; <span>1233</span></li>
                     </ul>
                     </div>
@@ -297,14 +299,22 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group  col-md-6 ">
+                                    <div class="form-group  col-md-4 ">
                                         <label class="col-md-2" style="margin-top: 7px">ST：</label>
-                                        <div class=' col-md-6 '>
+                                        <div class=' col-md-8 '>
                                             <select id="stType" class="col-md-10 selectpicker show-tick form-inline">
                                                 <option value="INCLUDE" selected>包含ST</option>
                                                 <option value="EXCLUDE">排除ST</option>
                                                 <option value="ONLY">仅有ST</option>
                                             </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group  col-md-4 ">
+                                        <label class="col-md-4" style="margin-top: 7px">调仓周期：</label>
+                                        <div class=' col-md-5 '>
+                                            <input id="holdingPeriod" type="text" class="form-control col-md-1"
+                                                   name="holdingPeriod" placeholder="请输入天数">
                                         </div>
 
                                     </div>
@@ -320,14 +330,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-5 ">
-                                        <label class="col-md-3" style="margin-top: 7px">结束日期：</label>
-                                        <div class=' col-md-5 input-group date' id='datetimeEnd'>
+                                    <div class="form-group col-md-4 ">
+                                        <label class="col-md-4" style="margin-top: 7px">结束日期：</label>
+                                        <div class=' col-md-6 input-group date' id='datetimeEnd'>
                                             <input id="endDate" type='text' class="form-control form_datetime"/>
                                             <span class="input-group-addon">
                                               <span class="glyphicon glyphicon-calendar"></span>
                                          </span>
                                         </div>
+                                    </div>
+                                    <div class="form-group  col-md-4 ">
+                                        <label class="col-md-4" style="margin-top: 7px">最大持仓：</label>
+                                        <div class=' col-md-5 '>
+                                            <input id="maxHolding" type="text" class="form-control col-md-1"
+                                                   name="maxHolding" placeholder="请输入股票数">
+                                        </div>
+
                                     </div>
                                 </div>
 

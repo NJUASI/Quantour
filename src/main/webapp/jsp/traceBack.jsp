@@ -806,8 +806,14 @@
                                 <div class="col-md-4">
                                     <label class="control-label">板块：</label><span>主板，创业板，中小板</span>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="control-label">ST：</label><span>主板，创业板，中小板</span>
+                                <div class="col-md-2">
+                                    <label class="control-label">ST：</label><span>仅为ST</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">调仓周期：</label><span>10</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">最大持股：</label><span>50</span>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 15px">
@@ -825,20 +831,20 @@
                                 <div class="col-md-2">
                                     <label class="control-label">筛选条件：</label>
                                 </div>
-                                <div class="col-md-10">
-                                    <div class="row ">
+                                <div class="col-md-8" >
+                                    <div class="row "style="border: 1px solid darkslategrey">
 
                                         <div class=" col-md-12">
                                             <strong class="col-md-4">指标</strong><strong class="col-md-3">比较符</strong>
-                                            <strong class="col-md-1">值</strong> <strong class="col-md-2">权重</strong>
+                                            <strong class="col-md-2">值</strong> <strong class="col-md-2">权重</strong>
                                         </div>
                                         <div class=" col-md-12">
                                             <span class="col-md-4">10日平均成交量</span><span class="col-md-3">排名最大</span>
-                                            <span class="col-md-1">20</span> <span class="col-md-2">1</span>
+                                            <span class="col-md-2">20</span> <span class="col-md-2">1</span>
                                         </div>
                                         <div class=" col-md-12">
                                             <span class="col-md-4">10日平均成交量</span><span class="col-md-3">排名最大</span>
-                                            <span class="col-md-1">20</span> <span class="col-md-2">1</span>
+                                            <span class="col-md-2">20</span> <span class="col-md-2">1</span>
                                         </div>
 
                                     </div>
