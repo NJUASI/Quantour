@@ -6,7 +6,7 @@ import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
-import com.edu.nju.asi.utilities.StrategyStockList;
+import com.edu.nju.asi.utilities.StockList;
 import com.edu.nju.asi.utilities.enums.*;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import org.junit.Before;
@@ -30,7 +30,7 @@ public class TraceBackStrategyCalculatorTest {
     /**
      * 所有股票池中的股票数据
      */
-    protected Map<String, List<StrategyStock>> stockData;
+    protected Map<String, List<Stock>> stockData;
 
 
     @Before
@@ -66,17 +66,9 @@ public class TraceBackStrategyCalculatorTest {
 
         stockData = new HashMap<>();
         for (String thisStockCode : traceBackStockPool) {
-            List<Stock> stocks = stockDao.getStockData(thisStockCode);
-            stockData.put(thisStockCode, convertStocks(stocks));
+            List<com.edu.nju.asi.model.Stock> stocks = stockDao.getStockData(thisStockCode);
+            stockData.put(thisStockCode, stocks);
         }
-    }
-
-    private List<StrategyStock> convertStocks(List<Stock> stocks) {
-        StrategyStockList result = new StrategyStockList();
-        for (Stock thisStock : stocks) {
-            result.add(new StrategyStock(thisStock));
-        }
-        return result;
     }
 
     @Test

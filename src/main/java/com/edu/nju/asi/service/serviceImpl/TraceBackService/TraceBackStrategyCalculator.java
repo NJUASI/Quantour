@@ -44,7 +44,7 @@ public class TraceBackStrategyCalculator {
     /**
      * 所有股票池中的股票数据
      */
-    protected Map<String, List<StrategyStock>> stockData;
+    protected Map<String, List<Stock>> stockData;
 
     /**
      * 当前持有的股票
@@ -65,7 +65,7 @@ public class TraceBackStrategyCalculator {
     StockDao stockDao = new StockDaoImpl();
 
 
-    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
         this.traceBackStockPool = traceBackStockPool;
         this.traceBackCriteria = traceBackCriteria;
         this.allDatesWithData = allDatesWithData;
@@ -79,12 +79,11 @@ public class TraceBackStrategyCalculator {
      */
     public List<CumulativeReturn> traceBack(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException {
 
-        //持有期
+        //调仓日为持有期的后一天，故把调仓日放到周期中，每个周期的起始调仓日不参与收益计算，末尾调仓日参与收益计算
         int holdingPeriod = traceBackCriteria.holdingPeriod;
 
         // 保存相应要返回的数据
         List<CumulativeReturn> strategyCumulativeReturn = new LinkedList<>();
-
 
         //区间第一个交易日在allDatesWithData中的位置
         int allStartIndex, allEndIndex;
@@ -101,27 +100,30 @@ public class TraceBackStrategyCalculator {
         allStartIndex = allDatesWithData.indexOf(thisStart);
         allEndIndex = allDatesWithData.indexOf(thisEnd);
 
-
         int cycles = (allEndIndex - allStartIndex + 1) / holdingPeriod;
 
-        // 回测时间太短，不足一个持有期
+        // 回测时间太短，不足一个持有期 或者刚好满一个周期，则没有末尾的调仓期
         if (cycles == 0) {
-            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex+1, allEndIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
-            return strategyCumulativeReturn;
+            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
         }
+        else {
+            // 至少一个持有期，整个周期的计算
+            for (int i = 0; i < cycles; i++) {
+                int startIndex = allStartIndex + i * holdingPeriod;
+                int endIndex = startIndex + holdingPeriod;
+                //最后一个周期且刚好满足整数的周期,没有末尾的调仓日
+                if(i == cycles-1 && (allEndIndex - allStartIndex + 1) % holdingPeriod == 0){
+                    endIndex = endIndex - 1;
+                }
+                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
+            }
 
-        // 至少一个持有期，整个周期的计算
-        for (int i = 0; i < cycles; i++) {
-            int startIndex = allStartIndex + i * holdingPeriod;
-            int endIndex = startIndex + holdingPeriod - 1;
-            strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
-        }
-
-        // 最后一个不足周期的计算
-        if ((allEndIndex - allStartIndex + 1) % holdingPeriod != 0) {
-            int startIndex = allStartIndex + cycles * holdingPeriod;
-            int endIndex = allEndIndex;
-            strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
+            // 最后一个不足周期的计算
+            if ((allEndIndex - allStartIndex + 1) % holdingPeriod != 0) {
+                int startIndex = allStartIndex + cycles * holdingPeriod;
+                int endIndex = allEndIndex;
+                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
+            }
         }
 
         // 根据果仁网，第一天数据设置为0
@@ -182,46 +184,8 @@ public class TraceBackStrategyCalculator {
 
             wantedFilterConditionRates = wantedFilterConditionRates.subList(0,maxHoldingNum);
         }
-        for(FilterConditionRate filterConditionRate : wantedFilterConditionRates){
+        for(FilterConditionRate filterConditionRate : wantedFilterConditionRates) {
             wantedStockCodes.add(filterConditionRate.stockCode);
-        }
-
-        //第一个周期，没有卖出的股票
-        if(periodSerial == 1){
-            for(int i = 0; i < wantedStockCodes.size(); i++){
-                Stock stock = null;
-                try {
-                    stock = stockDao.getStockData(wantedStockCodes.get(i), allDatesWithData.get(startIndex-1));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                currentHoldingStocks.add(new HoldOrSoldStocks(stock.getName(),wantedStockCodes.get(i),stock.getStockID().getDate(),stock.getFrontAdjClose()));
-            }
-        }
-        //不是第一个周期
-        else {
-            for(int i = 0; i < currentHoldingStocks.size();){
-                boolean isSold = true;
-                for(int j = 0; j < wantedStockCodes.size(); j++){
-                    if(currentHoldingStocks.get(i).stockCode.equals(wantedStockCodes.get(j))){
-                        isSold = false;
-                        i++;
-                        break;
-                    }
-                }
-                //被卖出，加入最近被卖出的队列
-                if(isSold){
-                    Stock stock = null;
-                    try {
-                         stock = stockDao.getStockData(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    //每个持仓期的第一天作为调仓日期
-                    lastSoldStocks.add(new HoldOrSoldStocks(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getFrontAdjClose()));
-                    currentHoldingStocks.remove(i);
-                }
-            }
         }
 
         return calculate(wantedStockCodes, periodStart, periodEnd, periodSerial, startIndex);
@@ -235,22 +199,80 @@ public class TraceBackStrategyCalculator {
      * @return 此持有期的累计收益率
      */
     private List<CumulativeReturn> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex) {
+
+        //第一个周期，没有卖出的股票
+        if(periodSerial == 1){
+            for(int i = 0; i < pickedStockCodes.size(); i++){
+                com.edu.nju.asi.model.Stock stock = null;
+                try {
+                    stock = stockDao.getStockData(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                currentHoldingStocks.add(new HoldOrSoldStocks(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getFrontAdjClose()));
+            }
+        }
+        //不是第一个周期
+        else {
+            //若挑选的股票代码不在当前持有的股票代码中，添加进去
+            for(int i = 0; i < pickedStockCodes.size(); i++){
+                for(int j = 0; j < currentHoldingStocks.size(); j++){
+                    boolean isNew = true;
+                    if(pickedStockCodes.get(i).equals(currentHoldingStocks.get(j).stockCode)){
+                        isNew = false;
+                    }
+                    if(isNew){
+                        com.edu.nju.asi.model.Stock stock = null;
+                        try {
+                            stock = stockDao.getStockData(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        currentHoldingStocks.add(new HoldOrSoldStocks(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getFrontAdjClose()));
+                        j++;
+                    }
+                }
+            }
+
+            // 若挑选的股票代码中没有当前持有股票的代码，则将该股票加入卖出的队列
+            for(int i = 0; i < currentHoldingStocks.size();){
+                boolean isSold = true;
+                for(int j = 0; j < pickedStockCodes.size(); j++){
+                    if(currentHoldingStocks.get(i).stockCode.equals(pickedStockCodes.get(j))){
+                        isSold = false;
+                        i++;
+                        break;
+                    }
+                }
+                //被卖出，加入最近被卖出的队列
+                if(isSold){
+                    com.edu.nju.asi.model.Stock stock = null;
+                    try {
+                        stock = stockDao.getStockData(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //每个持仓期的第一天作为调仓日期
+                    lastSoldStocks.add(new HoldOrSoldStocks(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getFrontAdjClose()));
+                    currentHoldingStocks.remove(i);
+                }
+            }
+        }
+
         List<CumulativeReturn> strategyCumulativeReturn = new LinkedList<>();
 
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
 
-        //若是第一个周期,收益的第一天以调仓期的第二天为基准
-        if(periodSerial == 1){
-            periodStart = allDatesWithData.get(startIndex+1);
-        }
+        //每个周期的起始调仓日不计算入收益中
+        periodStart = allDatesWithData.get(startIndex+1);
 
         // 对阶段内的每只股票进行数据读取
         for (String s : pickedStockCodes) {
-            List<StrategyStock> ss = stockData.get(s);
-            for (StrategyStock stock : ss) {
-                if (isDateWithinWanted(periodStart, periodEnd, stock.date)) {
-                    LocalDate thisDate = stock.date;
-                    double profit = stock.close / stock.preClose - 1;
+            List<Stock> ss = stockData.get(s);
+            for (Stock stock : ss) {
+                if (isDateWithinWanted(periodStart, periodEnd, stock.getStockID().getDate())) {
+                    LocalDate thisDate = stock.getStockID().getDate();
+                    double profit = stock.getClose() / stock.getPreClose() - 1;
 
                     if (forCalcu.keySet().contains(thisDate)) {
                         forCalcu.get(thisDate).add(profit);

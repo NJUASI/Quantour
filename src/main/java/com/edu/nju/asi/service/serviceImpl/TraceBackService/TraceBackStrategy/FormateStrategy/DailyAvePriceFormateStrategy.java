@@ -1,7 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
 import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
-import com.edu.nju.asi.infoCarrier.traceBack.StrategyStock;
+import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 
 import java.time.LocalDate;
@@ -10,25 +10,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Harvey on 2017/6/3.
+ * Created by Harvey on 2017/6/5.
  *
- * TODO
+ * 日均成交价
+ *
+ * 当日股票平均成交价格，等于当日成交额除以当日成交量。
  */
-public class ClosePriceFormateStrategy extends AllFormateStrategy{
+public class DailyAvePriceFormateStrategy extends AllFormateStrategy{
 
-
-    public ClosePriceFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<StrategyStock>> stockData) {
+    public DailyAvePriceFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
         super(allDatesWithData, stockData);
     }
 
-    /**
-     * 形成期／N日均值，用于后续策略筛选
-     *
-     * @param stockCodes      股票列表
-     * @param periodStart     持有期起始日期;
-     * @param formativePeriod 形成期长度（MS）／N日均值偏离度（MR）
-     * @return 形成的数据
-     */
     @Override
     public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
@@ -41,14 +34,18 @@ public class ClosePriceFormateStrategy extends AllFormateStrategy{
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
         for(int i = 0; i < stockCodes.size(); i++){
-            List<StrategyStock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
+            double total = 0;
+            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
             //说明为该形成期没有数据
             if(null == stockVOList){
                 continue;
             }
 
-            //初始得分为0
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), stockVOList.get(i).close, 0));
+            for(int j = 0; j < stockVOList.size(); j++){
+                total = new Double(stockVOList.get(j).getTransactionAmount()) / new Double(stockVOList.get(j).getVolume());
+            }
+
+            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), total / stockVOList.size(), 0));
         }
 
         return filterConditionRate;
