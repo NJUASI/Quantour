@@ -288,7 +288,7 @@
                                 <div class="row">
                                     <div class="form-group row col-md-4">
                                         <label class="col-md-4" style="margin-top: 7px">选择板块：</label>
-                                        <div class='col-md-7'>
+                                        <div class='col-md-7' style="margin-left: -14px">
                                             <select id="blockTypes" name="blockTypes"
                                                     class=" selectpicker show-tick form-control"
                                                     style="padding-left: 0px"
@@ -301,7 +301,7 @@
                                     </div>
                                     <div class="form-group  col-md-4 ">
                                         <label class="col-md-2" style="margin-top: 7px">ST：</label>
-                                        <div class=' col-md-8 '>
+                                        <div class=' col-md-8' style="margin-left: 27px">
                                             <select id="stType" class="col-md-10 selectpicker show-tick form-inline">
                                                 <option value="INCLUDE" selected>包含ST</option>
                                                 <option value="EXCLUDE">排除ST</option>
@@ -354,14 +354,14 @@
                                         <div class="row" style="margin-top: 20px">
                                             <!--左边选择栏  -->
                                             <div class="col-md-5 col-xs-12">
-                                                <label class="">
+                                                <label style="margin-right: 18px">
                                                     选股指标:
                                                 </label>
 
                                                 <select id="searchQuota" class="selectpicker col-md-6"
                                                         onchange=quotaChange(); data-live-search="true" data-size="10"
                                                         data-live-search-placeholder="Search" data-actions-box="true"
-                                                        title="搜索指标">
+                                                        title="搜索指标" style="margin-left: 25px">
                                                     <option><span class="quota">N日平均成交额</span></option>
                                                     <option class="quota">N日平均成交量</option>
                                                     <option class="quota">N日乖离率</option>

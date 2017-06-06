@@ -116,65 +116,66 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2 col-lg-offset-1 inputBlock">
-
-                        <label for="blockTypes">板块：</label>
-                        <select id="blockTypes" name="blockTypes" class="selectpicker show-tick form-control"
-                                multiple data-live-search="false" placeholder="请选择板块">
-                            <option value="ZB" selected>主板</option>
-                            <option value="ZXB" selected>中小板</option>
-                            <option value="CYB" selected>创业板</option>
-                        </select>
-
+                    <div class="form-group row col-md-4 col-md-offset-1 inputBlock">
+                        <label class="col-md-4" style="margin-top: 7px">选择板块：</label>
+                        <div class='col-md-7'   style="margin-left: -10px">
+                            <select id="blockTypes" name="blockTypes"
+                                    class=" selectpicker show-tick form-control"
+                                    multiple data-live-search="false" placeholder="请选择板块">
+                                <option value="ZB" selected>主板</option>
+                                <option value="ZXB" selected>中小板</option>
+                                <option value="CYB" selected>创业板</option>
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="col-lg-2 inputBlock">
-
-                        <label>ST：</label>
-                        <div style="display: inline">
-                            <select id="stType" class="selectpicker show-tick form-control">
+                    <div class="form-group  col-md-3 inputBlock">
+                        <label class="col-md-3" style="margin-top: 7px">ST：</label>
+                        <div class=' col-md-8'>
+                            <select id="stType" class="col-md-12 selectpicker show-tick form-inline">
                                 <option value="INCLUDE" selected>包含ST</option>
                                 <option value="EXCLUDE">排除ST</option>
                                 <option value="ONLY">仅有ST</option>
                             </select>
                         </div>
+
                     </div>
-                    <div class="col-md-2  inputBlock">
-                        <div class="row">
-                            <div class="col-md-5"><label>调仓周期</label></div>
-                        </div>
-                        <div class="row">
 
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input id="holdingPeriod" type="text" class="form-control col-md-1"
-                                               name="holdingPeriod" placeholder="请输入天数">
-                                    </div>
-                                </div>
-
-                            </div>
-
+                    <div class="form-group col-md-3 inputBlock">
+                        <label class="col-md-5" style="margin-top: 7px">收益基准：</label>
+                        <div class='col-md-7' style="margin-left: -14px">
+                            <select id="baseStockEve" name="baseStockEve" class="selectpicker show-tick form-control col-md-7">
+                                <option value="沪深300" selected>沪深300</option>
+                                <option value="创业板指">创业板指</option>
+                                <option value="中小板指">中小板指</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-md-2  inputBlock">
-                        <div class="row">
-                            <div class="col-md-6"><label>最大持仓数</label></div>
+
+
+
+
+                    <div class="form-group col-md-offset-1 col-md-4 inputBlock">
+                        <label class="col-md-4" style="margin-top: 7px">调仓周期：</label>
+                        <div class=' col-md-4 ' style="margin-left: -10px">
+                            <input id="holdingPeriod" type="text" class="form-control col-md-1"
+                                   name="holdingPeriod" placeholder="请输入天数">
                         </div>
-                        <div class="row">
-
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input id="maxHolding" type="text" class="form-control col-md-1"
-                                               name="maxHolding" placeholder="请输入股票数">
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
+                        <label class="col-md-1" style="margin-top: 7px">天</label>
                     </div>
+
+                    <div class="form-group  col-md-3 inputBlock" style="margin-left: -17px">
+                        <label class="col-md-5" style="margin-top: 7px">最大持仓：</label>
+                        <div class=' col-md-6 ' style="margin-left: -27px">
+                            <input id="maxHolding" type="text" class="form-control col-md-1"
+                                   name="maxHolding" placeholder="请输入股票数">
+                        </div>
+                        <label class="col-md-1" style="margin-top: 7px">支</label>
+                    </div>
+
+
+
+
+
                 </div>
             </div>
         </div>
@@ -540,11 +541,11 @@
             <div class="panel-body">
                 <div class="row">
 
-                    <div class="col-md-2 col-md-offset-1 inputBlock">
+                    <div class="col-md-3 col-md-offset-1 inputBlock">
 
-                        <label>开始日期：</label>
+                        <label class="col-md-5" style="margin-top: 7px">开始日期：</label>
                         <!--指定 date标记-->
-                        <div class='input-group date' id='datetimeStart'>
+                        <div class='input-group date col-md-6' id='datetimeStart'>
                             <input id="startDate" type='text' class="form-control form_datetime"/>
                             <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -552,10 +553,11 @@
 
                         </div>
                     </div>
-                    <div class="col-md-2 col-md-offset-1 inputBlock">
-                        <label>结束日期：</label>
+                    <div class="col-md-3 inputBlock">
+
+                        <label class="col-md-5" style="margin-top: 7px">结束日期：</label>
                         <!--指定 date标记-->
-                        <div class='input-group date' id='datetimeEnd'>
+                        <div class='input-group date col-md-6' id='datetimeEnd'>
                             <input id="endDate" type='text' class="form-control form_datetime"/>
                             <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -564,27 +566,16 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2 col-md-offset-1 inputBlock">
-
-                        <label>收益基准：</label>
-
-                        <select id="baseStockEve" name="baseStockEve" class="selectpicker show-tick form-control">
-                            <option value="沪深300" selected>沪深300</option>
-                            <option value="创业板指">创业板指</option>
-                            <option value="中小板指">中小板指</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-2 col-md-offset-1 inputBlock">
+                    <div class="col-md-1 col-md-offset-2 inputBlock" >
 
                         <button type="button" class="btn btn-info" onclick="traceback()"
-                                style="margin-left: -40px;">开始回测
+                                style="margin-left: -70px;">开始回测
                         </button>
                     </div>
-                    <div class="col-md-2 col-md-offset-1">
+                    <div class="col-md-1 inputBlock">
 
                         <button type="button" class="btn btn-info" id="createStrategy"
-                                style="margin-top: 10px;margin-left: -40px;margin-bottom: 20px">创建策略
+                                style="margin-left: -40px;margin-bottom: 20px">创建策略
                         </button>
                     </div>
 
@@ -706,6 +697,7 @@
         </div>
     </div>
 </div>
+<footer/>
 <%--</c:when>--%>
 <%--<c:otherwise>--%>
 <%--显示一张图片好了。。--%>
@@ -802,9 +794,9 @@
 
                 <div class="row">
                     <div class="form-group col-md-offset-1 col-md-6">
-                        <label class="col-md-3 control-label">策略名称：</label>
+                        <label class="col-md-3 control-label" style="margin-top: -10px">策略名称：</label>
                         <div class="col-md-5">
-                            <input type="text" class="form-control" style="margin-top: -7px;margin-left: -30px"
+                            <input type="text" class="form-control" style="margin-top: -17px;margin-left: -30px"
                                    placeholder="">
                         </div>
                     </div>
@@ -822,7 +814,7 @@
                                 <div class="col-md-2">
                                     <label class="control-label">ST：</label><span>仅为ST</span>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 col-md-offset-1">
                                     <label class="control-label">调仓周期：</label><span>10</span>
                                 </div>
                                 <div class="col-md-2">
@@ -1174,6 +1166,9 @@
             "<option value='RANK_MIN'>排名最小</option>" +
             "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
             "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
+            "<option value='RANK_BIGGER'>大于</option>" +
+            "<option value='RANK_SHORTER'>小于</option>" +
+            "<option value='RANK_EQUAL'>等于</option>" +
             "</select>" +
             "</div>" +
             "</td>" +
@@ -1204,12 +1199,85 @@
         $(".quotaRank").bind('input propertychange', function () {
             if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
-            } else {
+            } else  if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT"){
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html("%");
+            }else {
+                var name = $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".quotaName").html();
+                var result = convert(name);
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html(result);
             }
         })
 
     });
+
+    function convert(indicatorType) {
+        indicatorType=indicatorType.trim();
+        switch (indicatorType) {
+            case "开盘价":
+                return " ";
+            case "收盘价":
+                return " ";
+            case "最高价":
+                return " ";
+            case "最低价":
+                return " ";
+            case "前日收盘价":
+                return " ";
+            case "日均成交价":
+                return " ";
+            case "后复权开盘价":
+                return " ";
+            case "后复权收盘价":
+                return " ";
+            case "后复权最高价":
+                return " ";
+            case "后复权最低价":
+                return " ";
+            case "前日后复权收盘价":
+                return " ";
+            case "后复权均价":
+                return " ";
+            case "总股本":
+                return "亿";
+            case "流通股本":
+                return "亿";
+            case "总市值":
+                return "亿";
+            case "流通市值":
+                return "亿";
+            case "股价振幅":
+                return "%";
+            case "市盈率":
+                return " ";
+            case "市净率":
+                return " ";
+            case "市销率":
+                return " ";
+            case "静态市盈率":
+                return " ";
+            case "动态市盈率":
+                return " ";
+            default:
+                switch (indicatorType.substring(indicatorType.length-2)){
+                    case "交额":
+                        return "亿";
+                    case "交量":
+                        return "万";
+                    case "离率":
+                        return "%";
+                    case "动率":
+                        return "%";
+                    case "涨幅":
+                        return "%";
+                    case "手率":
+                        return "%";
+                }
+
+        }
+
+    }
 
     function commit() {
         $(".quotaRow").each(function () {
