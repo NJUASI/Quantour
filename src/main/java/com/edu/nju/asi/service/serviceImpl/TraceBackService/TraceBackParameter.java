@@ -33,7 +33,7 @@ public class TraceBackParameter {
     //基准的日收益标准差
     private double stdevBase;
 
-    //回测所需要显示参数的信息载体
+    //回测所需要显示数值型参数的信息载体
     private TraceBackNumVal traceBackNumVal;
 
     //回测系统需要获取的所有信息

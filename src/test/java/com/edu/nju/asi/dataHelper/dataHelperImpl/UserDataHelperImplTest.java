@@ -76,13 +76,13 @@ public class UserDataHelperImplTest {
     @Test
     public void addStrategy() throws Exception {
         Strategy strategy1 = new Strategy(LocalDate.of(2017,1,1)
-                ,"Byron",true,"涨幅","hhhhhhhhhhh");
+                ,"ByronDong",true,"涨幅","hhhhhhhhhhh");
         strategy1.setStrategyID("小策略");
         Strategy strategy2 = new Strategy(LocalDate.of(2017,3,1)
-                ,"Dong",false,"乖离率","aaaaaaaaaaaaaa");
+                ,"Charleskkkk",false,"乖离率","aaaaaaaaaaaaaa");
         strategy2.setStrategyID("大策略");
-        userDataHelper.addStrategyByCreator("Byron",strategy1);
-        userDataHelper.addStrategyByChecker("Dong","小策略");
+        userDataHelper.addStrategyByCreator("ByronDong",strategy1);
+        userDataHelper.addStrategyByChecker("Charleskkkk","小策略");
 //        userDataHelper.addStrategy("Gong",strategy1);
 //        userDataHelper.addStrategy("Gong","大策略");
     }
@@ -108,12 +108,12 @@ public class UserDataHelperImplTest {
 
     @Test
     public void getStrategy() throws Exception {
-        List<Strategy> strategies = userDataHelper.getStrategy("Gong");
+        List<Strategy> strategies = userDataHelper.getStrategy("Charleskkkk");
         Strategy strategy = strategies.get(0);
-        assertEquals("乖离率",strategy.getContent());
-        assertEquals("Dong",strategy.getCreater());
-        assertEquals(LocalDate.of(2017,3,1),strategy.getDate());
-        assertEquals("aaaaaaaaaaaaaa",strategy.getDescription());
+        assertEquals("涨幅",strategy.getContent());
+        assertEquals("ByronDong",strategy.getCreater());
+        assertEquals(LocalDate.of(2017,31,1),strategy.getDate());
+        assertEquals("hhhhhhhhhhh",strategy.getDescription());
         assertEquals(false,strategy.isPrivate());
     }
 

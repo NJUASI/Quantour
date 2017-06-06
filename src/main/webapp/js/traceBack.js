@@ -217,7 +217,7 @@ function separateIndicator(indicatorType) {
         // 指标中不含有日字
         alert("指标中不含有日字\n" + indicatorType);
         alert(convertIndicator(indicatorType));
-        return new Array(0, convertIndicator(indicatorType));
+        return new Array(1, convertIndicator(indicatorType));
     }
     if (separator == 0) {
         // 为 N日** 类型
@@ -229,7 +229,7 @@ function separateIndicator(indicatorType) {
             return new Array(indicatorType.substr(0, separator - 1), convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         } else {
             // 为 当／前日开盘价 类型
-            return new Array(0, convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
+            return new Array(1, convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         }
     }
 }
@@ -239,6 +239,8 @@ function separateIndicator(indicatorType) {
  * 在JS中实现 IndicatorType.getEnum()方法，能够在JS中调用Java代码后修改
  */
 function convertIndicator(indicatorType) {
+    alert(indicatorType + "\n" + (indicatorType == "股价振幅"));
+
     switch (indicatorType) {
         case "开盘价":
             return "OPEN";
@@ -301,4 +303,5 @@ function convertIndicator(indicatorType) {
         case "动态市盈率":
             return "D_PE_TTM";
     }
+    alert("No Match");
 }
