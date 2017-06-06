@@ -23,6 +23,17 @@ public class FilterConditionRate implements Comparable<FilterConditionRate>{
     //默认按降序方式排序
     @Override
     public int compareTo(FilterConditionRate o) {
+        //两个中有一个为null
+        if(this.indicatorVal == null && o.indicatorVal == null){
+            return 0;
+        }
+        if(this.indicatorVal == null && o.indicatorVal != null){
+            return 1;
+        }
+        if(this.indicatorVal != null && o.indicatorVal == null){
+            return -1;
+        }
+        //两个都不为null
         if(this.indicatorVal > o.indicatorVal){
             return -1;
         }

@@ -82,10 +82,21 @@ class AscSorter implements Comparator<FilterConditionRate> {
 
     @Override
     public int compare(FilterConditionRate o1, FilterConditionRate o2) {
+        //两个中有一个为null
+        if(o1.indicatorVal == null && o2.indicatorVal == null){
+            return 0;
+        }
+        if(o1.indicatorVal == null && o2.indicatorVal != null){
+            return 1;
+        }
+        if(o1.indicatorVal != null && o2.indicatorVal == null){
+            return -1;
+        }
+        //两个都不为null
         if(o1.indicatorVal > o2.indicatorVal){
             return -1;
         }
-        else if(o1.indicatorVal == o2.indicatorVal){
+        else if(o1.indicatorVal.doubleValue() == o2.indicatorVal.doubleValue()){
             return 0;
         }
         else {
@@ -100,10 +111,21 @@ class AscSorter implements Comparator<FilterConditionRate> {
 class DescSorter implements Comparator<FilterConditionRate>{
     @Override
     public int compare(FilterConditionRate o1, FilterConditionRate o2) {
+        //两个中有一个为null
+        if(o1.indicatorVal == null && o2.indicatorVal == null){
+            return 0;
+        }
+        if(o1.indicatorVal == null && o2.indicatorVal != null){
+            return -1;
+        }
+        if(o1.indicatorVal != null && o2.indicatorVal == null){
+            return 1;
+        }
+        //两个都不为null
         if(o1.indicatorVal > o2.indicatorVal){
             return 1;
         }
-        else if(o1.indicatorVal == o2.indicatorVal){
+        else if(o1.indicatorVal.doubleValue() == o2.indicatorVal.doubleValue()){
             return 0;
         }
         else {
