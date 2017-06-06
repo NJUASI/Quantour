@@ -9,7 +9,7 @@ public enum MailNotificationType {
 
     // 保存、更新、删除
     SAVE("保存"),
-    UPDATE("更新"),
+    MODIFY("更新"),
     DELETE("删除");
 
     private String repre;

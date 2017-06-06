@@ -1,24 +1,59 @@
 /**
  * Created by cuihua on 2017/5/14.
  */
+load("nashorn:mozilla_compat.js");
+importPackage("com.edu.nju.asi.utilities.enums");
+
 function traceback() {
-    var isCustomized = $(":radio[name='optionsRadios']:checked").val();
+    // var isCustomized = $(":radio[name='optionsRadios']:checked").val();
+
+    // 添加选股条件
+    var filterConditions = new Array();
+    var filterNum = 0;
+    $(".quotaRow").each(function () {
+        var dateOfIndicator = $(this).find(".numOfN").val();
+        var separatorResult = separateIndicator($(this).find(".quotaName").html());
+        alert(separatorResult);
+
+        if (dateOfIndicator == "") {
+            alert("无N日");
+            // 非输入框输入
+            filterConditions[filterNum] = {
+                "indicatorType": separatorResult[1],
+                "comparatorType": $(this).find(".quotaRank").val(),
+                "value": $(this).find(".quotaNum").val(),
+                "weight": $(this).find(".quotaWeight").val(),
+                "formativePeriod": separatorResult[0]
+            };
+        } else {
+            alert("有N日");
+            // 输入框输入
+            filterConditions[filterNum] = {
+                "indicatorType": separatorResult,
+                "comparatorType": $(this).find(".quotaRank").val(),
+                "value": $(this).find(".quotaNum").val(),
+                "weight": $(this).find(".quotaWeight").val(),
+                "formativePeriod": dateOfIndicator
+            };
+        }
+        filterNum++;
+    });
+
+    // "formativePeriod": $("#formativePeriod").val();
+
+    alert("ok");
     var jsonData = {
         "startDate": $("#startDate").val(),
         "endDate": $("#endDate").val(),
-        "formativePeriod": $("#formativePeriod").val(),
         "holdingPeriod": $("#holdingPeriod").val(),
         "stockPoolCriteria": {
             "stType": $("#stType").val(),
             "blockTypes": $("#blockTypes").val()
         },
+        "maxHoldingNum": 10,
         "baseStockName": $("#baseStockEve").val(),
-        "isCustomized": isCustomized,
-        "formateAndPickCriteria": {
-            "formateType": $("#formativeStrategy").val(),
-            "pickType": $("#pickStrategy").val(),
-            "rank": $("#rank").val(),
-        }
+        // "isCustomized": isCustomized,
+        "filterConditions": filterConditions
     };
 
     $("body").removeClass("loaded");
@@ -172,4 +207,98 @@ function traceback() {
             alert("错误" + result);
         }
     });
+}
+
+
+function separateIndicator(indicatorType) {
+    var separator = indicatorType.indexOf("日");
+
+    if (separator == -1) {
+        // 指标中不含有日字
+        alert("指标中不含有日字\n" + indicatorType);
+        alert(convertIndicator(indicatorType));
+        return new Array(0, convertIndicator(indicatorType));
+    }
+    if (separator == 0) {
+        // 为 N日** 类型
+        return convertIndicator(indicatorType.substr(1));
+    } else {
+        var reg = /^[0-9]*$/;
+        if (!reg.test(indicatorType.substr(0, separator - 1))) {
+            // 为 5日开盘价 类型
+            return new Array(indicatorType.substr(0, separator - 1), convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
+        } else {
+            // 为 当／前日开盘价 类型
+            return new Array(0, convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
+        }
+    }
+}
+
+
+/**
+ * 在JS中实现 IndicatorType.getEnum()方法，能够在JS中调用Java代码后修改
+ */
+function convertIndicator(indicatorType) {
+    switch (indicatorType) {
+        case "开盘价":
+            return "OPEN";
+        case "收盘价":
+            return "CLOSE";
+        case "最高价":
+            return "HIGH";
+        case "最低价":
+            return "LOW";
+        case "前日收盘价":
+            return "PRE_CLOSE";
+        case "日均成交价":
+            return "DAILY_AVE_PRICE";
+        case "后复权开盘价":
+            return "AFTER_ADJ_OPEN";
+        case "后复权收盘价":
+            return "AFTER_ADJ_HIGH";
+        case "后复权最高价":
+            return "AFTER_ADJ_OPEN";
+        case "后复权最低价":
+            return "AFTER_ADJ_LOW";
+        case "前日后复权收盘价":
+            return "AFTER_ADJ_PRE_CLOSE";
+        case "后复权均价":
+            return "AFTER_ADJ_DAILY_AVE_PRICE";
+        case "成交额":
+            return "TRANSACTION_AMOUNT";
+        case "平均成交额":
+            return "TRANSACTION_AMOUNT";
+        case "成交量":
+            return "VOLUME";
+        case "平均成交量":
+            return "VOLUME";
+        case "涨幅":
+            return "INCREASE_MARGIN";
+        case "换手率":
+            return "TURNOVER_RATE";
+        case "总股本":
+            return "GENERAL_CAPITAL";
+        case "流通股本":
+            return "NEGOTIABLE_CAPITAL";
+        case "总市值":
+            return "TOTAL_VALUE";
+        case "流通市值":
+            return "CIRCULATION_MARKET_VALUE";
+        case "股价振幅":
+            return "SWING_RATE";
+        case "乖离率":
+            return "BIAS";
+        case "波动率":
+            return "RETURN_VOLATILITY";
+        case "市盈率":
+            return "PE_TTM";
+        case "市净率":
+            return "PB";
+        case "市销率":
+            return "PS_TTM";
+        case "静态市盈率":
+            return "S_PE_TTM";
+        case "动态市盈率":
+            return "D_PE_TTM";
+    }
 }

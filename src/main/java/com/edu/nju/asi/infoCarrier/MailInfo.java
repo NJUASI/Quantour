@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class MailInfo {
 
-    private final static String asiUrl = "119.23.223.62";
+    private final static String asiUrl = "https://119.23.223.62";
 
     // 创建者
     public String creator;
@@ -33,6 +33,6 @@ public class MailInfo {
         this.subscribers = subscribers;
         this.type = type;
         this.strategyID = strategyID;
-        this.url = "/strategy/" + strategyID;
+        this.url = asiUrl + "/strategy/" + strategyID;
     }
 }

@@ -818,10 +818,10 @@
             "<td class=\"col-md-2\">" +
             "<div class=\"row\">" +
             "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
-            "<option>排名最大</option>" +
-            "<option>排名最小</option>" +
-            "<option>排名%最大</option>" +
-            "<option>排名%最小</option>" +
+            "<option value='RANK_MAX'>排名最大</option>" +
+            "<option value='RANK_MIN'>排名最小</option>" +
+            "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
+            "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
             "</select>" +
             "</div>" +
             "</td>" +
@@ -850,7 +850,7 @@
         });
         $(".quotaRank").unbind("input propertychange");
         $(".quotaRank").bind('input propertychange', function () {
-            if ($(this).val() == "排名最大" || $(this).val() == "排名最小") {
+            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
             } else {
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
@@ -885,10 +885,10 @@
             "<td class=\"col-md-2\">" +
             "<div class=\"row\">" +
             "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
-            "<option>排名最大</option>" +
-            "<option>排名最小</option>" +
-            "<option>排名%最大</option>" +
-            "<option>排名%最小</option>" +
+            "<option value='RANK_MAX'>排名最大</option>" +
+            "<option value='RANK_MIN'>排名最小</option>" +
+            "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
+            "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
             "</select>" +
             "</div>" +
             "</td>" +
