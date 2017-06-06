@@ -199,4 +199,22 @@ public abstract class AllFormateStrategy {
 
         return stockVOList.subList(startIndex, endIndex+1);
     }
+
+    /**
+     * 计算某只股票N个交易日的eam
+     * @param stockList 需要计算的某只股票N个交易日的详情
+     * @return
+     */
+    protected double EMA_Close(List<Stock> stockList){
+        //平滑指数, 一般取作2/(N+1)
+        double k = 2.0 / (stockList.size() + 1);
+        //第一天ema等于当天的收盘价
+        double ema = stockList.get(0).getClose();
+        for(int i = 1; i < stockList.size(); i++){
+            //第二天以后，当天收盘价 * 系数 加上昨天的ema*系数-1
+            ema = k*stockList.get(i).getClose() + (1 - k) * ema;
+        }
+
+        return ema;
+    }
 }

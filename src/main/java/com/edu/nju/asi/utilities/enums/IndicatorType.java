@@ -42,6 +42,10 @@ public enum IndicatorType {
     BIAS("乖离率"),
     RETURN_VOLATILITY("波动率"),
 
+    MACD_DIF("DIFF线"),
+    MACD_DEA("DEA线"),
+    MACD_COLUMN_VAL("MACD柱状值"),
+
 
     // 财务指标
     PE_TTM("市盈率"),

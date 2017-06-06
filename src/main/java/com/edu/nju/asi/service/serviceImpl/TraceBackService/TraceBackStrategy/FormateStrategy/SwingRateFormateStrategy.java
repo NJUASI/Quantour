@@ -32,6 +32,10 @@ public class SwingRateFormateStrategy extends AllFormateStrategy{
         for(int i = 0; i < stockCodes.size(); i++){
 
             List<Stock> stockList = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod);
+            if(stockList == null){
+                filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), null, 0));
+                continue;
+            }
 
             double totalIncreaseAmount = 0;
             for(int j = 0; j < stockList.size(); j++){

@@ -84,7 +84,11 @@ public class FormateStrategyFactory {
             // 收益波动率
             case RETURN_VOLATILITY:
                 return new ReturnVolatilityFormateStrategy(allDatesWithData, stockData);
-
+            //MACD技术指标
+            case MACD_DIF:
+            case MACD_DEA:
+            case MACD_COLUMN_VAL:
+                return new MACD_FormateStrategy(allDatesWithData, stockData, indicatorType);
 
         }
         return null;

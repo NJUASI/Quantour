@@ -37,7 +37,14 @@ public class AccumulateFormateStrategy extends AllFormateStrategy {
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
         for (int i = 0; i < stockCodes.size(); i++) {
-            double indicatorVal = calculateAccumulativeValue(getDateWithHaltDay(stockCodes.get(i), periodStartIndex - 1, formativePeriod), indicatorSpell);
+
+            List<Stock> stockList = getDateWithHaltDay(stockCodes.get(i), periodStartIndex - 1, formativePeriod);
+            if(stockList == null){
+                filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), null, 0));
+                continue;
+            }
+
+            double indicatorVal = calculateAccumulativeValue(stockList, indicatorSpell);
             filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), indicatorVal, 0));
         }
 
