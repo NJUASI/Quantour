@@ -45,6 +45,12 @@ public enum IndicatorType {
     MACD_DIF("DIFF线"),
     MACD_DEA("DEA线"),
     MACD_COLUMN_VAL("MACD柱状值"),
+    BBIC("多空指标"),
+    VOLUME_RATIO("1日5日量比"),
+    MULTIPLE_ARRANGEMENT_MARK("多头排列标记"),
+    BOLL_UP_BANDS("布林上线"),
+    BOLL_DOWN_BANDS("布林上线"),
+
 
 
     // 财务指标

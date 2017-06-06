@@ -49,7 +49,7 @@ public abstract class AllFormateStrategy {
      * @param indicatorSpell    指标
      * @return
      */
-    protected Double calculateMeanValue(List<Stock> stockList, String indicatorSpell){
+    protected Double computeMeanValue(List<Stock> stockList, String indicatorSpell){
 
         //拿到StrategyStock的类
         Class<Stock> clazz = Stock.class;
@@ -79,7 +79,7 @@ public abstract class AllFormateStrategy {
      * @param indicatorSpell    指标
      * @return
      */
-    protected Double calculateAccumulativeValue(List<Stock> stockList, String indicatorSpell){
+    protected Double computeAccumulativeValue(List<Stock> stockList, String indicatorSpell){
 
         //拿到StrategyStock的类
         Class<Stock> clazz = Stock.class;

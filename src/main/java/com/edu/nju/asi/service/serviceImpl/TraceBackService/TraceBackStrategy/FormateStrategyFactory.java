@@ -89,6 +89,19 @@ public class FormateStrategyFactory {
             case MACD_DEA:
             case MACD_COLUMN_VAL:
                 return new MACD_FormateStrategy(allDatesWithData, stockData, indicatorType);
+            //多空指标
+            case BBIC:
+                return new BBIC_FormateStrategy(allDatesWithData, stockData);
+            //多头排列标记
+            case MULTIPLE_ARRANGEMENT_MARK:
+                return new MulArrMarkFormateStrategy(allDatesWithData, stockData);
+            //1日5日量比
+            case VOLUME_RATIO:
+                return new VolumeRatioIndexFormateStrategy(allDatesWithData, stockData);
+            //布林线
+            case BOLL_UP_BANDS:
+            case BOLL_DOWN_BANDS:
+                return new BOLL_FormateStrategy(allDatesWithData, stockData, indicatorType);
 
         }
         return null;

@@ -4,7 +4,6 @@ import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class AccumulateFormateStrategy extends AllFormateStrategy {
                 continue;
             }
 
-            double indicatorVal = calculateAccumulativeValue(stockList, indicatorSpell);
+            double indicatorVal = computeAccumulativeValue(stockList, indicatorSpell);
             filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), indicatorVal, 0));
         }
 
