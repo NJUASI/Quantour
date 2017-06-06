@@ -1,7 +1,7 @@
 package com.edu.nju.asi.crawler;
 
 
-import com.edu.nju.asi.crawler.StoreDataHelper.StoreBasicDataHelper;
+import com.edu.nju.asi.crawler.StoreDataHelper.StoreAreaAndIndustryHelper;
 
 /**
  * Created by Byron Dong on 2017/6/2.
@@ -9,7 +9,7 @@ import com.edu.nju.asi.crawler.StoreDataHelper.StoreBasicDataHelper;
 public class Main {
 
     public static void main(String[] args) {
-        StoreBasicDataHelper storeBasicDataHelper = new StoreBasicDataHelper();
-        storeBasicDataHelper.store();
+        StoreAreaAndIndustryHelper storeAreaAndIndustryHelper = new StoreAreaAndIndustryHelper();
+        storeAreaAndIndustryHelper.handle();
     }
 }

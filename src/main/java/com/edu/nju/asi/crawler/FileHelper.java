@@ -1,4 +1,4 @@
-package com.edu.nju.asi.dataHelper.dataHelperImpl;
+package com.edu.nju.asi.crawler;
 
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
