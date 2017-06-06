@@ -12,6 +12,9 @@ import java.util.Map;
 
 /**
  * Created by Harvey on 2017/6/5.
+ *
+ * 股价涨幅:  股票1日/5日/20日/60日/120日/250日的累计涨跌幅。N日累计涨跌幅，股票的停牌日计算在内。 股票交易日数少于N时，N日涨幅为空值。
+ * 累计换手率: 股票当日/5日/20日/60日/120日/250日的累计换手率。 等于成交股数除以总股本。 N日累计换手率，股票的停牌日计算在内。 股票交易日数少于N时，N日累计换手率为空值。
  */
 public class AccumulateFormateStrategy extends AllFormateStrategy {
 
@@ -31,37 +34,11 @@ public class AccumulateFormateStrategy extends AllFormateStrategy {
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
-        LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
-
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
-        //拿到StrategyStock的类
-        Class<Stock> clazz = Stock.class;
-
-        for(int i = 0; i < stockCodes.size(); i++){
-            double total = 0;
-            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
-            //说明为该形成期没有数据
-            if(null == stockVOList){
-                continue;
-            }
-
-            for(int j = 0; j < stockVOList.size(); j++){
-                try {
-                    //反射拿到对象的值,并抑制java对修饰符的检查
-                    Field field = clazz.getDeclaredField(indicatorSpell);
-                    field.setAccessible(true);
-
-                    total += new Double(field.get(stockVOList.get(j)).toString());
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), total, 0));
+        for (int i = 0; i < stockCodes.size(); i++) {
+            double indicatorVal = calculateAccumulativeValue(getDateWithHaltDay(stockCodes.get(i), periodStartIndex - 1, formativePeriod), indicatorSpell);
+            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), indicatorVal, 0));
         }
 
         return filterConditionRate;

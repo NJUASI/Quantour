@@ -22,24 +22,19 @@ public class MomentumFormateStrategy extends AllFormateStrategy {
 
     @Override
     public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
-        LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
-
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
         for(int i = 0; i < stockCodes.size(); i++){
-            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
-            //说明为该形成期没有数据
-            if(null == stockVOList){
-                continue;
-            }
+
+            List<Stock> stockList = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod);
 
             //形成期内收益率
-            double rate = (stockVOList.get(stockVOList.size()-1).getClose() - stockVOList.get(0).getPreClose()) / stockVOList.get(0).getPreClose();
+            double rate = (stockList.get(stockList.size()-1).getClose() - stockList.get(0).getPreClose()) / stockList.get(0).getPreClose();
 
             //初始得分为0
             filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), rate, 0));

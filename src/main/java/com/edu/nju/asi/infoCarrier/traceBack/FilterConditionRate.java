@@ -9,24 +9,24 @@ public class FilterConditionRate implements Comparable<FilterConditionRate>{
     public String stockCode;
 
     // 指标
-    public double indicator;
+    public double indicatorVal;
 
     // 得分
     public double score;
 
-    public FilterConditionRate(String stockCode, double indicator, double score) {
+    public FilterConditionRate(String stockCode, double indicatorVal, double score) {
         this.stockCode = stockCode;
-        this.indicator = indicator;
+        this.indicatorVal = indicatorVal;
         this.score = score;
     }
 
     //默认按降序方式排序
     @Override
     public int compareTo(FilterConditionRate o) {
-        if(this.indicator > o.indicator){
+        if(this.indicatorVal > o.indicatorVal){
             return -1;
         }
-        else if(this.indicator == o.indicator){
+        else if(this.indicatorVal == o.indicatorVal){
             return 0;
         }
         else {

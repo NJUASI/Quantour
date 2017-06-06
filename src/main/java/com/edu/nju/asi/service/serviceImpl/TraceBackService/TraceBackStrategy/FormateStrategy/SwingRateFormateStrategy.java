@@ -22,29 +22,23 @@ public class SwingRateFormateStrategy extends AllFormateStrategy{
 
     @Override
     public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
-        LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
-
-
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
         for(int i = 0; i < stockCodes.size(); i++){
+
+            List<Stock> stockList = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod);
+
             double totalIncreaseAmount = 0;
-            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
-            //说明为该形成期没有数据
-            if(null == stockVOList){
-                continue;
+            for(int j = 0; j < stockList.size(); j++){
+                totalIncreaseAmount += (stockList.get(j).getHigh() - stockList.get(j).getLow()) / stockList.get(j).getPreClose();
             }
 
-            for(int j = 0; j < stockVOList.size(); j++){
-                totalIncreaseAmount += (stockVOList.get(j).getHigh() - stockVOList.get(j).getLow()) / stockVOList.get(j).getPreClose();
-            }
-
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), totalIncreaseAmount / stockVOList.size(), 0));
+            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), totalIncreaseAmount / stockList.size(), 0));
         }
 
         return filterConditionRate;

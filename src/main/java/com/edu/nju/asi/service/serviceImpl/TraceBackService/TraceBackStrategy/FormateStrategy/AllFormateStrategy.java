@@ -4,6 +4,7 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,129 @@ public abstract class AllFormateStrategy {
      */
     public abstract List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException;
 
+
+    /**
+     * 计算一个指标N日平均值
+     * @param stockList 需要计算的某只股票的数据
+     * @param indicatorSpell    指标
+     * @return
+     */
+    protected Double calculateMeanValue(List<Stock> stockList, String indicatorSpell){
+
+        //拿到StrategyStock的类
+        Class<Stock> clazz = Stock.class;
+
+        double total = 0;
+
+        for(int j = 0; j < stockList.size(); j++){
+            try {
+                //反射拿到对象的值,并抑制java对修饰符的检查
+                Field field = clazz.getDeclaredField(indicatorSpell);
+                field.setAccessible(true);
+
+                total += new Double(field.get(stockList.get(j)).toString());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return total/stockList.size();
+    }
+
+    /**
+     * 计算一个指标N日累计值
+     * @param stockList 需要计算的某只股票的数据
+     * @param indicatorSpell    指标
+     * @return
+     */
+    protected Double calculateAccumulativeValue(List<Stock> stockList, String indicatorSpell){
+
+        //拿到StrategyStock的类
+        Class<Stock> clazz = Stock.class;
+
+        double total = 0;
+
+        for(int j = 0; j < stockList.size(); j++){
+            try {
+                //反射拿到对象的值,并抑制java对修饰符的检查
+                Field field = clazz.getDeclaredField(indicatorSpell);
+                field.setAccessible(true);
+
+                total += new Double(field.get(stockList.get(j)).toString());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return total;
+    }
+
+    /**
+     * N日的某支股票的数据，停牌日不计算在内
+     * @param code      要获取数据的股票代码
+     * @param endIndex  要计算日期的最后一天
+     * @param period    要计算的时长（停牌日不计算在内）
+     * @return N日的某支股票的数据，停牌日不计算在内
+     */
+    public List<Stock> getDataWithoutHaltDay(String code, int endIndex, int period){
+
+        int startIndex = endIndex - period + 1;
+
+        LocalDate start = allDatesWithData.get(startIndex);
+        LocalDate end = allDatesWithData.get(endIndex);
+
+        List<Stock> stockList = findStockVOsWithinDay(code, start, end);
+        // 说明为该形成期没有数据
+        if(null == stockList){
+            return null;
+        }
+        // 数据库内交易日小于n, 数据不足
+        else if(stockData.get(code).size() < period){
+            return null;
+        }
+        else {
+            // 停牌日不算入交易日内, 补足缺少的数据
+            while(stockList.size() < period){
+                int k = period - stockList.size();
+                if(k == 1){
+                    start = allDatesWithData.get(startIndex - period - 1);
+                    end = start;
+                }
+                else {
+                    start = allDatesWithData.get(startIndex - period - k);
+                    end = allDatesWithData.get(startIndex - period - 1);
+                }
+                stockList.addAll(0,findStockVOsWithinDay(code, start, end));
+            }
+        }
+        return stockList;
+    }
+
+    /**
+     * N日的某支股票的数据，停牌日计算在内
+     * @param code      要获取数据的股票代码
+     * @param endIndex  要计算日期的最后一天
+     * @param period    要计算的时长（停牌日不计算在内）
+     * @return N日的某支股票的数据，停牌日计算在内
+     */
+    protected List<Stock> getDateWithHaltDay(String code, int endIndex, int period){
+        int startIndex = endIndex - period + 1;
+
+        LocalDate start = allDatesWithData.get(startIndex);
+        LocalDate end = allDatesWithData.get(endIndex);
+
+        List<Stock> stockList = findStockVOsWithinDay(code, start, end);
+        // 说明为该形成期没有数据
+        if(null == stockList){
+            return null;
+        }
+
+        return stockList;
+    }
 
     protected List<Stock> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){
         LocalDate thisStart = start;

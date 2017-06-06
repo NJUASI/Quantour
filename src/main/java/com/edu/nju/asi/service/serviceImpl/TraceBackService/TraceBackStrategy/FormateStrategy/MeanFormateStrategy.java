@@ -5,7 +5,6 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,9 @@ import java.util.Map;
 /**
  * Created by Harvey on 2017/4/20.
  *
- * 根据当日或N日平均 形成
  *
- * 股票价格、成交额、成交量、振幅、总股本/流通股本、总市值/流通市值
+ * 当日/N日均值（调仓日期前一日开始）  股票价格、成交额、成交量、振幅、总股本/流通股本、总市值/流通市值
+ * 停牌日不计算在内
  */
 public class MeanFormateStrategy extends AllFormateStrategy {
 
@@ -37,37 +36,11 @@ public class MeanFormateStrategy extends AllFormateStrategy {
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
-        LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
-
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
-        //拿到StrategyStock的类
-        Class<Stock> clazz = Stock.class;
-
         for(int i = 0; i < stockCodes.size(); i++){
-            double total = 0;
-            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
-            //说明为该形成期没有数据
-            if(null == stockVOList){
-                continue;
-            }
-
-            for(int j = 0; j < stockVOList.size(); j++){
-                try {
-                    //反射拿到对象的值,并抑制java对修饰符的检查
-                    Field field = clazz.getDeclaredField(indicatorSpell);
-                    field.setAccessible(true);
-
-                    total += new Double(field.get(stockVOList.get(j)).toString());
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), total / stockVOList.size(), 0));
+            double indicatorVal = calculateMeanValue(getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod), indicatorSpell);
+            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), indicatorVal, 0));
         }
 
         return filterConditionRate;

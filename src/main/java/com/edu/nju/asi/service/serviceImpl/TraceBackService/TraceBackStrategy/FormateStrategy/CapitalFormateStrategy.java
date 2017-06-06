@@ -35,40 +35,29 @@ public class CapitalFormateStrategy extends AllFormateStrategy{
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
-        LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
-
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
-        //拿到StrategyStock的类
         Class<Stock> clazz = Stock.class;
 
         for(int i = 0; i < stockCodes.size(); i++){
-            double total = 0;
-            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
-            //说明为该形成期没有数据
-            if(null == stockVOList){
-                continue;
+
+            List<Stock> stockList = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod);
+
+            Field field = null;
+            try {
+                field = clazz.getDeclaredField(indicatorSpell);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
             }
+            field.setAccessible(true);
 
-            for(int j = 0; j < stockVOList.size(); j++){
-                try {
-                    //反射拿到对象的值,并抑制java对修饰符的检查
-                    Field field = clazz.getDeclaredField(indicatorSpell);
-                    field.setAccessible(true);
-
-                    total += new Double(field.get(stockVOList.get(j)).toString()) / stockVOList.get(j).getClose();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
+            try {
+                filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), new Double(field.get(stockList.get(0)).toString()) / stockList.get(0).getClose(), 0));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
-
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), total / stockVOList.size(), 0));
         }
 
         return filterConditionRate;
     }
-
 }

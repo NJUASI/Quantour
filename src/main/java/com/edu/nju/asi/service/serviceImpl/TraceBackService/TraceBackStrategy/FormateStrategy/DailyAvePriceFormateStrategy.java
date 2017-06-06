@@ -4,6 +4,7 @@ import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,24 +29,19 @@ public class DailyAvePriceFormateStrategy extends AllFormateStrategy{
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
-        LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
-
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
         for(int i = 0; i < stockCodes.size(); i++){
+
+            List<Stock> stockList = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod);
+
             double total = 0;
-            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
-            //说明为该形成期没有数据
-            if(null == stockVOList){
-                continue;
+
+            for(int j = 0; j < stockList.size(); j++){
+                total = new Double(stockList.get(j).getTransactionAmount()) / new Double(stockList.get(j).getVolume());
             }
 
-            for(int j = 0; j < stockVOList.size(); j++){
-                total = new Double(stockVOList.get(j).getTransactionAmount()) / new Double(stockVOList.get(j).getVolume());
-            }
-
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), total / stockVOList.size(), 0));
+            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), total / stockList.size(), 0));
         }
 
         return filterConditionRate;

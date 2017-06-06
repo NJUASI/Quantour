@@ -1,6 +1,5 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FilterCondition;
 import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
 
 import java.util.ArrayList;
@@ -83,10 +82,10 @@ class AscSorter implements Comparator<FilterConditionRate> {
 
     @Override
     public int compare(FilterConditionRate o1, FilterConditionRate o2) {
-        if(o1.indicator > o2.indicator){
+        if(o1.indicatorVal > o2.indicatorVal){
             return -1;
         }
-        else if(o1.indicator == o2.indicator){
+        else if(o1.indicatorVal == o2.indicatorVal){
             return 0;
         }
         else {
@@ -101,10 +100,10 @@ class AscSorter implements Comparator<FilterConditionRate> {
 class DescSorter implements Comparator<FilterConditionRate>{
     @Override
     public int compare(FilterConditionRate o1, FilterConditionRate o2) {
-        if(o1.indicator > o2.indicator){
+        if(o1.indicatorVal > o2.indicatorVal){
             return 1;
         }
-        else if(o1.indicator == o2.indicator){
+        else if(o1.indicatorVal == o2.indicatorVal){
             return 0;
         }
         else {

@@ -30,42 +30,19 @@ public class BiasFormateStrategy extends AllFormateStrategy {
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
-        LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
-
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
         for(int i = 0; i < stockCodes.size(); i++){
+
+            List<Stock> stockList = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod);
+
             double total = 0;
-            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
-            //说明为该形成期没有数据
-            if(null == stockVOList){
-                continue;
-            }
-            else{
-                // 停牌日不算入交易日内
-                while(stockVOList.size() < formativePeriod){
-                    int k = formativePeriod - stockVOList.size();
-                    LocalDate start = null;
-                    LocalDate end = null;
-                    if(k == 1){
-                        start = allDatesWithData.get(periodStartIndex - formativePeriod - 1);
-                        end = start;
-                    }
-                    else {
-                        start = allDatesWithData.get(periodStartIndex - formativePeriod - k);
-                        end = allDatesWithData.get(periodStartIndex - formativePeriod - 1);
-                    }
-                    stockVOList.addAll(0,findStockVOsWithinDay(stockCodes.get(i), start, end));
-                }
+            for(int j = 0; j < stockList.size(); j++){
+                total += stockList.get(i).getClose();
             }
 
-            for(int j = 0; j < stockVOList.size(); j++){
-                total += stockVOList.get(j).getClose();
-            }
-
-            double average = total / stockVOList.size();
-            double biasRatio = (average - stockVOList.get(stockVOList.size()).getClose()) / average;
+            double average = total / stockList.size();
+            double biasRatio = (average - stockList.get(stockList.size()-1).getClose()) / average;
 
             filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), biasRatio, 0));
         }

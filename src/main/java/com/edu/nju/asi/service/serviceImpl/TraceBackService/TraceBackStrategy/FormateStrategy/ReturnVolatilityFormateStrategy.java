@@ -31,24 +31,17 @@ public class ReturnVolatilityFormateStrategy extends AllFormateStrategy{
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        LocalDate endOfFormative = allDatesWithData.get(periodStartIndex - 1);
-        LocalDate startOfFormative = allDatesWithData.get(periodStartIndex - formativePeriod);
-
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
         StandardDeviation stdev = new StandardDeviation();
 
         for(int i = 0; i < stockCodes.size(); i++){
-            List<Stock> stockVOList = findStockVOsWithinDay(stockCodes.get(i), startOfFormative, endOfFormative);
 
-            double[] increaseMargin = new double[stockVOList.size()];
-            //说明为该形成期没有数据
-            if(null == stockVOList){
-                continue;
-            }
+            List<Stock> stockList = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod);
+            double[] increaseMargin = new double[stockList.size()];
 
-            for(int j = 0; j < stockVOList.size(); j++){
-                increaseMargin[j] = stockVOList.get(j).getIncreaseMargin();
+            for(int j = 0; j < stockList.size(); j++){
+                increaseMargin[j] = stockList.get(j).getIncreaseMargin();
             }
 
             double returnVolatility = stdev.evaluate(increaseMargin) * Math.sqrt(formativePeriod);
