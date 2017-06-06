@@ -39,9 +39,9 @@ public class BaseStockDataHelperImpl implements BaseStockDataHelper {
      */
     @Override
     public BaseStock getStockData(String stockCode, LocalDate date) {
-        StockID stockID = new StockID(stockCode,date);
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+        StockID stockID = new StockID(stockCode,date);
         BaseStock stock = (BaseStock) session.get(BaseStock.class,stockID);
         transaction.commit();
         session.close();

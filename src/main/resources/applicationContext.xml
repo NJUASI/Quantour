@@ -40,7 +40,7 @@
         <!-- 请求连接失败后不再重连 -->
         <property name="breakAfterAcquireFailure" value="false"/>
         <!-- 自动超时回收Connection /> -->
-        <property name="unreturnedConnectionTimeout" value="25"/>
+        <property name="unreturnedConnectionTimeout" value="0"/>
         <!-- 配置超时自动断开conn /> -->
         <property name="maxIdleTimeExcessConnections" value="20"/>
     </bean>

@@ -83,8 +83,12 @@ public class StrategyDataHelperImpl implements StrategyDataHelper {
 
         Strategy strategy = session.get(Strategy.class,strategyID);
         if(strategy == null){
+            transaction.commit();
+            session.close();
             return false;
         }
+        transaction.commit();
+        session.close();
         return true;
     }
 }

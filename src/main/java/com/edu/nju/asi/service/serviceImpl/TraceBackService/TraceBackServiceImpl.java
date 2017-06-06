@@ -119,7 +119,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         stockData = new HashMap<>();
         for (String thisStockCode : traceBackStockPool) {
-            List<com.edu.nju.asi.model.Stock> stocks = stockDao.getStockData(thisStockCode);
+            List<Stock> stocks = stockDao.getStockData(thisStockCode);
             stockData.put(thisStockCode, stocks);
         }
 

@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class User implements Serializable {
     @Column(length = 100,nullable = true)
     private String email;
 
-    @ManyToMany(cascade={CascadeType.ALL})
+    @ManyToMany(cascade={CascadeType.ALL},fetch = FetchType.EAGER)
     @JoinTable(name = "user_strategy",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "userName")},
             inverseJoinColumns = {@JoinColumn(name = "strategy_id",referencedColumnName = "strategyID")})

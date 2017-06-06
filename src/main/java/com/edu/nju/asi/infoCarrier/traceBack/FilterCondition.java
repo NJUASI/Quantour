@@ -31,7 +31,7 @@ public class FilterCondition {
     public double weight;
 
     /**
-     * 形成期(若没有形成期则为0)
+     * 形成期(若没有形成期则为1)
      */
     public int formativePeriod;
 
