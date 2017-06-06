@@ -117,10 +117,12 @@ public class StockDataHelperImpl implements StockDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String hql  = "from Stock stock where stock.id.date =:date";
+        String hql  = "from Stock stock where stock.stockID.date =:date";
+        long start = System.currentTimeMillis();
         Query query = session.createQuery(hql);
         query.setParameter("date",date);
         List<Stock> stocks = query.list();
+        System.out.println(System.currentTimeMillis()-start);
         transaction.commit();
         session.close();
         return stocks;
@@ -179,6 +181,7 @@ public class StockDataHelperImpl implements StockDataHelper {
             }
             preparedStatement.executeBatch();
             connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
             try {
@@ -244,7 +247,6 @@ public class StockDataHelperImpl implements StockDataHelper {
         List<LocalDate> dates = query.list();
         transaction.commit();
         session.close();
-
         return dates;
     }
 }

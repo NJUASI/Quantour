@@ -152,6 +152,8 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
 
         StockSearch stockSearch = session.get(StockSearch.class,searchID);
         if(stockSearch == null){
+            transaction.commit();
+            session.close();
             return false;
         }
         stockSearch.setClickAmount(stockSearch.getClickAmount()+1);
@@ -197,6 +199,8 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         List<StockSearch> result = query.list();
 
         if(result==null||result.isEmpty()){
+            transaction.commit();
+            session.close();
             return null;
         }
         transaction.commit();
@@ -212,7 +216,8 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         Transaction transaction = session.beginTransaction();
 
         String hql = "select stocksearch.searchID.code, stocksearch.searchID.name from StockSearch stocksearch";
-        List list = session.createQuery(hql).list();
+        Query query = session.createQuery(hql);
+        List list = query.list();
         transaction.commit();
         session.close();
         return list;
