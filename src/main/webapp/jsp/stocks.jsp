@@ -208,6 +208,7 @@
                             <optgroup label="">
                                 <option class="industryOfStock">全部</option>
                             </optgroup>
+                            <optgroup11 label="">
                             <option class="industryOfStock">传媒艺术</option>
                             <option class="industryOfStock">电器制造</option>
                             <option class="industryOfStock">交运设备</option>
@@ -253,6 +254,7 @@
                             <option class="industryOfStock">采矿业</option>
                             <option class="industryOfStock">水电燃气</option>
                             <option class="industryOfStock">皮毛制鞋</option>
+                                </optgroup11>
                         </select>
                     </div>
                 </div>
@@ -267,6 +269,8 @@
                             <optgroup label="">
                                 <option class="industryOfStock">全部</option>
                             </optgroup>
+                            <optgroup label="">
+
                             <option class="provinceOfStock">北京</option>
                             <option class="provinceOfStock">天津</option>
                             <option class="provinceOfStock">河北</option>
@@ -297,6 +301,7 @@
                             <option class="provinceOfStock">甘肃</option>
                             <option class="provinceOfStock">青海</option>
                             <option class="provinceOfStock">宁夏</option>
+                                </optgroup>
                         </select>
                     </div>
                 </div>
