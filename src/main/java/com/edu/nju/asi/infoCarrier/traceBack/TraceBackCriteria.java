@@ -45,6 +45,11 @@ public class TraceBackCriteria {
      */
     public List<FilterCondition> filterConditions;
 
+    /**
+     * 所有的排名条件（仿果仁网）
+     */
+    public List<RankCondition> rankConditions;
+
     public TraceBackCriteria(){
     }
 

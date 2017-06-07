@@ -146,7 +146,12 @@ public class TraceBackServiceImpl implements TraceBackService {
         //每个持仓周期包含进起始和末尾的调仓日
         for (int i = 0; i < baseCumulativeReturn.size(); i += (holdingPeriod+1)) {
             holdingPeriodStart = i;
-            holdingPeriodEnd = i + holdingPeriod + 1;
+            holdingPeriodEnd = i + holdingPeriod;
+
+            if(holdingSerial != 1){
+                holdingPeriodStart = i - 1;
+            }
+
             if(holdingPeriodEnd > baseCumulativeReturn.size()-1){
                 holdingPeriodEnd = baseCumulativeReturn.size()-1;
             }

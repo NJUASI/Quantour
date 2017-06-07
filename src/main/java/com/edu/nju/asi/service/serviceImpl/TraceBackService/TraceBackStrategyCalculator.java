@@ -62,9 +62,6 @@ public class TraceBackStrategyCalculator {
     FormateStrategyFactory formateStrategyFactory = new FormateStrategyFactory();
     PickStrategyFactory pickStrategyFactory = new PickStrategyFactory();
 
-    StockDao stockDao = new StockDaoImpl();
-
-
     public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
         this.traceBackStockPool = traceBackStockPool;
         this.traceBackCriteria = traceBackCriteria;
@@ -171,9 +168,7 @@ public class TraceBackStrategyCalculator {
             }
         }
 
-        List<String> wantedStockCodes = new ArrayList<>();
-
-        // 筛选出来的股票大于最大持有股票数,应该按评分排名
+        // 筛选排名后的股票数依然大于最大持有股票数,应该按评分排名
         if(wantedFilterConditionRates.size() > maxHoldingNum){
             wantedFilterConditionRates.sort(new Comparator<FilterConditionRate>() {
                 @Override
@@ -181,9 +176,11 @@ public class TraceBackStrategyCalculator {
                     return (int) Math.ceil(o1.score-o2.score);
                 }
             });
-
             wantedFilterConditionRates = wantedFilterConditionRates.subList(0,maxHoldingNum);
         }
+
+        //添加计算的股票代码
+        List<String> wantedStockCodes = new ArrayList<>();
         for(FilterConditionRate filterConditionRate : wantedFilterConditionRates) {
             wantedStockCodes.add(filterConditionRate.stockCode);
         }
@@ -203,12 +200,7 @@ public class TraceBackStrategyCalculator {
         //第一个周期，没有卖出的股票
         if(periodSerial == 1){
             for(int i = 0; i < pickedStockCodes.size(); i++){
-                com.edu.nju.asi.model.Stock stock = null;
-                try {
-                    stock = stockDao.getStockData(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
                 currentHoldingStocks.add(new HoldOrSoldStocks(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getFrontAdjClose()));
             }
         }
@@ -222,12 +214,7 @@ public class TraceBackStrategyCalculator {
                         isNew = false;
                     }
                     if(isNew){
-                        com.edu.nju.asi.model.Stock stock = null;
-                        try {
-                            stock = stockDao.getStockData(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
                         currentHoldingStocks.add(new HoldOrSoldStocks(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getFrontAdjClose()));
                         j++;
                     }
@@ -246,12 +233,8 @@ public class TraceBackStrategyCalculator {
                 }
                 //被卖出，加入最近被卖出的队列
                 if(isSold){
-                    com.edu.nju.asi.model.Stock stock = null;
-                    try {
-                        stock = stockDao.getStockData(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
+
                     //每个持仓期的第一天作为调仓日期
                     lastSoldStocks.add(new HoldOrSoldStocks(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getFrontAdjClose()));
                     currentHoldingStocks.remove(i);
@@ -314,5 +297,22 @@ public class TraceBackStrategyCalculator {
             return true;
         }
         return false;
+    }
+
+    protected Stock findStock(String stockCode, LocalDate date){
+
+        List<Stock> stockVOList = stockData.get(stockCode);
+
+        List<LocalDate> dates = new ArrayList<>();
+        for(int j = 0; j < stockVOList.size(); j++){
+            dates.add(stockVOList.get(j).getStockID().getDate());
+        }
+
+        if(dates.contains(date)){
+            return stockVOList.get(dates.indexOf(date));
+        }
+        else {
+            return null;
+        }
     }
 }

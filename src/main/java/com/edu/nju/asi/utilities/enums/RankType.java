@@ -1,24 +1,17 @@
 package com.edu.nju.asi.utilities.enums;
 
 /**
- * Created by Harvey on 2017/4/19.
- *
- * 回测时， 形成期中的选择策略
+ * Created by Harvey on 2017/6/7.
  */
-public enum ComparatorType {
+public enum RankType {
 
-    GREATER_THAN("大于"),
-    LESS_THAN("小于"),
-    EQUAL("等于"),
-    RANK_MAX_PERCENT("排名%最大"),
-    RANK_MIN_PERCENT("排名%最小"),
-    RANK_MAX("排名最大"),
-    RANK_MIN("排名最小");
+    DESC_RANK("从大到小"),
+    ASC_RANK("从小到大");
 
 
     private String repre;
 
-    ComparatorType(String repre) {
+    RankType(String repre) {
         this.repre = repre;
     }
 
@@ -40,13 +33,14 @@ public enum ComparatorType {
      * String TO enum
      * 便于从数据库读入
      */
-    public static ComparatorType getEnum(String a) {
-        for (ComparatorType thisEnum : ComparatorType.values()){
+    public static RankType getEnum(String a) {
+        for (RankType thisEnum : RankType.values()){
             if (thisEnum.repre.equals(a)){
                 return thisEnum;
             }
         }
         return null;
     }
+
 
 }
