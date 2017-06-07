@@ -1,16 +1,16 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
-import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategyFactory;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.AllPickStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategyFactory;
+import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.RankStrategy;
+import com.edu.nju.asi.utilities.enums.IndicatorType;
+import com.edu.nju.asi.utilities.enums.RankType;
 import com.edu.nju.asi.utilities.exceptions.*;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -57,6 +57,16 @@ public class TraceBackStrategyCalculator {
     protected List<HoldOrSoldStocks> lastSoldStocks = new ArrayList<>();
 
     /**
+     * 筛选条件
+     */
+    protected List<FilterCondition> filterConditions;
+
+    /**
+     * 排名条件
+     */
+    protected List<RankCondition> rankConditions;
+
+    /**
      * 形成策略和选择策略工厂
      */
     FormateStrategyFactory formateStrategyFactory = new FormateStrategyFactory();
@@ -67,6 +77,9 @@ public class TraceBackStrategyCalculator {
         this.traceBackCriteria = traceBackCriteria;
         this.allDatesWithData = allDatesWithData;
         this.stockData = stockData;
+
+        this.filterConditions = traceBackCriteria.filterConditions;
+        this.rankConditions = traceBackCriteria.rankConditions;
     }
 
     /**
@@ -101,7 +114,7 @@ public class TraceBackStrategyCalculator {
 
         // 回测时间太短，不足一个持有期 或者刚好满一个周期，则没有末尾的调仓期
         if (cycles == 0) {
-            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
+            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles+1, traceBackCriteria.maxHoldingNum));
         }
         else {
             // 至少一个持有期，整个周期的计算
@@ -112,14 +125,14 @@ public class TraceBackStrategyCalculator {
                 if(i == cycles-1 && (allEndIndex - allStartIndex + 1) % holdingPeriod == 0){
                     endIndex = endIndex - 1;
                 }
-                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
+                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i+1, traceBackCriteria.maxHoldingNum));
             }
 
             // 最后一个不足周期的计算
             if ((allEndIndex - allStartIndex + 1) % holdingPeriod != 0) {
                 int startIndex = allStartIndex + cycles * holdingPeriod;
                 int endIndex = allEndIndex;
-                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, cycles+1, traceBackCriteria.maxHoldingNum, traceBackCriteria.filterConditions));
+                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, cycles+1, traceBackCriteria.maxHoldingNum));
             }
         }
 
@@ -129,60 +142,37 @@ public class TraceBackStrategyCalculator {
         return strategyCumulativeReturn;
     }
 
-    private List<CumulativeReturn> cycleCalcu(int startIndex, int endIndex, int periodSerial,int maxHoldingNum, List<FilterCondition> filterConditions) throws DataSourceFirstDayException {
+    private List<CumulativeReturn> cycleCalcu(int startIndex, int endIndex, int periodSerial,int maxHoldingNum) throws DataSourceFirstDayException {
         System.out.println("calculate cycle: " + periodSerial);
 
         LocalDate periodStart = allDatesWithData.get(startIndex);
         LocalDate periodEnd = allDatesWithData.get(endIndex);
 
-        List<List<FilterConditionRate>> filterConditionRates = new ArrayList<>();
-
-        // 通过不同的筛选条件进行筛选
-        for(FilterCondition filterCondition : filterConditions){
-            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData);
-            AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value, filterCondition.weight, traceBackStockPool.size());
-            filterConditionRates.add(pickStrategy.pick(formateStrategy.formate(traceBackStockPool, periodStart, filterCondition.formativePeriod)));
+        List<String> filterWantedCodes = new ArrayList<>();
+        //通过筛选条件筛选出该周期需要回测的股票代码
+        if(filterConditions.size() != 0){
+            filterWantedCodes = filterCodes(filterConditions, periodStart);
         }
 
-        // 选出经不同筛选条件筛选出来的相同的股票
-        List<FilterConditionRate> wantedFilterConditionRates = filterConditionRates.get(0);
-        //多于一个筛选条件
-        if(filterConditions.size() > 1){
-            for(int i = 1 ; i < filterConditionRates.size();i++){
-                for(int j = 0; j < wantedFilterConditionRates.size();){
-                    boolean isFound = false;
-                    for(int k = 0; k < filterConditionRates.get(i).size(); k++){
-                        if(wantedFilterConditionRates.get(j).stockCode.equals(filterConditionRates.get(i).get(k).stockCode)){
-                            wantedFilterConditionRates.get(j).score += filterConditionRates.get(i).get(k).score;
-                            isFound = true;
-                            break;
-                        }
-                    }
-                    if(isFound){
-                        j++;
-                    }
-                    else {
-                        wantedFilterConditionRates.remove(j);
-                    }
-                }
-            }
-        }
+        //通过排名条件排名
+        List<String> codesNeedToRank = filterConditions.size() != 0 ? filterWantedCodes : traceBackStockPool;
+        List<RankConditionRate> rankConditionRates = rankCodes(codesNeedToRank, rankConditions, periodStart);
 
         // 筛选排名后的股票数依然大于最大持有股票数,应该按评分排名
-        if(wantedFilterConditionRates.size() > maxHoldingNum){
-            wantedFilterConditionRates.sort(new Comparator<FilterConditionRate>() {
+        if(rankConditionRates.size() > maxHoldingNum){
+            rankConditionRates.sort(new Comparator<RankConditionRate>() {
                 @Override
-                public int compare(FilterConditionRate o1, FilterConditionRate o2) {
+                public int compare(RankConditionRate o1, RankConditionRate o2) {
                     return (int) Math.ceil(o1.score-o2.score);
                 }
             });
-            wantedFilterConditionRates = wantedFilterConditionRates.subList(0,maxHoldingNum);
+            rankConditionRates = rankConditionRates.subList(0,maxHoldingNum);
         }
 
         //添加计算的股票代码
         List<String> wantedStockCodes = new ArrayList<>();
-        for(FilterConditionRate filterConditionRate : wantedFilterConditionRates) {
-            wantedStockCodes.add(filterConditionRate.stockCode);
+        for(RankConditionRate rankConditionRate : rankConditionRates) {
+            wantedStockCodes.add(rankConditionRate.stockCode);
         }
 
         return calculate(wantedStockCodes, periodStart, periodEnd, periodSerial, startIndex);
@@ -287,6 +277,108 @@ public class TraceBackStrategyCalculator {
             sum += temp;
         }
         return sum / value.size();
+    }
+
+    /**
+     * 筛选股票
+     * @param filterConditions
+     * @param periodStart
+     * @return
+     */
+    private List<String> filterCodes(List<FilterCondition> filterConditions, LocalDate periodStart){
+
+        // 通过不同的筛选条件进行筛选
+        List<List<String>> allFilterWantedCodes = new ArrayList<>();
+
+        for(FilterCondition filterCondition : filterConditions){
+            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData);
+            AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value);
+            try {
+                allFilterWantedCodes.add(pickStrategy.pick(formateStrategy.formate(traceBackStockPool, periodStart, filterCondition.formativePeriod)));
+            } catch (DataSourceFirstDayException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //选出经不同筛选条件筛选出来的相同的股票
+        List<String> filterWantedCodes = allFilterWantedCodes.get(0);
+
+        //多于一个筛选条件
+        if(filterConditions.size() > 1){
+            for(int i = 1 ; i < allFilterWantedCodes.size();i++){
+                for(int j = 0; j < filterWantedCodes.size();){
+                    boolean isFound = false;
+                    for(int k = 0; k < allFilterWantedCodes.get(i).size(); k++){
+                        if(filterWantedCodes.get(j).equals(allFilterWantedCodes.get(i).get(k))){
+                            isFound = true;
+                            break;
+                        }
+                    }
+                    if(isFound){
+                        j++;
+                    }
+                    else {
+                        filterWantedCodes.remove(j);
+                    }
+                }
+            }
+        }
+
+        return filterWantedCodes;
+    }
+
+    /**
+     * 通过排名筛选应该回测股票
+     * @param codesNeedToRank
+     * @param rankConditions
+     * @param periodStart
+     * @return 需要回测股票的代码
+     */
+    private List<RankConditionRate> rankCodes(List<String> codesNeedToRank, List<RankCondition> rankConditions, LocalDate periodStart){
+
+        if(rankConditions.size() == 0){
+            //若排名条件为空，则默认以当日成交量从大到小排名
+            rankConditions.add(new RankCondition(IndicatorType.VOLUME, RankType.DESC_RANK, 1, 1));
+        }
+
+        // 通过不同的筛选条件进行筛选
+        List<List<RankConditionRate>> allFilterWantedCodes = new ArrayList<>();
+
+        for(RankCondition rankCondition : rankConditions){
+            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData);
+            RankStrategy rankStrategy = new RankStrategy(rankCondition.weight, rankCondition.rankType);
+            try {
+                allFilterWantedCodes.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
+            } catch (DataSourceFirstDayException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //选出经不同筛选条件筛选出来的相同的股票
+        List<RankConditionRate> rankConditionRates = allFilterWantedCodes.get(0);
+
+        //多于一个筛选条件
+        if(rankConditions.size() > 1){
+            for(int i = 1 ; i < allFilterWantedCodes.size();i++){
+                for(int j = 0; j < rankConditionRates.size();){
+                    boolean isFound = false;
+                    for(int k = 0; k < allFilterWantedCodes.get(i).size(); k++){
+                        if(rankConditionRates.get(j) .equals(allFilterWantedCodes.get(i).get(k))){
+                            isFound = true;
+                            break;
+                        }
+                    }
+                    if(isFound){
+                        j++;
+                    }
+                    else {
+                        rankConditionRates.remove(j);
+                    }
+                }
+            }
+        }
+
+        return rankConditionRates;
     }
 
     private boolean isDateWithinWanted(LocalDate start, LocalDate end, LocalDate now) {

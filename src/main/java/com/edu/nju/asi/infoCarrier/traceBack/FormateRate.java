@@ -3,7 +3,7 @@ package com.edu.nju.asi.infoCarrier.traceBack;
 /**
  * Created by harvey on 17-4-6.
  */
-public class FilterConditionRate implements Comparable<FilterConditionRate>{
+public class FormateRate implements Comparable<FormateRate>{
 
     // 股票代码
     public String stockCode;
@@ -11,18 +11,14 @@ public class FilterConditionRate implements Comparable<FilterConditionRate>{
     // 指标
     public Double indicatorVal;
 
-    // 得分
-    public double score;
-
-    public FilterConditionRate(String stockCode, Double indicatorVal, double score) {
+    public FormateRate(String stockCode, Double indicatorVal) {
         this.stockCode = stockCode;
         this.indicatorVal = indicatorVal;
-        this.score = score;
     }
 
     //默认按降序方式排序
     @Override
-    public int compareTo(FilterConditionRate o) {
+    public int compareTo(FormateRate o) {
         //两个中有一个为null
         if(this.indicatorVal == null && o.indicatorVal == null){
             return 0;

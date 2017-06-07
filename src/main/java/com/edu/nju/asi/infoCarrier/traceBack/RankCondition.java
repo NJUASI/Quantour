@@ -13,21 +13,27 @@ public class RankCondition {
     /**
      * 指标
      */
-    IndicatorType indicatorType;
+    public IndicatorType indicatorType;
 
     /**
      * 次序
      */
-    RankType rankType;
+    public RankType rankType;
 
     /**
      * 权重
      */
-    int weight;
+    public int weight;
 
-    public RankCondition(IndicatorType indicatorType, RankType rankType, int weight) {
+    /**
+     * 形成期(若没有形成期则为1)
+     */
+    public int formativePeriod;
+
+    public RankCondition(IndicatorType indicatorType, RankType rankType, int weight, int formativePeriod) {
         this.indicatorType = indicatorType;
         this.rankType = rankType;
         this.weight = weight;
+        this.formativePeriod = formativePeriod;
     }
 }

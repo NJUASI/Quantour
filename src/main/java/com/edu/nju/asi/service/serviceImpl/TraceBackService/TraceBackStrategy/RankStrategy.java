@@ -1,26 +1,51 @@
-package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
+package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy;
 
 import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
+import com.edu.nju.asi.infoCarrier.traceBack.RankConditionRate;
+import com.edu.nju.asi.utilities.enums.RankType;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by Harvey on 2017/4/19.
+ * Created by Harvey on 2017/6/7.
  *
- * 形成期的挑选股票的策略， 按排名区间 和 绝对排名 分开
+ * 排名策略
  */
-public abstract class AllPickStrategy {
+public class RankStrategy {
 
     /**
-     * 绝对排名：rank表示绝对名次； 区间排名：rank表示percent排名
+     * 得分权重
      */
-    protected int rank;
+    int weight;
 
+    /**
+     * 排名类型
+     */
+    RankType rankType;
 
-    public AllPickStrategy(int rank) {
-        this.rank = rank;
+    public RankStrategy(int weight, RankType rankType) {
+        this.weight = weight;
+        this.rankType = rankType;
+    }
+
+    /**
+     * 对已经排好序的股票代码进行打分
+     * @param unOrderedCodes 还没有排好序的股票代码
+     * @return
+     */
+    public List<RankConditionRate> mark(List<FormateRate> unOrderedCodes){
+        
+        List<String> orderedCodes = rank(unOrderedCodes);
+        
+       List<RankConditionRate> rankConditionRates = new ArrayList<>();
+
+       for(int i = 0; i < orderedCodes.size(); i++){
+           // 排名分的公式是 （股票数– 股票排名 + 1）/股票数 * 100
+           rankConditionRates.add(new RankConditionRate(orderedCodes.get(i), (orderedCodes.size() - i) / orderedCodes.size() * 100 * weight));
+       }
+       return rankConditionRates;
     }
 
     /**
@@ -28,24 +53,14 @@ public abstract class AllPickStrategy {
      * @param formateRates
      * @return List<String> 选择好的持有期的股票代码
      */
-    public abstract List<String> pick(List<FormateRate> formateRates);
-
-    protected List<FormateRate> ascSort(List<FormateRate> formateRates){
-        List<FormateRate> sortedStockCodes = new ArrayList<>();
-        formateRates.sort(new AscSorter());
-        for(int i = 0; i < formateRates.size(); i++){
-            sortedStockCodes.add(formateRates.get(i));
+    protected List<String> rank(List<FormateRate> formateRates){
+        if(rankType == RankType.DESC_RANK){
+             formateRates.sort(new DescSorter());
         }
-        return sortedStockCodes;
-    }
-
-    protected List<FormateRate> descSort(List<FormateRate> formateRates){
-        List<FormateRate> sortedStockCodes = new ArrayList<>();
-        formateRates.sort(new DescSorter());
-        for(int i = 0; i < formateRates.size(); i++){
-            sortedStockCodes.add(formateRates.get(i));
+        else {
+            formateRates.sort(new AscSorter());
         }
-        return sortedStockCodes;
+        return convert(formateRates);
     }
 
     protected List<String> convert(List<FormateRate> formateRates){
@@ -115,4 +130,5 @@ class DescSorter implements Comparator<FormateRate>{
             return -1;
         }
     }
+
 }
