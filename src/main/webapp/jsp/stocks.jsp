@@ -18,9 +18,17 @@
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="../css/stocks.css" rel="stylesheet">
     <link href="../css/bootstrap-select.css" rel="stylesheet">
-    <link href="../css/reset.css" rel="stylesheet">
+    <%--<link href="../css/reset.css" rel="stylesheet">--%>
     <link href="../css/index.css" rel="stylesheet">
     <link href="../css/startLoader.css" rel="stylesheet">
+    <style type="text/css" rel="stylesheet">
+        .tabPanel {
+            background-color: #f7f7f7;
+            border: none;
+            margin-bottom: 40px;
+            border-radius: 10px;
+        }
+    </style>
     <title>股票市场</title>
 </head>
 <header>
@@ -198,114 +206,108 @@
 
         <%--TODO 高源 没数据的话怎么显示--%>
         <div class="text-center" id="headTitle"><h3>市场行情</h3></div>
-        <div class="row">
-            <div class="col-md-offset-7 col-md-2">
-                <div class="row">
-                    <div class="col-md-4" style="margin-top: 6px">行业</div>
-                    <div class='col-md-8' style="margin-left: -16px">
-                        <select id="industry" name="industry" data-size="10" class=" selectpicker form-control" data-live-search="true">
-
-                            <optgroup label="">
-                                <option class="industryOfStock">全部</option>
-                            </optgroup>
-                            <optgroup11 label="">
-                            <option class="industryOfStock">传媒艺术</option>
-                            <option class="industryOfStock">电器制造</option>
-                            <option class="industryOfStock">交运设备</option>
-                            <option class="industryOfStock">茶酒饮料</option>
-                            <option class="industryOfStock">木材加工</option>
-                            <option class="industryOfStock">汽车制造</option>
-                            <option class="industryOfStock">家具制造</option>
-                            <option class="industryOfStock">食品制造</option>
-                            <option class="industryOfStock">造纸</option>
-                            <option class="industryOfStock">通信设备</option>
-                            <option class="industryOfStock">橡胶塑料</option>
-                            <option class="industryOfStock">旅游环境</option>
-                            <option class="industryOfStock">农林牧渔</option>
-                            <option class="industryOfStock">教育</option>
-                            <option class="industryOfStock">医药制造</option>
-                            <option class="industryOfStock">卫生</option>
-                            <option class="industryOfStock">粮食加工</option>
-                            <option class="industryOfStock">黑色金属</option>
-                            <option class="industryOfStock">其他制造业</option>
-                            <option class="industryOfStock">化纤制造</option>
-                            <option class="industryOfStock"> 信息技术</option>
-                            <option class="industryOfStock">出版传媒</option>
-                            <option class="industryOfStock">服装制造</option>
-                            <option class="industryOfStock">房地产业</option>
-                            <option class="industryOfStock">非金属制品</option>
-                            <option class="industryOfStock">综合</option>
-                            <option class="industryOfStock">租赁和商务</option>
-                            <option class="industryOfStock">通用设备制造</option>
-                            <option class="industryOfStock">纺织业</option>
-                            <option class="industryOfStock">金融业</option>
-                            <option class="industryOfStock">石油加工</option>
-                            <option class="industryOfStock">交通物流</option>
-                            <option class="industryOfStock">专用设备制造</option>
-                            <option class="industryOfStock">批发零售</option>
-                            <option class="industryOfStock">金属制品</option>
-                            <option class="industryOfStock">化学制品</option>
-                            <option class="industryOfStock">科研技术</option>
-                            <option class="industryOfStock">建筑业</option>
-                            <option class="industryOfStock">印刷</option>
-                            <option class="industryOfStock">仪器仪表</option>
-                            <option class="industryOfStock">有色金属</option>
-                            <option class="industryOfStock">废品利用</option>
-                            <option class="industryOfStock">采矿业</option>
-                            <option class="industryOfStock">水电燃气</option>
-                            <option class="industryOfStock">皮毛制鞋</option>
-                                </optgroup11>
-                        </select>
-                    </div>
+        <ul class="nav nav-pills  col-md-offset-1  col-md-10"  role="tablist" style="margin-bottom: 10px">
+            <li class="active"><a href="#bulletin" role="tab" data-toggle="pill">全部股票</a></li>
+            <li><a href="#rule" role="tab" data-toggle="pill">按行业板块</a></li>
+            <li><a href="#forum" role="tab" data-toggle="pill">按地域板块</a></li>
+        </ul>
+        <!-- 选项卡面板 -->
+        <div class="tab-content col-md-offset-1 col-md-10">
+            <div class="tab-pane fade in active" id="bulletin"></div>
+            <div class="tab-pane fade" id="rule">
+                <div class="tabPanel">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1" id="industryTab">
+                        <div><a class="industryOfStock">全部</a></div>
+                        <div><a class="industryOfStock">传媒艺术</a></div>
+                        <div><a class="industryOfStock">电器制造</a></div>
+                        <div><a class="industryOfStock">交运设备</a></div>
+                        <div><a class="industryOfStock">茶酒饮料</a></div>
+                        <div><a class="industryOfStock">木材加工</a></div>
+                        <div><a class="industryOfStock">汽车制造</a></div>
+                        <div><a class="industryOfStock">家具制造</a></div>
+                        <div><a class="industryOfStock">食品制造</a></div>
+                        <div><a class="industryOfStock">造纸</a></div>
+                        <div><a class="industryOfStock">通信设备</a></div>
+                        <div><a class="industryOfStock">橡胶塑料</a></div>
+                        <div><a class="industryOfStock">旅游环境</a></div>
+                        <div><a class="industryOfStock">农林牧渔</a></div>
+                        <div><a class="industryOfStock">教育</a></div>
+                        <div><a class="industryOfStock">医药制造</a></div>
+                        <div><a class="industryOfStock">卫生</a></div>
+                        <div><a class="industryOfStock">粮食加工</a></div>
+                        <div><a class="industryOfStock">黑色金属</a></div>
+                        <div><a class="industryOfStock">其他制造业</a></div>
+                        <div><a class="industryOfStock">化纤制造</a></div>
+                        <div><a class="industryOfStock"> 信息技术</a></div>
+                        <div><a class="industryOfStock">出版传媒</a></div>
+                        <div><a class="industryOfStock">服装制造</a></div>
+                        <div><a class="industryOfStock">房地产业</a></div>
+                        <div><a class="industryOfStock">非金属制品</a></div>
+                        <div><a class="industryOfStock">综合</a></div>
+                        <div><a class="industryOfStock">租赁和商务</a></div>
+                        <div><a class="industryOfStock">通用设备制造</a></div>
+                        <div><a class="industryOfStock">纺织业</a></div>
+                        <div><a class="industryOfStock">金融业</a></div>
+                        <div><a class="industryOfStock">石油加工</a></div>
+                        <div><a class="industryOfStock">交通物流</a></div>
+                        <div><a class="industryOfStock">专用设备制造</a></div>
+                        <div><a class="industryOfStock">批发零售</a></div>
+                        <div><a class="industryOfStock">金属制品</a></div>
+                        <div><a class="industryOfStock">化学制品</a></div>
+                        <div><a class="industryOfStock">科研技术</a></div>
+                        <div><a class="industryOfStock">建筑业</a></div>
+                        <div><a class="industryOfStock">印刷</a></div>
+                        <div><a class="industryOfStock">仪器仪表</a></div>
+                        <div><a class="industryOfStock">有色金属</a></div>
+                        <div><a class="industryOfStock">废品利用</a></div>
+                        <div><a class="industryOfStock">采矿业</a></div>
+                        <div><a class="industryOfStock">水电燃气</a></div>
+                        <div><a class="industryOfStock">皮毛制鞋</a></div>
+                        </div>
+                </div>
                 </div>
             </div>
 
-            <div class="col-md-2">
-                <div class="row">
-                    <div class="col-md-4" style="margin-top: 6px">地域</div>
-                    <div class='col-md-8' style="margin-left: -16px">
-                        <select id="industry" name="province" data-size="10" class=" selectpicker form-control" data-live-search="true">
-
-                            <optgroup label="">
-                                <option class="industryOfStock">全部</option>
-                            </optgroup>
-                            <optgroup label="">
-
-                            <option class="provinceOfStock">北京</option>
-                            <option class="provinceOfStock">天津</option>
-                            <option class="provinceOfStock">河北</option>
-                            <option class="provinceOfStock">山西</option>
-                            <option class="provinceOfStock">内蒙古</option>
-                            <option class="provinceOfStock">辽宁</option>
-                            <option class="provinceOfStock">吉林</option>
-                            <option class="provinceOfStock">黑龙江</option>
-                            <option class="provinceOfStock">上海</option>
-                            <option class="provinceOfStock">江苏</option>
-                            <option class="provinceOfStock">浙江</option>
-                            <option class="provinceOfStock">安徽</option>
-                            <option class="provinceOfStock">福建</option>
-                            <option class="provinceOfStock">江西</option>
-                            <option class="provinceOfStock">山东</option>
-                            <option class="provinceOfStock">河南</option>
-                            <option class="provinceOfStock">湖北</option>
-                            <option class="provinceOfStock">湖南</option>
-                            <option class="provinceOfStock">广东</option>
-                            <option class="provinceOfStock">广西</option>
-                            <option class="provinceOfStock">海南</option>
-                            <option class="provinceOfStock">四川</option>
-                            <option class="provinceOfStock">贵州</option>
-                            <option class="provinceOfStock">云南</option>
-                            <option class="provinceOfStock">西藏</option>
-                            <option class="provinceOfStock">重庆</option>
-                            <option class="provinceOfStock">陕西</option>
-                            <option class="provinceOfStock">甘肃</option>
-                            <option class="provinceOfStock">青海</option>
-                            <option class="provinceOfStock">宁夏</option>
-                                </optgroup>
-                        </select>
+            <div class="tab-pane fade" id="forum">
+                <div class="tabPanel">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1" id="provinceTab">
+                <div><a class="provinceOfStock">全部</a></div>
+                 <div><a class="provinceOfStock">北京</a></div>
+                 <div><a class="provinceOfStock">天津</a></div>
+                 <div><a class="provinceOfStock">河北</a></div>
+                 <div><a class="provinceOfStock">山西</a></div>
+                 <div><a class="provinceOfStock">内蒙古</a></div>
+                 <div><a class="provinceOfStock">辽宁</a></div>
+                 <div><a class="provinceOfStock">吉林</a></div>
+                 <div><a class="provinceOfStock">黑龙江</a></div>
+                 <div><a class="provinceOfStock">上海</a></div>
+                 <div><a class="provinceOfStock">江苏</a></div>
+                 <div><a class="provinceOfStock">浙江</a></div>
+                 <div><a class="provinceOfStock">安徽</a></div>
+                 <div><a class="provinceOfStock">福建</a></div>
+                 <div><a class="provinceOfStock">江西</a></div>
+                 <div><a class="provinceOfStock">山东</a></div>
+                 <div><a class="provinceOfStock">河南</a></div>
+                 <div><a class="provinceOfStock">湖北</a></div>
+                 <div><a class="provinceOfStock">湖南</a></div>
+                 <div><a class="provinceOfStock">广东</a></div>
+                 <div><a class="provinceOfStock">广西</a></div>
+                 <div><a class="provinceOfStock">海南</a></div>
+                 <div><a class="provinceOfStock">四川</a></div>
+                 <div><a class="provinceOfStock">贵州</a></div>
+                 <div><a class="provinceOfStock">云南</a></div>
+                 <div><a class="provinceOfStock">西藏</a></div>
+                 <div><a class="provinceOfStock">重庆</a></div>
+                 <div><a class="provinceOfStock">陕西</a></div>
+                 <div><a class="provinceOfStock">甘肃</a></div>
+                 <div><a class="provinceOfStock">青海</a></div>
+                 <div><a class="provinceOfStock">宁夏</a></div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         <div class="row" style="z-index:3">
             <div class="col-md-10 col-md-offset-1">
@@ -835,6 +837,51 @@
     }, function () {
         $(this).css({"margin-top": "0px", "margin-bottom": "40px","border": "none"});
     });
+
+    $("#industryTab").find("div").addClass("col-md-2");
+    $("#industryTab").find("div").css({"padding":"1px","margin-top":"3px"});
+    $("#industryTab").find("a").css({"color":"currentColor","text-decoration":"none","margin":"1px","padding":"1px"});
+    $(".industryOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+
+    $("#provinceTab").find("div").addClass("col-md-2");
+    $("#provinceTab").find("div").css({"padding":"1px","margin-top":"3px"});
+    $("#provinceTab").find("a").css({"color":"currentColor","text-decoration":"none","margin":"1px","padding":"1px"});
+    $(".provinceOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+
+    $(".industryOfStock").css("border","1px solid #F7F7F7");
+    $(".industryOfStock").hover(function () {
+        $(this).css({"cursor": "pointer", "border": "1px solid red"});
+    }, function () {
+        $(this).css({"border":"1px solid #F7F7F7"});
+    });
+    $(".provinceOfStock").css("border","1px solid #F7F7F7");
+    $(".provinceOfStock").hover(function () {
+        $(this).css({"cursor": "pointer", "border": "1px solid red"});
+    }, function () {
+        $(this).css({"border":"1px solid #F7F7F7"});
+    });
+
+    $(".industryOfStock").click(function () {
+        $(".provinceOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
+        $(".provinceOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+        $(".industryOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
+        $(this).css({"background-color":"#337ab7","color":"white"});
+        //TODO fjj 查看行业 此时地域为全部
+        alert($(this).html());
+    })
+
+    $(".provinceOfStock").click(function () {
+        $(".industryOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
+        $(".industryOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+        $(".provinceOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
+        $(this).css({"background-color":"#337ab7","color":"white"});
+        //TODO fjj 查看地域  行业为全部
+        alert($(this).html());
+    })
+
+
+
+
 </script>
 </body>
 </html>
