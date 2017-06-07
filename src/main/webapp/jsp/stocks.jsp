@@ -493,6 +493,8 @@
 
     $(document).ready(
         function () {
+            $("body").removeClass('loaded');
+
             var date = ${date.year}+"-";
             var month=${date.monthValue};
             var dayOfMonth=${date.dayOfMonth};
@@ -571,7 +573,7 @@
             $(document).click(function () {
                 $(".searchResults").hide();
             });
-
+            $("body").addClass('loaded');
         }
     );
 
@@ -658,6 +660,7 @@
     });
 //通过界面的数据post更改界面内容
     function updatePanel() {
+        $("body").addClass('loaded');
         $.ajax({
             type: "post",
             async: true,
@@ -806,6 +809,7 @@
                 alert("错误" + result);
             }
         });
+        $("body").removeClass('loaded');
     }
 //查看股票详情
     function getSingleStockDetail() {
