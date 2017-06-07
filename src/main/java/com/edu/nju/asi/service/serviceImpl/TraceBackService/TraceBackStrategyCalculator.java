@@ -160,7 +160,7 @@ public class TraceBackStrategyCalculator {
 
         //通过排名条件排名
         List<String> codesNeedToRank = filterConditions.size() != 0 ? filterWantedCodes : traceBackStockPool;
-        List<RankConditionRate> rankConditionRates = rankCodes(codesNeedToRank, rankConditions, periodStart);
+        List<RankConditionRate> rankConditionRates = rankCodes(codesNeedToRank, periodStart);
 
         // 筛选排名后的股票数依然大于最大持有股票数,应该按评分排名
         if(rankConditionRates.size() > maxHoldingNum){
@@ -334,11 +334,10 @@ public class TraceBackStrategyCalculator {
     /**
      * 通过排名筛选应该回测股票
      * @param codesNeedToRank
-     * @param rankConditions
      * @param periodStart
      * @return 需要回测股票的代码
      */
-    private List<RankConditionRate> rankCodes(List<String> codesNeedToRank, List<RankCondition> rankConditions, LocalDate periodStart){
+    private List<RankConditionRate> rankCodes(List<String> codesNeedToRank, LocalDate periodStart){
 
         if(rankConditions.size() == 0){
             //若排名条件为空，则默认以当日成交量从大到小排名
