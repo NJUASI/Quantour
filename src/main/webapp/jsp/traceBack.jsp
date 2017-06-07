@@ -118,7 +118,7 @@
 
                     <div class="form-group row col-md-4 col-md-offset-1 inputBlock">
                         <label class="col-md-4" style="margin-top: 7px">选择板块：</label>
-                        <div class='col-md-7'   style="margin-left: -10px">
+                        <div class='col-md-7' style="margin-left: -10px">
                             <select id="blockTypes" name="blockTypes"
                                     class=" selectpicker show-tick form-control"
                                     multiple data-live-search="false" placeholder="请选择板块">
@@ -143,15 +143,14 @@
                     <div class="form-group col-md-3 inputBlock">
                         <label class="col-md-5" style="margin-top: 7px">收益基准：</label>
                         <div class='col-md-7' style="margin-left: -14px">
-                            <select id="baseStockEve" name="baseStockEve" class="selectpicker show-tick form-control col-md-7">
+                            <select id="baseStockEve" name="baseStockEve"
+                                    class="selectpicker show-tick form-control col-md-7">
                                 <option value="沪深300" selected>沪深300</option>
                                 <option value="创业板指">创业板指</option>
                                 <option value="中小板指">中小板指</option>
                             </select>
                         </div>
                     </div>
-
-
 
 
                     <div class="form-group col-md-offset-1 col-md-4 inputBlock">
@@ -173,9 +172,6 @@
                     </div>
 
 
-
-
-
                 </div>
             </div>
         </div>
@@ -193,7 +189,7 @@
             <div class="panel-body">
                 <div class="row" style="margin-top: 20px">
                     <!--左边选择栏  -->
-                    <div class="col-md-4 col-md-offset-1 col-xs-12">
+                    <div class="col-md-4 col-md-offset-1">
                         <label class="">
                             选股指标:
                         </label>
@@ -242,7 +238,7 @@
                             <li><a href="#security" role="tab" data-toggle="tab">其他</a></li>
                         </ul>
                         <!-- 选项卡面板 -->
-                        <div id="myTabContent" class="tab-content">
+                        <div id="myTabContent1" class="tab-content">
                             <div class="tab-pane fade in active" id="bulletin">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -502,87 +498,120 @@
 
 
                     <!--右边数据框-->
-                    <div class="col-md-6 col-xs-12 pre-scrollable"
-                         style="height:300px;border-left: 1px solid slategray;max-height: 300px;">
-                        <label class="">
-                            选股条件:
-                        </label>
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>指标</th>
-                                <th>比较符</th>
-                                <th>值</th>
-                                <th>权重</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody id="quotaList">
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
 
 
-            </div>
-        </div>
-    </div>
+                    <div class="col-md-6" style=" border-left: 1px solid slategray;">
+                    <label class="row col-md-3" style="margin-top:5px">
+                        选股条件:
+                    </label>
+                        <!-- 选项卡组件（菜单项nav-tabs）-->
 
+                    <ul id="myTab2" class="nav nav-tabs col-md-12 col-xs-12" style="margin-top: 5px"role="tablist">
+                    <li class="active"><a href="#choose" role="tab" data-toggle="tab">筛选条件</a></li>
+                    <li><a href="#rank" role="tab" data-toggle="tab">排名条件</a></li>
+                    </ul>
+                    <!-- 选项卡面板 -->
+                    <div id="myTabContent2" class="tab-content">
+                        <div class="tab-pane fade in active" id="choose">
 
-    <div class="row">
-        <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    回测条件
-                </h4>
-            </div>
-            <div class="panel-body">
-                <div class="row">
+                            <div class="col-md-12 col-xs-12 pre-scrollable"
+                                 style="height:200px;max-height: 200px;">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>指标</th>
+                                        <th>比较符</th>
+                                        <th>值</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="quotaList">
 
-                    <div class="col-md-3 col-md-offset-1 inputBlock">
-
-                        <label class="col-md-5" style="margin-top: 7px">开始日期：</label>
-                        <!--指定 date标记-->
-                        <div class='input-group date col-md-6' id='datetimeStart'>
-                            <input id="startDate" type='text' class="form-control form_datetime"/>
-                            <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 inputBlock">
 
-                        <label class="col-md-5" style="margin-top: 7px">结束日期：</label>
-                        <!--指定 date标记-->
-                        <div class='input-group date col-md-6' id='datetimeEnd'>
-                            <input id="endDate" type='text' class="form-control form_datetime"/>
-                            <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
+                        <div class="tab-pane fade in" id="rank">
 
+                            <div class="col-md-12 col-xs-12 pre-scrollable"
+                                 style="height:200px;max-height: 200px;">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>指标</th>
+                                        <th>次序</th>
+                                        <th>权重</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="rankList">
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+
                     </div>
-
-                    <div class="col-md-1 col-md-offset-2 inputBlock" >
-
-                        <button type="button" class="btn btn-info" onclick="traceback()"
-                                style="margin-left: -70px;">开始回测
-                        </button>
-                    </div>
-                    <div class="col-md-1 inputBlock">
-
-                        <button type="button" class="btn btn-info" id="createStrategy"
-                                style="margin-left: -40px;margin-bottom: 20px">创建策略
-                        </button>
                     </div>
 
                 </div>
             </div>
         </div>
-    </div>
+
+
+        <div class="row">
+            <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        回测条件
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-md-3 col-md-offset-1 inputBlock">
+
+                            <label class="col-md-5" style="margin-top: 7px">开始日期：</label>
+                            <!--指定 date标记-->
+                            <div class='input-group date col-md-6' id='datetimeStart'>
+                                <input id="startDate" type='text' class="form-control form_datetime"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 inputBlock">
+
+                            <label class="col-md-5" style="margin-top: 7px">结束日期：</label>
+                            <!--指定 date标记-->
+                            <div class='input-group date col-md-6' id='datetimeEnd'>
+                                <input id="endDate" type='text' class="form-control form_datetime"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-1 col-md-offset-2 inputBlock">
+
+                            <button type="button" class="btn btn-info" onclick="traceback()"
+                                    style="margin-left: -70px;">开始回测
+                            </button>
+                        </div>
+                        <div class="col-md-1 inputBlock">
+
+                            <button type="button" class="btn btn-info" id="createStrategy"
+                                    style="margin-left: -40px;margin-bottom: 20px">创建策略
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 </form>
@@ -1148,72 +1177,10 @@
         $(this).css({"cursor": "pointer"});
     });
 
-    $(".quota").click(function () {
-        var quotaName;
-//       alert($(this).html())
-        if ($(this).html().substring(0, 1) == "N") {
-            quotaName = "<div class='col-md-4'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $(this).html().substring(1) + "</div>"
-        } else {
-            quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $(this).html() + "</div>"
-        }
-
-        $("#quotaList").append("<tr class='quotaRow'>" +
-            "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
-            "<option value='RANK_MAX'>排名最大</option>" +
-            "<option value='RANK_MIN'>排名最小</option>" +
-            "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
-            "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
-            "<option value='RANK_BIGGER'>大于</option>" +
-            "<option value='RANK_SHORTER'>小于</option>" +
-            "<option value='RANK_EQUAL'>等于</option>" +
-            "</select>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<div class=\"col-md-10\">" +
-            "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
-            "</div>" +
-            "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<div class=\"col-md-9\">" +
-            "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
-            "</div>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>" +
-            "</tr>");
-
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click(function () {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-            commit();
-        });
-        $(".quotaRank").unbind("input propertychange");
-        $(".quotaRank").bind('input propertychange', function () {
-            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
-            } else  if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT"){
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html("%");
-            }else {
-                var name = $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".quotaName").html();
-                var result = convert(name);
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html(result);
-            }
-        })
-
-    });
+ 
 
     function convert(indicatorType) {
-        indicatorType=indicatorType.trim();
+        indicatorType = indicatorType.trim();
         switch (indicatorType) {
             case "开盘价":
                 return " ";
@@ -1260,7 +1227,7 @@
             case "动态市盈率":
                 return " ";
             default:
-                switch (indicatorType.substring(indicatorType.length-2)){
+                switch (indicatorType.substring(indicatorType.length - 2)) {
                     case "交额":
                         return "亿";
                     case "交量":
@@ -1279,15 +1246,7 @@
 
     }
 
-    function commit() {
-        $(".quotaRow").each(function () {
-//           分别对应指标名称 指标排名方式 选股的多少 权重
-            alert($(this).find(".numOfN").val() + $(this).find(".quotaName").html());
-            alert($(this).find(".quotaRank").val());
-            alert($(this).find(".quotaNum").val());
-            alert($(this).find(".quotaWeight").val());
-        });
-    }
+
     $('#searchQuota').bind('input propertychange', function () {
         alert("11");
     });
@@ -1300,61 +1259,212 @@
             quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $('#searchQuota').val() + "</div>"
         }
 
-        $("#quotaList").append("<tr class='quotaRow'>" +
+        var rankType;
+        var whichTab;
+        var whichValue;
+        var whichButton;
+        if($("#choose").hasClass("active")){
+            rankType = "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
+                "<option value='RANK_MAX'>排名最大</option>" +
+                "<option value='RANK_MIN'>排名最小</option>" +
+                "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
+                "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
+                "<option value='RANK_BIGGER'>大于</option>" +
+                "<option value='RANK_SHORTER'>小于</option>" +
+                "<option value='RANK_EQUAL'>等于</option>" +
+                "</select>" ;
+            whichTab =$("#quotaList");
+
+            whichValue=  "<div class=\"row\">" +
+                "<div class=\"col-md-10\">" +
+                "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
+                "</div>" +
+                "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
+                "</div>" ;
+            whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
+        }else{
+            rankType="<select class=\"form-control col-md-12 rankOrder\" style=\"padding-left: 5px;padding-right: 5px\">" +
+                "<option value='ASCEND-ORDER'>由小到大</option>" +
+                "<option value='DESCEND-ORDER'>由大到小</option>" +
+                "</select>" ;
+            whichTab= $("#rankList");
+            whichValue=  "<div class=\"row\">" +
+                "<div class=\"col-md-9\">" +
+                "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
+                "</div>" +
+                "</div>" ;
+            whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary rankBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
+        }
+        whichTab.append("<tr class='quotaRow'>" +
             "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
             "<td class=\"col-md-2\">" +
             "<div class=\"row\">" +
-            "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
-            "<option value='RANK_MAX'>排名最大</option>" +
-            "<option value='RANK_MIN'>排名最小</option>" +
-            "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
-            "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
-            "<option value='RANK_BIGGER'>大于</option>" +
-            "<option value='RANK_SHORTER'>小于</option>" +
-            "<option value='RANK_EQUAL'>等于</option>" +
-            "</select>" +
+            rankType+
             "</div>" +
             "</td>" +
             "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<div class=\"col-md-10\">" +
-            "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
-            "</div>" +
-            "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
-            "</div>" +
+            whichValue+
             "</td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<div class=\"col-md-9\">" +
-            "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
-            "</div>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>" +
+            whichButton+
             "</tr>");
 
         $(".quotaBt").unbind("click");
         $(".quotaBt").click(function () {
             $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-            commit();
         });
 
         $(".quotaRank").unbind("input propertychange");
         $(".quotaRank").bind('input propertychange', function () {
             if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
-            } else  if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT"){
+            } else if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT") {
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html("%");
-            }else {
+            } else {
                 var name = $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".quotaName").html();
                 var result = convert(name);
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
                 $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html(result);
             }
+        });
+
+        $(".rankBt").unbind("click");
+        $(".rankBt").click(function () {
+            $("#rankList").find("tr").eq($(".rankBt").index($(this))).remove();
+        });
+        $(".rankOrder").unbind("input propertychange");
+        $(".rankOrder").bind('input propertychange', function () {
+            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "hidden");
+            } else if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT") {
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html("%");
+            } else {
+                var name = $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".quotaName").html();
+                var result = convert(name);
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html(result);
+            }
+        })
+    }
+
+    $(".quota").click(function () {
+        var quotaName;
+//       alert($(this).html())
+        if ($(this).html().substring(0, 1) == "N") {
+            quotaName = "<div class='col-md-4'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $(this).html().substring(1) + "</div>"
+        } else {
+            quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $(this).html() + "</div>"
+        }
+
+        var rankType;
+        var whichTab;
+        var whichValue;
+        var whichButton;
+        var whichType;
+        if($("#choose").hasClass("active")){
+            rankType = "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
+                "<option value='RANK_MAX'>排名最大</option>" +
+                "<option value='RANK_MIN'>排名最小</option>" +
+                "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
+                "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
+                "<option value='RANK_BIGGER'>大于</option>" +
+                "<option value='RANK_SHORTER'>小于</option>" +
+                "<option value='RANK_EQUAL'>等于</option>" +
+                "</select>" ;
+            whichTab =$("#quotaList");
+
+            whichValue=  "<div class=\"row\">" +
+                "<div class=\"col-md-10\">" +
+                "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
+                "</div>" +
+                "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
+                "</div>" ;
+            whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
+            whichType='quotaRow';
+        }else{
+            rankType="<select class=\"form-control col-md-12 rankOrder\" style=\"padding-left: 5px;padding-right: 5px\">" +
+                "<option value='ASCEND-ORDER'>由小到大</option>" +
+                "<option value='DESCEND-ORDER'>由大到小</option>" +
+                "</select>" ;
+            whichTab= $("#rankList");
+            whichValue=  "<div class=\"row\">" +
+                "<div class=\"col-md-9\">" +
+                "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
+                "</div>" +
+                "</div>" ;
+            whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary rankBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
+            whichType='rankRow';
+        }
+        whichTab.append("<tr class="+whichType+">" +
+            "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
+            "<td class=\"col-md-2\">" +
+            "<div class=\"row\">" +
+            rankType+
+            "</div>" +
+            "</td>" +
+            "<td class=\"col-md-2\">" +
+            whichValue+
+            "</td>" +
+            whichButton+
+            "</tr>");
+
+        $(".quotaBt").unbind("click");
+        $(".quotaBt").click(function () {
+            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
+        });
+        $(".quotaRank").unbind("input propertychange");
+        $(".quotaRank").bind('input propertychange', function () {
+            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
+            } else if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT") {
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html("%");
+            } else {
+                var name = $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".quotaName").html();
+                var result = convert(name);
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html(result);
+            }
+        });
+
+        $(".rankBt").unbind("click");
+        $(".rankBt").click(function () {
+            $("#rankList").find("tr").eq($(".rankBt").index($(this))).remove();
+        });
+        $(".rankOrder").unbind("input propertychange");
+        $(".rankOrder").bind('input propertychange', function () {
+            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "hidden");
+            } else if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT") {
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html("%");
+            } else {
+                var name = $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".quotaName").html();
+                var result = convert(name);
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
+                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html(result);
+            }
         })
 
-    }
+        function commit() {
+
+            //TODO fjj 分别遍历两个list
+            $(".quotaRow").each(function () {
+//           分别对应指标名称 指标排名方式 选股的多少 权重
+                alert($(this).find(".numOfN").val() + $(this).find(".quotaName").html());
+                alert($(this).find(".quotaRank").val());
+                alert($(this).find(".quotaNum").val());
+            });
+            $(".rankRow").each(function () {
+//           分别对应指标名称 指标排名方式 选股的多少 权重
+                alert($(this).find(".numOfN").val() + $(this).find(".quotaName").html());
+                alert($(this).find(".rankOrder").val());
+                alert($(this).find(".quotaWeight").val());
+            });
+        }
+
+    });
 </script>
 
 </body>

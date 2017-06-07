@@ -22,22 +22,22 @@ public class MaxTraceBack {
     public double maxStrategyTraceBackRate;
 
     /**
-     * 最大策略回撤起始日期
+     * 策略最大回撤起始日期
      */
     public LocalDate maxStartDay;
 
     /**
-     * 最大策略回撤结束日期
+     * 策略最大回撤结束日期
      */
     public LocalDate maxEndDay;
 
     /**
-     * 最大策略回撤结束日期在该策略日期列表中的位置
+     * 策略最大回撤结束日期在该策略日期列表中的位置
      */
     public int maxStartIndex;
 
     /**
-     * 最大策略回撤起始日期在该策略日期列表中的位置
+     * 策略最大回撤起始日期在该策略日期列表中的位置
      */
     public int maxEndIndex;
 

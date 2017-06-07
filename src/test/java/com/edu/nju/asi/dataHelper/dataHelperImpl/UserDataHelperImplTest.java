@@ -108,7 +108,7 @@ public class UserDataHelperImplTest {
 
     @Test
     public void getStrategy() throws Exception {
-        List<Strategy> strategies = userDataHelper.getStrategy("CharlesFeng47");
+        List<Strategy> strategies = userDataHelper.getStrategy("Charleskkkk");
         Strategy strategy = strategies.get(0);
         assertEquals("涨幅",strategy.getContent());
         assertEquals("ByronDong",strategy.getCreater());
