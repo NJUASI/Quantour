@@ -37,12 +37,7 @@ public class MulArrMarkFormateStrategy extends AllFormateStrategy{
             List<Stock> stockList_60day = stockList_120day.subList(60, 120);
             List<Stock> stockList_20day = stockList_120day.subList(100, 120);
             List<Stock> stockList_5day = stockList_120day.subList(115, 120);
-            if (stockList_120day == null) {
-                filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), null, 0));
-            List<Stock> stockList_5day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 3);
-            List<Stock> stockList_20day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 6);
-            List<Stock> stockList_60day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 12);
-            List<Stock> stockList_120day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 24);
+
             if(stockList_120day == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
                 continue;

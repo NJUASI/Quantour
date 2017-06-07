@@ -87,7 +87,7 @@ public class TraceBackStrategyCalculator {
      *
      * @return List<CumulativeReturn> 策略的累计收益率
      */
-    public List<CumulativeReturn> traceBack(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException {
+    public List<CumulativeReturn> traceBack(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException, NoDataWithinException {
 
         //调仓日为持有期的后一天，故把调仓日放到周期中，每个周期的起始调仓日不参与收益计算，末尾调仓日参与收益计算
         int holdingPeriod = traceBackCriteria.holdingPeriod;
@@ -105,6 +105,10 @@ public class TraceBackStrategyCalculator {
             }
             if (!allDatesWithData.contains(thisEnd)) {
                 thisEnd = thisEnd.minusDays(1);
+            }
+            //中间没有数据
+            if(thisStart.isAfter(thisEnd)){
+                throw new NoDataWithinException("all");
             }
         }
         allStartIndex = allDatesWithData.indexOf(thisStart);
