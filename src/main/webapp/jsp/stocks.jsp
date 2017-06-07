@@ -17,6 +17,7 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="../css/stocks.css" rel="stylesheet">
+    <link href="../css/bootstrap-select.css" rel="stylesheet">
     <link href="../css/reset.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
     <link href="../css/startLoader.css" rel="stylesheet">
@@ -196,11 +197,115 @@
         </div>
 
         <%--TODO 高源 没数据的话怎么显示--%>
+        <div class="text-center" id="headTitle"><h3>市场行情</h3></div>
+        <div class="row">
+            <div class="col-md-offset-7 col-md-2">
+                <div class="row">
+                    <div class="col-md-4" style="margin-top: 6px">行业</div>
+                    <div class='col-md-8' style="margin-left: -16px">
+                        <select id="industry" name="industry" data-size="10" class=" selectpicker form-control" data-live-search="true">
+
+                            <optgroup label="">
+                                <option class="industryOfStock">全部</option>
+                            </optgroup>
+                            <option class="industryOfStock">传媒艺术</option>
+                            <option class="industryOfStock">电器制造</option>
+                            <option class="industryOfStock">交运设备</option>
+                            <option class="industryOfStock">茶酒饮料</option>
+                            <option class="industryOfStock">木材加工</option>
+                            <option class="industryOfStock">汽车制造</option>
+                            <option class="industryOfStock">家具制造</option>
+                            <option class="industryOfStock">食品制造</option>
+                            <option class="industryOfStock">造纸</option>
+                            <option class="industryOfStock">通信设备</option>
+                            <option class="industryOfStock">橡胶塑料</option>
+                            <option class="industryOfStock">旅游环境</option>
+                            <option class="industryOfStock">农林牧渔</option>
+                            <option class="industryOfStock">教育</option>
+                            <option class="industryOfStock">医药制造</option>
+                            <option class="industryOfStock">卫生</option>
+                            <option class="industryOfStock">粮食加工</option>
+                            <option class="industryOfStock">黑色金属</option>
+                            <option class="industryOfStock">其他制造业</option>
+                            <option class="industryOfStock">化纤制造</option>
+                            <option class="industryOfStock"> 信息技术</option>
+                            <option class="industryOfStock">出版传媒</option>
+                            <option class="industryOfStock">服装制造</option>
+                            <option class="industryOfStock">房地产业</option>
+                            <option class="industryOfStock">非金属制品</option>
+                            <option class="industryOfStock">综合</option>
+                            <option class="industryOfStock">租赁和商务</option>
+                            <option class="industryOfStock">通用设备制造</option>
+                            <option class="industryOfStock">纺织业</option>
+                            <option class="industryOfStock">金融业</option>
+                            <option class="industryOfStock">石油加工</option>
+                            <option class="industryOfStock">交通物流</option>
+                            <option class="industryOfStock">专用设备制造</option>
+                            <option class="industryOfStock">批发零售</option>
+                            <option class="industryOfStock">金属制品</option>
+                            <option class="industryOfStock">化学制品</option>
+                            <option class="industryOfStock">科研技术</option>
+                            <option class="industryOfStock">建筑业</option>
+                            <option class="industryOfStock">印刷</option>
+                            <option class="industryOfStock">仪器仪表</option>
+                            <option class="industryOfStock">有色金属</option>
+                            <option class="industryOfStock">废品利用</option>
+                            <option class="industryOfStock">采矿业</option>
+                            <option class="industryOfStock">水电燃气</option>
+                            <option class="industryOfStock">皮毛制鞋</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-4" style="margin-top: 6px">地域</div>
+                    <div class='col-md-8' style="margin-left: -16px">
+                        <select id="industry" name="province" data-size="10" class=" selectpicker form-control" data-live-search="true">
+
+                            <optgroup label="">
+                                <option class="industryOfStock">全部</option>
+                            </optgroup>
+                            <option class="provinceOfStock">北京</option>
+                            <option class="provinceOfStock">天津</option>
+                            <option class="provinceOfStock">河北</option>
+                            <option class="provinceOfStock">山西</option>
+                            <option class="provinceOfStock">内蒙古</option>
+                            <option class="provinceOfStock">辽宁</option>
+                            <option class="provinceOfStock">吉林</option>
+                            <option class="provinceOfStock">黑龙江</option>
+                            <option class="provinceOfStock">上海</option>
+                            <option class="provinceOfStock">江苏</option>
+                            <option class="provinceOfStock">浙江</option>
+                            <option class="provinceOfStock">安徽</option>
+                            <option class="provinceOfStock">福建</option>
+                            <option class="provinceOfStock">江西</option>
+                            <option class="provinceOfStock">山东</option>
+                            <option class="provinceOfStock">河南</option>
+                            <option class="provinceOfStock">湖北</option>
+                            <option class="provinceOfStock">湖南</option>
+                            <option class="provinceOfStock">广东</option>
+                            <option class="provinceOfStock">广西</option>
+                            <option class="provinceOfStock">海南</option>
+                            <option class="provinceOfStock">四川</option>
+                            <option class="provinceOfStock">贵州</option>
+                            <option class="provinceOfStock">云南</option>
+                            <option class="provinceOfStock">西藏</option>
+                            <option class="provinceOfStock">重庆</option>
+                            <option class="provinceOfStock">陕西</option>
+                            <option class="provinceOfStock">甘肃</option>
+                            <option class="provinceOfStock">青海</option>
+                            <option class="provinceOfStock">宁夏</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row" style="z-index:3">
             <div class="col-md-10 col-md-offset-1">
                 <div class="table-responsive">
                     <table class="table table-hover table-condensed stocks-table">
-                        <caption class="text-center" id="headTitle"><h3>市场行情</h3></caption>
                         <thead>
                         <tr>
                             <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
@@ -351,13 +456,13 @@
 <script src="../js/stocks.js"></script>
 <script src="../js/echarts-liquidfill.js"></script>
 <script src="../js/startLoaded.js"></script>
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../js/bootstrap-select.js"></script>
 <script src="../js/logIn.js"></script>
 <script type="text/javascript">
 

@@ -1309,6 +1309,9 @@
             "<option value='RANK_MIN'>排名最小</option>" +
             "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
             "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
+            "<option value='RANK_BIGGER'>大于</option>" +
+            "<option value='RANK_SHORTER'>小于</option>" +
+            "<option value='RANK_EQUAL'>等于</option>" +
             "</select>" +
             "</div>" +
             "</td>" +
@@ -1335,6 +1338,21 @@
             $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
             commit();
         });
+
+        $(".quotaRank").unbind("input propertychange");
+        $(".quotaRank").bind('input propertychange', function () {
+            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
+            } else  if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT"){
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html("%");
+            }else {
+                var name = $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".quotaName").html();
+                var result = convert(name);
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
+                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html(result);
+            }
+        })
 
     }
 </script>
