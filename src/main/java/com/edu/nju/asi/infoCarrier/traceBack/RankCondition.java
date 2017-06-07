@@ -30,6 +30,9 @@ public class RankCondition {
      */
     public int formativePeriod;
 
+    public RankCondition() {
+    }
+
     public RankCondition(IndicatorType indicatorType, RankType rankType, int weight, int formativePeriod) {
         this.indicatorType = indicatorType;
         this.rankType = rankType;
