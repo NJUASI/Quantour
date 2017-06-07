@@ -1,10 +1,8 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
-import java.time.LocalDate;
-
 /**
  * Created by harvey on 17-3-28.
- *
+ * <p>
  * 用于列表展示回测中的数值型数据
  */
 public class TraceBackNumVal {
@@ -27,55 +25,37 @@ public class TraceBackNumVal {
     // 基准总收益率
     public double baseSumRate;
 
-    // 阿尔法比率
-    public double alpha;
-
-    // 贝塔
-    public double beta;
-
     // 策略夏普比率
     public double sharpeRatio;
 
     // 基准夏普比率
     public double baseSharpeRatio;
 
-    // 最大回撤率
-    public double maxRetracementRatio;
+    // （策略）阿尔法比率
+    public double alpha;
 
-    // 最大回撤率的峰值
-    public double peakPointRatio;
+    // （策略）贝塔
+    public double beta;
 
-    // 最大回撤率的谷底值
-    public double valleyPointRatio;
+    // （策略）信息比率
+    public double informationRatio;
 
-    // 最大回撤率起始时间
-    public LocalDate startDate;
-
-    // 最大回撤率结束时间
-    public LocalDate endDate;
-
+    public TraceBackNumVal() {
+    }
 
     public TraceBackNumVal(double annualizedRateOfReturn, double baseAnnualizedRateOfReturn, double returnVolatility,
-                           double baseReturnVolatility, double sumRate, double baseSumRate, double alpha, double beta,
-                           double sharpeRatio, double baseSharpeRatio, double maxRetracementRatio, double peakPointRatio,
-                           double valleyPointRatio, LocalDate startDate, LocalDate endDate) {
+                           double baseReturnVolatility, double sumRate, double baseSumRate, double sharpeRatio,
+                           double baseSharpeRatio, double alpha, double beta, double informationRatio) {
         this.annualizedRateOfReturn = annualizedRateOfReturn;
         this.baseAnnualizedRateOfReturn = baseAnnualizedRateOfReturn;
         this.returnVolatility = returnVolatility;
         this.baseReturnVolatility = baseReturnVolatility;
         this.sumRate = sumRate;
         this.baseSumRate = baseSumRate;
-        this.alpha = alpha;
-        this.beta = beta;
         this.sharpeRatio = sharpeRatio;
         this.baseSharpeRatio = baseSharpeRatio;
-        this.maxRetracementRatio = maxRetracementRatio;
-        this.peakPointRatio = peakPointRatio;
-        this.valleyPointRatio = valleyPointRatio;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
-    public TraceBackNumVal() {
+        this.alpha = alpha;
+        this.beta = beta;
+        this.informationRatio = informationRatio;
     }
 }

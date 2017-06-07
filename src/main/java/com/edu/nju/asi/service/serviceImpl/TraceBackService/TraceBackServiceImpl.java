@@ -107,10 +107,12 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         // TraceBackParameter 计算贝塔系数等
         List<BaseStock> baseStockList = stockService.getBaseStockData(traceBackCriteria.baseStockName, traceBackCriteria.startDate, traceBackCriteria.endDate);
-        TraceBackParameter traceBackParameter = new TraceBackParameter(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStockList);
-        System.out.println("---------------7------------");
-        return traceBackParameter.getTraceBackInfo();
 
+        TraceBackParam param = new TraceBackParam(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStockList);
+        traceBackInfo.traceBackNumVal = param.getNumericalVal();
+        System.out.println("---------------7------------");
+
+        return traceBackInfo;
     }
 
     private void setUp(List<String> traceBackStockPool) throws IOException {
