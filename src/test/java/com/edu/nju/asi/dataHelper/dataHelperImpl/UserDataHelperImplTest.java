@@ -76,10 +76,10 @@ public class UserDataHelperImplTest {
     @Test
     public void addStrategy() throws Exception {
         Strategy strategy1 = new Strategy(LocalDate.of(2017,1,1)
-                ,"ByronDong",true,"涨幅","hhhhhhhhhhh");
+                ,"ByronDong",true,"涨幅","hhhhhhhhhhh","1234567890");
         strategy1.setStrategyID("小策略");
         Strategy strategy2 = new Strategy(LocalDate.of(2017,3,1)
-                ,"CharlesFeng47",false,"乖离率","aaaaaaaaaaaaaa");
+                ,"CharlesFeng47",false,"乖离率","aaaaaaaaaaaaaa","1234567890");
         strategy2.setStrategyID("大策略");
         userDataHelper.addStrategyByCreator("ByronDong",strategy1);
         userDataHelper.addStrategyByChecker("CharlesFeng47","小策略");
@@ -90,7 +90,7 @@ public class UserDataHelperImplTest {
     @Test
     public void updateStrategy() throws Exception {
         Strategy strategy1 = new Strategy(LocalDate.of(2017,1,1)
-                ,"Byron",true,"涨幅","cccccccccc");
+                ,"Byron",true,"涨幅","cccccccccc","1234567890");
         strategy1.setStrategyID("小策略");
         userDataHelper.updateStrategy("Byron",strategy1);
     }
@@ -98,10 +98,10 @@ public class UserDataHelperImplTest {
     @Test
     public void deleteStrategy() throws Exception {
         Strategy strategy1 = new Strategy(LocalDate.of(2017,1,1)
-                ,"Byron",true,"涨幅","hhhhhhhhhhh");
+                ,"Byron",true,"涨幅","hhhhhhhhhhh","1234567890");
         strategy1.setStrategyID("小策略");
         Strategy strategy2 = new Strategy(LocalDate.of(2017,3,1)
-                ,"Dong",false,"乖离率","aaaaaaaaaaaaaa");
+                ,"Dong",false,"乖离率","aaaaaaaaaaaaaa","1234567890");
         strategy2.setStrategyID("大策略");
         userDataHelper.deleteStrategy("Dong",strategy2.getStrategyID());
     }

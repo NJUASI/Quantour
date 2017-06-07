@@ -46,18 +46,23 @@ public class Strategy implements Serializable{
     @Column(columnDefinition = "TEXT",nullable = true)
     private String description;
 
+    @Basic
+    @Column(columnDefinition = "TEXT",nullable = true)
+    private String traceBackInfo;
+
     @ManyToMany(mappedBy = "strategies")
     private List<User> users = new ArrayList<>();
 
     public Strategy() {
     }
 
-    public Strategy(LocalDate date, String creater, boolean isPrivate, String content, String description) {
+    public Strategy(LocalDate date, String creater, boolean isPrivate, String content, String description, String traceBackInfo) {
         this.date = date;
         this.creater = creater;
         this.isPrivate = isPrivate;
         this.content = content;
         this.description = description;
+        this.traceBackInfo = traceBackInfo;
     }
 
     public String getStrategyID() {
@@ -106,6 +111,14 @@ public class Strategy implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTraceBackInfo() {
+        return traceBackInfo;
+    }
+
+    public void setTraceBackInfo(String traceBackInfo) {
+        this.traceBackInfo = traceBackInfo;
     }
 
     public List<User> getUsers() {
