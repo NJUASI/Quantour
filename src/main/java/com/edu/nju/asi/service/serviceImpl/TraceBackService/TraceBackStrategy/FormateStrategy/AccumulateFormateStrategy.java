@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 
@@ -28,25 +28,25 @@ public class AccumulateFormateStrategy extends AllFormateStrategy {
     }
 
     @Override
-    public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+    public List<FormateRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        List<FilterConditionRate> filterConditionRate = new ArrayList<>();
+        List<FormateRate> formateRate = new ArrayList<>();
 
         for (int i = 0; i < stockCodes.size(); i++) {
 
             List<Stock> stockList = getDateWithHaltDay(stockCodes.get(i), periodStartIndex - 1, formativePeriod);
             if(stockList == null){
-                filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), null, 0));
+                formateRate.add(new FormateRate(stockCodes.get(i), null));
                 continue;
             }
 
             double indicatorVal = computeAccumulativeValue(stockList, indicatorSpell);
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), indicatorVal, 0));
+            formateRate.add(new FormateRate(stockCodes.get(i), indicatorVal));
         }
 
-        return filterConditionRate;
+        return formateRate;
     }
 }

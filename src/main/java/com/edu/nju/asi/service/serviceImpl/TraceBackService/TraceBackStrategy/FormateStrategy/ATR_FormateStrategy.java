@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
@@ -23,19 +23,19 @@ public class ATR_FormateStrategy extends AllFormateStrategy {
     }
 
     @Override
-    public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+    public List<FormateRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        List<FilterConditionRate> filterConditionRate = new ArrayList<>();
+        List<FormateRate> formateRate = new ArrayList<>();
 
         for(int i = 0; i < stockCodes.size(); i++){
 
             List<Stock> stockList_14day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 14);
 
             if(stockList_14day == null){
-                filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), null, 0));
+                formateRate.add(new FormateRate(stockCodes.get(i), null));
             }
 
             double[] trueRanges = new double[14];
@@ -55,9 +55,9 @@ public class ATR_FormateStrategy extends AllFormateStrategy {
             StandardDeviation stdev = new StandardDeviation();
             double ATR_val = stdev.evaluate(trueRanges);
 
-            filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), ATR_val, 0));
+            formateRate.add(new FormateRate(stockCodes.get(i), ATR_val));
         }
 
-        return filterConditionRate;
+        return formateRate;
     }
 }

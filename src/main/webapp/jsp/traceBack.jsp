@@ -514,8 +514,8 @@
                     <div id="myTabContent2" class="tab-content">
                         <div class="tab-pane fade in active" id="choose">
 
-                            <div class="col-md-12 col-xs-12 pre-scrollable"
-                                 style="height:200px;max-height: 200px;">
+                            <div class="col-md-12 col-xs-12"
+                                 style="height:200px;max-height: 240px;overflow-y: auto">
                                 <table class="table table-hover">
                                     <thead>
                                     <tr>
@@ -534,8 +534,8 @@
 
                         <div class="tab-pane fade in" id="rank">
 
-                            <div class="col-md-12 col-xs-12 pre-scrollable"
-                                 style="height:200px;max-height: 200px;">
+                            <div class="col-md-12 col-xs-12"
+                                 style="height:200px;max-height:  240px;overflow-y: auto">
                                 <table class="table table-hover">
                                     <thead>
                                     <tr>

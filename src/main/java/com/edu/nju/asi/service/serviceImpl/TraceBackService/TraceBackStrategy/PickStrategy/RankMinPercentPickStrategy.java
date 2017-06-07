@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
 
 import java.util.List;
 
@@ -11,17 +11,17 @@ import java.util.List;
  */
 public class RankMinPercentPickStrategy extends AllPickStrategy{
 
-    public RankMinPercentPickStrategy(int rank, double weight, int poolSize) {
-        super(rank, weight, poolSize);
+    public RankMinPercentPickStrategy(int rank) {
+        super(rank);
     }
 
     @Override
-    protected List<FilterConditionRate> eachPick(List<FilterConditionRate> filterConditionRates) {
-        List<FilterConditionRate> sortedStockPool = descSort(filterConditionRates);
+    public List<String> pick(List<FormateRate> formateRates) {
+        List<FormateRate> sortedStockPool = descSort(formateRates);
 
         int size = sortedStockPool.size();
         int pickedNum =  (int)Math.ceil((double)size * rank / 100);
 
-        return  sortedStockPool.subList(0,pickedNum);
+        return  convert(sortedStockPool.subList(0,pickedNum));
     }
 }

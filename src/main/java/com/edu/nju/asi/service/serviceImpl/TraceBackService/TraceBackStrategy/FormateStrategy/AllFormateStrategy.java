@@ -2,7 +2,7 @@ package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.F
 
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -40,7 +40,7 @@ public abstract class AllFormateStrategy {
      * @param formativePeriod 形成期长度
      * @return 形成的数据
      */
-    public abstract List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException;
+    public abstract List<FormateRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException;
 
 
     /**

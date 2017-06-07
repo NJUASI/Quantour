@@ -1,6 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
-import com.edu.nju.asi.infoCarrier.traceBack.FilterConditionRate;
+import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
@@ -31,29 +31,29 @@ public class MACD_FormateStrategy extends AllFormateStrategy{
      * @return 形成的数据
      */
     @Override
-    public List<FilterConditionRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
+    public List<FormateRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
         int periodStartIndex = allDatesWithData.indexOf(periodStart);
         if (periodStartIndex == 0) throw new DataSourceFirstDayException();
 
-        List<FilterConditionRate> filterConditionRate = new ArrayList<>();
+        List<FormateRate> formateRate = new ArrayList<>();
 
         for (int i = 0; i < stockCodes.size(); i++) {
 
             switch (MACD_Type){
                 case MACD_DIF:
-                    filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), computeDIF(stockCodes.get(i), periodStartIndex-1) , 0));
+                    formateRate.add(new FormateRate(stockCodes.get(i), computeDIF(stockCodes.get(i), periodStartIndex-1)));
                     break;
                 case MACD_DEA:
-                    filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), computeDEA(stockCodes.get(i), periodStartIndex-1) , 0));
+                    formateRate.add(new FormateRate(stockCodes.get(i), computeDEA(stockCodes.get(i), periodStartIndex-1)));
                     break;
                 case MACD_COLUMN_VAL:
-                    filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), computeMACD_COLUMN(stockCodes.get(i), periodStartIndex-1) , 0));
+                    formateRate.add(new FormateRate(stockCodes.get(i), computeMACD_COLUMN(stockCodes.get(i), periodStartIndex-1)));
                     break;
             }
         }
 
-        return filterConditionRate;
+        return formateRate;
     }
 
     /**
