@@ -53,7 +53,7 @@ public class TraceBackCriteria {
     public TraceBackCriteria(){
     }
 
-    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int holdingPeriod, int maxHoldingNum, StockPoolCriteria stockPoolCriteria, String baseStockName, List<FilterCondition> filterConditions) {
+    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int holdingPeriod, int maxHoldingNum, StockPoolCriteria stockPoolCriteria, String baseStockName, List<FilterCondition> filterConditions, List<RankCondition> rankConditions) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.holdingPeriod = holdingPeriod;
@@ -61,6 +61,7 @@ public class TraceBackCriteria {
         this.stockPoolCriteria = stockPoolCriteria;
         this.baseStockName = baseStockName;
         this.filterConditions = filterConditions;
+        this.rankConditions = rankConditions;
     }
 
 
@@ -72,5 +73,6 @@ public class TraceBackCriteria {
         this.stockPoolCriteria = criteria.stockPoolCriteria;
         this.baseStockName = criteria.baseStockName;
         this.filterConditions = criteria.filterConditions;
+        this.rankConditions = criteria.rankConditions;
     }
 }

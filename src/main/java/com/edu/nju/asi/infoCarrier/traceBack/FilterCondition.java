@@ -26,11 +26,6 @@ public class FilterCondition {
     public int value;
 
     /**
-     * 排名的权重
-     */
-    public double weight;
-
-    /**
      * 形成期(若没有形成期则为1)
      */
     public int formativePeriod;
@@ -38,11 +33,10 @@ public class FilterCondition {
     public FilterCondition() {
     }
 
-    public FilterCondition(IndicatorType indicatorType, ComparatorType comparatorType, int value, double weight, int formativePeriod) {
+    public FilterCondition(IndicatorType indicatorType, ComparatorType comparatorType, int value, int formativePeriod) {
         this.indicatorType = indicatorType;
         this.comparatorType = comparatorType;
         this.value = value;
-        this.weight = weight;
         this.formativePeriod = formativePeriod;
     }
 }
