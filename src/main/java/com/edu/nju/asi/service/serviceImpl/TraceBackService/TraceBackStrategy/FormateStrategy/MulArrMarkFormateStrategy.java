@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * 多头排列标记 ：标记为1，表示5日均线、20日均线、60日均线、120日均线依次排列，短线在长线的上方， 股价呈上升趋势。
  */
-public class MulArrMarkFormateStrategy extends AllFormateStrategy{
+public class MulArrMarkFormateStrategy extends AllFormateStrategy {
 
     public MulArrMarkFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
         super(allDatesWithData, stockData);
@@ -30,13 +30,14 @@ public class MulArrMarkFormateStrategy extends AllFormateStrategy{
 
         List<FilterConditionRate> filterConditionRate = new ArrayList<>();
 
-        for(int i = 0; i < stockCodes.size(); i++){
+        for (int i = 0; i < stockCodes.size(); i++) {
 
-            List<Stock> stockList_5day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 3);
-            List<Stock> stockList_20day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 6);
-            List<Stock> stockList_60day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 12);
-            List<Stock> stockList_120day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 24);
-            if(stockList_120day == null){
+
+            List<Stock> stockList_120day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex - 1, 24);
+            List<Stock> stockList_60day = stockList_120day.subList(60, 120);
+            List<Stock> stockList_20day = stockList_120day.subList(100, 120);
+            List<Stock> stockList_5day = stockList_120day.subList(115, 120);
+            if (stockList_120day == null) {
                 filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), null, 0));
                 continue;
             }
@@ -48,7 +49,7 @@ public class MulArrMarkFormateStrategy extends AllFormateStrategy{
 
             double up = 0;
             // 短线在长线上方
-            if(mean_5day > mean_20day && mean_20day > mean_60day && mean_60day > mean_120day){
+            if (mean_5day > mean_20day && mean_20day > mean_60day && mean_60day > mean_120day) {
                 up = 1;
             }
             filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), up, 0));

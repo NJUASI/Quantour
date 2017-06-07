@@ -73,7 +73,7 @@ public class MACD_FormateStrategy extends AllFormateStrategy{
             return null;
         }
 
-        return EMA_Close(stockList_short)- EMA_Close(stockList_long);
+        return EMA_AfterAdjClose(stockList_short)- EMA_AfterAdjClose(stockList_long);
     }
 
     /**
@@ -93,9 +93,8 @@ public class MACD_FormateStrategy extends AllFormateStrategy{
             return null;
         }
 
-        for(int j = 1; j < 9; j++){
-
-            Double next = computeDIF(code, endIndex-j);
+        for (int j = 1; j < 9; j++) {
+            Double next = computeDIF(code, endIndex - j);
 
             // 数据不存在，返回null
             if(next == null){
@@ -122,5 +121,25 @@ public class MACD_FormateStrategy extends AllFormateStrategy{
         }
 
         return 2*(dif - dea);
+    }
+
+
+    /**
+     * 计算某只股票N个交易日的eam
+     * @param stockList 需要计算的某只股票N个交易日的详情
+     * @return
+     */
+    protected double EMA_AfterAdjClose(List<Stock> stockList){
+        //平滑指数, 一般取作2/(N+1)
+        double k = 2.0 / (stockList.size() + 1);
+
+        //第一天ema等于当天的收盘价
+        double ema = stockList.get(0).getAfterAdjClose();
+        for(int i = 1; i < stockList.size(); i++){
+            //第二天以后，当天收盘价 * 系数 加上昨天的ema*系数-1
+            ema = k*stockList.get(i).getAfterAdjClose() + (1 - k) * ema;
+        }
+
+        return ema;
     }
 }

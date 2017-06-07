@@ -6,7 +6,6 @@ import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
-import com.edu.nju.asi.utilities.StockList;
 import com.edu.nju.asi.utilities.enums.*;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import org.junit.Before;

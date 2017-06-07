@@ -31,8 +31,8 @@ public class VolumeRatioIndexFormateStrategy extends AllFormateStrategy {
 
         for(int i = 0; i < stockCodes.size(); i++){
 
-            List<Stock> stockList_1day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 3);
-            List<Stock> stockList_5day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 6);
+            List<Stock> stockList_5day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex - 1, 5);
+            List<Stock> stockList_1day = stockList_5day.subList(4, 5);
             if(stockList_5day == null){
                 filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), null, 0));
                 continue;

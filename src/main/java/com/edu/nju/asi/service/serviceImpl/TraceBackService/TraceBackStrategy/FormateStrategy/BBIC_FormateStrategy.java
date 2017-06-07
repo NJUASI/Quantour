@@ -31,10 +31,11 @@ public class BBIC_FormateStrategy extends AllFormateStrategy {
 
         for(int i = 0; i < stockCodes.size(); i++){
 
-            List<Stock> stockList_3day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 3);
-            List<Stock> stockList_6day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 6);
-            List<Stock> stockList_12day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 12);
             List<Stock> stockList_24day = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, 24);
+            List<Stock> stockList_12day = stockList_24day.subList(12,24);
+            List<Stock> stockList_6day = stockList_24day.subList(18,24);
+            List<Stock> stockList_3day = stockList_24day.subList(21,24);
+
             if(stockList_24day == null){
                 filterConditionRate.add(new FilterConditionRate(stockCodes.get(i), null, 0));
                 continue;
