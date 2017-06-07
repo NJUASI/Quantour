@@ -30,6 +30,9 @@ public class Stock implements Serializable {
     @Column(length = 100)
     private String name;
 
+    /**
+     * 基本数据
+     * */
     // 开盘指数
     @Basic
     private double open;
@@ -51,6 +54,9 @@ public class Stock implements Serializable {
     @Column(length = 100)
     private String volume;
 
+    /**
+     * 拓展数据
+     * */
     //成交金额
     @Basic
     @Column(length = 100)
@@ -82,8 +88,8 @@ public class Stock implements Serializable {
     @Column(length = 100)
     private String circulationMarketValue;
 
-    /*
-    复权数据
+    /**
+     *复权数据
      */
     //前复权开盘指数
     @Basic
@@ -214,7 +220,6 @@ public class Stock implements Serializable {
         this.frontAdjOpen = 0;
         this.preAfterAdjClose = 0;
         this.preFrontAdjClose = 0;
-
     }
 
     public StockID getStockID() {

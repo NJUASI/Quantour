@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Test8</title>
+</head>
+<body>
+<div id="candlestick" style="width:100%;height:600px"></div>
+<script src="../../js/echarts.min.js"></script>
+<script src="../../js/chart.js"></script>
+<script src="../../js/echarts-liquidfill.js"></script>
+<script type="text/javascript">
+
+
+    var data = [
+        {
+            "node":"节点1",
+            "endpoint":[
+                "节点6",
+                "节点8"
+            ],
+            "service":[
+                "java.local.name_1",
+                "java.local.name_11"
+            ]
+        },
+        {
+            "node":"节点2",
+            "endpoint":[
+                "节点6",
+                "节点7"
+            ],
+            "service":[
+                "java.local.name_2",
+                "java.local.name_22"
+            ]
+        },{
+            "node":"节点3",
+            "endpoint":[
+                "节点6"
+            ],
+            "service":[
+                "java.local.name_3",
+                "java.local.name_33"
+            ]
+        },{
+            "node":"节点4",
+            "endpoint":[
+                "节点6"
+            ],
+            "service":[
+                "java.local.name_4",
+                "java.local.name_44"
+            ]
+        },{
+            "node":"节点5",
+            "endpoint":[
+                "节点6"
+            ],
+            "service":[
+                "java.local.name_5",
+                "java.local.name_55"
+            ]
+        },{
+            "node":"节点6",
+            "endpoint":[
+                "节点1",
+                "节点2",
+                "节点3",
+                "节点4",
+                "节点5",
+                "节点7",
+                "节点8"
+            ],
+            "service":[
+                "java.local.name_6",
+                "java.local.name_66"
+            ]
+        },{
+            "node":"节点7",
+            "endpoint":[
+                "节点6",
+                "节点2"
+            ],
+            "service":[
+                "java.local.name_7",
+                "java.local.name_77"
+            ]
+        },{
+            "node":"节点8",
+            "endpoint":[
+                "节点6",
+                "节点1"
+            ],
+            "service":[
+                "java.local.name_8",
+                "java.local.name_88"
+            ]
+        },{
+            "node":"节点9",
+            "endpoint":[
+                "节点5",
+                "节点1"
+            ],
+            "service":[
+                "java.local.name_9",
+                "java.local.name_99"
+            ]
+        }
+    ];
+
+    createRelationChart('candlestick',data);
+</script>
+</body>
+</html>

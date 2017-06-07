@@ -102,6 +102,8 @@ public class FormateStrategyFactory {
             case BOLL_UP_BANDS:
             case BOLL_DOWN_BANDS:
                 return new BOLL_FormateStrategy(allDatesWithData, stockData, indicatorType);
+            case AVE_TRUE_RANGE:
+                return new ATR_FormateStrategy(allDatesWithData, stockData);
 
         }
         return null;
