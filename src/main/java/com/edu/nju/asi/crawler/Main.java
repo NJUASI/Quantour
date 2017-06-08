@@ -30,6 +30,7 @@ public class Main {
         long start = System.currentTimeMillis();
         for (String code : codes) {
             map.put(code, main.getAllStock(code, connection));
+            System.out.println("code: "+code);
         }
         System.out.println("总时间： "+(System.currentTimeMillis()-start));
         try {

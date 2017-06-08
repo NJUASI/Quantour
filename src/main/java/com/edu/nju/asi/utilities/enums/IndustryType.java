@@ -5,7 +5,7 @@ package com.edu.nju.asi.utilities.enums;
  * <p>
  * 股票的行业信息
  */
-public enum IndustyType {
+public enum IndustryType {
 
     all(0),
     金融行业(1),
@@ -61,7 +61,7 @@ public enum IndustyType {
 
     int repre;
 
-    IndustyType(int repre) {
+    IndustryType(int repre) {
         this.repre = repre;
     }
 }

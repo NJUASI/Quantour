@@ -4,6 +4,8 @@ import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.enums.AreaType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.Market;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
 import org.hibernate.Session;
@@ -118,6 +120,26 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
             JDBCUtil.close(preparedStatement,connection);
         }
         return result;
+    }
+
+    /**
+     * 根据area取StockSearch列表
+     *
+     * @param area
+     */
+    @Override
+    public List<StockSearch> getByArea(AreaType area) {
+        return null;
+    }
+
+    /**
+     * 根据industry取StockSearch列表
+     *
+     * @param industry
+     */
+    @Override
+    public List<StockSearch> getByIndustry(IndustryType industry) {
+        return null;
     }
 
     /**
