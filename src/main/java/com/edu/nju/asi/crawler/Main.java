@@ -2,6 +2,7 @@ package com.edu.nju.asi.crawler;
 
 
 import com.edu.nju.asi.crawler.StoreDataHelper.StoreAreaAndIndustryHelper;
+import com.edu.nju.asi.crawler.StoreDataHelper.StoreBasicDataHelper;
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
@@ -22,22 +23,24 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        Main main = new Main();
-        Connection connection = JDBCUtil.getConnection();
-        Set<String> codes = HelperManager.stockSearchDataHelper.getAllStocksCode().keySet();
-        Map<String, List<Stock>> map = new HashMap<>();
-
-        long start = System.currentTimeMillis();
-        for (String code : codes) {
-            map.put(code, main.getAllStock(code, connection));
-            System.out.println("code: "+code);
-        }
-        System.out.println("总时间： "+(System.currentTimeMillis()-start));
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        StoreBasicDataHelper storeBasicDataHelper = new StoreBasicDataHelper();
+        storeBasicDataHelper.store();
+//        Main main = new Main();
+//        Connection connection = JDBCUtil.getConnection();
+//        Set<String> codes = HelperManager.stockSearchDataHelper.getAllStocksCode().keySet();
+//        Map<String, List<Stock>> map = new HashMap<>();
+//
+//        long start = System.currentTimeMillis();
+//        for (String code : codes) {
+//            map.put(code, main.getAllStock(code, connection));
+//            System.out.println("code: "+code);
+//        }
+//        System.out.println("总时间： "+(System.currentTimeMillis()-start));
+//        try {
+//            connection.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void test() {

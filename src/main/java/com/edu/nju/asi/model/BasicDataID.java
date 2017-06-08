@@ -3,48 +3,27 @@ package com.edu.nju.asi.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Created by Byron Dong on 2017/6/4.
  */
 @Embeddable
-public class BasicDataID implements Serializable{
-
-    //季度（使用1，2，3，4来进行标记）
-    @Column(length = 1)
-    private int quarter;
-
-    //年份
-    @Column(length = 4)
-    private int year;
+public class BasicDataID implements Serializable {
 
     //股票代号
     @Column(length = 100)
     private String code;
 
+    @Column
+    private LocalDate date;
+
     public BasicDataID() {
     }
 
-    public BasicDataID(int quarter, int year, String code) {
-        this.quarter = quarter;
-        this.year = year;
+    public BasicDataID(String code, LocalDate date) {
         this.code = code;
-    }
-
-    public int getQuarter() {
-        return quarter;
-    }
-
-    public void setQuarter(int quarter) {
-        this.quarter = quarter;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
+        this.date = date;
     }
 
     public String getCode() {
@@ -55,6 +34,14 @@ public class BasicDataID implements Serializable{
         this.code = code;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,16 +49,14 @@ public class BasicDataID implements Serializable{
 
         BasicDataID that = (BasicDataID) o;
 
-        if (quarter != that.quarter) return false;
-        if (year != that.year) return false;
-        return code != null ? code.equals(that.code) : that.code == null;
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        return date != null ? date.equals(that.date) : that.date == null;
     }
 
     @Override
     public int hashCode() {
-        int result = quarter;
-        result = 31 * result + year;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
+        int result = code != null ? code.hashCode() : 0;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 }

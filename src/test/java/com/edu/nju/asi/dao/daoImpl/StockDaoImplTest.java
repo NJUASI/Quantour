@@ -1,13 +1,16 @@
 package com.edu.nju.asi.dao.daoImpl;
 
 import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import com.edu.nju.asi.utilities.enums.Market;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -358,4 +361,10 @@ public class StockDaoImplTest {
 //        assertEquals(false, stockDao.isDateWithinSource("2286", LocalDate.of(2009, 2, 28), LocalDate.of(2014,4,29)));
 //        assertEquals(false, stockDao.isDateWithinSource("2286", LocalDate.of(2005, 2, 1), LocalDate.of(2014,2,1)));
 //    }
+
+
+    @Test
+    public void getAllStockPool() throws IOException, UnhandleBlockTypeException {
+        List<StockPool> result = stockDao.getAllStockPool();
+    }
 }
