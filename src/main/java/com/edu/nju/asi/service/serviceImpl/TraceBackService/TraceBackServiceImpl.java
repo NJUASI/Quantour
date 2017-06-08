@@ -73,7 +73,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         TraceBackInfo traceBackInfo = new TraceBackInfo();
 
         traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
-        setUp(traceBackStockPool);
+        setUpStockData();
 
         System.out.println("---------------set完毕------------");
 
@@ -117,15 +117,11 @@ public class TraceBackServiceImpl implements TraceBackService {
         return traceBackInfo;
     }
 
-    private void setUp(List<String> traceBackStockPool) throws IOException {
+    private void setUpStockData() throws IOException {
 
         System.out.println("enter");
 
-        stockData = new HashMap<>();
-        for (String thisStockCode : traceBackStockPool) {
-            List<Stock> stocks = stockDao.getStockData(thisStockCode);
-            stockData.put(thisStockCode, stocks);
-        }
+        stockData = stockDao.getAllStockData();
 
         System.out.println("out");
 

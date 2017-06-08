@@ -83,7 +83,7 @@ public interface StockDao {
      * @updateTime 2017/6/8
      * @return （股票代码相同）此股票的所有数据
      */
-    Map<String,StockList> getAllStockData();
+    Map<String,List<Stock>> getAllStockData();
 
     /**
      * 用户输入代码或者股票首字母或股票名称，查找符合条件的股票

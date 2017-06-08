@@ -31,8 +31,8 @@ public class TraceBackStrategyCalculator {
     protected TraceBackCriteria traceBackCriteria;
 
     // 默认1000元初始投资资本
-    private final double initMoney = 1000;
-    private double nowMoney = 1000;
+    private final double initMoney = 1;
+    private double nowMoney = 1;
 
     /*
     需要重复计算的一些东西，故保存
