@@ -4,7 +4,9 @@
 
 // 行情界面跳转至个股界面
 
-// 在个股界面修改查看条件后修改界面数据
+/**
+ * 在个股界面修改查看条件后修改界面数据
+ */
 function changeSingleStockDetail() {
     var wantedStockCode = $("#stockCode").text();
 //        alert("查看股票：" + wantedStockCode);
@@ -69,7 +71,9 @@ function changeSingleStockDetail() {
     });
 }
 
-
+/**
+ * 直接查看比较界面
+ */
 function directToCompare() {
     window.location.href = "/stocks/compare";
 }

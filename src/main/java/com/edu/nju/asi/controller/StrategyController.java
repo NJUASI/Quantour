@@ -42,8 +42,7 @@ public class StrategyController {
             }
         }
 
-        // TODO 冯俊杰 设置返回的mv视图
-        ModelAndView mv = new ModelAndView();
+        ModelAndView mv = new ModelAndView("searchStrategy");
 
         List<Strategy> allStrategies = strategyService.getAllStrategies();
         mv.addObject("allStrategies", allStrategies);
@@ -134,8 +133,7 @@ public class StrategyController {
 
 
 
-        // TODO 冯俊杰 设置返回的mv视图
-        ModelAndView mv = new ModelAndView();
+        ModelAndView mv = new ModelAndView("generalStrategy");
         return mv;
     }
 
