@@ -183,9 +183,15 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <%--没有自选股数据，提示用户选自选股--%>
-                <%--TODO 高源 美化一下没有自选股的情况--%>
-                <div>亲，去个股界面选两只股票收藏，就可以在这了方便地看到了哦</div>
+                <div class="panel-body">
+                    <div class="row" style="margin-top: 20px;">
+                        <p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"
+                                                           class="picture"/></p>
+                        <div class="text-center" style="margin-top: 20px;margin-bottom: 40px">
+                            亲，去大盘详情个股界面选两只股票收藏，就可以在这了方便地看到了哦~~~
+                        </div>
+                    </div>
+                </div>
             </c:otherwise>
         </c:choose>
     </div>
@@ -394,7 +400,6 @@
 <script src="../js/jquery.validate.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
-
 
 
 <script src="../js/strategy.js"></script>
