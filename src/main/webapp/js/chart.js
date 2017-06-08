@@ -3,7 +3,6 @@
  */
 function createCandlestickChart(id, candlestickData, volumes) {
 
-
     function splitCandlestickData(rawData) {
         var categoryData = [];
         var values = [];
@@ -166,8 +165,10 @@ function createCandlestickChart(id, candlestickData, volumes) {
                 data: data.values,
                 itemStyle: {
                     normal: {
-                        borderColor: null,
-                        borderColor0: null
+                        color: '#ef232a',
+                        color0: '#14b143',
+                        borderColor: '#ef232a',
+                        borderColor0: '#14b143'
                     }
                 },
                 tooltip: {
@@ -233,9 +234,243 @@ function createCandlestickChart(id, candlestickData, volumes) {
                             'Volume: ' + param.data[0] + '<br/>'
                         ].join('');
                     }
+                },
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var colorList;
+                            if (data.values[params.dataIndex][1]>data.values[params.dataIndex][0]) {
+                                colorList = '#ef232a';
+                            } else {
+                                colorList = '#14b143';
+                            }
+                            return colorList;
+                        }
+                    }
                 }
             }
         ]
+    };
+    chart.setOption(option, true);
+    chart.hideLoading();
+    return chart;
+}
+
+function createMACDChart(id,datas){
+    function splitMACDData(rawData){
+        var macd = [];
+        var dif = [];
+        var dea = [];
+        var category = [];
+        for(var i = 0;i<rawData.length;i++){
+            category.push(rawData[i][0]);
+            macd.push(rawData[i][1]);
+            dif.push(rawData[i][2]);
+            dea.push(rawData[i][3]);
+        }
+        return{
+            categoryData: category,
+            macdData: macd,
+            difData: dif,
+            deaData: dea
+        };
+    }
+
+    var allData = splitMACDData(datas);
+    var macdChart = echarts.init(document.getElementById(id));
+
+    var option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'line'
+            }
+        },
+        xAxis: [{
+            type: 'category',
+            data: allData.categoryData,
+            axisLabel: {show: true}
+        }],
+        yAxis: [{
+            splitNumber: 4,
+            axisLine: {onZero: false},
+            axisTick: {show: false},
+            splitLine: {show: false},
+            axisLabel: {show: true}
+        }],
+        dataZoom: [{
+                type: 'inside',
+                start: 1,
+                end: 100
+            },{
+                type: 'slider',
+                show: true,
+                start: 1,
+                end: 100
+            }],
+        series: [{
+            name: 'MACD',
+            type: 'bar',
+            data: allData.macdData,
+            itemStyle: {
+                normal: {
+                    color: function(params) {
+                        var colorList;
+                        if (params.data >= 0) {
+                            colorList = '#ef232a';
+                        } else {
+                            colorList = '#14b143';
+                        }
+                        return colorList;
+                    }
+                }
+            }
+        },{
+            name: 'DIF',
+            type: 'line',
+            smooth: true,
+            data: allData.difData
+        },{
+            name: 'DEA',
+            type: 'line',
+            smooth: true,
+            data: allData.deaData
+        }]
+    };
+    macdChart.setOption(option);
+    return macdChart;
+}
+
+function createBullChart(id,candlestickData,upData,midData,lowData){
+    function splitCandlestickData(rawData) {
+        var categoryData = [];
+        var values = [];
+        for (var i = 0; i < rawData.length; i++) {
+            categoryData.push(rawData[i].splice(0, 1)[0]);
+            values.push(rawData[i]);
+        }
+        return {
+            categoryData: categoryData,
+            values: values
+        };
+    }
+
+    var data = splitCandlestickData(candlestickData);
+    var chart = echarts.init(document.getElementById(id));
+    chart.showLoading();
+
+    var option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            },
+            backgroundColor: 'rgba(245, 245, 245, 0.8)',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            textStyle: {
+                color: '#000'
+            },
+            position: function (pos, params, el, elRect, size) {
+                var obj = {top: 10};
+                obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+                return obj;
+            },
+            extraCssText: 'width: 170px'
+        },
+        axisPointer: {
+            link: {xAxisIndex: 'all'},
+            label: {
+                backgroundColor: '#777'
+            }
+        },
+        xAxis: [{
+                type: 'category',
+                data: data.categoryData,
+                scale: true,
+                axisLine: {onZero: false},
+                splitLine: {show: false},
+                axisLabel: {show: false},
+                splitNumber: 20,
+                min: 'dataMin',
+                max: 'dataMax',
+                axisPointer: {
+                    z: 100
+                }
+            }],
+        yAxis: [{
+                scale: true,
+                splitArea: {
+                    show: true
+                }
+            }],
+        dataZoom: [
+            {
+                type: 'inside',
+                xAxisIndex: [0, 1],
+                start: 1,
+                end: 100
+            },
+            {
+                show: true,
+                xAxisIndex: [0, 1],
+                type: 'slider',
+                top: '85%',
+                start: 1,
+                end: 100
+            }
+        ],
+        series: [
+            {
+                name: '日K',
+                type: 'candlestick',
+                data: data.values,
+                itemStyle: {
+                    normal: {
+                        color: '#ef232a',
+                        color0: '#14b143',
+                        borderColor: '#ef232a',
+                        borderColor0: '#14b143'
+                    }
+                },
+                tooltip: {
+                    formatter: function (param) {
+                        param = param[0];
+                        return [
+                            'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
+                            'Open: ' + param.data[0] + '<br/>',
+                            'Close: ' + param.data[1] + '<br/>',
+                            'Lowest: ' + param.data[2] + '<br/>',
+                            'Highest: ' + param.data[3] + '<br/>'
+                        ].join('');
+                    }
+                }
+            }, {
+                name: 'UPPER',
+                type: 'line',
+                data: upData,
+                smooth: true,
+                lineStyle: {
+                    normal: {opacity: 0.5}
+                }
+            },{
+                name: 'MID',
+                type: 'line',
+                data: midData,
+                smooth: true,
+                lineStyle: {
+                    normal: {opacity: 0.5}
+                }
+            },{
+                name: 'LOWER',
+                type: 'line',
+                data: lowData,
+                smooth: true,
+                lineStyle: {
+                    normal: {opacity: 0.5}
+                }
+            }]
     };
     chart.setOption(option, true);
     chart.hideLoading();

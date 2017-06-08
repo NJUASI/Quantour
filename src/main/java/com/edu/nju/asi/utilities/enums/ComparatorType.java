@@ -7,9 +7,9 @@ package com.edu.nju.asi.utilities.enums;
  */
 public enum ComparatorType {
 
-    GREATER_THAN("大于"),
-    LESS_THAN("小于"),
-    EQUAL("等于"),
+    RANK_GREATER("大于"),
+    RANK_LESS("小于"),
+    RANK_EQUAL("等于"),
     RANK_MAX_PERCENT("排名%最大"),
     RANK_MIN_PERCENT("排名%最小"),
     RANK_MAX("排名最大"),

@@ -13,8 +13,9 @@ import java.io.FileReader;
 public class Main {
 
     public static void main(String[] args) {
-       Main main =  new Main();
-       main.test();
+//       Main main =  new Main();
+//       main.test();
+
     }
 
     public void test(){

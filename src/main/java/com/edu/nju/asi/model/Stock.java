@@ -54,6 +54,10 @@ public class Stock implements Serializable {
     @Column(length = 100)
     private String volume;
 
+    // 昨收
+    @Basic
+    private double preClose;
+
     /**
      * 拓展数据
      * */
@@ -61,10 +65,6 @@ public class Stock implements Serializable {
     @Basic
     @Column(length = 100)
     private String transactionAmount;
-
-    // 昨收
-    @Basic
-    private double preClose;
 
     //涨跌幅
     @Basic
