@@ -7,10 +7,15 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.Market;
+import com.edu.nju.asi.utilities.util.JDBCUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.cglib.core.Local;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -124,5 +129,4 @@ public class StockDataHelperImplTest {
     private String addOne(String code){
          return StockCodeHelper.format(String.valueOf(Integer.parseInt(code)+1));
     }
-
 }
