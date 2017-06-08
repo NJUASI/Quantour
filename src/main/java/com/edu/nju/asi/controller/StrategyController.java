@@ -1,5 +1,7 @@
 package com.edu.nju.asi.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.StrategyService;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -65,6 +68,9 @@ public class StrategyController {
 
 
         Strategy wantedStrategy = strategyService.getOneStrategy(strategyID);
+        TraceBackCriteria criteria = JSON.parseObject(wantedStrategy.getContent(), TraceBackCriteria.class);
+        TraceBackInfo info = JSON.parseObject(wantedStrategy.getTraceBackInfo(), TraceBackInfo.class);
+
 
         // 用户对此股票策略的操作（修改／删除）权限，只有创建者可以
         boolean canUpdate = false;
@@ -74,8 +80,17 @@ public class StrategyController {
             canUpdate = strategyService.canUpdate(wantedStrategy, thisUser);
         }
 
-        // TODO 用此策略进行回测，得其一些指标并画图
         ModelAndView mv = new ModelAndView("generalStrategy");
+        mv.addObject("canUpdate", canUpdate);
+        mv.addObject("nowStrategy", wantedStrategy);
+        mv.addObject("traceBackCriteria", criteria);
+        mv.addObject("filterConditions", convertChinese_filter(criteria.filterConditions));
+        mv.addObject("rankConditions", convertChinese_rank(criteria.rankConditions));
+
+        // TODO 回测结束的结果
+        mv.addObject("traceBackInfo", info);
+
+
         return mv;
     }
 
@@ -191,5 +206,21 @@ public class StrategyController {
         else return "-1;取消订阅失败";
     }
 
+
+    private List<FilterConditionChinese> convertChinese_filter(List<FilterCondition> filterConditions) {
+        List<FilterConditionChinese> result = new LinkedList<>();
+        for (FilterCondition temp : filterConditions) {
+            result.add(new FilterConditionChinese(temp));
+        }
+        return result;
+    }
+
+    private List<RankConditionChinese> convertChinese_rank(List<RankCondition> rankConditions) {
+        List<RankConditionChinese> result = new LinkedList<>();
+        for (RankCondition temp : rankConditions) {
+            result.add(new RankConditionChinese(temp));
+        }
+        return result;
+    }
 
 }

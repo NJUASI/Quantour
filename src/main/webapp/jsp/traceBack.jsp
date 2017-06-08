@@ -348,7 +348,7 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                             <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">1日涨幅</a>
+                                                <a role="menuitem" class="quota" tabindex="-1">当日涨幅</a>
                                             </li>
                                             <li role="presentation">
                                                 <a role="menuitem" class="quota" tabindex="-1">5日涨幅</a>
