@@ -1,12 +1,10 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
-import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.IndustryType;
-import com.edu.nju.asi.utilities.enums.Market;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,12 +13,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -129,7 +124,16 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
      */
     @Override
     public List<StockSearch> getByArea(AreaType area) {
-        return null;
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "from StockSearch where area=:area";
+        Query query = session.createQuery(hql);
+        query.setParameter("area",area.toString());
+        List<StockSearch> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 
     /**
@@ -139,7 +143,16 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
      */
     @Override
     public List<StockSearch> getByIndustry(IndustryType industry) {
-        return null;
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "from StockSearch where industry=:industry";
+        Query query = session.createQuery(hql);
+        query.setParameter("industry",industry.toString());
+        List<StockSearch> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 
     /**

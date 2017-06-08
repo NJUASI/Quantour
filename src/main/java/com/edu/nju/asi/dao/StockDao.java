@@ -5,6 +5,8 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.model.PrivateStock;
 import com.edu.nju.asi.utilities.StockList;
+import com.edu.nju.asi.utilities.enums.AreaType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 
@@ -94,6 +96,16 @@ public interface StockDao {
      * @return 符合条件的股票简要信息
      */
     List<StockSearch> searchStock(String searchString);
+
+    /**
+     * 根据area取StockSearch列表
+     */
+    List<StockSearch> getByArea(AreaType area);
+
+    /**
+     * 根据industry取StockSearch列表
+     */
+    List<StockSearch> getByIndustry(IndustryType industry);
 
 
     /*
