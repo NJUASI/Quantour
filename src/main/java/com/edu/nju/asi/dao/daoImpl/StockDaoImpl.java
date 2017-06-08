@@ -9,6 +9,7 @@ import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.StockCodeHelper;
+import com.edu.nju.asi.utilities.StockList;
 import com.edu.nju.asi.utilities.enums.BlockType;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
@@ -127,6 +128,20 @@ public class StockDaoImpl implements StockDao {
     @Override
     public List<Stock> getStockData(LocalDate date) throws IOException {
         return stockDataHelper.getStockData(date);
+    }
+
+    /**
+     * 取所有股票的所有数据，没有返回null
+     * 注意：取出来的单只股票数据中，年份小的在链表前端，年份大的在链表后端
+     *
+     * @return （股票代码相同）此股票的所有数据
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/8
+     */
+    @Override
+    public Map<String, StockList> getAllStockData() {
+        return stockDataHelper.getAllStockData(stockSearchDataHelper.getAllStocksCode().keySet());
     }
 
     /**
