@@ -4,6 +4,7 @@ import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.model.PrivateStock;
+import com.edu.nju.asi.utilities.StockList;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -71,6 +73,17 @@ public interface StockDao {
      * @return （时间相同）特定日期的保存的所有股票
      */
     List<Stock> getStockData(LocalDate date) throws IOException;
+
+    /**
+     * 取所有股票的所有数据，没有返回null
+     * 注意：取出来的单只股票数据中，年份小的在链表前端，年份大的在链表后端
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/8
+     * @return （股票代码相同）此股票的所有数据
+     */
+    Map<String,StockList> getAllStockData();
 
     /**
      * 用户输入代码或者股票首字母或股票名称，查找符合条件的股票

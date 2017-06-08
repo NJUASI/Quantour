@@ -1066,7 +1066,7 @@
     });
 
 
-    function modify() {
+    function user_modify() {
         $("#passwordField").toggle("slow");
         $("#passwordModify").toggle("slow");
     }

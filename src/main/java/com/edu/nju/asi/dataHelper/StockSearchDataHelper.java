@@ -30,6 +30,8 @@ public interface StockSearchDataHelper {
      */
     boolean addStockSearchAll(List<StockSearch> list);
 
+
+
     /**
      * 添加StockSearch列表
      */

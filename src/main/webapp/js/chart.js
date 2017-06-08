@@ -278,6 +278,7 @@ function createMACDChart(id,datas){
 
     var allData = splitMACDData(datas);
     var macdChart = echarts.init(document.getElementById(id));
+    macdChart.showLoading();
 
     var option = {
         tooltip: {
@@ -338,6 +339,7 @@ function createMACDChart(id,datas){
         }]
     };
     macdChart.setOption(option);
+    macdChart.hideLoading();
     return macdChart;
 }
 
@@ -854,6 +856,7 @@ function createHistogramChart(id, data, title) {
 function createClickChart(id, data1, percentString){
 
     var clickChart = echarts.init(document.getElementById(id));
+    clickChart.showLoading();
     var data = [];
     data.push(data1);
     var strData = [];
@@ -896,6 +899,7 @@ function createClickChart(id, data1, percentString){
         }]
     };
     clickChart.setOption(option);
+    clickChart.hideLoading();
     return clickChart;
 }
 
@@ -922,6 +926,7 @@ function createPieChart(id,data,seriesTitle){
 
     var pieData = splitePieData(data);
     var pieChart = echarts.init(document.getElementById(id));
+    pieChart.showLoading();
 
     var option = {
         tooltip : {
@@ -945,6 +950,7 @@ function createPieChart(id,data,seriesTitle){
     };
 
     pieChart.setOption(option);
+    pieChart.hideLoading();
     return pieChart;
 }
 
@@ -966,6 +972,7 @@ function createRadarChart(id,data,legend,paramter){
 
     var radarData = spliteRadarData(data,legend);
     var radarChart = echarts.init(document.getElementById(id));
+    radarChart.showLoading();
 
     var option = {
         tooltip: {
@@ -999,6 +1006,7 @@ function createRadarChart(id,data,legend,paramter){
     };
 
     radarChart.setOption(option);
+    radarChart.hideLoading();
     return radarChart;
 }
 
