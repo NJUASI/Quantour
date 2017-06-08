@@ -214,6 +214,7 @@
         $("body").removeClass('loaded');
         window.location.href="/stocks"
     }
+    $("#homePage").addClass("act");
 </script>
 </body>
 </html>

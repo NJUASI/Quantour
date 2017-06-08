@@ -18,6 +18,7 @@
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
 
+    <link href="../css/startLoader.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -89,13 +90,19 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">首页</a></li>
-                <li><a href="/stocks">大盘详情</a></li>
-                <li><a href="/trace_back">量化社区</a></li>
+                <li><a id="homePage" href="/">首页</a></li>
+                <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
+                <li class="dropdown">
+                    <a href="##" class="dropdown-toggle" data-toggle="dropdown">量化社区<span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="left:15px;max-width: 100px">
+                        <li><a href="/trace_back">创建策略</a></li>
+                        <li><a href="/jsp/generalStrategy.jsp">使用策略</a></li>
+                    </ul>
+                </li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">
-                        <li><a href="/user/welcome">用户管理</a></li>
+                        <li><a id="userManager"  href="/user/welcome">用户管理</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
@@ -183,9 +190,15 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <%--没有自选股数据，提示用户选自选股--%>
-                <%--TODO 高源 美化一下没有自选股的情况--%>
-                <div>亲，去个股界面选两只股票收藏，就可以在这了方便地看到了哦</div>
+                <div class="panel-body">
+                    <div class="row" style="margin-top: 20px;">
+                        <p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"
+                                                           class="picture"/></p>
+                        <div class="text-center" style="margin-top: 20px;margin-bottom: 40px">
+                            亲，去大盘详情个股界面选两只股票收藏，就可以在这了方便地看到了哦~~~
+                        </div>
+                    </div>
+                </div>
             </c:otherwise>
         </c:choose>
     </div>
@@ -204,36 +217,54 @@
             </div>
             <div style="width:85%;margin:0 auto;2px;margin-bottom: 20px;border-top:1px solid #ddd"></div>
 
-            <div class="row">
-                <div class="col-md-offset-1 col-md-10">
+            <%--<c:choose>--%>
+                <%--<c:when test="1==1">--%>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10">
 
-                    <div class="col-md-4">
-                        <div class="strategyPanel">
-                            <div class="row">
-                                <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                                <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                                    <li class="" style="font-size: 70%; color:red">
-                                        沪深300
-                                    </li>
-                                    <li class="" style="font-size: 70%; color:blueviolet">
-                                        策略收益率
-                                    </li>
-                                </ul>
-                                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                                    <img class="img-responsive " src="../img/traceback4.png">
-                                </figure>
-                                <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                                <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
-                                    class="col-md-5 col-md-offset-1 small">123</span>
-                                <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
+                        <div class="col-md-4">
+                            <div class="strategyPanel">
+                                <div class="row">
+                                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
+                                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
+                                        <li class="" style="font-size: 70%; color:red">
+                                            沪深300
+                                        </li>
+                                        <li class="" style="font-size: 70%; color:blueviolet">
+                                            策略收益率
+                                        </li>
+                                    </ul>
+                                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
+                                        <img class="img-responsive " src="../img/traceback4.png">
+                                    </figure>
+                                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span
+                                        class="col-md-6 small">2017-01-31</span>
+                                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
+                                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
+                                        class="col-md-5 col-md-offset-1 small">123</span>
+                                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
+                                </div>
                             </div>
                         </div>
+
+
                     </div>
-
-
                 </div>
-            </div>
+
+            <%--</c:when>--%>
+            <%--<c:otherwise>--%>
+                <%--<div class="panel-body">--%>
+                    <%--<div class="row" style="margin-top: 20px;">--%>
+                        <%--<p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"--%>
+                                                           <%--class="picture"/></p>--%>
+                        <%--<div class="text-center" style="margin-top: 20px;margin-bottom: 40px">--%>
+                            <%--亲，量化社区创建策略，就可以在这了方便地查看管理了哦~~~--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</c:otherwise>--%>
+            <%--</c:choose>--%>
+
 
             <div style="width:96%;margin:10px auto;2px;margin-bottom: 30px;border-top:2px solid #ddd"></div>
             <div class="row">
@@ -317,10 +348,6 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-offset-1 col-md-10">
                     <div class="col-md-4">
                         <div class="strategyPanel">
                             <div class="row">
@@ -388,14 +415,20 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-<footer/>
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+<footer>
+</footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <script src="../js/jquery.validate.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 
-
+<script src="../js/startLoaded.js"></script>
 
 <script src="../js/strategy.js"></script>
 
@@ -408,9 +441,11 @@
     });
 
     $(".strategyPanel").hover(function () {
-        $(this).css({"margin-top": "-10px", "margin-bottom": "48px", "cursor": "pointer", "border": "1px solid red"});
+        $(this).css({"margin-top": "-10px", "margin-bottom": "50px", "cursor": "pointer"});
+        $(this).addClass("box-shadow");
     }, function () {
         $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
+        $(this).remove("box-shadow");
     });
 
     $(".strategyPanel").click(function () {
@@ -475,7 +510,12 @@
     }, function () {
         $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
     });
+    function openStock() {
+        $("body").removeClass('loaded');
+        window.location.href="/stocks"
+    }
 
+    $("#userManager").addClass("act");
 </script>
 
 </body>

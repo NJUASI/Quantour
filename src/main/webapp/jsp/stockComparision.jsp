@@ -68,9 +68,15 @@
                     </a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/stocks">大盘详情</a></li>
-                    <li><a href="/trace_back">量化社区</a></li>
+                    <li><a id="homePage" href="/">首页</a></li>
+                    <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
+                    <li class="dropdown">
+                        <a href="##" class="dropdown-toggle" data-toggle="dropdown">量化社区<span class="caret"></span></a>
+                        <ul class="dropdown-menu" style="left:15px;max-width: 100px">
+                            <li><a href="/trace_back">创建策略</a></li>
+                            <li><a href="/jsp/generalStrategy.jsp">使用策略</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#">帮助</a></li>
                     <c:choose>
                         <c:when test="${sessionScope.user!=null}">
@@ -485,7 +491,68 @@
                 $(".searchResults2").hide();
             });
         });
+        function compare() {
+            var stockCode1 = $("#search-input1").val().split(" ")[0];
+            var stockCode2 = $("#search-input2").val().split(" ")[0];
+            var startDate = $("#compare_startDate>input").val();
+            var endDate = $("#compare_endDate>input").val();
 
+            var jsonData = {
+                "stockCode1": stockCode1,
+                "stockCode2": stockCode2,
+                "start": startDate,
+                "end": endDate
+            };
+
+            alert(JSON.stringify(jsonData));
+
+            $.ajax({
+                type: "post",
+                async: true,
+                url: "/stocks/req_compare",
+                data: {
+                    comparisionCriteria: JSON.stringify(jsonData)
+                },
+
+                success: function (result) {
+                    var parts = result.split(";");
+                    var closes01 = JSON.parse(parts[0]);
+                    var closes02 = JSON.parse(parts[1]);
+                    var logarithmicYield01 = JSON.parse(parts[2]);
+                    var logarithmicYield02 = JSON.parse(parts[3]);
+                    var comparisionName = JSON.parse(parts[4]);
+
+                    var closesData = [closes01, closes02];
+                    var logarithmicYield = [logarithmicYield01, logarithmicYield02];
+
+                    var numVals = JSON.parse(parts[5]); //二维数组
+
+                    createLineChart("closesChart", closesData, '收盘价', comparisionName);
+                    createLineChart("logarithmicYieldChart", logarithmicYield, "对数收益率方差", comparisionName);
+
+                    $("#analysePanel").fadeIn("slow");
+
+                    $("#compareChart").empty();
+                    for (var i = 0; i < 2; i++) {
+                        $("#compareChart").append("<tr>");
+                        for (var j = 0; j < 5; j++) {
+                            $("#compareChart").append("<td>" + numVals[i][j] + "</td>");
+                        }
+                        $("#compareChart").append("</tr>");
+                    }
+
+                },
+
+                error: function (result) {
+                    alert("错误" + result);
+                }
+            });
+        };
+        function openStock() {
+            $("body").removeClass('loaded');
+            window.location.href="/stocks"
+        }
+        $("#stocks").addClass("act");
     </script>
     </body>
     </html>
