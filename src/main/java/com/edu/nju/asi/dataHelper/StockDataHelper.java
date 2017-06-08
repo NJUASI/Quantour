@@ -69,7 +69,7 @@ public interface StockDataHelper {
      * @param codes 指定的股票代码
      * @return （股票代码相同）此股票的所有数据
      */
-    Map<String,List<Stock>> getAllStockData(Set<String> codes);
+    Map<String,List<Stock>> getAllStockData(List<String> codes);
 
     /**
      * 获取特定日期的所有股票所有数据

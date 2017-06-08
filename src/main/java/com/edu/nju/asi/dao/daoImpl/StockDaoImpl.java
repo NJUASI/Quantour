@@ -140,8 +140,8 @@ public class StockDaoImpl implements StockDao {
      * @updateTime 2017/6/8
      */
     @Override
-    public Map<String, List<Stock>> getAllStockData() {
-        return stockDataHelper.getAllStockData(stockSearchDataHelper.getAllStocksCode().keySet());
+    public Map<String, List<Stock>> getAllStockData(List<String> codes) {
+        return stockDataHelper.getAllStockData(codes);
     }
 
     /**

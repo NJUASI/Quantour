@@ -11,9 +11,7 @@ import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.enums.RankType;
 import com.edu.nju.asi.utilities.exceptions.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -31,8 +29,7 @@ public class TraceBackStrategyCalculator {
      */
     protected TraceBackCriteria traceBackCriteria;
 
-    // 默认1000元初始投资资本
-    private final double initMoney = 1;
+    private double initMoney = 1;
     private double nowMoney = 1;
 
     /*
@@ -247,34 +244,39 @@ public class TraceBackStrategyCalculator {
 
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
 
-        //初始化计算数组
-        for(int i = 0; i < periodStart.until(periodEnd, ChronoUnit.DAYS); i++){
-            forCalcu.put(periodStart.plusDays(i), new ArrayList<>());
-        }
+        //每个周期的起始调仓日不计算入收益中
+        periodStart = allDatesWithData.get(startIndex+1);
 
         // 对阶段内的每只股票进行数据读取
         for (String s : pickedStockCodes) {
-            List<Stock> ss = stockData.get(s);
+            List<Stock> ss = findStockVOsWithinDay(s, periodStart, periodEnd);
 
-            //持有期第一天的数据
-            for(int i = 0; i < ss.size(); i++){
+            double basePrice = ss.get(0).getPreClose();
+            for (int i = 0; i < ss.size(); i++) {
                 LocalDate thisDate = ss.get(i).getStockID().getDate();
+                double profit = ss.get(i).getClose() / basePrice - 1;
 
-                double eachAccumulativeReturn = ss.get(i).getClose() / ss.get(0).getClose() - 1;
-                if(forCalcu.keySet().contains(thisDate)){
-                    forCalcu.get(thisDate).add(eachAccumulativeReturn);
+                if (forCalcu.keySet().contains(thisDate)) {
+                    forCalcu.get(thisDate).add(profit);
+                } else {
+                    List<Double> values = new LinkedList<>();
+                    values.add(profit);
+                    forCalcu.put(thisDate, values);
                 }
             }
         }
 
         // 依次处理每一交易日
+
+        double thisPeriodStartMoney = nowMoney;
         for (Map.Entry<LocalDate, List<Double>> entry : forCalcu.entrySet()) {
+
             double thisYield = getAveYield(entry.getValue());
 
-            nowMoney *= (thisYield + 1);
-            double cumulativeYield = nowMoney / initMoney - 1;
+            nowMoney = (1 + thisYield) * thisPeriodStartMoney;
+            thisYield = nowMoney / initMoney - 1;
 
-            strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), cumulativeYield, false));
+            strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), thisYield, false));
         }
         return strategyCumulativeReturn;
     }
@@ -415,5 +417,39 @@ public class TraceBackStrategyCalculator {
         else {
             return null;
         }
+    }
+
+    protected List<Stock> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){
+        LocalDate thisStart = start;
+        LocalDate thisEnd = end;
+
+        List<Stock> stockVOList = stockData.get(stockCode);
+
+        List<LocalDate> dates = new ArrayList<>();
+        for(int j = 0; j < stockVOList.size(); j++){
+            dates.add(stockVOList.get(j).getStockID().getDate());
+        }
+
+        while(!dates.contains(thisStart) || !dates.contains(thisEnd)){
+            if(!dates.contains(thisStart)){
+                thisStart = thisStart.plusDays(1);
+            }
+            if(!dates.contains(thisEnd)){
+                thisEnd = thisEnd.minusDays(1);
+            }
+            //中间没有数据
+            if(thisStart.isAfter(thisEnd)){
+                return null;
+            }
+        }
+        int startIndex = dates.indexOf(thisStart);
+        int endIndex = dates.indexOf(thisEnd);
+
+        //没有数据
+        if(startIndex == -1){
+            return null;
+        }
+
+        return stockVOList.subList(startIndex, endIndex+1);
     }
 }
