@@ -36,7 +36,7 @@ public class StatementOfCashFlow implements Statement{
             statementOfCashFlow.get(i).setNetProfitAttributableToTheOwnerOfTheParentCompany("0");
             statementOfCashFlow.get(i).setBasicIncomePerStock(0);
             statementOfCashFlow.get(i).setAssetLiabilityRatio(0);
-            statementOfCashFlow.get(i).setNetDebtRatio(0);
+            statementOfCashFlow.get(i).setReturnOnEquity(0);
         }
         System.out.println("-----------------现金流量表组合数据结束--------------------");
         System.out.println("-----------------现金流量表写入数据开始--------------------");
@@ -57,7 +57,7 @@ public class StatementOfCashFlow implements Statement{
                 CsvReader reader = new CsvReader(path + File.separator + file.getName(), ',', Charset.forName("GBK"));
                 while (reader.readRecord()) {
                     if (reader.get(0).equals("报告日期") || reader.get(0).equals("经营活动产生的现金流量净额(万元)")) {
-                        info.add(this.readInfo(reader, reader.getColumnCount()));
+                        info.add(StatementUtil.readInfo(reader, reader.getColumnCount()));
                     }
                 }
                 System.out.println("-----------读入" + file.getName() + "数据完成-----------");
@@ -70,14 +70,13 @@ public class StatementOfCashFlow implements Statement{
             System.out.println("-----------开始转载" + file.getName() + "数据-----------");
             for (int i = 0; i < info.get(0).size(); i++) {
                 BasicData basicData = new BasicData();
-                LocalDate localDate = LocalDate.parse(format(info.get(0).get(i)));
-                if (!isTrueDate(localDate)) {
+                LocalDate localDate = LocalDate.parse(StatementUtil.format(info.get(0).get(i)));
+                if (!StatementUtil.isTrueDate(localDate)) {
                     continue;
                 }
-                String netCashFlowsFromOperatingActivities = info.get(1).get(i);
 
-                basicData.setBasicDataID(new BasicDataID(getQuarter(localDate.getMonthValue()),
-                        localDate.getYear(), file.getName().substring(0, 6)));
+                String netCashFlowsFromOperatingActivities = info.get(1).get(i);
+                basicData.setBasicDataID(new BasicDataID(file.getName().substring(0, 6),localDate));
                 basicData.setNetCashFlowsFromOperatingActivities(netCashFlowsFromOperatingActivities);
                 result.add(basicData);
                 System.out.println("转载：" + localDate.toString() + " " + netCashFlowsFromOperatingActivities);
@@ -90,7 +89,7 @@ public class StatementOfCashFlow implements Statement{
     public boolean update(List<BasicData> basicDataList){
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "UPDATE basicdata SET netCashFlowsFromOperatingActivities = ? WHERE code=? AND year=? AND quarter=?";
+        String sql = "UPDATE basicdata SET netCashFlowsFromOperatingActivities = ? WHERE code=? AND date=?";
         boolean result = true;
 
         try {
@@ -99,9 +98,8 @@ public class StatementOfCashFlow implements Statement{
             for (BasicData basicData : basicDataList) {
                 preparedStatement.setString(1, basicData.getNetCashFlowsFromOperatingActivities());
                 preparedStatement.setString(2, basicData.getBasicDataID().getCode());
-                preparedStatement.setInt(3, basicData.getBasicDataID().getYear());
-                preparedStatement.setInt(4, basicData.getBasicDataID().getQuarter());
-                System.out.println(basicData.getBasicDataID().getCode() + " " + basicData.getBasicDataID().getYear() + " " + basicData.getBasicDataID().getQuarter());
+                preparedStatement.setObject(3, basicData.getBasicDataID().getDate());
+                System.out.println(basicData.getBasicDataID().getCode() + " " + basicData.getBasicDataID().getDate().toString());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
@@ -118,62 +116,5 @@ public class StatementOfCashFlow implements Statement{
             JDBCUtil.close(preparedStatement, connection);
         }
         return result;
-    }
-
-    private List<String> readInfo(CsvReader reader, int n) {
-        List<String> result = new ArrayList<>();
-        for (int i = 1; i < n - 1; i++) {
-            try {
-                if (reader.get(i).equals("--")) {
-                    result.add("0");
-                } else {
-                    result.add(reader.get(i));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
-
-    private int getQuarter(int num) {
-        int month = num;
-
-        if (month >= 1 && month <= 3) {
-            return 1;
-        } else if (month >= 4 && month <= 6) {
-            return 2;
-        } else if (month >= 7 && month <= 9) {
-            return 3;
-        } else if (month >= 10 && month <= 12) {
-            return 4;
-        }
-        return 0;
-    }
-
-    private static String format(String date) {
-        if (date.indexOf("/") != -1) {
-            String temp[] = date.split("/");
-            if (temp[1].length() == 1) {
-                temp[1] = "0" + temp[1];
-            }
-
-            if (temp[2].length() == 1) {
-                temp[2] = "0" + temp[1];
-            }
-            return temp[0] + "-" + temp[1] + "-" + temp[2];
-        }
-        return date;
-    }
-
-    private boolean isTrueDate(LocalDate localDate) {
-        if (localDate.isEqual(LocalDate.of(localDate.getYear(), 12, 31)) ||
-                localDate.isEqual(LocalDate.of(localDate.getYear(), 9, 30)) ||
-                localDate.isEqual(LocalDate.of(localDate.getYear(), 6, 30)) ||
-                localDate.isEqual(LocalDate.of(localDate.getYear(), 3, 31))) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
