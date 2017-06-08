@@ -123,61 +123,71 @@
                 自选股票
             </h3>
         </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="table-responsive col-md-12">
-                    <table class="table table-hover table-condensed">
-                        <thead>
-                        <tr>
-                            <th>代码</th>
-                            <th>名称</th>
-                            <th>开盘价</th>
-                            <th>收盘价</th>
-                            <th>最高价</th>
-                            <th>最低价</th>
-                            <th>昨收</th>
-                            <th>交易量</th>
-                            <th>交易额</th>
-                        </tr>
-                        </thead>
-                        <tbody id="myStocks">
-                        <c:forEach items="${ps_list}" var="stock" varStatus="vs">
-                            <c:choose>
-                                <c:when test="${stock.volume == null}">
-                                    <%--此只股票没有当日信息，则仍需显示，只是显示为／--%>
-                                    <tr>
-                                        <td class="stock_no_value">${stock.stockID.code}</td>
-                                        <td class="stock_no_value">${stock.name}</td>
-                                        <td class="stock_no_value">/</td>
-                                        <td class="stock_no_value">/</td>
-                                        <td class="stock_no_value">/</td>
-                                        <td class="stock_no_value">/</td>
-                                        <td class="stock_no_value">/</td>
-                                        <td class="stock_no_value">/</td>
-                                        <td class="stock_no_value">/</td>
-                                    </tr>
-                                </c:when>
-                                <c:otherwise>
-                                    <%--正常显示--%>
-                                    <tr>
-                                        <td>${stock.stockID.code}</td>
-                                        <td>${stock.name}</td>
-                                        <td>${stock.open}</td>
-                                        <td>${stock.close}</td>
-                                        <td class="stock_high">${stock.high}</td>
-                                        <td class="stock_low">${stock.low}</td>
-                                        <td>${stock.preClose}</td>
-                                        <td>${stock.volume}</td>
-                                        <td>${stock.transactionAmount}</td>
-                                    </tr>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+        <c:choose>
+            <c:when test="${ps_list.size() != 0 && ps_list != null}">
+                <%--有自选股数据--%>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive col-md-12">
+                            <table class="table table-hover table-condensed">
+                                <thead>
+                                <tr>
+                                    <th>代码</th>
+                                    <th>名称</th>
+                                    <th>开盘价</th>
+                                    <th>收盘价</th>
+                                    <th>最高价</th>
+                                    <th>最低价</th>
+                                    <th>昨收</th>
+                                    <th>交易量</th>
+                                    <th>交易额</th>
+                                </tr>
+                                </thead>
+                                <tbody id="myStocks"
+                                <c:forEach items="${ps_list}" var="stock" varStatus="vs">
+                                    <c:choose>
+                                        <c:when test="${stock.volume == null}">
+                                            <%--此只股票没有当日信息，则仍需显示，只是显示为／--%>
+                                            <tr>
+                                                <td class="stock_no_value">${stock.stockID.code}</td>
+                                                <td class="stock_no_value">${stock.name}</td>
+                                                <td class="stock_no_value">/</td>
+                                                <td class="stock_no_value">/</td>
+                                                <td class="stock_no_value">/</td>
+                                                <td class="stock_no_value">/</td>
+                                                <td class="stock_no_value">/</td>
+                                                <td class="stock_no_value">/</td>
+                                                <td class="stock_no_value">/</td>
+                                            </tr>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <%--正常显示--%>
+                                            <tr>
+                                                <td>${stock.stockID.code}</td>
+                                                <td>${stock.name}</td>
+                                                <td>${stock.open}</td>
+                                                <td>${stock.close}</td>
+                                                <td class="stock_high">${stock.high}</td>
+                                                <td class="stock_low">${stock.low}</td>
+                                                <td>${stock.preClose}</td>
+                                                <td>${stock.volume}</td>
+                                                <td>${stock.transactionAmount}</td>
+                                            </tr>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </c:when>
+            <c:otherwise>
+                <%--没有自选股数据，提示用户选自选股--%>
+                <%--TODO 高源 美化一下没有自选股的情况--%>
+                <div>亲，去个股界面选两只股票收藏，就可以在这了方便地看到了哦</div>
+            </c:otherwise>
+        </c:choose>
     </div>
 
     <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
@@ -214,7 +224,8 @@
                                 </figure>
                                 <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
                                 <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
+                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
+                                    class="col-md-5 col-md-offset-1 small">123</span>
                                 <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
                             </div>
                         </div>
@@ -251,7 +262,8 @@
                                 </figure>
                                 <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
                                 <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
+                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
+                                    class="col-md-5 col-md-offset-1 small">123</span>
                                 <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
                             </div>
                         </div>
@@ -274,7 +286,8 @@
                                 </figure>
                                 <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
                                 <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
+                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
+                                    class="col-md-5 col-md-offset-1 small">123</span>
                                 <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
                             </div>
                         </div>
@@ -297,7 +310,8 @@
                                 </figure>
                                 <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
                                 <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
+                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
+                                    class="col-md-5 col-md-offset-1 small">123</span>
                                 <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
                             </div>
                         </div>
@@ -366,7 +380,7 @@
                                name="password2" placeholder="再次输入您的密码">
                     </div>
 
-                    <input type="submit" class="btn btn-info" onclick="modify()"
+                    <input type="submit" class="btn btn-info" onclick="user_modify()"
                            style="margin-top: 15px;margin-left: 80px;" value="确认修改"/>
                 </form>
             </div>
@@ -381,6 +395,10 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 
+
+
+<script src="../js/strategy.js"></script>
+
 <script type="text/javascript">
 
 
@@ -390,14 +408,14 @@
     });
 
     $(".strategyPanel").hover(function () {
-        $(this).css({"margin-top": "-10px","margin-bottom": "48px", "cursor": "pointer", "border": "1px solid red"});
+        $(this).css({"margin-top": "-10px", "margin-bottom": "48px", "cursor": "pointer", "border": "1px solid red"});
     }, function () {
-        $(this).css({"margin-top": "0px", "margin-bottom": "40px","border": "none"});
+        $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
     });
 
-    $(".strategyPanel").click(function(){
+    $(".strategyPanel").click(function () {
         //TODO  此处需要跳转
-        window.location.href="/jsp/searchStrategy.jsp";
+        window.location.href = "/jsp/searchStrategy.jsp";
     })
 
     $("#modifyForm").validate({
@@ -449,13 +467,13 @@
     //双击后查看详情
 
     $("#myStocks").find("tr").dblclick(function () {
-        var code=$(this).find("td").eq(0).html();
+        var code = $(this).find("td").eq(0).html();
         window.location.href = "/stocks/" + code;
     });
     $("td").hover(function () {
         $(this).css({"cursor": "default"});
     }, function () {
-        $(this).css({"margin-top": "0px", "margin-bottom": "40px","border": "none"});
+        $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
     });
 
 </script>
