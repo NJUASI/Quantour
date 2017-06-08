@@ -114,10 +114,10 @@ public class StockDataHelperImpl implements StockDataHelper {
      * @updateTime 2017/6/8
      */
     @Override
-    public Map<String, StockList> getAllStockData(Set<String> codes) {
+    public Map<String, List<Stock>> getAllStockData(Set<String> codes) {
         Connection connection = JDBCUtil.getConnection();
 
-        Map<String, StockList> map = new HashMap<>();
+        Map<String, List<Stock>> map = new HashMap<>();
 
         long start = System.currentTimeMillis();
         for (String code : codes) {

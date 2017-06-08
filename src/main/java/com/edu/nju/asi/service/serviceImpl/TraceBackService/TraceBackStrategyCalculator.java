@@ -13,6 +13,7 @@ import com.edu.nju.asi.utilities.exceptions.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -246,26 +247,22 @@ public class TraceBackStrategyCalculator {
 
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
 
-        //每个周期的起始调仓日不计算入收益中
-        periodStart = allDatesWithData.get(startIndex+1);
+        //初始化计算数组
+        for(int i = 0; i < periodStart.until(periodEnd, ChronoUnit.DAYS); i++){
+            forCalcu.put(periodStart.plusDays(i), new ArrayList<>());
+        }
 
         // 对阶段内的每只股票进行数据读取
         for (String s : pickedStockCodes) {
             List<Stock> ss = stockData.get(s);
-            for (Stock stock : ss) {
-                if (isDateWithinWanted(periodStart, periodEnd, stock.getStockID().getDate())) {
-                    LocalDate thisDate = stock.getStockID().getDate();
-                    double profit = stock.getClose() / stock.getPreClose() - 1;
-                    //四舍五入，保留四位小数
-//                    profit = new BigDecimal(profit).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                    if (forCalcu.keySet().contains(thisDate)) {
-                    forCalcu.get(thisDate).add(profit);
-                    } else {
-                        List<Double> values = new LinkedList<>();
-                        values.add(profit);
-                        forCalcu.put(thisDate, values);
-                    }
+            //持有期第一天的数据
+            for(int i = 0; i < ss.size(); i++){
+                LocalDate thisDate = ss.get(i).getStockID().getDate();
+
+                double eachAccumulativeReturn = ss.get(i).getClose() / ss.get(0).getClose() - 1;
+                if(forCalcu.keySet().contains(thisDate)){
+                    forCalcu.get(thisDate).add(eachAccumulativeReturn);
                 }
             }
         }
@@ -276,8 +273,6 @@ public class TraceBackStrategyCalculator {
 
             nowMoney *= (thisYield + 1);
             double cumulativeYield = nowMoney / initMoney - 1;
-            //四舍五入，保留4位小数
-//            cumulativeYield = new BigDecimal(cumulativeYield).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 
             strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), cumulativeYield, false));
         }
