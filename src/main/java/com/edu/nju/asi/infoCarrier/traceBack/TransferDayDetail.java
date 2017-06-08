@@ -69,6 +69,6 @@ public class TransferDayDetail {
         this.sellDate = sellDate;
         this.sellPrice = sellPrice;
 
-        this.changeRate = sellPrice - buyPrice / buyPrice;
+        this.changeRate = (sellPrice - buyPrice) / buyPrice;
     }
 }

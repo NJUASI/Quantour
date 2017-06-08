@@ -11,7 +11,9 @@ import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.enums.RankType;
 import com.edu.nju.asi.utilities.exceptions.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -245,24 +247,22 @@ public class TraceBackStrategyCalculator {
 
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
 
-        //每个周期的起始调仓日不计算入收益中
-        periodStart = allDatesWithData.get(startIndex+1);
+        //初始化计算数组
+        for(int i = 0; i < periodStart.until(periodEnd, ChronoUnit.DAYS); i++){
+            forCalcu.put(periodStart.plusDays(i), new ArrayList<>());
+        }
 
         // 对阶段内的每只股票进行数据读取
         for (String s : pickedStockCodes) {
             List<Stock> ss = stockData.get(s);
-            for (Stock stock : ss) {
-                if (isDateWithinWanted(periodStart, periodEnd, stock.getStockID().getDate())) {
-                    LocalDate thisDate = stock.getStockID().getDate();
-                    double profit = stock.getClose() / stock.getPreClose() - 1;
 
-                    if (forCalcu.keySet().contains(thisDate)) {
-                    forCalcu.get(thisDate).add(profit);
-                    } else {
-                        List<Double> values = new LinkedList<>();
-                        values.add(profit);
-                        forCalcu.put(thisDate, values);
-                    }
+            //持有期第一天的数据
+            for(int i = 0; i < ss.size(); i++){
+                LocalDate thisDate = ss.get(i).getStockID().getDate();
+
+                double eachAccumulativeReturn = ss.get(i).getClose() / ss.get(0).getClose() - 1;
+                if(forCalcu.keySet().contains(thisDate)){
+                    forCalcu.get(thisDate).add(eachAccumulativeReturn);
                 }
             }
         }
@@ -285,6 +285,7 @@ public class TraceBackStrategyCalculator {
         for (double temp : value) {
             sum += temp;
         }
+
         return sum / value.size();
     }
 
@@ -350,28 +351,28 @@ public class TraceBackStrategyCalculator {
         }
 
         // 通过不同的筛选条件进行筛选
-        List<List<RankConditionRate>> allFilterWantedCodes = new ArrayList<>();
+        List<List<RankConditionRate>> allRankConditionRates = new ArrayList<>();
 
         for(RankCondition rankCondition : rankConditions){
             AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData);
             RankStrategy rankStrategy = new RankStrategy(rankCondition.weight, rankCondition.rankType);
             try {
-                allFilterWantedCodes.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
+                allRankConditionRates.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
             } catch (DataSourceFirstDayException e) {
                 e.printStackTrace();
             }
         }
 
         //选出经不同筛选条件筛选出来的相同的股票
-        List<RankConditionRate> rankConditionRates = allFilterWantedCodes.get(0);
+        List<RankConditionRate> rankConditionRates = allRankConditionRates.get(0);
 
         //多于一个筛选条件
         if(rankConditions.size() > 1){
-            for(int i = 1 ; i < allFilterWantedCodes.size();i++){
+            for(int i = 1 ; i < allRankConditionRates.size();i++){
                 for(int j = 0; j < rankConditionRates.size();){
                     boolean isFound = false;
-                    for(int k = 0; k < allFilterWantedCodes.get(i).size(); k++){
-                        if(rankConditionRates.get(j) .equals(allFilterWantedCodes.get(i).get(k))){
+                    for(int k = 0; k < allRankConditionRates.get(i).size(); k++){
+                        if(rankConditionRates.get(j) .equals(allRankConditionRates.get(i).get(k))){
                             isFound = true;
                             break;
                         }
