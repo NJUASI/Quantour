@@ -176,7 +176,12 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         String hql = "select sum(clickAmount) from StockSearch";
         double sum = ((Long)session.createQuery(hql).uniqueResult()).intValue();
         int click = ((StockSearch)session.get(StockSearch.class,searchID)).getClickAmount();
-        double result = click/sum;
+        double result = 0;
+
+        // 没有热搜数据时默认为0
+        if (sum != 0) {
+            result = click/sum;
+        }
         transaction.commit();
         session.close();
         return result;
