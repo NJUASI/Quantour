@@ -5,9 +5,9 @@ import java.time.LocalDate;
 /**
  * Created by Harvey on 2017/6/3.
  *
- * 保存最近卖出的股票
+ * 调仓日期操作的详情
  */
-public class HoldOrSoldStocks {
+public class TransferDayDetail {
 
     /**
      *  股票名
@@ -44,7 +44,7 @@ public class HoldOrSoldStocks {
      */
     public double changeRate;
 
-    public HoldOrSoldStocks(String stockName, String stockCode, LocalDate buyDate, LocalDate sellDate, double buyPrice, double sellPrice, double changeRate) {
+    public TransferDayDetail(String stockName, String stockCode, LocalDate buyDate, LocalDate sellDate, double buyPrice, double sellPrice, double changeRate) {
         this.stockName = stockName;
         this.stockCode = stockCode;
         this.buyDate = buyDate;
@@ -54,18 +54,18 @@ public class HoldOrSoldStocks {
         this.changeRate = changeRate;
     }
 
-    public HoldOrSoldStocks(String stockName, String stockCode, LocalDate buyDate, double buyPrice) {
+    public TransferDayDetail(String stockName, String stockCode, LocalDate buyDate, double buyPrice) {
         this.stockName = stockName;
         this.stockCode = stockCode;
         this.buyDate = buyDate;
         this.buyPrice = buyPrice;
     }
 
-    public HoldOrSoldStocks(HoldOrSoldStocks holdOrSoldStocks, LocalDate sellDate, double sellPrice) {
-        this.stockName = holdOrSoldStocks.stockName;
-        this.stockCode = holdOrSoldStocks.stockCode;
-        this.buyDate = holdOrSoldStocks.buyDate;
-        this.buyPrice = holdOrSoldStocks.buyPrice;
+    public TransferDayDetail(TransferDayDetail transferDayDetail, LocalDate sellDate, double sellPrice) {
+        this.stockName = transferDayDetail.stockName;
+        this.stockCode = transferDayDetail.stockCode;
+        this.buyDate = transferDayDetail.buyDate;
+        this.buyPrice = transferDayDetail.buyPrice;
         this.sellDate = sellDate;
         this.sellPrice = sellPrice;
 

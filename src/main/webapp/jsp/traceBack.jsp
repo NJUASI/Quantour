@@ -1218,8 +1218,8 @@
                 "<option value='RANK_MIN'>排名最小</option>" +
                 "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
                 "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
-                "<option value='RANK_BIGGER'>大于</option>" +
-                "<option value='RANK_SHORTER'>小于</option>" +
+                "<option value='RANK_GREATER'>大于</option>" +
+                "<option value='RANK_LESS'>小于</option>" +
                 "<option value='RANK_EQUAL'>等于</option>" +
                 "</select>" ;
             whichTab =$("#quotaList");
@@ -1233,8 +1233,8 @@
             whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
         }else{
             rankType="<select class=\"form-control col-md-12 rankOrder\" style=\"padding-left: 5px;padding-right: 5px\">" +
-                "<option value='ASCEND-ORDER'>由小到大</option>" +
-                "<option value='DESCEND-ORDER'>由大到小</option>" +
+                "<option value='ASC_RANK'>由小到大</option>" +
+                "<option value='DESC_RANK'>由大到小</option>" +
                 "</select>" ;
             whichTab= $("#rankList");
             whichValue=  "<div class=\"row\">" +
@@ -1317,8 +1317,8 @@
                 "<option value='RANK_MIN'>排名最小</option>" +
                 "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
                 "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
-                "<option value='RANK_BIGGER'>大于</option>" +
-                "<option value='RANK_SHORTER'>小于</option>" +
+                "<option value='RANK_GREATER'>大于</option>" +
+                "<option value='RANK_LESS'>小于</option>" +
                 "<option value='RANK_EQUAL'>等于</option>" +
                 "</select>" ;
             whichTab =$("#quotaList");
@@ -1333,8 +1333,8 @@
             whichType='quotaRow';
         }else{
             rankType="<select class=\"form-control col-md-12 rankOrder\" style=\"padding-left: 5px;padding-right: 5px\">" +
-                "<option value='ASCEND-ORDER'>由小到大</option>" +
-                "<option value='DESCEND-ORDER'>由大到小</option>" +
+                "<option value='ASC_RANK'>由小到大</option>" +
+                "<option value='DESC_RANK'>由大到小</option>" +
                 "</select>" ;
             whichTab= $("#rankList");
             whichValue=  "<div class=\"row\">" +
@@ -1395,24 +1395,6 @@
                 $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html(result);
             }
         })
-
-        function commit() {
-
-            //TODO fjj 分别遍历两个list
-            $(".quotaRow").each(function () {
-//           分别对应指标名称 指标排名方式 选股的多少
-                alert($(this).find(".numOfN").val() + $(this).find(".quotaName").html());
-                alert($(this).find(".quotaRank").val());
-                alert($(this).find(".quotaNum").val());
-            });
-            $(".rankRow").each(function () {
-//           分别对应指标名称 指标排名方式  权重
-                alert($(this).find(".numOfN").val() + $(this).find(".quotaName").html());
-                alert($(this).find(".rankOrder").val());//ASCEND-ORDER DESCEND-ORDER
-                alert($(this).find(".quotaWeight").val());
-            });
-        }
-
     });
 </script>
 

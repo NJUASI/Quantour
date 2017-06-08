@@ -18,6 +18,11 @@ public class TraceBackInfo {
     public List<CumulativeReturn> strategyCumulativeReturn;
 
     /**
+     * 调仓日期操作的详情
+     */
+    public List<TransferDayDetail> transferDayDetails;
+
+    /**
      * 历史持仓详情
      */
     public List<HoldingDetail> holdingDetails;

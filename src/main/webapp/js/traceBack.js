@@ -1,9 +1,6 @@
 /**
  * Created by cuihua on 2017/5/14.
  */
-load("nashorn:mozilla_compat.js");
-importPackage("com.edu.nju.asi.utilities.enums");
-
 function traceback() {
     // var isCustomized = $(":radio[name='optionsRadios']:checked").val();
 
@@ -12,7 +9,7 @@ function traceback() {
     var filterNum = 0;
     $(".quotaRow").each(function () {
         var dateOfIndicator = $(this).find(".numOfN").val();
-        var separatorResult = separateIndicator($(this).find(".quotaName").html());
+        var separatorResult = separateIndicator($(this).find(".quotaName").html().trim());
         alert(separatorResult);
 
         if (dateOfIndicator == "") {
@@ -22,7 +19,6 @@ function traceback() {
                 "indicatorType": separatorResult[1],
                 "comparatorType": $(this).find(".quotaRank").val(),
                 "value": $(this).find(".quotaNum").val(),
-                "weight": $(this).find(".quotaWeight").val(),
                 "formativePeriod": separatorResult[0]
             };
         } else {
@@ -32,16 +28,45 @@ function traceback() {
                 "indicatorType": separatorResult,
                 "comparatorType": $(this).find(".quotaRank").val(),
                 "value": $(this).find(".quotaNum").val(),
-                "weight": $(this).find(".quotaWeight").val(),
                 "formativePeriod": dateOfIndicator
             };
         }
         filterNum++;
     });
 
+    // 添加排序条件
+    var rankConditions = new Array();
+    var rankNum = 0;
+    $(".rankRow").each(function () {
+        var dateOfIndicator = $(this).find(".numOfN").val();
+        var separatorResult = separateIndicator($(this).find(".quotaName").html().trim());
+        alert(separatorResult);
+
+        if (dateOfIndicator == "") {
+            alert("无N日");
+            // 非输入框输入
+            rankConditions[rankNum] = {
+                "indicatorType": separatorResult[1],
+                "rankType": $(this).find(".rankOrder").val(),
+                "weight": $(this).find(".quotaWeight").val(),
+                "formativePeriod": separatorResult[0]
+            };
+        } else {
+            alert("有N日");
+            // 输入框输入
+            rankConditions[rankNum] = {
+                "indicatorType": separatorResult,
+                "rankType": $(this).find(".rankOrder").val(),
+                "weight": $(this).find(".quotaWeight").val(),
+                "formativePeriod": dateOfIndicator
+            };
+        }
+        rankNum++;
+    });
+
     // "formativePeriod": $("#formativePeriod").val();
 
-    alert("ok");
+    alert("filterConditions: " +  filterConditions + "\n\n" + "rankConditions: " + rankConditions);
     var jsonData = {
         "startDate": $("#startDate").val(),
         "endDate": $("#endDate").val(),
@@ -50,10 +75,11 @@ function traceback() {
             "stType": $("#stType").val(),
             "blockTypes": $("#blockTypes").val()
         },
-        "maxHoldingNum": 10,
+        "maxHoldingNum": $("#maxHolding").val(),
         "baseStockName": $("#baseStockEve").val(),
         // "isCustomized": isCustomized,
-        "filterConditions": filterConditions
+        "filterConditions": filterConditions,
+        "rankConditions": rankConditions
     };
 
     $("body").removeClass("loaded");
@@ -209,14 +235,12 @@ function traceback() {
     });
 }
 
-
 function separateIndicator(indicatorType) {
     var separator = indicatorType.indexOf("日");
 
     if (separator == -1) {
         // 指标中不含有日字
-        alert("指标中不含有日字\n" + indicatorType);
-        alert(convertIndicator(indicatorType));
+        alert("指标中不含有日字\n" + convertIndicator(indicatorType));
         return new Array(1, convertIndicator(indicatorType));
     }
     if (separator == 0) {
@@ -224,9 +248,9 @@ function separateIndicator(indicatorType) {
         return convertIndicator(indicatorType.substr(1));
     } else {
         var reg = /^[0-9]*$/;
-        if (!reg.test(indicatorType.substr(0, separator - 1))) {
-            // 为 5日开盘价 类型
-            return new Array(indicatorType.substr(0, separator - 1), convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
+        if (reg.test(indicatorType.substr(0, separator))) {
+            // 为 *日*** 类型
+            return new Array(indicatorType.substr(0, separator), convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         } else {
             // 为 当／前日开盘价 类型
             return new Array(1, convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
@@ -239,8 +263,6 @@ function separateIndicator(indicatorType) {
  * 在JS中实现 IndicatorType.getEnum()方法，能够在JS中调用Java代码后修改
  */
 function convertIndicator(indicatorType) {
-    alert(indicatorType + "\n" + (indicatorType == "股价振幅"));
-
     switch (indicatorType) {
         case "开盘价":
             return "OPEN";
@@ -257,9 +279,9 @@ function convertIndicator(indicatorType) {
         case "后复权开盘价":
             return "AFTER_ADJ_OPEN";
         case "后复权收盘价":
-            return "AFTER_ADJ_HIGH";
+            return "AFTER_ADJ_CLOSE";
         case "后复权最高价":
-            return "AFTER_ADJ_OPEN";
+            return "AFTER_ADJ_HIGH";
         case "后复权最低价":
             return "AFTER_ADJ_LOW";
         case "前日后复权收盘价":
@@ -303,5 +325,5 @@ function convertIndicator(indicatorType) {
         case "动态市盈率":
             return "D_PE_TTM";
     }
-    alert("No Match");
+    alert("No Match IndicatorType");
 }
