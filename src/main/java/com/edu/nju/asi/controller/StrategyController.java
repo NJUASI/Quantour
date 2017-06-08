@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -49,66 +50,10 @@ public class StrategyController {
         return mv;
     }
 
-
-    @PostMapping("/save")
-    public ModelAndView saveStrategy(@RequestParam("strategy") Strategy newStrategy, HttpServletRequest request, HttpServletResponse response) {
-        // 限制进入
-        HttpSession session = request.getSession(false);
-        User thisUser = (User) request.getSession().getAttribute("user");
-        if (session == null || thisUser == null) {
-            System.out.println("未登录");
-            return new ModelAndView("index");
-        }
-        System.out.println("已登录：" + thisUser.getUserName());
-
-        // TODO 冯俊杰 设置返回的mv视图
-        ModelAndView mv = new ModelAndView();
-
-        boolean saveResult = strategyService.saveStrategy(newStrategy);
-        mv.addObject("saveResult", saveResult);
-        return mv;
-    }
-
-    @PostMapping("/modify")
-    public @ResponseBody
-    String modifyStrategy(@RequestParam("strategy") Strategy newStrategy, HttpServletRequest request, HttpServletResponse response) {
-        // 限制进入
-        HttpSession session = request.getSession(false);
-        User thisUser = (User) request.getSession().getAttribute("user");
-        if (session == null || thisUser == null) {
-            System.out.println("未登录");
-            return "-1;未登录";
-        }
-        System.out.println("已登录：" + thisUser.getUserName());
-
-        boolean modifyResult = strategyService.modify(newStrategy);
-
-        // TODO 冯俊杰 设置返回JSON值
-        return null;
-    }
-
-    @PostMapping("/delete")
-    public @ResponseBody
-    String deleteStrategy(@RequestParam("deleteStrategyID") String deleteStrategyID, HttpServletRequest request, HttpServletResponse response) {
-        // 限制进入
-        HttpSession session = request.getSession(false);
-        User thisUser = (User) request.getSession().getAttribute("user");
-        if (session == null || thisUser == null) {
-            System.out.println("未登录");
-            return "-1;未登录";
-        }
-        System.out.println("已登录：" + thisUser.getUserName());
-
-        boolean deleteResult = strategyService.delete(thisUser, deleteStrategyID);
-
-        // TODO 冯俊杰 设置返回JSON值
-        return null;
-    }
-
     /**
      * 查看单只股票策略的详情
      *
-     * @param strategyID
+     * @param strategyID 要查看的策略实体ID
      */
     @GetMapping("/{id}")
     public ModelAndView getOneStrategy(@PathVariable("id") String strategyID, HttpServletRequest request, HttpServletResponse response) {
@@ -130,11 +75,76 @@ public class StrategyController {
         }
 
         // TODO 用此策略进行回测，得其一些指标并画图
-
-
-
         ModelAndView mv = new ModelAndView("generalStrategy");
         return mv;
+    }
+
+
+    /**
+     * 用户保存自己的股票策略
+     *
+     * @param newStrategy 新的策略实体
+     */
+    @PostMapping(value = "/save", produces = "text/html;charset=UTF-8;")
+    public @ResponseBody
+    String saveStrategy(@RequestParam("strategy") Strategy newStrategy, HttpServletRequest request, HttpServletResponse response) {
+        // 限制进入
+        HttpSession session = request.getSession(false);
+        User thisUser = (User) request.getSession().getAttribute("user");
+        if (session == null || thisUser == null) {
+            System.out.println("未登录");
+            return "-1;未登录";
+        }
+        System.out.println("已登录：" + thisUser.getUserName());
+
+        newStrategy.setDate(LocalDate.now());
+        boolean saveResult = strategyService.saveStrategy(newStrategy);
+        if (saveResult) return "1;保存成功";
+        else return "-1;保存失败";
+    }
+
+    /**
+     * 创建者用户修改股票策略
+     *
+     * @param modifiedStrategy 被修改过的策略实体
+     */
+    @PostMapping("/modify")
+    public @ResponseBody
+    String modifyStrategy(@RequestParam("strategy") Strategy modifiedStrategy, HttpServletRequest request, HttpServletResponse response) {
+        // 限制进入
+        HttpSession session = request.getSession(false);
+        User thisUser = (User) request.getSession().getAttribute("user");
+        if (session == null || thisUser == null) {
+            System.out.println("未登录");
+            return "-1;未登录";
+        }
+        System.out.println("已登录：" + thisUser.getUserName());
+
+        boolean modifyResult = strategyService.modify(modifiedStrategy);
+        if (modifyResult) return "1;修改成功";
+        else return "-1;修改失败";
+    }
+
+    /**
+     * 创建者用户删除股票策略
+     *
+     * @param deleteStrategyID 需删除的策略实体ID
+     */
+    @PostMapping("/delete")
+    public @ResponseBody
+    String deleteStrategy(@RequestParam("deleteStrategyID") String deleteStrategyID, HttpServletRequest request, HttpServletResponse response) {
+        // 限制进入
+        HttpSession session = request.getSession(false);
+        User thisUser = (User) request.getSession().getAttribute("user");
+        if (session == null || thisUser == null) {
+            System.out.println("未登录");
+            return "-1;未登录";
+        }
+        System.out.println("已登录：" + thisUser.getUserName());
+
+        boolean deleteResult = strategyService.delete(thisUser, deleteStrategyID);
+        if (deleteResult) return "1;删除成功";
+        else return "-1;删除失败";
     }
 
     /**
@@ -177,8 +187,8 @@ public class StrategyController {
         System.out.println("已登录：" + thisUser.getUserName());
 
         boolean result = strategyService.revokeSubscribe(strategyID, thisUser);
-        if (result) return "1;订阅成功";
-        else return "-1;订阅失败";
+        if (result) return "1;取消订阅成功";
+        else return "-1;取消订阅失败";
     }
 
 

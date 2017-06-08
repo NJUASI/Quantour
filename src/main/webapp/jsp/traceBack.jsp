@@ -1,3 +1,4 @@
+<%@ page import="com.edu.nju.asi.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -922,7 +923,7 @@
                         <div class=" col-md-offset-8 col-md-1" style="padding-right: 0px">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="radios3" id="radios1" value="私密" checked>
+                                    <input type="radio" name="radios3" id="radios1" value="true" checked>
                                     私密
                                 </label>
                             </div>
@@ -930,13 +931,20 @@
                         <div class="col-md-1" style="padding-left: 0px">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="radios3" id="radios2" value="公开">
+                                    <input type="radio" name="radios3" id="radios2" value="false">
                                     公开
                                 </label>
                             </div>
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" onclick="sureCreate()" class="btn btn-primary">创建策略</button>
+                        <c:choose>
+                            <c:when test="${sessionScope.user==null}">
+                                <button type="button" onclick='ensureCreate()' class="btn btn-primary">创建策略</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="button" onclick='ensureCreate("<%=((User)session.getAttribute("user")).getUserName()%>")' class="btn btn-primary">创建策略</button>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -959,6 +967,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 <script src="../js/traceBack.js"></script>
+<script src="../js/strategy.js"></script>
 
 <script src="../js/echarts.min.js"></script>
 <script src="../js/chart.js"></script>
@@ -970,90 +979,6 @@
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
-
-
-    $(function () {
-        $("#createStrategy").click(function () {
-            $("#mymodal").modal("toggle");
-            var blockType="";
-            for( var i = 0; i< $("#blockTypes").val().length;i++)   {
-                if($("#blockTypes").val()[i]=="ZB"){
-                    blockType+="主板 ";
-                }else if($("#blockTypes").val()[i]=="CYB"){
-                    blockType+="创业板 ";
-                }else{
-                    blockType+="中小板 ";
-                }
-            }
-            $("#strategyBlock").html(blockType);
-            var stType=document.getElementById("stType").options[document.getElementById("stType").selectedIndex].text;
-            $("#strategyST").html(stType);
-            $("#strategyBace").html($("#baseStockEve").val());
-            $("#strategyPeriod").html($("#holdingPeriod").val());
-            $("#strategyHolding").html($("#maxHolding").val());
-
-            $("#quotaCreate").empty();
-            $("#quotaCreate").append( "<div class=' col-md-10'> <strong class='col-md-5'>指标</strong><strong class='col-md-4'>比较符</strong> <strong class='col-md-2'>值</strong> </div>")
-
-            $(".quotaRow").each(function () {
-                var rank="";
-                switch ($(this).find('.quotaRank').val()){
-                    case "RANK_MIN":
-                        rank="排名最小"
-                        break;
-                    case "RANK_MAX_PERCENT":
-                        rank="排名%最大"
-                        break;
-                    case "RANK_MAX":
-                        rank="排名最大"
-                        break;
-                    case  "RANK_MIN_PERCENT":
-                        rank="排名%最小"
-                        break;
-                    case  "RANK_GREATER":
-                        rank="大于"
-                        break;
-                    case  "RANK_LESS":
-                        rank="小于"
-                        break;
-                    case  " RANK_EQUAL":
-                        rank="等于"
-                        break;
-                }
-
-                $("#quotaCreate").append( "<div class=' col-md-10'> <span class='col-md-5'>"+$(this).find('.numOfN').val() + $(this).find('.quotaName').html()+"</span><span class='col-md-4'>"+rank+"</span> <span class='col-md-2'>"+$(this).find('.quotaNum').val()+"</span> </div>")
-//
-
-            });
-
-            $("#rankCreate").empty();
-            $("#rankCreate").append( "<div class=' col-md-10'> <strong class='col-md-5'>指标</strong><strong class='col-md-4'>次序</strong> <strong class='col-md-2'>权重</strong> </div>")
-
-            $(".rankRow").each(function (){
-                var rank="";
-                switch ($(this).find('.rankOrder').val()){
-                    case "ASC_RANK":
-                        rank="由小到大"
-                        break;
-                    case "DESC_RANK":
-                        rank="由大到小"
-                        break;
-                    }
-                $("#rankCreate").append( "<div class=' col-md-10'> <span class='col-md-5'>"+$(this).find('.numOfN').val() + $(this).find('.quotaName').html()+"</span><span class='col-md-4'>"+rank+"</span> <span class='col-md-2'>"+$(this).find('.quotaWeight').val()+"</span> </div>")
-
-            });
-
-        });
-    });
-    function sureCreate(){
-        //TODO fjj 计算的数据同 traceback.js  注意回测日期是不是需要修改为1年
-        //下面直接存
-        $("#strategyName").val();//股票名称
-        //创建者
-        //创建日期
-        alert($("#strategyDescription").val());//策略描述
-        alert($('input[name="radios3"]:checked').val());//是否私密
-    }
 
     var today = new Date();
     var yesterday = new Date();

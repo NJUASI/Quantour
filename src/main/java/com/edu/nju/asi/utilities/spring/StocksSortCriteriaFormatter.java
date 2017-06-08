@@ -12,6 +12,7 @@ import java.util.Locale;
  * Created by cuihua on 2017/5/30.
  */
 public class StocksSortCriteriaFormatter implements Formatter<StocksSortCriteria> {
+
     @Override
     public StocksSortCriteria parse(String text, Locale locale) throws ParseException {
         System.out.println("--------------FORMAT StocksSortCriteria--------------");
