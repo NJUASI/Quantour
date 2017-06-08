@@ -87,7 +87,9 @@ public class TraceBackServiceImpl implements TraceBackService {
         System.out.println("---------------2------------");
 
         //策略回测
-        traceBackInfo.strategyCumulativeReturn = traceBackStrategyCalculator.traceBack(traceBackCriteria);
+        StrategyCumulativeAndTransferDetail strategyCumulativeAndTransferDetail = traceBackStrategyCalculator.traceBack(traceBackCriteria);
+        traceBackInfo.strategyCumulativeReturn = strategyCumulativeAndTransferDetail.strategyCumulativeReturn;
+        traceBackInfo.transferDayDetails = strategyCumulativeAndTransferDetail.transferDayDetails;
         System.out.println("---------------3------------");
 
         //计算策略回撤的相关信息

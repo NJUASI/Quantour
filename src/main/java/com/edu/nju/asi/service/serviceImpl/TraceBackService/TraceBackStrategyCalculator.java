@@ -49,12 +49,12 @@ public class TraceBackStrategyCalculator {
     /**
      * 当前持有的股票
      */
-    protected List<HoldOrSoldStocks> currentHoldingStocks = new ArrayList<>();
+    protected List<TransferDayDetail> currentHoldingStocks = new ArrayList<>();
 
     /**
      * 最近卖出的股票
      */
-    protected List<HoldOrSoldStocks> lastSoldStocks = new ArrayList<>();
+    protected List<TransferDayDetail> lastSoldStocks = new ArrayList<>();
 
     /**
      * 筛选条件
@@ -85,9 +85,10 @@ public class TraceBackStrategyCalculator {
     /**
      * 根据目标股票池及所给的标准，返回策略的累计收益率
      *
-     * @return List<CumulativeReturn> 策略的累计收益率
+     * @return StrategyCumulativeAndTransferDetail 策略的累计收益率和调仓日期的详情
      */
-    public List<CumulativeReturn> traceBack(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException, NoDataWithinException {
+    public StrategyCumulativeAndTransferDetail traceBack(TraceBackCriteria traceBackCriteria) throws DataSourceFirstDayException, NoDataWithinException {
+
 
         //调仓日为持有期的后一天，故把调仓日放到周期中，每个周期的起始调仓日不参与收益计算，末尾调仓日参与收益计算
         int holdingPeriod = traceBackCriteria.holdingPeriod;
@@ -143,7 +144,11 @@ public class TraceBackStrategyCalculator {
         // 根据果仁网，第一天数据设置为0
         strategyCumulativeReturn.add(0, new CumulativeReturn(allDatesWithData.get(allStartIndex), 0, false));
 
-        return strategyCumulativeReturn;
+        StrategyCumulativeAndTransferDetail strategyCumulativeAndTransferDetail = new StrategyCumulativeAndTransferDetail();
+
+        strategyCumulativeAndTransferDetail.strategyCumulativeReturn = strategyCumulativeReturn;
+        strategyCumulativeAndTransferDetail.transferDayDetails = lastSoldStocks;
+        return strategyCumulativeAndTransferDetail;
     }
 
     private List<CumulativeReturn> cycleCalcu(int startIndex, int endIndex, int periodSerial,int maxHoldingNum) throws DataSourceFirstDayException {
@@ -194,8 +199,8 @@ public class TraceBackStrategyCalculator {
         //第一个周期，没有卖出的股票
         if(periodSerial == 1){
             for(int i = 0; i < pickedStockCodes.size(); i++){
-                Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
-                currentHoldingStocks.add(new HoldOrSoldStocks(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getFrontAdjClose()));
+                Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
+                currentHoldingStocks.add(new TransferDayDetail(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getClose()));
             }
         }
         //不是第一个周期
@@ -208,8 +213,8 @@ public class TraceBackStrategyCalculator {
                         isNew = false;
                     }
                     if(isNew){
-                        Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
-                        currentHoldingStocks.add(new HoldOrSoldStocks(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getFrontAdjClose()));
+                        Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
+                        currentHoldingStocks.add(new TransferDayDetail(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getClose()));
                         j++;
                     }
                 }
@@ -225,12 +230,12 @@ public class TraceBackStrategyCalculator {
                         break;
                     }
                 }
-                //被卖出，加入最近被卖出的队列
+                //TODO 这里的卖出价格有点儿问题 被卖出，加入最近被卖出的队列，卖的是调仓日期的前复权开盘价
                 if(isSold){
-                    Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex-1));
+                    Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
 
                     //每个持仓期的第一天作为调仓日期
-                    lastSoldStocks.add(new HoldOrSoldStocks(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getFrontAdjClose()));
+                    lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getClose()));
                     currentHoldingStocks.remove(i);
                 }
             }
@@ -252,7 +257,7 @@ public class TraceBackStrategyCalculator {
                     double profit = stock.getClose() / stock.getPreClose() - 1;
 
                     if (forCalcu.keySet().contains(thisDate)) {
-                        forCalcu.get(thisDate).add(profit);
+                    forCalcu.get(thisDate).add(profit);
                     } else {
                         List<Double> values = new LinkedList<>();
                         values.add(profit);
