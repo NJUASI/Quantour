@@ -2,9 +2,12 @@ package com.edu.nju.asi.dataHelper;
 
 import com.edu.nju.asi.infoCarrier.FirstAndLastDay;
 import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.utilities.StockList;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Byron Dong on 2017/3/5.
@@ -55,6 +58,18 @@ public interface StockDataHelper {
      * @return （股票代码相同）此股票的所有数据
      */
     List<Stock> getStockData(String stockCode);
+
+    /**
+     * 取所有股票的所有数据，没有返回null
+     * 注意：取出来的单只股票数据中，年份小的在链表前端，年份大的在链表后端
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/8
+     * @param codes 指定的股票代码
+     * @return （股票代码相同）此股票的所有数据
+     */
+    Map<String,StockList> getAllStockData(Set<String> codes);
 
     /**
      * 获取特定日期的所有股票所有数据

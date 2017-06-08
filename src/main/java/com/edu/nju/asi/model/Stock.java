@@ -144,6 +144,10 @@ public class Stock implements Serializable {
     public Stock() {
     }
 
+    public Stock(String code, LocalDate date) {
+        this.stockID = new StockID(code, date);
+    }
+
     // 个人界面当天股票没有信息只显示有此自选股
     public Stock(String code, LocalDate date, String name) {
         this.stockID = new StockID(code, date);
