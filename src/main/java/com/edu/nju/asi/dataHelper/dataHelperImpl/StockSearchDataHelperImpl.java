@@ -34,7 +34,7 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
      * @return 所有股票名称的首字母缩写及其名称、代码
      */
     @Override
-    public List<StockSearch> getAllStocksFirstLetters() {
+    public List<StockSearch> getAllStockSearch() {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -117,43 +117,6 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
         return result;
     }
 
-    /**
-     * 根据area取StockSearch列表
-     *
-     * @param area
-     */
-    @Override
-    public List<StockSearch> getByArea(AreaType area) {
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        String hql = "from StockSearch where area=:area";
-        Query query = session.createQuery(hql);
-        query.setParameter("area",area.toString());
-        List<StockSearch> list = query.list();
-        transaction.commit();
-        session.close();
-        return list;
-    }
-
-    /**
-     * 根据industry取StockSearch列表
-     *
-     * @param industry
-     */
-    @Override
-    public List<StockSearch> getByIndustry(IndustryType industry) {
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        String hql = "from StockSearch where industry=:industry";
-        Query query = session.createQuery(hql);
-        query.setParameter("industry",industry.toString());
-        List<StockSearch> list = query.list();
-        transaction.commit();
-        session.close();
-        return list;
-    }
 
     /**
      * 添加StockSearch列表

@@ -26,22 +26,23 @@ public class StCriteriaFilter extends StockPoolFilter{
     @Override
     public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria) {
 
-        //TODO 因为现在还不需要筛选出st，故先直接返回，不做筛选
-
         if(criteria.stType == StType.EXCLUDE){
             for(int i = 0; i < stocks.size();){
                 if (stocks.get(i).isSt){
                     stocks.remove(i);
+                } else {
+                    i++;
                 }
-                i++;
+
             }
         }
         else if(criteria.stType == StType.ONLY){
             for(int i = 0; i < stocks.size();){
                 if(!stocks.get(i).isSt){
                     stocks.remove(i);
+                } else {
+                    i++;
                 }
-                i++;
             }
         }
 

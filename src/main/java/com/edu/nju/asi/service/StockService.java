@@ -38,7 +38,7 @@ public interface StockService{
      * @return 股票信息列表
      * @throws IOException IO
      */
-    List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria, IndustryType industryType, AreaType areaType) throws IOException;
+    List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria, IndustryType industryType, AreaType areaType) throws IOException, UnhandleBlockTypeException;
 
     /**
      * 用户输入代码或者股票首字母或股票名称，查找符合条件的股票

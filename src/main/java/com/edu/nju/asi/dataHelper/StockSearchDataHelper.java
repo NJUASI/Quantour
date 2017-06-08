@@ -16,7 +16,7 @@ public interface StockSearchDataHelper {
     /**
      * @return 所有股票名称的首字母缩写及其名称、代码
      */
-    List<StockSearch> getAllStocksFirstLetters();
+    List<StockSearch> getAllStockSearch();
 
     /**
      * @return 返回所有股票的代码及其名称，代码作为键值
@@ -32,16 +32,6 @@ public interface StockSearchDataHelper {
      * 添加StockSearch列表
      */
     boolean addStockSearchAll(List<StockSearch> list);
-
-    /**
-     * 根据area取StockSearch列表
-     */
-    List<StockSearch> getByArea(AreaType area);
-
-    /**
-     * 根据industry取StockSearch列表
-     */
-    List<StockSearch> getByIndustry(IndustryType industry);
 
     /**
      * 添加StockSearch列表

@@ -1,6 +1,8 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
+import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.BlockType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 
 /**
  * Created by harvey on 17-4-2.
@@ -26,14 +28,23 @@ public class StockPool {
     public boolean isSt;
 
     /**
-     *
-     * @param stockCode 股票代码
-     * @param blockType 所属版块，主板，中小板，创业板
-     * @param isSt 是否是st
+     * 所属行业
      */
-    public StockPool(String stockCode, BlockType blockType, boolean isSt) {
+    public IndustryType industryType;
+
+    /**
+     * 所属地域
+     */
+    public AreaType areaType;
+
+
+
+
+    public StockPool(String stockCode, BlockType blockType, boolean isSt, IndustryType industryType, AreaType areaType) {
         this.stockCode = stockCode;
         this.blockType = blockType;
         this.isSt = isSt;
+        this.industryType = industryType;
+        this.areaType = areaType;
     }
 }

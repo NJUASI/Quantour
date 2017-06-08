@@ -46,7 +46,7 @@ public class StockSearchDataHelperImplTest {
 
     @Test
     public void getAllStocksFirstLetters() throws Exception {
-        List<StockSearch> list = stockSearchDataHelper.getAllStocksFirstLetters();
+        List<StockSearch> list = stockSearchDataHelper.getAllStockSearch();
 
         assertEquals("000001",list.get(0).getSearchID().getCode());
         assertEquals("sfza",list.get(0).getFirstLetters());
@@ -120,18 +120,6 @@ public class StockSearchDataHelperImplTest {
     @Test
     public void getClickRate() throws Exception {
         assertEquals(1.0,stockSearchDataHelper.getClickRate(new SearchID("000001","平安银行",Market.SZ)),0);
-    }
-
-    @Test
-    public void getByArea() throws Exception {
-        List<StockSearch> list = stockSearchDataHelper.getByArea(AreaType.上海);
-        for(StockSearch stockSearch:list){
-            System.out.println(stockSearch.getSearchID().getCode());
-        }
-    }
-
-    @Test
-    public void getByIndustry() throws Exception {
     }
 
 }

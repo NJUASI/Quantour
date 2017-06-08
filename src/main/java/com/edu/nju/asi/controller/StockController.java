@@ -14,10 +14,7 @@ import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
-import com.edu.nju.asi.utilities.exceptions.CodeNotFoundException;
-import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
-import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
-import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,8 +127,10 @@ public class StockController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            return "-1;IO读取失败！";
+        } catch (UnhandleBlockTypeException e) {
+            e.printStackTrace();
         }
+        return "-1;失败！";
     }
 
     /**
