@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
     //显示出白色下划线的效果
-   $("#homePage").addClass("act");
+
 
    //切换白色下划线
    $(".navbar-nav li a").on("click",function () {
