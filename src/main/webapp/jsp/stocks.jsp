@@ -207,7 +207,7 @@
         <%--TODO 高源 没数据的话怎么显示--%>
         <div class="text-center" id="headTitle"><h3>市场行情</h3></div>
         <ul class="nav nav-pills  col-md-offset-1  col-md-10"  role="tablist" style="margin-bottom: 10px">
-            <li class="active"><a href="#bulletin" role="tab" data-toggle="pill">全部股票</a></li>
+            <li class="active"><a href="#bulletin" onclick="stocks_on_all()" role="tab" data-toggle="pill">全部股票</a></li>
             <li><a href="#rule" role="tab" data-toggle="pill">按行业板块</a></li>
             <li><a href="#forum" role="tab" data-toggle="pill">按地域板块</a></li>
         </ul>
@@ -239,7 +239,7 @@
                         <div><a class="industryOfStock">黑色金属</a></div>
                         <div><a class="industryOfStock">其他制造业</a></div>
                         <div><a class="industryOfStock">化纤制造</a></div>
-                        <div><a class="industryOfStock"> 信息技术</a></div>
+                        <div><a class="industryOfStock">信息技术</a></div>
                         <div><a class="industryOfStock">出版传媒</a></div>
                         <div><a class="industryOfStock">服装制造</a></div>
                         <div><a class="industryOfStock">房地产业</a></div>
@@ -596,6 +596,12 @@
     var numOfColumn = 0;
     var numOfClick = 1;
     var sortNum = 0;
+
+    var areaType = 0;
+    var industryType = 0;
+
+
+
     $("th").find("span").click(function () {
         if (($(".cTable").index($(this))) != numOfColumn) {
             numOfColumn = ($(".cTable").index($(this)));
@@ -658,6 +664,7 @@
         sortNum=0;
         updatePanel();
     });
+
 //通过界面的数据post更改界面内容
     function updatePanel() {
         $("body").addClass('loaded');
@@ -668,7 +675,9 @@
             data: {
                 "date": $(".form_date > input").val(),
                 "sortCriteria": sortNum,
-                "wantedPage": nowPage
+                "wantedPage": nowPage,
+                "industryType": industryType,
+                "areaType": areaType
             },
 
             success: function (result) {
@@ -679,7 +688,7 @@
                 if (array[0] == "1") {
                     // js修改jsp中数据
 
-                    // 处理图表数据
+                    // 处理表格数据
                     var stock_page = eval("(" + array[1] + ")");
 
                     var numOfEachPage = stock_page["numOfEachPage"];
@@ -793,7 +802,7 @@
                     });
 
 
-                    // 处理表格数据
+                    // 处理热搜榜图表数据
                     var top_search_chart_data = array[2];
                     createPieChart("hot_search_chart", top_search_chart_data);
 
@@ -870,19 +879,34 @@
         $(".provinceOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
         $(".industryOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
         $(this).css({"background-color":"#337ab7","color":"white"});
-        //TODO fjj 查看行业 此时地域为全部
-        alert($(this).html());
-    })
+
+        industryType = $(this).html();
+        areaType = '全部';
+        updatePanel();
+    });
 
     $(".provinceOfStock").click(function () {
         $(".industryOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
         $(".industryOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
         $(".provinceOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
         $(this).css({"background-color":"#337ab7","color":"white"});
-        //TODO fjj 查看地域  行业为全部
-        alert($(this).html());
-    })
 
+        areaType = $(this).html();
+        industryType = '全部';
+        updatePanel();
+    });
+
+    
+    function stocks_on_all() {
+        $(".industryOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
+        $(".industryOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+
+        $(".provinceOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
+        $(".provinceOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+        industryType = 0;
+        areaType = 0;
+        updatePanel();
+    }
 
 
 
