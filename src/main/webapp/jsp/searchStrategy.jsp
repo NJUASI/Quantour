@@ -87,6 +87,7 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="row">
             <h3 class="col-md-2" style="color:#4890c8">中小板股指</h3>
+            <%--TODO 高源 收藏、取消收藏、编辑修改、删除策略 (strategy.js  strategy_modify...) --%>
             <button class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">
                 <span class="glyphicon glyphicon-heart"></span>
                 <span class="txt">收藏</span>

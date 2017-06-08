@@ -109,7 +109,7 @@
         <div class="col-md-4">
             <div class="strategyPanel">
                 <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
+                    <h5 id="strategyName" class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
                     <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
                         <li class="" style="font-size: 90%; color:red">
                             沪深300
