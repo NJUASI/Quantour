@@ -81,7 +81,7 @@ public class BasicData implements Serializable{
     /**
      * 现金流量表
      * */
-    //经营活动产生的现金流量净额（万元）
+    //经营活动净收益（万元）
     @Basic
     @Column(length = 100)
     private String netCashFlowsFromOperatingActivities;

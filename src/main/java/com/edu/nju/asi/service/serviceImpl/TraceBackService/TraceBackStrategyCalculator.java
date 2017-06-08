@@ -1,6 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.infoCarrier.traceBack.*;
+import com.edu.nju.asi.model.BasicData;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategyFactory;
@@ -66,6 +67,11 @@ public class TraceBackStrategyCalculator {
     protected List<RankCondition> rankConditions;
 
     /**
+     * 财务指标
+     */
+    protected Map<String,List<BasicData>> financialData;
+
+    /**
      * 形成策略和选择策略工厂
      */
     FormateStrategyFactory formateStrategyFactory = new FormateStrategyFactory();
@@ -79,6 +85,12 @@ public class TraceBackStrategyCalculator {
 
         this.filterConditions = traceBackCriteria.filterConditions;
         this.rankConditions = traceBackCriteria.rankConditions;
+
+        setUpFinancialIndicators();
+    }
+
+    private void setUpFinancialIndicators() {
+        //TODO 下层的接口，根据股票代码获取该股票的所有的财务指标
     }
 
     /**
@@ -392,16 +404,6 @@ public class TraceBackStrategyCalculator {
         return rankConditionRates;
     }
 
-    private boolean isDateWithinWanted(LocalDate start, LocalDate end, LocalDate now) {
-        if (now.isEqual(start) || now.isEqual(end)) {
-            return true;
-        }
-        if (now.isAfter(start) && now.isBefore(end)) {
-            return true;
-        }
-        return false;
-    }
-
     protected Stock findStock(String stockCode, LocalDate date){
 
         List<Stock> stockVOList = stockData.get(stockCode);
@@ -451,5 +453,54 @@ public class TraceBackStrategyCalculator {
         }
 
         return stockVOList.subList(startIndex, endIndex+1);
+    }
+
+
+    /**
+     * 返回股票最新4个季度指标加在一起的值。例子：TTM（营业收入， 0）返回最新4个季报营业收入之和，
+     * TTM（营业收入， 4）返回1年前的4个季报营业收入之和。
+     * @param indicator 季报指标
+     * @param forwardQuarter 前移季度数
+     * @return
+     */
+    protected Double ttm(String indicator, int forwardQuarter){
+        return null;
+    }
+
+    /**
+     * 返回季报指标的年报数据， 前移年数 = 0时， 返回最近年报数据。 例子：假设现在是2016Q2，
+     * Annual（营业收入，0）就是2015年报的营业收入，而Annual（营业收入，1）就是2014年报收入。
+     * @param indicator 季报指标
+     * @param forwardYear 前移年数
+     * @return
+     */
+    protected Double annual(String indicator, int forwardYear){
+        return null;
+    }
+
+    /**
+     * 通过股票代码和日期，找到该日期的财务指标
+     * @param code 股票代码
+     * @param date 日期
+     * @return
+     */
+    protected BasicData findBasicData(String code, LocalDate date){
+
+        List<BasicData> thisFinancialData = financialData.get(code);
+        for(BasicData basicData : thisFinancialData){
+//            if(basicData.getBasicDataID().ge)
+        }
+        return null;
+    }
+
+    /**
+     * 找到需要的时间段的某只股票的财务指标
+     * @param code 股票代码
+     * @param date 日期
+     * @param num 数量
+     * @return
+     */
+    protected List<BasicData> findBasicData(String code, LocalDate date, int num){
+        return null;
     }
 }
