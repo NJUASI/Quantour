@@ -43,7 +43,7 @@ public class RankStrategy {
 
        for(int i = 0; i < orderedCodes.size(); i++){
            // 排名分的公式是 （股票数– 股票排名 + 1）/股票数 * 100
-           rankConditionRates.add(new RankConditionRate(orderedCodes.get(i), (orderedCodes.size() - i) / orderedCodes.size() * 100 * weight));
+           rankConditionRates.add(new RankConditionRate(orderedCodes.get(i), ((double) (orderedCodes.size() - i)) / orderedCodes.size() * 100 * weight));
        }
        return rankConditionRates;
     }

@@ -11,6 +11,7 @@ import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.enums.RankType;
 import com.edu.nju.asi.utilities.exceptions.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -30,8 +31,8 @@ public class TraceBackStrategyCalculator {
     protected TraceBackCriteria traceBackCriteria;
 
     // 默认1000元初始投资资本
-    private final double initMoney = 1;
-    private double nowMoney = 1;
+    private final double initMoney = 1000;
+    private double nowMoney = 1000;
 
     /*
     需要重复计算的一些东西，故保存
@@ -255,6 +256,8 @@ public class TraceBackStrategyCalculator {
                 if (isDateWithinWanted(periodStart, periodEnd, stock.getStockID().getDate())) {
                     LocalDate thisDate = stock.getStockID().getDate();
                     double profit = stock.getClose() / stock.getPreClose() - 1;
+                    //四舍五入，保留四位小数
+//                    profit = new BigDecimal(profit).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 
                     if (forCalcu.keySet().contains(thisDate)) {
                     forCalcu.get(thisDate).add(profit);
@@ -273,6 +276,8 @@ public class TraceBackStrategyCalculator {
 
             nowMoney *= (thisYield + 1);
             double cumulativeYield = nowMoney / initMoney - 1;
+            //四舍五入，保留4位小数
+//            cumulativeYield = new BigDecimal(cumulativeYield).setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 
             strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), cumulativeYield, false));
         }
@@ -285,6 +290,7 @@ public class TraceBackStrategyCalculator {
         for (double temp : value) {
             sum += temp;
         }
+
         return sum / value.size();
     }
 
@@ -350,28 +356,28 @@ public class TraceBackStrategyCalculator {
         }
 
         // 通过不同的筛选条件进行筛选
-        List<List<RankConditionRate>> allFilterWantedCodes = new ArrayList<>();
+        List<List<RankConditionRate>> allRankConditionRates = new ArrayList<>();
 
         for(RankCondition rankCondition : rankConditions){
             AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData);
             RankStrategy rankStrategy = new RankStrategy(rankCondition.weight, rankCondition.rankType);
             try {
-                allFilterWantedCodes.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
+                allRankConditionRates.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
             } catch (DataSourceFirstDayException e) {
                 e.printStackTrace();
             }
         }
 
         //选出经不同筛选条件筛选出来的相同的股票
-        List<RankConditionRate> rankConditionRates = allFilterWantedCodes.get(0);
+        List<RankConditionRate> rankConditionRates = allRankConditionRates.get(0);
 
         //多于一个筛选条件
         if(rankConditions.size() > 1){
-            for(int i = 1 ; i < allFilterWantedCodes.size();i++){
+            for(int i = 1 ; i < allRankConditionRates.size();i++){
                 for(int j = 0; j < rankConditionRates.size();){
                     boolean isFound = false;
-                    for(int k = 0; k < allFilterWantedCodes.get(i).size(); k++){
-                        if(rankConditionRates.get(j) .equals(allFilterWantedCodes.get(i).get(k))){
+                    for(int k = 0; k < allRankConditionRates.get(i).size(); k++){
+                        if(rankConditionRates.get(j) .equals(allRankConditionRates.get(i).get(k))){
                             isFound = true;
                             break;
                         }
