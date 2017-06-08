@@ -14,10 +14,7 @@ import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
-import com.edu.nju.asi.utilities.exceptions.CodeNotFoundException;
-import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
-import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
-import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,16 +90,16 @@ public class StockController {
      */
     @PostMapping(produces = "text/html;charset=UTF-8;")
     public @ResponseBody
-    String reqGetStockMarket(@RequestParam("date") LocalDate thisDate, @RequestParam("sortCriteria") StocksSortCriteria comparisionCriteria,
+    String reqGetStockMarket(@RequestParam("date") LocalDate thisDate, @RequestParam("sortCriteria") StocksSortCriteria sortCriteria,
                              @RequestParam("wantedPage") int wantedPage, @RequestParam("industryType") IndustryType industryType,
                              @RequestParam("areaType") AreaType areaType) {
         System.out.println("--------在req中-----------");
-        System.out.println(thisDate + "\n" + comparisionCriteria.getRepre() + "\n" + wantedPage + "\n" + industryType
+        System.out.println(thisDate + "\n" + sortCriteria.getRepre() + "\n" + wantedPage + "\n" + industryType
                 + "\n" + areaType + "\n\n");
 
         String result = null;
         try {
-            List<Stock> allStocks = stockService.getAllStocks(thisDate, comparisionCriteria);
+            List<Stock> allStocks = stockService.getAllStocks(thisDate, sortCriteria, industryType, areaType);
             List<BaseStock> baseStocks = stockService.getBaseStockDataOfOneDay(thisDate);
             System.out.println(allStocks.size() + "   " + baseStocks.size());
 
@@ -130,8 +127,10 @@ public class StockController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            return "-1;IO读取失败！";
+        } catch (UnhandleBlockTypeException e) {
+            e.printStackTrace();
         }
+        return "-1;失败！";
     }
 
     /**

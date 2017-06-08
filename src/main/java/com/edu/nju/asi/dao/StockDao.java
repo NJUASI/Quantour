@@ -97,16 +97,6 @@ public interface StockDao {
      */
     List<StockSearch> searchStock(String searchString);
 
-    /**
-     * 根据area取StockSearch列表
-     */
-    List<StockSearch> getByArea(AreaType area);
-
-    /**
-     * 根据industry取StockSearch列表
-     */
-    List<StockSearch> getByIndustry(IndustryType industry);
-
 
     /*
     交易日期相关

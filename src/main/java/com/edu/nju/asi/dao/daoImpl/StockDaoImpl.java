@@ -9,7 +9,6 @@ import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.StockCodeHelper;
-import com.edu.nju.asi.utilities.StockList;
 import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.BlockType;
 import com.edu.nju.asi.utilities.enums.IndustryType;
@@ -160,26 +159,6 @@ public class StockDaoImpl implements StockDao {
         return stockSearchDataHelper.search(searchString);
     }
 
-    /**
-     * 根据area取StockSearch列表
-     *
-     * @param area
-     */
-    @Override
-    public List<StockSearch> getByArea(AreaType area) {
-        return stockSearchDataHelper.getByArea(area);
-    }
-
-    /**
-     * 根据industry取StockSearch列表
-     *
-     * @param industry
-     */
-    @Override
-    public List<StockSearch> getByIndustry(IndustryType industry) {
-        return stockSearchDataHelper.getByIndustry(industry);
-    }
-
 
 
     /*
@@ -314,7 +293,7 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public List<StockSearch> getAllStocksFirstLetters() throws IOException {
-        return stockSearchDataHelper.getAllStocksFirstLetters();
+        return stockSearchDataHelper.getAllStockSearch();
     }
 
     /**
@@ -339,20 +318,15 @@ public class StockDaoImpl implements StockDao {
     public List<StockPool> getAllStockPool() throws IOException, UnhandleBlockTypeException {
         List<StockPool> result = new LinkedList<>();
 
-        Map<String, String> codeName = stockSearchDataHelper.getAllStocksCode();
-        List<String> stockCodes = new ArrayList<>(codeName.keySet());
-        List<String> stockNames = new ArrayList<>(codeName.values());
+        List<StockSearch> allStockSearches = stockSearchDataHelper.getAllStockSearch();
+        for (StockSearch temp : allStockSearches) {
+            // 手动去除基准股票／股指（沪深300、上证指数、深证成指、中小板指、创业板指）
+            if (temp.isBase()) continue;
 
-        // 手动去除基准股票（沪深300、上证指数、深证成指、中小板指、创业板指）
-        stockCodes.remove("000300");
-        stockCodes.remove("000001");
-        stockCodes.remove("399001");
-        stockCodes.remove("399005");
-        stockCodes.remove("399006");
+            String tempCode = StockCodeHelper.format(temp.getSearchID().getCode());
+            String tempName = temp.getSearchID().getName();
 
-        for (int i = 0; i < stockCodes.size(); i++) {
-            String tempCode = StockCodeHelper.format(stockCodes.get(i));
-
+            // 所属板块
             BlockType thisBlockType;
             if (tempCode.startsWith("001") || tempCode.startsWith("000") | tempCode.startsWith("6")) {
                 thisBlockType = BlockType.ZB;
@@ -365,9 +339,10 @@ public class StockDaoImpl implements StockDao {
                 throw new UnhandleBlockTypeException();
             }
 
-            boolean isSt = stockNames.get(i).contains("ST");
+            // 是否st
+            boolean isSt = tempName.contains("ST");
 
-            result.add(new StockPool(tempCode, thisBlockType, isSt));
+            result.add(new StockPool(tempCode, thisBlockType, isSt, temp.getIndustryOfEnum(), temp.getAreaOfEnum()));
         }
 
         return result;

@@ -1,5 +1,6 @@
 package com.edu.nju.asi.utilities.spring;
 
+import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.utilities.LocalDateHelper;
 import org.springframework.format.Formatter;
 
@@ -21,6 +22,6 @@ public class LocalDateFormatter implements Formatter<LocalDate> {
 
     @Override
     public String print(LocalDate object, Locale locale) {
-        return object.toString();
+        return JSON.toJSONString(object);
     }
 }

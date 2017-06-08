@@ -1,6 +1,8 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
+import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.BlockType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StType;
 
 import java.util.List;
@@ -22,6 +24,18 @@ public class StockPoolCriteria {
      */
     public List<BlockType> blockTypes;
 
+
+    /**
+     * 需要的行业类型
+     */
+    public IndustryType industryType;
+
+    /**
+     * 需要的地域类型
+     */
+    public AreaType areaType;
+
+
     public StockPoolCriteria() {
     }
 
@@ -30,5 +44,8 @@ public class StockPoolCriteria {
         this.blockTypes = blockTypes;
     }
 
-
+    public StockPoolCriteria(IndustryType industryType, AreaType areaType) {
+        this.industryType = industryType;
+        this.areaType = areaType;
+    }
 }

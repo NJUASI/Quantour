@@ -9,14 +9,17 @@ import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.service.StockService;
+import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.AreaFilter;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
+import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.IndustryFilter;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
 import com.edu.nju.asi.utilities.StockCodeHelper;
+import com.edu.nju.asi.utilities.enums.AreaType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -55,9 +58,37 @@ public class StockServiceImpl implements StockService {
      * @params date 用户选择日期
      */
     @Override
-    public List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria) throws IOException {
+    public List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria, IndustryType industryType, AreaType areaType) throws IOException, UnhandleBlockTypeException {
         System.out.println("getAllStocks" + stockDao);
-        List<Stock> allStocks =  stockDao.getStockData(date);
+
+        // 设置责任链并基于条件对股票进行筛选
+        StockPoolCriteria criteria = new StockPoolCriteria(industryType, areaType);
+
+        StockPoolFilter filter = new StockPoolFilter();
+        StockPoolFilter industryFilter = new IndustryFilter();
+        StockPoolFilter areaFilter = new AreaFilter();
+
+        filter.setNextFilter(industryFilter);
+        industryFilter.setNextFilter(areaFilter);
+        List<StockPool> meeted = filter.meetCriteria(stockDao.getAllStockPool(), criteria);
+
+        List<Stock> allStocks = stockDao.getStockData(date);
+        for (int i = 0; i < allStocks.size();) {
+            boolean isMeeted = false;
+            for (StockPool temp : meeted) {
+                if (temp.stockCode.equals(allStocks.get(i).getStockID().getCode())){
+                    isMeeted = true;
+                    break;
+                }
+            }
+
+            if (!isMeeted) {
+                allStocks.remove(i);
+            } else {
+                i++;
+            }
+        }
+
 
         // 按指定要求排好序
         StockSortComparatorFactory factory = new StockSortComparatorFactory();

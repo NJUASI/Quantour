@@ -62,6 +62,10 @@
                 </bean>
                 <bean class="com.edu.nju.asi.utilities.spring.StocksSortCriteriaFormatter">
                 </bean>
+                <bean class="com.edu.nju.asi.utilities.spring.IndustryTypeFormatter">
+                </bean>
+                <bean class="com.edu.nju.asi.utilities.spring.AreaTypeFormatter">
+                </bean>
             </set>
         </property>
     </bean>

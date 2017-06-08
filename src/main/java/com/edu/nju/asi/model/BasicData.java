@@ -96,9 +96,9 @@ public class BasicData implements Serializable{
     /**
      * 盈利能力
      * */
-    //净资产负债率
+    //净资产收益率
     @Basic
-    private double netDebtRatio;
+    private double returnOnEquity;
 
     public BasicData() {
     }
@@ -107,7 +107,7 @@ public class BasicData implements Serializable{
                      String totalEquityAttributableToShareholdersOfTheParentCompany, String totalOwnerEquity, String totalBusinessIncome, String totalOperatingCost,
                      String operatingProfit, String totalProfit, String netProfit, String netProfitAttributableToTheOwnerOfTheParentCompany,
                      double basicIncomePerStock, String netCashFlowsFromOperatingActivities, double assetLiabilityRatio,
-                     double netDebtRatio) {
+                     double returnOnEquity) {
         this.totalAssets = totalAssets;
         this.totalLiabilities = totalLiabilities;
         this.totalEquityAttributableToShareholdersOfTheParentCompany = totalEquityAttributableToShareholdersOfTheParentCompany;
@@ -121,7 +121,7 @@ public class BasicData implements Serializable{
         this.basicIncomePerStock = basicIncomePerStock;
         this.netCashFlowsFromOperatingActivities = netCashFlowsFromOperatingActivities;
         this.assetLiabilityRatio = assetLiabilityRatio;
-        this.netDebtRatio = netDebtRatio;
+        this.returnOnEquity = returnOnEquity;
     }
 
     public BasicDataID getBasicDataID() {
@@ -236,11 +236,11 @@ public class BasicData implements Serializable{
         this.assetLiabilityRatio = assetLiabilityRatio;
     }
 
-    public double getNetDebtRatio() {
-        return netDebtRatio;
+    public double getReturnOnEquity() {
+        return returnOnEquity;
     }
 
-    public void setNetDebtRatio(double netDebtRatio) {
-        this.netDebtRatio = netDebtRatio;
+    public void setReturnOnEquity(double netDebtRatio) {
+        this.returnOnEquity = netDebtRatio;
     }
 }

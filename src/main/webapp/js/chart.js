@@ -2,7 +2,8 @@
  * Created by Byron Dong on 2017/5/13.
  */
 
-function createGroupChart(id){
+function createGroupChart(id, candlestick, seriesOneLegend, seriesOne, bar, seriesTwo, seriesTwoLegend) {
+
     function splitCandlestickData(rawData) {
         var categoryData = [];
         var values = [];
@@ -36,14 +37,161 @@ function createGroupChart(id){
         return result;
     }
 
-    var data = splitCandlestickData(candlestickData);
+    function splitSeries1(series, seriesLegend, collection, legend) {
+        if (series.length == 3) {
+            for (var i = 0; i < series.length; i++) {
+                legend.push(seriesLegend[i]);
+                collection.push({
+                    name: seriesLegend[i],
+                    type: 'line',
+                    data: series[i],
+                    smooth: true,
+                    lineStyle: {
+                        normal: {opacity: 0.5}
+                    }
+                });
+            }
+        } else {
+            for (var i = 0; i < series.length; i++) {
+                legend.push(seriesLegend[i]);
+                collection.push({
+                    name: seriesLegend[i],
+                    type: 'line',
+                    data: createMA(series[i]),
+                    smooth: true,
+                    lineStyle: {
+                        normal: {opacity: 0.5}
+                    }
+                });
+            }
+        }
+    }
+
+    function splitSeries2(series, seriesLegend, collection) {
+        for (var i = 0; i < series.length; i++) {
+            collection.push({
+                name: seriesLegend[i],
+                type: 'line',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: series[i],
+                smooth: true,
+                lineStyle: {
+                    normal: {opacity: 0.5}
+                }
+            });
+        }
+    }
+
+    function createAllData(candlestickData, series1Legend, series1, barData, series2, series2Legend) {
+        var series = [];
+        var legend = ['日K'];
+        series.push({
+            name: '日K',
+            type: 'candlestick',
+            data: candlestickData,
+            itemStyle: {
+                normal: {
+                    color: '#ef232a',
+                    color0: '#14b143',
+                    borderColor: '#ef232a',
+                    borderColor0: '#14b143'
+                }
+            },
+            tooltip: {
+                formatter: function (param) {
+                    param = param[0];
+                    return [
+                        'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
+                        'Open: ' + param.data[0] + '<br/>',
+                        'Close: ' + param.data[1] + '<br/>',
+                        'Lowest: ' + param.data[2] + '<br/>',
+                        'Highest: ' + param.data[3] + '<br/>'
+                    ].join('');
+                }
+            }
+        });
+        splitSeries1(series1, series1Legend, series, legend);
+
+        if (series2.length == 0) {
+            series.push({
+                name: 'volume',
+                type: 'bar',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: barData,
+                tooltip: {
+                    formatter: function (param) {
+                        param = param[0];
+                        return [
+                            'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
+                            'Volume: ' + param.data[0] + '<br/>'
+                        ].join('');
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            var colorList;
+                            if (data.values[params.dataIndex][1] > data.values[params.dataIndex][0]) {
+                                colorList = '#ef232a';
+                            } else {
+                                colorList = '#14b143';
+                            }
+                            return colorList;
+                        }
+                    }
+                }
+            });
+        } else {
+            series.push({
+                name: 'MACD',
+                type: 'bar',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: barData,
+                tooltip: {
+                    formatter: function (param) {
+                        param = param[0];
+                        return [
+                            'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
+                            'MACD: ' + param.data[0] + '<br/>'
+                        ].join('');
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            var colorList;
+                            if (params.data >= 0) {
+                                colorList = '#ef232a';
+                            } else {
+                                colorList = '#14b143';
+                            }
+                            return colorList;
+                        }
+                    }
+                }
+            });
+        }
+        splitSeries2(series2, series2Legend, series);
+
+        return {
+            series: series,
+            legend: legend
+        };
+    }
+
+    var candlestickData = splitCandlestickData(candlestick);
+    var data = createAllData(splitCandlestickData(candlestickData.values, seriesOneLegend,
+        seriesOne, bar, seriesTwo, seriesTwoLegend));
     var chart = echarts.init(document.getElementById(id));
     chart.showLoading();
 
     var option = {
         legend: {
             left: 'center',
-            data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
+            data: data.legend
         },
         tooltip: {
             trigger: 'axis',
@@ -70,185 +218,81 @@ function createGroupChart(id){
                 backgroundColor: '#777'
             }
         },
-        grid: [
-            {
-                left: '10%',
-                right: '8%',
-                height: '50%'
-            },
-            {
-                left: '10%',
-                right: '8%',
-                top: '63%',
-                height: '16%'
+        grid: [{
+            left: '10%',
+            right: '8%',
+            height: '50%'
+        }, {
+            left: '10%',
+            right: '8%',
+            top: '63%',
+            height: '16%'
+        }],
+        xAxis: [{
+            type: 'category',
+            data: candlestickData.categoryData,
+            scale: true,
+            axisLine: {onZero: false},
+            splitLine: {show: false},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax',
+            axisPointer: {
+                z: 100
             }
-        ],
-        xAxis: [
-            {
-                type: 'category',
-                data: data.categoryData,
-                scale: true,
-                axisLine: {onZero: false},
-                splitLine: {show: false},
-                axisLabel: {show: false},
-                splitNumber: 20,
-                min: 'dataMin',
-                max: 'dataMax',
-                axisPointer: {
-                    z: 100
-                }
-            },
-            {
-                type: 'category',
-                gridIndex: 1,
-                data: data.categoryData,
-                scale: true,
-                axisLine: {onZero: false},
-                axisTick: {show: false},
-                splitLine: {show: false},
-                splitNumber: 20,
-                min: 'dataMin',
-                max: 'dataMax',
-                axisPointer: {
-                    label: {
-                        formatter: function (params) {
-                            var seriesValue = (params.seriesData[0] || {}).value;
-                            return params.value
-                                + (seriesValue !== null
-                                        ? '\n' + echarts.format.addCommas(seriesValue) : ''
-                                );
-                        }
+        }, {
+            type: 'category',
+            gridIndex: 1,
+            data: candlestickData.categoryData,
+            scale: true,
+            axisLine: {onZero: false},
+            axisTick: {show: false},
+            splitLine: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax',
+            axisPointer: {
+                label: {
+                    formatter: function (params) {
+                        var seriesValue = (params.seriesData[0] || {}).value;
+                        return params.value
+                            + (seriesValue !== null
+                                    ? '\n' + echarts.format.addCommas(seriesValue) : ''
+                            );
                     }
                 }
             }
-        ],
-        yAxis: [
-            {
-                scale: true,
-                splitArea: {
-                    show: true
-                }
-            },
-            {
-                scale: true,
-                gridIndex: 1,
-                splitNumber: 2,
-                axisLabel: {
-                    show: false,
-                    formatter: '{value}%'
-                },
-                axisLine: {show: false},
-                axisTick: {show: false}
+        }],
+        yAxis: [{
+            scale: true,
+            splitArea: {
+                show: true
             }
-        ],
-        dataZoom: [
-            {
-                type: 'inside',
-                xAxisIndex: [0, 1],
-                start: 1,
-                end: 100
+        }, {
+            scale: true,
+            gridIndex: 1,
+            splitNumber: 2,
+            axisLabel: {
+                show: false
             },
-            {
-                show: true,
-                xAxisIndex: [0, 1],
-                type: 'slider',
-                top: '85%',
-                start: 1,
-                end: 100
-            }
-        ],
-        series: [
-            {
-                name: '日K',
-                type: 'candlestick',
-                data: data.values,
-                itemStyle: {
-                    normal: {
-                        color: '#ef232a',
-                        color0: '#14b143',
-                        borderColor: '#ef232a',
-                        borderColor0: '#14b143'
-                    }
-                },
-                tooltip: {
-                    formatter: function (param) {
-                        param = param[0];
-                        return [
-                            'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
-                            'Open: ' + param.data[0] + '<br/>',
-                            'Close: ' + param.data[1] + '<br/>',
-                            'Lowest: ' + param.data[2] + '<br/>',
-                            'Highest: ' + param.data[3] + '<br/>'
-                        ].join('');
-                    }
-                }
-            },
-            {
-                name: 'MA5',
-                type: 'line',
-                data: createMA(5),
-                smooth: true,
-                lineStyle: {
-                    normal: {opacity: 0.5}
-                }
-            },
-            {
-                name: 'MA10',
-                type: 'line',
-                data: createMA(10),
-                smooth: true,
-                lineStyle: {
-                    normal: {opacity: 0.5}
-                }
-            },
-            {
-                name: 'MA20',
-                type: 'line',
-                data: createMA(20),
-                smooth: true,
-                lineStyle: {
-                    normal: {opacity: 0.5}
-                }
-            },
-            {
-                name: 'MA30',
-                type: 'line',
-                data: createMA(30),
-                smooth: true,
-                lineStyle: {
-                    normal: {opacity: 0.5}
-                }
-            },
-            {
-                name: 'volume',
-                type: 'bar',
-                xAxisIndex: 1,
-                yAxisIndex: 1,
-                data: volumes,
-                tooltip: {
-                    formatter: function (param) {
-                        param = param[0];
-                        return [
-                            'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
-                            'Volume: ' + param.data[0] + '<br/>'
-                        ].join('');
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        color: function(params) {
-                            var colorList;
-                            if (data.values[params.dataIndex][1]>data.values[params.dataIndex][0]) {
-                                colorList = '#ef232a';
-                            } else {
-                                colorList = '#14b143';
-                            }
-                            return colorList;
-                        }
-                    }
-                }
-            }
-        ]
+            axisLine: {show: false},
+            axisTick: {show: false}
+        }],
+        dataZoom: [{
+            type: 'inside',
+            xAxisIndex: [0, 1],
+            start: 1,
+            end: 100
+        }, {
+            show: true,
+            xAxisIndex: [0, 1],
+            type: 'slider',
+            top: '85%',
+            start: 1,
+            end: 100
+        }],
+        series: data.series
     };
     chart.setOption(option, true);
     chart.hideLoading();
@@ -491,9 +535,9 @@ function createCandlestickChart(id, candlestickData, volumes) {
                 },
                 itemStyle: {
                     normal: {
-                        color: function(params) {
+                        color: function (params) {
                             var colorList;
-                            if (data.values[params.dataIndex][1]>data.values[params.dataIndex][0]) {
+                            if (data.values[params.dataIndex][1] > data.values[params.dataIndex][0]) {
                                 colorList = '#ef232a';
                             } else {
                                 colorList = '#14b143';
@@ -510,19 +554,19 @@ function createCandlestickChart(id, candlestickData, volumes) {
     return chart;
 }
 
-function createMACDChart(id,datas){
-    function splitMACDData(rawData){
+function createMACDChart(id, datas) {
+    function splitMACDData(rawData) {
         var macd = [];
         var dif = [];
         var dea = [];
         var category = [];
-        for(var i = 0;i<rawData.length;i++){
+        for (var i = 0; i < rawData.length; i++) {
             category.push(rawData[i][0]);
             macd.push(rawData[i][1]);
             dif.push(rawData[i][2]);
             dea.push(rawData[i][3]);
         }
-        return{
+        return {
             categoryData: category,
             macdData: macd,
             difData: dif,
@@ -554,22 +598,22 @@ function createMACDChart(id,datas){
             axisLabel: {show: true}
         }],
         dataZoom: [{
-                type: 'inside',
-                start: 1,
-                end: 100
-            },{
-                type: 'slider',
-                show: true,
-                start: 1,
-                end: 100
-            }],
+            type: 'inside',
+            start: 1,
+            end: 100
+        }, {
+            type: 'slider',
+            show: true,
+            start: 1,
+            end: 100
+        }],
         series: [{
             name: 'MACD',
             type: 'bar',
             data: allData.macdData,
             itemStyle: {
                 normal: {
-                    color: function(params) {
+                    color: function (params) {
                         var colorList;
                         if (params.data >= 0) {
                             colorList = '#ef232a';
@@ -580,12 +624,12 @@ function createMACDChart(id,datas){
                     }
                 }
             }
-        },{
+        }, {
             name: 'DIF',
             type: 'line',
             smooth: true,
             data: allData.difData
-        },{
+        }, {
             name: 'DEA',
             type: 'line',
             smooth: true,
@@ -597,7 +641,7 @@ function createMACDChart(id,datas){
     return macdChart;
 }
 
-function createBullChart(id,candlestickData,upData,midData,lowData){
+function createBullChart(id, candlestickData, upData, midData, lowData) {
     function splitCandlestickData(rawData) {
         var categoryData = [];
         var values = [];
@@ -642,25 +686,25 @@ function createBullChart(id,candlestickData,upData,midData,lowData){
             }
         },
         xAxis: [{
-                type: 'category',
-                data: data.categoryData,
-                scale: true,
-                axisLine: {onZero: false},
-                splitLine: {show: false},
-                axisLabel: {show: false},
-                splitNumber: 20,
-                min: 'dataMin',
-                max: 'dataMax',
-                axisPointer: {
-                    z: 100
-                }
-            }],
+            type: 'category',
+            data: data.categoryData,
+            scale: true,
+            axisLine: {onZero: false},
+            splitLine: {show: false},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax',
+            axisPointer: {
+                z: 100
+            }
+        }],
         yAxis: [{
-                scale: true,
-                splitArea: {
-                    show: true
-                }
-            }],
+            scale: true,
+            splitArea: {
+                show: true
+            }
+        }],
         dataZoom: [
             {
                 type: 'inside',
@@ -710,7 +754,7 @@ function createBullChart(id,candlestickData,upData,midData,lowData){
                 lineStyle: {
                     normal: {opacity: 0.5}
                 }
-            },{
+            }, {
                 name: 'MID',
                 type: 'line',
                 data: midData,
@@ -718,7 +762,7 @@ function createBullChart(id,candlestickData,upData,midData,lowData){
                 lineStyle: {
                     normal: {opacity: 0.5}
                 }
-            },{
+            }, {
                 name: 'LOWER',
                 type: 'line',
                 data: lowData,
@@ -1039,7 +1083,7 @@ function createHistogramChart(id, data, title) {
     histogramChart.showLoading();
 
     var option = {
-        title:{
+        title: {
             text: title
         },
         tooltip: {
@@ -1056,7 +1100,7 @@ function createHistogramChart(id, data, title) {
             }
         },
         legend: {
-            data:['正收益周期数', '负收益周期数']
+            data: ['正收益周期数', '负收益周期数']
         },
         xAxis: [
             {
@@ -1091,14 +1135,14 @@ function createHistogramChart(id, data, title) {
         ],
         series: [
             {
-                name:'正收益周期数',
-                type:'bar',
-                data:datas1.values
+                name: '正收益周期数',
+                type: 'bar',
+                data: datas1.values
             },
             {
-                name:'负收益周期数',
-                type:'bar',
-                data:datas2.values
+                name: '负收益周期数',
+                type: 'bar',
+                data: datas2.values
             }
         ]
     };
@@ -1107,7 +1151,7 @@ function createHistogramChart(id, data, title) {
     return histogramChart;
 }
 
-function createClickChart(id, data1, percentString){
+function createClickChart(id, data1, percentString) {
 
     var clickChart = echarts.init(document.getElementById(id));
     clickChart.showLoading();
@@ -1123,14 +1167,14 @@ function createClickChart(id, data1, percentString){
             waveAnimation: true,
             type: 'liquidFill',
             data: data,
-            color: [ 'rgb(20,142,222)'],
+            color: ['rgb(20,142,222)'],
             center: ['75%', '50%'],
             radius: '70%',
             amplitude: 8,
             label: {
                 normal: {
-                    formatter: function() {
-                        return '热搜率'+strData;
+                    formatter: function () {
+                        return '热搜率' + strData;
                     },
                     textStyle: {
                         fontSize: 17
@@ -1141,7 +1185,7 @@ function createClickChart(id, data1, percentString){
             outline: {
                 itemStyle: {
                     borderWidth: 5,
-                    borderColor: [ 'rgb(20,142,222)']
+                    borderColor: ['rgb(20,142,222)']
                 },
                 borderDistance: 0
             },
@@ -1157,7 +1201,7 @@ function createClickChart(id, data1, percentString){
     return clickChart;
 }
 
-function createPieChart(id,data,seriesTitle){
+function createPieChart(id, data, seriesTitle) {
 
     function splitePieData(rawData) {
         var categoryData = [];
@@ -1183,24 +1227,24 @@ function createPieChart(id,data,seriesTitle){
     pieChart.showLoading();
 
     var option = {
-        tooltip : {
+        tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         legend: {
-            x : 'center',
-            y : 'bottom',
-            data:pieData.categoryData
+            x: 'center',
+            y: 'bottom',
+            data: pieData.categoryData
         },
-        calculable : true,
-        series : [{
-                name: seriesTitle,
-                type:'pie',
-                radius : [30, 110],
-                center : ['50%', '50%'],
-                roseType : 'area',
-                data:pieData.values
-            }]
+        calculable: true,
+        series: [{
+            name: seriesTitle,
+            type: 'pie',
+            radius: [30, 110],
+            center: ['50%', '50%'],
+            roseType: 'area',
+            data: pieData.values
+        }]
     };
 
     pieChart.setOption(option);
@@ -1208,9 +1252,9 @@ function createPieChart(id,data,seriesTitle){
     return pieChart;
 }
 
-function createRadarChart(id,data,legend,paramter){
+function createRadarChart(id, data, legend, paramter) {
 
-    function spliteRadarData(rawData,category) {
+    function spliteRadarData(rawData, category) {
         var values = [];
 
         for (var i = 0; i < category.length; i++) {
@@ -1224,7 +1268,7 @@ function createRadarChart(id,data,legend,paramter){
         };
     }
 
-    var radarData = spliteRadarData(data,legend);
+    var radarData = spliteRadarData(data, legend);
     var radarChart = echarts.init(document.getElementById(id));
     radarChart.showLoading();
 
@@ -1234,19 +1278,19 @@ function createRadarChart(id,data,legend,paramter){
         },
         legend: {
             x: 'center',
-            data:legend,
+            data: legend,
             show: false
         },
         radar: [
             {
-                indicator: (function (){
+                indicator: (function () {
                     var res = [];
-                    for (var i = 0; i <paramter.length; i++) {
-                        res.push({text:paramter[i],max:50});
+                    for (var i = 0; i < paramter.length; i++) {
+                        res.push({text: paramter[i], max: 50});
                     }
                     return res;
                 })(),
-                center: ['50%','50%'],
+                center: ['50%', '50%'],
                 radius: 80
             }
         ],
@@ -1265,14 +1309,14 @@ function createRadarChart(id,data,legend,paramter){
 }
 
 //待定 TODO 董金玉
-function createRelationChart(id,data){
+function createRelationChart(id, data) {
 
     function get_nodes(data) {
         var nodes = [];
-        for(var nodes_i in data) {
+        for (var nodes_i in data) {
             nodes.push(
                 {
-                    'name':data[nodes_i].node
+                    'name': data[nodes_i].node
                 }
             );
         }
@@ -1281,19 +1325,19 @@ function createRelationChart(id,data){
 
     function get_links(data) {
         var links = [];
-        for(var nodes_i in data) {
+        for (var nodes_i in data) {
             var node = data[nodes_i].node;
             var endpoint = data[nodes_i].endpoint;
             var service = data[nodes_i].service;
-            for(var service_i in endpoint) {
+            for (var service_i in endpoint) {
                 links.push({
-                    'source':node,
-                    'target':endpoint[service_i],
+                    'source': node,
+                    'target': endpoint[service_i],
                     'label': {
                         'normal': {
                             'show': false,
-                            'textStyle':{
-                                'fontSize':5
+                            'textStyle': {
+                                'fontSize': 5
                             },
                             'formatter': service
                         }
@@ -1309,8 +1353,8 @@ function createRelationChart(id,data){
 
         //调整线的格式
         for (var i = 0, len1 = links.length; i < len1; i++) {
-            for(var j = i, len2 = len1 - 1; j < len2; j++) {
-                if (links[i].source==links[j].target) {
+            for (var j = i, len2 = len1 - 1; j < len2; j++) {
+                if (links[i].source == links[j].target) {
                     links[j].lineStyle.normal.curveness = -0.1;
                 }
             }
@@ -1328,14 +1372,14 @@ function createRelationChart(id,data){
         animationDurationUpdate: 1500,
         animationEasing: 'cubicOut',
         animationEasingUpdate: 'quinticInOut',
-        series : [
+        series: [
             {
                 type: 'graph',
                 layout: 'circular',
                 // layout:'none',
                 focusNodeAdjacency: true,
                 legendHoverLink: true,
-                hoverAnimation:true,
+                hoverAnimation: true,
                 symbolSize: 50,
                 //edgeSymbolSize: 50,
                 roam: true,
@@ -1361,7 +1405,7 @@ function createRelationChart(id,data){
                         opacity: 0.9,
                         width: 2,
                         curveness: 0,
-                        type :'dashed'
+                        type: 'dashed'
                     }
                 }
             },
@@ -1374,10 +1418,10 @@ function createRelationChart(id,data){
     myChart.on('click', function (params) {
         // 弹窗打印数据的名称
         console.log(params);
-        if (params.dataType=="node") {
-            alert("机器属性："+params.name);
-        }else if(params.dataType=="edge"){
-            alert("调用方法："+params.data.label.normal.formatter);
+        if (params.dataType == "node") {
+            alert("机器属性：" + params.name);
+        } else if (params.dataType == "edge") {
+            alert("调用方法：" + params.data.label.normal.formatter);
         }
     });
 }
