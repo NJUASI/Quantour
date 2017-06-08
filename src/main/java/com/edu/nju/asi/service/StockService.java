@@ -1,12 +1,16 @@
 package com.edu.nju.asi.service;
 
+import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.enums.AreaType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
-import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
+import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -29,10 +33,12 @@ public interface StockService{
      * @updateTime 2017/3/5
      * @params date 用户选择日期
      * @param sortCriteria 对所有股票的比较排序条件
+     * @param industryType 限制股票的行业信息
+     * @param areaType 慈安之股票的地域信息
      * @return 股票信息列表
      * @throws IOException IO
      */
-    List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria) throws IOException;
+    List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria, IndustryType industryType, AreaType areaType) throws IOException;
 
     /**
      * 用户输入代码或者股票首字母或股票名称，查找符合条件的股票
