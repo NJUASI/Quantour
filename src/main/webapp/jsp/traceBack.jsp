@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../css/bootstrap-select.css">
     <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
     <link href="../css/startLoader.css" rel="stylesheet">
+    <link href="../css/bootstrap-slider.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
     <style type="text/css" rel="stylesheet">
         footer {
@@ -27,6 +28,7 @@
             height: 100px;
             background-color: #444444;
         }
+
 
         /*#myTab{*/
         /*display: none;*/
@@ -495,7 +497,7 @@
 
                         </div>
                     </div>
-
+                    <%--<input id='ex1' data-slider-id='ex1Slider' type='text' data-slider-min='0' data-slider-max='20' data-slider-step='1' data-slider-value='14'/>--%>
 
                     <!--右边数据框-->
 
@@ -825,7 +827,7 @@
                     <div class="form-group col-md-offset-1 col-md-6">
                         <label class="col-md-3 control-label" style="margin-top: -10px">策略名称：</label>
                         <div class="col-md-5">
-                            <input type="text" class="form-control" style="margin-top: -17px;margin-left: -30px"
+                            <input type="text" id="strategyName" class="form-control" style="margin-top: -17px;margin-left: -30px"
                                    placeholder="">
                         </div>
                     </div>
@@ -838,21 +840,21 @@
                         <div class="col-md-10">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="control-label">板块：</label><span>主板，创业板，中小板</span>
+                                    <label class="control-label">板块：</label><span id="strategyBlock">主板，创业板，中小板</span>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="control-label">ST：</label><span>仅为ST</span>
+                                    <label class="control-label">ST：</label><span id="strategyST">仅为ST</span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="control-label">收益基准：</label><span>沪深300</span>
+                                    <label class="control-label">收益基准：</label><span id="strategyBace">沪深300</span>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 15px">
                                 <div class="col-md-4 ">
-                                    <label class="control-label">调仓周期：</label><span>10</span>
+                                    <label class="control-label">调仓周期：</label><span id="strategyPeriod"></span>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="control-label">最大持股：</label><span>50</span>
+                                    <label class="control-label">最大持股：</label><span id="strategyHolding"></span>
                                 </div>
 
                             </div>
@@ -861,7 +863,7 @@
                                     <label class="control-label">筛选条件：</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="row " style="border: 1px solid darkslategrey">
+                                    <div class="row " id="quotaCreate">
 
                                         <div class=" col-md-10">
                                             <strong class="col-md-5">指标</strong><strong class="col-md-4">比较符</strong>
@@ -884,7 +886,7 @@
                                     <label class="control-label">排名条件：</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="row " style="border: 1px solid darkslategrey">
+                                    <div class="row " id="rankCreate">
 
                                         <div class=" col-md-10">
                                             <strong class="col-md-5">指标</strong><strong class="col-md-4">次序</strong>
@@ -907,7 +909,7 @@
                                     <label class="control-label">策略描述：</label>
                                 </div>
                                 <div class="col-md-10">
-                                    <textarea rows="4" style="width: 90%; margin-left: -20px"></textarea>
+                                    <textarea rows="4" id="strategyDescription" style="width: 90%; margin-left: -20px"></textarea>
                                 </div>
                             </div>
 
@@ -920,7 +922,7 @@
                         <div class=" col-md-offset-8 col-md-1" style="padding-right: 0px">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="radios" id="radios1" value="false" checked>
+                                    <input type="radio" name="radios3" id="radios1" value="私密" checked>
                                     私密
                                 </label>
                             </div>
@@ -928,13 +930,13 @@
                         <div class="col-md-1" style="padding-left: 0px">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="radios" id="radios2" value="false">
+                                    <input type="radio" name="radios3" id="radios2" value="公开">
                                     公开
                                 </label>
                             </div>
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">创建策略</button>
+                        <button type="button" onclick="sureCreate()" class="btn btn-primary">创建策略</button>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -963,6 +965,7 @@
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
 
+<script src="../js/bootstrap-slider.js"></script>
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
@@ -972,8 +975,85 @@
     $(function () {
         $("#createStrategy").click(function () {
             $("#mymodal").modal("toggle");
+            var blockType="";
+            for( var i = 0; i< $("#blockTypes").val().length;i++)   {
+                if($("#blockTypes").val()[i]=="ZB"){
+                    blockType+="主板 ";
+                }else if($("#blockTypes").val()[i]=="CYB"){
+                    blockType+="创业板 ";
+                }else{
+                    blockType+="中小板 ";
+                }
+            }
+            $("#strategyBlock").html(blockType);
+            var stType=document.getElementById("stType").options[document.getElementById("stType").selectedIndex].text;
+            $("#strategyST").html(stType);
+            $("#strategyBace").html($("#baseStockEve").val());
+            $("#strategyPeriod").html($("#holdingPeriod").val());
+            $("#strategyHolding").html($("#maxHolding").val());
+
+            $("#quotaCreate").empty();
+            $("#quotaCreate").append( "<div class=' col-md-10'> <strong class='col-md-5'>指标</strong><strong class='col-md-4'>比较符</strong> <strong class='col-md-2'>值</strong> </div>")
+
+            $(".quotaRow").each(function () {
+                var rank="";
+                switch ($(this).find('.quotaRank').val()){
+                    case "RANK_MIN":
+                        rank="排名最小"
+                        break;
+                    case "RANK_MAX_PERCENT":
+                        rank="排名%最大"
+                        break;
+                    case "RANK_MAX":
+                        rank="排名最大"
+                        break;
+                    case  "RANK_MIN_PERCENT":
+                        rank="排名%最小"
+                        break;
+                    case  "RANK_GREATER":
+                        rank="大于"
+                        break;
+                    case  "RANK_LESS":
+                        rank="小于"
+                        break;
+                    case  " RANK_EQUAL":
+                        rank="等于"
+                        break;
+                }
+
+                $("#quotaCreate").append( "<div class=' col-md-10'> <span class='col-md-5'>"+$(this).find('.numOfN').val() + $(this).find('.quotaName').html()+"</span><span class='col-md-4'>"+rank+"</span> <span class='col-md-2'>"+$(this).find('.quotaNum').val()+"</span> </div>")
+//
+
+            });
+
+            $("#rankCreate").empty();
+            $("#rankCreate").append( "<div class=' col-md-10'> <strong class='col-md-5'>指标</strong><strong class='col-md-4'>次序</strong> <strong class='col-md-2'>权重</strong> </div>")
+
+            $(".rankRow").each(function (){
+                var rank="";
+                switch ($(this).find('.rankOrder').val()){
+                    case "ASC_RANK":
+                        rank="由小到大"
+                        break;
+                    case "DESC_RANK":
+                        rank="由大到小"
+                        break;
+                    }
+                $("#rankCreate").append( "<div class=' col-md-10'> <span class='col-md-5'>"+$(this).find('.numOfN').val() + $(this).find('.quotaName').html()+"</span><span class='col-md-4'>"+rank+"</span> <span class='col-md-2'>"+$(this).find('.quotaWeight').val()+"</span> </div>")
+
+            });
+
         });
     });
+    function sureCreate(){
+        //TODO fjj 计算的数据同 traceback.js  注意回测日期是不是需要修改为1年
+        //下面直接存
+        $("#strategyName").val();//股票名称
+        //创建者
+        //创建日期
+        alert($("#strategyDescription").val());//策略描述
+        alert($('input[name="radios3"]:checked').val());//是否私密
+    }
 
     var today = new Date();
     var yesterday = new Date();
@@ -1121,7 +1201,6 @@
 </script>
 
 <script type="text/javascript">
-
     $(".quota").hover(function () {
         $(this).css({"cursor": "pointer"});
     });
@@ -1240,6 +1319,7 @@
             whichValue=  "<div class=\"row\">" +
                 "<div class=\"col-md-9\">" +
                 "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
+//                    "<input id='ex1' data-slider-id='ex1Slider' type='text' data-slider-min='0' data-slider-max='20' data-slider-step='1' data-slider-value='14'/>"+
                 "</div>" +
                 "</div>" ;
             whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary rankBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
@@ -1340,6 +1420,7 @@
             whichValue=  "<div class=\"row\">" +
                 "<div class=\"col-md-9\">" +
                 "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
+//                "<input id='ex1' data-slider-id='ex1Slider' type='text' data-slider-min='0' data-slider-max='20' data-slider-step='1' data-slider-value='14'/>"+
                 "</div>" +
                 "</div>" ;
             whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary rankBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
@@ -1396,6 +1477,8 @@
             }
         })
     });
+
+
 </script>
 
 </body>

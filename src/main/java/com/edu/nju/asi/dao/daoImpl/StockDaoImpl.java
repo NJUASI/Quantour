@@ -10,7 +10,9 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.StockList;
+import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.BlockType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 import org.springframework.stereotype.Component;
@@ -156,6 +158,26 @@ public class StockDaoImpl implements StockDao {
     @Override
     public List<StockSearch> searchStock(String searchString) {
         return stockSearchDataHelper.search(searchString);
+    }
+
+    /**
+     * 根据area取StockSearch列表
+     *
+     * @param area
+     */
+    @Override
+    public List<StockSearch> getByArea(AreaType area) {
+        return stockSearchDataHelper.getByArea(area);
+    }
+
+    /**
+     * 根据industry取StockSearch列表
+     *
+     * @param industry
+     */
+    @Override
+    public List<StockSearch> getByIndustry(IndustryType industry) {
+        return stockSearchDataHelper.getByIndustry(industry);
     }
 
 

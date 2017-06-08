@@ -1,5 +1,7 @@
 package com.edu.nju.asi.model;
 
+import com.edu.nju.asi.utilities.enums.AreaType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -110,4 +112,8 @@ public class StockSearch implements Serializable {
     public void setArea(String area) {
         this.area = area;
     }
+
+    public AreaType getAreaOfEnum(){return AreaType.valueOf(area);}
+
+    public IndustryType getIndustryOfEnum(){return IndustryType.valueOf(industry);}
 }

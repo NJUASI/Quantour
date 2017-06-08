@@ -11,6 +11,8 @@ import com.edu.nju.asi.service.PrivateStockService;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.edu.nju.asi.utilities.StockCodeHelper;
+import com.edu.nju.asi.utilities.enums.AreaType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
 import com.edu.nju.asi.utilities.exceptions.CodeNotFoundException;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
@@ -59,7 +61,7 @@ public class StockController {
         HttpSession session = request.getSession(false);
         System.out.println("默认页面跳转进来的");
 
-        String reqResult = reqGetStockMarket(defaultDate, StocksSortCriteria.CODE_ASC, 1);
+        String reqResult = reqGetStockMarket(defaultDate, StocksSortCriteria.CODE_ASC, 1, IndustryType.all, AreaType.all);
         System.out.println("请求成功");
 
         String[] parts = reqResult.split(";");
@@ -92,9 +94,11 @@ public class StockController {
     @PostMapping(produces = "text/html;charset=UTF-8;")
     public @ResponseBody
     String reqGetStockMarket(@RequestParam("date") LocalDate thisDate, @RequestParam("sortCriteria") StocksSortCriteria comparisionCriteria,
-                             @RequestParam("wantedPage") int wantedPage) {
+                             @RequestParam("wantedPage") int wantedPage, @RequestParam("industryType") IndustryType industryType,
+                             @RequestParam("areaType") AreaType areaType) {
         System.out.println("--------在req中-----------");
-        System.out.println(thisDate + "\n" + comparisionCriteria.getRepre() + "\n" + wantedPage);
+        System.out.println(thisDate + "\n" + comparisionCriteria.getRepre() + "\n" + wantedPage + "\n" + industryType
+                + "\n" + areaType + "\n\n");
 
         String result = null;
         try {

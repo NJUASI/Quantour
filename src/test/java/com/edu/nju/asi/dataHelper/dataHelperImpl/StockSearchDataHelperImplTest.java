@@ -4,6 +4,7 @@ import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.Market;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -119,6 +120,18 @@ public class StockSearchDataHelperImplTest {
     @Test
     public void getClickRate() throws Exception {
         assertEquals(1.0,stockSearchDataHelper.getClickRate(new SearchID("000001","平安银行",Market.SZ)),0);
+    }
+
+    @Test
+    public void getByArea() throws Exception {
+        List<StockSearch> list = stockSearchDataHelper.getByArea(AreaType.上海);
+        for(StockSearch stockSearch:list){
+            System.out.println(stockSearch.getSearchID().getCode());
+        }
+    }
+
+    @Test
+    public void getByIndustry() throws Exception {
     }
 
 }

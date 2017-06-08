@@ -2,6 +2,9 @@ package com.edu.nju.asi.dataHelper;
 
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.enums.AreaType;
+import com.edu.nju.asi.utilities.enums.IndustryType;
+
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +33,15 @@ public interface StockSearchDataHelper {
      */
     boolean addStockSearchAll(List<StockSearch> list);
 
+    /**
+     * 根据area取StockSearch列表
+     */
+    List<StockSearch> getByArea(AreaType area);
 
+    /**
+     * 根据industry取StockSearch列表
+     */
+    List<StockSearch> getByIndustry(IndustryType industry);
 
     /**
      * 添加StockSearch列表
