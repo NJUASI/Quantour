@@ -24,10 +24,10 @@ public class FormateRate implements Comparable<FormateRate>{
             return 0;
         }
         if(this.indicatorVal == null && o.indicatorVal != null){
-            return 1;
+            return -1;
         }
         if(this.indicatorVal != null && o.indicatorVal == null){
-            return -1;
+            return 1;
         }
         //两个都不为null
         if(this.indicatorVal > o.indicatorVal){

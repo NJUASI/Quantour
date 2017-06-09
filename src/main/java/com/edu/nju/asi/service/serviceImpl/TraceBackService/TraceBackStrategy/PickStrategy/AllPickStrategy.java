@@ -65,15 +65,15 @@ class AscSorter implements Comparator<FormateRate> {
 
     @Override
     public int compare(FormateRate o1, FormateRate o2) {
-        //两个中有一个为null
+        //两个中至少有一个为null
         if(o1.indicatorVal == null && o2.indicatorVal == null){
             return 0;
         }
         if(o1.indicatorVal == null && o2.indicatorVal != null){
-            return 1;
+            return -1;
         }
         if(o1.indicatorVal != null && o2.indicatorVal == null){
-            return -1;
+            return 1;
         }
         //两个都不为null
         if(o1.indicatorVal > o2.indicatorVal){

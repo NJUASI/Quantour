@@ -21,6 +21,12 @@ public class PickStrategyFactory {
                 return new RankMinPickStrategy(value);
             case RANK_MIN_PERCENT:
                 return new RankMinPercentPickStrategy(value);
+            case RANK_GREATER:
+                return new GreaterThanPickStrategy(value);
+            case RANK_LESS:
+                return new LessThanPickStrategy(value);
+            case RANK_EQUAL:
+                return new EqualToPickStrategy(value);
         }
         return null;
     }

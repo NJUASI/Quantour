@@ -630,7 +630,7 @@
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
         <li><a href="#cyclePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
         <li><a href="#holdingDetailPanel" role="tab" data-toggle="tab">交易详情</a></li>
-
+        <li><a href="#recentlySold" role="tab" data-toggle="tab">最近卖出股票</a></li>
     </ul>
 </div>
 
@@ -729,6 +729,26 @@
             </div>
         </div>
     </div>
+    <div class="tab-pane active" id="recentlySold">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    <%--TODO fjj 你需要的表格 --%>
+                    <th>股票名</th>
+                    <th>股票代码</th>
+                    <th>买入日期</th>
+                    <th>卖出日期</th>
+                    <th>买入价格</th>
+                    <th>卖出价格</th>
+                    <th>涨幅</th>
+                </tr>
+                </thead>
+                <tbody id="sold_stock">
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <%--</c:when>--%>
@@ -738,83 +758,7 @@
 <%--</c:choose>--%>
 
 <!-- 登录模态框（Modal） -->
-<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="loginLabel">登录</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="login_username">用户名：</label>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control" id="login_username" placeholder="请输入用户名">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="login_password">密码：</label>
-                        <div class="col-md-7">
-                            <input type="password" class="form-control" id="login_password" placeholder="请输入密码">
-                        </div>
-                    </div>
-                    <p class="col-md-offset-3" id="errorMessageField"></p>
-                    <div class="checkbox text-right">
-                        <label id="rem-password">
-                            <input type="checkbox" checked>记住密码
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="login-btn-group">
-                    <button type="button" class="btn btn-primary" onclick="login()">登录</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
-<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
 
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="registerLabel">注册</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_username">用户名：</label>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control" id="reg_username" placeholder="请输入用户名">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_password">密码：</label>
-                        <div class="col-md-7">
-                            <input type="password" class="form-control" id="reg_password" placeholder="请输入密码">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_password2" style="padding-left: 0">确认密码：</label>
-                        <div class="col-md-7">
-                            <input type="password" class="form-control" id="reg_password2" placeholder="请再次输入密码">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="login-btn-group">
-                    <button type="button" class="btn btn-primary" onclick="register()">注册</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
 <div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:70%">
         <div class="modal-content">
@@ -952,11 +896,8 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-<div id="loader-wrapper">
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-</div>
+<%@ include file="logIn.jsp" %>
+
 
 <footer>
 
@@ -1052,71 +993,6 @@
 
     });
 
-
-    function user_modify() {
-        $("#passwordField").toggle("slow");
-        $("#passwordModify").toggle("slow");
-    }
-
-    $("#modifyForm").validate({
-        rules: {
-            password1: {
-                required: true,
-                minlength: 5,
-                maxlength: 15
-            },
-            password2: {
-                equalTo: "#password1"
-            },
-        },
-        messages: {
-
-            password1: {
-                required: "密码不能为空",
-                minlength: "密码不能少于5位",
-                maxlength: "密码不能高于15位"
-            },
-            password2: {
-                equalTo: "两次密码不一样"
-            }
-        }
-    });
-//    var reg = /^[0-9]*$/;
-//    if(name==""){
-//        $("#error-dynamic-info").text("姓名不能为空！");
-//        setTimeout("$('#error-dynamic-info').text('');",1000);
-//        return false;
-//    }else if(tel=="" || !reg.test(tel)){
-//        $("#error-dynamic-info").text("电话为空或电话输入错误！");
-//        setTimeout("$('#error-dynamic-info').text('');",1000);
-//        return false;
-//    }else if(address==""){
-//        $("#error-dynamic-info").text("客栈的地址不能为空！");
-//        setTimeout("$('#error-dynamic-info').text('');",1000);
-//        return false;
-//    }
-    $("#normalForm").validate({
-        rules: {
-            phone: {
-                minlength: 11,
-                maxlength: 11
-            },
-            email: {
-                email: true
-            },
-        },
-        messages: {
-
-            phone: {
-                minlength: "手机错误",
-                maxlength: "手机错误"
-
-            },
-            email: {
-                email: "邮箱错误"
-            }
-        }
-    });
 
     $("#community").addClass("act");
 </script>
