@@ -85,9 +85,9 @@
                         </div>
 
                         <div class="col-md-3 col-md-offset-1">
-                            <form role="form">
+                            <form id="inputcode" role="form">
                                 <div class="input-group" style="position: relative">
-                                    <input type="text" id="search-input" class="form-control" placeholder="输入代码/简称/拼音">
+                                    <input type="text" id="search-input" name="search_input" class="form-control" placeholder="输入代码/简称/拼音">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default form-control search-btn" type="button"
                                             onclick="getSingleStockDetail()">
@@ -463,11 +463,7 @@
     </div><!-- /.modal -->
 </div>
 
-<div id="loader-wrapper">
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-</div>
+<%@ include file="logIn.jsp" %>
 
 <footer>
 </footer>
@@ -485,8 +481,24 @@
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/logIn.js"></script>
+<script src="../js/jquery.validate.js"></script>
 <script type="text/javascript">
 
+        var isValid=0;
+        $.validator.addMethod("checkInput",function(value,element,params){
+            var check = /^\d{6}.*$/;
+            return this.optional(element)||(check.test(value));
+        },"请输入正确的股票！");
+
+    $("#inputcode").validate({
+        rules: {
+            search_input: {
+                checkInput: true,
+            }
+        },
+        messages: {
+        }
+    });
     // 画出热搜榜的图
     createPieChart("hot_search_chart", ${topClicksChartData});
 
@@ -638,10 +650,7 @@
 
         sortNum = numOfColumn * 2 + numOfClick - 1;
 
-//        TODO fjj 当sortNum等于16或者17的时候不能排序，就是最后一列
-//        alert(sortNum);
-//        alert("你第"+numOfClick+"次点了第"+numOfColumn+"列"+nowPage+"页");
-//        alert(sortNum);
+
         updatePanel();
     });
 

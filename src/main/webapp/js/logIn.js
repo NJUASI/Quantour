@@ -41,9 +41,9 @@ function login() {
             if (array[0] == "1") {
                 window.location.reload();
             } else if (array[0] == "-1") {
-                $("#errorMessageField").html(array[1]);
+                $("#errorMessageField").html("您的用户名或密码错误");
             } else {
-                alert("未知错误类型orz");
+                $("#errorMessageField").html("您的用户名或密码错误");
             }
         },
         error: function (result) {
@@ -56,7 +56,7 @@ $.validator.addMethod("checkQQ",function(value,element,params){
     return this.optional(element)||(checkQQ.test(value));
 },"请输入正确的QQ号码！");
 $("#registerForm").validate({
-
+    onsubmit :false,
     onkeyup :true,// 是否在敲击键盘时验证
     rules: {
         reg_username: {
@@ -73,6 +73,10 @@ $("#registerForm").validate({
         reg_password2: {
             equalTo: "#reg_password"
         },
+        e_mail:{
+            // required: true,
+            email: true
+        }
     },
     messages: {
         reg_username:{
@@ -87,6 +91,10 @@ $("#registerForm").validate({
         },
         reg_password2: {
             equalTo: "两次密码不一样"
+        },
+        e_mail:{
+            required: "邮箱不能为空",
+            email: "你输入的邮箱格式错误"
         }
     }
 });
@@ -94,6 +102,9 @@ function register() {
     var userName = $("#reg_username").val();
     var password1 = $("#reg_password").val();
     var password2 = $("#reg_password2").val();
+//TODO FJJ 对电子邮箱的处理
+    var email= $("#e_mail").val();
+
 
     $.ajax({
         type: "post",
@@ -112,9 +123,9 @@ function register() {
                 window.location.reload();
             } else if (array[0] == "-1") {
                 // 提示错误信息
-                alert(array[1]);
+                $("#errorMessageField2").html(array[1]);
             } else {
-                alert("未知错误类型orz");
+                $("#errorMessageField2").html("请再次确定输入信息");
             }
         },
         error: function (result) {

@@ -1,6 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -67,6 +66,13 @@
                             <input type="password" class="form-control" id="reg_password2" name="reg_password2" placeholder="请再次输入密码">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="reg_password2" style="padding-left: 0">电子邮箱：</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="e_mail" name="e_mail" placeholder="请输入邮箱">
+                        </div>
+                    </div>
+                    <strong class="col-md-offset-4" style="color:red;" id="errorMessageField2"></strong>
                 </form>
             </div>
             <div class="modal-footer">
