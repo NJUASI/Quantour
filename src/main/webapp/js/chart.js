@@ -1646,3 +1646,56 @@ function createRelationChart(id, data) {
         }
     });
 }
+
+function createWithoutDecorationChart(id,data1,data2){
+    function splitSeriesData(rawData) {
+        var categoryData = [];
+        var values = [];
+
+        for (var i = 0; i < rawData.length; i++) {
+            categoryData.push(rawData[i].splice(0, 1)[0]);
+            values.push(rawData[i].splice(0, 1)[0]);
+        }
+        return {
+            categoryData: categoryData,
+            values: values
+        };
+    }
+
+    var series1 = splitSeriesData(data1);
+    var series2 = splitSeriesData(data2);
+    var chart = echarts.init(document.getElementById(id));
+    chart.showLoading();
+
+    var option = {
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: series1.categoryData,
+            splitNumber: 10,
+            show: false
+        },
+        yAxis: {
+            type: 'value',
+            scale: true,
+            show: false
+        },
+        series: [
+            {
+                name: 'series1',
+                type: 'line',
+                data: series1.values,
+                smooth: true
+            },
+            {
+                name: 'series2',
+                type: 'line',
+                data: series2.values,
+                smooth: true
+            }
+        ]
+    };
+    chart.setOption(option, true);
+    chart.hideLoading();
+    return chart;
+}
