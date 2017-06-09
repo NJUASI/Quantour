@@ -51,7 +51,7 @@ public class StrategyController {
             }
         }
 
-        ModelAndView mv = new ModelAndView("searchStrategy");
+        ModelAndView mv = new ModelAndView("generalStrategy");
 
         List<GeneralStrategy> generalStrategies = new LinkedList<>();
 

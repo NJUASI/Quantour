@@ -122,7 +122,7 @@ public class StockController {
             result = JsonConverter.convertStockMarket(wanted);
 
             if (wantedStocks != null) System.out.println("Success\nwantedStocks size: " + wantedStocks.size());
-            else System.out.println("Success\n没取到数据");
+            else return "-2;无数据";
             return "1;" + result;
 
         } catch (IOException e) {
@@ -176,7 +176,10 @@ public class StockController {
             return mv;
         } else {
             System.out.println("请求失败");
-            return new ModelAndView("errorPage");
+
+            ModelAndView mv = new ModelAndView("errorPage");
+            mv.addObject("error", "您选择的代码 " + stockCode + " 不存在");
+            return mv;
         }
     }
 

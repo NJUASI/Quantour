@@ -44,7 +44,6 @@
             margin-bottom: 15px;
         }
 
-
         /*#myTab{*/
         /*display: none;*/
         /*}*/
@@ -74,7 +73,8 @@
                 <li><a id="homePage" href="/">首页</a></li>
                 <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
                 <li class="dropdown">
-                    <a href="##" class="dropdown-toggle" id="community" data-toggle="dropdown">量化社区<span class="caret"></span></a>
+                    <a href="##" class="dropdown-toggle" id="community" data-toggle="dropdown">量化社区<span
+                            class="caret"></span></a>
                     <ul class="dropdown-menu" style="left:15px;max-width: 100px">
                         <li><a href="/trace_back">创建策略</a></li>
                         <li><a href="/jsp/generalStrategy.jsp">使用策略</a></li>
@@ -121,9 +121,12 @@
                     <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
                         <img class="img-responsive " src="../img/traceback3.png">
                     </figure>
-                    <span class="col-md-3 col-md-offset-4 small">创建日期</span><span class="col-md-5 small">2017-01-31</span>
-                    <span class="col-md-3 col-md-offset-4 small">创建者</span><span class="col-md-5 small">qingqing123</span>
-                    <span class="col-md-3 col-md-offset-4 small">订阅人数</span><span class="col-md-4 col-md-offset-1 small">123</span>
+                    <span class="col-md-3 col-md-offset-4 small">创建日期</span><span
+                        class="col-md-5 small">2017-01-31</span>
+                    <span class="col-md-3 col-md-offset-4 small">创建者</span><span
+                        class="col-md-5 small">qingqing123</span>
+                    <span class="col-md-3 col-md-offset-4 small">订阅人数</span><span
+                        class="col-md-4 col-md-offset-1 small">123</span>
                     <button class="searchBt col-md-offset-8 btn btn-sm btn-info">查看详情</button>
                 </div>
             </div>
@@ -144,9 +147,12 @@
                     <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
                         <img class="img-responsive " src="../img/traceback3.png">
                     </figure>
-                    <span class="col-md-3 col-md-offset-4 small">创建日期</span><span class="col-md-5 small">2017-01-31</span>
-                    <span class="col-md-3 col-md-offset-4 small">创建者</span><span class="col-md-5 small">qingqing123</span>
-                    <span class="col-md-3 col-md-offset-4 small">订阅人数</span><span class="col-md-4 col-md-offset-1 small">123</span>
+                    <span class="col-md-3 col-md-offset-4 small">创建日期</span><span
+                        class="col-md-5 small">2017-01-31</span>
+                    <span class="col-md-3 col-md-offset-4 small">创建者</span><span
+                        class="col-md-5 small">qingqing123</span>
+                    <span class="col-md-3 col-md-offset-4 small">订阅人数</span><span
+                        class="col-md-4 col-md-offset-1 small">123</span>
                     <button class="searchBt col-md-offset-8 btn btn-sm btn-info">查看详情</button>
                 </div>
             </div>
@@ -167,9 +173,12 @@
                     <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
                         <img class="img-responsive " src="../img/traceback3.png">
                     </figure>
-                    <span class="col-md-3 col-md-offset-4 small">创建日期</span><span class="col-md-5 small">2017-01-31</span>
-                    <span class="col-md-3 col-md-offset-4 small">创建者</span><span class="col-md-5 small">qingqing123</span>
-                    <span class="col-md-3 col-md-offset-4 small">订阅人数</span><span class="col-md-4 col-md-offset-1 small">123</span>
+                    <span class="col-md-3 col-md-offset-4 small">创建日期</span><span
+                        class="col-md-5 small">2017-01-31</span>
+                    <span class="col-md-3 col-md-offset-4 small">创建者</span><span
+                        class="col-md-5 small">qingqing123</span>
+                    <span class="col-md-3 col-md-offset-4 small">订阅人数</span><span
+                        class="col-md-4 col-md-offset-1 small">123</span>
                     <button class="searchBt col-md-offset-8 btn btn-sm btn-info">查看详情</button>
                 </div>
             </div>
@@ -186,192 +195,32 @@
 
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
-        <div class="col-md-3">
-        <div class="strategyPanel">
-            <div class="row">
-                <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                    <li class="" style="font-size: 70%; color:red">
-                        沪深300
-                    </li>
-                    <li class="" style="font-size: 70%; color:blueviolet">
-                        策略收益率
-                    </li>
-                </ul>
-                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                    <img class="img-responsive " src="../img/traceback4.png">
-                </figure>
-                <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
-                <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-            </div>
-        </div>
-    </div>
-
+<%--TODO fjj debug--%>
+    <c:forEach items="${generalStrategies}" var="strategy" varStatus="vs">
         <div class="col-md-3">
             <div class="strategyPanel">
                 <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
+                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">${strategy.strategyID}</h5>
                     <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="" style="font-size: 70%; color:red">
+                        <li class="" style="font-size: 90%; color:red">
                             沪深300
                         </li>
-                        <li class="" style="font-size: 70%; color:blueviolet">
+                        <li class="" style="font-size: 90%; color:blueviolet">
                             策略收益率
                         </li>
                     </ul>
                     <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
                         <img class="img-responsive " src="../img/traceback4.png">
                     </figure>
-                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
+                    <span class="col-md-4 col-md-offset-1 font-size: 85%;">创建日期</span><span class="col-md-6 small">2017-01-31</span>
+                    <span class="col-md-4 col-md-offset-1 font-size: 85%;">创建者</span><span class="col-md-6 small">qingqing123</span>
+                    <span class="col-md-4 col-md-offset-1 font-size: 85%;">订阅人数</span><span
+                        class="col-md-5 col-md-offset-1 small">123</span>
                     <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-3">
-            <div class="strategyPanel">
-                <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="" style="font-size: 70%; color:red">
-                            沪深300
-                        </li>
-                        <li class="" style="font-size: 70%; color:blueviolet">
-                            策略收益率
-                        </li>
-                    </ul>
-                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                        <img class="img-responsive " src="../img/traceback4.png">
-                    </figure>
-                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
-                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="strategyPanel">
-                <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="" style="font-size: 70%; color:red">
-                            沪深300
-                        </li>
-                        <li class="" style="font-size: 70%; color:blueviolet">
-                            策略收益率
-                        </li>
-                    </ul>
-                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                        <img class="img-responsive " src="../img/traceback4.png">
-                    </figure>
-                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
-                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-     <div class="col-md-offset-1 col-md-10">
-        <div class="col-md-3">
-            <div class="strategyPanel">
-                <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="" style="font-size: 70%; color:red">
-                            沪深300
-                        </li>
-                        <li class="" style="font-size: 70%; color:blueviolet">
-                            策略收益率
-                        </li>
-                    </ul>
-                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                        <img class="img-responsive " src="../img/traceback4.png">
-                    </figure>
-                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
-                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="strategyPanel">
-                <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="" style="font-size: 70%; color:red">
-                            沪深300
-                        </li>
-                        <li class="" style="font-size: 70%; color:blueviolet">
-                            策略收益率
-                        </li>
-                    </ul>
-                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                        <img class="img-responsive " src="../img/traceback4.png">
-                    </figure>
-                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
-                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="strategyPanel">
-                <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="" style="font-size: 70%; color:red">
-                            沪深300
-                        </li>
-                        <li class="" style="font-size: 70%; color:blueviolet">
-                            策略收益率
-                        </li>
-                    </ul>
-                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                        <img class="img-responsive " src="../img/traceback4.png">
-                    </figure>
-                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
-                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="strategyPanel">
-                <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="" style="font-size: 70%; color:red">
-                            沪深300
-                        </li>
-                        <li class="" style="font-size: 70%; color:blueviolet">
-                            策略收益率
-                        </li>
-                    </ul>
-                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                        <img class="img-responsive " src="../img/traceback4.png">
-                    </figure>
-                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span class="col-md-5 col-md-offset-1 small">123</span>
-                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                </div>
-            </div>
-        </div>
+    </c:forEach>
     </div>
 </div>
 
@@ -400,18 +249,18 @@
 <script type="text/javascript">
 
     $(".strategyPanel").hover(function () {
-        $(this).css({"margin-top": "-10px","margin-bottom": "48px", "cursor": "pointer", "border": "1px solid red"});
+        $(this).css({"margin-top": "-10px", "margin-bottom": "50px", "cursor": "pointer"});
     }, function () {
-        $(this).css({"margin-top": "0px", "margin-bottom": "40px","border": "none"});
+        $(this).css({"margin-top": "0px", "margin-bottom": "40px"});
     });
 
-    $(".strategyPanel").click(function(){
+    $(".strategyPanel").click(function () {
         //TODO  此处需要跳转
-        window.location.href="/jsp/searchStrategy.jsp";
+        window.location.href = "/jsp/searchStrategy.jsp";
     })
     function openStock() {
         $("body").removeClass('loaded');
-        window.location.href="/stocks"
+        window.location.href = "/stocks"
     }
     $("#community").addClass("act");
 </script>

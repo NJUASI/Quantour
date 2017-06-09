@@ -19,7 +19,7 @@
         <!-- Bootstrap -->
         <link href="../css/bootstrap.css" rel="stylesheet">
         <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
-
+        <link href="../css/startLoader.css" rel="stylesheet">
         <link href="../css/index.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,28 +32,12 @@
         <style rel="stylesheet" type="text/css">
 
 
-            .stock {
-                font-family: "Microsoft YaHei";
-                font-size: large;
-                font-weight: bold;
-                padding-bottom: 30px;
-                padding-top: 50px;
-            }
-
-            .messageBlock {
-                margin-top: 10px;
-                padding-right: 0;
-                padding-left: 0;
-            }
-
             .inputBlock {
                 margin-top: 50px;
                 margin-bottom: 40px;
             }
 
-            #passwordModify {
-                display: none;
-            }
+
         </style>
 
     </head>
@@ -69,7 +53,7 @@
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a id="homePage" href="/">首页</a></li>
-                    <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
+                    <li><a id="stocks" onClick="JavaScript :history.back(1)" style="cursor: pointer">大盘详情</a></li>
                     <li class="dropdown">
                         <a href="##" class="dropdown-toggle" data-toggle="dropdown">量化社区<span class="caret"></span></a>
                         <ul class="dropdown-menu" style="left:15px;max-width: 100px">
@@ -143,7 +127,7 @@
 
                 <label>开始日期：</label>
                 <!--指定 date标记-->
-                <div class='input-group date' id="compare_startDate">
+                <div class='input-group date' id="datetimeStart">
                     <input type='text' class="form-control form_datetime"/>
                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -153,7 +137,7 @@
             <div class="col-md-2">
                 <label>结束日期：</label>
                 <!--指定 date标记-->
-                <div class='input-group date' id="compare_endDate">
+                <div class='input-group date' id="datetimeEnd">
                     <input type='text' class="form-control form_datetime"/>
                     <span class="input-group-addon">
                        <span class="glyphicon glyphicon-calendar"></span>
@@ -167,8 +151,11 @@
 
 
     <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+            <strong id="errorMessage" style="color:indianred" hidden>输入有误，请重新输入</strong>
+        </div>
 
-        <div class="col-md-2 col-md-offset-8">
+        <div class="col-md-2 col-md-offset-1">
             <button id="compare-btn" type="button" class="btn btn-primary" onclick="compare()"/>
             开始对比</button>
         </div>
@@ -257,82 +244,13 @@
     <script src="../js/bootstrap-datetimepicker.js"></script>
     <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="../js/echarts.min.js"></script>
+    <script src="../js/dbDatePicker.js"></script>
     <script src="../js/chart.js"></script>
     <script src="../js/logIn.js"></script>
-
+    <script src="../js/startLoaded.js"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
-
-            var today = new Date();
-
-            var today = new Date();
-            var yesterday=new Date();
-            yesterday.setTime(today.getTime()-24*60*60*1000);
-
-            var endTime = today.getFullYear() + "-";
-            var startTime = yesterday.getFullYear()+"-";
-
-            var month=today.getMonth() + 1;
-            var dayOfMonth=today.getDate();
-            if( month<10){
-                endTime+="0"+month;
-            }else{
-                endTime+=month;
-            }
-            if(dayOfMonth<10){
-                endTime+="-0"+dayOfMonth;
-            }else{
-                endTime+="-"+dayOfMonth;
-            }
-
-            month=yesterday.getMonth() + 1;
-            dayOfMonth=yesterday.getDate();
-            if( month<10){
-                startTime+="0"+month;
-            }else{
-                startTime+=month;
-            }
-            if(dayOfMonth<10){
-                startTime+="-0"+dayOfMonth;
-            }else{
-                startTime+="-"+dayOfMonth;
-            }
-            $("#compare_startDate>input").attr('value', startTime);
-            $("#compare_endDate>input").attr('value', endTime);
-
-
-            $("#compare_startDate").datetimepicker({
-                format: 'yyyy-mm-dd',
-                minView: 'month',
-                language: 'zh-CN',
-                autoclose: true,
-                startDate: new Date(2005 - 04 - 03),
-                endDate: new Date()
-            }).on("click", function () {
-                $("#compare_startDate").datetimepicker('setEndDate', $("#compare_endDate>input").val())
-            });
-            $("#compare_endDate").datetimepicker({
-                format: 'yyyy-mm-dd',
-                minView: 'month',
-                language: 'zh-CN',
-                autoclose: true,
-                endDate: new Date()
-            }).on("click", function () {
-                $("#compare_endDate").datetimepicker("setStartDate", $("#compare_startDate>input").val())
-            });
-
-//        $("#compareChart").append("1231231");
-            <%--var ttt = <%=request.getAttribute("closesData")%>;--%>
-            <%--if (ttt != null) {--%>
-            <%--alert("hhh");--%>
-            <%--alert(${closesData});--%>
-
-            <%--var closesChart = createLineChart("closesChart", ${closesData}, '收盘价', ${comparisionName});--%>
-            <%--var logarithmicYieldChart = createLineChart("logarithmicYieldChart", ${logarithmicYieldData}, '对数收益率方差', ${comparisionName});--%>
-            <%--}else {--%>
-            <%--alert("kkkkk");--%>
-            <%--}--%>
 
             $('#search-input1').bind('input propertychange', function () {
                 $("#search-body1").show();
@@ -380,14 +298,6 @@
                     }
                 })
             });
-
-            $('#search-input2').focus(function(){
-                $(".searchResults1").hide();
-            })
-            $('#compare_startDate').focus(function(){
-                $(".searchResults2").hide();
-            })
-
             $('#search-input2').bind('input propertychange', function () {
                 $("#search-body2").show();
                 var key = $('#search-input2').val();
@@ -433,12 +343,12 @@
                     }
                 })
             });
-//            $("tbody").click(function () {
-//
-//                      var code = $(this).find("td:first").text();
-//                            $("#search-input1").html(code);
-//            });
-
+            $('#search-input2').focus(function(){
+                $(".searchResults1").hide();
+            })
+            $('#datetimeStart').focus(function(){
+                $(".searchResults2").hide();
+            })
 
             $(".searchResults1").click(function (e) {
                 e.stopPropagation();
@@ -456,8 +366,8 @@
         function compare() {
             var stockCode1 = $("#search-input1").val().split(" ")[0];
             var stockCode2 = $("#search-input2").val().split(" ")[0];
-            var startDate = $("#compare_startDate>input").val();
-            var endDate = $("#compare_endDate>input").val();
+            var startDate = $("#datetimeStart>input").val();
+            var endDate = $("#datetimeEnd>input").val();
 
             var jsonData = {
                 "stockCode1": stockCode1,
@@ -466,7 +376,7 @@
                 "end": endDate
             };
 
-            alert(JSON.stringify(jsonData));
+//            alert(JSON.stringify(jsonData));
 
             $.ajax({
                 type: "post",
@@ -506,7 +416,8 @@
                 },
 
                 error: function (result) {
-                    alert("错误" + result);
+                    $("#errorMessage").show();
+                    setTimeout("$('#errorMessage').hide();", 2000);
                 }
             });
         };

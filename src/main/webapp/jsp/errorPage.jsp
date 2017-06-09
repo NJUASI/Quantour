@@ -18,13 +18,13 @@
 
 <div>
 
-    <div style="height: 150px;"></div>
+    <div style="height: 120px;"></div>
     <center>
         <img src="../img/NotFound.png" alt="加载失败，出了一点小问题。请静待我们的解决哦（≧∇≦）">
         <div>
-            <div style="height: 25px"></div>
+            <div style="height: 25px;margin-top: 30px"></div>
             <%--错误信息显示--%>
-            <span style="height: 30px; font-family: 'Microsoft YaHei'; ">错啦啦</span>
+            <span style="color: #999;margin-top: 30px;font-size: 130%;height: 30px; font-family: 'Microsoft YaHei'; ">${error}</span>
         </div>
     </center>
 
