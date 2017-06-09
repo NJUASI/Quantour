@@ -77,13 +77,13 @@ class AscSorter implements Comparator<FormateRate> {
         }
         //两个都不为null
         if(o1.indicatorVal > o2.indicatorVal){
-            return -1;
+            return 1;
         }
         else if(o1.indicatorVal.doubleValue() == o2.indicatorVal.doubleValue()){
             return 0;
         }
         else {
-            return 1;
+            return -1;
         }
     }
 }
@@ -99,20 +99,20 @@ class DescSorter implements Comparator<FormateRate>{
             return 0;
         }
         if(o1.indicatorVal == null && o2.indicatorVal != null){
-            return -1;
+            return 1;
         }
         if(o1.indicatorVal != null && o2.indicatorVal == null){
-            return 1;
+            return -1;
         }
         //两个都不为null
         if(o1.indicatorVal > o2.indicatorVal){
-            return 1;
+            return -1;
         }
         else if(o1.indicatorVal.doubleValue() == o2.indicatorVal.doubleValue()){
             return 0;
         }
         else {
-            return -1;
+            return 1;
         }
     }
 }

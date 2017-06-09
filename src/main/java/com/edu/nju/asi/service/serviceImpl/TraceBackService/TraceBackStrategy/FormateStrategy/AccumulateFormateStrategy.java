@@ -37,7 +37,7 @@ public class AccumulateFormateStrategy extends AllFormateStrategy {
 
         for (int i = 0; i < stockCodes.size(); i++) {
 
-            List<Stock> stockList = getDateWithHaltDay(stockCodes.get(i), periodStartIndex - 1, formativePeriod);
+            List<Stock> stockList = getDataWithHaltDay(stockCodes.get(i), periodStartIndex - 1, formativePeriod);
             if(stockList == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
                 continue;

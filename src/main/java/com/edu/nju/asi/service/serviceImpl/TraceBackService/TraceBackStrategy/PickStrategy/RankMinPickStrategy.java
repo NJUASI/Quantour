@@ -17,7 +17,7 @@ public class RankMinPickStrategy extends AllPickStrategy {
 
     @Override
     public List<String> pick(List<FormateRate> formateRates) {
-        List<FormateRate> sortedStockPool = descSort(formateRates);
+        List<FormateRate> sortedStockPool = ascSort(formateRates);
         return convert(sortedStockPool.subList(0,rank));
     }
 }

@@ -168,7 +168,7 @@ public abstract class AllFormateStrategy {
      * @param period    要计算的时长（停牌日不计算在内）
      * @return N日的某支股票的数据，停牌日计算在内
      */
-    protected List<Stock> getDateWithHaltDay(String code, int endIndex, int period){
+    protected List<Stock> getDataWithHaltDay(String code, int endIndex, int period){
         int startIndex = endIndex - period + 1;
 
         LocalDate start = allDatesWithData.get(startIndex);
