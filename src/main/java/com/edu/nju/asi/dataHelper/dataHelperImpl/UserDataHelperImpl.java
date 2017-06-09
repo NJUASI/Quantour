@@ -1,7 +1,6 @@
 package com.edu.nju.asi.dataHelper.dataHelperImpl;
 
 import com.edu.nju.asi.dataHelper.UserDataHelper;
-import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 import org.hibernate.Session;
@@ -64,7 +63,7 @@ public class UserDataHelperImpl implements UserDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User) session.get(User.class, username);
+        User user = session.get(User.class, username);
         transaction.commit();
         session.close();
         return user;
@@ -117,7 +116,6 @@ public class UserDataHelperImpl implements UserDataHelper {
     /**
      * 更新策略信息
      *
-     * @param userName 用户名
      * @param strategy 策略信息载体
      * @return 是否成功更新策略
      * @author Byron Dong
@@ -125,11 +123,11 @@ public class UserDataHelperImpl implements UserDataHelper {
      * @updateTime 2017/6/1
      */
     @Override
-    public boolean updateStrategy(String userName, Strategy strategy) {
+    public boolean updateStrategy(Strategy strategy) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User) session.get(User.class, userName);
+        User user = session.get(User.class, strategy.getCreator());
         if (!isContain(user.getStrategies(), strategy)) {
             transaction.commit();
             session.close();
@@ -141,6 +139,7 @@ public class UserDataHelperImpl implements UserDataHelper {
                 strategy1.setContent(strategy.getContent());
                 strategy1.setDescription(strategy.getDescription());
                 strategy1.setPrivate(strategy.isPrivate());
+                strategy1.setTraceBackInfo(strategy.getTraceBackInfo());
                 break;
             }
         }
@@ -164,14 +163,14 @@ public class UserDataHelperImpl implements UserDataHelper {
     public boolean deleteStrategy(String userName, String strategyID) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        User user = (User) session.get(User.class, userName);
+        User user = session.get(User.class, userName);
         List<Strategy> strategies = user.getStrategies();
         transaction.commit();
         session.close();
 
         for (Strategy strategy : strategies) {
             if (strategy.getStrategyID().equals(strategyID)) {
-                if (strategy.getCreater().equals(userName)) {
+                if (strategy.getCreator().equals(userName)) {
                     return this.deleteStrategyByCreator(strategyID);
                 } else {
                     return this.deleteStrategyByChecker(userName, strategyID);
@@ -195,7 +194,7 @@ public class UserDataHelperImpl implements UserDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User) session.get(User.class, userName);
+        User user = session.get(User.class, userName);
         List<Strategy> strategies = user.getStrategies();
         transaction.commit();
         session.close();
@@ -205,14 +204,13 @@ public class UserDataHelperImpl implements UserDataHelper {
     /**
      * 添加策略信息(创建者)
      *
-     * @param userName 用户名
      * @param strategy 策略信息载体
      * @return 是否成功添加策略
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      */
-    public boolean addStrategyByCreator(String userName, Strategy strategy) {
+    public boolean addStrategyByCreator(Strategy strategy) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -224,7 +222,7 @@ public class UserDataHelperImpl implements UserDataHelper {
         session.save(strategy);
         transaction.commit();
         session.close();
-        return addStrategyByChecker(userName, strategy.getStrategyID());
+        return addStrategyByChecker(strategy.getCreator(), strategy.getStrategyID());
     }
 
     /**
@@ -241,8 +239,8 @@ public class UserDataHelperImpl implements UserDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User) session.get(User.class, userName);
-        Strategy strategy = (Strategy)session.get(Strategy.class,strategyID);
+        User user = session.get(User.class, userName);
+        Strategy strategy = session.get(Strategy.class,strategyID);
 
         user.getStrategies().add(strategy);
         session.save(user);
@@ -276,7 +274,7 @@ public class UserDataHelperImpl implements UserDataHelper {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        User user = (User) session.get(User.class, userName);
+        User user = session.get(User.class, userName);
         for (Strategy strategy : user.getStrategies()) {
             if (strategy.getStrategyID().equals(strategyID)) {
                 user.getStrategies().remove(strategy);

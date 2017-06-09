@@ -729,7 +729,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane active" id="recentlySoldPanel">
+    <div class="tab-pane" id="recentlySoldPanel">
        <div class="row">
            <div class="col-md-12 table-responsive">
                <table class="table table-hover table-condensed">

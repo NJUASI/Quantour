@@ -6,8 +6,6 @@ import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.service.TraceBackService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.concurrent.Callable;
@@ -48,7 +46,7 @@ public class TraceBackSave implements Callable<Boolean> {
 
         // 将结果存入数据库更新
         strategy.setTraceBackInfo(JSON.toJSONString(info));
-        boolean updateResult = strategyDao.updateStrategy(strategy.getCreater(), strategy);
+        boolean updateResult = strategyDao.updateStrategy(strategy);
 
         System.out.println(JSON.toJSONString(info) + "\n" + updateResult);
 

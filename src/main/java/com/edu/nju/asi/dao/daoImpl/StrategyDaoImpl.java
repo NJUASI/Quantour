@@ -27,7 +27,6 @@ public class StrategyDaoImpl implements StrategyDao {
     /**
      * 添加策略信息(创建者)
      *
-     * @param userName 用户名
      * @param strategy 策略信息载体
      * @return 是否成功添加策略
      * @author Byron Dong
@@ -35,8 +34,8 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/1
      */
     @Override
-    public boolean saveStrategy(String userName, Strategy strategy) {
-        return userDataHelper.addStrategyByCreator(userName,strategy);
+    public boolean saveStrategy(Strategy strategy) {
+        return userDataHelper.addStrategyByCreator(strategy);
     }
 
     /**
@@ -57,7 +56,6 @@ public class StrategyDaoImpl implements StrategyDao {
     /**
      * 更新策略信息
      *
-     * @param userID 用户名
      * @param strategy 策略信息载体
      * @return 是否成功更新策略
      * @author Byron Dong
@@ -65,8 +63,8 @@ public class StrategyDaoImpl implements StrategyDao {
      * @updateTime 2017/6/1
      */
     @Override
-    public boolean updateStrategy(String userID, Strategy strategy) {
-        return userDataHelper.updateStrategy(userID,strategy);
+    public boolean updateStrategy(Strategy strategy) {
+        return userDataHelper.updateStrategy(strategy);
     }
 
     /**

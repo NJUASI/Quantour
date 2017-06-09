@@ -350,26 +350,26 @@ name</ColNames>
       <Position>2</Position>
       <DataType>text|0</DataType>
     </column>
-    <column id="87" parent="14" name="creater">
-      <Position>3</Position>
-      <DataType>varchar(100)|0</DataType>
-    </column>
-    <column id="88" parent="14" name="date">
+    <column id="87" parent="14" name="date">
       <Position>4</Position>
       <DataType>date|0</DataType>
     </column>
-    <column id="89" parent="14" name="description">
+    <column id="88" parent="14" name="description">
       <Position>5</Position>
       <DataType>text|0</DataType>
     </column>
-    <column id="90" parent="14" name="isPrivate">
+    <column id="89" parent="14" name="isPrivate">
       <Position>6</Position>
       <DataType>bit(1)|0</DataType>
       <DefaultExpression>b&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="91" parent="14" name="traceBackInfo">
+    <column id="90" parent="14" name="traceBackInfo">
       <Position>7</Position>
       <DataType>text|0</DataType>
+    </column>
+    <column id="91" parent="14" name="creator">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
     </column>
     <key id="92" parent="14" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>

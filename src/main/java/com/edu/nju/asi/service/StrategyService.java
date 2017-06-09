@@ -33,7 +33,19 @@ public interface StrategyService {
     /*
     新建策略
      */
+    /**
+     *
+     * @param newStrategy 当前用户想要操作创建的的策略实体
+     * @return 用户是否成功创建策略
+     */
     boolean saveStrategy(Strategy newStrategy);
+
+    /**
+     *
+     * @param strategyID 当前用户想要操作创建的的策略实体ID
+     * @return 当前用户能否操作（修改／删除）此策略（只有创建者可以）
+     */
+    boolean isExist(String strategyID);
 
 
 
@@ -47,14 +59,6 @@ public interface StrategyService {
      * @return 单只策略详情
      */
     Strategy getOneStrategy(String strategyID);
-
-    /**
-     *
-     * @param strategy 当前用户想要操作（修改／删除）的策略实体
-     * @param curUser 当前想要操作（修改／删除）策略的用户
-     * @return 当前用户能否操作（修改／删除）此策略（只有创建者可以）
-     */
-    boolean canUpdate(Strategy strategy, User curUser);
 
     /**
      *
