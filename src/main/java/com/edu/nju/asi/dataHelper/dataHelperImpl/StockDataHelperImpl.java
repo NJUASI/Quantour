@@ -119,14 +119,12 @@ public class StockDataHelperImpl implements StockDataHelper {
 
         Map<String, List<Stock>> map = new HashMap<>();
 
-        long start = System.currentTimeMillis();
         System.out.println("----------取出所有数据---------");
         for (String code : codes) {
             map.put(code, this.getOneStockData(code, connection));
             System.out.println("code: "+code);
         }
         System.out.println("----------取出所有数据完成---------");
-        System.out.println("总时间： "+(System.currentTimeMillis()-start));
         try {
             connection.close();
         } catch (SQLException e) {
@@ -289,6 +287,7 @@ public class StockDataHelperImpl implements StockDataHelper {
 
         try {
             preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setFetchSize(Integer.MIN_VALUE);
             preparedStatement.setString(1, code);
             ResultSet set = preparedStatement.executeQuery();
             while (set.next()) {
