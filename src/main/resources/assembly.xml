@@ -1,0 +1,37 @@
+<assembly>
+    <id>assembly</id>
+    <formats>
+        <format>war</format>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <dependencySets>
+        <!-- 将项目依赖的JAR包输出到 WEB-INF/lib -->
+        <dependencySet>
+            <unpack>false</unpack>
+            <outputDirectory>WEB-INF/lib</outputDirectory>
+            <!--<useProjectArtifact>false</useProjectArtifact>-->
+        </dependencySet>
+    </dependencySets>
+    <fileSets>
+        <fileSet>
+            <directory>${project.build.outputDirectory}</directory>
+            <outputDirectory>WEB-INF/classes</outputDirectory>
+        </fileSet>
+        <!-- ${env} 的值由 -P 的参数传递进来, 如：-Pdev, 那么, ${env} 的值就是 dev -->
+        <fileSet>
+            <directory>${project.basedir}/${profiles.dir}/${env}</directory>
+            <outputDirectory>WEB-INF/classes</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/assembly/bin</directory>
+            <outputDirectory>WEB-INF/classes/lib</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- 将 webapp 下的文件输出到 WAR 包 -->
+        <fileSet>
+            <directory>${project.basedir}/src/main/webapp</directory>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>

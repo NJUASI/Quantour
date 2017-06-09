@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
     <meta charset='UTF-8'>
-    <title>Test5</title>
+    <title>PieChart</title>
 </head>
 <body>
 <div id="candlestick" style="width:100%;height:600px"></div>
@@ -11,7 +11,8 @@
 <script src="../../js/echarts-liquidfill.js"></script>
 <script type="text/javascript">
 
-    createClickChart("candlestick", [0.1], ["10%"]);
+    var data1 =[['rose1',10],['rose2',5],['rose3',15],['rose4',25],['rose5',20],['rose6',35],['rose7',30],['rose8',40]];
+    createPieChart('candlestick',data1);
 </script>
 </body>
 </html>
