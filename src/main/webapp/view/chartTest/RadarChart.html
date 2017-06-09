@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
     <meta charset='UTF-8'>
-    <title>Test6</title>
+    <title>RadarChart</title>
 </head>
 <body>
 <div id="candlestick" style="width:100%;height:600px"></div>
@@ -11,8 +11,9 @@
 <script src="../../js/echarts-liquidfill.js"></script>
 <script type="text/javascript">
 
-    var data1 =[['rose1',10],['rose2',5],['rose3',15],['rose4',25],['rose5',20],['rose6',35],['rose7',30],['rose8',40]];
-    createPieChart('candlestick',data1);
+    var paramter = [1,2,3,4,5,6,7,8,9,10,11,12];
+    var data1 =[[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 75.6, 82.2, 48.7, 18.8, 6.0, 2.3],[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 35.6, 62.2, 32.6, 20.0, 6.4, 3.3]];
+    createRadarChart('candlestick',data1,['1','2'],paramter);
 </script>
 </body>
 </html>
