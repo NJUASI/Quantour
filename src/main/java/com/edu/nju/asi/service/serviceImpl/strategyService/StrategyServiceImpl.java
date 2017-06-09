@@ -1,4 +1,4 @@
-package com.edu.nju.asi.service.serviceImpl;
+package com.edu.nju.asi.service.serviceImpl.strategyService;
 
 import com.edu.nju.asi.dao.StrategyDao;
 import com.edu.nju.asi.dao.UserDao;
@@ -7,6 +7,7 @@ import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.MailService;
 import com.edu.nju.asi.service.StrategyService;
+import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.utilities.enums.MailNotificationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 /**
  * Created by cuihua on 2017/6/2.
@@ -22,13 +26,16 @@ import java.util.List;
 public class StrategyServiceImpl implements StrategyService {
 
     @Autowired
+    TraceBackService traceBackService;
+
+    @Autowired
+    MailService mailService;
+
+    @Autowired
     StrategyDao strategyDao;
 
     @Autowired
     UserDao userDao;
-
-    @Autowired
-    MailService mailService;
 
 
     @Override
@@ -43,11 +50,13 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public boolean saveStrategy(Strategy newStrategy) {
-        boolean fakeSave = strategyDao.saveStrategy(newStrategy.getContent(), newStrategy);
+        boolean fakeSave = strategyDao.saveStrategy(newStrategy.getCreater(), newStrategy);
 
-
-        // TODO 另开一个线程跑回测，跑完了将回测的数据存入数据库
-
+        // 另开一个线程跑回测，跑完了将回测的数据存入数据库
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        FutureTask<Boolean> ft = new FutureTask<Boolean>(new TraceBackTask(traceBackService, strategyDao, newStrategy));
+        executor.submit(ft);
+        executor.shutdown();
 
         return fakeSave;
     }
