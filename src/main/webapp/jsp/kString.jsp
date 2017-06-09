@@ -103,7 +103,7 @@
 </div>
 
 
-<div class="row">z
+<div class="row">
     <ul id="stockDetail" class="col-md-5 col-md-offset-2 list-inline">
         <li>开盘 <span class=" font-green ">${stockOfEndDay.open}</span></li>
         <li>最高 <span class=" font-red ">${stockOfEndDay.high}</span></li>

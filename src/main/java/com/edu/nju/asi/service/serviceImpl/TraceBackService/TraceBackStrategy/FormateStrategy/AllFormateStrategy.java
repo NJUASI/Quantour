@@ -125,22 +125,37 @@ public abstract class AllFormateStrategy {
             return null;
         }
         // 数据库内交易日小于n, 数据不足
-        else if(stockData.get(code).size() < period){
+        else if(findStockVOsWithinDay(code, stockData.get(code).get(0).getStockID().getDate(), end).size() < period){
             return null;
         }
         else {
             // 停牌日不算入交易日内, 补足缺少的数据
+            int i = 0;
+            if(code.equals("002861")){
+                System.out.println(i);
+            }
             while(stockList.size() < period){
                 int k = period - stockList.size();
+                i++;
                 if(k == 1){
-                    start = allDatesWithData.get(startIndex - period - 1);
-                    end = start;
+                    start = allDatesWithData.get(startIndex - period - i);
+                    Stock stock = findStock(code, start);
+                    if(stock == null){
+                        continue;
+                    }else {
+                        stockList.add(0, stock);
+                    }
                 }
                 else {
-                    start = allDatesWithData.get(startIndex - period - k);
-                    end = allDatesWithData.get(startIndex - period - 1);
+                    start = allDatesWithData.get(startIndex - period - i*k);
+                    end = allDatesWithData.get(startIndex - period - (i-1)*k - 1);
+                    List<Stock> stocks = findStockVOsWithinDay(code, start, end);
+                    if(stocks == null){
+                        continue;
+                    }else {
+                        stockList.addAll(0,findStockVOsWithinDay(code, start, end));
+                    }
                 }
-                stockList.addAll(0,findStockVOsWithinDay(code, start, end));
             }
         }
         return stockList;
@@ -200,5 +215,22 @@ public abstract class AllFormateStrategy {
         }
 
         return stockVOList.subList(startIndex, endIndex+1);
+    }
+
+    protected Stock findStock(String stockCode, LocalDate date){
+
+        List<Stock> stockVOList = stockData.get(stockCode);
+
+        List<LocalDate> dates = new ArrayList<>();
+        for(int j = 0; j < stockVOList.size(); j++){
+            dates.add(stockVOList.get(j).getStockID().getDate());
+        }
+
+        if(dates.contains(date)){
+            return stockVOList.get(dates.indexOf(date));
+        }
+        else {
+            return null;
+        }
     }
 }

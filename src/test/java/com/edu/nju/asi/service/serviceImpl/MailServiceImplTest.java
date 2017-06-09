@@ -1,4 +1,4 @@
-package test.com.edu.nju.asi.service.serviceImpl;
+package com.edu.nju.asi.service.serviceImpl;
 
 import com.edu.nju.asi.infoCarrier.MailInfo;
 import com.edu.nju.asi.service.MailService;
