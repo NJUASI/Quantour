@@ -29,7 +29,7 @@ public class Strategy implements Serializable{
     //策略创建者
     @Basic
     @Column(length = 100)
-    private String creater;
+    private String creator;
 
     //策略是否私有
     @Basic
@@ -50,15 +50,15 @@ public class Strategy implements Serializable{
     @Column(columnDefinition = "TEXT",nullable = true)
     private String traceBackInfo;
 
-    @ManyToMany(mappedBy = "strategies")
+    @ManyToMany(mappedBy = "strategies", fetch = FetchType.EAGER)
     private List<User> users = new ArrayList<>();
 
     public Strategy() {
     }
 
-    public Strategy(LocalDate date, String creater, boolean isPrivate, String content, String description, String traceBackInfo) {
+    public Strategy(LocalDate date, String creator, boolean isPrivate, String content, String description, String traceBackInfo) {
         this.date = date;
-        this.creater = creater;
+        this.creator = creator;
         this.isPrivate = isPrivate;
         this.content = content;
         this.description = description;
@@ -81,12 +81,12 @@ public class Strategy implements Serializable{
         this.date = date;
     }
 
-    public String getCreater() {
-        return creater;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setCreater(String creater) {
-        this.creater = creater;
+    public void setCreator(String creater) {
+        this.creator = creater;
     }
 
     public boolean isPrivate() {

@@ -131,6 +131,9 @@ public class StrategyController {
         }
         System.out.println("已登录：" + thisUser.getUserName());
 
+        // TODO 高源 保存时策略ID相同
+        if (strategyService.isExist(newStrategy.getStrategyID())) return "-2;此策略名称已存在";
+
         newStrategy.setDate(LocalDate.now());
         boolean saveResult = strategyService.saveStrategy(newStrategy);
         if (saveResult) return "1;保存成功";

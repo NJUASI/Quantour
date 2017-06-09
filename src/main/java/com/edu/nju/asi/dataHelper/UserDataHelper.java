@@ -1,6 +1,5 @@
 package com.edu.nju.asi.dataHelper;
 
-import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 
@@ -61,14 +60,13 @@ public interface UserDataHelper {
     /**
      * 添加策略信息(创建者)
      *
-     * @param userName 用户名
      * @param strategy 策略信息载体
      * @return 是否成功添加策略
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      */
-     boolean addStrategyByCreator(String userName, Strategy strategy);
+     boolean addStrategyByCreator(Strategy strategy);
 
     /**
      * 添加策略信息（订阅者）
@@ -89,10 +87,9 @@ public interface UserDataHelper {
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/1
      * @param strategy 策略信息载体
-     * @param userID 用户名
      * @return 是否成功更新策略
      */
-    boolean updateStrategy(String userID,Strategy strategy);
+    boolean updateStrategy(Strategy strategy);
 
     /**
      * 删除策略信息

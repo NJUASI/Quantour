@@ -58,7 +58,7 @@ public class GeneralStrategy {
 
     public GeneralStrategy(Strategy strategy) {
         this.strategyID = strategy.getStrategyID();
-        this.creator = strategy.getCreater();
+        this.creator = strategy.getCreator();
         this.createDate = strategy.getDate();
         this.subscribeNum = strategy.getUsers().size() - 1;
 
