@@ -1,5 +1,9 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
+import com.edu.nju.asi.dao.BasicDataDao;
+import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dao.daoImpl.BasicDataDaoImpl;
+import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.BasicData;
 import com.edu.nju.asi.model.Stock;
@@ -77,6 +81,8 @@ public class TraceBackStrategyCalculator {
     FormateStrategyFactory formateStrategyFactory = new FormateStrategyFactory();
     PickStrategyFactory pickStrategyFactory = new PickStrategyFactory();
 
+    BasicDataDao basicDataDao = new BasicDataDaoImpl();
+
     public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
         this.traceBackStockPool = traceBackStockPool;
         this.traceBackCriteria = traceBackCriteria;
@@ -90,7 +96,7 @@ public class TraceBackStrategyCalculator {
     }
 
     private void setUpFinancialIndicators() {
-        //TODO 下层的接口，根据股票代码获取该股票的所有的财务指标
+        financialData = basicDataDao.getAllBasicData(traceBackStockPool);
     }
 
     /**
@@ -315,7 +321,7 @@ public class TraceBackStrategyCalculator {
         List<List<String>> allFilterWantedCodes = new ArrayList<>();
 
         for(FilterCondition filterCondition : filterConditions){
-            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData);
+            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData,financialData);
             AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value);
             try {
                 allFilterWantedCodes.add(pickStrategy.pick(formateStrategy.formate(traceBackStockPool, periodStart, filterCondition.formativePeriod)));
@@ -368,7 +374,7 @@ public class TraceBackStrategyCalculator {
         List<List<RankConditionRate>> allRankConditionRates = new ArrayList<>();
 
         for(RankCondition rankCondition : rankConditions){
-            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData);
+            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData,financialData);
             RankStrategy rankStrategy = new RankStrategy(rankCondition.weight, rankCondition.rankType);
             try {
                 allRankConditionRates.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
@@ -453,54 +459,5 @@ public class TraceBackStrategyCalculator {
         }
 
         return stockVOList.subList(startIndex, endIndex+1);
-    }
-
-
-    /**
-     * 返回股票最新4个季度指标加在一起的值。例子：TTM（营业收入， 0）返回最新4个季报营业收入之和，
-     * TTM（营业收入， 4）返回1年前的4个季报营业收入之和。
-     * @param indicator 季报指标
-     * @param forwardQuarter 前移季度数
-     * @return
-     */
-    protected Double ttm(String indicator, int forwardQuarter){
-        return null;
-    }
-
-    /**
-     * 返回季报指标的年报数据， 前移年数 = 0时， 返回最近年报数据。 例子：假设现在是2016Q2，
-     * Annual（营业收入，0）就是2015年报的营业收入，而Annual（营业收入，1）就是2014年报收入。
-     * @param indicator 季报指标
-     * @param forwardYear 前移年数
-     * @return
-     */
-    protected Double annual(String indicator, int forwardYear){
-        return null;
-    }
-
-    /**
-     * 通过股票代码和日期，找到该日期的财务指标
-     * @param code 股票代码
-     * @param date 日期
-     * @return
-     */
-    protected BasicData findBasicData(String code, LocalDate date){
-
-        List<BasicData> thisFinancialData = financialData.get(code);
-        for(BasicData basicData : thisFinancialData){
-//            if(basicData.getBasicDataID().ge)
-        }
-        return null;
-    }
-
-    /**
-     * 找到需要的时间段的某只股票的财务指标
-     * @param code 股票代码
-     * @param date 日期
-     * @param num 数量
-     * @return
-     */
-    protected List<BasicData> findBasicData(String code, LocalDate date, int num){
-        return null;
     }
 }

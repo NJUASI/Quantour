@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Harvey on 2017/6/8.
+ * Created by Harvey on 2017/6/9.
  *
- * 市净率形成，总市值/归属母公司股东权益合计
+ * 市盈率：PE_TTM，等于总市值除以过去12个月的归属于母公司所有者的净利润，盈利为负的公司没有市盈率
  */
-public class PB_FormateStrategy extends FinancialFormateStrategy{
+public class PE_TTM_FormateStrategy extends FinancialFormateStrategy {
 
-    public PB_FormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialData) {
+    public PE_TTM_FormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialData) {
         super(allDatesWithData, stockData, financialData);
     }
 
@@ -36,18 +36,21 @@ public class PB_FormateStrategy extends FinancialFormateStrategy{
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
                 continue;
             }
-
             //总市值
             double totalMarket = new Double(stockList.get(0).getTotalValue());
-            //归属母公司股东权益合计（选择当季的数据，若没有当季的数据，则选择前面一个季度的数据）
-            LocalDate date = stockList.get(0).getStockID().getDate();
-            BasicData basicData = findBasicData(stockCodes.get(i), date);
 
-            if(basicData == null){
+            //TTM(归属于母公司所有者的净利润)（选择当季的数据，若没有当季的数据，则选择前面一个季度的数据）
+            LocalDate date = stockList.get(0).getStockID().getDate();
+            Double totalProfit = ttm(stockCodes.get(i), date, "netProfitAttributableToTheOwnerOfTheParentCompany", 4);
+
+            if(totalProfit == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
             }
-            double totalEquityAttr = 0;
-            formateRate.add(new FormateRate(stockCodes.get(i), totalMarket / totalEquityAttr));
+
+            //归属于母公司所有者的利润以万元为单位
+            totalProfit *= 10000;
+
+            formateRate.add(new FormateRate(stockCodes.get(i), totalMarket / totalProfit));
         }
 
         return formateRate;

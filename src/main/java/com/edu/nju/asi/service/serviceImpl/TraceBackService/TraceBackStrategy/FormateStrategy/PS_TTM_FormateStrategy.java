@@ -11,15 +11,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Harvey on 2017/6/8.
+ * Created by Harvey on 2017/6/9.
  *
- * 市净率形成，总市值/归属母公司股东权益合计
+ * 市销率：PS_TTM，等于总市值除以过去12个月的营业总收入。
  */
-public class PB_FormateStrategy extends FinancialFormateStrategy{
+public class PS_TTM_FormateStrategy extends FinancialFormateStrategy {
 
-    public PB_FormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialData) {
+    public PS_TTM_FormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialData) {
         super(allDatesWithData, stockData, financialData);
     }
+
 
     @Override
     public List<FormateRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
@@ -36,18 +37,21 @@ public class PB_FormateStrategy extends FinancialFormateStrategy{
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
                 continue;
             }
-
             //总市值
             double totalMarket = new Double(stockList.get(0).getTotalValue());
-            //归属母公司股东权益合计（选择当季的数据，若没有当季的数据，则选择前面一个季度的数据）
-            LocalDate date = stockList.get(0).getStockID().getDate();
-            BasicData basicData = findBasicData(stockCodes.get(i), date);
 
-            if(basicData == null){
+            //TTM(归属于母公司所有者的净利润)（选择当季的数据，若没有当季的数据，则选择前面一个季度的数据）
+            LocalDate date = stockList.get(0).getStockID().getDate();
+            Double totalRevenue = ttm(stockCodes.get(i), date, "totalBusinessIncome", 4);
+
+            if(totalRevenue == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
             }
-            double totalEquityAttr = 0;
-            formateRate.add(new FormateRate(stockCodes.get(i), totalMarket / totalEquityAttr));
+
+            //营业总收入
+            totalRevenue *= 10000;
+
+            formateRate.add(new FormateRate(stockCodes.get(i), totalMarket / totalRevenue));
         }
 
         return formateRate;

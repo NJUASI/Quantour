@@ -1,5 +1,7 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy;
 
+import antlr.debug.ListenerBase;
+import com.edu.nju.asi.model.BasicData;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
@@ -23,7 +25,7 @@ public abstract class AllFormateStrategy {
     protected List<LocalDate> allDatesWithData;
 
     /**
-     * 所有股票池中的股票数据
+     * 回测股票池中的股票数据
      */
     protected Map<String, List<Stock>> stockData;
 
