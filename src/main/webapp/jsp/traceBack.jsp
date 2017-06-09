@@ -616,7 +616,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
 
 </form>
 
@@ -630,7 +630,7 @@
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
         <li><a href="#cyclePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
         <li><a href="#holdingDetailPanel" role="tab" data-toggle="tab">交易详情</a></li>
-        <li><a href="#recentlySold" role="tab" data-toggle="tab">最近卖出股票</a></li>
+        <li><a href="#recentlySoldPanel" role="tab" data-toggle="tab">卖出股票</a></li>
     </ul>
 </div>
 
@@ -659,7 +659,7 @@
             </table>
         </div>
         <div class="row">
-            <div id="trace_back_chart" style="width:1100px;height:500px"></div>
+            <div id="trace_back_chart" style="margin:0px auto; width:1100px;height:500px"></div>
         </div>
     </div>
     <div class="tab-pane" id="cyclePanel">
@@ -729,25 +729,27 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane active" id="recentlySold">
-        <div class="col-md-12 table-responsive">
-            <table class="table table-hover table-condensed">
-                <thead>
-                <tr>
-                    <%--TODO fjj 你需要的表格 --%>
-                    <th>股票名</th>
-                    <th>股票代码</th>
-                    <th>买入日期</th>
-                    <th>卖出日期</th>
-                    <th>买入价格</th>
-                    <th>卖出价格</th>
-                    <th>涨幅</th>
-                </tr>
-                </thead>
-                <tbody id="sold_stock">
-                </tbody>
-            </table>
-        </div>
+    <div class="tab-pane active" id="recentlySoldPanel">
+       <div class="row">
+           <div class="col-md-12 table-responsive">
+               <table class="table table-hover table-condensed">
+                   <thead>
+                   <tr>
+                       <th>股票名</th>
+                       <th>股票代码</th>
+                       <th>买入日期</th>
+                       <th>卖出日期</th>
+                       <th>买入价格</th>
+                       <th>卖出价格</th>
+                       <th>涨幅</th>
+                   </tr>
+                   </thead>
+                   <tbody id="sold_stock_detail">
+                   </tbody>
+               </table>
+           </div>
+       </div>
+
     </div>
 </div>
 
@@ -779,7 +781,7 @@
                     </div>
                 </div>
 
-                <div style="width:90%;margin:0 auto;2px;margin-bottom: 30px;border-top:1px solid #ddd"></div>
+                <div style="width:90%;margin:0px auto;margin-bottom:30px;border-top:1px solid #ddd"></div>
 
                 <div class="row" style="margin-bottom: 10px">
                     <div class="col-md-offset-1 col-md-11">

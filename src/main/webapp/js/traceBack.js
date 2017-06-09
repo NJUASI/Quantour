@@ -184,6 +184,22 @@ function traceback() {
                 }
                 // alert("--------------------3----------------");
 
+                // 卖出的股票详情
+                $("#sold_stock_detail").empty();
+                for (var i = 0; i < transferDetails.length; i++) {
+                    $("#sold_stock_detail").append("<tr>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["stockName"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["stockCode"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyDate"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellDate"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyPrice"]+ "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellPrice"]+ "</td>");
+                    $("#sold_stock_detail").append("<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>");
+                    $("#sold_stock_detail").append("</tr>");
+                }
+                // alert("--------------------4----------------");
+
+
 
                 // // 固定形成期的赢率分析
                 // $("#tb_certain_formate").empty();
@@ -194,7 +210,7 @@ function traceback() {
                 //     $("#tb_certain_formate").append("<td>" + (certainFormates[i]["winRate"]*100).toFixed(2) + "%" + "</td>");
                 //     $("#tb_certain_formate").append("</tr>");
                 // }
-                // // alert("--------------------4----------------");
+                // // alert("--------------------5----------------");
                 //
                 //
                 // // 固定持有期的赢率分析
@@ -206,7 +222,7 @@ function traceback() {
                 //     $("#tb_certain_holding").append("<td>" + (certainHoldings[i]["winRate"]*100).toFixed(2) + "%" + "</td>");
                 //     $("#tb_certain_holding").append("</tr>");
                 // }
-                // // alert("--------------------5----------------");
+                // // alert("--------------------6----------------");
 
 
                 // 处理图表的信息

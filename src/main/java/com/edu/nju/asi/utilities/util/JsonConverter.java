@@ -181,11 +181,12 @@ public class JsonConverter {
         holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
         System.out.println("numbers2 over");
 
-        // holdingDetails, transferDayDetails
+        // holdingDetails
         holder.append(JSON.toJSONString(traceBackInfo.holdingDetails)).append(";");
         System.out.println("numbers3 over");
 
-        holder.append(JSON.toJSONString(traceBackInfo.transferDayDetails));
+        // transferDayDetails
+        holder.append(JSON.toJSONString(traceBackInfo.transferDayDetails)).append(";");
         System.out.println("numbers4 over");
 
         // certainFormates, certainHoldings
