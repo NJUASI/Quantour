@@ -375,11 +375,8 @@
     </div>
 </div>
 
-<div id="loader-wrapper">
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-</div>
+<%@ include file="logIn.jsp" %>
+
 <footer>
 
 </footer>
@@ -393,6 +390,7 @@
 
 <script src="../js/echarts.min.js"></script>
 <script src="../js/chart.js"></script>
+<script src="../js/logIn.js"></script>
 <script src="../js/startLoaded.js"></script>
 
 

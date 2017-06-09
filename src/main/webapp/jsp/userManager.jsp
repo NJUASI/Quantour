@@ -118,8 +118,8 @@
 <div class="row">
     <div class="col-md-2 affix" style="margin-top: 40px">
         <p style="text-align: center"><img src="../img/happy.png" style="margin-left: auto" class="picture"/></p>
-        <a href="#" data-toggle="modal" style="text-decoration: none" data-target="#changePassword">
-            <div class="userID text-center" style="margin-top: 10px"></div>
+        <a href="#"  data-toggle="modal" style="text-decoration: none" data-target="#changePassword">
+            <div class="userID text-center"   style="margin-top: 10px"></div>
         </a>
     </div>
 
@@ -406,7 +406,11 @@
                         <input type="password" style="width:200px;" class="form-control" id="password2"
                                name="password2" placeholder="再次输入您的密码">
                     </div>
-
+                    <div class="form-group form-inline">
+                        <label for="password2">修改邮箱：</label>
+                        <input type="text" style="width:200px;" class="form-control" id="e_mail"
+                               name="e_mail" placeholder="请输入邮箱">
+                    </div>
                     <input type="submit" class="btn btn-info" onclick="user_modify()"
                            style="margin-top: 15px;margin-left: 80px;" value="确认修改"/>
                 </form>
@@ -429,7 +433,6 @@
 <script src="../js/bootstrap.js"></script>
 
 <script src="../js/startLoaded.js"></script>
-
 <script src="../js/strategy.js"></script>
 
 <script type="text/javascript">
@@ -438,6 +441,19 @@
     $(document).ready(function () {
         var user = "<%= ((User)session.getAttribute("user")).getUserName()%>";
         $(".userID").html(user);
+        $(".userID").click(function () {
+            var password = "<%= ((User)session.getAttribute("user")).getPassword()%>";
+            $("#password1").val(password);
+            $("#password2").val(password);
+            var email="<%= ((User)session.getAttribute("user")).getEmail()%>";
+            $("#email").val(email);
+        });
+        $("#password1").click(function () {
+            $("#password1").val("");
+        });
+        $("#password2").click(function () {
+            $("#password2").val("");
+        });
     });
 
     $(".strategyPanel").hover(function () {
@@ -453,6 +469,12 @@
         window.location.href = "/jsp/searchStrategy.jsp";
     })
 
+    //TODO fjj 修改密码 邮箱
+    function user_modify() {
+        $("#passwordField").toggle("slow");
+        $("#passwordModify").toggle("slow");
+    }
+
     $("#modifyForm").validate({
         rules: {
             password1: {
@@ -463,6 +485,10 @@
             password2: {
                 equalTo: "#password1"
             },
+            e_mail: {
+                email: true
+            },
+
         },
         messages: {
 
@@ -473,31 +499,17 @@
             },
             password2: {
                 equalTo: "两次密码不一样"
-            }
-        }
-    });
-    $("#normalForm").validate({
-        rules: {
-            phone: {
-                minlength: 11,
-                maxlength: 11
             },
-            email: {
-                email: true
-            },
-        },
-        messages: {
-
-            phone: {
-                minlength: "手机错误",
-                maxlength: "手机错误"
-
-            },
-            email: {
+            e_mail: {
                 email: "邮箱错误"
             }
+
         }
     });
+
+
+
+
 
     //双击后查看详情
 
