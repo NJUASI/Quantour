@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 61990
@@ -70,12 +71,26 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">首页</a></li>
-                <li><a id="stocks" style="cursor:
-                 pointer">大盘详情</a></li>
-                <li><a href="/trace_back">量化社区</a></li>
+                <li><a id="homePage" href="/">首页</a></li>
+                <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
+                <li class="dropdown">
+                    <a href="##" class="dropdown-toggle" id="community" data-toggle="dropdown">量化社区<span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="left:15px;max-width: 100px">
+                        <li><a href="/trace_back">创建策略</a></li>
+                        <li><a href="/jsp/generalStrategy.jsp">使用策略</a></li>
+                    </ul>
+                </li>
                 <li><a href="#">帮助</a></li>
-                <li><a href="/user/welcome">用户管理</a></li>
+                <c:choose>
+                    <c:when test="${sessionScope.user!=null}">
+                        <li><a href="/user/welcome">用户管理</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
+                    </c:otherwise>
+                </c:choose>
+
 
             </ul>
         </div><!-- /.container-fluid -->
@@ -94,12 +109,12 @@
         <div class="col-md-4">
             <div class="strategyPanel">
                 <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
+                    <h5 id="strategyName" class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
                     <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="" style="font-size: 70%; color:red">
+                        <li class="" style="font-size: 90%; color:red">
                             沪深300
                         </li>
-                        <li class="" style="font-size: 70%; color:blueviolet">
+                        <li class="" style="font-size: 90%; color:blueviolet">
                             策略收益率
                         </li>
                     </ul>
@@ -360,6 +375,11 @@
     </div>
 </div>
 
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
 <footer>
 
 </footer>
@@ -391,6 +411,11 @@
         //TODO  此处需要跳转
         window.location.href="/jsp/searchStrategy.jsp";
     })
+    function openStock() {
+        $("body").removeClass('loaded');
+        window.location.href="/stocks"
+    }
+    $("#community").addClass("act");
 </script>
 
 </body>

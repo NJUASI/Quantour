@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
     //显示出白色下划线的效果
-   $("#homePage").addClass("act");
+
 
    //切换白色下划线
    $(".navbar-nav li a").on("click",function () {
@@ -13,6 +13,9 @@ $(document).ready(function () {
        $(this).addClass("act");
        $(this).css("color","#ffffff");
    });
+
+
+
 });
 
 function login() {
@@ -48,7 +51,45 @@ function login() {
         }
     });
 }
+$.validator.addMethod("checkQQ",function(value,element,params){
+    var checkQQ = /^[a-zA-Z]+\w+$/;
+    return this.optional(element)||(checkQQ.test(value));
+},"请输入正确的QQ号码！");
+$("#registerForm").validate({
 
+    onkeyup :true,// 是否在敲击键盘时验证
+    rules: {
+        reg_username: {
+            required: true,
+            minlength: 5,
+            maxlength: 15,
+            checkQQ:true
+        },
+        reg_password: {
+            required: true,
+            minlength: 5,
+            maxlength: 15
+        },
+        reg_password2: {
+            equalTo: "#reg_password"
+        },
+    },
+    messages: {
+        reg_username:{
+            required:"用户名不能为空",
+            minlength: "用户名不能少于5位",
+            maxlength: "用户名不能高于15位"
+        },
+        reg_password: {
+            required: "密码不能为空",
+            minlength: "密码不能少于5位",
+            maxlength: "密码不能高于15位"
+        },
+        reg_password2: {
+            equalTo: "两次密码不一样"
+        }
+    }
+});
 function register() {
     var userName = $("#reg_username").val();
     var password1 = $("#reg_password").val();

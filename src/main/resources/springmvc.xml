@@ -66,6 +66,8 @@
                 </bean>
                 <bean class="com.edu.nju.asi.utilities.spring.AreaTypeFormatter">
                 </bean>
+                <bean class="com.edu.nju.asi.utilities.spring.StrategyFormatter">
+                </bean>
             </set>
         </property>
     </bean>

@@ -11,6 +11,7 @@ import java.util.Locale;
  * Created by cuihua on 2017/5/28.
  */
 public class TraceBackCriteriaFormatter implements Formatter<TraceBackCriteria> {
+
     @Override
     public TraceBackCriteria parse(String text, Locale locale) throws ParseException {
         System.out.println("--------------FORMAT TraceBackCriteria--------------");

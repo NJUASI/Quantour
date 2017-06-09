@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 61990
@@ -57,13 +58,25 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">首页</a></li>
-                <li><a id="stocks" style="cursor:
-                 pointer">大盘详情</a></li>
-                <li><a href="/trace_back">量化社区</a></li>
+                <li><a id="homePage" href="/">首页</a></li>
+                <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
+                <li class="dropdown">
+                    <a href="##" class="dropdown-toggle" id="commity" data-toggle="dropdown">量化社区<span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="left:15px;max-width: 100px">
+                        <li><a href="/trace_back">创建策略</a></li>
+                        <li><a href="/jsp/generalStrategy.jsp">使用策略</a></li>
+                    </ul>
+                </li>
                 <li><a href="#">帮助</a></li>
-                <li><a href="/user/welcome">用户管理</a></li>
-
+                <c:choose>
+                    <c:when test="${sessionScope.user!=null}">
+                        <li><a href="/user/welcome">用户管理</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div><!-- /.container-fluid -->
     </nav>
@@ -74,11 +87,12 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="row">
             <h3 class="col-md-2" style="color:#4890c8">中小板股指</h3>
-            <button class="btn btn-primary btn-sm col-md-1 col-md-offset-1" style="margin-top: 20px">
+            <%--TODO 高源 收藏、取消收藏、编辑修改、删除策略 (strategy.js  strategy_modify...) --%>
+            <button class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">
                 <span class="glyphicon glyphicon-heart"></span>
                 <span class="txt">收藏</span>
             </button>
-            <button id="modifyBt" class="btn btn-primary btn-sm col-md-1 col-md-offset-1" style="margin-top: 20px">
+            <button id="modifyBt" class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">
                 <span class="txt">编辑</span>
             </button>
         </div>
@@ -106,31 +120,48 @@
                     </ul>
                     </div>
                     <div class="row">
-                        <div class="col-md-3 small"><p>筛选条件</p></div>
-                        <div class="col-md-9">
+                        <div class="col-md-3 "><p>筛选条件</p></div>
+                        <div class="col-md-9" style="margin-left: -40px">
                         <div class="row ">
-                            <div class=" col-md-12 small">
-                                <span class="col-md-4">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">20</span> <span class="col-md-1">1</span>
+                            <div class=" col-md-12 ">
+                                <span class="col-md-6">指标</span><span class="col-md-4">比较符</span> <span class="col-md-1">值</span>
                             </div>
-                            <div class=" col-md-12 small">
-                                <span class="col-md-4">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">20</span> <span class="col-md-1">1</span>
+                            <div class=" col-md-12 ">
+                                <span class="col-md-6">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">20</span>
                             </div>
-                            <div class=" col-md-12 small">
-                                <span class="col-md-4">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">20</span> <span class="col-md-1">1</span>
+                            <div class=" col-md-12 ">
+                                <span class="col-md-6">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">20</span>
                             </div>
                         </div>
                         </div>
 
                     </div>
+                    <div class="row" style="margin-top: 5px">
+                        <div class="col-md-3 "><p>排名条件</p></div>
+                        <div class="col-md-9" style="margin-left: -40px">
+                            <div class="row ">
+                                <div class=" col-md-12 ">
+                                    <span class="col-md-6">指标</span><span class="col-md-4">次序</span> <span class="col-md-2" style="padding-right: 0px">权重</span>
+                                </div>
+                                <div class=" col-md-12 ">
+                                    <span class="col-md-6">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">1</span>
+                                </div>
+                                <div class=" col-md-12 ">
+                                    <span class="col-md-6">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-2">1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-3" style="border-right: 1px solid slategray">
-                    <div class="col-md-12 small">
+                <div class="col-md-3">
+                    <div class="col-md-12 ">
                         策略描述:
                     </div>
-                    <p class="col-md-12 small" style="color:#9e9e9e">
+                    <p class="col-md-12 " style="color:#9e9e9e">
                         不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的 </p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" style="border-left: 1px solid slategray">
                     <div id="candlestick" style=" width:100%;height:220px"></div>
                 </div>
             </div>
@@ -310,38 +341,21 @@
                                         </div>
 
                                     </div>
+
+                                </div>
+                                <div class="row">
                                     <div class="form-group  col-md-4 ">
-                                        <label class="col-md-4" style="margin-top: 7px">调仓周期：</label>
-                                        <div class=' col-md-5 '>
+                                        <label class="col-md-4" style="padding-left:0px;margin-top: 7px">调仓周期：</label>
+                                        <div class=' col-md-5 'style="margin-left: -30px">
                                             <input id="holdingPeriod" type="text" class="form-control col-md-1"
                                                    name="holdingPeriod" placeholder="请输入天数">
                                         </div>
 
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group row col-md-4 ">
-                                        <label class="col-md-4 " style="margin-top: 7px">开始日期：</label>
-                                        <div class='col-md-6 input-group date' id='datetimeStart'>
-                                            <input id="startDate" type='text' class="form-control form_datetime"/>
-                                            <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-4 ">
-                                        <label class="col-md-4" style="margin-top: 7px">结束日期：</label>
-                                        <div class=' col-md-6 input-group date' id='datetimeEnd'>
-                                            <input id="endDate" type='text' class="form-control form_datetime"/>
-                                            <span class="input-group-addon">
-                                              <span class="glyphicon glyphicon-calendar"></span>
-                                         </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group  col-md-4 ">
+                                    <div class="form-group  col-md-4 " style="margin-left:-30px">
                                         <label class="col-md-4" style="margin-top: 7px">最大持仓：</label>
-                                        <div class=' col-md-5 '>
+                                        <div class=' col-md-5 ' style="margin-left:-14px">
                                             <input id="maxHolding" type="text" class="form-control col-md-1"
                                                    name="maxHolding" placeholder="请输入股票数">
                                         </div>
@@ -349,360 +363,370 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row" style="margin-top: 20px">
-                                            <!--左边选择栏  -->
-                                            <div class="col-md-5 col-xs-12">
-                                                <label style="margin-right: 18px">
-                                                    选股指标:
-                                                </label>
+                                <div class="row" style="margin-top: 20px">
+                                    <!--左边选择栏  -->
+                                    <div class="col-md-5">
+                                        <label class="">
+                                            选股指标:
+                                        </label>
 
-                                                <select id="searchQuota" class="selectpicker col-md-6"
-                                                        onchange=quotaChange(); data-live-search="true" data-size="10"
-                                                        data-live-search-placeholder="Search" data-actions-box="true"
-                                                        title="搜索指标" style="margin-left: 25px">
-                                                    <option><span class="quota">N日平均成交额</span></option>
-                                                    <option class="quota">N日平均成交量</option>
-                                                    <option class="quota">N日乖离率</option>
-                                                    <option class="quota">N日波动率</option>
-                                                    <option class="quota">N日涨幅</option>
-                                                    <option class="quota">N日换手率</option>
-                                                    <optgroup label="价格">
-                                                        <option class="quota">开盘价</option>
-                                                        <option class="quota">收盘价</option>
-                                                        <option class="quota">最高价</option>
-                                                        <option class="quota">最低价</option>
-                                                        <option class="quota">前日收盘价</option>
-                                                        <option class="quota">后复权收盘价</option>
-                                                        <option class="quota">后复权均价</option>
-                                                    </optgroup>
-                                                    <optgroup label="股本">
-                                                        <option class="quota">总股本</option>
-                                                        <option class="quota">流通股本</option>
-                                                        <option class="quota">总市值</option>
-                                                        <option class="quota">流通市值</option>
-                                                        <option class="quota">股价振幅</option>
-                                                    </optgroup>
-                                                    <optgroup label="估值">
-                                                        <option class="quota">市盈率</option>
-                                                        <option class="quota">市销率</option>
-                                                        <option class="quota">市净率</option>
-                                                        <option class="quota">静态市盈率</option>
-                                                        <option class="quota">动态市盈率</option>
-                                                    </optgroup>
+                                        <select id="searchQuota" class="selectpicker col-md-6" onchange=quotaChange();
+                                                data-live-search="true" data-size="10" data-live-search-placeholder="Search"
+                                                data-actions-box="true" title="搜索指标">
+                                            <option><span class="quota">N日平均成交额</span></option>
+                                            <option class="quota">N日平均成交量</option>
+                                            <option class="quota">N日乖离率</option>
+                                            <option class="quota">N日波动率</option>
+                                            <option class="quota">N日涨幅</option>
+                                            <option class="quota">N日换手率</option>
+                                            <optgroup label="价格">
+                                                <option class="quota">开盘价</option>
+                                                <option class="quota">收盘价</option>
+                                                <option class="quota">最高价</option>
+                                                <option class="quota">最低价</option>
+                                                <option class="quota">前日收盘价</option>
+                                                <option class="quota">后复权收盘价</option>
+                                                <option class="quota">后复权均价</option>
+                                            </optgroup>
+                                            <optgroup label="股本">
+                                                <option class="quota">总股本</option>
+                                                <option class="quota">流通股本</option>
+                                                <option class="quota">总市值</option>
+                                                <option class="quota">流通市值</option>
+                                                <option class="quota">股价振幅</option>
+                                            </optgroup>
+                                            <optgroup label="估值">
+                                                <option class="quota">市盈率</option>
+                                                <option class="quota">市销率</option>
+                                                <option class="quota">市净率</option>
+                                                <option class="quota">静态市盈率</option>
+                                                <option class="quota">动态市盈率</option>
+                                            </optgroup>
 
-                                                </select>
+                                        </select>
 
-                                                <!-- 选项卡组件（菜单项nav-tabs）-->
-                                                <ul id="myTab" class="nav nav-tabs col-md-12 col-xs-12"
-                                                    style="margin-top: 20px" role="tablist">
-                                                    <li class="active"><a href="#bulletin" role="tab" data-toggle="tab">行情</a>
-                                                    </li>
-                                                    <li><a href="#rule" role="tab" data-toggle="tab">技术指标</a></li>
-                                                    <li><a href="#forum" role="tab" data-toggle="tab">股指</a></li>
-                                                    <li><a href="#security" role="tab" data-toggle="tab">其他</a></li>
-                                                </ul>
-                                                <!-- 选项卡面板 -->
-                                                <div id="myTabContent" class="tab-content">
-                                                    <div class="tab-pane fade in active" id="bulletin">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <button type="button"
-                                                                        class="btn btn-default dropdown-toggle"
-                                                                        style="border: 0px solid white"
-                                                                        data-toggle="dropdown">股票价格
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu"
-                                                                    aria-labelledby="">
-                                                                    <li role="presentation" class="dropdown-header">
-                                                                        当日价格
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">开盘价</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">收盘价</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">最高价</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">最低价</a>
-                                                                    </li>
-                                                                    <li role="presentation" class="dropdown-header">
-                                                                        其他价格
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">前日收盘价</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">日均成交价</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">后复权收盘价</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">后复权均价</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <button type="button"
-                                                                        class="btn btn-default dropdown-toggle"
-                                                                        style="border: 0px solid white"
-                                                                        data-toggle="dropdown">成交额
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu"
-                                                                    aria-labelledby="">
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">当日成交额</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">5日平均成交额</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">20日平均成交额</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">60日平均成交额</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">N日平均成交额</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <button type="button"
-                                                                        class="btn btn-default dropdown-toggle"
-                                                                        style="border: 0px solid white"
-                                                                        data-toggle="dropdown">成交量
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu"
-                                                                    aria-labelledby="">
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">当日成交量</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">5日平均成交量</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">20日平均成交量</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">60日平均成交量</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">N日平均成交量</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <button type="button"
-                                                                        class="btn btn-default dropdown-toggle"
-                                                                        style="border: 0px solid white"
-                                                                        data-toggle="dropdown">股价涨幅
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu"
-                                                                    aria-labelledby="">
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">1日涨幅</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">5日涨幅</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">20日涨幅</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">60日涨幅</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">N日涨幅</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <button type="button"
-                                                                        class="btn btn-default dropdown-toggle"
-                                                                        style="border: 0px solid white"
-                                                                        data-toggle="dropdown">累计换手率
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu"
-                                                                    aria-labelledby="">
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">当日换手率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">5日换手率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">20日换手率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">60日换手率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">N日换手率</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <button type="button"
-                                                                        class="btn btn-default dropdown-toggle"
-                                                                        style="border: 0px solid white"
-                                                                        data-toggle="dropdown">股本和市值
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu"
-                                                                    aria-labelledby="">
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">总股本</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">流通股本</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">总市值</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">流通市值</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <button type="button" class="btn btn-default quota"
-                                                                        style="border: 0px solid white">股价涨幅
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
+                                        <!-- 选项卡组件（菜单项nav-tabs）-->
+                                        <ul id="myTab1" class="nav nav-tabs col-md-12 col-xs-12" style="margin-top: 20px"
+                                            role="tablist">
+                                            <li class="active"><a href="#bulletin" role="tab" data-toggle="tab">行情</a></li>
+                                            <li><a href="#rule" role="tab" data-toggle="tab">技术指标</a></li>
+                                            <li><a href="#forum" role="tab" data-toggle="tab">股指</a></li>
+                                            <li><a href="#security" role="tab" data-toggle="tab">其他</a></li>
+                                        </ul>
+                                        <!-- 选项卡面板 -->
+                                        <div id="myTabContent1" class="tab-content">
+                                            <div class="tab-pane fade in active" id="bulletin">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                style="border: 0px solid white" data-toggle="dropdown">股票价格
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                                            <li role="presentation" class="dropdown-header">当日价格</li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">开盘价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">收盘价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">最高价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">最低价</a>
+                                                            </li>
+                                                            <li role="presentation" class="dropdown-header">其他价格</li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">前日收盘价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">日均成交价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">后复权开盘价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">后复权收盘价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">后复权最高价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">后复权最低价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">前日后复权收盘价</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">后复权均价</a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                    <div class="tab-pane fade" id="rule">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <button type="button"
-                                                                        class="btn btn-default dropdown-toggle"
-                                                                        style="border: 0px solid white"
-                                                                        data-toggle="dropdown">乖离率
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu"
-                                                                    aria-labelledby="">
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">5日乖离率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">10日乖离率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">20日乖离率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">30日乖离率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">N日乖离率</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <button type="button"
-                                                                        class="btn btn-default dropdown-toggle"
-                                                                        style="border: 0px solid white"
-                                                                        data-toggle="dropdown">波动率
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu" role="menu"
-                                                                    aria-labelledby="">
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">5日波动率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">10日波动率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">20日波动率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">30日波动率</a>
-                                                                    </li>
-                                                                    <li role="presentation">
-                                                                        <a role="menuitem" class="quota" tabindex="-1">N日波动率</a>
-                                                                    </li>
-
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                style="border: 0px solid white" data-toggle="dropdown">成交额
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">当日成交额</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">5日平均成交额</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">20日平均成交额</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">60日平均成交额</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">N日平均成交额</a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                    <div class="tab-pane fade" id="forum">
-                                                        <div class="col-md-4">
-                                                            <button type="button" class="btn btn-default quota"
-                                                                    style="border: 0px solid white">市盈率
-                                                            </button>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <button type="button" class="btn btn-default quota"
-                                                                    style="border: 0px solid white">市净率
-                                                            </button>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <button type="button" class="btn btn-default quota"
-                                                                    style="border: 0px solid white">市销率
-                                                            </button>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <button type="button" class="btn btn-default quota"
-                                                                    style="border: 0px solid white">静态市盈率
-                                                            </button>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <button type="button" class="btn btn-default quota"
-                                                                    style="border: 0px solid white">动态市盈率
-                                                            </button>
-
-                                                        </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                style="border: 0px solid white" data-toggle="dropdown">成交量
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">当日成交量</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">5日平均成交量</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">20日平均成交量</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">60日平均成交量</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">N日平均成交量</a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                    <div class="tab-pane fade" id="security"></div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                style="border: 0px solid white" data-toggle="dropdown">股价涨幅
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">1日涨幅</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">5日涨幅</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">20日涨幅</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">60日涨幅</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">N日涨幅</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                style="border: 0px solid white" data-toggle="dropdown">累计换手率
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">当日换手率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">5日换手率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">20日换手率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">60日换手率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">N日换手率</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                style="border: 0px solid white" data-toggle="dropdown">股本和市值
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">总股本</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">流通股本</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">总市值</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">流通市值</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default quota"
+                                                                style="border: 0px solid white">股价振幅
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="rule">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                style="border: 0px solid white" data-toggle="dropdown">乖离率
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">5日乖离率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">10日乖离率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">20日乖离率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">30日乖离率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">N日乖离率</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                                style="border: 0px solid white" data-toggle="dropdown">波动率
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">5日波动率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">10日波动率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">20日波动率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">30日波动率</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a role="menuitem" class="quota" tabindex="-1">N日波动率</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
 
                                                 </div>
                                             </div>
+                                            <div class="tab-pane fade" id="forum">
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                                        市盈率
+                                                    </button>
 
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                                        市净率
+                                                    </button>
 
-                                            <!--右边数据框-->
-                                            <div class="col-md-7 col-xs-12 pre-scrollable"
-                                                 style="height:200px;border-left: 1px solid slategray;max-height: 200px;">
-                                                <label class="">
-                                                    选股条件:
-                                                </label>
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>指标</th>
-                                                        <th>比较符</th>
-                                                        <th>值</th>
-                                                        <th>权重</th>
-                                                        <th>操作</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="quotaList">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                                        市销率
+                                                    </button>
 
-                                                    </tbody>
-                                                </table>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                                        静态市盈率
+                                                    </button>
+
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
+                                                        动态市盈率
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="security"></div>
+
+                                        </div>
+                                    </div>
+                                    <!--右边数据框-->
+                                    <div class="col-md-6" style=" border-left: 1px solid slategray;">
+                                        <label class="row col-md-3" style="margin-top:5px">
+                                            选股条件:
+                                        </label>
+                                        <!-- 选项卡组件（菜单项nav-tabs）-->
+
+                                        <ul id="myTab2" class="nav nav-tabs col-md-12 col-xs-12" style="margin-top: 5px"role="tablist">
+                                            <li class="active"><a href="#choose" role="tab" data-toggle="tab">筛选条件</a></li>
+                                            <li><a href="#rank" role="tab" data-toggle="tab">排名条件</a></li>
+                                        </ul>
+                                        <!-- 选项卡面板 -->
+                                        <div id="myTabContent2" class="tab-content">
+                                            <div class="tab-pane fade in active" id="choose">
+
+                                                <div class="col-md-12 col-xs-12"
+                                                     style="height:200px;max-height: 240px;overflow-y: auto">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>指标</th>
+                                                            <th>比较符</th>
+                                                            <th>值</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="quotaList">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade in" id="rank">
+
+                                                <div class="col-md-12 col-xs-12"
+                                                     style="height:200px;max-height:  240px;overflow-y: auto">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>指标</th>
+                                                            <th>次序</th>
+                                                            <th>权重</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="rankList">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
 
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="row" style="margin-top: 15px; margin-bottom: 15px">
                                     <div class="col-md-2">
@@ -743,7 +767,11 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
 <footer>
 
 </footer>
@@ -757,6 +785,7 @@
 
 <script src="../js/echarts.min.js"></script>
 <script src="../js/chart.js"></script>
+<script src="../js/quotaSelect.js"></script>
 <script src="../js/startLoaded.js"></script>
 
 
@@ -765,7 +794,7 @@
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
 
-    $("#strategyDetail").find("li").addClass("col-md-6 small");
+    $("#strategyDetail").find("li").addClass("col-md-6 ");
     $("#strategyDetail").find("li").find("span").css("color", "#9e9e9e");
     $("#strategyDetail").find("li").css("margin-bottom", "10px")
     var paramter = ["我去", 2, 3, 4, 5];
@@ -796,127 +825,11 @@
     }).on("click", function () {
         $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
     });
-
-</script>
-<script type="text/javascript">
-
-    $(".quota").hover(function () {
-        $(this).css({"cursor": "pointer"});
-    });
-
-    $(".quota").click(function () {
-        var quotaName;
-//       alert($(this).html())
-        if ($(this).html().substring(0, 1) == "N") {
-            quotaName = "<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $(this).html().substring(1,) + "</div>"
-        } else {
-            quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $(this).html() + "</div>"
-        }
-
-        $("#quotaList").append("<tr class='quotaRow'>" +
-            "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
-            "<option value='RANK_MAX'>排名最大</option>" +
-            "<option value='RANK_MIN'>排名最小</option>" +
-            "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
-            "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
-            "</select>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<div class=\"col-md-10\">" +
-            "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
-            "</div>" +
-            "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<div class=\"col-md-9\">" +
-            "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
-            "</div>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>" +
-            "</tr>");
-
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click(function () {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-            commit();
-        });
-        $(".quotaRank").unbind("input propertychange");
-        $(".quotaRank").bind('input propertychange', function () {
-            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
-            } else {
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
-            }
-        })
-
-    });
-
-    function commit() {
-        $(".quotaRow").each(function () {
-//           分别对应指标名称 指标排名方式 选股的多少 权重
-            alert($(this).find(".numOfN").val() + $(this).find(".quotaName").html());
-            alert($(this).find(".quotaRank").val());
-            alert($(this).find(".quotaNum").val());
-            alert($(this).find(".quotaWeight").val());
-        });
+    function openStock() {
+        $("body").removeClass('loaded');
+        window.location.href="/stocks"
     }
-    $('#searchQuota').bind('input propertychange', function () {
-        alert("11");
-    });
-    function quotaChange() {
-        var quotaName;
-//       alert($(this).html())
-        if ($('#searchQuota').val().substring(0, 1) == "N") {
-            quotaName = "<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $('#searchQuota').val().substring(1,) + "</div>"
-        } else {
-            quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $('#searchQuota').val() + "</div>"
-        }
-
-        $("#quotaList").append("<tr class='quotaRow'>" +
-            "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
-            "<option value='RANK_MAX'>排名最大</option>" +
-            "<option value='RANK_MIN'>排名最小</option>" +
-            "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
-            "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
-            "</select>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<div class=\"col-md-10\">" +
-            "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
-            "</div>" +
-            "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            "<div class=\"col-md-9\">" +
-            "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
-            "</div>" +
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>" +
-            "</tr>");
-
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click(function () {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-            commit();
-        });
-
-    }
+    $("#commity").addClass("act");
 </script>
 </body>
 </html>

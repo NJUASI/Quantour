@@ -11,6 +11,7 @@ import java.util.Locale;
  * Created by cuihua on 2017/5/28.
  */
 public class StockComparisionCriteriaFormatter implements Formatter<StockComparisionCriteria> {
+
     @Override
     public StockComparisionCriteria parse(String text, Locale locale) throws ParseException {
         System.out.println("--------------FORMAT StockComparisionCriteria--------------");

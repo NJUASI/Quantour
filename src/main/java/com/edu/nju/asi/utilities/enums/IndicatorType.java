@@ -21,7 +21,7 @@ public enum IndicatorType {
     AFTER_ADJ_HIGH("后复权最高价"),
     AFTER_ADJ_LOW("后复权最低价"),
     AFTER_ADJ_CLOSE("后复权收盘价"),
-    AFTER_ADJ_PRE_CLOSE("昨日后复权收盘价"),
+    AFTER_ADJ_PRE_CLOSE("前日后复权收盘价"),
     AFTER_ADJ_DAILY_AVE_PRICE("后复权均价"),
 
     VOLUME("成交量"),

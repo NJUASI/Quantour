@@ -1,8 +1,15 @@
 /**
  * Created by cuihua on 2017/5/14.
  */
-function traceback() {
-    // var isCustomized = $(":radio[name='optionsRadios']:checked").val();
+/**
+ * 获取股票策略的条件
+ */
+function getTraceBackCriteria() {
+
+    // alert($("#startDate").val() + "\n" + $("#endDate").val() + "\n" + $("#formativePeriod").val() + "\n" + $("#holdingPeriod").val()
+    //     + "\n" + $("#stType").val() + "\n" +$("#blockTypes").val() + "\n" +$("#baseStockEve").val() + "\n" + isCustomized
+    //     + "\n" +$("#formativeStrategy").val() + "\n" +$("#pickStrategy").val() + "\n"+$("#rank").val());
+
 
     // 添加选股条件
     var filterConditions = new Array();
@@ -67,7 +74,7 @@ function traceback() {
     // "formativePeriod": $("#formativePeriod").val();
 
     alert("filterConditions: " +  filterConditions + "\n\n" + "rankConditions: " + rankConditions);
-    var jsonData = {
+    var criteriaData = {
         "startDate": $("#startDate").val(),
         "endDate": $("#endDate").val(),
         "holdingPeriod": $("#holdingPeriod").val(),
@@ -81,15 +88,18 @@ function traceback() {
         "filterConditions": filterConditions,
         "rankConditions": rankConditions
     };
+    return criteriaData;
+}
 
+/**
+ * 回测
+ */
+function traceback() {
+    // var isCustomized = $(":radio[name='optionsRadios']:checked").val();
     $("body").removeClass("loaded");
 
+    var jsonData = getTraceBackCriteria();
     alert(JSON.stringify(jsonData));
-
-    //
-    // alert($("#startDate").val() + "\n" + $("#endDate").val() + "\n" + $("#formativePeriod").val() + "\n" + $("#holdingPeriod").val()
-    //     + "\n" + $("#stType").val() + "\n" +$("#blockTypes").val() + "\n" +$("#baseStockEve").val() + "\n" + isCustomized
-    //     + "\n" +$("#formativeStrategy").val() + "\n" +$("#pickStrategy").val() + "\n"+$("#rank").val());
 
     $.ajax({
         type: "post",
@@ -235,6 +245,65 @@ function traceback() {
     });
 }
 
+
+
+/**
+ * 用户确认保存策略
+ */
+function ensureCreate(curUser){
+    alert("--------ENTER--------");
+    var strategyID = $("#strategyName").val();
+    var description = $("#strategyDescription").val();
+    var isPrivate = $('input[name="radios3"]:checked').val();
+
+    var strategyData = {
+        "strategyID": strategyID,
+        "date": null,
+        "creater": curUser,
+        "isPrivate": isPrivate,
+        "content": JSON.stringify(getTraceBackCriteria()),
+        "description": description,
+        "traceBackInfo": null,
+        "users": null
+    };
+
+    alert("--------END--------");
+    alert(JSON.stringify(strategyData));
+
+    $.ajax({
+        type: "post",
+        async: true,
+        url: "/strategy/save",
+        data:{
+            "strategy": JSON.stringify(strategyData)
+        },
+
+        success: function (result) {
+            // $("body").addClass("loaded");
+            var array = result.split(";");
+
+            if (array[0] == "1") {
+
+
+            } else if (array[0] == "-1") {
+                // 提示错误信息
+                alert(array[1]);
+            } else {
+                alert("未知错误类型orz");
+            }
+        },
+        error: function (result) {
+            alert("错误" + result);
+        }
+
+    });
+
+
+}
+
+/**
+ * 解析回测指标
+ */
 function separateIndicator(indicatorType) {
     var separator = indicatorType.indexOf("日");
 
@@ -244,6 +313,8 @@ function separateIndicator(indicatorType) {
         return new Array(1, convertIndicator(indicatorType));
     }
     if (separator == 0) {
+        if (indicatorType == "日均成交价") return new Array(1, convertIndicator(indicatorType));
+
         // 为 N日** 类型
         return convertIndicator(indicatorType.substr(1));
     } else {
@@ -252,7 +323,10 @@ function separateIndicator(indicatorType) {
             // 为 *日*** 类型
             return new Array(indicatorType.substr(0, separator), convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         } else {
-            // 为 当／前日开盘价 类型
+            if (indicatorType == "前日收盘价") return new Array(1, "PRE_CLOSE");
+            if (indicatorType == "前日后复权收盘价") return new Array(1, "AFTER_ADJ_PRE_CLOSE");
+
+            // 为 当日*** 类型
             return new Array(1, convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         }
     }
@@ -272,8 +346,6 @@ function convertIndicator(indicatorType) {
             return "HIGH";
         case "最低价":
             return "LOW";
-        case "前日收盘价":
-            return "PRE_CLOSE";
         case "日均成交价":
             return "DAILY_AVE_PRICE";
         case "后复权开盘价":
@@ -284,8 +356,6 @@ function convertIndicator(indicatorType) {
             return "AFTER_ADJ_HIGH";
         case "后复权最低价":
             return "AFTER_ADJ_LOW";
-        case "前日后复权收盘价":
-            return "AFTER_ADJ_PRE_CLOSE";
         case "后复权均价":
             return "AFTER_ADJ_DAILY_AVE_PRICE";
         case "成交额":

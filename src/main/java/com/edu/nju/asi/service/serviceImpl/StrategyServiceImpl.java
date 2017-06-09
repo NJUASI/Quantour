@@ -43,7 +43,13 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public boolean saveStrategy(Strategy newStrategy) {
-        return strategyDao.saveStrategy(newStrategy.getContent(), newStrategy);
+        boolean fakeSave = strategyDao.saveStrategy(newStrategy.getContent(), newStrategy);
+
+
+        // TODO 另开一个线程跑回测，跑完了将回测的数据存入数据库
+
+
+        return fakeSave;
     }
 
     @Override

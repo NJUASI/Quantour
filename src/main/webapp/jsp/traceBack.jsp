@@ -1,3 +1,4 @@
+<%@ page import="com.edu.nju.asi.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -79,10 +80,15 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">首页</a></li>
-                <li><a href="/stocks" style="cursor:
-                 pointer">大盘详情</a></li>
-                <li><a href="/trace_back">量化社区</a></li>
+                <li><a id="homePage" href="/">首页</a></li>
+                <li><a id="stocks" style="cursor: pointer">大盘详情</a></li>
+                <li class="dropdown">
+                    <a href="##" class="dropdown-toggle" id="community" data-toggle="dropdown">量化社区<span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="left:15px;max-width: 100px">
+                        <li><a href="/trace_back">创建策略</a></li>
+                        <li><a href="/jsp/generalStrategy.jsp">使用策略</a></li>
+                    </ul>
+                </li>
                 <li><a href="#">帮助</a></li>
                 <c:choose>
                     <c:when test="${sessionScope.user!=null}">
@@ -342,7 +348,7 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                             <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">1日涨幅</a>
+                                                <a role="menuitem" class="quota" tabindex="-1">当日涨幅</a>
                                             </li>
                                             <li role="presentation">
                                                 <a role="menuitem" class="quota" tabindex="-1">5日涨幅</a>
@@ -497,11 +503,7 @@
 
                         </div>
                     </div>
-                    <%--<input id='ex1' data-slider-id='ex1Slider' type='text' data-slider-min='0' data-slider-max='20' data-slider-step='1' data-slider-value='14'/>--%>
-
                     <!--右边数据框-->
-
-
                     <div class="col-md-6" style=" border-left: 1px solid slategray;">
                     <label class="row col-md-3" style="margin-top:5px">
                         选股条件:
@@ -728,7 +730,7 @@
         </div>
     </div>
 </div>
-<footer/>
+
 <%--</c:when>--%>
 <%--<c:otherwise>--%>
 <%--显示一张图片好了。。--%>
@@ -922,7 +924,7 @@
                         <div class=" col-md-offset-8 col-md-1" style="padding-right: 0px">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="radios3" id="radios1" value="私密" checked>
+                                    <input type="radio" name="radios3" id="radios1" value="true" checked>
                                     私密
                                 </label>
                             </div>
@@ -930,13 +932,20 @@
                         <div class="col-md-1" style="padding-left: 0px">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="radios3" id="radios2" value="公开">
+                                    <input type="radio" name="radios3" id="radios2" value="false">
                                     公开
                                 </label>
                             </div>
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" onclick="sureCreate()" class="btn btn-primary">创建策略</button>
+                        <c:choose>
+                            <c:when test="${sessionScope.user==null}">
+                                <button type="button" onclick='ensureCreate()' class="btn btn-primary">创建策略</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="button" onclick='ensureCreate("<%=((User)session.getAttribute("user")).getUserName()%>")' class="btn btn-primary">创建策略</button>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -959,101 +968,19 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
 <script src="../js/traceBack.js"></script>
+<script src="../js/strategy.js"></script>
 
 <script src="../js/echarts.min.js"></script>
 <script src="../js/chart.js"></script>
-<script src="../js/startLoaded.js"></script>
+<%--<script src="../js/startLoaded.js"></script>--%>
 <script src="../js/logIn.js"></script>
+<script src="../js/quotaSelect.js"></script>
 
 <script src="../js/bootstrap-slider.js"></script>
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
-
-
-    $(function () {
-        $("#createStrategy").click(function () {
-            $("#mymodal").modal("toggle");
-            var blockType="";
-            for( var i = 0; i< $("#blockTypes").val().length;i++)   {
-                if($("#blockTypes").val()[i]=="ZB"){
-                    blockType+="主板 ";
-                }else if($("#blockTypes").val()[i]=="CYB"){
-                    blockType+="创业板 ";
-                }else{
-                    blockType+="中小板 ";
-                }
-            }
-            $("#strategyBlock").html(blockType);
-            var stType=document.getElementById("stType").options[document.getElementById("stType").selectedIndex].text;
-            $("#strategyST").html(stType);
-            $("#strategyBace").html($("#baseStockEve").val());
-            $("#strategyPeriod").html($("#holdingPeriod").val());
-            $("#strategyHolding").html($("#maxHolding").val());
-
-            $("#quotaCreate").empty();
-            $("#quotaCreate").append( "<div class=' col-md-10'> <strong class='col-md-5'>指标</strong><strong class='col-md-4'>比较符</strong> <strong class='col-md-2'>值</strong> </div>")
-
-            $(".quotaRow").each(function () {
-                var rank="";
-                switch ($(this).find('.quotaRank').val()){
-                    case "RANK_MIN":
-                        rank="排名最小"
-                        break;
-                    case "RANK_MAX_PERCENT":
-                        rank="排名%最大"
-                        break;
-                    case "RANK_MAX":
-                        rank="排名最大"
-                        break;
-                    case  "RANK_MIN_PERCENT":
-                        rank="排名%最小"
-                        break;
-                    case  "RANK_GREATER":
-                        rank="大于"
-                        break;
-                    case  "RANK_LESS":
-                        rank="小于"
-                        break;
-                    case  " RANK_EQUAL":
-                        rank="等于"
-                        break;
-                }
-
-                $("#quotaCreate").append( "<div class=' col-md-10'> <span class='col-md-5'>"+$(this).find('.numOfN').val() + $(this).find('.quotaName').html()+"</span><span class='col-md-4'>"+rank+"</span> <span class='col-md-2'>"+$(this).find('.quotaNum').val()+"</span> </div>")
-//
-
-            });
-
-            $("#rankCreate").empty();
-            $("#rankCreate").append( "<div class=' col-md-10'> <strong class='col-md-5'>指标</strong><strong class='col-md-4'>次序</strong> <strong class='col-md-2'>权重</strong> </div>")
-
-            $(".rankRow").each(function (){
-                var rank="";
-                switch ($(this).find('.rankOrder').val()){
-                    case "ASC_RANK":
-                        rank="由小到大"
-                        break;
-                    case "DESC_RANK":
-                        rank="由大到小"
-                        break;
-                    }
-                $("#rankCreate").append( "<div class=' col-md-10'> <span class='col-md-5'>"+$(this).find('.numOfN').val() + $(this).find('.quotaName').html()+"</span><span class='col-md-4'>"+rank+"</span> <span class='col-md-2'>"+$(this).find('.quotaWeight').val()+"</span> </div>")
-
-            });
-
-        });
-    });
-    function sureCreate(){
-        //TODO fjj 计算的数据同 traceback.js  注意回测日期是不是需要修改为1年
-        //下面直接存
-        $("#strategyName").val();//股票名称
-        //创建者
-        //创建日期
-        alert($("#strategyDescription").val());//策略描述
-        alert($('input[name="radios3"]:checked').val());//是否私密
-    }
 
     var today = new Date();
     var yesterday = new Date();
@@ -1120,27 +1047,7 @@
 
         $("#stocks").click(function () {
             $("body").removeClass("loaded");
-            $.ajax({
-                type: "post",
-                async: true,
-                url: "/stocks",
-
-                success: function (result) {
-                    var array = result.split(";");
-
-                    if (array[0] == "1") {
-                        window.location.href = "/stocks";
-                    } else if (array[0] == "-1") {
-                        // 提示错误信息
-                        alert(array[1]);
-                    } else {
-                        alert("未知错误类型orz");
-                    }
-                },
-                error: function (result) {
-                    alert("错误" + result);
-                }
-            });
+            window.location.href = "/stocks";
         });
 
     });
@@ -1174,6 +1081,20 @@
             }
         }
     });
+//    var reg = /^[0-9]*$/;
+//    if(name==""){
+//        $("#error-dynamic-info").text("姓名不能为空！");
+//        setTimeout("$('#error-dynamic-info').text('');",1000);
+//        return false;
+//    }else if(tel=="" || !reg.test(tel)){
+//        $("#error-dynamic-info").text("电话为空或电话输入错误！");
+//        setTimeout("$('#error-dynamic-info').text('');",1000);
+//        return false;
+//    }else if(address==""){
+//        $("#error-dynamic-info").text("客栈的地址不能为空！");
+//        setTimeout("$('#error-dynamic-info').text('');",1000);
+//        return false;
+//    }
     $("#normalForm").validate({
         rules: {
             phone: {
@@ -1197,289 +1118,10 @@
         }
     });
 
-
+    $("#community").addClass("act");
 </script>
 
-<script type="text/javascript">
-    $(".quota").hover(function () {
-        $(this).css({"cursor": "pointer"});
-    });
 
- 
-
-    function convert(indicatorType) {
-        indicatorType = indicatorType.trim();
-        switch (indicatorType) {
-            case "开盘价":
-                return " ";
-            case "收盘价":
-                return " ";
-            case "最高价":
-                return " ";
-            case "最低价":
-                return " ";
-            case "前日收盘价":
-                return " ";
-            case "日均成交价":
-                return " ";
-            case "后复权开盘价":
-                return " ";
-            case "后复权收盘价":
-                return " ";
-            case "后复权最高价":
-                return " ";
-            case "后复权最低价":
-                return " ";
-            case "前日后复权收盘价":
-                return " ";
-            case "后复权均价":
-                return " ";
-            case "总股本":
-                return "亿";
-            case "流通股本":
-                return "亿";
-            case "总市值":
-                return "亿";
-            case "流通市值":
-                return "亿";
-            case "股价振幅":
-                return "%";
-            case "市盈率":
-                return " ";
-            case "市净率":
-                return " ";
-            case "市销率":
-                return " ";
-            case "静态市盈率":
-                return " ";
-            case "动态市盈率":
-                return " ";
-            default:
-                switch (indicatorType.substring(indicatorType.length - 2)) {
-                    case "交额":
-                        return "亿";
-                    case "交量":
-                        return "万";
-                    case "离率":
-                        return "%";
-                    case "动率":
-                        return "%";
-                    case "涨幅":
-                        return "%";
-                    case "手率":
-                        return "%";
-                }
-
-        }
-
-    }
-
-
-    $('#searchQuota').bind('input propertychange', function () {
-        alert("11");
-    });
-    function quotaChange() {
-        var quotaName;
-//       alert($(this).html())
-        if ($('#searchQuota').val().substring(0, 1) == "N") {
-            quotaName = "<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $('#searchQuota').val().substring(1) + "</div>"
-        } else {
-            quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $('#searchQuota').val() + "</div>"
-        }
-
-        var rankType;
-        var whichTab;
-        var whichValue;
-        var whichButton;
-        if($("#choose").hasClass("active")){
-            rankType = "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
-                "<option value='RANK_MAX'>排名最大</option>" +
-                "<option value='RANK_MIN'>排名最小</option>" +
-                "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
-                "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
-                "<option value='RANK_GREATER'>大于</option>" +
-                "<option value='RANK_LESS'>小于</option>" +
-                "<option value='RANK_EQUAL'>等于</option>" +
-                "</select>" ;
-            whichTab =$("#quotaList");
-
-            whichValue=  "<div class=\"row\">" +
-                "<div class=\"col-md-10\">" +
-                "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
-                "</div>" +
-                "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
-                "</div>" ;
-            whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
-        }else{
-            rankType="<select class=\"form-control col-md-12 rankOrder\" style=\"padding-left: 5px;padding-right: 5px\">" +
-                "<option value='ASC_RANK'>由小到大</option>" +
-                "<option value='DESC_RANK'>由大到小</option>" +
-                "</select>" ;
-            whichTab= $("#rankList");
-            whichValue=  "<div class=\"row\">" +
-                "<div class=\"col-md-9\">" +
-                "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
-//                    "<input id='ex1' data-slider-id='ex1Slider' type='text' data-slider-min='0' data-slider-max='20' data-slider-step='1' data-slider-value='14'/>"+
-                "</div>" +
-                "</div>" ;
-            whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary rankBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
-        }
-        whichTab.append("<tr class='quotaRow'>" +
-            "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            rankType+
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-2\">" +
-            whichValue+
-            "</td>" +
-            whichButton+
-            "</tr>");
-
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click(function () {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-        });
-
-        $(".quotaRank").unbind("input propertychange");
-        $(".quotaRank").bind('input propertychange', function () {
-            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
-            } else if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT") {
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html("%");
-            } else {
-                var name = $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".quotaName").html();
-                var result = convert(name);
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html(result);
-            }
-        });
-
-        $(".rankBt").unbind("click");
-        $(".rankBt").click(function () {
-            $("#rankList").find("tr").eq($(".rankBt").index($(this))).remove();
-        });
-        $(".rankOrder").unbind("input propertychange");
-        $(".rankOrder").bind('input propertychange', function () {
-            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "hidden");
-            } else if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT") {
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html("%");
-            } else {
-                var name = $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".quotaName").html();
-                var result = convert(name);
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html(result);
-            }
-        })
-    }
-
-    $(".quota").click(function () {
-        var quotaName;
-//       alert($(this).html())
-        if ($(this).html().substring(0, 1) == "N") {
-            quotaName = "<div class='col-md-4'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $(this).html().substring(1) + "</div>"
-        } else {
-            quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $(this).html() + "</div>"
-        }
-
-        var rankType;
-        var whichTab;
-        var whichValue;
-        var whichButton;
-        var whichType;
-        if($("#choose").hasClass("active")){
-            rankType = "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
-                "<option value='RANK_MAX'>排名最大</option>" +
-                "<option value='RANK_MIN'>排名最小</option>" +
-                "<option value='RANK_MAX_PERCENT'>排名%最大</option>" +
-                "<option value='RANK_MIN_PERCENT'>排名%最小</option>" +
-                "<option value='RANK_GREATER'>大于</option>" +
-                "<option value='RANK_LESS'>小于</option>" +
-                "<option value='RANK_EQUAL'>等于</option>" +
-                "</select>" ;
-            whichTab =$("#quotaList");
-
-            whichValue=  "<div class=\"row\">" +
-                "<div class=\"col-md-10\">" +
-                "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>" +
-                "</div>" +
-                "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
-                "</div>" ;
-            whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
-            whichType='quotaRow';
-        }else{
-            rankType="<select class=\"form-control col-md-12 rankOrder\" style=\"padding-left: 5px;padding-right: 5px\">" +
-                "<option value='ASC_RANK'>由小到大</option>" +
-                "<option value='DESC_RANK'>由大到小</option>" +
-                "</select>" ;
-            whichTab= $("#rankList");
-            whichValue=  "<div class=\"row\">" +
-                "<div class=\"col-md-9\">" +
-                "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>" +
-//                "<input id='ex1' data-slider-id='ex1Slider' type='text' data-slider-min='0' data-slider-max='20' data-slider-step='1' data-slider-value='14'/>"+
-                "</div>" +
-                "</div>" ;
-            whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary rankBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
-            whichType='rankRow';
-        }
-        whichTab.append("<tr class="+whichType+">" +
-            "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
-            "<td class=\"col-md-2\">" +
-            "<div class=\"row\">" +
-            rankType+
-            "</div>" +
-            "</td>" +
-            "<td class=\"col-md-2\">" +
-            whichValue+
-            "</td>" +
-            whichButton+
-            "</tr>");
-
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click(function () {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-        });
-        $(".quotaRank").unbind("input propertychange");
-        $(".quotaRank").bind('input propertychange', function () {
-            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "hidden");
-            } else if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT") {
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html("%");
-            } else {
-                var name = $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".quotaName").html();
-                var result = convert(name);
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility", "visible");
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").html(result);
-            }
-        });
-
-        $(".rankBt").unbind("click");
-        $(".rankBt").click(function () {
-            $("#rankList").find("tr").eq($(".rankBt").index($(this))).remove();
-        });
-        $(".rankOrder").unbind("input propertychange");
-        $(".rankOrder").bind('input propertychange', function () {
-            if ($(this).val() == "RANK_MAX" || $(this).val() == "RANK_MIN") {
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "hidden");
-            } else if ($(this).val() == "RANK_MAX_PERCENT" || $(this).val() == "RANK_MIN_PERCENT") {
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html("%");
-            } else {
-                var name = $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".quotaName").html();
-                var result = convert(name);
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
-                $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html(result);
-            }
-        })
-    });
-
-
-</script>
 
 </body>
 </html>
