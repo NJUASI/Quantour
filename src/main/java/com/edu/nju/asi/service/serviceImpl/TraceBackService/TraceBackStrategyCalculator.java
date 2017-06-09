@@ -1,6 +1,11 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
+import com.edu.nju.asi.dao.BasicDataDao;
+import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dao.daoImpl.BasicDataDaoImpl;
+import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
+import com.edu.nju.asi.model.BasicData;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategyFactory;
@@ -11,9 +16,7 @@ import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.enums.RankType;
 import com.edu.nju.asi.utilities.exceptions.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -31,8 +34,7 @@ public class TraceBackStrategyCalculator {
      */
     protected TraceBackCriteria traceBackCriteria;
 
-    // 默认1000元初始投资资本
-    private final double initMoney = 1;
+    private double initMoney = 1;
     private double nowMoney = 1;
 
     /*
@@ -69,10 +71,17 @@ public class TraceBackStrategyCalculator {
     protected List<RankCondition> rankConditions;
 
     /**
+     * 财务指标
+     */
+    protected Map<String,List<BasicData>> financialData;
+
+    /**
      * 形成策略和选择策略工厂
      */
     FormateStrategyFactory formateStrategyFactory = new FormateStrategyFactory();
     PickStrategyFactory pickStrategyFactory = new PickStrategyFactory();
+
+    BasicDataDao basicDataDao = new BasicDataDaoImpl();
 
     public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
         this.traceBackStockPool = traceBackStockPool;
@@ -82,6 +91,12 @@ public class TraceBackStrategyCalculator {
 
         this.filterConditions = traceBackCriteria.filterConditions;
         this.rankConditions = traceBackCriteria.rankConditions;
+
+        setUpFinancialIndicators();
+    }
+
+    private void setUpFinancialIndicators() {
+        financialData = basicDataDao.getAllBasicData(traceBackStockPool);
     }
 
     /**
@@ -247,34 +262,39 @@ public class TraceBackStrategyCalculator {
 
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
 
-        //初始化计算数组
-        for(int i = 0; i < periodStart.until(periodEnd, ChronoUnit.DAYS); i++){
-            forCalcu.put(periodStart.plusDays(i), new ArrayList<>());
-        }
+        //每个周期的起始调仓日不计算入收益中
+        periodStart = allDatesWithData.get(startIndex+1);
 
         // 对阶段内的每只股票进行数据读取
         for (String s : pickedStockCodes) {
-            List<Stock> ss = stockData.get(s);
+            List<Stock> ss = findStockVOsWithinDay(s, periodStart, periodEnd);
 
-            //持有期第一天的数据
-            for(int i = 0; i < ss.size(); i++){
+            double basePrice = ss.get(0).getPreClose();
+            for (int i = 0; i < ss.size(); i++) {
                 LocalDate thisDate = ss.get(i).getStockID().getDate();
+                double profit = ss.get(i).getClose() / basePrice - 1;
 
-                double eachAccumulativeReturn = ss.get(i).getClose() / ss.get(0).getClose() - 1;
-                if(forCalcu.keySet().contains(thisDate)){
-                    forCalcu.get(thisDate).add(eachAccumulativeReturn);
+                if (forCalcu.keySet().contains(thisDate)) {
+                    forCalcu.get(thisDate).add(profit);
+                } else {
+                    List<Double> values = new LinkedList<>();
+                    values.add(profit);
+                    forCalcu.put(thisDate, values);
                 }
             }
         }
 
         // 依次处理每一交易日
+
+        double thisPeriodStartMoney = nowMoney;
         for (Map.Entry<LocalDate, List<Double>> entry : forCalcu.entrySet()) {
+
             double thisYield = getAveYield(entry.getValue());
 
-            nowMoney *= (thisYield + 1);
-            double cumulativeYield = nowMoney / initMoney - 1;
+            nowMoney = (1 + thisYield) * thisPeriodStartMoney;
+            thisYield = nowMoney / initMoney - 1;
 
-            strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), cumulativeYield, false));
+            strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), thisYield, false));
         }
         return strategyCumulativeReturn;
     }
@@ -301,7 +321,7 @@ public class TraceBackStrategyCalculator {
         List<List<String>> allFilterWantedCodes = new ArrayList<>();
 
         for(FilterCondition filterCondition : filterConditions){
-            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData);
+            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData,financialData);
             AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value);
             try {
                 allFilterWantedCodes.add(pickStrategy.pick(formateStrategy.formate(traceBackStockPool, periodStart, filterCondition.formativePeriod)));
@@ -354,7 +374,7 @@ public class TraceBackStrategyCalculator {
         List<List<RankConditionRate>> allRankConditionRates = new ArrayList<>();
 
         for(RankCondition rankCondition : rankConditions){
-            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData);
+            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData,financialData);
             RankStrategy rankStrategy = new RankStrategy(rankCondition.weight, rankCondition.rankType);
             try {
                 allRankConditionRates.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
@@ -390,16 +410,6 @@ public class TraceBackStrategyCalculator {
         return rankConditionRates;
     }
 
-    private boolean isDateWithinWanted(LocalDate start, LocalDate end, LocalDate now) {
-        if (now.isEqual(start) || now.isEqual(end)) {
-            return true;
-        }
-        if (now.isAfter(start) && now.isBefore(end)) {
-            return true;
-        }
-        return false;
-    }
-
     protected Stock findStock(String stockCode, LocalDate date){
 
         List<Stock> stockVOList = stockData.get(stockCode);
@@ -415,5 +425,39 @@ public class TraceBackStrategyCalculator {
         else {
             return null;
         }
+    }
+
+    protected List<Stock> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){
+        LocalDate thisStart = start;
+        LocalDate thisEnd = end;
+
+        List<Stock> stockVOList = stockData.get(stockCode);
+
+        List<LocalDate> dates = new ArrayList<>();
+        for(int j = 0; j < stockVOList.size(); j++){
+            dates.add(stockVOList.get(j).getStockID().getDate());
+        }
+
+        while(!dates.contains(thisStart) || !dates.contains(thisEnd)){
+            if(!dates.contains(thisStart)){
+                thisStart = thisStart.plusDays(1);
+            }
+            if(!dates.contains(thisEnd)){
+                thisEnd = thisEnd.minusDays(1);
+            }
+            //中间没有数据
+            if(thisStart.isAfter(thisEnd)){
+                return null;
+            }
+        }
+        int startIndex = dates.indexOf(thisStart);
+        int endIndex = dates.indexOf(thisEnd);
+
+        //没有数据
+        if(startIndex == -1){
+            return null;
+        }
+
+        return stockVOList.subList(startIndex, endIndex+1);
     }
 }

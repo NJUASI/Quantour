@@ -59,7 +59,9 @@ public enum IndicatorType {
     PB("市净率"),
     PS_TTM("市销率"),
     S_PE_TTM("静态市盈率"),
-    D_PE_TTM("动态市盈率");
+    D_PE_TTM("动态市盈率"),
+    PEG("市盈率相对于盈利增长比率");
+
 
 
     private String repre;

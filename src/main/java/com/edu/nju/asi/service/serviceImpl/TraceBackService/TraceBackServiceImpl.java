@@ -121,7 +121,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         System.out.println("enter");
 
-        stockData = stockDao.getAllStockData();
+        stockData = stockDao.getAllStockData(traceBackStockPool);
 
         System.out.println("out");
 

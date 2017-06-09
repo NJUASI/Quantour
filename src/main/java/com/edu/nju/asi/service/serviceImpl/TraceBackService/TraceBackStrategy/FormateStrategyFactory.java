@@ -1,5 +1,6 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy;
 
+import com.edu.nju.asi.model.BasicData;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.*;
 import com.edu.nju.asi.utilities.enums.IndicatorType;
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public class FormateStrategyFactory {
 
-    public static AllFormateStrategy createFormateStrategy(IndicatorType indicatorType, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
+    public static AllFormateStrategy createFormateStrategy(IndicatorType indicatorType, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialStock) {
         switch (indicatorType) {
 
             //可直接拿到的数据，并通过均值形成
@@ -104,6 +105,23 @@ public class FormateStrategyFactory {
                 return new BOLL_FormateStrategy(allDatesWithData, stockData, indicatorType);
             case AVE_TRUE_RANGE:
                 return new ATR_FormateStrategy(allDatesWithData, stockData);
+
+
+            /**
+             * 财务指标
+             */
+            //市盈率
+            case PE_TTM:
+                return new PE_TTM_FormateStrategy(allDatesWithData, stockData, financialStock);
+            //静态市盈率
+            case S_PE_TTM:
+                return new S_PE_TTM_FormateStrategy(allDatesWithData, stockData, financialStock);
+            //市净率
+            case PB:
+                return new PB_FormateStrategy(allDatesWithData, stockData, financialStock);
+            //市销率
+            case PS_TTM:
+                return new PS_TTM_FormateStrategy(allDatesWithData, stockData, financialStock);
 
         }
         return null;
