@@ -3,8 +3,14 @@ package com.edu.nju.asi.crawler;
 
 import com.edu.nju.asi.crawler.StoreDataHelper.StoreAreaAndIndustryHelper;
 import com.edu.nju.asi.crawler.StoreDataHelper.StoreBasicDataHelper;
+import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.dataHelper.HelperManager;
+import com.edu.nju.asi.dataHelper.StockDataHelper;
+import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.StockSearch;
+import com.edu.nju.asi.utilities.StockList;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
 
 import javax.script.ScriptEngine;
@@ -23,24 +29,21 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        StoreBasicDataHelper storeBasicDataHelper = new StoreBasicDataHelper();
-        storeBasicDataHelper.store();
-//        Main main = new Main();
-//        Connection connection = JDBCUtil.getConnection();
-//        Set<String> codes = HelperManager.stockSearchDataHelper.getAllStocksCode().keySet();
-//        Map<String, List<Stock>> map = new HashMap<>();
-//
-//        long start = System.currentTimeMillis();
-//        for (String code : codes) {
-//            map.put(code, main.getAllStock(code, connection));
-//            System.out.println("code: "+code);
-//        }
-//        System.out.println("总时间： "+(System.currentTimeMillis()-start));
-//        try {
-//            connection.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        Main main = new Main();
+        StockDataHelper stockDataHelper = HelperManager.stockDataHelper;
+        StockSearchDataHelper stockSearchDataHelper = HelperManager.stockSearchDataHelper;
+        StockDao stockDao = new StockDaoImpl();
+        List<String> codes = new ArrayList<>();
+        Set<String> set = stockSearchDataHelper.getAllStocksCode().keySet();
+        Map<String,List<Stock>> data = new HashMap<>();
+        for(String code:set){
+            codes.add(code);
+        }
+
+        long start = System.currentTimeMillis();
+        System.out.println("------------------testSql----------------");
+            stockDao.getAllStockData(codes);
+        System.out.println("------------------testSql时间："+(System.currentTimeMillis()-start)+"----------------");
     }
 
     public void test() {
@@ -53,39 +56,5 @@ public class Main {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    public List<Stock> getAllStock(String code, Connection connection) {
-        System.out.println("------------enter-----------");
-        List<Stock> stocks = new ArrayList<>();
-        System.out.println("------------enter1-----------");
-        PreparedStatement preparedStatement = null;
-        System.out.println("------------ente2-----------");
-        String sql = "SELECT * FROM stock WHERE stock.code=?";
-        System.out.println("------------enter4-----------");
-
-        try {
-            long start = System.currentTimeMillis();
-            System.out.println("------------ente5-----------");
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, code);
-            System.out.println("------------ente6-----------");
-            ResultSet set = preparedStatement.executeQuery();
-            System.out.println("------------ente7-----------");
-            while (set.next()) {
-                String code1 = set.getString(1);
-                Date date = set.getDate(2);
-                System.out.println(date.toString());
-                LocalDate localDate = LocalDate.parse(date.toString());
-                stocks.add(new Stock(set.getString(1), localDate));
-            }
-            System.out.println("------------out-----------");
-            System.out.println(System.currentTimeMillis() - start);
-            set.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return stocks;
     }
 }
