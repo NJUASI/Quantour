@@ -121,92 +121,13 @@
 </footer>
 
 <!-- 登录模态框（Modal） -->
-<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="loginLabel">登录</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="login_username">用户名：</label>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control" id="login_username" placeholder="请输入用户名">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="login_password">密码：</label>
-                        <div class="col-md-7">
-                            <input type="password" class="form-control" id="login_password" placeholder="请输入密码">
-                        </div>
-                    </div>
-                    <p class="col-md-offset-3" id="errorMessageField"></p>
-                    <div class="checkbox text-right">
-                        <label id="rem-password">
-                            <input type="checkbox" checked>记住密码
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="login-btn-group">
-                    <button type="button" class="btn btn-primary" onclick="login()">登录</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
-<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="registerLabel">注册</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_username">用户名：</label>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control" id="reg_username" placeholder="请输入用户名">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_password">密码：</label>
-                        <div class="col-md-7">
-                            <input type="password" class="form-control" id="reg_password" placeholder="请输入密码">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_password2" style="padding-left: 0">确认密码：</label>
-                        <div class="col-md-7">
-                            <input type="password" class="form-control" id="reg_password2" placeholder="请再次输入密码">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="login-btn-group">
-                    <button type="button" class="btn btn-primary" onclick="register()">注册</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
-<div id="loader-wrapper">
-    <div id="loader"></div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-</div>
+<%@ include file="logIn.jsp" %>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.js"></script>
+<script src="../js/jquery.validate.js"></script>;
 <script src="../js/logIn.js"></script>
 <script src="../js/startLoaded.js"></script>
 <script type="text/javascript">
@@ -215,6 +136,45 @@
         window.location.href="/stocks"
     }
     $("#homePage").addClass("act");
+    $.validator.addMethod("checkQQ",function(value,element,params){
+        var checkQQ = /^[a-zA-Z]+\w+$/;
+        return this.optional(element)||(checkQQ.test(value));
+    },"请输入正确的QQ号码！");
+    $("#registerForm").validate({
+
+        onkeyup :true,// 是否在敲击键盘时验证
+        rules: {
+            reg_username: {
+                required: true,
+                minlength: 5,
+                maxlength: 15,
+                checkQQ:true
+            },
+            reg_password: {
+                required: true,
+                minlength: 5,
+                maxlength: 15
+            },
+            reg_password2: {
+                equalTo: "#reg_password"
+            },
+        },
+        messages: {
+            reg_username:{
+                required:"用户名不能为空",
+                minlength: "用户名不能少于5位",
+                maxlength: "用户名不能高于15位"
+            },
+            reg_password: {
+                required: "密码不能为空",
+                minlength: "密码不能少于5位",
+                maxlength: "密码不能高于15位"
+            },
+            reg_password2: {
+                equalTo: "两次密码不一样"
+            }
+        }
+    });
 </script>
 </body>
 </html>

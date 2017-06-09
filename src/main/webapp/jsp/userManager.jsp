@@ -391,7 +391,7 @@
                 <h4 class="modal-title" id="registerLabel">修改密码</h4>
             </div>
             <div class="modal-body" style="padding-left: 80px">
-                <form class="form-horizontal" role="form">
+                <form id="modifyForm" class="form-horizontal" role="form">
                     <div class="form-group">
                         <label>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：</label>
                         <label class="userID" style="margin-left: 20px">12345</label>

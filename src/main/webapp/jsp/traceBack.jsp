@@ -1081,6 +1081,20 @@
             }
         }
     });
+//    var reg = /^[0-9]*$/;
+//    if(name==""){
+//        $("#error-dynamic-info").text("姓名不能为空！");
+//        setTimeout("$('#error-dynamic-info').text('');",1000);
+//        return false;
+//    }else if(tel=="" || !reg.test(tel)){
+//        $("#error-dynamic-info").text("电话为空或电话输入错误！");
+//        setTimeout("$('#error-dynamic-info').text('');",1000);
+//        return false;
+//    }else if(address==""){
+//        $("#error-dynamic-info").text("客栈的地址不能为空！");
+//        setTimeout("$('#error-dynamic-info').text('');",1000);
+//        return false;
+//    }
     $("#normalForm").validate({
         rules: {
             phone: {
