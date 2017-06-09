@@ -181,8 +181,12 @@ public class JsonConverter {
         holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
         System.out.println("numbers2 over");
 
+        // holdingDetails, transferDayDetails
         holder.append(JSON.toJSONString(traceBackInfo.holdingDetails)).append(";");
         System.out.println("numbers3 over");
+
+        holder.append(JSON.toJSONString(traceBackInfo.transferDayDetails));
+        System.out.println("numbers4 over");
 
         // certainFormates, certainHoldings
 //        holder.append(jsonOfObject(traceBackInfo.certainFormates)).append(";");
@@ -222,12 +226,12 @@ public class JsonConverter {
         return holder.toString();
     }
 
-    private static ReturnPeriod convertReturnPeriod(ReturnPeriod returnPeriod) {
+    public static ReturnPeriod convertReturnPeriod(ReturnPeriod returnPeriod) {
         returnPeriod.winRate = Double.parseDouble(NumberFormat.decimaFormat(returnPeriod.winRate, 4));
         return returnPeriod;
     }
 
-    private static List<String> convertTraceBackNumVal(TraceBackInfo info) {
+    public static List<String> convertTraceBackNumVal(TraceBackInfo info) {
         TraceBackNumVal val = info.traceBackNumVal;
         MaxTraceBack maxTraceBack = info.maxTraceBack;
         List<String> result = new LinkedList<>();
@@ -277,7 +281,7 @@ public class JsonConverter {
      * @updateTime 2017/5/14
      * @params object 需要转换的对象
      */
-    private static String convertTraceBack(List<CumulativeReturn> list) throws JsonProcessingException {
+    public static String convertTraceBack(List<CumulativeReturn> list) throws JsonProcessingException {
         List<List<String>> result = new ArrayList<>();
 
         for (CumulativeReturn cumulativeReturn : list) {
@@ -329,7 +333,7 @@ public class JsonConverter {
      * @updateTime 2017/5/14
      * @params object 需要转换的对象
      */
-    private static List<String> convertHistogram(ReturnPeriod returnPeriod) throws JsonProcessingException {
+    public static List<String> convertHistogram(ReturnPeriod returnPeriod) throws JsonProcessingException {
         String[] categories = {"1%", "2%", "3%", "4%", "5%", "6%", "7%", "8%", "9%", "10%", "11%", ">12%"};
         Object[] datas1 = new Object[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         Object[] datas2 = new Object[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

@@ -1,5 +1,6 @@
-package com.edu.nju.asi.infoCarrier.traceBack;
+package com.edu.nju.asi.infoCarrier.strategy;
 
+import com.edu.nju.asi.infoCarrier.traceBack.FilterCondition;
 import com.edu.nju.asi.utilities.IndicatorTypeHelper;
 import com.edu.nju.asi.utilities.enums.IndicatorType;
 

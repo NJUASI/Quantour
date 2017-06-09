@@ -118,11 +118,12 @@ function traceback() {
             var array = result.split(";");
             if (array[0] == "1") {
 
-                // 处理网页上要显示的信息
+                // 处理网页上要显示的表格信息
                 var numberValues = eval("(" + array[1] + ")");              // List<String>
                 var abReturnPeriod = eval("(" + array[2] + ")");            // ReturnPeriod
                 var reReturnPeriod = eval("(" + array[3] + ")");            // ReturnPeriod
                 var holdingDetails = eval("(" + array[4] + ")");            // List<HoldingDetail>
+                var transferDetails = eval("(" + array[5] + ")");           // List<TransferDetail>
                 // var certainFormates = eval("(" + array[5] + ")");           // List<ExcessAndWinRateDist>
                 // var certainHoldings = eval("(" + array[6] + ")");           // List<ExcessAndWinRateDist>
 
@@ -208,11 +209,11 @@ function traceback() {
                 // // alert("--------------------5----------------");
 
 
-                // 处理图标的信息
-                var strategyData = JSON.parse(array[5]);            //List<List<String>>
-                var baseData = JSON.parse(array[6]);                //List<List<String>>
-                var abHistogramData = JSON.parse(array[7]);
-                var reHistogramData = JSON.parse(array[8]);
+                // 处理图表的信息
+                var strategyData = JSON.parse(array[6]);            //List<List<String>>
+                var baseData = JSON.parse(array[7]);                //List<List<String>>
+                var abHistogramData = JSON.parse(array[8]);
+                var reHistogramData = JSON.parse(array[9]);
                 // var formateExcessData = JSON.parse(array[11]);
                 // var formateWinData = JSON.parse(array[12]);
                 // var holdingExcessData = JSON.parse(array[13]);

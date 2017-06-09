@@ -1,10 +1,15 @@
 package com.edu.nju.asi.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.nju.asi.infoCarrier.strategy.FilterConditionChinese;
+import com.edu.nju.asi.infoCarrier.strategy.GeneralStrategy;
+import com.edu.nju.asi.infoCarrier.strategy.RankConditionChinese;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.StrategyService;
+import com.edu.nju.asi.utilities.util.JsonConverter;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +53,14 @@ public class StrategyController {
 
         ModelAndView mv = new ModelAndView("searchStrategy");
 
+        List<GeneralStrategy> generalStrategies = new LinkedList<>();
+
         List<Strategy> allStrategies = strategyService.getAllStrategies();
-        mv.addObject("allStrategies", allStrategies);
+        for (Strategy nowStrategy : allStrategies) {
+            generalStrategies.add(new GeneralStrategy(nowStrategy));
+        }
+
+        mv.addObject("generalStrategies", generalStrategies);
         return mv;
     }
 
@@ -71,26 +82,34 @@ public class StrategyController {
         TraceBackCriteria criteria = JSON.parseObject(wantedStrategy.getContent(), TraceBackCriteria.class);
         TraceBackInfo info = JSON.parseObject(wantedStrategy.getTraceBackInfo(), TraceBackInfo.class);
 
-
-        // 用户对此股票策略的操作（修改／删除）权限，只有创建者可以
-        boolean canUpdate = false;
-        User thisUser = (User) request.getSession().getAttribute("user");
-        if (thisUser != null) {
-            System.out.println("已登录：" + thisUser.getUserName());
-            canUpdate = strategyService.canUpdate(wantedStrategy, thisUser);
-        }
-
         ModelAndView mv = new ModelAndView("generalStrategy");
-        mv.addObject("canUpdate", canUpdate);
         mv.addObject("nowStrategy", wantedStrategy);
         mv.addObject("traceBackCriteria", criteria);
         mv.addObject("filterConditions", convertChinese_filter(criteria.filterConditions));
         mv.addObject("rankConditions", convertChinese_rank(criteria.rankConditions));
 
-        // TODO 回测结束的结果
-        mv.addObject("traceBackInfo", info);
+        /*
+        回测策略的结果 TODO 高源 不需要修改  表格和图表直接加入就行吧
+         */
+        // 表格数据
+        mv.addObject("traceBackNums", JsonConverter.convertTraceBackNumVal(info));
+        mv.addObject("absoluteReturnPeriod", JsonConverter.convertReturnPeriod(info.absoluteReturnPeriod));
+        mv.addObject("relativeReturnPeriod", JsonConverter.convertReturnPeriod(info.relativeReturnPeriod));
+        mv.addObject("holdingDetails", info.holdingDetails);
+        mv.addObject("transferDayDetails", info.transferDayDetails);
 
+        // 图表数据
+        try {
+            // json_strategyData, json_baseData
+            mv.addObject("strategyCumulativeReturnChart", JsonConverter.convertTraceBack(info.strategyCumulativeReturn));
+            mv.addObject("baseCumulativeReturnChart", JsonConverter.convertTraceBack(info.baseCumulativeReturn));
 
+            // json_absoluteHistogramData, json_relativeHistogramData
+            mv.addObject("absoluteReturnPeriodChart", JsonConverter.convertHistogram(info.absoluteReturnPeriod));
+            mv.addObject("relativeReturnPeriodChart", JsonConverter.convertHistogram(info.relativeReturnPeriod));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return mv;
     }
 
