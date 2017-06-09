@@ -23,7 +23,7 @@ public class RankMaxPercentPickStrategy extends AllPickStrategy {
      */
     @Override
     public List<String> pick(List<FormateRate> formateRates) {
-        List<FormateRate> sortedStockPool = ascSort(formateRates);
+        List<FormateRate> sortedStockPool = descSort(formateRates);
 
         int size = sortedStockPool.size();
         int pickedNum =  (int)Math.ceil((double)size * rank / 100);

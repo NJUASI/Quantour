@@ -40,7 +40,7 @@ public class MeanFormateStrategy extends AllFormateStrategy {
 
         for(int i = 0; i < stockCodes.size(); i++){
 
-            System.out.println("code:" + stockCodes.get(i));
+//            System.out.println("code:" + stockCodes.get(i));
             List<Stock> stockList = getDataWithoutHaltDay(stockCodes.get(i), periodStartIndex-1, formativePeriod);
             if(stockList == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));

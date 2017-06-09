@@ -249,7 +249,7 @@ public class TraceBackStrategyCalculator {
                 }
                 //TODO 这里的卖出价格有点儿问题 被卖出，加入最近被卖出的队列，卖的是调仓日期的前复权开盘价
                 if(isSold){
-                    Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
+                    Stock stock = findStock(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
 
                     //每个持仓期的第一天作为调仓日期
                     lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getClose()));
