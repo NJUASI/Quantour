@@ -54,7 +54,7 @@ public class StrategyServiceImpl implements StrategyService {
 
         // 另开一个线程跑回测，跑完了将回测的数据存入数据库
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        FutureTask<Boolean> ft = new FutureTask<Boolean>(new TraceBackTask(traceBackService, strategyDao, newStrategy));
+        FutureTask<Boolean> ft = new FutureTask<Boolean>(new TraceBackSave(traceBackService, strategyDao, newStrategy));
         executor.submit(ft);
         executor.shutdown();
 
