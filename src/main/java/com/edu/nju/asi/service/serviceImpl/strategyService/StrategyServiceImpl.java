@@ -40,21 +40,26 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public List<Strategy> getAllStrategies() {
-        return strategyDao.getAllStrategies();
+        List<Strategy> wanted = strategyDao.getAllStrategies();
+        wanted.sort(new StrategyUsersDescComparator());
+        return wanted;
     }
 
     @Override
     public List<Strategy> getMyStrategies(User curUser) {
-        return strategyDao.getAllStrategies(curUser.getUserName());
+        List<Strategy> wanted = strategyDao.getAllStrategies(curUser.getUserName());
+        wanted.sort(new StrategyUsersDescComparator());
+        return wanted;
+
     }
 
     @Override
     public boolean saveStrategy(Strategy newStrategy) {
-        boolean fakeSave = strategyDao.saveStrategy(newStrategy.getCreater(), newStrategy);
+        boolean fakeSave = strategyDao.saveStrategy(newStrategy);
 
         // 另开一个线程跑回测，跑完了将回测的数据存入数据库
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        FutureTask<Boolean> ft = new FutureTask<Boolean>(new TraceBackSave(traceBackService, strategyDao, newStrategy));
+        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSave(traceBackService, strategyDao, newStrategy));
         executor.submit(ft);
         executor.shutdown();
 
@@ -62,19 +67,18 @@ public class StrategyServiceImpl implements StrategyService {
     }
 
     @Override
+    public boolean isExist(String strategyID) {
+        return strategyDao.isExist(strategyID);
+    }
+
+    @Override
     public Strategy getOneStrategy(String strategyID) {
         return strategyDao.getStrategy(strategyID);
     }
 
-    // 只有创建者能够操作（修改／删除）策略
-    @Override
-    public boolean canUpdate(Strategy strategy, User curUser) {
-        return isCreator(strategy, curUser);
-    }
-
     @Override
     public boolean modify(Strategy modified) {
-        boolean modifyResult = strategyDao.updateStrategy(modified.getCreater(), modified);
+        boolean modifyResult = strategyDao.updateStrategy(modified);
         boolean notifyResult = notify(modified, MailNotificationType.MODIFY);
         return modifyResult && notifyResult;
 
@@ -100,12 +104,12 @@ public class StrategyServiceImpl implements StrategyService {
 
 
     private boolean isCreator(Strategy strategy, User user) {
-        if (strategy.getCreater().equals(user.getUserName())) return true;
+        if (strategy.getCreator().equals(user.getUserName())) return true;
         else return false;
     }
 
     private boolean notify(Strategy strategy, MailNotificationType type) {
-        String creatorAddress = userDao.get(strategy.getCreater()).getEmail();
+        String creatorAddress = userDao.get(strategy.getCreator()).getEmail();
 
         List<String> subscribersAddress = new LinkedList<>();
         for (User user : strategy.getUsers()) {

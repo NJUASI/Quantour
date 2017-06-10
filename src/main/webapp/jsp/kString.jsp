@@ -59,7 +59,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a id="homePage" href="/">首页</a></li>
-                <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
+                <li><a id="stocks" onClick="JavaScript :history.back(1)" style="cursor: pointer">大盘详情</a></li>
                 <li class="dropdown">
                     <a href="##" class="dropdown-toggle" data-toggle="dropdown">量化社区<span class="caret"></span></a>
                     <ul class="dropdown-menu" style="left:15px;max-width: 100px">
@@ -149,9 +149,13 @@
 
         </div>
     </div>
-    <div class="col-lg-2 col-lg-offset-1 userBlockLeft">
+    <div class="col-lg-1 col-lg-offset-1 userBlockLeft">
         <a class="btn btn-info" onclick="changeSingleStockDetail()" style="margin-top: 15px;margin-left: -40px;">查看区间</a>
     </div>
+    <div id="dateError"  class=" row col-md-offset-6 col-md-3" hidden>
+        <strong  style="margin-top: 20px;color:red">选择区间没有数据，请重新选择~~~</strong>
+    </div>
+
 </div>
 
 <div class="row" style="margin-top: 60px">
@@ -188,6 +192,7 @@
 
 <script type="text/javascript">
 
+    <%--TODO  高源 加图--%>
     // 画出点击率的图
     createClickChart("one_stock_click_chart", ${clickedData}, ${clickedDataStringRepre});
     $(document).ready(

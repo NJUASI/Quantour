@@ -59,13 +59,17 @@ function changeSingleStockDetail() {
 
             } else if (array[0] == "-1") {
                 // 提示错误信息
-                alert(array[1]);
+                $("#dateError").show();
+                setTimeout("$('#dateError').hide();", 2000);
+
             } else {
-                alert("未知错误类型orz");
+                $("#dateError").show();
+                setTimeout("$('#dateError').hide();", 2000);
             }
         },
         error: function (result) {
-            alert("错误" + result);
+            $("#dateError").show();
+            setTimeout("$('#dateError').hide();", 2000);
         }
 
     });

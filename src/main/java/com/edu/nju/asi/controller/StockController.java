@@ -122,7 +122,7 @@ public class StockController {
             result = JsonConverter.convertStockMarket(wanted);
 
             if (wantedStocks != null) System.out.println("Success\nwantedStocks size: " + wantedStocks.size());
-            else System.out.println("Success\n没取到数据");
+            else return "-2;无数据";
             return "1;" + result;
 
         } catch (IOException e) {
@@ -150,24 +150,28 @@ public class StockController {
 
             // 解析JSON对象
             String candlestickData = parts[1];
-            String volumeData = parts[2];
-            Stock stockOfEndDay = JSON.parseObject(parts[3], Stock.class);
-            LocalDate startDate = JSON.parseObject(parts[4], LocalDate.class);
-            boolean isPrivate = JSON.parseObject(parts[5], Boolean.class);
-            double clickedData = JSON.parseObject(parts[6], Double.class);
-            String clickedDataStringRepre = JSON.parseObject(parts[7], String.class);
+            String bollData = parts[2];
+            String volumeData = parts[3];
+            String macdData = parts[4];
+            Stock stockOfEndDay = JSON.parseObject(parts[5], Stock.class);
+            LocalDate startDate = JSON.parseObject(parts[6], LocalDate.class);
+            boolean isPrivate = JSON.parseObject(parts[7], Boolean.class);
+            double clickedData = JSON.parseObject(parts[8], Double.class);
+            String clickedDataStringRepre = JSON.parseObject(parts[9], String.class);
 
             // 搜索量加一
             SearchID nowSearchID = (SearchID) session.getAttribute("nowSearchID");
             boolean clicked = stockService.addClickAmount(nowSearchID);
             if (!clicked) {
-                System.err.println("getOneStock：搜索量未加一！！");
+                System.err.println("getOneStock：" + stockCode + "  搜索量未加一！！");
             }
 
 
             ModelAndView mv = new ModelAndView("kString");
             mv.addObject("candlestickData", candlestickData);
+            mv.addObject("bollData", bollData);
             mv.addObject("volumeData", volumeData);
+            mv.addObject("macdData", macdData);
             mv.addObject("stockOfEndDay", stockOfEndDay);
             mv.addObject("startDate", startDate);
             mv.addObject("isPrivate", isPrivate);
@@ -176,7 +180,10 @@ public class StockController {
             return mv;
         } else {
             System.out.println("请求失败");
-            return new ModelAndView("errorPage");
+
+            ModelAndView mv = new ModelAndView("errorPage");
+            mv.addObject("error", "您选择的代码 " + stockCode + " 不存在");
+            return mv;
         }
     }
 

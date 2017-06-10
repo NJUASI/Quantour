@@ -18,10 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -142,7 +139,21 @@ public class StockDaoImpl implements StockDao {
      */
     @Override
     public Map<String, List<Stock>> getAllStockData(List<String> codes) {
-        return stockDataHelper.getAllStockData(codes);
+
+        Map<String,List<Stock>> map = new HashMap<>();
+
+        int cut = 0; //用于存储中间变量i
+        for(int i=0;i<codes.size();i++){
+            //经多次测试模10(每10只取一次数据)最快
+            if(i%10==0){
+                if(i==0){continue;}
+                map.putAll(stockDataHelper.getAllStockData(codes.subList(cut,i)));
+                cut = i;
+                System.out.println(i+"次: "+codes.subList(i-10,i));
+            }
+        }
+        map.putAll(stockDataHelper.getAllStockData(codes.subList(cut,codes.size())));
+        return map;
     }
 
     /**

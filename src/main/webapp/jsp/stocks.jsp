@@ -41,7 +41,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a id="homePage" href="/">首页</a></li>
-                <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
+                <li><a id="stocks" style="cursor: pointer">大盘详情</a></li>
                 <li class="dropdown">
                     <a href="##" class="dropdown-toggle" data-toggle="dropdown">量化社区<span class="caret"></span></a>
                     <ul class="dropdown-menu" style="left:15px;max-width: 100px">
@@ -82,12 +82,14 @@
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-calendar"></span></span>
                             </div>
+
                         </div>
 
                         <div class="col-md-3 col-md-offset-1">
                             <form id="inputcode" role="form">
                                 <div class="input-group" style="position: relative">
-                                    <input type="text" id="search-input" name="search_input" class="form-control" placeholder="输入代码/简称/拼音">
+                                    <input type="text" id="search-input" name="search_input" class="form-control"
+                                           placeholder="输入代码/简称/拼音">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default form-control search-btn" type="button"
                                             onclick="getSingleStockDetail()">
@@ -95,8 +97,8 @@
                                     </button>
                                     </span>
 
-
                                 </div>
+                                <strong id="inputMessage" style="color: indianred;"></strong>
                                 <div class="searchResults  pre-scrollable"
                                      style="position: absolute;display: none;width: 300px;max-height: 200px; background-color: whitesmoke;z-index: 20">
                                     <table class="table table-hover table-bordered search-table">
@@ -124,262 +126,281 @@
                 </div>
             </div>
         </div>
-        <div class="row markets_wrapper " style="z-index:3">
-            <div class="col-md-offset-1 col-md-10">
-                <div id="myCarousel" class="carousel slide" style="padding-top: 15px;padding-bottom: 15px">
-                    <!-- 轮播（Carousel）指标 -->
-                    <ol class="carousel-indicators" style="top:-15px">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
-                        <li data-target="#myCarousel" data-slide-to="3"></li>
-                        <li data-target="#myCarousel" data-slide-to="4"></li>
-                    </ol>
-                    <!-- 轮播（Carousel）项目 -->
 
-                    <%--TODO 高源 没数据的话怎么显示--%>
-                    <div class="carousel-inner row">
-                        <c:forEach items="${base_stock_list}" var="base_stock" varStatus="vs">
-                            <div class="item col-md-offset-4 col-md-6" >
-                                <div class="row">
-                                    <h4 class="stockName">${base_stock.name}</h4>
-                                </div>
-                                <div class="row">
-                                    <h3 class="col-md-5" style="margin-top: 0px"><span class="volume">${base_stock.volume}</span></h3>
-
-                                    <h4 class="col-md-4" style="margin-top: 5px"><span class="transactionAmount">${base_stock.transactionAmount}</span></h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">开盘:<span class="market_open">${base_stock.open}</span></div>
-                                    <div class="col-md-4">最高:<span class="market_high">${base_stock.high}</span></div>
-                                    <div class="col-md-4">涨跌幅:<span class="increaseMargin">${base_stock.increaseMargin}</span></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">收盘:<span class="market_close">${base_stock.close}</span></div>
-                                    <div class="col-md-4">最低:<span class="market_low">${base_stock.low}</span></div>
-                                    <div class="col-md-4">涨跌额:<span class="fluctuation">${base_stock.fluctuation}</span></div>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                    <!-- 轮播（Carousel）导航 -->
-                    <%--<a class="carousel-control left" href="#myCarousel"--%>
-                       <%--data-slide="prev">--%>
-                    <%--</a>--%>
-                    <%--<a class="carousel-control right" href="#myCarousel"--%>
-                       <%--data-slide="next">--%>
-                    <%--</a>--%>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1">
-                <table class="table table-hover" style="text-align: center">
-                    <caption><h4  style="text-align: center">热搜榜</h4></caption>
-                    <thead>
-                    <tr>
-                        <th>排名</th>
-                        <th>股票</th>
-                        <th>点击量</th>
-                    </tr>
-                    </thead>
-                    <tbody id="rank-list">
-                    <%--<c:foreach items="${topClicksChartData}" var="topClickDate" varStatus="vs">--%>
-                        <%--<tr>--%>
-                            <%--<td>1</td>--%>
-                            <%--<td>${topClickDate[0]}</td>--%>
-                            <%--<td>${topClickDate[1]}</td>--%>
-                        <%--</tr>--%>
-                    <%--</c:foreach>--%>
-                    <c:set var="index" value="1" />
-                    <c:forEach items="${topClicks}" var="topStock"  varStatus="vs">
-                        <tr>
-                            <td>${index}</td>
-                            <td>${topStock.searchID.code} ${topStock.searchID.name}</td>
-                            <td>${topStock.clickAmount}</td>
-                        </tr>
-                        <c:set var="index" value="${index+1}" />
-                    </c:forEach>
-                    </tbody>
-                </table>
-
-            </div>
-            <div class="col-md-6 col-md-offset-1" id="hot_search_chart" style="width: 40%;height: 420px">
-
+        <div class="row" id="dateMessage" style="margin-top: 60px;margin-bottom: 200px;">
+            <p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"
+                                               class="picture"/></p>
+            <div class="text-center" style="margin-top: 20px;margin-bottom: 40px">
+                亲，由于当天停盘没有数据，请选择其他日期~~~
             </div>
         </div>
+        <div id="analysePanel">
+            <div class="row markets_wrapper " style="z-index:3">
+                <div class="col-md-offset-3 col-md-6">
+                    <div id="myCarousel" class="carousel slide" style="padding-top: 15px;padding-bottom: 15px">
+                        <!-- 轮播（Carousel）指标 -->
+                        <ol class="carousel-indicators" style="top:-15px">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                            <li data-target="#myCarousel" data-slide-to="3"></li>
+                            <li data-target="#myCarousel" data-slide-to="4"></li>
+                        </ol>
+                        <!-- 轮播（Carousel）项目 -->
 
-        <%--TODO 高源 没数据的话怎么显示--%>
-        <div class="text-center" id="headTitle"><h3>市场行情</h3></div>
-        <ul class="nav nav-pills  col-md-offset-1  col-md-10"  role="tablist" style="margin-bottom: 10px">
-            <li class="active"><a href="#bulletin" onclick="stocks_on_all()" role="tab" data-toggle="pill">全部股票</a></li>
-            <li><a href="#rule" role="tab" data-toggle="pill">按行业板块</a></li>
-            <li><a href="#forum" role="tab" data-toggle="pill">按地域板块</a></li>
-        </ul>
-        <!-- 选项卡面板 -->
-        <div class="tab-content col-md-offset-1 col-md-10">
-            <div class="tab-pane fade in active" id="bulletin"></div>
-            <div class="tab-pane fade" id="rule">
-                <div class="tabPanel">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1" id="industryTab">
-                            <div><a class="industryOfStock">全部</a></div>
-                            <div><a class="industryOfStock">金融行业</a></div>
-                            <div><a class="industryOfStock">房地产</a></div>
-                            <div><a class="industryOfStock">综合行业</a></div>
-                            <div><a class="industryOfStock">建筑建材</a></div>
-                            <div><a class="industryOfStock">玻璃行业</a></div>
-                            <div><a class="industryOfStock">家电行业</a></div>
-                            <div><a class="industryOfStock">纺织行业</a></div>
-                            <div><a class="industryOfStock">食品行业</a></div>
-                            <div><a class="industryOfStock">电子信息</a></div>
-                            <div><a class="industryOfStock">交通运输</a></div>
-                            <div><a class="industryOfStock">汽车制造</a></div>
-                            <div><a class="industryOfStock">商业百货</a></div>
-                            <div><a class="industryOfStock">电力行业</a></div>
-                            <div><a class="industryOfStock">酒店旅游</a></div>
-                            <div><a class="industryOfStock">机械行业</a></div>
-                            <div><a class="industryOfStock">农林牧渔</a></div>
-                            <div><a class="industryOfStock">电器行业</a></div>
-                            <div><a class="industryOfStock">电子器件</a></div>
-                            <div><a class="industryOfStock">石油行业</a></div>
-                            <div><a class="industryOfStock">有色金属</a></div>
-                            <div><a class="industryOfStock">生物制药</a></div>
-                            <div><a class="industryOfStock">医疗器械</a></div>
-                            <div><a class="industryOfStock">物资外贸</a></div>
-                            <div><a class="industryOfStock">传媒娱乐</a></div>
-                            <div><a class="industryOfStock">发电设备</a></div>
-                            <div><a class="industryOfStock">水泥行业</a></div>
-                            <div><a class="industryOfStock">塑料制品</a></div>
-                            <div><a class="industryOfStock">钢铁行业</a></div>
-                            <div><a class="industryOfStock">化纤行业</a></div>
-                            <div><a class="industryOfStock">农药化肥</a></div>
-                            <div><a class="industryOfStock">公路桥梁</a></div>
-                            <div><a class="industryOfStock">造纸行业</a></div>
-                            <div><a class="industryOfStock">化工行业</a></div>
-                            <div><a class="industryOfStock">环保行业</a></div>
-                            <div><a class="industryOfStock">煤炭行业</a></div>
-                            <div><a class="industryOfStock">酿酒行业</a></div>
-                            <div><a class="industryOfStock">供水供气</a></div>
-                            <div><a class="industryOfStock">开发区</a></div>
-                            <div><a class="industryOfStock">印刷包装</a></div>
-                            <div><a class="industryOfStock">纺织机械</a></div>
-                            <div><a class="industryOfStock">仪器仪表</a></div>
-                            <div><a class="industryOfStock">飞机制造</a></div>
-                            <div><a class="industryOfStock">其它行业</a></div>
-                            <div><a class="industryOfStock">家具行业</a></div>
-                            <div><a class="industryOfStock">摩托车</a></div>
-                            <div><a class="industryOfStock">服装鞋类</a></div>
-                            <div><a class="industryOfStock">陶瓷行业</a></div>
-                            <div><a class="industryOfStock">船舶制造</a></div>
-                            <div><a class="industryOfStock">次新股</a></div>
-                            <div><a class="industryOfStock">其他</a></div>
-                        </div>
-                </div>
-                </div>
-            </div>
+                        <%--TODO 高源 没数据的话怎么显示--%>
+                        <div class="carousel-inner row">
+                            <c:forEach items="${base_stock_list}" var="base_stock" varStatus="vs">
+                                <div class="item  col-md-12">
+                                    <div class="row">
+                                        <h4 class="stockName">${base_stock.name}</h4>
+                                    </div>
+                                    <div class="row">
+                                        <h3 class="col-md-5" style="margin-top: 0px"><span
+                                                class="volume">${base_stock.volume}</span></h3>
 
-            <div class="tab-pane fade" id="forum">
-                <div class="tabPanel">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1" id="provinceTab">
-                            <div><a class="provinceOfStock">全部</a></div>
-                            <div><a class="provinceOfStock">深圳</a></div>
-                            <div><a class="provinceOfStock">北京</a></div>
-                            <div><a class="provinceOfStock">吉林</a></div>
-                            <div><a class="provinceOfStock">江苏</a></div>
-                            <div><a class="provinceOfStock">辽宁</a></div>
-                            <div><a class="provinceOfStock">广东</a></div>
-                            <div><a class="provinceOfStock">浙江</a></div>
-                            <div><a class="provinceOfStock">湖南</a></div>
-                            <div><a class="provinceOfStock">河北</a></div>
-                            <div><a class="provinceOfStock">新疆</a></div>
-                            <div><a class="provinceOfStock">山东</a></div>
-                            <div><a class="provinceOfStock">河南</a></div>
-                            <div><a class="provinceOfStock">山西</a></div>
-                            <div><a class="provinceOfStock">江西</a></div>
-                            <div><a class="provinceOfStock">安徽</a></div>
-                            <div><a class="provinceOfStock">湖北</a></div>
-                            <div><a class="provinceOfStock">内蒙</a></div>
-                            <div><a class="provinceOfStock">海南</a></div>
-                            <div><a class="provinceOfStock">四川</a></div>
-                            <div><a class="provinceOfStock">重庆</a></div>
-                            <div><a class="provinceOfStock">陕西</a></div>
-                            <div><a class="provinceOfStock">广西</a></div>
-                            <div><a class="provinceOfStock">福建</a></div>
-                            <div><a class="provinceOfStock">天津</a></div>
-                            <div><a class="provinceOfStock">云南</a></div>
-                            <div><a class="provinceOfStock">贵州</a></div>
-                            <div><a class="provinceOfStock">甘肃</a></div>
-                            <div><a class="provinceOfStock">黑龙江</a></div>
-                            <div><a class="provinceOfStock">宁夏</a></div>
-                            <div><a class="provinceOfStock">青海</a></div>
-                            <div><a class="provinceOfStock">上海</a></div>
-                            <div><a class="provinceOfStock">西藏</a></div>
-                            <div><a class="provinceOfStock">其他</a></div>
+                                        <h4 class="col-md-4" style="margin-top: 5px"><span
+                                                class="transactionAmount">${base_stock.transactionAmount}</span></h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">开盘:<span class="market_open">${base_stock.open}</span>
+                                        </div>
+                                        <div class="col-md-4">最高:<span class="market_high">${base_stock.high}</span>
+                                        </div>
+                                        <div class="col-md-4">涨跌幅:<span
+                                                class="increaseMargin">${base_stock.increaseMargin}</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">收盘:<span class="market_close">${base_stock.close}</span>
+                                        </div>
+                                        <div class="col-md-4">最低:<span class="market_low">${base_stock.low}</span></div>
+                                        <div class="col-md-4">涨跌额:<span
+                                                class="fluctuation">${base_stock.fluctuation}</span></div>
+                                    </div>
+                                </div>
+                            </c:forEach>
                         </div>
+                        <!-- 轮播（Carousel）导航 -->
+                        <%--<a class="carousel-control left" href="#myCarousel"--%>
+                        <%--data-slide="prev">--%>
+                        <%--</a>--%>
+                        <%--<a class="carousel-control right" href="#myCarousel"--%>
+                        <%--data-slide="next">--%>
+                        <%--</a>--%>
                     </div>
                 </div>
+
             </div>
-        </div>
-        <div class="row" style="z-index:3">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="table-responsive">
-                    <table class="table table-hover table-condensed stocks-table">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <table class="table table-hover" style="text-align: center">
+                        <caption><h4 style="text-align: center">热搜榜</h4></caption>
                         <thead>
                         <tr>
-                            <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">名称</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">开盘价</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">收盘价</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">最高价</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">最低价</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">昨收</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">交易量</span><span class="tLabel"></span></th>
-                            <th width="10%"><span class="cTable">交易额</span><span class="tLabel"></span></th>
+                            <th>排名</th>
+                            <th>股票</th>
+                            <th>点击量</th>
                         </tr>
                         </thead>
-                        <tbody id="stocks_all">
-
-                        <c:forEach items="${stock_list}" var="stock" varStatus="vs">
+                        <tbody id="rank-list">
+                        <%--<c:foreach items="${topClicksChartData}" var="topClickDate" varStatus="vs">--%>
+                        <%--<tr>--%>
+                        <%--<td>1</td>--%>
+                        <%--<td>${topClickDate[0]}</td>--%>
+                        <%--<td>${topClickDate[1]}</td>--%>
+                        <%--</tr>--%>
+                        <%--</c:foreach>--%>
+                        <c:set var="index" value="1"/>
+                        <c:forEach items="${topClicks}" var="topStock" varStatus="vs">
                             <tr>
-                                <td>${stock.stockID.code}</td>
-                                <td>${stock.name}</td>
-                                <td>${stock.open}</td>
-                                <td>${stock.close}</td>
-                                <td class="stock_high">${stock.high}</td>
-                                <td class="stock_low">${stock.low}</td>
-                                <td>${stock.preClose}</td>
-                                <td>${stock.volume}</td>
-                                <td>${stock.transactionAmount}</td>
+                                <td>${index}</td>
+                                <td>${topStock.searchID.code} ${topStock.searchID.name}</td>
+                                <td>${topStock.clickAmount}</td>
                             </tr>
+                            <c:set var="index" value="${index+1}"/>
                         </c:forEach>
-
                         </tbody>
                     </table>
+
+                </div>
+                <div class="col-md-6 col-md-offset-1" id="hot_search_chart" style="width: 40%;height: 420px">
+
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 col-md-offset-4">
-                <ul class="pagination">
-                    <li class="active"><a>1</a></li>
-                    <%--<c:if test="${totalPageNum}>9">--%>
 
-                    <%--</c:if>--%>
 
-                </ul>
+            <div class="text-center" id="headTitle"><h3>市场行情</h3></div>
+            <ul class="nav nav-pills  col-md-offset-1  col-md-10" role="tablist" style="margin-bottom: 10px">
+                <li class="active"><a href="#bulletin" onclick="stocks_on_all()" role="tab" data-toggle="pill">全部股票</a>
+                </li>
+                <li><a href="#rule" role="tab" data-toggle="pill">按行业板块</a></li>
+                <li><a href="#forum" role="tab" data-toggle="pill">按地域板块</a></li>
+            </ul>
+            <!-- 选项卡面板 -->
+            <div class="tab-content col-md-offset-1 col-md-10">
+                <div class="tab-pane fade in active" id="bulletin"></div>
+                <div class="tab-pane fade" id="rule">
+                    <div class="tabPanel">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1" id="industryTab">
+                                <div><a class="industryOfStock">全部</a></div>
+                                <div><a class="industryOfStock">金融行业</a></div>
+                                <div><a class="industryOfStock">房地产</a></div>
+                                <div><a class="industryOfStock">综合行业</a></div>
+                                <div><a class="industryOfStock">建筑建材</a></div>
+                                <div><a class="industryOfStock">玻璃行业</a></div>
+                                <div><a class="industryOfStock">家电行业</a></div>
+                                <div><a class="industryOfStock">纺织行业</a></div>
+                                <div><a class="industryOfStock">食品行业</a></div>
+                                <div><a class="industryOfStock">电子信息</a></div>
+                                <div><a class="industryOfStock">交通运输</a></div>
+                                <div><a class="industryOfStock">汽车制造</a></div>
+                                <div><a class="industryOfStock">商业百货</a></div>
+                                <div><a class="industryOfStock">电力行业</a></div>
+                                <div><a class="industryOfStock">酒店旅游</a></div>
+                                <div><a class="industryOfStock">机械行业</a></div>
+                                <div><a class="industryOfStock">农林牧渔</a></div>
+                                <div><a class="industryOfStock">电器行业</a></div>
+                                <div><a class="industryOfStock">电子器件</a></div>
+                                <div><a class="industryOfStock">石油行业</a></div>
+                                <div><a class="industryOfStock">有色金属</a></div>
+                                <div><a class="industryOfStock">生物制药</a></div>
+                                <div><a class="industryOfStock">医疗器械</a></div>
+                                <div><a class="industryOfStock">物资外贸</a></div>
+                                <div><a class="industryOfStock">传媒娱乐</a></div>
+                                <div><a class="industryOfStock">发电设备</a></div>
+                                <div><a class="industryOfStock">水泥行业</a></div>
+                                <div><a class="industryOfStock">塑料制品</a></div>
+                                <div><a class="industryOfStock">钢铁行业</a></div>
+                                <div><a class="industryOfStock">化纤行业</a></div>
+                                <div><a class="industryOfStock">农药化肥</a></div>
+                                <div><a class="industryOfStock">公路桥梁</a></div>
+                                <div><a class="industryOfStock">造纸行业</a></div>
+                                <div><a class="industryOfStock">化工行业</a></div>
+                                <div><a class="industryOfStock">环保行业</a></div>
+                                <div><a class="industryOfStock">煤炭行业</a></div>
+                                <div><a class="industryOfStock">酿酒行业</a></div>
+                                <div><a class="industryOfStock">供水供气</a></div>
+                                <div><a class="industryOfStock">开发区</a></div>
+                                <div><a class="industryOfStock">印刷包装</a></div>
+                                <div><a class="industryOfStock">纺织机械</a></div>
+                                <div><a class="industryOfStock">仪器仪表</a></div>
+                                <div><a class="industryOfStock">飞机制造</a></div>
+                                <div><a class="industryOfStock">其它行业</a></div>
+                                <div><a class="industryOfStock">家具行业</a></div>
+                                <div><a class="industryOfStock">摩托车</a></div>
+                                <div><a class="industryOfStock">服装鞋类</a></div>
+                                <div><a class="industryOfStock">陶瓷行业</a></div>
+                                <div><a class="industryOfStock">船舶制造</a></div>
+                                <div><a class="industryOfStock">次新股</a></div>
+                                <div><a class="industryOfStock">其他</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="forum">
+                    <div class="tabPanel">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1" id="provinceTab">
+                                <div><a class="provinceOfStock">全部</a></div>
+                                <div><a class="provinceOfStock">深圳</a></div>
+                                <div><a class="provinceOfStock">北京</a></div>
+                                <div><a class="provinceOfStock">吉林</a></div>
+                                <div><a class="provinceOfStock">江苏</a></div>
+                                <div><a class="provinceOfStock">辽宁</a></div>
+                                <div><a class="provinceOfStock">广东</a></div>
+                                <div><a class="provinceOfStock">浙江</a></div>
+                                <div><a class="provinceOfStock">湖南</a></div>
+                                <div><a class="provinceOfStock">河北</a></div>
+                                <div><a class="provinceOfStock">新疆</a></div>
+                                <div><a class="provinceOfStock">山东</a></div>
+                                <div><a class="provinceOfStock">河南</a></div>
+                                <div><a class="provinceOfStock">山西</a></div>
+                                <div><a class="provinceOfStock">江西</a></div>
+                                <div><a class="provinceOfStock">安徽</a></div>
+                                <div><a class="provinceOfStock">湖北</a></div>
+                                <div><a class="provinceOfStock">内蒙</a></div>
+                                <div><a class="provinceOfStock">海南</a></div>
+                                <div><a class="provinceOfStock">四川</a></div>
+                                <div><a class="provinceOfStock">重庆</a></div>
+                                <div><a class="provinceOfStock">陕西</a></div>
+                                <div><a class="provinceOfStock">广西</a></div>
+                                <div><a class="provinceOfStock">福建</a></div>
+                                <div><a class="provinceOfStock">天津</a></div>
+                                <div><a class="provinceOfStock">云南</a></div>
+                                <div><a class="provinceOfStock">贵州</a></div>
+                                <div><a class="provinceOfStock">甘肃</a></div>
+                                <div><a class="provinceOfStock">黑龙江</a></div>
+                                <div><a class="provinceOfStock">宁夏</a></div>
+                                <div><a class="provinceOfStock">青海</a></div>
+                                <div><a class="provinceOfStock">上海</a></div>
+                                <div><a class="provinceOfStock">西藏</a></div>
+                                <div><a class="provinceOfStock">其他</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class=" row col-md-3" style="margin-top: 21px">
-                <input type="text" id="goPage"  style="max-width:20%;padding-left:4px;margin-right:10px;padding-right: 4px ;text-align: center"
-                       value=1 class="form-control col-md-2"/>
-                <button class="btn btn-default col-md-3" id="pageChoose" type="button">
-                    <a href="#headTitle" style='text-decoration:none;'><span style="color:blueviolet">跳转</span></a>
-                </button>
+            <div class="row" style="z-index:3">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-condensed stocks-table">
+                            <thead>
+                            <tr>
+                                <th width="10%"><span class="cTable">代码</span><span class="tLabel"></span></th>
+                                <th width="10%"><span class="cTable">名称</span><span class="tLabel"></span></th>
+                                <th width="10%"><span class="cTable">开盘价</span><span class="tLabel"></span></th>
+                                <th width="10%"><span class="cTable">收盘价</span><span class="tLabel"></span></th>
+                                <th width="10%"><span class="cTable">最高价</span><span class="tLabel"></span></th>
+                                <th width="10%"><span class="cTable">最低价</span><span class="tLabel"></span></th>
+                                <th width="10%"><span class="cTable">昨收</span><span class="tLabel"></span></th>
+                                <th width="10%"><span class="cTable">交易量</span><span class="tLabel"></span></th>
+                                <th width="10%"><span class="cTable">交易额</span><span class="tLabel"></span></th>
+                            </tr>
+                            </thead>
+                            <tbody id="stocks_all">
+
+                            <c:forEach items="${stock_list}" var="stock" varStatus="vs">
+                                <tr>
+                                    <td>${stock.stockID.code}</td>
+                                    <td>${stock.name}</td>
+                                    <td>${stock.open}</td>
+                                    <td>${stock.close}</td>
+                                    <td class="stock_high">${stock.high}</td>
+                                    <td class="stock_low">${stock.low}</td>
+                                    <td>${stock.preClose}</td>
+                                    <td>${stock.volume}</td>
+                                    <td>${stock.transactionAmount}</td>
+                                </tr>
+                            </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-md-5 col-md-offset-4">
+                    <ul class="pagination">
+                        <li class="active"><a>1</a></li>
+                        <%--<c:if test="${totalPageNum}>9">--%>
+
+                        <%--</c:if>--%>
+
+                    </ul>
+                </div>
+                <div class=" row col-md-3" style="margin-top: 21px">
+                    <input type="text" id="goPage"
+                           style="max-width:20%;padding-left:4px;margin-right:10px;padding-right: 4px ;text-align: center"
+                           value=1 class="form-control col-md-2"/>
+                    <button class="btn btn-default col-md-3" id="pageChoose" type="button">
+                        <a href="#headTitle" style='text-decoration:none;'><span style="color:blueviolet">跳转</span></a>
+                    </button>
+                </div>
 
 
+            </div>
         </div>
     </div>
 </div>
@@ -484,26 +505,17 @@
 <script src="../js/jquery.validate.js"></script>
 <script type="text/javascript">
 
-        var isValid=0;
-        $.validator.addMethod("checkInput",function(value,element,params){
-            var check = /^\d{6}.*$/;
-            return this.optional(element)||(check.test(value));
-        },"请输入正确的股票！");
 
-    $("#inputcode").validate({
-        rules: {
-            search_input: {
-                checkInput: true,
-            }
-        },
-        messages: {
-        }
-    });
+   if(${base_stock_list == null}){
+       $("#analysePanel").hide();
+   }else{
+       $("#dateMessage").hide();
+   }
     // 画出热搜榜的图
     createPieChart("hot_search_chart", ${topClicksChartData});
 
     <%--alert(${topClicks.});--%>
-    var pagetol=${totalPageNum};
+    var pagetol =${totalPageNum};
     if (pagetol <= 9) {
         for (var i = 2; i <= pagetol; i++) {
             $(".pagination").append(" <li><a  href=\"#headTitle\" class=\"\">" + i + "</a></li>");
@@ -522,19 +534,21 @@
             $("body").removeClass('loaded');
 
             var date = ${date.year}+"-";
-            var month=${date.monthValue};
-            var dayOfMonth=${date.dayOfMonth};
-            if( month<10){
-                date+="0"+month;
-            }else{
-                date+=month;
+            var month =${date.monthValue};
+            var dayOfMonth =${date.dayOfMonth};
+            if (month < 10) {
+                date += "0" + month;
+            } else {
+                date += month;
             }
-            if(dayOfMonth<10){
-                date+="-0"+dayOfMonth;
-            }else{
-                date+="-"+dayOfMonth;
+            if (dayOfMonth < 10) {
+                date += "-0" + dayOfMonth;
+            } else {
+                date += "-" + dayOfMonth;
             }
             $(".form_date > input").attr('value', date);
+
+
 
 
             $('#search-input').bind('input propertychange', function () {
@@ -556,8 +570,8 @@
                         var obj = eval("(" + result + ")");
                         var len = obj.length;
                         $("#search-body").empty();
-                        if(len>10){
-                            len=10;
+                        if (len > 10) {
+                            len = 10;
                         }
                         for (var i = 0; i < len; i++) {
                             $("#search-body").append("<tr class='colomnsOfTable' style='cursor: default'><td>" + obj[i]["searchID"]["code"] + "</td><td style='font-size: 14px;'>" + obj[i]["searchID"]["name"] + "</td>" +
@@ -569,7 +583,7 @@
                             var code = $("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(0).html();
                             var name = $("#search-body").find(".colomnsOfTable").eq(num).find("td").eq(1).html();
 
-                            $("#search-input").val(code+" "+name);
+                            $("#search-input").val(code + " " + name);
                             $(".searchResults").hide();
                             $("#search-input").focus();
                         });
@@ -627,7 +641,6 @@
     var industryType = '全部';
 
 
-
     $("th").find("span").click(function () {
         if (($(".cTable").index($(this))) != numOfColumn) {
             numOfColumn = ($(".cTable").index($(this)));
@@ -660,8 +673,8 @@
     $('.carousel').carousel();
 
     $("#pageChoose").click(function () {
-        var pageNumber=$("#goPage").val();
-        nowPage=pageNumber;
+        var pageNumber = $("#goPage").val();
+        nowPage = pageNumber;
         updatePanel();
     });
 
@@ -684,11 +697,11 @@
 //        alert($(".form_date > input").val());
         $("body").removeClass("loaded");
         nowPage = 1;
-        sortNum=0;
+        sortNum = 0;
         updatePanel();
     });
 
-//通过界面的数据post更改界面内容
+    //通过界面的数据post更改界面内容
     function updatePanel() {
         $("body").addClass('loaded');
         $.ajax({
@@ -720,7 +733,7 @@
                     var totalRecordNum = stock_page["totalRecordNum"];
 
                     var baseStocks = stock_page["baseStocks"];
-                    for(var j=0;j<baseStocks.length;j++){
+                    for (var j = 0; j < baseStocks.length; j++) {
                         $(".stockName").eq(j).html(baseStocks[j]["name"]);
                         $(".volume").eq(j).html(baseStocks[j]["volume"]);
                         $(".transactionAmount").eq(j).html(baseStocks[j]["transactionAmount"]);
@@ -820,7 +833,7 @@
                             "<td>" + stocks[i]["transactionAmount"] + "</td></tr>");
                     }
                     $("#stocks_all").find("tr").dblclick(function () {
-                        var code=$(this).find("td").eq(0).html();
+                        var code = $(this).find("td").eq(0).html();
                         window.location.href = "/stocks/" + code;
                     });
 
@@ -829,11 +842,17 @@
                     var top_search_chart_data = array[2];
                     createPieChart("hot_search_chart", top_search_chart_data);
 
+                    $("#analysePanel").show();
+                    $("#dateMessage").hide();
                 } else if (array[0] == "-1") {
-                    // 提示错误信息
-                    alert(array[1]);
+                    $("#analysePanel").hide();
+                    $("#dateMessage").show();
+                } else if (array[0] == "-2") {
+                    $("#analysePanel").hide();
+                    $("#dateMessage").show();
                 } else {
-                    alert("未知错误类型orz");
+                    $("#analysePanel").hide();
+                    $("#dateMessage").show();
                 }
             },
             error: function (result) {
@@ -843,65 +862,101 @@
         });
         $("body").removeClass('loaded');
     }
-//查看股票详情
+    //查看股票详情
     function getSingleStockDetail() {
         var str = $("#search-input").val();
-        var wantedStockCode=str.split(" ")[0];
-       // alert(wantedStockCode);
+        var wantedStockCode = str.split(" ")[0];
+
+        var reg = /^\d{6}.*$/;
+        if (wantedStockCode == "") {
+            $("#inputMessage").html("代码不能为空！");
+            setTimeout("$('#inputMessage').html('');", 2000);
+            return false;
+        } else if (!reg.test(wantedStockCode)) {
+            $("#inputMessage").html("代码输入不正确！");
+            setTimeout("$('#inputMessage').html('');", 2000);
+            return false;
+        }
+
+        // alert(wantedStockCode);
         window.location.href = "/stocks/" + wantedStockCode;
     }
 
-    $("#search-input").keyup(function(event) {
+    $("#search-input").keyup(function (event) {
         if (event.keyCode == 13) {
+
             var str = $("#search-input").val();
-            var wantedStockCode=str.split(" ")[0];
-            window.location.href = "/stocks/" + wantedStockCode;
+            var wantedStockCode = str.split(" ")[0];
+            var reg = /^\d{0,6}.*$/;
+            if (wantedStockCode == "") {
+                $("#inputMessage").html("代码不能为空！");
+                setTimeout("$('#inputMessage').html('');", 1000);
+                return false;
+            } else if (!reg.test(wantedStockCode)) {
+                $("#inputMessage").html("代码输入不正确！");
+                setTimeout("$('#inputMessage').html('');", 1000);
+                return false;
+            } else {
+                window.location.href = "/stocks/" + wantedStockCode;
+            }
+        }else{
+
         }
     });
-//双击后查看详情
+    //双击后查看详情
     $("#rank-list").find("tr").dblclick(function () {
-        var code=$(this).find("td").eq(1).html().split(" ")[0];
+        var code = $(this).find("td").eq(1).html().split(" ")[0];
         window.location.href = "/stocks/" + code;
     });
 
     $("#stocks_all").find("tr").dblclick(function () {
-        var code=$(this).find("td").eq(0).html();
+        var code = $(this).find("td").eq(0).html();
         window.location.href = "/stocks/" + code;
     });
     $("td").hover(function () {
         $(this).css({"cursor": "default"});
     }, function () {
-        $(this).css({"margin-top": "0px", "margin-bottom": "40px","border": "none"});
+        $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
     });
 
     $("#industryTab").find("div").addClass("col-md-2");
-    $("#industryTab").find("div").css({"padding":"1px","margin-top":"3px"});
-    $("#industryTab").find("a").css({"color":"currentColor","text-decoration":"none","margin":"1px","padding":"1px"});
-    $(".industryOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+    $("#industryTab").find("div").css({"padding": "1px", "margin-top": "3px"});
+    $("#industryTab").find("a").css({
+        "color": "currentColor",
+        "text-decoration": "none",
+        "margin": "1px",
+        "padding": "1px"
+    });
+    $(".industryOfStock").eq(0).css({"background-color": "#337ab7", "color": "white"});
 
     $("#provinceTab").find("div").addClass("col-md-2");
-    $("#provinceTab").find("div").css({"padding":"1px","margin-top":"3px"});
-    $("#provinceTab").find("a").css({"color":"currentColor","text-decoration":"none","margin":"1px","padding":"1px"});
-    $(".provinceOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+    $("#provinceTab").find("div").css({"padding": "1px", "margin-top": "3px"});
+    $("#provinceTab").find("a").css({
+        "color": "currentColor",
+        "text-decoration": "none",
+        "margin": "1px",
+        "padding": "1px"
+    });
+    $(".provinceOfStock").eq(0).css({"background-color": "#337ab7", "color": "white"});
 
-    $(".industryOfStock").css("border","1px solid #F7F7F7");
+    $(".industryOfStock").css("border", "1px solid #F7F7F7");
     $(".industryOfStock").hover(function () {
         $(this).css({"cursor": "pointer", "border": "1px solid red"});
     }, function () {
-        $(this).css({"border":"1px solid #F7F7F7"});
+        $(this).css({"border": "1px solid #F7F7F7"});
     });
-    $(".provinceOfStock").css("border","1px solid #F7F7F7");
+    $(".provinceOfStock").css("border", "1px solid #F7F7F7");
     $(".provinceOfStock").hover(function () {
         $(this).css({"cursor": "pointer", "border": "1px solid red"});
     }, function () {
-        $(this).css({"border":"1px solid #F7F7F7"});
+        $(this).css({"border": "1px solid #F7F7F7"});
     });
 
     $(".industryOfStock").click(function () {
-        $(".provinceOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
-        $(".provinceOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
-        $(".industryOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
-        $(this).css({"background-color":"#337ab7","color":"white"});
+        $(".provinceOfStock").css({"background-color": "#F7F7F7", "color": "currentColor"});
+        $(".provinceOfStock").eq(0).css({"background-color": "#337ab7", "color": "white"});
+        $(".industryOfStock").css({"background-color": "#F7F7F7", "color": "currentColor"});
+        $(this).css({"background-color": "#337ab7", "color": "white"});
 
         industryType = $(this).html();
         areaType = '全部';
@@ -909,23 +964,23 @@
     });
 
     $(".provinceOfStock").click(function () {
-        $(".industryOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
-        $(".industryOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
-        $(".provinceOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
-        $(this).css({"background-color":"#337ab7","color":"white"});
+        $(".industryOfStock").css({"background-color": "#F7F7F7", "color": "currentColor"});
+        $(".industryOfStock").eq(0).css({"background-color": "#337ab7", "color": "white"});
+        $(".provinceOfStock").css({"background-color": "#F7F7F7", "color": "currentColor"});
+        $(this).css({"background-color": "#337ab7", "color": "white"});
 
         areaType = $(this).html();
         industryType = '全部';
         updatePanel();
     });
 
-    
-    function stocks_on_all() {
-        $(".industryOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
-        $(".industryOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
 
-        $(".provinceOfStock").css({"background-color":"#F7F7F7","color":"currentColor"});
-        $(".provinceOfStock").eq(0).css({"background-color":"#337ab7","color":"white"});
+    function stocks_on_all() {
+        $(".industryOfStock").css({"background-color": "#F7F7F7", "color": "currentColor"});
+        $(".industryOfStock").eq(0).css({"background-color": "#337ab7", "color": "white"});
+
+        $(".provinceOfStock").css({"background-color": "#F7F7F7", "color": "currentColor"});
+        $(".provinceOfStock").eq(0).css({"background-color": "#337ab7", "color": "white"});
         industryType = '全部';
         areaType = '全部';
         updatePanel();
@@ -933,7 +988,7 @@
 
     function openStock() {
         $("body").removeClass('loaded');
-        window.location.href="/stocks"
+        window.location.href = "/stocks"
     }
     $("#stocks").addClass("act");
 

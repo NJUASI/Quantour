@@ -118,11 +118,12 @@ function traceback() {
             var array = result.split(";");
             if (array[0] == "1") {
 
-                // 处理网页上要显示的信息
+                // 处理网页上要显示的表格信息
                 var numberValues = eval("(" + array[1] + ")");              // List<String>
                 var abReturnPeriod = eval("(" + array[2] + ")");            // ReturnPeriod
                 var reReturnPeriod = eval("(" + array[3] + ")");            // ReturnPeriod
                 var holdingDetails = eval("(" + array[4] + ")");            // List<HoldingDetail>
+                var transferDetails = eval("(" + array[5] + ")");           // List<TransferDetail>
                 // var certainFormates = eval("(" + array[5] + ")");           // List<ExcessAndWinRateDist>
                 // var certainHoldings = eval("(" + array[6] + ")");           // List<ExcessAndWinRateDist>
 
@@ -183,6 +184,22 @@ function traceback() {
                 }
                 // alert("--------------------3----------------");
 
+                // 卖出的股票详情
+                $("#sold_stock_detail").empty();
+                for (var i = 0; i < transferDetails.length; i++) {
+                    $("#sold_stock_detail").append("<tr>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["stockName"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["stockCode"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyDate"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellDate"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyPrice"]+ "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellPrice"]+ "</td>");
+                    $("#sold_stock_detail").append("<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>");
+                    $("#sold_stock_detail").append("</tr>");
+                }
+                // alert("--------------------4----------------");
+
+
 
                 // // 固定形成期的赢率分析
                 // $("#tb_certain_formate").empty();
@@ -193,7 +210,7 @@ function traceback() {
                 //     $("#tb_certain_formate").append("<td>" + (certainFormates[i]["winRate"]*100).toFixed(2) + "%" + "</td>");
                 //     $("#tb_certain_formate").append("</tr>");
                 // }
-                // // alert("--------------------4----------------");
+                // // alert("--------------------5----------------");
                 //
                 //
                 // // 固定持有期的赢率分析
@@ -205,14 +222,14 @@ function traceback() {
                 //     $("#tb_certain_holding").append("<td>" + (certainHoldings[i]["winRate"]*100).toFixed(2) + "%" + "</td>");
                 //     $("#tb_certain_holding").append("</tr>");
                 // }
-                // // alert("--------------------5----------------");
+                // // alert("--------------------6----------------");
 
 
-                // 处理图标的信息
-                var strategyData = JSON.parse(array[5]);            //List<List<String>>
-                var baseData = JSON.parse(array[6]);                //List<List<String>>
-                var abHistogramData = JSON.parse(array[7]);
-                var reHistogramData = JSON.parse(array[8]);
+                // 处理图表的信息
+                var strategyData = JSON.parse(array[6]);            //List<List<String>>
+                var baseData = JSON.parse(array[7]);                //List<List<String>>
+                var abHistogramData = JSON.parse(array[8]);
+                var reHistogramData = JSON.parse(array[9]);
                 // var formateExcessData = JSON.parse(array[11]);
                 // var formateWinData = JSON.parse(array[12]);
                 // var holdingExcessData = JSON.parse(array[13]);
