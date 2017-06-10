@@ -361,6 +361,7 @@
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                             <li role="presentation">
                                                 <a role="menuitem" class="quota" tabindex="-1">当日涨幅</a>
+                                                <%--<span class="	glyphicon glyphicon-search"></span>--%>
                                             </li>
                                             <li role="presentation">
                                                 <a role="menuitem" class="quota" tabindex="-1">5日涨幅</a>

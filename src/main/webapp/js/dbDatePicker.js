@@ -10,6 +10,7 @@ var startTime = yesterday.getFullYear() + "-";
 
 var month = today.getMonth() + 1;
 var dayOfMonth = today.getDate();
+
 if (month < 10) {
     endTime += "0" + month;
 } else {
@@ -39,6 +40,7 @@ $("#datetimeEnd>input").attr('value', endTime);
 
 
 $("#datetimeStart").datetimepicker({
+    daysOfWeekDisabled: [0,6],
     format: 'yyyy-mm-dd',
     minView: 'month',
     language: 'zh-CN',
@@ -49,6 +51,7 @@ $("#datetimeStart").datetimepicker({
     $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())
 });
 $("#datetimeEnd").datetimepicker({
+    daysOfWeekDisabled: [0,6],
     format: 'yyyy-mm-dd',
     minView: 'month',
     language: 'zh-CN',

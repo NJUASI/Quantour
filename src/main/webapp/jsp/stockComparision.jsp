@@ -252,6 +252,7 @@
 
         $(document).ready(function () {
 
+
             $('#search-input1').bind('input propertychange', function () {
                 $("#search-body1").show();
                 var key = $('#search-input1').val();
@@ -426,6 +427,9 @@
             window.location.href="/stocks"
         }
         $("#stocks").addClass("act");
+
+
+
     </script>
     </body>
     </html>
