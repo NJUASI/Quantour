@@ -363,7 +363,7 @@
 
                             <c:forEach items="${stock_list}" var="stock" varStatus="vs">
                                 <tr>
-                                    <td>${stock.stockID.code}</td>
+                                    <td> <span class="code" style="color:#7291CA">${stock.stockID.code}</span></td>
                                     <td>${stock.name}</td>
                                     <td>${stock.open}</td>
                                     <td>${stock.close}</td>
@@ -428,7 +428,6 @@
 <script src="../js/logIn.js"></script>
 <script src="../js/jquery.validate.js"></script>
 <script type="text/javascript">
-
 
    if(${base_stock_list == null}){
        $("#analysePanel").hide();
@@ -616,8 +615,7 @@
         updatePanel();
     });
 
-    $('.form_date')
-        .datetimepicker().on("changeDate", function () {
+    $('.form_date').datetimepicker().on("changeDate", function () {
 //        alert($(".form_date > input").val());
         $("body").removeClass("loaded");
         nowPage = 1;
@@ -746,7 +744,8 @@
                     $("#stocks_all").empty();
 
                     for (var i = 0; i < stocks.length; i++) {
-                        $("#stocks_all").append("<tr><td>" + stocks[i]["stockID"]["code"] + "</td>" +
+                        $("#stocks_all").append("<tr><td><span class=\"code\" style=\"color:#7291CA\">" + stocks[i]["stockID"]["code"] + "</span>" +
+                            "</td>" +
                             "<td>" + stocks[i]["name"] + "</td>" +
                             "<td>" + stocks[i]["open"] + "</td>" +
                             "<td>" + stocks[i]["close"] + "</td>" +
@@ -761,6 +760,15 @@
                         window.location.href = "/stocks/" + code;
                     });
 
+                    $(".code").click(function () {
+                        window.location.href = "/stocks/" + $(this).html();
+                    })
+
+                    $(".code").hover(function () {
+                        $(this).css({"cursor": "pointer","text-decoration":" underline"});
+                    }, function () {
+                        $(this).css({"color":"#7291CA","text-decoration":" none"});
+                    });
 
                     // 处理热搜榜图表数据
                     var top_search_chart_data = array[2];
@@ -837,11 +845,21 @@
         var code = $(this).find("td").eq(0).html();
         window.location.href = "/stocks/" + code;
     });
-    $("td").hover(function () {
-        $(this).css({"cursor": "default"});
-    }, function () {
-        $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
-    });
+
+   $(".code").click(function () {
+       window.location.href = "/stocks/" + $(this).html();
+   })
+
+   $(".code").hover(function () {
+       $(this).css({"cursor": "pointer","text-decoration":" underline"});
+   }, function () {
+       $(this).css({"color":"#7291CA","text-decoration":" none"});
+   });
+//    $("td").hover(function () {
+//        $(this).css({"cursor": "default"});
+//    }, function () {
+//        $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
+//    });
 
     $("#industryTab").find("div").addClass("col-md-2");
     $("#industryTab").find("div").css({"padding": "1px", "margin-top": "3px"});

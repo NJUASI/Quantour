@@ -117,11 +117,9 @@
 
 
 <div class="row">
-    <div class="col-md-2 affix" style="margin-top: 40px">
+    <div class="col-md-2 affix" id="modifyInfo" style="margin-top: 40px">
         <p style="text-align: center"><img src="../img/happy.png" style="margin-left: auto" class="picture"/></p>
-        <a href="#"  data-toggle="modal" style="text-decoration: none" data-target="#changePassword">
             <div class="userID text-center"   style="margin-top: 10px"></div>
-        </a>
     </div>
 
 
@@ -157,7 +155,7 @@
                                         <c:when test="${stock.volume == null}">
                                             <%--此只股票没有当日信息，则仍需显示，只是显示为／--%>
                                             <tr>
-                                                <td class="stock_no_value">${stock.stockID.code}</td>
+                                                <td class="stock_no_value"><span class="code" style="color:#7291CA"">${stock.stockID.code}</span></td>
                                                 <td class="stock_no_value">${stock.name}</td>
                                                 <td class="stock_no_value">/</td>
                                                 <td class="stock_no_value">/</td>
@@ -171,7 +169,7 @@
                                         <c:otherwise>
                                             <%--正常显示--%>
                                             <tr>
-                                                <td>${stock.stockID.code}</td>
+                                                <td><span class="code" style="color:7291CA">${stock.stockID.code}</span></td>
                                                 <td>${stock.name}</td>
                                                 <td>${stock.open}</td>
                                                 <td>${stock.close}</td>
@@ -216,7 +214,7 @@
                     <h5>我的创建</h5>
                 </div>
             </div>
-            <div style="width:85%;margin:0 auto;2px;margin-bottom: 20px;border-top:1px solid #ddd"></div>
+            <div style="width:85%;margin:0 auto;margin-bottom: 20px;border-top:1px solid #ddd"></div>
 
             <%--<c:choose>--%>
                 <%--<c:when test="1==1">--%>
@@ -267,13 +265,13 @@
             <%--</c:choose>--%>
 
 
-            <div style="width:96%;margin:10px auto;2px;margin-bottom: 30px;border-top:2px solid #ddd"></div>
+            <div style="width:96%;margin:10px auto;margin-bottom: 30px;border-top:2px solid #ddd"></div>
             <div class="row">
                 <div class="col-md-2 col-md-offset-1">
                     <h5>我的收藏</h5>
                 </div>
             </div>
-            <div style="width:85%;margin:0 auto;2px;margin-bottom: 20px;border-top:1px solid #ddd"></div>
+            <div style="width:85%;margin:0 auto;margin-bottom: 20px;border-top:1px solid #ddd"></div>
 
             <div class="row">
                 <div class="col-md-offset-1 col-md-10">
@@ -446,7 +444,13 @@
 
 <script type="text/javascript">
 
-
+    $("#modifyInfo").click(function () {
+        $("#changePassword").modal("toggle");
+    });
+    $("#modifyInfo").hover(function () {
+        $(this).css({"cursor": "pointer"});
+    }, function () {
+    });
     $(document).ready(function () {
         var user = "<%= ((User)session.getAttribute("user")).getUserName()%>";
         $(".userID").html(user);
@@ -523,13 +527,17 @@
     //双击后查看详情
 
     $("#myStocks").find("tr").dblclick(function () {
-        var code = $(this).find("td").eq(0).html();
+        var code = $(this).find(".code").eq(0).html();
         window.location.href = "/stocks/" + code;
     });
-    $("td").hover(function () {
-        $(this).css({"cursor": "default"});
+    $(".code").click(function () {
+        window.location.href = "/stocks/" + $(this).html();
+    })
+
+    $(".code").hover(function () {
+        $(this).css({"cursor": "pointer","text-decoration":" underline"});
     }, function () {
-        $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
+        $(this).css({"color":"#7291CA","text-decoration":" none"});
     });
     function openStock() {
         $("body").removeClass('loaded');
