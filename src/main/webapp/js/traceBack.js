@@ -73,7 +73,7 @@ function getTraceBackCriteria() {
 
     // "formativePeriod": $("#formativePeriod").val();
 
-    alert("filterConditions: " +  filterConditions + "\n\n" + "rankConditions: " + rankConditions);
+    alert("filterConditions: " + filterConditions + "\n\n" + "rankConditions: " + rankConditions);
     var criteriaData = {
         "startDate": $("#startDate").val(),
         "endDate": $("#endDate").val(),
@@ -192,13 +192,12 @@ function traceback() {
                     $("#sold_stock_detail").append("<td>" + transferDetails[i]["stockCode"] + "</td>");
                     $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyDate"] + "</td>");
                     $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellDate"] + "</td>");
-                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyPrice"]+ "</td>");
-                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellPrice"]+ "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyPrice"] + "</td>");
+                    $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellPrice"] + "</td>");
                     $("#sold_stock_detail").append("<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>");
                     $("#sold_stock_detail").append("</tr>");
                 }
                 // alert("--------------------4----------------");
-
 
 
                 // // 固定形成期的赢率分析
@@ -263,11 +262,10 @@ function traceback() {
 }
 
 
-
 /**
  * 用户确认保存策略
  */
-function ensureCreate(curUser){
+function ensureCreate(curUser) {
     alert("--------ENTER--------");
     var strategyID = $("#strategyName").val();
     var description = $("#strategyDescription").val();
@@ -291,7 +289,7 @@ function ensureCreate(curUser){
         type: "post",
         async: true,
         url: "/strategy/save",
-        data:{
+        data: {
             "strategy": JSON.stringify(strategyData)
         },
 
@@ -322,6 +320,13 @@ function ensureCreate(curUser){
  * 解析回测指标
  */
 function separateIndicator(indicatorType) {
+    // 特殊情况，优先处理
+    if (indicatorType == "日均成交价") return new Array(1, convertIndicator(indicatorType));
+    if (indicatorType == "前日收盘价") return new Array(1, "PRE_CLOSE");
+    if (indicatorType == "前日后复权收盘价") return new Array(1, "AFTER_ADJ_PRE_CLOSE");
+    if (indicatorType == "1日5日量比") return new Array(1, "VOLUME_RATIO");
+
+
     var separator = indicatorType.indexOf("日");
 
     if (separator == -1) {
@@ -330,8 +335,6 @@ function separateIndicator(indicatorType) {
         return new Array(1, convertIndicator(indicatorType));
     }
     if (separator == 0) {
-        if (indicatorType == "日均成交价") return new Array(1, convertIndicator(indicatorType));
-
         // 为 N日** 类型
         return convertIndicator(indicatorType.substr(1));
     } else {
@@ -340,9 +343,6 @@ function separateIndicator(indicatorType) {
             // 为 *日*** 类型
             return new Array(indicatorType.substr(0, separator), convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         } else {
-            if (indicatorType == "前日收盘价") return new Array(1, "PRE_CLOSE");
-            if (indicatorType == "前日后复权收盘价") return new Array(1, "AFTER_ADJ_PRE_CLOSE");
-
             // 为 当日*** 类型
             return new Array(1, convertIndicator(indicatorType.substr(separator + 1, indicatorType.length)));
         }
@@ -375,18 +375,21 @@ function convertIndicator(indicatorType) {
             return "AFTER_ADJ_LOW";
         case "后复权均价":
             return "AFTER_ADJ_DAILY_AVE_PRICE";
+
         case "成交额":
-            return "TRANSACTION_AMOUNT";
         case "平均成交额":
             return "TRANSACTION_AMOUNT";
         case "成交量":
-            return "VOLUME";
         case "平均成交量":
             return "VOLUME";
+
         case "涨幅":
             return "INCREASE_MARGIN";
         case "换手率":
             return "TURNOVER_RATE";
+        case "股价振幅":
+            return "SWING_RATE";
+
         case "总股本":
             return "GENERAL_CAPITAL";
         case "流通股本":
@@ -395,12 +398,28 @@ function convertIndicator(indicatorType) {
             return "TOTAL_VALUE";
         case "流通市值":
             return "CIRCULATION_MARKET_VALUE";
-        case "股价振幅":
-            return "SWING_RATE";
+
         case "乖离率":
             return "BIAS";
         case "波动率":
             return "RETURN_VOLATILITY";
+        case "DIFF线":
+            return "MACD_DIF";
+        case "DEA线":
+            return "MACD_DEA";
+        case "MACD柱状值":
+            return "MACD_COLUMN_VAL";
+        case "多空指标":
+            return "BBIC";
+        case "多头排列标记":
+            return "MULTIPLE_ARRANGEMENT_MARK";
+        case "布林上线":
+            return "BOLL_UP_BANDS";
+        case "布林下线":
+            return "BOLL_DOWN_BANDS";
+        case "平均真实波动范围":
+            return "AVE_TRUE_RANGE";
+
         case "市盈率":
             return "PE_TTM";
         case "市净率":
@@ -411,6 +430,14 @@ function convertIndicator(indicatorType) {
             return "S_PE_TTM";
         case "动态市盈率":
             return "D_PE_TTM";
+        case "市盈率相对于盈利增长比率":
+            return "PEG";
+        case "每股收益":
+            return "EPS";
+        case "净资产收益率":
+            return "ROE";
+        case "资产负债率":
+            return "ASSET_LIABILITY_RATIO";
     }
     alert("No Match IndicatorType");
 }
