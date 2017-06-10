@@ -1,6 +1,7 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Harvey on 2017/6/7.
@@ -18,5 +19,10 @@ public class StrategyCumulativeAndTransferDetail {
      * 调仓日期的操作详情
      */
     public List<TransferDayDetail> transferDayDetails;
+
+    /**
+     * 阶段持仓详单
+     */
+    public Map<Integer, List<StageDetail>> stageDetails;
 
 }

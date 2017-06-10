@@ -21,13 +21,11 @@ import java.util.List;
  */
 public class StoreAdjStockHelper {
 
-    private String frontPath = "F:\\Quant\\adjData\\stock\\front\\";
-    private String afterPath = "F:\\Quant\\adjData\\stock\\after\\";
+    private String frontPath = "F:\\Quant\\adjData\\add\\front\\";
+    private String afterPath = "F:\\Quant\\adjData\\add\\after\\";
 
-    public void store() {
-//        storeFrontStock(frontPath+"date1");
-//        storeFrontStock(frontPath+"date2");
-//        storeAfterStock(afterPath+"date1");
+    public void handle() {
+        storeFrontStock(frontPath+"date2");
         storeAfterStock(afterPath+"date2");
     }
 

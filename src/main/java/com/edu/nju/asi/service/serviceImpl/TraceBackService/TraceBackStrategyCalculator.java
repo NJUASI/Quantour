@@ -61,6 +61,11 @@ public class TraceBackStrategyCalculator {
     protected List<TransferDayDetail> lastSoldStocks = new ArrayList<>();
 
     /**
+     * 阶段持仓详单
+     */
+    protected Map<Integer, List<StageDetail>>  stageDetails = new TreeMap<>();
+
+    /**
      * 筛选条件
      */
     protected List<FilterCondition> filterConditions;
@@ -161,10 +166,13 @@ public class TraceBackStrategyCalculator {
         // 根据果仁网，第一天数据设置为0
         strategyCumulativeReturn.add(0, new CumulativeReturn(allDatesWithData.get(allStartIndex), 0, false));
 
+
+        //装载数据
         StrategyCumulativeAndTransferDetail strategyCumulativeAndTransferDetail = new StrategyCumulativeAndTransferDetail();
 
         strategyCumulativeAndTransferDetail.strategyCumulativeReturn = strategyCumulativeReturn;
         strategyCumulativeAndTransferDetail.transferDayDetails = lastSoldStocks;
+        strategyCumulativeAndTransferDetail.stageDetails = stageDetails;
         return strategyCumulativeAndTransferDetail;
     }
 
@@ -189,7 +197,7 @@ public class TraceBackStrategyCalculator {
             rankConditionRates.sort(new Comparator<RankConditionRate>() {
                 @Override
                 public int compare(RankConditionRate o1, RankConditionRate o2) {
-                    return (int) Math.ceil(o1.score-o2.score);
+                    return (int) Math.ceil(o2.score-o1.score);
                 }
             });
             rankConditionRates = rankConditionRates.subList(0,maxHoldingNum);
@@ -201,7 +209,7 @@ public class TraceBackStrategyCalculator {
             wantedStockCodes.add(rankConditionRate.stockCode);
         }
 
-        return calculate(wantedStockCodes, periodStart, periodEnd, periodSerial, startIndex);
+        return calculate(wantedStockCodes, periodStart, periodEnd, periodSerial, startIndex, endIndex);
     }
 
     /**
@@ -211,51 +219,52 @@ public class TraceBackStrategyCalculator {
      * @param periodSerial     调仓周期
      * @return 此持有期的累计收益率
      */
-    private List<CumulativeReturn> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex) {
+    private List<CumulativeReturn> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex, int endIndex) {
 
         //第一个周期，没有卖出的股票
         if(periodSerial == 1){
+            List<StageDetail> stageDetailList = new ArrayList<>();
             for(int i = 0; i < pickedStockCodes.size(); i++){
-                Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
-                currentHoldingStocks.add(new TransferDayDetail(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getClose()));
+                Stock startDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
+                Stock endDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(endIndex));
+
+                stageDetailList.add(new StageDetail(pickedStockCodes.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), endDayStock.getFrontAdjClose()));
+
+                currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),pickedStockCodes.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose()));
             }
+            stageDetails.put(periodSerial, stageDetailList);
         }
         //不是第一个周期
         else {
-            //若挑选的股票代码不在当前持有的股票代码中，添加进去
-            for(int i = 0; i < pickedStockCodes.size(); i++){
-                for(int j = 0; j < currentHoldingStocks.size(); j++){
-                    boolean isNew = true;
-                    if(pickedStockCodes.get(i).equals(currentHoldingStocks.get(j).stockCode)){
-                        isNew = false;
-                    }
-                    if(isNew){
-                        Stock stock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
-                        currentHoldingStocks.add(new TransferDayDetail(stock.getName(),pickedStockCodes.get(i),stock.getStockID().getDate(),stock.getClose()));
-                        j++;
-                    }
-                }
-            }
-
             // 若挑选的股票代码中没有当前持有股票的代码，则将该股票加入卖出的队列
-            for(int i = 0; i < currentHoldingStocks.size();){
+            for(int i = 0; i < currentHoldingStocks.size(); i++){
                 boolean isSold = true;
                 for(int j = 0; j < pickedStockCodes.size(); j++){
                     if(currentHoldingStocks.get(i).stockCode.equals(pickedStockCodes.get(j))){
                         isSold = false;
-                        i++;
                         break;
                     }
                 }
-                //TODO 这里的卖出价格有点儿问题 被卖出，加入最近被卖出的队列，卖的是调仓日期的前复权开盘价
                 if(isSold){
                     Stock stock = findStock(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
-
                     //每个持仓期的第一天作为调仓日期
-                    lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getClose()));
-                    currentHoldingStocks.remove(i);
+                    lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getFrontAdjClose()));
                 }
             }
+
+            //更新当前持有股票
+            List<StageDetail> stageDetailList = new ArrayList<>();
+            //清空当前持有股票
+            currentHoldingStocks.clear();
+            for(int i = 0; i < pickedStockCodes.size(); i++){
+                Stock startDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
+                Stock endDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(endIndex));
+
+                stageDetailList.add(new StageDetail(pickedStockCodes.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), endDayStock.getFrontAdjClose()));
+
+                currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),pickedStockCodes.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose()));
+            }
+            stageDetails.put(periodSerial, stageDetailList);
         }
 
         List<CumulativeReturn> strategyCumulativeReturn = new LinkedList<>();
@@ -366,8 +375,8 @@ public class TraceBackStrategyCalculator {
     private List<RankConditionRate> rankCodes(List<String> codesNeedToRank, LocalDate periodStart){
 
         if(rankConditions.size() == 0){
-            //若排名条件为空，则默认以当日成交量从大到小排名
-            rankConditions.add(new RankCondition(IndicatorType.VOLUME, RankType.DESC_RANK, 1, 1));
+            //若排名条件为空，则默认以当日成交额从大到小排名
+            rankConditions.add(new RankCondition(IndicatorType.TRANSACTION_AMOUNT, RankType.DESC_RANK, 1, 1));
         }
 
         // 通过不同的筛选条件进行筛选

@@ -385,7 +385,7 @@
 </div>
 
 <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 30%">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -394,24 +394,32 @@
             <div class="modal-body" style="padding-left: 80px">
                 <form id="modifyForm" class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：</label>
-                        <label class="userID" style="margin-left: 20px">12345</label>
+                        <label class="col-md-3 control-label" for="password1" style="padding-left: 0">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;户：</label>
+                        <div class="col-md-7">
+                            <label class="userID" style="margin-left: 20px">12345</label>
+                        </div>
                     </div>
-                    <div class="form-group form-inline">
-                        <label for="password1">输入密码：</label>
-                        <input type="password" style="width:200px;" class="form-control" id="password1"
-                               name="password1" placeholder="请输入您的密码">
+
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="password1" style="padding-left: 0">用户密码：</label>
+                        <div class="col-md-7">
+                            <input type="password" class="form-control" id="password1" name="password1" placeholder="请输入密码">
+                        </div>
                     </div>
-                    <div class="form-group form-inline">
-                        <label for="password2">确认密码：</label>
-                        <input type="password" style="width:200px;" class="form-control" id="password2"
-                               name="password2" placeholder="再次输入您的密码">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="password2" style="padding-left: 0">确认密码：</label>
+                        <div class="col-md-7">
+                            <input type="password" class="form-control" id="password2" name="reg_password2" placeholder="请再次输入密码">
+                        </div>
                     </div>
-                    <div class="form-group form-inline">
-                        <label for="password2">修改邮箱：</label>
-                        <input type="text" style="width:200px;" class="form-control" id="e_mail"
-                               name="e_mail" placeholder="请输入邮箱">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="e_mail" style="padding-left: 0">电子邮箱：</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="e_mail" name="e_mail" placeholder="请输入邮箱">
+                        </div>
                     </div>
+
                     <input type="submit" class="btn btn-info" onclick="user_modify()"
                            style="margin-top: 15px;margin-left: 80px;" value="确认修改"/>
                 </form>

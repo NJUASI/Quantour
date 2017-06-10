@@ -138,6 +138,9 @@ public abstract class AllFormateStrategy {
                 int k = period - stockList.size();
                 i++;
                 if(k == 1){
+                    if((startIndex - period - i) < 0){
+                        return null;
+                    }
                     start = allDatesWithData.get(startIndex - period - i);
                     Stock stock = findStock(code, start);
                     if(stock == null){
@@ -147,6 +150,9 @@ public abstract class AllFormateStrategy {
                     }
                 }
                 else {
+                    if((startIndex - period - i*k) < 0){
+                        return null;
+                    }
                     start = allDatesWithData.get(startIndex - period - i*k);
                     end = allDatesWithData.get(startIndex - period - (i-1)*k - 1);
                     List<Stock> stocks = findStockVOsWithinDay(code, start, end);

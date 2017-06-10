@@ -88,6 +88,7 @@ function quotaChange() {
     var whichTab;
     var whichValue;
     var whichButton;
+    var whichType;
     if($("#choose").hasClass("active")){
         rankType = "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">" +
             "<option value='RANK_MAX'>排名最大</option>" +
@@ -107,6 +108,7 @@ function quotaChange() {
             "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>" +
             "</div>" ;
         whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
+        whichType= 'quotaRow';
     }else{
         rankType="<select class=\"form-control col-md-12 rankOrder\" style=\"padding-left: 5px;padding-right: 5px\">" +
             "<option value='ASC_RANK'>由小到大</option>" +
@@ -120,8 +122,10 @@ function quotaChange() {
             "</div>" +
             "</div>" ;
         whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary rankBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
+        whichType= 'rankRow';
+
     }
-    whichTab.append("<tr class='quotaRow'>" +
+    whichTab.append("<tr class="+whichType+">" +
         "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
         "<td class=\"col-md-2\">" +
         "<div class=\"row\">" +
@@ -133,6 +137,34 @@ function quotaChange() {
         "</td>" +
         whichButton+
         "</tr>");
+
+    var reg2 = /^[1-9]$/;
+    $(".quotaWeight").bind('input propertychange', function () {
+        if($(this).val()==""){
+            $(this).css("border","2px solid red");
+            return false;
+        }
+        else if (!reg2.test($(this).val())) {
+            $(this).css("border","2px solid red");
+            return false;
+        }else{
+            $(this).css("border","1px solid #CCCCCC");
+        }
+    });
+    var reg3 = /^\d{1,20}$/;
+    $(".quotaNum").bind('input propertychange', function () {
+        alert("213");
+        if($(this).val()==""){
+            $(this).css("border","2px solid red");
+            return false;
+        }
+        else if (!reg3.test($(this).val())) {
+            $(this).css("border","2px solid red");
+            return false;
+        }else{
+            $(this).css("border","1px solid #CCCCCC");
+        }
+    });
 
     $(".quotaBt").unbind("click");
     $(".quotaBt").click(function () {
@@ -176,7 +208,7 @@ function quotaChange() {
 
 $(".quota").click(function () {
     var quotaName;
-//       alert($(this).html())
+
     if ($(this).html().substring(0, 1) == "N") {
         quotaName = "<div class='col-md-4'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $(this).html().substring(1) + "</div>"
     } else {
@@ -208,6 +240,7 @@ $(".quota").click(function () {
             "</div>" ;
         whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
         whichType='quotaRow';
+
     }else{
         rankType="<select class=\"form-control col-md-12 rankOrder\" style=\"padding-left: 5px;padding-right: 5px\">" +
             "<option value='ASC_RANK'>由小到大</option>" +
@@ -222,6 +255,7 @@ $(".quota").click(function () {
             "</div>" ;
         whichButton= "<td class=\"col-md-1\"><button class=\"btn  btn-primary rankBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>";
         whichType='rankRow';
+
     }
     whichTab.append("<tr class="+whichType+">" +
         "<td class=\"col-md-4\"><div class='row'>" + quotaName + "</div></td>" +
@@ -235,6 +269,33 @@ $(".quota").click(function () {
         "</td>" +
         whichButton+
         "</tr>");
+
+    var reg2 = /^[1-9]$/;
+    $(".quotaWeight").bind('input propertychange', function () {
+        if($(this).val()==""){
+            $(this).css("border","2px solid red");
+            return false;
+        }
+        else if (!reg2.test($(this).val())) {
+            $(this).css("border","2px solid red");
+            return false;
+        }else{
+            $(this).css("border","1px solid #CCCCCC");
+        }
+    });
+    var reg3 = /^\d{1,20}$/;
+    $(".quotaNum").bind('input propertychange', function () {
+        if($(this).val()==""){
+            $(this).css("border","2px solid red");
+            return false;
+        }
+        else if (!reg3.test($(this).val())) {
+            $(this).css("border","2px solid red");
+            return false;
+        }else{
+            $(this).css("border","1px solid #CCCCCC");
+        }
+    });
 
     $(".quotaBt").unbind("click");
     $(".quotaBt").click(function () {
@@ -272,5 +333,5 @@ $(".quota").click(function () {
             $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").css("visibility", "visible");
             $("#rankList").find("tr").eq($(".rankOrder").index($(this))).find(".percent").html(result);
         }
-    })
+    });
 });

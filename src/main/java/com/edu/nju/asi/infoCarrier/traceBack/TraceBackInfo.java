@@ -1,6 +1,9 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
+import javafx.stage.Stage;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by harvey on 17-4-9.
@@ -21,6 +24,11 @@ public class TraceBackInfo {
      * 调仓日期操作的详情
      */
     public List<TransferDayDetail> transferDayDetails;
+
+    /**
+     * 阶段持仓详单
+     */
+    public Map<Integer, List<StageDetail>> stageDetails;
 
     /**
      * 历史持仓详情
