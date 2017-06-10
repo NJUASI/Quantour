@@ -359,9 +359,14 @@
         connect(c2,c3);
         connect(c1,c4);
         connect(c2,c4);
+
+        //todo fjj 当前日期
+        $("#datetimeStart>input").attr('value', "2003-01-02");
+        $("#datetimeEnd>input").attr('value', endTime);
     });
 </script>
 <script type="text/javascript">
+
 
     createClickChart("one_stock_click_chart", ${clickedData}, ${clickedDataStringRepre});
     $(document).ready(

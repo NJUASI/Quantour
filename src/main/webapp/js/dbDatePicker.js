@@ -38,7 +38,6 @@ if (dayOfMonth < 10) {
 $("#datetimeStart>input").attr('value', startTime);
 $("#datetimeEnd>input").attr('value', endTime);
 
-
 $("#datetimeStart").datetimepicker({
     daysOfWeekDisabled: [0,6],
     format: 'yyyy-mm-dd',
