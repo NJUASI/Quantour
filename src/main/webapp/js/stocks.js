@@ -33,6 +33,7 @@ function changeSingleStockDetail() {
             if (array[0] == "1") {
 
                 var candlestickData = eval("(" + array[1] + ")");
+                var candlestickData2 = eval("(" + array[1] + ")");
                 var bollData = eval("(" + array[2] + ")");
                 var volumeData = eval("(" + array[3] + ")");
                 var macdData = eval("(" + array[4] + ")");
@@ -58,11 +59,10 @@ function changeSingleStockDetail() {
                 $("#datetimeStart>input").attr('value', startDate);
                 $("#datetimeEnd>input").attr('value', stockOfEndDay["stockID"]["date"]);
 
-                // TODO 高源
                 var c1 = createCandlestick('candlestick_chart', candlestickData);
                 var c2 = createVolume('volume_chart', volumeData);
                 var c3 = createMACD('MACD_chart', macdData);
-                var c4 = createBULL('boll_chart', candlestickData, bollData[0], bollData[1], bollData[2]);
+                var c4 = createBULL('boll_chart', candlestickData2, bollData[0], bollData[1], bollData[2]);
                 connect(c1, c3);
                 connect(c2, c3);
                 connect(c1, c4);
@@ -84,6 +84,10 @@ function changeSingleStockDetail() {
         }
 
     });
+}
+
+function connect(chart1,chart2){
+    echarts.connect([chart1,chart2]);
 }
 
 /**
