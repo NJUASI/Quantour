@@ -295,7 +295,7 @@
 <script src="../js/quotaSelect.js"></script>
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
-
+<%--<script src="../js/dbDatePicker.js"></script>--%>
 
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
@@ -314,25 +314,7 @@
         });
     });
 
-    $("#datetimeStart").datetimepicker({
-        format: 'yyyy-mm-dd',
-        minView: 'month',
-        language: 'zh-CN',
-        autoclose: true,
-        startDate: new Date(2005 - 04 - 03),
-        endDate: new Date()
-    }).on("click", function () {
-        $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())
-    });
-    $("#datetimeEnd").datetimepicker({
-        format: 'yyyy-mm-dd',
-        minView: 'month',
-        language: 'zh-CN',
-        autoclose: true,
-        endDate: new Date()
-    }).on("click", function () {
-        $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
-    });
+
     function openStock() {
         $("body").removeClass('loaded');
         window.location.href="/stocks"
