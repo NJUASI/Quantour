@@ -49,6 +49,7 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
     @Override
     public List<Stock> getPrivateStocks(String userName, LocalDate date) {
         List<Stock> result = new ArrayList<>();
+        List<Stock> withoutData = new ArrayList<>();
 
         List<PrivateStock> privateStockIDList = privateStockDataHelper.getPrivateStock(userName);
 
@@ -59,12 +60,13 @@ public class PrivateStockDaoImpl implements PrivateStockDao {
             Stock tempStock = stockDataHelper.getStockData(id.getStockCode(), date);
             if (tempStock == null) {
                 // 如果此只股票没有当日信息，则仍需显示，只是显示为／
-                result.add(new Stock(id.getStockCode(), date, codeAndName.get(id.getStockCode())));
+                withoutData.add(new Stock(id.getStockCode(), date, codeAndName.get(id.getStockCode())));
             } else {
                 result.add(tempStock);
             }
         }
 
+        result.addAll(withoutData);
         return result;
     }
 

@@ -295,6 +295,7 @@
 <script src="../js/quotaSelect.js"></script>
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
+<script src="../js/strategy.js"></script>
 
 
 <script src="../js/bootstrap-select.js"></script>

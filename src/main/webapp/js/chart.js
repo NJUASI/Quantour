@@ -1507,7 +1507,7 @@ function createRadarChart(id, data, legend, paramter) {
                 indicator: (function () {
                     var res = [];
                     for (var i = 0; i < paramter.length; i++) {
-                        res.push({text: paramter[i], max: 50});
+                        res.push({text: paramter[i], max: 100});
                     }
                     return res;
                 })(),
