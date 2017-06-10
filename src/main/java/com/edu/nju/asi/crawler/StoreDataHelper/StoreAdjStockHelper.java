@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class StoreAdjStockHelper {
 
-    private String frontPath = "F:\\Quant\\adjData\\add\\front\\";
-    private String afterPath = "F:\\Quant\\adjData\\add\\after\\";
+    private String frontPath = "F:\\Quant\\adjData\\today\\front\\";
+    private String afterPath = "F:\\Quant\\adjData\\today\\after\\";
 
     public void handle() {
         storeFrontStock(frontPath+"date2");

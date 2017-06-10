@@ -336,7 +336,7 @@ function createCandlestick(id, candlestickData) {
         yAxis: [{
             scale: true,
             splitArea: {
-                show: true
+                show: false
             }
         }],
         dataZoom: [{
@@ -439,7 +439,7 @@ function createVolume(id, volumes) {
                 type: 'cross'
             },
             backgroundColor: 'rgba(245, 245, 245, 0.8)',
-            borderWidth: 1,
+            borderWidth: 10,
             borderColor: '#ccc',
             padding: 10,
             textStyle: {
@@ -451,12 +451,6 @@ function createVolume(id, volumes) {
                 return obj;
             },
             extraCssText: 'width: 170px'
-        },
-        axisPointer: {
-            link: {xAxisIndex: 'all'},
-            label: {
-                backgroundColor: '#777'
-            }
         },
         xAxis: [{
             type: 'category',
@@ -484,8 +478,7 @@ function createVolume(id, volumes) {
             scale: true,
             splitNumber: 2,
             axisLabel: {
-                show: false,
-                formatter: '{value}%'
+                show: true
             },
             axisLine: {show: false},
             axisTick: {show: false}
