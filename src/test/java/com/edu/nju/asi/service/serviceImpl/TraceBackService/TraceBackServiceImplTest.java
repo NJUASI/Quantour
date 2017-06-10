@@ -28,14 +28,14 @@ public class TraceBackServiceImplTest {
     @Before
     public void setUp() throws IOException {
         traceBackService = new TraceBackServiceImpl();
-        start = LocalDate.of(2017,4,1);
-        end = LocalDate.of(2017,5,1);
+        start = LocalDate.of(2017,4,18);
+        end = LocalDate.of(2017,5,2);
     }
 
     @Test
     public void setTraceBackService(){
         List<BlockType> blockTypes = new LinkedList<>();
-        blockTypes.add(BlockType.ZXB);
+        blockTypes.add(BlockType.ZB);
 
         //筛选条件
         List<FilterCondition> filterConditions = new ArrayList<>();
@@ -43,9 +43,9 @@ public class TraceBackServiceImplTest {
 
         //排名条件
         List<RankCondition> rankConditions = new ArrayList<>();
-        rankConditions.add(new RankCondition(IndicatorType.VOLUME, RankType.DESC_RANK, 1, 5));
+        rankConditions.add(new RankCondition(IndicatorType.VOLUME, RankType.DESC_RANK, 1, 1));
 
-        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 10, 5, new StockPoolCriteria(StType.EXCLUDE, blockTypes),
+        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, 2, new StockPoolCriteria(StType.EXCLUDE, blockTypes),
                 "沪深300", filterConditions, rankConditions);
 
         try {
