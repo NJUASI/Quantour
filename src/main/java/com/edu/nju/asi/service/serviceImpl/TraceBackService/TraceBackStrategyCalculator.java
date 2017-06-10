@@ -197,7 +197,7 @@ public class TraceBackStrategyCalculator {
             rankConditionRates.sort(new Comparator<RankConditionRate>() {
                 @Override
                 public int compare(RankConditionRate o1, RankConditionRate o2) {
-                    return (int) Math.ceil(o1.score-o2.score);
+                    return (int) Math.ceil(o2.score-o1.score);
                 }
             });
             rankConditionRates = rankConditionRates.subList(0,maxHoldingNum);
@@ -375,8 +375,8 @@ public class TraceBackStrategyCalculator {
     private List<RankConditionRate> rankCodes(List<String> codesNeedToRank, LocalDate periodStart){
 
         if(rankConditions.size() == 0){
-            //若排名条件为空，则默认以当日成交量从大到小排名
-            rankConditions.add(new RankCondition(IndicatorType.VOLUME, RankType.DESC_RANK, 1, 1));
+            //若排名条件为空，则默认以当日成交额从大到小排名
+            rankConditions.add(new RankCondition(IndicatorType.TRANSACTION_AMOUNT, RankType.DESC_RANK, 1, 1));
         }
 
         // 通过不同的筛选条件进行筛选

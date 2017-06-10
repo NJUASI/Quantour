@@ -147,13 +147,12 @@ public class TraceBackParam {
         System.out.println("策略日收益均值：" + meanStrategy);
         System.out.println("策略日收益标准差：" + stdevStrategy);
 
+        // 计算策略的年化波动率
+        traceBackNumVal.returnVolatility = calculateReturnVolatility(stdevStrategy);
 
         // 计算（策略）夏普比率、（策略）信息比率
         traceBackNumVal.sharpeRatio = calculateSharpeRatio(traceBackNumVal.annualizedRateOfReturn, traceBackNumVal.returnVolatility);
         traceBackNumVal.informationRatio = calculateInformationRatio();
-
-        // 计算策略的年化波动率
-        traceBackNumVal.returnVolatility = calculateReturnVolatility(stdevStrategy);
 
         // 计算alpha、beta
         traceBackNumVal.beta = calculateBeta(strategyRateList, baseRateList, stdevBase);

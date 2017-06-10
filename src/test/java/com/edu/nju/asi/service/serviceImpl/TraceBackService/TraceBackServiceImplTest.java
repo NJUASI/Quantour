@@ -39,11 +39,11 @@ public class TraceBackServiceImplTest {
 
         //筛选条件
         List<FilterCondition> filterConditions = new ArrayList<>();
-//        filterConditions.add(new FilterCondition(IndicatorType.VOLUME, ComparatorType.RANK_MAX, 10, 5));
+        filterConditions.add(new FilterCondition(IndicatorType.VOLUME, ComparatorType.RANK_MAX, 10, 1));
 
         //排名条件
         List<RankCondition> rankConditions = new ArrayList<>();
-        rankConditions.add(new RankCondition(IndicatorType.VOLUME, RankType.DESC_RANK, 1, 1));
+//        rankConditions.add(new RankCondition(IndicatorType.VOLUME, RankType.DESC_RANK, 1, 1));
 
         TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, 2, new StockPoolCriteria(StType.EXCLUDE, blockTypes),
                 "沪深300", filterConditions, rankConditions);
