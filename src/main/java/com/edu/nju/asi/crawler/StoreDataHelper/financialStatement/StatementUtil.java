@@ -45,7 +45,24 @@ public class StatementUtil {
 
     public static boolean isTrueDate(LocalDate localDate) {
         if(localDate.isAfter(LocalDate.of(2010,1,1))) {
-            return true;
+
+            if(localDate.getMonthValue()==12&&localDate.getDayOfMonth()==31){
+                return true;
+            }
+
+            if(localDate.getMonthValue()==9&&localDate.getDayOfMonth()==30){
+                return true;
+            }
+
+            if(localDate.getMonthValue()==6&&localDate.getDayOfMonth()==30){
+                return true;
+            }
+
+            if(localDate.getMonthValue()==3&&localDate.getDayOfMonth()==31){
+                return true;
+            }
+
+            return false;
         } else {
             return false;
         }
