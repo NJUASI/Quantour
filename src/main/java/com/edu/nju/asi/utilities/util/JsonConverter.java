@@ -8,6 +8,7 @@ import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.NumberFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,7 +48,9 @@ public class JsonConverter {
     public static String convertOneStock(List<Stock> stocks, boolean isPrivate, double nowClickNum) throws JsonProcessingException {
         StringBuffer holder = new StringBuffer();
         holder.append(convertCandlestick(stocks)).append(";");
+        holder.append(convertBoll(stocks)).append(";");
         holder.append(convertVolume(stocks)).append(";");
+        holder.append(convertMACD(stocks)).append(";");
         holder.append(JSON.toJSONString(stocks.get(stocks.size() - 1))).append(";");
         holder.append(JSON.toJSONString(stocks.get(0).getStockID().getDate())).append(";");
         holder.append(JSON.toJSONString(isPrivate)).append(";");
@@ -80,6 +83,47 @@ public class JsonConverter {
     }
 
     /**
+     * 转换为布林线所需json data字符串格式
+     */
+    private static String convertBoll(List<Stock> stocks) throws JsonProcessingException {
+        List<String> upper = new ArrayList<>();
+        List<String> mid = new ArrayList<>();
+        List<String> lower = new ArrayList<>();
+
+        StandardDeviation stdev = new StandardDeviation();
+
+
+        for (int i = 0; i < stocks.size(); i++) {
+            // 默认为20日布林线，当开始没有数据就跳过
+            if (i < 20) {
+                upper.add("-");
+                mid.add("-");
+                lower.add("-");
+            } else {
+                double[] afterAdjCloses = new double[20];
+                double sum = 0;
+                for (int j = 0; j < 20; j++) {
+                    double tempAfterAdjClose = stocks.get(i - j).getAfterAdjClose();
+                    sum += tempAfterAdjClose;
+                    afterAdjCloses[j] = tempAfterAdjClose;
+                }
+                double mean = sum / 20;
+                double stdev_afterAdjCloses = stdev.evaluate(afterAdjCloses);
+
+                upper.add(NumberFormat.decimaFormat(mean + 2 * stdev_afterAdjCloses, 2));
+                mid.add(NumberFormat.decimaFormat(mean, 2));
+                lower.add(NumberFormat.decimaFormat(mean - 2 * stdev_afterAdjCloses, 2));
+            }
+        }
+
+        List<List<String>> result = new ArrayList<>();
+        result.add(upper);
+        result.add(mid);
+        result.add(lower);
+        return jsonOfObject(result);
+    }
+
+    /**
      * 将数据集合变成json-String(用于交易量)
      *
      * @return String 转换后的json
@@ -100,10 +144,50 @@ public class JsonConverter {
         return JsonConverter.jsonOfObject(result);
     }
 
+    /**
+     * 转换为MACD所需json data字符串格式
+     */
+    private static String convertMACD(List<Stock> stocks) throws JsonProcessingException {
+        List<List<String>> result = new ArrayList<>();
+
+        // dea的平滑指数, 一般取作2/(N+1) MID = 9
+        double k = 2.0 / (9 + 1);
+
+        for (int i = 0; i < stocks.size(); i++) {
+            List<String> temp = new ArrayList<>();
+            // 默认为26 + 9 = 35日后才开始能计算长线，当开始没有数据就跳过
+            if (i < 35) {
+                temp.add("-");
+                temp.add("-");
+                temp.add("-");
+                temp.add("-");
+            } else {
+                double diff = computeDIF(stocks, i);
+
+                //第一天的macd_dea以第一次计算的dif为准
+                Double dea = computeDIF(stocks, i - 8);
+                for (int j = 1; j < 9; j++) {
+                    Double next = computeDIF(stocks, i - j);
+                    dea = k*next + (1 - k) * dea;
+                }
+
+                double macd = 2 * (diff - dea);
+
+                temp.add(stocks.get(i).getStockID().getDate().toString());
+                temp.add(NumberFormat.decimaFormat(macd, 2));
+                temp.add(NumberFormat.decimaFormat(diff, 2));
+                temp.add(NumberFormat.decimaFormat(dea, 2));
+            }
+            result.add(temp);
+        }
+
+        return jsonOfObject(result);
+    }
+
     public static String convertClickSearch(double nowClickNum) throws JsonProcessingException {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(JSON.toJSONString(NumberFormat.decimaFormat(nowClickNum,4))).append(";");
-        buffer.append(JSON.toJSONString("\"" + NumberFormat.percentFormat(nowClickNum,2) + "\""));
+        buffer.append(JSON.toJSONString(NumberFormat.decimaFormat(nowClickNum, 4))).append(";");
+        buffer.append(JSON.toJSONString("\"" + NumberFormat.percentFormat(nowClickNum, 2) + "\""));
         return buffer.toString();
     }
 
@@ -148,7 +232,7 @@ public class JsonConverter {
         List<List<String>> result = new ArrayList<>();
 
         if (topClicks != null) {
-            for(StockSearch stockSearch: topClicks){
+            for (StockSearch stockSearch : topClicks) {
                 List<String> temp = new ArrayList<>();
                 temp.add(stockSearch.getSearchID().getName());
                 temp.add(String.valueOf(stockSearch.getClickAmount()));
@@ -379,6 +463,39 @@ public class JsonConverter {
                 data[index] = map.get(key);
             }
         }
+    }
+
+
+    /**
+     * 计算某只股票的DIF值，短线的时间为12天，长线的时间为26天
+     */
+    private static double computeDIF(List<Stock> stocks, int endIndex) {
+        // 短期——12天，长期——26天
+        List<Stock> stockList_short = stocks.subList(endIndex - 11, endIndex + 1);
+        List<Stock> stockList_long = stocks.subList(endIndex - 25, endIndex + 1);
+
+        return EMA_AfterAdjClose(stockList_short) - EMA_AfterAdjClose(stockList_long);
+    }
+
+
+    /**
+     * 计算某只股票N个交易日的eam
+     *
+     * @param stockList 需要计算的某只股票N个交易日的详情
+     * @return
+     */
+    private static double EMA_AfterAdjClose(List<Stock> stockList) {
+        //平滑指数, 一般取作2/(N+1)
+        double k = 2.0 / (stockList.size() + 1);
+
+        //第一天ema等于当天的收盘价
+        double ema = stockList.get(0).getAfterAdjClose();
+        for (int i = 1; i < stockList.size(); i++) {
+            //第二天以后，当天收盘价 * 系数 加上昨天的ema*系数-1
+            ema = k * stockList.get(i).getAfterAdjClose() + (1 - k) * ema;
+        }
+
+        return ema;
     }
 
 }

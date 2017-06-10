@@ -192,6 +192,7 @@
 
 <script type="text/javascript">
 
+    <%--TODO  高源 加图--%>
     // 画出点击率的图
     createClickChart("one_stock_click_chart", ${clickedData}, ${clickedDataStringRepre});
     $(document).ready(
