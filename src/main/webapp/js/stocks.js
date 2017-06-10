@@ -33,10 +33,12 @@ function changeSingleStockDetail() {
             if (array[0] == "1") {
 
                 var candlestickData = eval("(" + array[1] + ")");
-                var volumeData = eval("(" + array[2] + ")");
-                var stockOfEndDay = eval("(" + array[3] + ")");
-                var startDate = eval("(" + array[4] + ")");
-                var isPrivate = eval("(" + array[5] + ")");
+                var bollData = eval("(" + array[2] + ")");
+                var volumeData = eval("(" + array[3] + ")");
+                var macdData = eval("(" + array[4] + ")");
+                var stockOfEndDay = eval("(" + array[5] + ")");
+                var startDate = eval("(" + array[6] + ")");
+                var isPrivate = eval("(" + array[7] + ")");
 
 
                 $("#stockDetail").empty();
@@ -51,11 +53,20 @@ function changeSingleStockDetail() {
                     "<li>换手率 <span>"+stockOfEndDay["turnoverRate"]+"</span></li>"+
                     "<li>总市值 <span>"+stockOfEndDay["totalValue"]+"</span></li>"+
                     "<li>流通市值 <span>"+stockOfEndDay["circulationMarketValue"]+"</span></li>");
-
                 $("#stockDetail > li").addClass("col-md-5");
 
-                 createCandlestickChart('candlestick_chart', candlestickData, volumeData);
+                $("#datetimeStart>input").attr('value', startDate);
+                $("#datetimeEnd>input").attr('value', stockOfEndDay["stockID"]["date"]);
 
+                // TODO 高源
+                var c1 = createCandlestick('candlestick_chart', candlestickData);
+                var c2 = createVolume('volume_chart', volumeData);
+                var c3 = createMACD('MACD_chart', macdData);
+                var c4 = createBULL('boll_chart', candlestickData, bollData[0], bollData[1], bollData[2]);
+                connect(c1, c3);
+                connect(c2, c3);
+                connect(c1, c4);
+                connect(c2, c4);
 
             } else if (array[0] == "-1") {
                 // 提示错误信息
