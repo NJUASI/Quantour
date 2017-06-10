@@ -45,6 +45,7 @@ public class PB_FormateStrategy extends FinancialFormateStrategy{
 
             if(basicData == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
+                continue;
             }
             double totalEquityAttr = 0;
             formateRate.add(new FormateRate(stockCodes.get(i), totalMarket / totalEquityAttr));

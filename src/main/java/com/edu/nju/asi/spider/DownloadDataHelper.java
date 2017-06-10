@@ -38,11 +38,9 @@ public class DownloadDataHelper {
      */
     public void normalStockStore(String path) {
 
-        File dir = new File(path);
-        File[] files = dir.listFiles();
-        for(int i = 0; i < files.length; i++) {
-            if (files[i].getName().startsWith("000") || files[i].getName().startsWith("001") || files[i].getName().startsWith("600")
-                    || files[i].getName().startsWith("601") || files[i].getName().startsWith("002") || files[i].getName().startsWith("300")) {
+            File dir = new File(path);
+            File[] files = dir.listFiles();
+            for(int i = 0; i < files.length; i++) {
 
                 List<Stock> stocks = new ArrayList<>();
 
@@ -63,12 +61,12 @@ public class DownloadDataHelper {
                         }
 
                         //TODO 添加16号的数据
-//                        if (!LocalDate.parse(reader.get(0)).equals(LocalDate.of(2017,5,16))){
-//                            continue;
-//                        }
+    //                        if (!LocalDate.parse(reader.get(0)).equals(LocalDate.of(2017,5,16))){
+    //                            continue;
+    //                        }
                         normalStock.setCode(reader.get(1));
                         normalStock.setName(reader.get(2));
-//                        System.out.println(reader.get(2));
+    //                        System.out.println(reader.get(2));
                         normalStock.setDate(reader.get(0));
                         normalStock.setOpen(reader.get(6));
                         normalStock.setClose(reader.get(3));
@@ -94,7 +92,6 @@ public class DownloadDataHelper {
                 stockDataHelper.addStockAll(stocks);
             }
         }
-    }
 
     /**
      * 保存基准股票数据

@@ -37,7 +37,8 @@ public abstract class FinancialFormateStrategy extends AllFormateStrategy{
      */
     protected Double ttm(String code, LocalDate date, String indicator, int forwardQuarter){
 
-        List<BasicData> basicDatas = findBasicData(code, date, 4);
+        //多往前面取一个季度的数据
+        List<BasicData> basicDatas = findBasicData(code, date,  5);
         if(basicDatas == null){
             return null;
         }
@@ -48,9 +49,19 @@ public abstract class FinancialFormateStrategy extends AllFormateStrategy{
         Field field = null;
         try {
             field = clazz.getDeclaredField(indicator);
-
             field.setAccessible(true);
-            total += new Double(field.get(indicator).toString());
+
+            for(int i = 1; i < basicDatas.size(); i++){
+
+                //是一年中第一个季度
+                if(basicDatas.get(i).getBasicDataID().getDate().getMonthValue() == 3){
+                    total += new Double(field.get(basicDatas.get(i)).toString());
+                }
+                //不是一年中的第一个季度，由于季度指标在一年中是累加的，则应该算出每个季度的值
+                else {
+                    total += new Double(field.get(basicDatas.get(i)).toString()) - new Double(field.get(basicDatas.get(i-1)).toString());
+                }
+            }
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -70,8 +81,10 @@ public abstract class FinancialFormateStrategy extends AllFormateStrategy{
      * @return
      */
     protected Double annual(String code,LocalDate date, String indicator, int forwardYear){
-        List<BasicData> basicDatas = findBasicData(code, LocalDate.of(date.getYear()-1, 12, 31), 4);
-        if(basicDatas == null){
+
+        //由于季报指标是累加的，则年报指标的就是12/31号的指标
+        BasicData basicData = findBasicData(code, LocalDate.of(date.getYear()-1, 12, 31));
+        if(basicData == null){
             return null;
         }
 
@@ -83,7 +96,7 @@ public abstract class FinancialFormateStrategy extends AllFormateStrategy{
             field = clazz.getDeclaredField(indicator);
 
             field.setAccessible(true);
-            total += new Double(field.get(indicator).toString());
+            total += new Double(field.get(basicData).toString());
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -152,7 +165,7 @@ public abstract class FinancialFormateStrategy extends AllFormateStrategy{
                     return null;
                 }else {
                     for(int j = 0; j < num; j++){
-                        basicDatas.add(thisFinancialData.get(i - j));
+                        basicDatas.add(0, thisFinancialData.get(i - j));
                     }
                 }
             }
@@ -166,7 +179,7 @@ public abstract class FinancialFormateStrategy extends AllFormateStrategy{
      * @param date
      * @return
      */
-    private LocalDate findQuarter(LocalDate date){
+    protected LocalDate findQuarter(LocalDate date){
 
         int year = date.getYear();
         int month = date.getMonthValue();

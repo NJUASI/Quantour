@@ -18,12 +18,12 @@ import java.util.TreeMap;
  * 通过下载链接下载所有股票历史数据,起始日从2007年1月1日起
  */
 public class StocksDownloadProcessor implements PageProcessor {
-    static String First_Page = "http://quotes\\.money\\.163\\.com/hs/realtimedata/service/rank.php\\?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query";
+    static String First_Page = "http://quotes\\.money\\.163\\.com/hs/service/diyrank\\.php\\?host=http%3A%2F%2Fquotes\\.money\\.163\\.com%2Fhs%2Fservice%2Fdiyrank\\.php&page=0&query=STYPE%3AEQA&fields=NO%2CSYMBOL%2CNAME%2CPRICE%2CPERCENT%2CUPDOWN%2CFIVE_MINUTE%2COPEN%2CYESTCLOSE%2CHIGH%2CLOW%2CVOLUME%2CTURNOVER%2CHS%2CLB%2CWB%2CZF%2CPE%2CMCAP%2CTCAP%2CMFSUM%2CMFRATIO\\.MFRATIO2%2CMFRATIO\\.MFRATIO10%2CSNAME%2CCODE%2CANNOUNMT%2CUVSNEWS&sort=SYMBOL&order=asc&count=24&type=query";
     static String CODE_LIST = "http://quotes\\.money\\.163\\.com/hs/.*";
     static String ALL_LIST = "http://quotes\\.money\\.163\\.com/trade/lsjysj_\\d{6}.html";
 
-    LocalDate today = LocalDate.of(2017,6,1);
-    LocalDate default_StartDay = LocalDate.of(2012,1,1);
+    LocalDate today = LocalDate.of(2017,6,9);
+    LocalDate default_StartDay = LocalDate.of(2014,1,1);
 
     //每页取的股票代码个数，最后一页除外
     int pageCount = 25;
@@ -62,14 +62,7 @@ public class StocksDownloadProcessor implements PageProcessor {
 
             for(int j = 0; j < count; j++){
                 String tempCode = json.jsonPath("$.list["+j+"].SYMBOL").get();
-                //过滤掉基金
-//                if(tempCode.startsWith("000") || tempCode.startsWith("001") || tempCode.startsWith("002")
-//                        || tempCode.startsWith("300") || tempCode.startsWith("600") || tempCode.startsWith("601") || tempCode.startsWith("603")){
-//                    codes.add(tempCode);
-//                }
-                if(tempCode.startsWith("603")){
-                    codes.add(tempCode);
-                }
+                codes.add(tempCode);
             }
 
             Map<String,Map<String,String>> allCwzb = new TreeMap<>();
@@ -112,7 +105,7 @@ public class StocksDownloadProcessor implements PageProcessor {
             totalPage = Integer.parseInt(page.getJson().jsonPath("$.pagecount").get());
 
             for(int i = 0; i < totalPage; i++){
-                page.addTargetRequest("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page="+i+"&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count="+ pageCount +"&type=query");
+                page.addTargetRequest("http://quotes.money.163.com/hs/service/diyrank.php?host=http%3A%2F%2Fquotes.money.163.com%2Fhs%2Fservice%2Fdiyrank.php&page="+i+"&query=STYPE%3AEQA&fields=NO%2CSYMBOL%2CNAME%2CPRICE%2CPERCENT%2CUPDOWN%2CFIVE_MINUTE%2COPEN%2CYESTCLOSE%2CHIGH%2CLOW%2CVOLUME%2CTURNOVER%2CHS%2CLB%2CWB%2CZF%2CPE%2CMCAP%2CTCAP%2CMFSUM%2CMFRATIO.MFRATIO2%2CMFRATIO.MFRATIO10%2CSNAME%2CCODE%2CANNOUNMT%2CUVSNEWS&sort=SYMBOL&order=asc&count="+pageCount+"&type=query");
             }
 
             //抓取第一个页面的code，因为之后会被去重
@@ -127,30 +120,30 @@ public class StocksDownloadProcessor implements PageProcessor {
             for(int i = 0; i < codes.size(); i++) {
                 System.out.println("股票代码:" + codes.get(i));
                 //TODO
-//                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_" + codes.get(i) + ".html#01b07");
-//
-                //添加财务指标的url
-//                Map<String, String> cwzb = new TreeMap<>();
-//                //主要财务指标url
-//                cwzb.put("zycwzb", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report");
-//                //盈利能力
-//                cwzb.put("ylnl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=ylnl");
-//                //偿还能力
-//                cwzb.put("chnl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=chnl");
-//                //成长能力
-//                cwzb.put("cznl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=cznl");
-//                //营运能力
-//                cwzb.put("yynl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=chnl");
-//                //资产负债表
-//                cwzb.put("zcfzb", "http://quotes.money.163.com/service/zcfzb_" + codes.get(i) + ".html");
-//                //利润表
-//                cwzb.put("lrn", "http://quotes.money.163.com/service/lrb_" + codes.get(i) + ".html");
-//                //现金流量表
-//                cwzb.put("xjllb", "http://quotes.money.163.com/service/xjllb_" + codes.get(i) + ".html");
-//
-//                allCwzb.put(codes.get(i), cwzb);
+                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_" + codes.get(i) + ".html#01b07");
+
+//                添加财务指标的url
+                Map<String, String> cwzb = new TreeMap<>();
+                //主要财务指标url
+                cwzb.put("zycwzb", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report");
+                //盈利能力
+                cwzb.put("ylnl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=ylnl");
+                //偿还能力
+                cwzb.put("chnl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=chnl");
+                //成长能力
+                cwzb.put("cznl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=cznl");
+                //营运能力
+                cwzb.put("yynl", "http://quotes.money.163.com/service/zycwzb_" + codes.get(i) + ".html?type=report&part=chnl");
+                //资产负债表
+                cwzb.put("zcfzb", "http://quotes.money.163.com/service/zcfzb_" + codes.get(i) + ".html");
+                //利润表
+                cwzb.put("lrn", "http://quotes.money.163.com/service/lrb_" + codes.get(i) + ".html");
+                //现金流量表
+                cwzb.put("xjllb", "http://quotes.money.163.com/service/xjllb_" + codes.get(i) + ".html");
+
+                allCwzb.put(codes.get(i), cwzb);
             }
-//            page.putField("allCwzb",allCwzb);
+            page.putField("allCwzb",allCwzb);
 
             totalStocks += codes.size();
             System.out.println(totalStocks);

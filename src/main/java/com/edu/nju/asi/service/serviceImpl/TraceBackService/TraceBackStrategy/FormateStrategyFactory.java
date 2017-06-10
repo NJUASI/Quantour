@@ -46,6 +46,10 @@ public class FormateStrategyFactory {
                 return new MeanFormateStrategy(allDatesWithData, stockData, "afterAdjLow");
             case AFTER_ADJ_CLOSE:
                 return new MeanFormateStrategy(allDatesWithData, stockData, "afterAdjClose");
+            case AFTER_ADJ_PRE_CLOSE:
+                return new MeanFormateStrategy(allDatesWithData, stockData, "preAfterAdjClose");
+            case AFTER_ADJ_DAILY_AVE_PRICE:
+                return new MeanFormateStrategy(allDatesWithData, stockData, "afterAdjClose");
 
 
             // 可直接拿到的数据，并累计形成（涨幅、换手率）
@@ -116,13 +120,25 @@ public class FormateStrategyFactory {
             //静态市盈率
             case S_PE_TTM:
                 return new S_PE_TTM_FormateStrategy(allDatesWithData, stockData, financialStock);
+            case D_PE_TTM:
+                return new D_PE_TTM_FormateStrategy(allDatesWithData, stockData, financialStock);
             //市净率
             case PB:
                 return new PB_FormateStrategy(allDatesWithData, stockData, financialStock);
             //市销率
             case PS_TTM:
                 return new PS_TTM_FormateStrategy(allDatesWithData, stockData, financialStock);
+            //PEG（市盈率相对盈利增长比率）
+            case PEG:
+                return new PEG_FormateStrategy(allDatesWithData, stockData, financialStock);
 
+
+            //每股收益
+            case EPS:
+                return new EPS_FormateStrategy(allDatesWithData, stockData, financialStock);
+            //净资产收益率
+            case ROE:
+                return new ROE_FormateStrategy(allDatesWithData, stockData, financialStock);
         }
         return null;
     }

@@ -46,6 +46,7 @@ public class PS_TTM_FormateStrategy extends FinancialFormateStrategy {
 
             if(totalRevenue == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
+                continue;
             }
 
             //营业总收入

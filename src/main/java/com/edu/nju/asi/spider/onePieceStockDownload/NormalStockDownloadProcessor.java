@@ -19,18 +19,20 @@ import java.util.List;
 /**
  * Created by Harvey on 2017/5/15.
  *
- * 通过下载链接下载所有股票历史数据,起始日从2007年1月1日起
+ * 通过下载链接下载所有股票历史数据,起始日从2012年1月1日起
  */
 public class NormalStockDownloadProcessor implements PageProcessor {
-    static String First_Page = "http://quotes\\.money\\.163\\.com/hs/realtimedata/service/rank.php\\?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query";
+    static String PAGE = "http://quotes.money.163.com/hs/service/diyrank.php?host=http%3A%2F%2Fquotes.money.163.com%2Fhs%2Fservice%2Fdiyrank.php&page=0&query=STYPE%3AEQA&fields=NO%2CSYMBOL%2CNAME%2CPRICE%2CPERCENT%2CUPDOWN%2CFIVE_MINUTE%2COPEN%2CYESTCLOSE%2CHIGH%2CLOW%2CVOLUME%2CTURNOVER%2CHS%2CLB%2CWB%2CZF%2CPE%2CMCAP%2CTCAP%2CMFSUM%2CMFRATIO.MFRATIO2%2CMFRATIO.MFRATIO10%2CSNAME%2CCODE%2CANNOUNMT%2CUVSNEWS&sort=SYMBOL&order=asc&count=24&type=query";
+    static String First_Page = "http://quotes\\.money\\.163\\.com/hs/service/diyrank\\.php\\?host=http%3A%2F%2Fquotes\\.money\\.163\\.com%2Fhs%2Fservice%2Fdiyrank\\.php&page=0&query=STYPE%3AEQA&fields=NO%2CSYMBOL%2CNAME%2CPRICE%2CPERCENT%2CUPDOWN%2CFIVE_MINUTE%2COPEN%2CYESTCLOSE%2CHIGH%2CLOW%2CVOLUME%2CTURNOVER%2CHS%2CLB%2CWB%2CZF%2CPE%2CMCAP%2CTCAP%2CMFSUM%2CMFRATIO\\.MFRATIO2%2CMFRATIO\\.MFRATIO10%2CSNAME%2CCODE%2CANNOUNMT%2CUVSNEWS&sort=SYMBOL&order=asc&count=24&type=query";
     static String CODE_LIST = "http://quotes\\.money\\.163\\.com/hs/.*";
     static String ALL_LIST = "http://quotes\\.money\\.163\\.com/trade/lsjysj_\\d{6}.html";
     static String NAME_LIST = "http://quotes\\.money\\.163\\.com/stocksearch/json.do\\?count=1&word=\\d{6}";
 
-    LocalDate today = LocalDate.now().minusDays(1);
+    //TODO
+    LocalDate today = LocalDate.now();
 
     //每页取的股票代码个数，最后一页除外
-    int pageCount = 25;
+    int pageCount = 24;
     int totalPage = 0;
 
     int totalStocks = 0;
@@ -68,20 +70,16 @@ public class NormalStockDownloadProcessor implements PageProcessor {
 
             for(int j = 0; j < count; j++){
                 String tempCode = json.jsonPath("$.list["+j+"].SYMBOL").get();
-                //过滤掉基金
-                if(tempCode.startsWith("000") || tempCode.startsWith("001") || tempCode.startsWith("002")
-                        || tempCode.startsWith("300") || tempCode.startsWith("600") || tempCode.startsWith("601") || tempCode.startsWith("603")){
-                    codes.add(tempCode);
-                }
+                codes.add(tempCode);
             }
 
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
                 //TODO
                 //添加股票代码今天的数据页面
-//                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
+                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
                 //添加通过代码搜索股票的界面
-                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
+//                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
             }
 
             totalStocks += codes.size();
@@ -94,7 +92,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
             totalPage = Integer.parseInt(page.getJson().jsonPath("$.pagecount").get());
 
             for(int i = 0; i < totalPage; i++){
-                page.addTargetRequest("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page="+i+"&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count="+ pageCount +"&type=query");
+                page.addTargetRequest("http://quotes.money.163.com/hs/service/diyrank.php?host=http%3A%2F%2Fquotes.money.163.com%2Fhs%2Fservice%2Fdiyrank.php&page="+i+"&query=STYPE%3AEQA&fields=NO%2CSYMBOL%2CNAME%2CPRICE%2CPERCENT%2CUPDOWN%2CFIVE_MINUTE%2COPEN%2CYESTCLOSE%2CHIGH%2CLOW%2CVOLUME%2CTURNOVER%2CHS%2CLB%2CWB%2CZF%2CPE%2CMCAP%2CTCAP%2CMFSUM%2CMFRATIO.MFRATIO2%2CMFRATIO.MFRATIO10%2CSNAME%2CCODE%2CANNOUNMT%2CUVSNEWS&sort=SYMBOL&order=asc&count="+pageCount+"&type=query");
             }
 
             //抓取第一个页面的code，因为之后会被去重
@@ -107,9 +105,9 @@ public class NormalStockDownloadProcessor implements PageProcessor {
             for(int i = 0; i < codes.size(); i++){
                 System.out.println("股票代码:"+codes.get(i));
                 //TODO
-//                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
+                page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
                 //添加通过代码搜索股票的界面
-                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
+//                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
             }
 
             totalStocks += codes.size();
@@ -130,7 +128,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
                 page.setSkip(true);
             }
 
-            String start = today.format(formatter);
+            String start = LocalDate.of(2017, 6, 2).format(formatter);
             String end = today.format(formatter);
 
             System.out.println("开始日期:"+start+"------"+"结束日期:"+end);
@@ -142,9 +140,9 @@ public class NormalStockDownloadProcessor implements PageProcessor {
             }
             //TODO
             //添加当天数据的下载链接
-//            page.putField("url","http://quotes.money.163.com/service/chddata.html?code="+prefix+code+"&start="+start+"&end="+end+"&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP");
-//            page.putField("code",code);
-//            page.putField("isNormal", true);
+            page.putField("url","http://quotes.money.163.com/service/chddata.html?code="+prefix+code+"&start="+start+"&end="+end+"&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;TURNOVER;VOTURNOVER;VATURNOVER;TCAP;MCAP");
+            page.putField("code",code);
+            page.putField("isNormal", true);
         }
         //获取对应代码的正确名称、简称、所属市场类型
         else if (page.getUrl().regex(NAME_LIST).match()){

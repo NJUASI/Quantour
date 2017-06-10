@@ -11,17 +11,24 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Harvey on 2017/6/9.
+ * Created by Harvey on 2017/6/10.
  *
- * 静态市盈率：等于总市值/最近年报的归属于母公司所有者的净利润
+ * 动态市盈率:等于总市值/归属于母公司所有者的净利润，净利润根据每期财报动态扩展到年报数据。
  */
-public class S_PE_TTM_FormateStrategy extends FinancialFormateStrategy{
+public class D_PE_TTM_FormateStrategy extends FinancialFormateStrategy {
 
-    public S_PE_TTM_FormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialData) {
+    public D_PE_TTM_FormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialData) {
         super(allDatesWithData, stockData, financialData);
     }
 
-
+    /**
+     * 根据当日或N日平均形成
+     *
+     * @param stockCodes      股票列表
+     * @param periodStart     持有期起始日期;
+     * @param formativePeriod 形成期长度
+     * @return 形成的数据
+     */
     @Override
     public List<FormateRate> formate(List<String> stockCodes, LocalDate periodStart, int formativePeriod) throws DataSourceFirstDayException {
         //形成期的起讫日期
@@ -40,19 +47,23 @@ public class S_PE_TTM_FormateStrategy extends FinancialFormateStrategy{
             //总市值
             double totalMarket = new Double(stockList.get(0).getTotalValue());
 
-            //TTM(归属于母公司所有者的净利润)（选择去年的数据）
+            //TTM(归属于母公司所有者的净利润)（选择当季的数据，若没有当季的数据，则选择前面一个季度的数据）
             LocalDate date = stockList.get(0).getStockID().getDate();
-            Double totalProfit = annual(stockCodes.get(i), date, "netProfitAttributableToTheOwnerOfTheParentCompany", 0);
+            BasicData basicData1 = findBasicData(stockCodes.get(i), date);
 
-            if(totalProfit == null){
+            //有数据不存在
+            if(basicData1 == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
                 continue;
             }
 
-            //归属于母公司所有者的利润以万元为单位
-            totalProfit *= 10000;
+            //季度
+            int quarter = basicData1.getBasicDataID().getDate().getMonthValue() / 4 + 1;
+            double totalProfit = new Double(basicData1.getNetProfitAttributableToTheOwnerOfTheParentCompany()) * 10000;
 
-            formateRate.add(new FormateRate(stockCodes.get(i), totalMarket / totalProfit));
+            double D_PE_val = totalMarket / (totalProfit * 4 / quarter);
+
+            formateRate.add(new FormateRate(stockCodes.get(i), D_PE_val));
         }
 
         return formateRate;

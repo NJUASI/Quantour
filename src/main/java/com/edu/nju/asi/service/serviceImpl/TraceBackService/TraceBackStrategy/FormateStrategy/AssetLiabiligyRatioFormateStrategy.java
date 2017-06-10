@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Harvey on 2017/6/9.
+ * Created by Harvey on 2017/6/10.
  *
- * 静态市盈率：等于总市值/最近年报的归属于母公司所有者的净利润
+ * 资产负债率
  */
-public class S_PE_TTM_FormateStrategy extends FinancialFormateStrategy{
+public class AssetLiabiligyRatioFormateStrategy extends FinancialFormateStrategy {
 
-    public S_PE_TTM_FormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialData) {
+    public AssetLiabiligyRatioFormateStrategy(List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BasicData>> financialData) {
         super(allDatesWithData, stockData, financialData);
     }
 
@@ -37,22 +37,19 @@ public class S_PE_TTM_FormateStrategy extends FinancialFormateStrategy{
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
                 continue;
             }
-            //总市值
-            double totalMarket = new Double(stockList.get(0).getTotalValue());
 
-            //TTM(归属于母公司所有者的净利润)（选择去年的数据）
             LocalDate date = stockList.get(0).getStockID().getDate();
-            Double totalProfit = annual(stockCodes.get(i), date, "netProfitAttributableToTheOwnerOfTheParentCompany", 0);
+            BasicData basicData = findBasicData(stockCodes.get(i), date);
 
-            if(totalProfit == null){
+            //有数据不存在
+            if(basicData == null){
                 formateRate.add(new FormateRate(stockCodes.get(i), null));
                 continue;
             }
 
-            //归属于母公司所有者的利润以万元为单位
-            totalProfit *= 10000;
+            double assetLiabilityRatio = basicData.getAssetLiabilityRatio();
 
-            formateRate.add(new FormateRate(stockCodes.get(i), totalMarket / totalProfit));
+            formateRate.add(new FormateRate(stockCodes.get(i), assetLiabilityRatio));
         }
 
         return formateRate;

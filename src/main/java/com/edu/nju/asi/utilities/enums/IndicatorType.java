@@ -60,7 +60,14 @@ public enum IndicatorType {
     PS_TTM("市销率"),
     S_PE_TTM("静态市盈率"),
     D_PE_TTM("动态市盈率"),
-    PEG("市盈率相对于盈利增长比率");
+    PEG("市盈率相对于盈利增长比率"),
+
+    //其它
+    EPS("每股收益"),
+    ROE("净资产收益率"),
+    ASSET_LIABILITY_RATIO("资产负债率");
+
+
 
 
 
