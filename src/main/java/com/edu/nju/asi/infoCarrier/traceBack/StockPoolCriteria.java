@@ -5,6 +5,7 @@ import com.edu.nju.asi.utilities.enums.BlockType;
 import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StType;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -42,10 +43,18 @@ public class StockPoolCriteria {
     public StockPoolCriteria(StType stType, List<BlockType> blockTypes) {
         this.stType = stType;
         this.blockTypes = blockTypes;
+        this.industryType = IndustryType.all;
+        this.areaType = AreaType.all;
     }
 
     public StockPoolCriteria(IndustryType industryType, AreaType areaType) {
         this.industryType = industryType;
         this.areaType = areaType;
+
+        this.stType = StType.INCLUDE;
+        this.blockTypes = new LinkedList<>();
+        blockTypes.add(BlockType.ZB);
+        blockTypes.add(BlockType.ZXB);
+        blockTypes.add(BlockType.CYB);
     }
 }

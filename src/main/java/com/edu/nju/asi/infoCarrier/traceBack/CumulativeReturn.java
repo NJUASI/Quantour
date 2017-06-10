@@ -18,6 +18,9 @@ public class CumulativeReturn {
     // 是否为最大回测点
     public boolean isTraceBack;
 
+    public CumulativeReturn() {
+    }
+
     public CumulativeReturn(LocalDate currentDate, double cumulativeReturn, boolean isTraceBack) {
         this.currentDate = currentDate;
         this.cumulativeReturn = cumulativeReturn;

@@ -49,7 +49,7 @@ public enum IndicatorType {
     VOLUME_RATIO("1日5日量比"),
     MULTIPLE_ARRANGEMENT_MARK("多头排列标记"),
     BOLL_UP_BANDS("布林上线"),
-    BOLL_DOWN_BANDS("布林上线"),
+    BOLL_DOWN_BANDS("布林下线"),
     AVE_TRUE_RANGE("平均真实波动范围"),
 
 

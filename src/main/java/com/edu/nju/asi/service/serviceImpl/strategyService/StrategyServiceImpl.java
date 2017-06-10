@@ -57,6 +57,12 @@ public class StrategyServiceImpl implements StrategyService {
     public boolean saveStrategy(Strategy newStrategy) {
         boolean fakeSave = strategyDao.saveStrategy(newStrategy);
 
+        if (fakeSave) {
+            // 邮件通知用户
+            notify(newStrategy, MailNotificationType.SAVE);
+        }
+
+
         // 另开一个线程跑回测，跑完了将回测的数据存入数据库
         ExecutorService executor = Executors.newSingleThreadExecutor();
         FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSave(traceBackService, strategyDao, newStrategy));
@@ -78,18 +84,34 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public boolean modify(Strategy modified) {
-        boolean modifyResult = strategyDao.updateStrategy(modified);
-        boolean notifyResult = notify(modified, MailNotificationType.MODIFY);
-        return modifyResult && notifyResult;
+        boolean fakeModify = strategyDao.updateStrategy(modified);
+
+        if (fakeModify) {
+            // 邮件通知用户
+            notify(modified, MailNotificationType.MODIFY);
+        }
+
+        // 另开一个线程对策略重新进行回测，跑完了将回测的数据存入数据库
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSave(traceBackService, strategyDao, modified));
+        executor.submit(ft);
+        executor.shutdown();
+
+        return fakeModify;
 
     }
 
     @Override
     public boolean delete(User curUser, String strategyID) {
-        Strategy deleteStrategy = strategyDao.getStrategy(strategyID);
-        boolean notifyResult = notify(deleteStrategy, MailNotificationType.DELETE);
-        boolean deleteResult = strategyDao.deleteStrategy(curUser.getUserName(), strategyID);
-        return notifyResult && deleteResult;
+        boolean fakeDelete = strategyDao.deleteStrategy(curUser.getUserName(), strategyID);
+
+        if (fakeDelete) {
+            // 邮件通知用户
+            Strategy deleteStrategy = strategyDao.getStrategy(strategyID);
+            notify(deleteStrategy, MailNotificationType.DELETE);
+        }
+
+        return fakeDelete;
     }
 
     @Override
@@ -112,8 +134,10 @@ public class StrategyServiceImpl implements StrategyService {
         String creatorAddress = userDao.get(strategy.getCreator()).getEmail();
 
         List<String> subscribersAddress = new LinkedList<>();
-        for (User user : strategy.getUsers()) {
-            subscribersAddress.add(user.getEmail());
+        if (strategy.getUsers() != null) {
+            for (User user : strategy.getUsers()) {
+                subscribersAddress.add(user.getEmail());
+            }
         }
 
         MailInfo mailInfo = new MailInfo(creatorAddress, subscribersAddress, type, strategy.getStrategyID());

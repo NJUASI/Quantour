@@ -2,6 +2,7 @@ package com.edu.nju.asi.service.serviceImpl.strategyService;
 
 import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.dao.StrategyDao;
+import com.edu.nju.asi.infoCarrier.strategy.StrategyRankResult;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.Strategy;
@@ -42,14 +43,19 @@ public class TraceBackSave implements Callable<Boolean> {
         criteria.endDate = defaultDate;
         criteria.startDate = defaultDate.minusMonths(1);
 
+        // 回测结果并打分
         TraceBackInfo info = traceBackService.traceBack(criteria);
 
+        StrategyRanker ranker = new StrategyRanker();
+        StrategyRankResult rankResult = ranker.getRank(criteria, info);
+
+        String nowInfo = JSON.toJSONString(info) + ";" + JSON.toJSONString(rankResult);
+
         // 将结果存入数据库更新
-        strategy.setTraceBackInfo(JSON.toJSONString(info));
+        strategy.setTraceBackInfo(nowInfo);
         boolean updateResult = strategyDao.updateStrategy(strategy);
 
-        System.out.println(JSON.toJSONString(info) + "\n" + updateResult);
-
+        System.out.println(nowInfo + "\n" + updateResult);
         return updateResult;
     }
 }

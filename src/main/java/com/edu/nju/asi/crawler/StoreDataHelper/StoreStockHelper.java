@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class StoreStockHelper {
 
-    private String path = "F:\\QuantNew\\todayNormalStock";
-    private String basePath = "F:\\QuantNew\\todayBaseStock";
+    private String path = "F:\\Quant\\stocks";
+    private String basePath = "F:\\Quant\\todayBaseStock";
 
     private StockDataHelper stockDataHelper;
 
@@ -34,7 +34,7 @@ public class StoreStockHelper {
     }
 
     public void handle() {
-        this.store();
+//        this.store();
         this.storeBase();
     }
 
