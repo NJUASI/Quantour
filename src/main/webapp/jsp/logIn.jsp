@@ -46,16 +46,16 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="registerLabel">注册</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="margin-left: 40px">
                 <form id="registerForm" class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_username">用户名：</label>
+                        <label class="col-md-3 control-label" for="reg_username" style="padding-left: 0">用户昵称：</label>
                         <div class="col-md-7">
                             <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="请输入用户名">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="reg_password">密码：</label>
+                        <label class="col-md-3 control-label" for="reg_password" style="padding-left: 0">用户密码：</label>
                         <div class="col-md-7">
                             <input type="password" class="form-control" id="reg_password" name="reg_password" placeholder="请输入密码">
                         </div>

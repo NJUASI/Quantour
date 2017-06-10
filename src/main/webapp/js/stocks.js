@@ -60,16 +60,16 @@ function changeSingleStockDetail() {
             } else if (array[0] == "-1") {
                 // 提示错误信息
                 $("#dateError").show();
-                setTimeout("$('#dateError').hide();", 2000);
+                setTimeout("$('#dateError').hide();", 4000);
 
             } else {
                 $("#dateError").show();
-                setTimeout("$('#dateError').hide();", 2000);
+                setTimeout("$('#dateError').hide();", 4000);
             }
         },
         error: function (result) {
             $("#dateError").show();
-            setTimeout("$('#dateError').hide();", 2000);
+            setTimeout("$('#dateError').hide();", 4000);
         }
 
     });
