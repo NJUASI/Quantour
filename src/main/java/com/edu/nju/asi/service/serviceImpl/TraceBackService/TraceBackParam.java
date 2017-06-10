@@ -5,6 +5,8 @@ import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
@@ -110,7 +112,7 @@ public class TraceBackParam {
 
         //计算基准的日收益率均值、日收益率标准差
         meanBase = calMeanOfDaily(baseRateList);
-        stdevBase = calStdevOfDaily(baseRateList, meanBase);
+        stdevBase = calStdevOfDaily(baseRateList);
 
         System.out.println("基准日收益均值：" + meanBase);
         System.out.println("基准日收益标准差：" + stdevBase);
@@ -142,7 +144,7 @@ public class TraceBackParam {
 
         //计算策略的日收益率均值、日收益率标准差
         meanStrategy = calMeanOfDaily(strategyRateList);
-        stdevStrategy = calStdevOfDaily(strategyRateList, meanStrategy);
+        stdevStrategy = calStdevOfDaily(strategyRateList);
 
         System.out.println("策略日收益均值：" + meanStrategy);
         System.out.println("策略日收益标准差：" + stdevStrategy);
@@ -225,46 +227,33 @@ public class TraceBackParam {
      * @updateTime 2017/4/9
      */
     private double calMeanOfDaily(List<DailyRate> rateList) {
-        double sum = 0;
-        for (DailyRate dailyRate : rateList) {
-            sum += dailyRate.rate;
+        Mean mean = new Mean();
+
+        double[] data = new double[rateList.size()];
+        for(int i = 0; i < rateList.size(); i++){
+            data[i] = rateList.get(i).rate;
         }
-        return sum / rateList.size();
+
+        return mean.evaluate(data);
     }
 
     /**
      * @param rateList 日收益列表
-     * @param mean     日收益率均值
      * @return double 日收益标准差
      * @auther Byron Dong
      * @lastUpdatedBy cuihua
      * @updateTime 2017/6/8
      */
-    private double calStdevOfDaily(List<DailyRate> rateList, double mean) {
-        double sum = 0;
-        for (DailyRate temp : rateList) {
-            sum += (temp.rate-mean) * (temp.rate-mean);
-        }
-        return Math.sqrt(sum/rateList.size());
-        
+    private double calStdevOfDaily(List<DailyRate> rateList) {
 
-//        List<Double> tempList = new LinkedList<>();
-//        for (DailyRate dailyRate : rateList) {
-//            double temp = dailyRate.rate * dailyRate.rate;
-//            tempList.add(temp);
-//        }
-//
-//        double ave = getAve(tempList);
-//        double result = ave - mean * mean;
-//        return Math.sqrt(result);
-    }
+        StandardDeviation stdev = new StandardDeviation();
 
-    private double getAve(List<Double> wanted) {
-        double sum = 0;
-        for (double temp : wanted) {
-            sum += temp;
+        double[] data = new double[rateList.size()];
+        for(int i = 0; i < rateList.size(); i++){
+            data[i] = rateList.get(i).rate;
         }
-        return sum / wanted.size();
+
+        return stdev.evaluate(data);
     }
 
 
@@ -340,8 +329,7 @@ public class TraceBackParam {
         for (int i = 0; i < baseRateList.size(); i++) {
             tempList.add(new DailyRate(strategyRateList.get(i).rate - baseRateList.get(i).rate, baseRateList.get(i).date));
         }
-        double ave = calMeanOfDaily(tempList);
-        return calStdevOfDaily(tempList, ave) * Math.sqrt(250);
+        return calStdevOfDaily(tempList) * Math.sqrt(250);
     }
 
     /**
