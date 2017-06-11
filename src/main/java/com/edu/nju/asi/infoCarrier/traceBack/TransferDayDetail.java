@@ -44,7 +44,12 @@ public class TransferDayDetail {
      */
     public double changeRate;
 
-    public TransferDayDetail(String stockName, String stockCode, LocalDate buyDate, LocalDate sellDate, double buyPrice, double sellPrice, double changeRate) {
+    /**
+     * 标志是否能被卖出(可能由于调仓日停牌，无法卖出，必须继续持有)：true表示能被卖出2
+     */
+    public boolean canBeSold;
+
+    public TransferDayDetail(String stockName, String stockCode, LocalDate buyDate, LocalDate sellDate, double buyPrice, double sellPrice, double changeRate, boolean canBeSold) {
         this.stockName = stockName;
         this.stockCode = stockCode;
         this.buyDate = buyDate;
@@ -52,13 +57,15 @@ public class TransferDayDetail {
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
         this.changeRate = changeRate;
+        this.canBeSold = canBeSold;
     }
 
-    public TransferDayDetail(String stockName, String stockCode, LocalDate buyDate, double buyPrice) {
+    public TransferDayDetail(String stockName, String stockCode, LocalDate buyDate, double buyPrice, boolean canNotBeSold) {
         this.stockName = stockName;
         this.stockCode = stockCode;
         this.buyDate = buyDate;
         this.buyPrice = buyPrice;
+        this.canBeSold = canBeSold;
     }
 
     public TransferDayDetail(TransferDayDetail transferDayDetail, LocalDate sellDate, double sellPrice) {

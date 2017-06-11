@@ -18,24 +18,29 @@ public class StageDetail {
     /**
      * 开始价格（前复权）
      */
-    public double startPrice;
+    public Double startPrice;
 
     /**
      * 结束价格（后复权）
      */
-    public double endPrice;
+    public Double endPrice;
 
     /**
      * 涨跌幅
      */
-    public double changeRate;
+    public Double changeRate;
 
-    public StageDetail(String stockCode, String stockName, double startPrice, double endPrice) {
+    public StageDetail(String stockCode, String stockName, Double startPrice, Double endPrice) {
         this.stockCode = stockCode;
         this.stockName = stockName;
-        this.startPrice = startPrice;
-        this.endPrice = endPrice;
 
-        this.changeRate = (endPrice - startPrice) / startPrice;
+        if(endPrice != null && startPrice != null){
+            this.startPrice = startPrice;
+            this.endPrice = endPrice;
+            this.changeRate = (endPrice - startPrice) / startPrice;
+        }else {
+            this.endPrice = null;
+            this.changeRate = null;
+        }
     }
 }

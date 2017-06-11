@@ -56,6 +56,11 @@ public class TraceBackStrategyCalculator {
     protected List<TransferDayDetail> currentHoldingStocks = new ArrayList<>();
 
     /**
+     * 因为调仓日停牌而不能被卖出的股票
+     */
+    protected List<String> canNotBeSoldStocks = new ArrayList<>();
+
+    /**
      * 最近卖出的股票
      */
     protected List<TransferDayDetail> lastSoldStocks = new ArrayList<>();
@@ -209,7 +214,7 @@ public class TraceBackStrategyCalculator {
             wantedStockCodes.add(rankConditionRate.stockCode);
         }
 
-        return calculate(wantedStockCodes, periodStart, periodEnd, periodSerial, startIndex, endIndex);
+        return calculate(wantedStockCodes, periodStart, periodEnd, periodSerial, startIndex, endIndex, maxHoldingNum);
     }
 
     /**
@@ -219,53 +224,10 @@ public class TraceBackStrategyCalculator {
      * @param periodSerial     调仓周期
      * @return 此持有期的累计收益率
      */
-    private List<CumulativeReturn> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex, int endIndex) {
+    private List<CumulativeReturn> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex, int endIndex, int maxHoldingNum) {
 
-        //第一个周期，没有卖出的股票
-        if(periodSerial == 1){
-            List<StageDetail> stageDetailList = new ArrayList<>();
-            for(int i = 0; i < pickedStockCodes.size(); i++){
-                Stock startDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
-                Stock endDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(endIndex));
-
-                stageDetailList.add(new StageDetail(pickedStockCodes.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), endDayStock.getFrontAdjClose()));
-
-                currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),pickedStockCodes.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose()));
-            }
-            stageDetails.put(periodSerial, stageDetailList);
-        }
-        //不是第一个周期
-        else {
-            // 若挑选的股票代码中没有当前持有股票的代码，则将该股票加入卖出的队列
-            for(int i = 0; i < currentHoldingStocks.size(); i++){
-                boolean isSold = true;
-                for(int j = 0; j < pickedStockCodes.size(); j++){
-                    if(currentHoldingStocks.get(i).stockCode.equals(pickedStockCodes.get(j))){
-                        isSold = false;
-                        break;
-                    }
-                }
-                if(isSold){
-                    Stock stock = findStock(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
-                    //每个持仓期的第一天作为调仓日期
-                    lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getFrontAdjClose()));
-                }
-            }
-
-            //更新当前持有股票
-            List<StageDetail> stageDetailList = new ArrayList<>();
-            //清空当前持有股票
-            currentHoldingStocks.clear();
-            for(int i = 0; i < pickedStockCodes.size(); i++){
-                Stock startDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
-                Stock endDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(endIndex));
-
-                stageDetailList.add(new StageDetail(pickedStockCodes.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), endDayStock.getFrontAdjClose()));
-
-                currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),pickedStockCodes.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose()));
-            }
-            stageDetails.put(periodSerial, stageDetailList);
-        }
+        //对挑选的股票做精细处理
+        pickedStockCodes = dealPickedStockCodes(pickedStockCodes, periodSerial, startIndex, endIndex, maxHoldingNum);
 
         List<CumulativeReturn> strategyCumulativeReturn = new LinkedList<>();
 
@@ -306,6 +268,115 @@ public class TraceBackStrategyCalculator {
             strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), thisYield, false));
         }
         return strategyCumulativeReturn;
+    }
+
+    private List<String> dealPickedStockCodes(List<String> pickedStockCodes, int periodSerial, int startIndex, int endIndex, int maxHoldingNum){
+        //第一个周期，没有卖出的股票
+        if(periodSerial == 1){
+            List<StageDetail> stageDetailList = new ArrayList<>();
+            for(int i = 0; i < pickedStockCodes.size();){
+                Stock startDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
+                Stock endDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(endIndex));
+                //当日所选停牌，不能被买
+                if(startDayStock == null){
+                    pickedStockCodes.remove(i);
+                    continue;
+                }else {
+                    if(endDayStock == null){
+                        //该股票在末尾调仓日停牌，标志不能被卖出，且末尾调仓日的前复权为null
+                        stageDetailList.add(new StageDetail(pickedStockCodes.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), null));
+                        canNotBeSoldStocks.add(pickedStockCodes.get(i));
+                        currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),pickedStockCodes.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose(),false));
+                    }else {
+                        stageDetailList.add(new StageDetail(pickedStockCodes.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), endDayStock.getFrontAdjClose()));
+                        currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),pickedStockCodes.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose(),true));
+                    }
+                    i++;
+                }
+            }
+            stageDetails.put(periodSerial, stageDetailList);
+            return pickedStockCodes;
+        }
+        //不是第一个周期
+        else {
+            //停牌不能卖出的股票与挑选出的股票多于最大持有股票数
+            List<String> canBeHoldStocks = new ArrayList<>();
+            //取无重复并集
+            pickedStockCodes.removeAll(canNotBeSoldStocks);
+            //两个集合相并大于最大持有股票数
+            if(pickedStockCodes.size() + canNotBeSoldStocks.size() > maxHoldingNum){
+                //此时已经是排好名的codes，可以直接截取
+                pickedStockCodes = pickedStockCodes.subList(0, maxHoldingNum - canNotBeSoldStocks.size());
+            }
+            canBeHoldStocks.addAll(pickedStockCodes);
+            //添加所有因停牌不能被卖出的股票
+            canBeHoldStocks.addAll(canNotBeSoldStocks);
+
+            // 若挑选的股票代码中没有当前持有股票的代码，则将该股票加入卖出的队列
+            for(int i = 0; i < currentHoldingStocks.size(); i++){
+                boolean isSold = true;
+                for(int j = 0; j < canBeHoldStocks.size(); j++){
+                    if(currentHoldingStocks.get(i).stockCode.equals(canBeHoldStocks.get(j))){
+                        isSold = false;
+                        break;
+                    }
+                }
+                //需要被卖出的
+                if(isSold){
+                    Stock stock = findStock(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
+                    //此时的stock已经不可能为空
+                    assert (stock != null) : "逻辑有错，stock为空了";
+                    //每个持仓期的第一天作为调仓日期
+                    lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getFrontAdjClose()));
+                }
+            }
+
+            //更新当前持有股票
+            List<StageDetail> stageDetailList = new ArrayList<>();
+            //清空当前持有股票
+            currentHoldingStocks.clear();
+
+            List<String> thisCanNotBeSoldStocks = new ArrayList<>();
+            for(int i = 0; i < canBeHoldStocks.size(); ){
+                Stock startDayStock = findStock(canBeHoldStocks.get(i), allDatesWithData.get(startIndex));
+                Stock endDayStock = findStock(canBeHoldStocks.get(i), allDatesWithData.get(endIndex));
+
+                //当日所选股票停牌
+                if(startDayStock == null){
+                    //虽然停牌，如果是上个周期就持有的，还是继续持有
+                    if(canNotBeSoldStocks.contains(canBeHoldStocks.get(i))){
+                        if(endDayStock == null){
+                            //该股票在末尾调仓日停牌，标志不能被卖出，且末尾调仓日的前复权为null
+                            stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), startDayStock.getName(), null, null));
+                            thisCanNotBeSoldStocks.add(canBeHoldStocks.get(i));
+                            currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),canBeHoldStocks.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose(),false));
+                        }else {
+                            stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), startDayStock.getName(), null, endDayStock.getFrontAdjClose()));
+                            currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),canBeHoldStocks.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose(),true));
+                        }
+                        i++;
+                    }else {
+                        canBeHoldStocks.remove(i);
+                    }
+                }else {
+                    if(endDayStock == null){
+                        //该股票在末尾调仓日停牌，标志不能被卖出，且末尾调仓日的前复权为null
+                        stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), null));
+                        thisCanNotBeSoldStocks.add(canBeHoldStocks.get(i));
+                        currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),canBeHoldStocks.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose(),false));
+                    }else {
+                        stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), endDayStock.getFrontAdjClose()));
+                        currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),canBeHoldStocks.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose(),true));
+                    }
+                    i++;
+                }
+            }
+
+            //更新因调仓日停牌而不能卖出的股票
+            canNotBeSoldStocks = thisCanNotBeSoldStocks;
+            stageDetails.put(periodSerial, stageDetailList);
+            return canBeHoldStocks;
+        }
     }
 
     // 计算value的平均值
