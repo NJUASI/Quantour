@@ -50,6 +50,33 @@ public class TraceBackCriteria {
      */
     public List<RankCondition> rankConditions;
 
+
+
+    /*
+    市场择时调仓
+     */
+    /**
+     * 所有的市场择时条件（仿果仁网）
+     */
+    public List<MarketSelectingCondition> marketSelectingConditions;
+
+    /**
+     * （变为熊市时的）调仓比例
+     */
+    public double adjustPositionPercent;
+
+    /**
+     * 又熊变牛需要满足的条件数目
+     */
+    public int bearToBull_num;
+
+    /**
+     * 又牛变熊需要满足的条件数目
+     */
+    public int bullToBear_num;
+
+
+
     public TraceBackCriteria(){
     }
 

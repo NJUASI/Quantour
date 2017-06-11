@@ -1,6 +1,8 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
+import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dao.daoImpl.BaseStockDaoImpl;
 import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.BaseStock;
@@ -8,7 +10,10 @@ import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
-import com.edu.nju.asi.utilities.exceptions.*;
+import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -25,6 +30,8 @@ public class TraceBackServiceImpl implements TraceBackService {
     private StockService stockService;
 //    @Autowired
     private StockDao stockDao;
+//    @Autowired
+    private BaseStockDao baseStockDao;
 
     private List<String> traceBackStockPool;
 
@@ -41,13 +48,19 @@ public class TraceBackServiceImpl implements TraceBackService {
     protected List<LocalDate> allDatesWithData;
 
     /**
-     * 所有股票池中的股票数据
+     * 所有股票池中的股票数据，键值为股票代码（如000010）
      */
     protected Map<String, List<Stock>> stockData;
+
+    /**
+     * 回测所使用的基准股票，键值为股指名称（如沪深300）
+     */
+    protected Map<String, List<BaseStock>> baseStockData;
 
     public TraceBackServiceImpl() throws IOException {
         stockService = new StockServiceImpl();
         stockDao = new StockDaoImpl();
+        baseStockDao = new BaseStockDaoImpl();
 
         //获取所有数据的日期
 //        allDatesWithData = stockDao.getDateWithData();
@@ -73,7 +86,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         TraceBackInfo traceBackInfo = new TraceBackInfo();
 
         traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
-        setUpStockData();
+        setUpStockData(traceBackCriteria);
 
         System.out.println("---------------set完毕------------");
 
@@ -83,7 +96,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         System.out.println("---------------1------------");
 
         //选择策略
-        traceBackStrategyCalculator = new TraceBackStrategyCalculator(traceBackStockPool, traceBackCriteria, allDatesWithData, stockData);
+        traceBackStrategyCalculator = new TraceBackStrategyCalculator(traceBackStockPool, traceBackCriteria, allDatesWithData, stockData, baseStockData);
         System.out.println("---------------2------------");
 
         //策略回测
@@ -109,7 +122,10 @@ public class TraceBackServiceImpl implements TraceBackService {
         System.out.println("计算目标策略算法给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等
-        List<BaseStock> baseStockList = stockService.getBaseStockData(traceBackCriteria.baseStockName, traceBackCriteria.startDate, traceBackCriteria.endDate);
+        List<BaseStock> allBaseStocks = baseStockData.get(traceBackCriteria.baseStockName);
+        int startIndex = allBaseStocks.indexOf(traceBackCriteria.startDate);
+        int endIndex = allBaseStocks.indexOf(traceBackCriteria.endDate);
+        List<BaseStock> baseStockList = allBaseStocks.subList(startIndex, endIndex + 1);
 
         TraceBackParam param = new TraceBackParam(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStockList);
         traceBackInfo.traceBackNumVal = param.getNumericalVal();
@@ -118,14 +134,23 @@ public class TraceBackServiceImpl implements TraceBackService {
         return traceBackInfo;
     }
 
-    private void setUpStockData() throws IOException {
+    private void setUpStockData(TraceBackCriteria criteria) throws IOException {
 
         System.out.println("enter");
-
         stockData = stockDao.getAllStockData(traceBackStockPool);
-
         System.out.println("out");
 
+        // 获取所有股指信息
+        Set<String> baseStockNames = new HashSet<>();
+        baseStockNames.add(criteria.baseStockName);
+        for (MarketSelectingCondition condition : criteria.marketSelectingConditions) {
+            baseStockNames.add(condition.baseStockName);
+        }
+
+        baseStockData = new HashMap<>();
+        for (String bsName : baseStockNames) {
+            baseStockData.put(bsName, baseStockDao.getBaseStockData(bsName));
+        }
     }
 
     /**
@@ -202,27 +227,22 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         System.out.println("in getCumulativeReturnOfOneStock-------------"+stockName+"--------------");
 
-        List<BaseStock> list = null;
-        try {
-            list = stockService.getBaseStockData(stockName, start, end);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoDataWithinException e) {
-            e.printStackTrace();
-        } catch (DateNotWithinException e) {
-            e.printStackTrace();
-        }
-        List<CumulativeReturn> cumulativeReturns = new ArrayList<CumulativeReturn>();
+        List<BaseStock> allBaseStocks = baseStockData.get(stockName);
+        int startIndex = allBaseStocks.indexOf(start);
+        int endIndex = allBaseStocks.indexOf(end);
+        List<BaseStock> baseStocks = allBaseStocks.subList(startIndex, endIndex + 1);
+
+        List<CumulativeReturn> cumulativeReturns = new ArrayList<>();
 
         //累计收益率以第一个交易日的收益率来对比计算
-        double closeOfFirstDay = list.get(0).getClose();
+        double closeOfFirstDay = baseStocks.get(0).getClose();
 
         System.out.println("Begin loop");
-        for (int i = 0; i < list.size(); i++) {
-            double sucClose = list.get(i).getClose();
+        for (int i = 0; i < baseStocks.size(); i++) {
+            double sucClose = baseStocks.get(i).getClose();
             double cumulativeReturn = (sucClose - closeOfFirstDay) / closeOfFirstDay;
             //先将所有的最大回测点设为false
-            cumulativeReturns.add(new CumulativeReturn(list.get(i).getStockID().getDate(), cumulativeReturn, false));
+            cumulativeReturns.add(new CumulativeReturn(baseStocks.get(i).getStockID().getDate(), cumulativeReturn, false));
         }
 
         //将第一天的收益率设置为0

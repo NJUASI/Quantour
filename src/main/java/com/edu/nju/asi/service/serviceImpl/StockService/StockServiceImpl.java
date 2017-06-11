@@ -114,30 +114,6 @@ public class StockServiceImpl implements StockService {
         return stockDao.searchStock(searchString);
     }
 
-    /**
-     * 根据基准股票名称，起始日期，结束日期，获得该基准股票在此期间的数据
-     *
-     * @param stockName 股票名称
-     * @param start     起始日期
-     * @param end       结束日期
-     * @return List<StockVO> 基准股票信息的列表
-     */
-    @Override
-    public List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException {
-        System.out.println("-----------In base----------");
-        System.out.println("getBaseStockData" + stockDao);
-        Map<String, String> map = stockDao.getAllStocksName();
-        for (Map.Entry entry : map.entrySet()) {
-            System.out.println(entry.getKey() + "   " + entry.getValue());
-        }
-
-        System.out.println("baseCode: "+map.get(stockName));
-
-        String baseStockCode = StockCodeHelper.format(map.get(stockName));
-        System.out.println("finished getBaseStockData--------------"+stockName+"--------------------------");
-        return baseStockDao.getStockData(baseStockCode, start, end);
-    }
-
     @Override
     public List<BaseStock> getBaseStockDataOfOneDay(LocalDate thisDate) {
         List<String> baseStocksCode = baseStockDao.getAllBaseStocksCode();

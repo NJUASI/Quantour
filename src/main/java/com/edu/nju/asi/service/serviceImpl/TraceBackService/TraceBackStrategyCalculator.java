@@ -1,20 +1,22 @@
 package com.edu.nju.asi.service.serviceImpl.TraceBackService;
 
 import com.edu.nju.asi.dao.BasicDataDao;
-import com.edu.nju.asi.dao.StockDao;
 import com.edu.nju.asi.dao.daoImpl.BasicDataDaoImpl;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
+import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.BasicData;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategy.AllFormateStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.FormateStrategyFactory;
+import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.MarketSelectingStrategyFactory;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategy.AllPickStrategy;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.PickStrategyFactory;
 import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.RankStrategy;
+import com.edu.nju.asi.service.serviceImpl.TraceBackService.TraceBackStrategy.marketSelectingStrategy.AllMarketSelectingStrategy;
 import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.enums.RankType;
-import com.edu.nju.asi.utilities.exceptions.*;
+import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -37,6 +39,11 @@ public class TraceBackStrategyCalculator {
     private double initMoney = 1;
     private double nowMoney = 1;
 
+    /**
+     * 当前仓位（默认初始为1）
+     */
+    private double nowPosition = 1;
+
     /*
     需要重复计算的一些东西，故保存
      */
@@ -49,6 +56,11 @@ public class TraceBackStrategyCalculator {
      * 所有股票池中的股票数据
      */
     protected Map<String, List<Stock>> stockData;
+
+    /**
+     * 所有的股指数据
+     */
+    protected Map<String, List<BaseStock>> baseStockData;
 
     /**
      * 当前持有的股票
@@ -81,26 +93,28 @@ public class TraceBackStrategyCalculator {
     protected List<RankCondition> rankConditions;
 
     /**
+     * 市场择时条件
+     */
+    protected List<MarketSelectingCondition> marketSelectingConditions;
+
+    /**
      * 财务指标
      */
     protected Map<String,List<BasicData>> financialData;
 
-    /**
-     * 形成策略和选择策略工厂
-     */
-    FormateStrategyFactory formateStrategyFactory = new FormateStrategyFactory();
-    PickStrategyFactory pickStrategyFactory = new PickStrategyFactory();
-
     BasicDataDao basicDataDao = new BasicDataDaoImpl();
 
-    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData) {
+    public TraceBackStrategyCalculator(List<String> traceBackStockPool, TraceBackCriteria traceBackCriteria, List<LocalDate> allDatesWithData, Map<String, List<Stock>> stockData, Map<String, List<BaseStock>> baseStockData) {
         this.traceBackStockPool = traceBackStockPool;
         this.traceBackCriteria = traceBackCriteria;
         this.allDatesWithData = allDatesWithData;
         this.stockData = stockData;
+        this.baseStockData = baseStockData;
+
 
         this.filterConditions = traceBackCriteria.filterConditions;
         this.rankConditions = traceBackCriteria.rankConditions;
+        this.marketSelectingConditions = traceBackCriteria.marketSelectingConditions;
 
         setUpFinancialIndicators();
     }
@@ -186,6 +200,13 @@ public class TraceBackStrategyCalculator {
 
         LocalDate periodStart = allDatesWithData.get(startIndex);
         LocalDate periodEnd = allDatesWithData.get(endIndex);
+
+//        // TODO 根据市场情况进行市场择时
+//        if (adjustPosition(periodStart)) {
+//            nowPosition = traceBackCriteria.adjustPositionPercent;
+//        }
+
+
 
         List<String> filterWantedCodes = new ArrayList<>();
         //通过筛选条件筛选出该周期需要回测的股票代码
@@ -396,11 +417,30 @@ public class TraceBackStrategyCalculator {
         return sum / value.size();
     }
 
+
+    /**
+     * 市场择时
+     * true表示需要进行调仓操作
+     */
+    private boolean adjustPosition(LocalDate periodStart){
+
+        int deathCross = 0;
+        for (MarketSelectingCondition condition : traceBackCriteria.marketSelectingConditions) {
+            AllMarketSelectingStrategy mss = MarketSelectingStrategyFactory.createMarketSelectingStrategyFactory(condition, allDatesWithData, baseStockData);
+            MarketSelectingResult result = mss.marketSelecting(periodStart, condition.criteria2, condition.criteria3, condition.criteria1);
+            if (result.isDeathCross) deathCross++;
+        }
+
+        // 死叉过多，进行调仓
+        if (deathCross >= traceBackCriteria.bullToBear_num) return true;
+
+
+        return false;
+    }
+
+
     /**
      * 筛选股票
-     * @param filterConditions
-     * @param periodStart
-     * @return
      */
     private List<String> filterCodes(List<FilterCondition> filterConditions, LocalDate periodStart){
 
@@ -408,8 +448,8 @@ public class TraceBackStrategyCalculator {
         List<List<String>> allFilterWantedCodes = new ArrayList<>();
 
         for(FilterCondition filterCondition : filterConditions){
-            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData,financialData);
-            AllPickStrategy pickStrategy = pickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value);
+            AllFormateStrategy formateStrategy = FormateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData,financialData);
+            AllPickStrategy pickStrategy = PickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value);
             try {
                 allFilterWantedCodes.add(pickStrategy.pick(formateStrategy.formate(traceBackStockPool, periodStart, filterCondition.formativePeriod)));
             } catch (DataSourceFirstDayException e) {
@@ -461,7 +501,7 @@ public class TraceBackStrategyCalculator {
         List<List<RankConditionRate>> allRankConditionRates = new ArrayList<>();
 
         for(RankCondition rankCondition : rankConditions){
-            AllFormateStrategy formateStrategy = formateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData,financialData);
+            AllFormateStrategy formateStrategy = FormateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData,financialData);
             RankStrategy rankStrategy = new RankStrategy(rankCondition.weight, rankCondition.rankType);
             try {
                 allRankConditionRates.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
