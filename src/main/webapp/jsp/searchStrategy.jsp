@@ -176,6 +176,102 @@
 </div>
 
 
+<div class="row ">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="row">
+            <h3 class="col-md-2" style="color:#4890c8">${nowStrategy.strategyID}</h3>
+            <%--TODO 高源 收藏、取消收藏、编辑修改、删除策略 (strategy.js  strategy_modify...) --%>
+            <button class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">
+                <span class="glyphicon glyphicon-heart"></span>
+                <span class="txt">收藏</span>
+            </button>
+
+            <button class="btn btn-default  col-md-1 col-md-offset-1" style="margin-top: 20px">
+                <span class="txt">取消收藏</span>
+            </button>
+
+            <button id="modifyBt" class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">
+                <span class="txt">编辑</span>
+            </button>
+            <button id="deleteBt" class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">
+                <span class="txt">删除</span>
+            </button>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="panel panel-default col-md-8 col-md-offset-2">
+        <div class="panel-body">
+            <div class="row" style="margin-top: 20px">
+                <div class="col-md-5 row ">
+                    <div class="row col-md-12">
+                        <ul id="strategyDetail" class="list-inline">
+                            <%--TODO 数据添加--%>
+                            <li>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者:&nbsp; <span>${nowStrategy.creator}</span></li>
+                            <li>板&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;块:&nbsp; <span>${traceBackCriteria.stockPoolCriteria}</span></li>
+                            <li>创建日期:&nbsp; <span>${nowStrategy.date}</span></li>
+                            <li>ST&nbsp;&nbsp;&nbsp;信息:&nbsp; <span>${traceBackCriteria.}</span></li>
+                            <li>开始日期:&nbsp; <span>${traceBackCriteria.startDate}</span></li>
+                            <li>结束日期:&nbsp; <span>${traceBackCriteria.endDate}</span></li>
+                            <li>调仓周期:&nbsp; <span>${traceBackCriteria.holdingPeriod}</span></li>
+                            <li>最大持仓:&nbsp; <span>${traceBackCriteria.maxHoldingNum}</span></li>
+                            <li>收益基准:&nbsp; <span>${traceBackCriteria.baseStockName}</span></li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 "><p>筛选条件</p></div>
+                        <div class="col-md-9" style="margin-left: -40px">
+                            <div class="row ">
+                                <div class=" col-md-12 ">
+                                    <span class="col-md-6">指标</span><span class="col-md-4">比较符</span> <span class="col-md-1">值</span>
+                                </div>
+                                <c:forEach items="${filterConditions}" var="condition" varStatus="vs">
+                                <div class=" col-md-12 ">
+                                    <span class="col-md-6">${condition.indicatorType}</span><span class="col-md-4">${condition.comparatorType}</span> <span class="col-md-1">${condition.value}</span>
+                                </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" style="margin-top: 5px">
+                        <div class="col-md-3 "><p>排名条件</p></div>
+                        <div class="col-md-9" style="margin-left: -40px">
+                            <div class="row ">
+                                <div class=" col-md-12 ">
+                                    <span class="col-md-6">指标</span><span class="col-md-4">次序</span> <span class="col-md-2" style="padding-right: 0px">权重</span>
+                                </div>
+                                <c:forEach items="${rankConditions}" var="condition" varStatus="vs">
+                                    <div class=" col-md-12 ">
+                                        <span class="col-md-6">${condition.indicatorType}</span><span class="col-md-4">${condition.rankType}</span> <span class="col-md-1">${condition.weight}</span>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12 ">
+                        策略描述:
+                    </div>
+                    <p class="col-md-12 " style="color:#9e9e9e">
+                        ${nowStrategy.description}
+                    </p>
+                </div>
+                <div class="col-md-4" style="border-left: 1px solid slategray">
+                    <div id="candlestick" style=" width:100%;height:220px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div id="coverPanel" style="position: absolute;background: #EBEFF0;width: 100%;height: 90px;z-index: 20">
 
 </div>

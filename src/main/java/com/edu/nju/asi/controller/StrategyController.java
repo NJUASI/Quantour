@@ -82,7 +82,7 @@ public class StrategyController {
         TraceBackCriteria criteria = JSON.parseObject(wantedStrategy.getContent(), TraceBackCriteria.class);
         TraceBackInfo info = JSON.parseObject(wantedStrategy.getTraceBackInfo(), TraceBackInfo.class);
 
-        ModelAndView mv = new ModelAndView("generalStrategy");
+        ModelAndView mv = new ModelAndView("searchStrategy");
         mv.addObject("nowStrategy", wantedStrategy);
         mv.addObject("traceBackCriteria", criteria);
         mv.addObject("filterConditions", convertChinese_filter(criteria.filterConditions));
