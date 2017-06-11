@@ -123,7 +123,7 @@
     </div>
 
 
-    <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
+    <div class="panel panel-default col-md-9 col-md-offset-2 userBlock">
         <div class="panel-heading">
             <h3 class="panel_title">
                 自选股票
@@ -202,7 +202,7 @@
         </c:choose>
     </div>
 
-    <div class="panel panel-default col-md-8 col-md-offset-2 userBlock">
+    <div class="panel panel-default col-md-9 col-md-offset-2 userBlock">
         <div class="panel-heading">
             <h3 class="panel_title">
                 我的策略
@@ -216,53 +216,53 @@
             </div>
             <div style="width:85%;margin:0 auto;margin-bottom: 20px;border-top:1px solid #ddd"></div>
 
-            <%--<c:choose>--%>
-                <%--<c:when test="1==1">--%>
+            <c:choose>
+                <%--TODO 冯俊杰 有创建策略的 还是不显示--%>
+                <c:when test="${myOwn==null}">
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10">
-
-                        <div class="col-md-4">
-                            <div class="strategyPanel">
-                                <div class="row">
-                                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                                        <li class="" style="font-size: 70%; color:red">
-                                            沪深300
-                                        </li>
-                                        <li class="" style="font-size: 70%; color:blueviolet">
-                                            策略收益率
-                                        </li>
-                                    </ul>
-                                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                                        <img class="img-responsive " src="../img/traceback4.png">
-                                    </figure>
-                                    <span class="col-md-4 col-md-offset-1 small">创建日期</span><span
-                                        class="col-md-6 small">2017-01-31</span>
-                                    <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                                    <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
-                                        class="col-md-5 col-md-offset-1 small">123</span>
-                                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
+                        <c:forEach items="${myOwn}" var="strategy" varStatus="vs">
+                            <div class="col-md-4">
+                                <div class="strategyPanel">
+                                    <div class="row">
+                                        <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">${strategy.strategyID}</h5>
+                                        <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
+                                            <li class="" style="font-size: 90%; color:red">
+                                                    ${strategy.createDate}
+                                            </li>
+                                            <li class="" style="font-size: 90%; color:blueviolet">
+                                                策略收益率
+                                            </li>
+                                        </ul>
+                                        <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
+                                            <img class="img-responsive " src="../img/traceback4.png">
+                                        </figure>
+                                        <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">创建日期</span><span class="col-md-6 small">${strategy.createDate}</span>
+                                        <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">创建者</span><span class="col-md-6 small">${strategy.creator}</span>
+                                        <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">年化收益率</span><span class="col-md-6 small">${strategy.annualizedRateOfReturn}</span>
+                                        <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">最大回撤率</span><span class="col-md-6 small">${strategy.maxStrategyTraceBackRate}</span>
+                                        <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">订阅人数</span><span
+                                            class="col-md-5 col-md-offset-1 small">${strategy.subscribeNum}</span>
+                                        <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-
+                        </c:forEach>
                     </div>
                 </div>
 
-            <%--</c:when>--%>
-            <%--<c:otherwise>--%>
-                <%--<div class="panel-body">--%>
-                    <%--<div class="row" style="margin-top: 20px;">--%>
-                        <%--<p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"--%>
-                                                           <%--class="picture"/></p>--%>
-                        <%--<div class="text-center" style="margin-top: 20px;margin-bottom: 40px">--%>
-                            <%--亲，量化社区创建策略，就可以在这了方便地查看管理了哦~~~--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</c:otherwise>--%>
-            <%--</c:choose>--%>
+            </c:when>
+            <c:otherwise>
+
+                    <div class="row" style="margin-top: 20px;">
+                        <p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"
+                                                           class="picture"/></p>
+                        <div class="text-center" style="margin-top: 20px;margin-bottom: 40px">
+                            亲，量化社区创建策略，就可以在这了方便地查看管理了哦~~~
+                        </div>
+                    </div>
+            </c:otherwise>
+            </c:choose>
 
 
             <div style="width:96%;margin:10px auto;margin-bottom: 30px;border-top:2px solid #ddd"></div>
@@ -275,10 +275,106 @@
 
             <div class="row">
                 <div class="col-md-offset-1 col-md-10">
+
+                    <c:choose>
+                        <%--TODO 冯俊杰 有创建策略的 还是不显示--%>
+                        <c:when test="${mySubscribe==null}">
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-10">
+                                    <c:forEach items="${myOwn}" var="strategy" varStatus="vs">
+                                        <div class="col-md-4">
+                                            <div class="strategyPanel">
+                                                <div class="row">
+                                                    <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">${strategy.strategyID}</h5>
+                                                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
+                                                        <li class="" style="font-size: 90%; color:red">
+                                                                ${strategy.createDate}
+                                                        </li>
+                                                        <li class="" style="font-size: 90%; color:blueviolet">
+                                                            策略收益率
+                                                        </li>
+                                                    </ul>
+                                                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
+                                                        <img class="img-responsive " src="../img/traceback4.png">
+                                                    </figure>
+                                                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">创建日期</span><span class="col-md-6 small">${strategy.createDate}</span>
+                                                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">创建者</span><span class="col-md-6 small">${strategy.creator}</span>
+                                                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">年化收益率</span><span class="col-md-6 small">${strategy.annualizedRateOfReturn}</span>
+                                                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">最大回撤率</span><span class="col-md-6 small">${strategy.maxStrategyTraceBackRate}</span>
+                                                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">订阅人数</span><span
+                                                        class="col-md-5 col-md-offset-1 small">${strategy.subscribeNum}</span>
+                                                    <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+
+                        </c:when>
+                        <c:otherwise>
+
+                            <div class="row" style="margin-top: 20px;">
+                                <p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"
+                                                                   class="picture"/></p>
+                                <div class="text-center" style="margin-top: 20px;margin-bottom: 40px">
+                                    亲，量化社区订阅策略，就可以在这了方便地查看使用了哦~~~
+                                </div>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+
+
                     <div class="col-md-4">
                         <div class="strategyPanel">
                             <div class="row">
-                                <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
+                                <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">22222 </h5>
+                                <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
+                                    <li class="" style="font-size: 70%; color:red">
+                                        沪深300
+                                    </li>
+                                    <li class="" style="font-size: 70%; color:blueviolet">
+                                        策略收益率
+                                    </li>
+                                </ul>
+                                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
+                                    <img class="img-responsive " src="../img/traceback4.png">
+                                </figure>
+                                <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
+                                <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
+                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
+                                    class="col-md-5 col-md-offset-1 small">123</span>
+                                <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="strategyPanel">
+                            <div class="row">
+                                <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">中小股策略</h5>
+                                <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
+                                    <li class="" style="font-size: 70%; color:red">
+                                        沪深300
+                                    </li>
+                                    <li class="" style="font-size: 70%; color:blueviolet">
+                                        策略收益率
+                                    </li>
+                                </ul>
+                                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
+                                    <img class="img-responsive " src="../img/traceback4.png">
+                                </figure>
+                                <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
+                                <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
+                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
+                                    class="col-md-5 col-md-offset-1 small">123</span>
+                                <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="strategyPanel">
+                            <div class="row">
+                                <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">中小股策略</h5>
                                 <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
                                     <li class="" style="font-size: 70%; color:red">
                                         沪深300
@@ -299,77 +395,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="strategyPanel">
-                            <div class="row">
-                                <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                                <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                                    <li class="" style="font-size: 70%; color:red">
-                                        沪深300
-                                    </li>
-                                    <li class="" style="font-size: 70%; color:blueviolet">
-                                        策略收益率
-                                    </li>
-                                </ul>
-                                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                                    <img class="img-responsive " src="../img/traceback4.png">
-                                </figure>
-                                <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                                <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
-                                    class="col-md-5 col-md-offset-1 small">123</span>
-                                <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-4">
-                        <div class="strategyPanel">
-                            <div class="row">
-                                <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                                <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                                    <li class="" style="font-size: 70%; color:red">
-                                        沪深300
-                                    </li>
-                                    <li class="" style="font-size: 70%; color:blueviolet">
-                                        策略收益率
-                                    </li>
-                                </ul>
-                                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                                    <img class="img-responsive " src="../img/traceback4.png">
-                                </figure>
-                                <span class="col-md-4 col-md-offset-1 small">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                                <span class="col-md-4 col-md-offset-1 small">创建者</span><span class="col-md-6 small">qingqing123</span>
-                                <span class="col-md-4 col-md-offset-1 small">订阅人数</span><span
-                                    class="col-md-5 col-md-offset-1 small">123</span>
-                                <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="strategyPanel">
-                            <div class="row">
-                                <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
-                                <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                                    <li class="" style="font-size: 70%; color:red">
-                                        沪深300
-                                    </li>
-                                    <li class="" style="font-size: 70%; color:blueviolet">
-                                        策略收益率
-                                    </li>
-                                </ul>
-                                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                                    <img class="img-responsive " src="../img/traceback2.png">
-                                </figure>
-                                <span class="col-md-4 col-md-offset-1 small">创建日期</span><span
-                                    class="col-md-6 small">2017-01-31</span>
-                                <span class="col-md-4 col-md-offset-1 small">创建者</span><span
-                                    class="col-md-6 small">qingqing123</span>
-                                <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -478,8 +504,9 @@
     });
 
     $(".strategyPanel").click(function () {
-        //TODO  此处需要跳转
-        window.location.href = "/jsp/searchStrategy.jsp";
+        //TODO  fjj 此处需要跳转 获得 id 跳到详情界面
+        alert($(this).find(".strategyID").eq(0).html());
+        var strategyID=$(this).find(".strategyID").eq(0).html();
     })
 
     //TODO fjj 修改密码 邮箱
