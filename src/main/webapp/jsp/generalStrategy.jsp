@@ -109,7 +109,7 @@
         <div class="col-md-4">
             <div class="strategyPanel">
                 <div class="row">
-                    <h5 id="strategyName" class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
+                    <h5  class="col-md-offset-1 strategyID col-md-11" style="font-size: 130%">中策略</h5>
                     <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
                         <li class="" style="font-size: 90%; color:red">
                             沪深300
@@ -135,7 +135,7 @@
         <div class="col-md-4">
             <div class="strategyPanel">
                 <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
+                    <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">中小略</h5>
                     <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
                         <li class="" style="font-size: 70%; color:red">
                             沪深300
@@ -161,7 +161,7 @@
         <div class="col-md-4">
             <div class="strategyPanel">
                 <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">中小股策略</h5>
+                    <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">中略</h5>
                     <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
                         <li class="" style="font-size: 70%; color:red">
                             沪深300
@@ -200,10 +200,10 @@
         <div class="col-md-3">
             <div class="strategyPanel">
                 <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11" style="font-size: 130%">${strategy.strategyID}</h5>
+                    <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">${strategy.strategyID}</h5>
                     <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
                         <li class="" style="font-size: 90%; color:red">
-                            沪深300
+                                ${strategy.createDate}
                         </li>
                         <li class="" style="font-size: 90%; color:blueviolet">
                             策略收益率
@@ -212,10 +212,12 @@
                     <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
                         <img class="img-responsive " src="../img/traceback4.png">
                     </figure>
-                    <span class="col-md-4 col-md-offset-1 font-size: 85%;">创建日期</span><span class="col-md-6 small">2017-01-31</span>
-                    <span class="col-md-4 col-md-offset-1 font-size: 85%;">创建者</span><span class="col-md-6 small">qingqing123</span>
-                    <span class="col-md-4 col-md-offset-1 font-size: 85%;">订阅人数</span><span
-                        class="col-md-5 col-md-offset-1 small">123</span>
+                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">创建日期</span><span class="col-md-6 small">${strategy.createDate}</span>
+                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">创建者</span><span class="col-md-6 small">${strategy.creator}</span>
+                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">年化收益率</span><span class="col-md-6 small">${strategy.annualizedRateOfReturn}</span>
+                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">最大回撤率</span><span class="col-md-6 small">${strategy.maxStrategyTraceBackRate}</span>
+                    <span class="col-md-4 col-md-offset-1" style="font-size: 85%;">订阅人数</span><span
+                        class="col-md-5 col-md-offset-1 small">${strategy.subscribeNum}</span>
                     <button class="searchBt col-md-offset-6 btn btn-sm btn-info">查看详情</button>
                 </div>
             </div>
@@ -255,9 +257,11 @@
     });
 
     $(".strategyPanel").click(function () {
-        //TODO  此处需要跳转
-        window.location.href = "/jsp/searchStrategy.jsp";
-    })
+        //TODO  fjj 此处需要跳转 获得 id 跳到详情界面
+//        alert($(this).find(".strategyID").eq(0).html());
+        var strategyID=$(this).find(".strategyID").eq(0).html();
+//        window.location.href = "/jsp/searchStrategy.jsp";
+    });
     function openStock() {
         $("body").removeClass('loaded');
         window.location.href = "/stocks"

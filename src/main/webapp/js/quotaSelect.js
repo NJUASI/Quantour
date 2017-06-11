@@ -81,7 +81,7 @@ function quotaChange() {
     if ($('#searchQuota').val().substring(0, 1) == "N") {
         quotaName = "<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $('#searchQuota').val().substring(1) + "</div>"
     } else {
-        quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $('#searchQuota').val() + "</div>"
+        quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control' hidden></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $('#searchQuota').val() + "</div>"
     }
 
     var rankType;
