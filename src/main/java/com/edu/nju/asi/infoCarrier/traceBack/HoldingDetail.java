@@ -61,6 +61,10 @@ public class HoldingDetail {
      */
     public double remainInvestment;
 
+
+    public HoldingDetail() {
+    }
+
     public HoldingDetail(int periodSerial, LocalDate startDate, LocalDate endDate, double strategyReturn, double baseReturn, double excessReturn, double remainInvestment) {
         this.periodSerial = periodSerial;
         this.startDate = startDate;

@@ -44,6 +44,10 @@ public class TransferDayDetail {
      */
     public double changeRate;
 
+
+    public TransferDayDetail() {
+    }
+
     public TransferDayDetail(String stockName, String stockCode, LocalDate buyDate, LocalDate sellDate, double buyPrice, double sellPrice, double changeRate) {
         this.stockName = stockName;
         this.stockCode = stockCode;

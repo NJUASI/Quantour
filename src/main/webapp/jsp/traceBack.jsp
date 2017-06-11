@@ -1382,7 +1382,7 @@
         var strategyData = {
             "strategyID": strategyID,
             "date": null,
-            "creater": curUser,
+            "creator": curUser,
             "isPrivate": isPrivate,
             "content": JSON.stringify(getTraceBackCriteria()),
             "description": description,

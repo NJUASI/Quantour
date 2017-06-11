@@ -30,6 +30,10 @@ public class StageDetail {
      */
     public double changeRate;
 
+
+    public StageDetail() {
+    }
+
     public StageDetail(String stockCode, String stockName, double startPrice, double endPrice) {
         this.stockCode = stockCode;
         this.stockName = stockName;

@@ -5,7 +5,6 @@ import com.edu.nju.asi.dao.UserDao;
 import com.edu.nju.asi.infoCarrier.MailInfo;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
-import com.edu.nju.asi.service.MailService;
 import com.edu.nju.asi.service.StrategyService;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.utilities.enums.MailNotificationType;
@@ -27,9 +26,6 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Autowired
     TraceBackService traceBackService;
-
-    @Autowired
-    MailService mailService;
 
     @Autowired
     StrategyDao strategyDao;
@@ -141,11 +137,13 @@ public class StrategyServiceImpl implements StrategyService {
         }
 
         MailInfo mailInfo = new MailInfo(creatorAddress, subscribersAddress, type, strategy.getStrategyID());
-        try {
-            mailService.notify(mailInfo);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+
+        // 另开一个线程通知用户
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        FutureTask<Boolean> ft = new FutureTask<>(new MailNotification(mailInfo));
+        executor.submit(ft);
+        executor.shutdown();
+
         return true;
     }
 
