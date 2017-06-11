@@ -102,7 +102,6 @@ function register() {
     var userName = $("#reg_username").val();
     var password1 = $("#reg_password").val();
     var password2 = $("#reg_password2").val();
-//TODO FJJ 对电子邮箱的处理
     var email= $("#e_mail").val();
 
 
@@ -113,7 +112,8 @@ function register() {
         data: {
             "userName":userName,
             "password": password1,
-            "password2": password2
+            "password2": password2,
+            "email": email
         },
 
         success: function (result) {

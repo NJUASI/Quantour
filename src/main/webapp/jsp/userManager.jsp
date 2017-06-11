@@ -504,15 +504,53 @@
     });
 
     $(".strategyPanel").click(function () {
-        //TODO  fjj 此处需要跳转 获得 id 跳到详情界面
-        alert($(this).find(".strategyID").eq(0).html());
+//        alert($(this).find(".strategyID").eq(0).html());
         var strategyID=$(this).find(".strategyID").eq(0).html();
-    })
+        window.location.href = "/strategy/" + strategyID;
+    });
 
-    //TODO fjj 修改密码 邮箱
     function user_modify() {
         $("#passwordField").toggle("slow");
         $("#passwordModify").toggle("slow");
+
+//        TODO 冯俊杰 用户修改时好像调用有点问题  明明成功了却返回error。。。
+        $("#password1").val();
+        $("#e_mail").val();
+
+        var modified_user = {
+            "userName": "<%=((User) session.getAttribute("user")).getUserName()%>",
+            "password": $("#password1").val(),
+            "email": $("#e_mail").val()
+        };
+
+
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/user/modify",
+            data: {
+                "user":JSON.stringify(modified_user)
+            },
+
+            success: function (result) {
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    // TODO gaoyuan 登录成功用我说的那个小动画
+                    alert("66666666");
+                    window.location.reload();
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    $("#errorMessageField2").html(array[1]);
+                } else {
+                    $("#errorMessageField2").html("请再次确定输入信息");
+                }
+            },
+            error: function (result) {
+                alert("----错误" + result);
+            }
+        });
+
     }
 
     $("#modifyForm").validate({

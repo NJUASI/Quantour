@@ -68,6 +68,8 @@
                 </bean>
                 <bean class="com.edu.nju.asi.utilities.spring.StrategyFormatter">
                 </bean>
+                <bean class="com.edu.nju.asi.utilities.spring.UserFormatter">
+                </bean>
             </set>
         </property>
     </bean>

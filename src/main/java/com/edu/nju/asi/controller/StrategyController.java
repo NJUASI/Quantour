@@ -5,7 +5,10 @@ import com.edu.nju.asi.infoCarrier.strategy.FilterConditionChinese;
 import com.edu.nju.asi.infoCarrier.strategy.GeneralStrategy;
 import com.edu.nju.asi.infoCarrier.strategy.RankConditionChinese;
 import com.edu.nju.asi.infoCarrier.strategy.StrategyRankResult;
-import com.edu.nju.asi.infoCarrier.traceBack.*;
+import com.edu.nju.asi.infoCarrier.traceBack.FilterCondition;
+import com.edu.nju.asi.infoCarrier.traceBack.RankCondition;
+import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
+import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.StrategyService;
@@ -58,7 +61,7 @@ public class StrategyController {
 
         List<Strategy> allStrategies = strategyService.getAllStrategies();
         for (Strategy nowStrategy : allStrategies) {
-            if (!nowStrategy.isPrivate()){
+            if (!nowStrategy.isPrivate()) {
                 generalStrategies.add(new GeneralStrategy(nowStrategy));
             }
         }
@@ -79,8 +82,22 @@ public class StrategyController {
         if (session == null) {
             return new ModelAndView("index");
         }
-        //TODO  fjj 我不知道这个是不是他收藏的还是没有收藏的，或者你在这里可以判断 还有就是是否自己创建你也在这里检测了？
+
         Strategy wantedStrategy = strategyService.getOneStrategy(strategyID);
+
+        // 检查用户是否订阅此策略
+        User curUser = (User) session.getAttribute("user");
+        boolean hasSubscribe = false;
+        if (wantedStrategy.getUsers() != null) {
+            for (User temp : wantedStrategy.getUsers()) {
+                if (temp.getUserName().equals(curUser.getUserName())) {
+                    hasSubscribe = true;
+                    break;
+                }
+            }
+        }
+
+
         TraceBackCriteria criteria = JSON.parseObject(wantedStrategy.getContent(), TraceBackCriteria.class);
 
         String[] parts = wantedStrategy.getTraceBackInfo().split(";");
@@ -89,6 +106,7 @@ public class StrategyController {
 
         ModelAndView mv = new ModelAndView("searchStrategy");
         mv.addObject("nowStrategy", wantedStrategy);
+        mv.addObject("hasSubscribe", hasSubscribe);
         mv.addObject("traceBackCriteria", criteria);
         mv.addObject("filterConditions", convertChinese_filter(criteria.filterConditions));
         mv.addObject("rankConditions", convertChinese_rank(criteria.rankConditions));

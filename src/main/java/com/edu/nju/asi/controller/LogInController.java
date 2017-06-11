@@ -39,16 +39,14 @@ public class LogInController {
      */
     @PostMapping(value = "/req_register", produces = "text/html;charset=UTF-8")
     public @ResponseBody
-    String reqRegister(HttpServletRequest request, HttpServletResponse response) {
-        String username = request.getParameter("userName");
-        String password = request.getParameter("password");
-        String password2 = request.getParameter("password2");
-
-        System.out.println(username + "  " + password + "  " + password2);
+    String reqRegister(@RequestParam("userName") String username, @RequestParam("userName") String password,
+                       @RequestParam("userName") String password2, @RequestParam("userName") String email,
+                       HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(username + "  " + password + "  " + password2 + " " + email);
 
         boolean result = false;
         try {
-            User thisUser = new User(username, password);
+            User thisUser = new User(username, password, email);
             result = userService.registerUser(thisUser, password2);
 
             HttpSession session = request.getSession(true);

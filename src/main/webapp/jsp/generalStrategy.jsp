@@ -257,10 +257,9 @@
     });
 
     $(".strategyPanel").click(function () {
-        //TODO  fjj 此处需要跳转 获得 id 跳到详情界面
 //        alert($(this).find(".strategyID").eq(0).html());
         var strategyID=$(this).find(".strategyID").eq(0).html();
-//        window.location.href = "/jsp/searchStrategy.jsp";
+        window.location.href = "/strategy/" + strategyID;
     });
     function openStock() {
         $("body").removeClass('loaded');

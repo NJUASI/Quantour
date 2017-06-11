@@ -18,7 +18,7 @@ function directToGeneralStrategy(strategy_id) {
  */
 function strategy_modify(curUser) {
 
-    // TODO 传数据
+    // TODO gaoyuan 传数据 应用方法
     var strategyData = {
         "strategyID": strategyID,
         "date": null,
