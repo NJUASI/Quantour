@@ -13,7 +13,6 @@ import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.AreaFil
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.BlockCriteriaFilter;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.IndustryFilter;
 import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilters.StCriteriaFilter;
-import com.edu.nju.asi.utilities.StockCodeHelper;
 import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
@@ -120,7 +119,7 @@ public class StockServiceImpl implements StockService {
 
         List<BaseStock> result = new ArrayList<>();
         for (String tempBaseStock : baseStocksCode) {
-            result.add(baseStockDao.getStockData(tempBaseStock, thisDate));
+            result.add(baseStockDao.getBaseStockData(tempBaseStock, thisDate));
         }
         return result;
     }

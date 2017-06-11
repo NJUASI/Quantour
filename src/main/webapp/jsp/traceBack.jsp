@@ -1123,6 +1123,11 @@
             setTimeout("$('#wholeMessage').hide();",3000)
             return false;
         }
+
+        // 添加择时条件
+        var marketSelectingConditions = new Array();
+        var marketSelectingNum = 0;
+
         // "formativePeriod": $("#formativePeriod").val();
 
 //        alert("filterConditions: " +  filterConditions + "\n\n" + "rankConditions: " + rankConditions);
@@ -1148,7 +1153,11 @@
             "baseStockName": $("#baseStockEve").val(),
             // "isCustomized": isCustomized,
             "filterConditions": filterConditions,
-            "rankConditions": rankConditions
+            "rankConditions": rankConditions,
+            "marketSelectingConditions": marketSelectingConditions,
+            "adjustPositionPercent": null,
+            "bearToBull_num": null,
+            "bullToBear_num": null
         };
 
 

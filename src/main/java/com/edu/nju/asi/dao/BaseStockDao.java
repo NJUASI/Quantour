@@ -1,10 +1,7 @@
 package com.edu.nju.asi.dao;
 
 import com.edu.nju.asi.model.BaseStock;
-import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
-import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,7 +20,7 @@ public interface BaseStockDao {
      * @param date 指定日期
      * @return 特定日期指定股票的相关数据
      */
-    BaseStock getStockData(String stockCode, LocalDate date);
+    BaseStock getBaseStockData(String stockCode, LocalDate date);
 
     /**
      * 获取指定股票的相关数据
@@ -42,6 +39,19 @@ public interface BaseStockDao {
      * @return 基准股票信息的列表
      */
     List<BaseStock> getBaseStockData(String stockName);
+
+    /**
+     * 获取特定日期指定股票的相关数据
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @param stockName 指定股指名称
+     * @param start 指定开始日期（如果存在，包含start）
+     * @param end 指定结束日期（如果存在，包含end）
+     * @return 特定日期指定股票的相关数据
+     */
+    List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end);
 
     /**
      * @author cuihua
