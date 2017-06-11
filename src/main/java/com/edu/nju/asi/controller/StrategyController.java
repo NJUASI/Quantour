@@ -57,6 +57,7 @@ public class StrategyController {
 
         List<Strategy> allStrategies = strategyService.getAllStrategies();
         for (Strategy nowStrategy : allStrategies) {
+            //TODO fjj 私密的就不用传了吧
             generalStrategies.add(new GeneralStrategy(nowStrategy));
         }
 

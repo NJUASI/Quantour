@@ -1033,21 +1033,24 @@
         });
         var reg4 = /^\d{1,3}$/;
         $(".numOfN").each(function () {
-            var num=$(this).val();
-            if(num==0||num=="0"){
-                $(this).css("border","2px solid red");
-                $("#wholeMessage").show();
-                $("#wholeError").html("你输入的指标错误");
-                setTimeout("$('#wholeMessage').hide();",3000)
-                isZero=false;
-            }else if (!reg4.test($(this).val())) {
-                $(this).css("border","2px solid red");
-                $("#wholeMessage").show();
-                $("#wholeError").html(" 你输入的指标错误");
-                setTimeout("$('#wholeMessage').hide();",3000)
-                isZero=false;
-            }else{
-                $(this).css("border","1px solid #CCCCCC");
+            var temp= $(this).is(":hidden");
+            if(!temp) {
+                var num = $(this).val();
+                if (num == 0 || num == "0") {
+                    $(this).css("border", "2px solid red");
+                    $("#wholeMessage").show();
+                    $("#wholeError").html("你输入的指标错误");
+                    setTimeout("$('#wholeMessage').hide();", 3000)
+                    isZero = false;
+                } else if (!reg4.test($(this).val())) {
+                    $(this).css("border", "2px solid red");
+                    $("#wholeMessage").show();
+                    $("#wholeError").html(" 你输入的指标错误");
+                    setTimeout("$('#wholeMessage').hide();", 3000)
+                    isZero = false;
+                } else {
+                    $(this).css("border", "1px solid #CCCCCC");
+                }
             }
         });
         if(isZero==false){
