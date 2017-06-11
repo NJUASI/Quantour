@@ -96,27 +96,30 @@ public class UserController {
     /**
      * 修改用户信息
      */
-    @PostMapping("modify")
-    public ModelAndView modify(@RequestParam("user") User modifiedUser, HttpServletRequest request) {
+    @PostMapping(value = "/modify", produces = "text/html;charset=UTF-8;")
+    public @ResponseBody
+    String modify(@RequestParam("user") User modifiedUser, HttpServletRequest request) {
         // 限制进入
         HttpSession session = request.getSession(false);
         User thisUser = (User) request.getSession().getAttribute("user");
         if (session == null || thisUser == null) {
             System.out.println("未登录");
-            return new ModelAndView("index");
+            return "-1;未登录";
         }
+
+        System.out.println("已登录："  + thisUser.getUserName());
+        System.out.println(modifiedUser.getUserName() + " " + modifiedUser.getPassword() + " " + modifiedUser.getEmail());
 
         boolean modifyResult = false;
         try {
             modifyResult = userService.modifyUser(modifiedUser);
         } catch (PasswordInputException e) {
             e.printStackTrace();
-            return new ModelAndView("errorPage");
+            return "-1;密码输入不合法";
         }
 
-        // 修改成功跳转至成功界面
-        if (modifyResult) return new ModelAndView("");
-        else return new ModelAndView("errorPage");
+        if (modifyResult) return "1;修改成功";
+        else return "-1;修改失败";
     }
 
     /**
