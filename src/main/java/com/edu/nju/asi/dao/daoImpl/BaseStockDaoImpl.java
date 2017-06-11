@@ -3,12 +3,15 @@ package com.edu.nju.asi.dao.daoImpl;
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dataHelper.BaseStockDataHelper;
 import com.edu.nju.asi.dataHelper.HelperManager;
+import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import com.edu.nju.asi.model.BaseStock;
+import com.edu.nju.asi.utilities.StockCodeHelper;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/5/15.
@@ -17,6 +20,7 @@ import java.util.List;
 public class BaseStockDaoImpl implements BaseStockDao {
 
     private BaseStockDataHelper baseStockDataHelper;
+    private StockSearchDataHelper stockSearchDataHelper;
 
     /**
      * @author Byron Dong
@@ -25,6 +29,7 @@ public class BaseStockDaoImpl implements BaseStockDao {
      */
     public BaseStockDaoImpl() {
         baseStockDataHelper = HelperManager.baseStockDataHelper;
+        stockSearchDataHelper = HelperManager.stockSearchDataHelper;
     }
 
     /**
@@ -38,24 +43,54 @@ public class BaseStockDaoImpl implements BaseStockDao {
      * @updateTime 2017/5/9
      */
     @Override
-    public BaseStock getStockData(String stockCode, LocalDate date) {
-        return baseStockDataHelper.getStockData(stockCode,date);
+    public BaseStock getBaseStockData(String stockCode, LocalDate date) {
+        return baseStockDataHelper.getStockData(stockCode, date);
     }
 
     /**
-     * 获取特定日期指定股票的相关数据
+     * 获取指定股票的相关数据
      *
      * @param stockCode 指定股票代码
-     * @param start     指定开始日期（如果存在，包含start）
-     * @param end       指定结束日期（如果存在，包含end）
-     * @return 特定日期指定股票的相关数据
+     * @return 指定股票的相关数据
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
-    public List<BaseStock> getStockData(String stockCode, LocalDate start, LocalDate end) {
-        return baseStockDataHelper.getStockData(stockCode,start,end);
+    public List<BaseStock> getStockData(String stockCode) {
+        return baseStockDataHelper.getStockData(stockCode);
+    }
+
+    /**
+     * 根据基准股票名称，起始日期，结束日期，获得该基准股票在此期间的数据
+     *
+     * @param stockName 股票名称
+     * @return List<StockVO> 基准股票信息的列表
+     */
+    @Override
+    public List<BaseStock> getBaseStockData(String stockName) {
+        System.out.println("-----------In base----------");
+        System.out.println("getBaseStockData" + this);
+        Map<String, String> map = stockSearchDataHelper.getAllStocksName();
+
+        System.out.println("baseCode: " + map.get(stockName));
+
+        String baseStockCode = StockCodeHelper.format(map.get(stockName));
+        System.out.println("finished getBaseStockData--------------" + stockName + "--------------------------");
+        return baseStockDataHelper.getStockData(baseStockCode);
+    }
+
+    @Override
+    public List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end) {
+        System.out.println("-----------In base----------");
+        System.out.println("getBaseStockData" + this);
+        Map<String, String> map = stockSearchDataHelper.getAllStocksName();
+
+        System.out.println("baseCode: " + map.get(stockName));
+
+        String baseStockCode = StockCodeHelper.format(map.get(stockName));
+        System.out.println("finished getBaseStockData--------------" + stockName + "--------------------------");
+        return baseStockDataHelper.getStockData(baseStockCode, start, end);
     }
 
     @Override

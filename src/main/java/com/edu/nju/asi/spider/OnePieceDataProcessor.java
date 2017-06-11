@@ -1,8 +1,8 @@
 package com.edu.nju.asi.spider;
 
-import com.edu.nju.asi.spider.Model.Code_Name;
+import com.edu.nju.asi.task.spider.Code_Name;
 import com.edu.nju.asi.spider.Model.NormalStock;
-import com.edu.nju.asi.spider.onePieceStockDownload.Code_NamePipeline;
+import com.edu.nju.asi.task.spider.Code_NamePipeline;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
@@ -162,23 +162,5 @@ public class OnePieceDataProcessor implements PageProcessor {
     @Override
     public Site getSite() {
         return site;
-    }
-
-    public static void main(String[] args) {
-        Request request = new Request();
-        request.setUrl("http://quotes.money.163.com/hs/realtimedata/service/rank.php?host=/hs/realtimedata/service/rank.php&page=0&query=STATS_RANK:_exists_&fields=RN,CODE,SYMBOL,NAME,PRICE,STATS_RANK,PERCENT&sort=SYMBOL&order=asc&count=25&type=query");
-//        request.setUrl("http://quotes.money.163.com/stocksearch/json.do?count=1&word=000021");
-        request.setMethod(HttpConstant.Method.GET);
-
-        Spider.create(new OnePieceDataProcessor())
-                //从“http://quotes.money.163.com/old/#query=todayRank"开始抓
-                .addRequest(request)
-                //可以有多个pipeline
-                .addPipeline(new ConsolePipeline())
-                .addPipeline(new Code_NamePipeline())
-                //开启1个线程抓取
-                .thread(1)
-                //启动爬虫
-                .run();
     }
 }

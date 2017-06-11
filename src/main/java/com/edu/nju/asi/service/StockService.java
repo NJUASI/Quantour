@@ -51,15 +51,6 @@ public interface StockService{
     List<StockSearch> searchStock(String searchString);
 
     /**
-     * 根据基准股票名称，起始日期，结束日期，获得该基准股票在此期间的数据
-     * @param stockName 股票名称
-     * @param start 起始日期
-     * @param end 结束日期
-     * @return 基准股票信息的列表
-     */
-    List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end) throws IOException, NoDataWithinException, DateNotWithinException;
-
-    /**
      * 根据需要查看的日期，获得所有基准股票在此日的数据
      * @param thisDate 需要查看的日期
      * @return 基准股票信息的列表

@@ -1,19 +1,19 @@
 package com.edu.nju.asi.utilities;
 
-import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.BaseStock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * Created by Harvey on 2017/4/18.
+ * Created by cuihua on 2017/6/11.
  *
  * 为优化时间， 重写list的indexOf算法
  */
-public class StockList extends ArrayList<Stock>{
+public class BaseStockList extends ArrayList<BaseStock> {
 
     /**
-     * 寻找目标时间的Stock
+     * 寻找目标时间的BaseStock
      * @param o 目标时间
      */
     @Override

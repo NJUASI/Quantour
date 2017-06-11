@@ -48,6 +48,30 @@ public class BaseStockDataHelperImpl implements BaseStockDataHelper {
         return stock;
     }
 
+
+    /**
+     * 获取特定日期指定股票的相关数据
+     *
+     * @param stockCode 指定股票代码
+     * @return 特定日期指定股票的相关数据
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     */
+    @Override
+    public List<BaseStock> getStockData(String stockCode) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        String hql = "from BaseStock where stockID.code=:code order by stockID.date";
+
+        Query query = session.createQuery(hql);
+        query.setParameter("code", stockCode);
+        List<BaseStock> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
     /**
      * 获取特定日期指定股票的相关数据
      *
@@ -66,9 +90,9 @@ public class BaseStockDataHelperImpl implements BaseStockDataHelper {
         String hql = "from BaseStock where stockID.date<=:endDate and stockID.date>=:startDate and stockID.code=:code order by stockID.date";
 
         Query query = session.createQuery(hql);
-        query.setParameter("endDate",end);
-        query.setParameter("startDate",start);
-        query.setParameter("code",stockCode);
+        query.setParameter("endDate", end);
+        query.setParameter("startDate", start);
+        query.setParameter("code", stockCode);
         List<BaseStock> list = query.list();
         transaction.commit();
         session.close();

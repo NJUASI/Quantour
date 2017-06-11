@@ -24,6 +24,17 @@ public interface BaseStockDataHelper {
     BaseStock getStockData(String stockCode, LocalDate date);
 
     /**
+     * 获取指定股票的相关数据
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @param stockCode 指定股票代码
+     * @return 指定股票的相关数据
+     */
+    List<BaseStock> getStockData(String stockCode);
+
+    /**
      * 获取特定日期指定股票的相关数据
      *
      * @author Byron Dong

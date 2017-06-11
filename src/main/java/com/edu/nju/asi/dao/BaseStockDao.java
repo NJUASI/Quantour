@@ -20,7 +20,25 @@ public interface BaseStockDao {
      * @param date 指定日期
      * @return 特定日期指定股票的相关数据
      */
-    BaseStock getStockData(String stockCode, LocalDate date);
+    BaseStock getBaseStockData(String stockCode, LocalDate date);
+
+    /**
+     * 获取指定股票的相关数据
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/5/9
+     * @param stockCode 指定股票代码
+     * @return 特定日期指定股票的相关数据
+     */
+    List<BaseStock> getStockData(String stockCode);
+
+    /**
+     * 根据基准股票名称，起始日期，结束日期，获得该基准股票在此期间的数据
+     * @param stockName 股票名称
+     * @return 基准股票信息的列表
+     */
+    List<BaseStock> getBaseStockData(String stockName);
 
     /**
      * 获取特定日期指定股票的相关数据
@@ -28,12 +46,12 @@ public interface BaseStockDao {
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
-     * @param stockCode 指定股票代码
+     * @param stockName 指定股指名称
      * @param start 指定开始日期（如果存在，包含start）
-     * @param  end 指定结束日期（如果存在，包含end）
+     * @param end 指定结束日期（如果存在，包含end）
      * @return 特定日期指定股票的相关数据
      */
-    List<BaseStock> getStockData(String stockCode, LocalDate start, LocalDate end);
+    List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end);
 
     /**
      * @author cuihua
