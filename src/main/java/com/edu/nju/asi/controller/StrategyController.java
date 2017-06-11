@@ -77,8 +77,7 @@ public class StrategyController {
         if (session == null) {
             return new ModelAndView("index");
         }
-
-
+        //TODO  fjj 我不知道这个是不是他收藏的还是没有收藏的，或者你在这里可以判断 还有就是是否自己创建你也在这里检测了？
         Strategy wantedStrategy = strategyService.getOneStrategy(strategyID);
         TraceBackCriteria criteria = JSON.parseObject(wantedStrategy.getContent(), TraceBackCriteria.class);
         TraceBackInfo info = JSON.parseObject(wantedStrategy.getTraceBackInfo(), TraceBackInfo.class);

@@ -92,9 +92,15 @@
                 <span class="glyphicon glyphicon-heart"></span>
                 <span class="txt">收藏</span>
             </button>
+
+            <button class="btn btn-default  col-md-1 col-md-offset-1" style="margin-top: 20px">
+                <span class="txt">取消收藏</span>
+            </button>
+
             <button id="modifyBt" class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">
                 <span class="txt">编辑</span>
             </button>
+
         </div>
 
 

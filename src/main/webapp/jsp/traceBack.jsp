@@ -1358,7 +1358,7 @@
     function ensureCreate(curUser){
 
 
-            if($("#strategyName").val()==""){
+            if($("#strategyName").val().trim()==""){
                 $('#nameErrorPanel').show();
                 $('#nameError').html("策略名称必须填写");
                 return false;
@@ -1367,7 +1367,7 @@
             }
 
 
-            if($("#strategyDescription").val()==""){
+            if($("#strategyDescription").trim().val()==""){
                 $('#descriptionError').show();
                 return false;
             }else{
@@ -1410,9 +1410,11 @@
 
                 } else if (array[0] == "-1") {
                     // 提示错误信息
-                    alert(array[1]);
-                } else {
-                    alert("未知错误类型orz");
+                    $('#nameErrorPanel').show();
+                    $('#nameError').html(array[1]);
+                } else if  (array[0] == "-2"){
+                    $('#nameErrorPanel').show();
+                    $('#nameError').html("策略名称已被创建");
                 }
             },
             error: function (result) {
