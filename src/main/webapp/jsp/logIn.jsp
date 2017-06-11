@@ -23,10 +23,8 @@
                         </div>
                     </div>
                     <strong class="col-md-offset-4" style="color:red;" id="errorMessageField"></strong>
-                    <div class="checkbox text-right">
-                        <label id="rem-password">
-                            <input type="checkbox" checked>记住密码
-                        </label>
+                    <div class="row">
+                    <li class="col-md-offset-7 col-md-5"><a href="#" data-toggle="modal" data-target="#register">没有账户？</a></li>
                     </div>
                 </form>
             </div>

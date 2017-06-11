@@ -73,36 +73,7 @@
 <body class="loaded">
 
 <header>
-    <nav class="navbar navbar-default nav-wrapper navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand brand" href="#">
-                    <img alt="Quantour" src="">
-                </a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a id="homePage" href="/">首页</a></li>
-                <li><a id="stocks" style="cursor: pointer">大盘详情</a></li>
-                <li class="dropdown">
-                    <a href="##" class="dropdown-toggle" id="community" data-toggle="dropdown">量化社区<span class="caret"></span></a>
-                    <ul class="dropdown-menu" style="left:15px;max-width: 100px">
-                        <li><a href="/trace_back">创建策略</a></li>
-                        <li><a href="/jsp/generalStrategy.jsp">使用策略</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">帮助</a></li>
-                <c:choose>
-                    <c:when test="${sessionScope.user!=null}">
-                        <li><a href="/user/welcome">用户管理</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#register">注册</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
-        </div><!-- /.container-fluid -->
-    </nav>
+    <%@ include file="header.jsp" %>
 </header>
 
 <form role="form" style="position:relative;margin-top: 60px;">
@@ -110,10 +81,42 @@
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    选股票池
+                    选择条件
                 </h4>
             </div>
             <div class="panel-body">
+                <div class="row">
+
+                    <div class="form-group col-md-3 col-md-offset-1 inputBlock">
+                        <label class="col-md-5" style="margin-top: 7px">收益基准：</label>
+                        <div class='col-md-7' style="margin-left: 0px">
+                            <select id="baseStockEve" name="baseStockEve"
+                                    class="selectpicker show-tick form-control col-md-7">
+                                <option value="沪深300" selected>沪深300</option>
+                                <option value="创业板指">创业板指</option>
+                                <option value="中小板指">中小板指</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group  col-md-3 col-md-offset-1  inputBlock">
+                        <label class="col-md-3" style="margin-top: 7px;margin-left: -14px">ST：</label>
+                        <div class=' col-md-8'>
+                            <select id="stType" class="col-md-12 selectpicker show-tick form-inline">
+                                <option value="INCLUDE" selected>包含ST</option>
+                                <option value="EXCLUDE">排除ST</option>
+                                <option value="ONLY">仅有ST</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
                 <div class="row">
 
 
@@ -130,35 +133,119 @@
                         </div>
                     </div>
 
-                    <div class="form-group  col-md-3 inputBlock">
-                        <label class="col-md-3" style="margin-top: 7px">ST：</label>
-                        <div class=' col-md-8'>
-                            <select id="stType" class="col-md-12 selectpicker show-tick form-inline">
-                                <option value="INCLUDE" selected>包含ST</option>
-                                <option value="EXCLUDE">排除ST</option>
-                                <option value="ONLY">仅有ST</option>
+                    <div class="form-group col-md-3 inputBlock">
+                        <label class="col-md-5" style="margin-top: 7px">行业板块：</label>
+                        <div class='col-md-7' style="margin-left: -30px">
+                            <select id="industryBlock" name="industryBlock" multiple data-live-search="true"  data-live-search-placeholder="请选择行业" data-selected-text-format="count > 2"
+                                    data-actions-box="true" rows="10" style="width:200px" class="selectpicker show-tick form-control col-md-7">
+
+                                <option value="金融行业" selected>金融行业</option>
+                                <option value="房地产" selected>房地产</option>
+                                <option value="综合行业" selected>综合行业</option>
+                                <option value="建筑建材" selected>建筑建材</option>
+                                <option value="玻璃行业" selected>玻璃行业</option>
+                                <option value="家电行业" selected>家电行业</option>
+                                <option value="纺织行业" selected>纺织行业</option>
+                                <option value="食品行业" selected>食品行业</option>
+                                <option value="电子信息" selected>电子信息</option>
+                                <option value="交通运输" selected>交通运输</option>
+                                <option value="汽车制造" selected>汽车制造</option>
+                                <option value="商业百货" selected>商业百货</option>
+                                <option value="电力行业" selected>电力行业</option>
+                                <option value="酒店旅游" selected>酒店旅游</option>
+                                <option value="机械行业" selected>机械行业</option>
+                                <option value="农林牧渔" selected>农林牧渔</option>
+                                <option value="电器行业" selected>电器行业</option>
+                                <option value="电子器件" selected>电子器件</option>
+                                <option value="石油行业" selected>石油行业</option>
+                                <option value="有色金属" selected>有色金属</option>
+                                <option value="生物制药" selected>生物制药</option>
+                                <option value="医疗器械" selected>医疗器械</option>
+                                <option value="物资外贸" selected>物资外贸</option>
+                                <option value="传媒娱乐" selected>传媒娱乐</option>
+                                <option value="发电设备" selected>发电设备</option>
+                                <option value="水泥行业" selected>水泥行业</option>
+                                <option value="塑料制品" selected>塑料制品</option>
+                                <option value="钢铁行业" selected>钢铁行业</option>
+                                <option value="化纤行业" selected>化纤行业</option>
+                                <option value="农药化肥" selected>农药化肥</option>
+                                <option value="公路桥梁" selected>公路桥梁</option>
+                                <option value="造纸行业" selected>造纸行业</option>
+                                <option value="化工行业" selected>化工行业</option>
+                                <option value="环保行业" selected>环保行业</option>
+                                <option value="煤炭行业" selected>煤炭行业</option>
+                                <option value="酿酒行业" selected>酿酒行业</option>
+                                <option value="供水供气" selected>供水供气</option>
+                                <option value="开发区" selected>开发区</option>
+                                <option value="印刷包装" selected>印刷包装</option>
+                                <option value="纺织机械" selected>纺织机械</option>
+                                <option value="仪器仪表" selected>仪器仪表</option>
+                                <option value="飞机制造" selected>飞机制造</option>
+                                <option value="其它行业" selected>其它行业</option>
+                                <option value="家具行业" selected>家具行业</option>
+                                <option value="摩托车" selected>摩托车</option>
+                                <option value="服装鞋类" selected>服装鞋类</option>
+                                <option value="陶瓷行业" selected>陶瓷行业</option>
+                                <option value="船舶制造" selected>船舶制造</option>
+                                <option value="次新股" selected>次新股</option>
                             </select>
                         </div>
-
                     </div>
-
                     <div class="form-group col-md-3 inputBlock">
-                        <label class="col-md-5" style="margin-top: 7px">收益基准：</label>
-                        <div class='col-md-7' style="margin-left: -14px">
-                            <select id="baseStockEve" name="baseStockEve"
-                                    class="selectpicker show-tick form-control col-md-7">
-                                <option value="沪深300" selected>沪深300</option>
-                                <option value="创业板指">创业板指</option>
-                                <option value="中小板指">中小板指</option>
+                        <label class="col-md-5" style="margin-top: 7px">地域板块：</label>
+                        <div class='col-md-7' style="margin-left: -30px">
+                            <select id="provinceBlock" name="provinceBlock" multiple data-live-search="true"  data-live-search-placeholder="请选择行业" data-selected-text-format="count > 2"
+                                    data-actions-box="true" data-size="10" class="selectpicker show-tick form-control col-md-7">
+                                <option value="深圳" selected>深圳</option>
+                                <option value="北京" selected>北京</option>
+                                <option value="吉林" selected>吉林</option>
+                                <option value="江苏" selected>江苏</option>
+                                <option value="辽宁" selected>辽宁</option>
+                                <option value="广东" selected>广东</option>
+                                <option value="浙江" selected>浙江</option>
+                                <option value="湖南" selected>湖南</option>
+                                <option value="河北" selected>河北</option>
+                                <option value="新疆" selected>新疆</option>
+                                <option value="山东" selected>山东</option>
+                                <option value="河南" selected>河南</option>
+                                <option value="山西" selected>山西</option>
+                                <option value="江西" selected>江西</option>
+                               <option value=" 安徽" selected>安徽</option>
+                               <option value=" 湖北" selected>湖北</option>
+                               <option value=" 内蒙" selected>内蒙</option>
+                                <option value="海南" selected>海南</option>
+                                <option value="四川" selected>四川</option>
+                                <option value="重庆" selected>重庆</option>
+                                <option value="陕西" selected>陕西</option>
+                                <option value="广西" selected>广西</option>
+                                <option value="福建" selected>福建</option>
+                                <option value="天津" selected>天津</option>
+                                <option value="云南" selected>云南</option>
+                                <option value="贵州" selected>贵州</option>
+                                <option value="甘肃" selected>甘肃</option>
+                                <option value="黑龙江" selected>黑龙江</option>
+                                <option value="宁夏" selected>宁夏</option>
+                                <option value="青海" selected>青海</option>
+                                <option value="上海" selected>上海</option>
+                                <option value="西藏" selected>西藏</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div id="blockTypesError" class="row col-md-2 col-md-offset-2" hidden>
-                        <strong style="color:indianred;margin-left: 33px"> <span class="glyphicon glyphicon glyphicon-remove-circle"></span> 板块不能为空</strong>
+                    <div class="row col-md-2 col-md-offset-2">
+                        <strong id="blockTypesError"  style="color:indianred;margin-left: 33px" hidden> <span class="glyphicon glyphicon glyphicon-remove-circle"></span>板块不能为空</strong>
                     </div>
+
+                    <div  class="row col-md-2 col-md-offset-2">
+                        <strong id="industryError" style="color:indianred;margin-left: 33px" hidden> <span class="glyphicon glyphicon glyphicon-remove-circle"></span> 行业不能为空</strong>
+                    </div>
+
+                    <div class="row col-md-2 col-md-offset-1">
+                        <strong id="provinceError" style="color:indianred;margin-left: 33px" hidden> <span class="glyphicon glyphicon glyphicon-remove-circle"></span> 地域不能为空</strong>
+                    </div>
+
                 </div>
 
                 <div class="row">
@@ -805,7 +892,7 @@
                         <div class="col-md-10">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="control-label">板块：</label><span id="strategyBlock">主板，创业板，中小板</span>
+                                    <label class="control-label">板块：</label><span id="strategyBlock">主板<option value="创业板，中小板</span>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="control-label">ST：</label><span id="strategyST">仅为ST</span>
@@ -917,8 +1004,70 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-<%@ include file="logIn.jsp" %>
 
+<div class="modal fade" id="strategyPool" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 40%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">新建静态股票池</h4>
+            </div>
+            <div class="modal-body">
+                <p class="" style="margin-top: 5px">股票池名称:</p>
+                <input type="text" class="form-control" placeholder="取个好名字" aria-describedby="basic-addon1">
+                <p class="error" style="display: none;"></p>
+                <p class="" style="margin-top: 5px">股票池说明:</p>
+                <textarea type="text" class="form-control" placeholder="股票池说明"></textarea>
+                <p class="error" style="display: none;"></p>
+                <div class="" style="margin-top: 5px;">
+                    <p class="static">股票列表:</p>
+                    <textarea type="text" class="form-control" rows="10" placeholder="请输入股票代码 以空格隔开"></textarea>
+                </div>
+                <p class="error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary save ">保存</button>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+</div>
+
+<%@ include file="logIn.jsp" %>
+<div class="modal fade" id="circleModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">周期买卖详情</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>股票代码</th>
+                        <th>股票名</th>
+                        <th>行业分类</th>
+                        <th>开始价格</th>
+                        <th>结束价格</th>
+                        <th>涨幅</th>
+                        <th>本期起始仓</th>
+                        <th>当日成交额</th>
+                        <th>股价振幅</th>
+                    </tr>
+                    </thead>
+                    <tbody id="circleList">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
 
 <footer>
 
@@ -966,6 +1115,7 @@
     function getTraceBackCriteria() {
         var user = "<%= (User)session.getAttribute("user")%>";
         if(user=="null" ){
+            $("#login").modal("toggle");
             $("#wholeMessage").show();
             $("#wholeError").html("请先登录");
             setTimeout("$('#wholeMessage').hide();",5000);
@@ -978,6 +1128,19 @@
         if( $("#blockTypes").val()==" "||$("#blockTypes").val()==""||$("#blockTypes").val()==null){
             $('#blockTypesError').show();
             setTimeout("$('#blockTypesError').hide();",3000);
+            window.location.href="#";
+            isZero= false;
+        }
+
+        if($("#industryBlock").val()==" "||$("#industryBlock").val()==""||$("#industryBlock").val()==null){
+            $('#industryError').show();
+            setTimeout("$('#industryError').hide();",3000);
+            window.location.href="#";
+            isZero= false;
+        }
+        if($("#provinceBlock").val()[0]==""||$("#provinceBlock").val()[0]==null){
+            $('#provinceError').show();
+            setTimeout("$('#provinceError').hide();",3000);
             window.location.href="#";
             isZero= false;
         }
@@ -1136,6 +1299,11 @@
         }
 
 
+
+//        TODO fjj  行业和地狱的获得
+        $("#provinceBlock").val();
+        $("#industryBlock").val();
+
         var criteriaData = {
             "startDate": $("#startDate").val(),
             "endDate": $("#endDate").val(),
@@ -1221,18 +1389,18 @@
 
                     // 股票周期的对比图
                     $("#tb_cycle_ab").empty();
-                    $("#tb_cycle_ab").append("<tr>");
-                    $("#tb_cycle_ab").append("<td>" + abReturnPeriod["positivePeriodsNum"] + "</td>");
-                    $("#tb_cycle_ab").append("<td>" + abReturnPeriod["negativePeriodNum"] + "</td>");
-                    $("#tb_cycle_ab").append("<td>" + abReturnPeriod["winRate"] + "</td>");
-                    $("#tb_cycle_ab").append("</tr>");
+                    $("#tb_cycle_ab").append("<tr>"+
+                  "<td>" + abReturnPeriod["positivePeriodsNum"] + "</td>"+
+                  "<td>" + abReturnPeriod["negativePeriodNum"] + "</td>"+
+                  "<td>" + abReturnPeriod["winRate"] + "</td>"+
+                  "</tr>");
 
                     $("#tb_cycle_re").empty();
-                    $("#tb_cycle_re").append("<tr>");
-                    $("#tb_cycle_re").append("<td>" + reReturnPeriod["positivePeriodsNum"] + "</td>");
-                    $("#tb_cycle_re").append("<td>" + reReturnPeriod["negativePeriodNum"] + "</td>");
-                    $("#tb_cycle_re").append("<td>" + reReturnPeriod["winRate"] + "</td>");
-                    $("#tb_cycle_re").append("</tr>");
+                    $("#tb_cycle_re").append("<tr>"+
+                    "<td>" + reReturnPeriod["positivePeriodsNum"] + "</td>"+
+                    "<td>" + reReturnPeriod["negativePeriodNum"] + "</td>"+
+                    "<td>" + reReturnPeriod["winRate"] + "</td>"+
+                    "</tr>");
                     // alert("--------------------2----------------");
 
 
@@ -1240,7 +1408,7 @@
                     $("#tb_detail").empty();
                     for (var i = 0; i < holdingDetails.length; i++) {
                         $("#tb_detail").append("<tr>"+
-                        "<td><span class='circle' style='color:#7291CA'>" + holdingDetails[i]["periodSerial"] + "<spam></td>"+
+                        "<td style='text-align: center'><span class='circle' style='color:#7291CA'>" + holdingDetails[i]["periodSerial"] + "<span></td>"+
                         "<td>" + holdingDetails[i]["startDate"] + "</td>"+
                         "<td>" + holdingDetails[i]["endDate"] + "</td>"+
                         "<td>" + holdingDetails[i]["holdingNum"] + "</td>"+
@@ -1252,7 +1420,24 @@
                     }
 
                     $(".circle").click(function () {
+                        alert($(this).html());
 
+                        //TODO $(this).html() 为当前需要看的周期，加一下此周期持有股票信息
+//                        $("#circleList").empty();
+//                        for (var i = 0; i < circleList.length; i++) {
+//                            $("#circleList").append("<tr>"+
+//                                "<td>" + 股票代码+ "</td>"+
+//                                "<td>" + 股票名" + "</td>"+
+//                                "<td>" + 行业分类+ "</td>"+
+//                                "<td>" + 开始价格+ "</td>"+
+//                                "<td>" + 结束价格 + "%" + "</td>"+
+//                                "<td>" + 涨幅 + "</td>"+
+//                                "<td>" + 本期起始仓 + "</td>"+
+//                                "<td>" + 当日成交额 + "</td>"+
+//                                "<td>" + 股价振幅 + "</td>"+
+//                                "</tr>");
+//                        }
+                          $("#circleModal").modal("toggle");
                     })
 
                     $(".circle").hover(function () {
@@ -1266,15 +1451,15 @@
                     // 卖出的股票详情
                     $("#sold_stock_detail").empty();
                     for (var i = 0; i < transferDetails.length; i++) {
-                        $("#sold_stock_detail").append("<tr>");
-                        $("#sold_stock_detail").append("<td>" + transferDetails[i]["stockName"] + "</td>");
-                        $("#sold_stock_detail").append("<td>" + transferDetails[i]["stockCode"] + "</td>");
-                        $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyDate"] + "</td>");
-                        $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellDate"] + "</td>");
-                        $("#sold_stock_detail").append("<td>" + transferDetails[i]["buyPrice"]+ "</td>");
-                        $("#sold_stock_detail").append("<td>" + transferDetails[i]["sellPrice"]+ "</td>");
-                        $("#sold_stock_detail").append("<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>");
-                        $("#sold_stock_detail").append("</tr>");
+                        $("#sold_stock_detail").append("<tr>"+
+                       "<td>" + transferDetails[i]["stockName"] + "</td>"+
+                       "<td>" + transferDetails[i]["stockCode"] + "</td>"+
+                       "<td>" + transferDetails[i]["buyDate"] + "</td>"+
+                       "<td>" + transferDetails[i]["sellDate"] + "</td>"+
+                       "<td>" + transferDetails[i]["buyPrice"]+ "</td>"+
+                       "<td>" + transferDetails[i]["sellPrice"]+ "</td>"+
+                       "<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>"+
+                       "</tr>");
                     }
                     // alert("--------------------4----------------");
 
@@ -1357,7 +1542,6 @@
      */
     function ensureCreate(curUser){
 
-
             if($("#strategyName").val().trim()==""){
                 $('#nameErrorPanel').show();
                 $('#nameError').html("策略名称必须填写");
@@ -1367,7 +1551,7 @@
             }
 
 
-            if($("#strategyDescription").trim().val()==""){
+            if($("#strategyDescription").val().trim()==""){
                 $('#descriptionError').show();
                 return false;
             }else{

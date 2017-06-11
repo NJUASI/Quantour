@@ -334,7 +334,7 @@
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
+      return (numSelected == 1) ? "{0} 个已选" : "{0} 个已选";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
@@ -342,7 +342,7 @@
         (numGroup == 1) ? 'Group limit reached ({n} item max)' : 'Group limit reached ({n} items max)'
       ];
     },
-    selectAllText: 'Select All',
+    selectAllText: '全选',
     deselectAllText: 'Deselect All',
     doneButton: false,
     doneButtonText: 'Close',
