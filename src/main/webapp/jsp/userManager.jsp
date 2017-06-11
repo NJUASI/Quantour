@@ -155,7 +155,7 @@
                                         <c:when test="${stock.volume == null}">
                                             <%--此只股票没有当日信息，则仍需显示，只是显示为／--%>
                                             <tr>
-                                                <td class="stock_no_value"><span class="code" style="color:#7291CA"">${stock.stockID.code}</span></td>
+                                                <td class="stock_no_value"><span class="code" style="color:#7291CA">${stock.stockID.code}</span></td>
                                                 <td class="stock_no_value">${stock.name}</td>
                                                 <td class="stock_no_value">/</td>
                                                 <td class="stock_no_value">/</td>

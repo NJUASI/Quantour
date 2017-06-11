@@ -166,6 +166,19 @@ function quotaChange() {
         }
     });
 
+    var reg4 = /^\d{1,3}$/;
+    $(".numOfN").bind('input propertychange', function () {
+        if ($(this).val() == 0 || $(this).val() == "0") {
+            $(this).css("border", "2px solid red");
+            return false;
+        } else if (!reg4.test($(this).val())) {
+            $(this).css("border", "2px solid red");
+            return false;
+        } else {
+            $(this).css("border", "1px solid #CCCCCC");
+        }
+    });
+
     $(".quotaBt").unbind("click");
     $(".quotaBt").click(function () {
         $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
@@ -296,6 +309,19 @@ $(".quota").click(function () {
             $(this).css("border","1px solid #CCCCCC");
         }
     });
+    var reg4 = /^\d{1,3}$/;
+    $(".numOfN").bind('input propertychange', function () {
+        if ($(this).val() == 0 || $(this).val() == "0") {
+            $(this).css("border", "2px solid red");
+            return false;
+        } else if (!reg4.test($(this).val())) {
+            $(this).css("border", "2px solid red");
+            return false;
+        } else {
+            $(this).css("border", "1px solid #CCCCCC");
+        }
+    });
+
 
     $(".quotaBt").unbind("click");
     $(".quotaBt").click(function () {
