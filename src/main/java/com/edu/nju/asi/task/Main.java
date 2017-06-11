@@ -12,16 +12,4 @@ public class Main {
         FileHelper fileHelper = new FileHelper("F:\\test");
         fileHelper.delete();
     }
-
-    public void test() {
-        try {
-            System.out.println(getClass().getClassLoader().getResource("python/CrawingToday.py").getPath());
-            String path = getClass().getClassLoader().getResource("python/CrawingToday.py").getPath();
-            Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-            proc.waitFor();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 }

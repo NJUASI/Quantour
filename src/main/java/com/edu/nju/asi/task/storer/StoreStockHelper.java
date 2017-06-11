@@ -21,20 +21,26 @@ import java.util.List;
  */
 public class StoreStockHelper {
 
-    private String path = "F:\\Quant\\stocks";
-    private String basePath = "F:\\Quant\\todayBaseStock";
+    private String path;
+    private String basePath;
 
     private StockDataHelper stockDataHelper;
 
     private BaseStockDataHelper baseStockDataHelper;
 
-    public StoreStockHelper() {
+    public StoreStockHelper(String root) {
+        if(!root.endsWith(File.separator)){
+            root = root+File.separator;
+        }
+
         stockDataHelper = HelperManager.stockDataHelper;
         baseStockDataHelper = HelperManager.baseStockDataHelper;
+        path = root+File.separator+"stocks";
+        basePath = root+File.separator+"baseStocks";
     }
 
     public void handle() {
-//        this.store();
+        this.store();
         this.storeBase();
     }
 

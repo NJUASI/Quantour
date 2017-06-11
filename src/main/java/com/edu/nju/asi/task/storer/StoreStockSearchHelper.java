@@ -26,6 +26,16 @@ public class StoreStockSearchHelper {
 
     private String filePath = "F:\\Quant\\stockData.txt";
 
+    public StoreStockSearchHelper(String root) {
+        if(!root.endsWith(File.separator)){
+            root = root+File.separator;
+        }
+        areaPath = root+"area.csv";
+        industryPath = root+"industry.csv";
+        stockPath = root+"stocks";
+        filePath = root+"stockData.txt";
+    }
+
     public void handle() {
         //清洗code,会产生stockData.txt
         deleteUnuseCode();
