@@ -1,4 +1,4 @@
-package com.edu.nju.asi.crawler.StoreDataHelper.financialStatement;
+package com.edu.nju.asi.task.storer.financialStatement;
 
 import com.csvreader.CsvReader;
 import com.edu.nju.asi.model.BasicData;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Byron Dong on 2017/6/5.
  */
-public class ProfitStatement implements Statement{
+public class ProfitStatement implements Statement {
 
     public void write(List<BasicData> profitStatement) {
         System.out.println("-----------------利润表组合数据开始--------------------");

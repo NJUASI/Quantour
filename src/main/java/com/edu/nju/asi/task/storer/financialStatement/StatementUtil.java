@@ -1,4 +1,4 @@
-package com.edu.nju.asi.crawler.StoreDataHelper.financialStatement;
+package com.edu.nju.asi.task.storer.financialStatement;
 
 import com.csvreader.CsvReader;
 

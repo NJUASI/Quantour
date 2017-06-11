@@ -1,26 +1,6 @@
-package com.edu.nju.asi.crawler.StoreDataHelper;
+package com.edu.nju.asi.task.storer;
 
-import com.csvreader.CsvReader;
-import com.edu.nju.asi.crawler.StoreDataHelper.financialStatement.*;
-import com.edu.nju.asi.dataHelper.BasicDataHelper;
-import com.edu.nju.asi.dataHelper.HelperManager;
-import com.edu.nju.asi.model.BasicData;
-import com.edu.nju.asi.model.BasicDataID;
-import com.edu.nju.asi.utilities.util.JDBCUtil;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import com.edu.nju.asi.task.storer.financialStatement.*;
 
 /**
  * Created by Byron Dong on 2017/6/4.

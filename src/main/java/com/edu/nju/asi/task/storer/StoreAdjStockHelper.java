@@ -1,4 +1,4 @@
-package com.edu.nju.asi.crawler.StoreDataHelper;
+package com.edu.nju.asi.task.storer;
 
 import com.csvreader.CsvReader;
 import com.edu.nju.asi.model.Stock;

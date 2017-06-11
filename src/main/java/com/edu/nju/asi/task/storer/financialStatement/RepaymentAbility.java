@@ -1,4 +1,4 @@
-package com.edu.nju.asi.crawler.StoreDataHelper.financialStatement;
+package com.edu.nju.asi.task.storer.financialStatement;
 
 import com.csvreader.CsvReader;
 import com.edu.nju.asi.model.BasicData;
@@ -19,29 +19,29 @@ import java.util.List;
 /**
  * Created by Byron Dong on 2017/6/5.
  */
-public class StatementOfCashFlow implements Statement{
+public class RepaymentAbility implements Statement{
 
-    public void write(List<BasicData> statementOfCashFlow) {
-        System.out.println("-----------------现金流量表组合数据开始--------------------");
-        for (int i = 0; i < statementOfCashFlow.size(); i++) {
-            statementOfCashFlow.get(i).setTotalAssets("0");
-            statementOfCashFlow.get(i).setTotalLiabilities("0");
-            statementOfCashFlow.get(i).setTotalEquityAttributableToShareholdersOfTheParentCompany("0");
-            statementOfCashFlow.get(i).setTotalOwnerEquity("0");
-            statementOfCashFlow.get(i).setTotalBusinessIncome("0");
-            statementOfCashFlow.get(i).setTotalOperatingCost("0");
-            statementOfCashFlow.get(i).setOperatingProfit("0");
-            statementOfCashFlow.get(i).setTotalProfit("0");
-            statementOfCashFlow.get(i).setNetProfit("0");
-            statementOfCashFlow.get(i).setNetProfitAttributableToTheOwnerOfTheParentCompany("0");
-            statementOfCashFlow.get(i).setBasicIncomePerStock(0);
-            statementOfCashFlow.get(i).setAssetLiabilityRatio(0);
-            statementOfCashFlow.get(i).setReturnOnEquity(0);
+    public void write(List<BasicData> repaymentAbility) {
+        System.out.println("-----------------偿还能力组合数据开始--------------------");
+        for (int i = 0; i < repaymentAbility.size(); i++) {
+            repaymentAbility.get(i).setTotalAssets("0");
+            repaymentAbility.get(i).setTotalLiabilities("0");
+            repaymentAbility.get(i).setTotalEquityAttributableToShareholdersOfTheParentCompany("0");
+            repaymentAbility.get(i).setTotalOwnerEquity("0");
+            repaymentAbility.get(i).setTotalBusinessIncome("0");
+            repaymentAbility.get(i).setTotalOperatingCost("0");
+            repaymentAbility.get(i).setOperatingProfit("0");
+            repaymentAbility.get(i).setTotalProfit("0");
+            repaymentAbility.get(i).setNetProfit("0");
+            repaymentAbility.get(i).setNetProfitAttributableToTheOwnerOfTheParentCompany("0");
+            repaymentAbility.get(i).setBasicIncomePerStock(0);
+            repaymentAbility.get(i).setNetCashFlowsFromOperatingActivities("0");
+            repaymentAbility.get(i).setReturnOnEquity(0);
         }
-        System.out.println("-----------------现金流量表组合数据结束--------------------");
-        System.out.println("-----------------现金流量表写入数据开始--------------------");
-        this.update(statementOfCashFlow);
-        System.out.println("-----------------现金流量表写入数据结束--------------------");
+        System.out.println("-----------------偿还能力组合数据结束--------------------");
+        System.out.println("-----------------偿还能力写入数据开始--------------------");
+        this.update(repaymentAbility);
+        System.out.println("-----------------偿还能力写入数据结束--------------------");
     }
 
     public List<BasicData> get(String path) {
@@ -56,7 +56,7 @@ public class StatementOfCashFlow implements Statement{
             try {
                 CsvReader reader = new CsvReader(path + File.separator + file.getName(), ',', Charset.forName("GBK"));
                 while (reader.readRecord()) {
-                    if (reader.get(0).equals("报告日期") || reader.get(0).equals("经营活动产生的现金流量净额(万元)")) {
+                    if (reader.get(0).equals("报告日期") || reader.get(0).equals("资产负债率(%)")) {
                         info.add(StatementUtil.readInfo(reader, reader.getColumnCount()));
                     }
                 }
@@ -74,29 +74,29 @@ public class StatementOfCashFlow implements Statement{
                 if (!StatementUtil.isTrueDate(localDate)) {
                     continue;
                 }
+                String assetLiabilityRatio = info.get(1).get(i);
 
-                String netCashFlowsFromOperatingActivities = info.get(1).get(i);
                 basicData.setBasicDataID(new BasicDataID(file.getName().substring(0, 6),localDate));
-                basicData.setNetCashFlowsFromOperatingActivities(netCashFlowsFromOperatingActivities);
+                basicData.setAssetLiabilityRatio(Double.parseDouble(assetLiabilityRatio));
                 result.add(basicData);
-                System.out.println("转载：" + localDate.toString() + " " + netCashFlowsFromOperatingActivities);
+                System.out.println("转载：" + localDate.toString() + " " + assetLiabilityRatio);
             }
             System.out.println("-----------转载" + file.getName() + "数据结束-----------");
         }
         return result;
     }
 
-    public boolean update(List<BasicData> basicDataList){
+    public boolean update(List<BasicData> basicDataList) {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "UPDATE basicdata SET netCashFlowsFromOperatingActivities = ? WHERE code=? AND date=?";
+        String sql = "UPDATE basicdata SET assetLiabilityRatio=? WHERE code=? AND date=?";
         boolean result = true;
 
         try {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(sql);
             for (BasicData basicData : basicDataList) {
-                preparedStatement.setString(1, basicData.getNetCashFlowsFromOperatingActivities());
+                preparedStatement.setDouble(1, basicData.getAssetLiabilityRatio());
                 preparedStatement.setString(2, basicData.getBasicDataID().getCode());
                 preparedStatement.setObject(3, basicData.getBasicDataID().getDate());
                 System.out.println(basicData.getBasicDataID().getCode() + " " + basicData.getBasicDataID().getDate().toString());

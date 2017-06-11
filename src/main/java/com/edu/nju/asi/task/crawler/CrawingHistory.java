@@ -1,4 +1,4 @@
-package com.edu.nju.asi.crawler;
+package com.edu.nju.asi.task.crawler;
 
 import org.python.core.PyFunction;
 import org.python.core.PyList;
@@ -6,7 +6,6 @@ import org.python.core.PyString;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
