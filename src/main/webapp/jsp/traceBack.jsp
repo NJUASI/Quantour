@@ -361,6 +361,7 @@
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                             <li role="presentation">
                                                 <a role="menuitem" class="quota" tabindex="-1">当日涨幅</a>
+                                                <%--<span class="	glyphicon glyphicon-search"></span>--%>
                                             </li>
                                             <li role="presentation">
                                                 <a role="menuitem" class="quota" tabindex="-1">5日涨幅</a>
@@ -967,7 +968,7 @@
         if(user=="null" ){
             $("#wholeMessage").show();
             $("#wholeError").html("请先登录");
-            setTimeout("$('#wholeMessage').hide();",5000)
+            setTimeout("$('#wholeMessage').hide();",5000);
             return false;
         }
         // alert($("#startDate").val() + "\n" + $("#endDate").val() + "\n" + $("#formativePeriod").val() + "\n" + $("#holdingPeriod").val()
@@ -1030,6 +1031,28 @@
                 isZero=false;
             }
         });
+        var reg4 = /^\d{1,3}$/;
+        $(".numOfN").each(function () {
+            var temp= $(this).is(":hidden");
+            if(!temp) {
+                var num = $(this).val();
+                if (num == 0 || num == "0") {
+                    $(this).css("border", "2px solid red");
+                    $("#wholeMessage").show();
+                    $("#wholeError").html("你输入的指标错误");
+                    setTimeout("$('#wholeMessage').hide();", 3000)
+                    isZero = false;
+                } else if (!reg4.test($(this).val())) {
+                    $(this).css("border", "2px solid red");
+                    $("#wholeMessage").show();
+                    $("#wholeError").html(" 你输入的指标错误");
+                    setTimeout("$('#wholeMessage').hide();", 3000)
+                    isZero = false;
+                } else {
+                    $(this).css("border", "1px solid #CCCCCC");
+                }
+            }
+        });
         if(isZero==false){
             return false;
         }
@@ -1063,12 +1086,7 @@
             filterNum++;
         });
 //        alert( $("#blockTypes").val());
-        if(filterNum==0){
-            $("#wholeMessage").show();
-            $("#wholeError").html(" 请选择筛选条件");
-           setTimeout("$('#wholeMessage').hide();",3000)
-            return false;
-        }
+
 
         // 添加排序条件
         var rankConditions = new Array();
@@ -1099,10 +1117,25 @@
             }
             rankNum++;
         });
-
+        if(rankNum+filterNum==0){
+            $("#wholeMessage").show();
+            $("#wholeError").html(" 请选择筛选条件或者排名条件");
+            setTimeout("$('#wholeMessage').hide();",3000)
+            return false;
+        }
         // "formativePeriod": $("#formativePeriod").val();
 
 //        alert("filterConditions: " +  filterConditions + "\n\n" + "rankConditions: " + rankConditions);
+        var start=new Date( $("#startDate").val());
+        var end=new Date($("#endDate").val());
+        if(end-start<1000*60*60*24*$("#holdingPeriod").val()){
+            $("#wholeMessage").show();
+            $("#wholeError").html(" 你输入的日期少于持仓周期");
+            setTimeout("$('#wholeMessage').hide();",3000)
+            return false;
+        }
+
+
         var criteriaData = {
             "startDate": $("#startDate").val(),
             "endDate": $("#endDate").val(),
@@ -1206,17 +1239,28 @@
                     // 持有周期详情
                     $("#tb_detail").empty();
                     for (var i = 0; i < holdingDetails.length; i++) {
-                        $("#tb_detail").append("<tr>");
-                        $("#tb_detail").append("<td>" + holdingDetails[i]["periodSerial"] + "</td>");
-                        $("#tb_detail").append("<td>" + holdingDetails[i]["startDate"] + "</td>");
-                        $("#tb_detail").append("<td>" + holdingDetails[i]["endDate"] + "</td>");
-                        $("#tb_detail").append("<td>" + holdingDetails[i]["holdingNum"] + "</td>");
-                        $("#tb_detail").append("<td>" + (holdingDetails[i]["strategyReturn"] * 100).toFixed(2) + "%" + "</td>");
-                        $("#tb_detail").append("<td>" + (holdingDetails[i]["baseReturn"] * 100).toFixed(2) + "%" + "</td>");
-                        $("#tb_detail").append("<td>" + (holdingDetails[i]["excessReturn"] * 100).toFixed(2) + "%" + "</td>");
-                        $("#tb_detail").append("<td>" + holdingDetails[i]["remainInvestment"].toFixed(2) + "</td>");
-                        $("#tb_detail").append("</tr>");
+                        $("#tb_detail").append("<tr>"+
+                        "<td><span class='circle' style='color:#7291CA'>" + holdingDetails[i]["periodSerial"] + "<spam></td>"+
+                        "<td>" + holdingDetails[i]["startDate"] + "</td>"+
+                        "<td>" + holdingDetails[i]["endDate"] + "</td>"+
+                        "<td>" + holdingDetails[i]["holdingNum"] + "</td>"+
+                        "<td>" + (holdingDetails[i]["strategyReturn"] * 100).toFixed(2) + "%" + "</td>"+
+                        "<td>" + (holdingDetails[i]["baseReturn"] * 100).toFixed(2) + "%" + "</td>"+
+                        "<td>" + (holdingDetails[i]["excessReturn"] * 100).toFixed(2) + "%" + "</td>"+
+                        "<td>" + holdingDetails[i]["remainInvestment"].toFixed(2) + "</td>"+
+                        "</tr>");
                     }
+
+                    $(".circle").click(function () {
+
+                    })
+
+                    $(".circle").hover(function () {
+                        $(this).css({"cursor": "pointer","text-decoration":" underline"});
+                    }, function () {
+                        $(this).css({"color":"#7291CA","text-decoration":" none"});
+                    });
+
                     // alert("--------------------3----------------");
 
                     // 卖出的股票详情
@@ -1314,7 +1358,7 @@
     function ensureCreate(curUser){
 
 
-            if($("#strategyName").val()==""){
+            if($("#strategyName").val().trim()==""){
                 $('#nameErrorPanel').show();
                 $('#nameError').html("策略名称必须填写");
                 return false;
@@ -1323,7 +1367,7 @@
             }
 
 
-            if($("#strategyDescription").val()==""){
+            if($("#strategyDescription").trim().val()==""){
                 $('#descriptionError').show();
                 return false;
             }else{
@@ -1338,7 +1382,7 @@
         var strategyData = {
             "strategyID": strategyID,
             "date": null,
-            "creater": curUser,
+            "creator": curUser,
             "isPrivate": isPrivate,
             "content": JSON.stringify(getTraceBackCriteria()),
             "description": description,
@@ -1366,9 +1410,11 @@
 
                 } else if (array[0] == "-1") {
                     // 提示错误信息
-                    alert(array[1]);
-                } else {
-                    alert("未知错误类型orz");
+                    $('#nameErrorPanel').show();
+                    $('#nameError').html(array[1]);
+                } else if  (array[0] == "-2"){
+                    $('#nameErrorPanel').show();
+                    $('#nameError').html("策略名称已被创建");
                 }
             },
             error: function (result) {

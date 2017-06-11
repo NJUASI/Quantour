@@ -113,4 +113,6 @@ public interface StockDataHelper {
      * @return 数据库中股票存在记录的起讫时间，List.get(0)为第一天，List.get(1)为最后一天
      */
     List<LocalDate> getFirstAndLastDay(String stockCode);
+
+    void update(List<Stock> stocks);
 }

@@ -325,4 +325,34 @@ public class StockDataHelperImpl implements StockDataHelper {
         }
         return stocks;
     }
+
+    public void update(List<Stock> stocks){
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        String sql = "UPDATE stock SET preFrontAdjClose=?,preAfterAdjClose=? WHERE code=? AND date=?";
+
+        try {
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql);
+            for (Stock stock : stocks) {
+                preparedStatement.setDouble(1, stock.getPreFrontAdjClose());
+                preparedStatement.setDouble(2, stock.getPreAfterAdjClose());
+                preparedStatement.setString(3, stock.getStockID().getCode());
+                preparedStatement.setObject(4, stock.getStockID().getDate());
+                System.out.println("更新： "+stock.getStockID().getCode() + " " + stock.getStockID().getDate().toString());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            JDBCUtil.close(preparedStatement, connection);
+        }
+    }
 }

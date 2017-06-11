@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.strategy.FilterConditionChinese;
 import com.edu.nju.asi.infoCarrier.strategy.GeneralStrategy;
 import com.edu.nju.asi.infoCarrier.strategy.RankConditionChinese;
+import com.edu.nju.asi.infoCarrier.strategy.StrategyRankResult;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
@@ -57,7 +58,9 @@ public class StrategyController {
 
         List<Strategy> allStrategies = strategyService.getAllStrategies();
         for (Strategy nowStrategy : allStrategies) {
-            generalStrategies.add(new GeneralStrategy(nowStrategy));
+            if (!nowStrategy.isPrivate()){
+                generalStrategies.add(new GeneralStrategy(nowStrategy));
+            }
         }
 
         mv.addObject("generalStrategies", generalStrategies);
@@ -76,13 +79,15 @@ public class StrategyController {
         if (session == null) {
             return new ModelAndView("index");
         }
-
-
+        //TODO  fjj 我不知道这个是不是他收藏的还是没有收藏的，或者你在这里可以判断 还有就是是否自己创建你也在这里检测了？
         Strategy wantedStrategy = strategyService.getOneStrategy(strategyID);
         TraceBackCriteria criteria = JSON.parseObject(wantedStrategy.getContent(), TraceBackCriteria.class);
-        TraceBackInfo info = JSON.parseObject(wantedStrategy.getTraceBackInfo(), TraceBackInfo.class);
 
-        ModelAndView mv = new ModelAndView("generalStrategy");
+        String[] parts = wantedStrategy.getTraceBackInfo().split(";");
+        TraceBackInfo info = JSON.parseObject(parts[0], TraceBackInfo.class);
+        StrategyRankResult rankResult = JSON.parseObject(parts[1], StrategyRankResult.class);
+
+        ModelAndView mv = new ModelAndView("searchStrategy");
         mv.addObject("nowStrategy", wantedStrategy);
         mv.addObject("traceBackCriteria", criteria);
         mv.addObject("filterConditions", convertChinese_filter(criteria.filterConditions));
@@ -107,6 +112,9 @@ public class StrategyController {
             // json_absoluteHistogramData, json_relativeHistogramData
             mv.addObject("absoluteReturnPeriodChart", JsonConverter.convertHistogram(info.absoluteReturnPeriod));
             mv.addObject("relativeReturnPeriodChart", JsonConverter.convertHistogram(info.relativeReturnPeriod));
+
+            // 评分的数据画雷达图
+            mv.addObject("rankResult", rankResult);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

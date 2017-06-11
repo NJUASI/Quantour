@@ -10,9 +10,8 @@ import com.edu.nju.asi.crawler.StoreDataHelper.StoreBasicDataHelper;
 public class Main {
 
     public static void main(String[] args) {
-        StoreBasicDataHelper storeBasicDataHelper = new StoreBasicDataHelper();
-        storeBasicDataHelper.store();
-
+        StoreAdjStockHelper storeAdjStockHelper = new StoreAdjStockHelper();
+        storeAdjStockHelper.handle();
     }
 
     public void test() {

@@ -63,7 +63,9 @@ public class GeneralStrategy {
         this.subscribeNum = strategy.getUsers().size() - 1;
 
 
-        TraceBackInfo info = JSON.parseObject(strategy.getTraceBackInfo(), TraceBackInfo.class);
+        String[] parts = strategy.getTraceBackInfo().split(";");
+
+        TraceBackInfo info = JSON.parseObject(parts[0], TraceBackInfo.class);
         this.annualizedRateOfReturn = NumberFormat.percentFormat(info.traceBackNumVal.annualizedRateOfReturn, 2);
         this.maxStrategyTraceBackRate = NumberFormat.percentFormat(info.maxTraceBack.maxStrategyTraceBackRate, 2);
         try {

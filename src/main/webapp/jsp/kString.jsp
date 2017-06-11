@@ -19,6 +19,8 @@
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../css/flat/red.css" rel="stylesheet">
+    <link href="../css/flat/green.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
     <link href="../css/startLoader.css" rel="stylesheet">
     <style type="text/css" rel="stylesheet">
@@ -29,7 +31,6 @@
         }
     </style>
 
-    <![endif]-->
     <title>个股</title>
 
     <style rel="stylesheet" type="text/css">
@@ -122,7 +123,8 @@
     </div>
 </div>
 
-</div>
+
+
 
 
 <div class="row">
@@ -157,12 +159,58 @@
     </div>
 
 </div>
-
-<div class="row" style="margin-top: 60px">
-    <div class="col-md-offset-1 col-md-10">
-        <div id="candlestick_chart"class="col-md-12" style=" height: 600px"></div>
+<div class="row " style="margin-top: 30px">
+    <div class="col-md-offset-2 col-md-1">
+        <div>
+            <label class="radio1">
+                <input class="radio_group1" type="radio" name="upPanel"  value="MA" checked>MA
+            </label>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div>
+            <label class="radio1">
+                <input class="radio_group1" type="radio" name="upPanel" value="BOLL">BOLL
+            </label>
+        </div>
     </div>
 </div>
+
+
+<div class="row mychart">
+    <div id="candlestick_chart" style="margin:0px auto; width:1300px;height:400px" ></div>
+</div>
+
+<div class="row mychart" hidden>
+    <div id="boll_chart" style="margin:0px auto; width:1300px;height:400px" ></div>
+</div>
+
+<div class="row ">
+    <div class=" col-md-offset-2 col-md-1">
+        <div>
+            <label class="radio2">
+                <input class="radio_group2" type="radio" name="downPanel"  value="VOLUME" checked>VOLUME
+            </label>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div>
+            <label class="radio2">
+                <input class="radio_group2" type="radio" name="downPanel" value="MACD">MACD
+            </label>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mychart" style="margin-bottom: 50px">
+    <div id="volume_chart" style="margin:0px auto; width:1300px;height:200px" ></div>
+</div>
+
+<div class="row mychart" hidden  style="margin-bottom: 50px">
+    <div id="MACD_chart" style="margin:0px auto; width:1300px;height:200px" ></div>
+</div>
+
 
 <!-- 登录模态框（Modal） -->
 <%@ include file="logIn.jsp" %>
@@ -182,6 +230,9 @@
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 
+<script src="../js/icheck.js"></script>
+
+<script src="../js/dbDatePicker.js"></script>
 <script src="../js/chart.js"></script>
 <script src="../js/echarts.min.js"></script>
 <script src="../js/echarts-liquidfill.js"></script>
@@ -189,11 +240,71 @@
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
 <script src="../js/stocks.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.radio_group1').iCheck({
+            checkboxClass: 'icheckbox_flat-red',
+            radioClass: 'iradio_flat-red'
+        });
+        $('.radio_group2').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+//
+//        $('.radio1').click(function () {
+//            changePanel();
+//        })
+//
+//        $('.radio2').click(function () {
+//            changePanel();
+//        })
+        $('input').on('ifChecked', function(event){
+            changePanel();
+        });
 
+        function changePanel() {
+            var up=$("input[name='upPanel']:checked").val();
+            var down=$("input[name='downPanel']:checked").val();
+            if(up=="MA"){
+                $(".mychart").eq(0).show();
+                $(".mychart").eq(1).hide();
+            }else{
+                $(".mychart").eq(1).show();
+                $(".mychart").eq(0).hide();
+            }
+            if(down=="VOLUME"){
+                $(".mychart").eq(2).show();
+                $(".mychart").eq(3).hide();
+            }else{
+                $(".mychart").eq(3).show();
+                $(".mychart").eq(2).hide();
+            }
+        }
+
+        function connect(chart1,chart2){
+            echarts.connect([chart1,chart2]);
+        }
+
+        // 调整日期 TODO 高源 把日期格式化为yyyy-MM-dd
+        $("#datetimeStart>input").attr('value', ${startDate.year} + "-" + ${startDate.monthValue} + "-" + ${startDate.dayOfMonth});
+        $("#datetimeEnd>input").attr('value', ${stockOfEndDay.stockID.date.year} + "-" + ${stockOfEndDay.stockID.date.monthValue} + "-" + ${stockOfEndDay.stockID.date.dayOfMonth});
+
+        // 画图
+        var bollData = ${bollData};
+
+        var c1 = createCandlestick('candlestick_chart', ${candlestickData});
+        var c2 = createVolume('volume_chart', ${volumeData});
+        var c3 = createMACD('MACD_chart', ${macdData});
+        var c4 = createBULL('boll_chart', ${candlestickData}, bollData[0], bollData[1], bollData[2]);
+        connect(c1, c3);
+        connect(c2, c3);
+        connect(c1, c4);
+        connect(c2, c4);
+    });
+</script>
 <script type="text/javascript">
 
-    <%--TODO  高源 加图--%>
-    // 画出点击率的图
+
     createClickChart("one_stock_click_chart", ${clickedData}, ${clickedDataStringRepre});
     $(document).ready(
         function() {
@@ -266,64 +377,9 @@
 
     $("#stockDetail > li").addClass("col-md-5");
 
-    var today = new Date();
-    var yesterday=new Date();
-    yesterday.setTime(today.getTime()-24*60*60*1000);
 
-    var endTime = today.getFullYear() + "-";
-    var startTime = yesterday.getFullYear()+"-";
 
-    var month=today.getMonth() + 1;
-    var dayOfMonth=today.getDate();
-    if( month<10){
-        endTime+="0"+month;
-    }else{
-        endTime+=month;
-    }
-    if(dayOfMonth<10){
-        endTime+="-0"+dayOfMonth;
-    }else{
-        endTime+="-"+dayOfMonth;
-    }
 
-    month=yesterday.getMonth() + 1;
-    dayOfMonth=yesterday.getDate();
-    if( month<10){
-        startTime+="0"+month;
-    }else{
-        startTime+=month;
-    }
-    if(dayOfMonth<10){
-        startTime+="-0"+dayOfMonth;
-    }else{
-        startTime+="-"+dayOfMonth;
-    }
-
-    $("#datetimeStart>input").attr('value', startTime);
-    $("#datetimeEnd>input").attr('value', endTime);
-
-    $("#datetimeStart").datetimepicker({
-        format: 'yyyy-mm-dd',
-        minView: 'month',
-        language: 'zh-CN',
-        autoclose: true,
-        //数据从12年开始
-        startDate: new Date(2012 - 01 - 01),
-        endDate: new Date(),
-        daysOfWeekDisabled: [0,6]
-    });
-
-    $("#datetimeEnd").datetimepicker({
-        format: 'yyyy-mm-dd',
-        minView: 'month',
-        language: 'zh-CN',
-        autoclose: true,
-        startDate: new Date(2012 - 01 - 01),
-        endDate: new Date(),
-        daysOfWeekDisabled: [0,6]
-    });
-
-    createCandlestickChart('candlestick_chart', ${candlestickData}, ${volumeData});
 
     <%--var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});--%>
     function openStock() {

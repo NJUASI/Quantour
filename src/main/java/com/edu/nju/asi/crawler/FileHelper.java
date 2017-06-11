@@ -3,10 +3,13 @@ package com.edu.nju.asi.crawler;
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.model.SearchID;
+import com.edu.nju.asi.model.Stock;
+import com.edu.nju.asi.model.StockID;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.enums.Market;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,22 +41,28 @@ public class FileHelper {
 //
 //        main.writeInfo(info);
         FileHelper fileHelper = new FileHelper();
-        List<String> allInfo  = fileHelper.readeInfo("F:\\Quant\\stockData.txt");
-        List<String> hadInfo = fileHelper.readeInfo("F:\\Quant\\tempStockData.txt");
-        List<String> needInfo = new ArrayList<>();
-        for(String info:allInfo){
-            String[] infos = info.split(";");
-            if(hadInfo.indexOf(info)==-1){
-                if(LocalDate.parse(infos[5]).isAfter(LocalDate.of(2017,6,2))){
-                    if(!LocalDate.parse(infos[4]).isAfter(LocalDate.of(2017,6,3))){
-                        infos[4]="2017-06-03";
-                    }
-                    needInfo.add(infos[0]+";"+infos[1]+";"+infos[2]+";"+infos[3]+";"+infos[4]+";"+infos[5]);
-                }
-            }
+        List<String> infos = fileHelper.readeInfo("F:\\Quant\\stockData.txt");
+        StockDataHelper stockDataHelper = HelperManager.stockDataHelper;
+        for(String info:infos){
+            String[] tempInfo = info.split(";");
+            List<Stock> stocks = fileHelper.modify(stockDataHelper.getStockData(tempInfo[0]));
+            stockDataHelper.update(stocks);
         }
-        fileHelper.writeInfo(needInfo,"F:\\Quant\\needStockData.txt");
+
     }
+
+    public List<Stock> modify(List<Stock> stocks){
+        System.out.println("修改： "+stocks.get(0).getStockID().getCode());
+        for(int i=stocks.size()-1;i>1;i--){
+            stocks.get(i).setPreFrontAdjClose(stocks.get(i-1).getFrontAdjClose());
+            stocks.get(i).setPreAfterAdjClose(stocks.get(i-1).getAfterAdjClose());
+        }
+        stocks.get(0).setPreFrontAdjClose(0);
+        stocks.get(0).setPreAfterAdjClose(0);
+        System.out.println("结束： "+stocks.get(0).getStockID().getCode());
+        return stocks;
+    }
+
 
     public List<String> readeInfo(String path){
         List<String> info =  new ArrayList<>();

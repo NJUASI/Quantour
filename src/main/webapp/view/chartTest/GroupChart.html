@@ -80,18 +80,18 @@
     volume = createVolume('volume',volumeData);
     alert("out volume");
 
-   alert('enter MACD');
-    macd = createMACD('volume',macdData);
-    alert('enter MACD');
+//   alert('enter MACD');
+//    macd = createMACD('volume',macdData);
+//    alert('enter MACD');
+//
+//    alert("enter bull");
+//    bull = createBULL('candlestick',candlestick2,up,mid,low);
+//    alert("out bull");
 
-    alert("enter bull");
-    bull = createBULL('candlestick',candlestick2,up,mid,low);
-    alert("out bull");
-
-//    connect(candlestick,volume);
+    connect(candlestick,volume);
 //    connect(candlestick,macd);
 //    connect(bull,volume);
-    connect(bull,macd);
+//    connect(bull,macd);
 
     function connect(chart1,chart2){
         echarts.connect([chart1,chart2]);

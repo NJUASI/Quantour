@@ -81,7 +81,7 @@ function quotaChange() {
     if ($('#searchQuota').val().substring(0, 1) == "N") {
         quotaName = "<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $('#searchQuota').val().substring(1) + "</div>"
     } else {
-        quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $('#searchQuota').val() + "</div>"
+        quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control' hidden></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $('#searchQuota').val() + "</div>"
     }
 
     var rankType;
@@ -163,6 +163,19 @@ function quotaChange() {
             return false;
         }else{
             $(this).css("border","1px solid #CCCCCC");
+        }
+    });
+
+    var reg4 = /^\d{1,3}$/;
+    $(".numOfN").bind('input propertychange', function () {
+        if ($(this).val() == 0 || $(this).val() == "0") {
+            $(this).css("border", "2px solid red");
+            return false;
+        } else if (!reg4.test($(this).val())) {
+            $(this).css("border", "2px solid red");
+            return false;
+        } else {
+            $(this).css("border", "1px solid #CCCCCC");
         }
     });
 
@@ -296,6 +309,19 @@ $(".quota").click(function () {
             $(this).css("border","1px solid #CCCCCC");
         }
     });
+    var reg4 = /^\d{1,3}$/;
+    $(".numOfN").bind('input propertychange', function () {
+        if ($(this).val() == 0 || $(this).val() == "0") {
+            $(this).css("border", "2px solid red");
+            return false;
+        } else if (!reg4.test($(this).val())) {
+            $(this).css("border", "2px solid red");
+            return false;
+        } else {
+            $(this).css("border", "1px solid #CCCCCC");
+        }
+    });
+
 
     $(".quotaBt").unbind("click");
     $(".quotaBt").click(function () {

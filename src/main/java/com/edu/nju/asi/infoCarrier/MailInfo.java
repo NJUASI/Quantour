@@ -13,10 +13,10 @@ public class MailInfo {
 
     private final static String asiUrl = "https://119.23.223.62";
 
-    // 创建者
+    // 创建者邮箱
     public String creator;
 
-    // 订阅者列表
+    // 订阅者邮箱列表
     public List<String> subscribers;
 
     // 发送邮件的原因

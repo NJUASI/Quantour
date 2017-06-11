@@ -1,29 +1,32 @@
-package com.edu.nju.asi.service.serviceImpl;
+package com.edu.nju.asi.service.serviceImpl.strategyService;
 
 import com.edu.nju.asi.infoCarrier.MailInfo;
-import com.edu.nju.asi.service.MailService;
-import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
 /**
- * Created by cuihua on 2017/6/3.
+ * Created by cuihua on 2017/6/11.
+ *
+ *
  */
-@Service("MailService")
-public class MailServiceImpl implements MailService {
+public class MailNotification implements Callable<Boolean> {
 
     // 系统发件人的账户密码
     private final String senderName = "asiquantour";
     private final String password = "qazxswedc123456";
 
-    public MailServiceImpl() {
+    private MailInfo mailInfo;
+
+    public MailNotification(MailInfo mailInfo) {
+        this.mailInfo = mailInfo;
     }
 
     @Override
-    public boolean notify(MailInfo mailInfo) throws MessagingException {
+    public Boolean call() throws Exception {
         Properties props = new Properties();
         props.setProperty("mail.debug", "true");                    // 开启debug调试
         props.setProperty("mail.smtp.auth", "true");                // 发送服务器需要身份验证
