@@ -1,23 +1,22 @@
-package com.edu.nju.asi.spider.onePieceStockDownload;
+package com.edu.nju.asi.task.spider;
 
-import com.csvreader.CsvWriter;
-import com.edu.nju.asi.spider.Model.Code_Name;
 import com.edu.nju.asi.utilities.enums.Market;
-import com.edu.nju.asi.utilities.util.JDBCUtil;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 /**
  * Created by Harvey on 2017/5/15.
  */
 public class Code_NamePipeline implements Pipeline {
+
+    String rootPath;
+
+    public Code_NamePipeline(String rootPath) {
+        this.rootPath = rootPath;
+    }
 
     @Override
     public void process(ResultItems resultItems, Task task) {
@@ -59,7 +58,7 @@ public class Code_NamePipeline implements Pipeline {
     public void addCode_Name(Code_Name code_name){
         FileWriter fw = null;
         try {
-            fw = new FileWriter(new File("D:/Quant/stockSearch.txt"), true);
+            fw = new FileWriter(new File(rootPath+File.separator+"stockSearch.txt"), true);
         } catch (IOException e) {
             e.printStackTrace();
         }

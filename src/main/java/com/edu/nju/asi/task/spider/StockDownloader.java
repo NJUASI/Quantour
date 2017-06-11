@@ -1,4 +1,4 @@
-package com.edu.nju.asi.spider.onePieceStockDownload;
+package com.edu.nju.asi.task.spider;
 
 import com.edu.nju.asi.spider.DownloadDataHelper;
 import org.assertj.core.internal.cglib.core.Local;

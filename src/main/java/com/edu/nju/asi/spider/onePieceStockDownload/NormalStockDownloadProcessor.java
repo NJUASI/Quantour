@@ -1,15 +1,10 @@
 package com.edu.nju.asi.spider.onePieceStockDownload;
 
-import com.edu.nju.asi.spider.Model.Code_Name;
-import org.assertj.core.internal.cglib.core.Local;
+import com.edu.nju.asi.task.spider.Code_Name;
 import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
-import us.codecraft.webmagic.utils.HttpConstant;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +17,6 @@ import java.util.List;
  * 通过下载链接下载所有股票历史数据,起始日从2012年1月1日起
  */
 public class NormalStockDownloadProcessor implements PageProcessor {
-    static String PAGE = "http://quotes.money.163.com/hs/service/diyrank.php?host=http%3A%2F%2Fquotes.money.163.com%2Fhs%2Fservice%2Fdiyrank.php&page=0&query=STYPE%3AEQA&fields=NO%2CSYMBOL%2CNAME%2CPRICE%2CPERCENT%2CUPDOWN%2CFIVE_MINUTE%2COPEN%2CYESTCLOSE%2CHIGH%2CLOW%2CVOLUME%2CTURNOVER%2CHS%2CLB%2CWB%2CZF%2CPE%2CMCAP%2CTCAP%2CMFSUM%2CMFRATIO.MFRATIO2%2CMFRATIO.MFRATIO10%2CSNAME%2CCODE%2CANNOUNMT%2CUVSNEWS&sort=SYMBOL&order=asc&count=24&type=query";
     static String First_Page = "http://quotes\\.money\\.163\\.com/hs/service/diyrank\\.php\\?host=http%3A%2F%2Fquotes\\.money\\.163\\.com%2Fhs%2Fservice%2Fdiyrank\\.php&page=0&query=STYPE%3AEQA&fields=NO%2CSYMBOL%2CNAME%2CPRICE%2CPERCENT%2CUPDOWN%2CFIVE_MINUTE%2COPEN%2CYESTCLOSE%2CHIGH%2CLOW%2CVOLUME%2CTURNOVER%2CHS%2CLB%2CWB%2CZF%2CPE%2CMCAP%2CTCAP%2CMFSUM%2CMFRATIO\\.MFRATIO2%2CMFRATIO\\.MFRATIO10%2CSNAME%2CCODE%2CANNOUNMT%2CUVSNEWS&sort=SYMBOL&order=asc&count=24&type=query";
     static String CODE_LIST = "http://quotes\\.money\\.163\\.com/hs/.*";
     static String ALL_LIST = "http://quotes\\.money\\.163\\.com/trade/lsjysj_\\d{6}.html";
@@ -45,7 +39,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
     private Site site = Site.me()
             .setCharset("utf-8")
             .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36")
-            .setTimeOut(600000)
+            .setTimeOut(100000)
             .setRetryTimes(5)
             .setSleepTime(100);
 
@@ -128,11 +122,11 @@ public class NormalStockDownloadProcessor implements PageProcessor {
                 page.setSkip(true);
             }
 
+            //TODO 在这里调整日期,自动化的时候，start、end都做成今天就行了
             String start = LocalDate.of(2017, 6, 2).format(formatter);
             String end = today.format(formatter);
 
             System.out.println("开始日期:"+start+"------"+"结束日期:"+end);
-
 
             int prefix = 1;
             if(code.startsWith("6") || (code.startsWith("900"))){

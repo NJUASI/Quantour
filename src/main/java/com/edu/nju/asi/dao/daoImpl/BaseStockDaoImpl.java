@@ -43,22 +43,22 @@ public class BaseStockDaoImpl implements BaseStockDao {
      * @updateTime 2017/5/9
      */
     @Override
-    public BaseStock getStockData(String stockCode, LocalDate date) {
+    public BaseStock getBaseStockData(String stockCode, LocalDate date) {
         return baseStockDataHelper.getStockData(stockCode, date);
     }
 
     /**
-     * 获取特定日期指定股票的相关数据
+     * 获取指定股票的相关数据
      *
      * @param stockCode 指定股票代码
-     * @return 特定日期指定股票的相关数据
+     * @return 指定股票的相关数据
      * @author Byron Dong
      * @lastUpdatedBy Byron Dong
      * @updateTime 2017/5/9
      */
     @Override
     public List<BaseStock> getStockData(String stockCode) {
-        return baseStockDataHelper.getStockData(stockCode, null, null);
+        return baseStockDataHelper.getStockData(stockCode);
     }
 
     /**
@@ -71,16 +71,26 @@ public class BaseStockDaoImpl implements BaseStockDao {
     public List<BaseStock> getBaseStockData(String stockName) {
         System.out.println("-----------In base----------");
         System.out.println("getBaseStockData" + this);
-        Map<String, String> map = stockSearchDataHelper.getAllStocksCode();
-        for (Map.Entry entry : map.entrySet()) {
-            System.out.println(entry.getKey() + "   " + entry.getValue());
-        }
+        Map<String, String> map = stockSearchDataHelper.getAllStocksName();
 
         System.out.println("baseCode: " + map.get(stockName));
 
         String baseStockCode = StockCodeHelper.format(map.get(stockName));
         System.out.println("finished getBaseStockData--------------" + stockName + "--------------------------");
-        return getStockData(baseStockCode);
+        return baseStockDataHelper.getStockData(baseStockCode);
+    }
+
+    @Override
+    public List<BaseStock> getBaseStockData(String stockName, LocalDate start, LocalDate end) {
+        System.out.println("-----------In base----------");
+        System.out.println("getBaseStockData" + this);
+        Map<String, String> map = stockSearchDataHelper.getAllStocksName();
+
+        System.out.println("baseCode: " + map.get(stockName));
+
+        String baseStockCode = StockCodeHelper.format(map.get(stockName));
+        System.out.println("finished getBaseStockData--------------" + stockName + "--------------------------");
+        return baseStockDataHelper.getStockData(baseStockCode, start, end);
     }
 
     @Override

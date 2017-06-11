@@ -66,12 +66,12 @@ public class TraceBackCriteria {
     public double adjustPositionPercent;
 
     /**
-     * 又熊变牛需要满足的条件数目
+     * 由熊变牛需要满足的条件数目
      */
-    public int bearToBull_num;
+//    public int bearToBull_num;
 
     /**
-     * 又牛变熊需要满足的条件数目
+     * 由牛变熊需要满足的条件数目
      */
     public int bullToBear_num;
 

@@ -1,4 +1,4 @@
-package com.edu.nju.asi.spider.Model;
+package com.edu.nju.asi.task.spider;
 
 /**
  * Created by Harvey on 2017/5/15.
