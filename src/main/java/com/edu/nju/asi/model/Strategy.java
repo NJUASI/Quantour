@@ -85,8 +85,8 @@ public class Strategy implements Serializable{
         return creator;
     }
 
-    public void setCreator(String creater) {
-        this.creator = creater;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public boolean isPrivate() {

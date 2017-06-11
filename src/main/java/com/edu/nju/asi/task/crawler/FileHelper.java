@@ -1,16 +1,11 @@
-package com.edu.nju.asi.crawler;
+package com.edu.nju.asi.task.crawler;
 
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
-import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
-import com.edu.nju.asi.model.StockID;
-import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.enums.Market;
 
 import java.io.*;
-import java.text.DecimalFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

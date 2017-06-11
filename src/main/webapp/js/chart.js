@@ -580,7 +580,7 @@ function createMACD(id, datas) {
             splitNumber: 4,
             axisLine: {onZero: false},
             axisTick: {show: false},
-            splitLine: {show: false},
+            splitLine: {show: true},
             axisLabel: {show: true}
         }],
         dataZoom: [{

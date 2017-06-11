@@ -1,4 +1,4 @@
-package com.edu.nju.asi.crawler;
+package com.edu.nju.asi.task.crawler;
 
 import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
@@ -6,7 +6,6 @@ import com.edu.nju.asi.dataHelper.StockSearchDataHelper;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Byron Dong on 2017/6/2.

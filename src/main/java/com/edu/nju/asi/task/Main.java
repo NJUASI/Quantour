@@ -1,8 +1,7 @@
-package com.edu.nju.asi.crawler;
+package com.edu.nju.asi.task;
 
 
-import com.edu.nju.asi.crawler.StoreDataHelper.StoreAdjStockHelper;
-import com.edu.nju.asi.crawler.StoreDataHelper.StoreBasicDataHelper;
+import com.edu.nju.asi.task.fileHelper.FileHelper;
 
 /**
  * Created by Byron Dong on 2017/6/2.
@@ -10,8 +9,8 @@ import com.edu.nju.asi.crawler.StoreDataHelper.StoreBasicDataHelper;
 public class Main {
 
     public static void main(String[] args) {
-        StoreAdjStockHelper storeAdjStockHelper = new StoreAdjStockHelper();
-        storeAdjStockHelper.handle();
+        FileHelper fileHelper = new FileHelper("F:\\test");
+        fileHelper.delete();
     }
 
     public void test() {

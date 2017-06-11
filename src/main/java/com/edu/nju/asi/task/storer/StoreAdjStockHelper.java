@@ -1,4 +1,4 @@
-package com.edu.nju.asi.crawler.StoreDataHelper;
+package com.edu.nju.asi.task.storer;
 
 import com.csvreader.CsvReader;
 import com.edu.nju.asi.model.Stock;
@@ -21,12 +21,21 @@ import java.util.List;
  */
 public class StoreAdjStockHelper {
 
-    private String frontPath = "F:\\Quant\\adjData\\today\\front\\";
-    private String afterPath = "F:\\Quant\\adjData\\today\\after\\";
+    private String frontPath;
+    private String afterPath;
+
+    public StoreAdjStockHelper(String root) {
+
+        if(!root.endsWith(File.separator)){
+            root = root+File.separator;
+        }
+        frontPath = root+"adjData"+File.separator+"front";
+        afterPath = root+"adjData"+File.separator+"after";
+    }
 
     public void handle() {
-        storeFrontStock(frontPath+"date2");
-        storeAfterStock(afterPath+"date2");
+        storeFrontStock(frontPath);
+        storeAfterStock(afterPath);
     }
 
     private void storeFrontStock(String path) {
