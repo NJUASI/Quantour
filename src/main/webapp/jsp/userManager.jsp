@@ -189,7 +189,7 @@
 
             <c:choose>
                 <%--TODO 冯俊杰 有创建策略的 还是不显示--%>
-                <c:when test="${myOwn==null}">
+                <c:when test="${myOwn!=null}">
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10">
                         <c:forEach items="${myOwn}" var="strategy" varStatus="vs">
@@ -199,7 +199,7 @@
                                         <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">${strategy.strategyID}</h5>
                                         <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
                                             <li class="" style="font-size: 90%; color:red">
-                                                    ${strategy.createDate}
+                                                    <%--${traceBackCriteria.}--%>
                                             </li>
                                             <li class="" style="font-size: 90%; color:blueviolet">
                                                 策略收益率

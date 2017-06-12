@@ -57,6 +57,13 @@ public class TraceBackServiceImpl implements TraceBackService {
      */
     protected Map<String, List<BaseStock>> baseStockData;
 
+
+    /**
+     * 回测区间内实用的股票池中的股指数据
+     */
+    private List<BaseStock> baseStocks;
+
+
     public TraceBackServiceImpl() throws IOException {
         stockService = new StockServiceImpl();
         stockDao = new StockDaoImpl();
@@ -102,7 +109,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         //策略回测
         StrategyCumulativeAndTransferDetail strategyCumulativeAndTransferDetail = traceBackStrategyCalculator.traceBack(traceBackCriteria);
         traceBackInfo.strategyCumulativeReturn = strategyCumulativeAndTransferDetail.strategyCumulativeReturn;
-        traceBackInfo.transferDayDetails = strategyCumulativeAndTransferDetail.transferDayDetails;
+        traceBackInfo.transferDayDetails = strategyCumulativeAndTransferDetail.lastSoldStocks;
         traceBackInfo.stageDetails = strategyCumulativeAndTransferDetail.stageDetails;
         System.out.println("---------------3------------");
 
@@ -122,12 +129,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         System.out.println("计算目标策略算法给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
 
         // TraceBackParameter 计算贝塔系数等
-        List<BaseStock> allBaseStocks = baseStockData.get(traceBackCriteria.baseStockName);
-        int startIndex = allBaseStocks.indexOf(traceBackCriteria.startDate);
-        int endIndex = allBaseStocks.indexOf(traceBackCriteria.endDate);
-        List<BaseStock> baseStockList = allBaseStocks.subList(startIndex, endIndex + 1);
-
-        TraceBackParam param = new TraceBackParam(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStockList);
+        TraceBackParam param = new TraceBackParam(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStocks);
         traceBackInfo.traceBackNumVal = param.getNumericalVal();
         System.out.println("---------------7------------");
 
@@ -136,16 +138,20 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     private void setUpStockData(TraceBackCriteria criteria) throws IOException {
 
+        // 所有股票数据
         System.out.println("enter");
         stockData = stockDao.getAllStockData(traceBackStockPool);
         System.out.println("out");
 
+        // 所有回测股指数据
+        baseStocks = baseStockDao.getBaseStockData(criteria.baseStockName, criteria.startDate, criteria.endDate);
+
         // 获取所有股指信息
         Set<String> baseStockNames = new HashSet<>();
         baseStockNames.add(criteria.baseStockName);
-        for (MarketSelectingCondition condition : criteria.marketSelectingConditions) {
-            baseStockNames.add(condition.baseStockName);
-        }
+//        for (MarketSelectingCondition condition : criteria.marketSelectingConditions) {
+//            baseStockNames.add(condition.baseStockName);
+//        }
 
         baseStockData = new HashMap<>();
         for (String bsName : baseStockNames) {
@@ -226,11 +232,6 @@ public class TraceBackServiceImpl implements TraceBackService {
     private List<CumulativeReturn> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) {
 
         System.out.println("in getCumulativeReturnOfOneStock-------------"+stockName+"--------------");
-
-        List<BaseStock> allBaseStocks = baseStockData.get(stockName);
-        int startIndex = allBaseStocks.indexOf(start);
-        int endIndex = allBaseStocks.indexOf(end);
-        List<BaseStock> baseStocks = allBaseStocks.subList(startIndex, endIndex + 1);
 
         List<CumulativeReturn> cumulativeReturns = new ArrayList<>();
 

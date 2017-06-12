@@ -68,7 +68,7 @@ public class TraceBackCriteria {
     /**
      * 由熊变牛需要满足的条件数目
      */
-//    public int bearToBull_num;
+    public int bearToBull_num;
 
     /**
      * 由牛变熊需要满足的条件数目
@@ -80,15 +80,19 @@ public class TraceBackCriteria {
     public TraceBackCriteria(){
     }
 
-    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int holdingPeriod, int maxHoldingNum, StockPoolCriteria stockPoolCriteria, String baseStockName, List<FilterCondition> filterConditions, List<RankCondition> rankConditions) {
+    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int holdingPeriod, StockPoolCriteria stockPoolCriteria, int maxHoldingNum, String baseStockName, List<FilterCondition> filterConditions, List<RankCondition> rankConditions, List<MarketSelectingCondition> marketSelectingConditions, double adjustPositionPercent, int bearToBull_num, int bullToBear_num) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.holdingPeriod = holdingPeriod;
-        this.maxHoldingNum = maxHoldingNum;
         this.stockPoolCriteria = stockPoolCriteria;
+        this.maxHoldingNum = maxHoldingNum;
         this.baseStockName = baseStockName;
         this.filterConditions = filterConditions;
         this.rankConditions = rankConditions;
+        this.marketSelectingConditions = marketSelectingConditions;
+        this.adjustPositionPercent = adjustPositionPercent;
+        this.bearToBull_num = bearToBull_num;
+        this.bullToBear_num = bullToBear_num;
     }
 
 

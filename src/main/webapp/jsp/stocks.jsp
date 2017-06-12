@@ -575,11 +575,11 @@
     $(".pagination").find("li").click(function () {
         if ($(this).find("a").html() == "···") {
 //            alert($(this).next("li").find("a").html());
-            if (($(this).next("li").find("a").html()) == totalPageNum) {
-                nowPage = curPageNum + 4;
-            } else {
-                nowPage = curPageNum - 4;
-            }
+//            if (($(this).next("li").find("a").html()) == totalPageNum) {
+                nowPage = 9;
+//            } else {
+//                nowPage = curPageNum - 4;
+//            }
         } else {
             nowPage = $(this).find("a").html();
         }
