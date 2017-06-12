@@ -126,6 +126,12 @@ public class StockDataHelperImplTest {
         assertEquals(LocalDate.of(1017,4,11),localDates.get(1));
     }
 
+    @Test
+    public void getLastStock() throws Exception {
+        Stock stock = stockDataHelper.getLastStock("000001");
+        assertEquals(LocalDate.of(2017,6,9),stock.getStockID().getDate());
+    }
+
     private String addOne(String code){
          return StockCodeHelper.format(String.valueOf(Integer.parseInt(code)+1));
     }
