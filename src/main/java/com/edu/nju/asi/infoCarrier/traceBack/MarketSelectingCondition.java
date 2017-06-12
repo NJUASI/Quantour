@@ -20,6 +20,11 @@ public class MarketSelectingCondition {
     public String baseStockName;
 
     /**
+     * 择时判断周期
+     */
+    public int cycle;
+
+    /**
      * 条件一
      */
     public int criteria1;

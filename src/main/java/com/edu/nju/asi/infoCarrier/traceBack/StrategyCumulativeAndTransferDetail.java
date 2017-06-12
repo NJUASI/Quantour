@@ -16,9 +16,9 @@ public class StrategyCumulativeAndTransferDetail {
     public List<CumulativeReturn> strategyCumulativeReturn;
 
     /**
-     * 调仓日期的操作详情
+     * 最近被卖出的股票详情
      */
-    public List<TransferDayDetail> transferDayDetails;
+    public List<TransferDayDetail> lastSoldStocks;
 
     /**
      * 阶段持仓详单

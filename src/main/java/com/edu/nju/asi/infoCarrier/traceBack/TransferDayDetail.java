@@ -30,12 +30,12 @@ public class TransferDayDetail {
     public LocalDate sellDate;
 
     /**
-     * 买入价格（前复权）
+     * 买入价格（不复权）
      */
     public double buyPrice;
 
     /**
-     * 卖出价格(前复权)
+     * 卖出价格（不复权）
      */
     public double sellPrice;
 
@@ -43,6 +43,16 @@ public class TransferDayDetail {
      * 涨跌幅（卖出-买入/买入）
      */
     public double changeRate;
+
+//    /**
+//     * 当前仓位
+//     */
+//    public double curPosition;
+//
+//    /**
+//     * 当前仓位所占的价值
+//     */
+//    public double curPositionMoney;
 
 
     public TransferDayDetail() {
@@ -58,18 +68,29 @@ public class TransferDayDetail {
         this.changeRate = changeRate;
     }
 
+    /**
+     * 买入时使用
+     */
     public TransferDayDetail(String stockName, String stockCode, LocalDate buyDate, double buyPrice) {
         this.stockName = stockName;
         this.stockCode = stockCode;
         this.buyDate = buyDate;
         this.buyPrice = buyPrice;
+//        this.curPosition = curPosition;
+//        this.curPositionMoney = curPositionMoney;
     }
 
+    /**
+     * 卖出时使用
+     */
     public TransferDayDetail(TransferDayDetail transferDayDetail, LocalDate sellDate, double sellPrice) {
         this.stockName = transferDayDetail.stockName;
         this.stockCode = transferDayDetail.stockCode;
         this.buyDate = transferDayDetail.buyDate;
         this.buyPrice = transferDayDetail.buyPrice;
+//        this.curPosition = transferDayDetail.curPosition;
+//        this.curPositionMoney = transferDayDetail.curPositionMoney;
+
         this.sellDate = sellDate;
         this.sellPrice = sellPrice;
 

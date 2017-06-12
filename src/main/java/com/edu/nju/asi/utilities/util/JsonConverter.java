@@ -110,9 +110,10 @@ public class JsonConverter {
                 double mean = sum / 20;
                 double stdev_afterAdjCloses = stdev.evaluate(afterAdjCloses);
 
-                upper.add(NumberFormat.decimaFormat(mean + 2 * stdev_afterAdjCloses, 2));
-                mid.add(NumberFormat.decimaFormat(mean, 2));
-                lower.add(NumberFormat.decimaFormat(mean - 2 * stdev_afterAdjCloses, 2));
+                // 因单位问题转化数据量大小
+                upper.add(NumberFormat.decimaFormat((mean + 2 * stdev_afterAdjCloses) / 100, 2));
+                mid.add(NumberFormat.decimaFormat(mean / 100, 2));
+                lower.add(NumberFormat.decimaFormat((mean - 2 * stdev_afterAdjCloses) / 100, 2));
             }
         }
 
@@ -269,7 +270,7 @@ public class JsonConverter {
         holder.append(JSON.toJSONString(traceBackInfo.holdingDetails)).append(";");
         System.out.println("numbers3 over");
 
-        // transferDayDetails
+        // lastSoldStocks
         holder.append(JSON.toJSONString(traceBackInfo.transferDayDetails)).append(";");
         System.out.println("numbers4 over");
 

@@ -44,6 +44,12 @@ public class TraceBackStrategyCalculator {
      */
     private double nowPosition = 1;
 
+    /**
+     * 按照回测周期的每一天保存当日是否需要进行调仓
+     */
+    private List<Boolean> isBullPositions;
+
+
     /*
     需要重复计算的一些东西，故保存
      */
@@ -70,7 +76,7 @@ public class TraceBackStrategyCalculator {
     /**
      * 因为调仓日停牌而不能被卖出的股票
      */
-    protected List<String> canNotBeSoldStocks = new ArrayList<>();
+    protected List<String> canNotBeSoldStockCodes = new ArrayList<>();
 
     /**
      * 最近卖出的股票
@@ -80,7 +86,7 @@ public class TraceBackStrategyCalculator {
     /**
      * 阶段持仓详单
      */
-    protected Map<Integer, List<StageDetail>>  stageDetails = new TreeMap<>();
+    protected Map<Integer, List<StageDetail>> stageDetails = new TreeMap<>();
 
     /**
      * 筛选条件
@@ -156,13 +162,18 @@ public class TraceBackStrategyCalculator {
         allStartIndex = allDatesWithData.indexOf(thisStart);
         allEndIndex = allDatesWithData.indexOf(thisEnd);
 
+
+        // 一次性获得所有择时调仓的结果，以便之后查看
+//        setUpMarketSelectingResults(traceBackCriteria.marketSelectingConditions, allStartIndex, allEndIndex);
+
+
+        // 回测周期开始
         int cycles = (allEndIndex - allStartIndex + 1) / holdingPeriod;
 
         // 回测时间太短，不足一个持有期 或者刚好满一个周期，则没有末尾的调仓期
         if (cycles == 0) {
-            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles+1, traceBackCriteria.maxHoldingNum));
-        }
-        else {
+            strategyCumulativeReturn.addAll(cycleCalcu(allStartIndex, allEndIndex, cycles + 1, traceBackCriteria.maxHoldingNum));
+        } else {
             // 至少一个持有期，整个周期的计算
             for (int i = 0; i < cycles; i++) {
                 int startIndex = allStartIndex + i * holdingPeriod;
@@ -190,22 +201,53 @@ public class TraceBackStrategyCalculator {
         StrategyCumulativeAndTransferDetail strategyCumulativeAndTransferDetail = new StrategyCumulativeAndTransferDetail();
 
         strategyCumulativeAndTransferDetail.strategyCumulativeReturn = strategyCumulativeReturn;
-        strategyCumulativeAndTransferDetail.transferDayDetails = lastSoldStocks;
+        strategyCumulativeAndTransferDetail.lastSoldStocks = lastSoldStocks;
         strategyCumulativeAndTransferDetail.stageDetails = stageDetails;
         return strategyCumulativeAndTransferDetail;
     }
 
-    private List<CumulativeReturn> cycleCalcu(int startIndex, int endIndex, int periodSerial,int maxHoldingNum) throws DataSourceFirstDayException {
+
+    /**
+     * 所有持有期的择时选择结果，依次存入由当日死叉个数，是否需要进行调仓
+     */
+    private void setUpMarketSelectingResults(List<MarketSelectingCondition> conditions, int allStartIndex, int allEndIndex) {
+
+        isBullPositions = new LinkedList<>();
+        boolean curIsBull = true;
+
+        // 依次对每天进行处理
+        for (int i = allStartIndex; i <= allEndIndex; i++) {
+            int goldenFork = 0;
+            int deathCross = 0;
+
+            // 依次处理每种择时情况，只有在周期上才检查
+            for (MarketSelectingCondition condition : conditions) {
+                if ((i - allStartIndex + 1) % condition.cycle == 0) {
+                    AllMarketSelectingStrategy mss = MarketSelectingStrategyFactory.createMarketSelectingStrategyFactory(condition, allDatesWithData, baseStockData);
+                    MarketSelectingResult tempResult = mss.marketSelecting(allDatesWithData.get(allStartIndex), condition.criteria2, condition.criteria3, condition.criteria1);
+                    if (tempResult.isGoldenFork) goldenFork++;
+                    if (tempResult.isDeathCross) deathCross++;
+                }
+            }
+
+            if (curIsBull) {
+                // 之前为为金叉形成的牛市，只因死叉而调仓
+                if (deathCross >= traceBackCriteria.bullToBear_num) curIsBull = false;
+            } else {
+                // 之前为为死叉形成的熊市，只因金叉而调仓
+                if (goldenFork >= traceBackCriteria.bearToBull_num) curIsBull = true;
+            }
+            isBullPositions.add(curIsBull);
+
+        }
+    }
+
+
+    private List<CumulativeReturn> cycleCalcu(int startIndex, int endIndex, int periodSerial, int maxHoldingNum) throws DataSourceFirstDayException {
         System.out.println("calculate cycle: " + periodSerial);
 
         LocalDate periodStart = allDatesWithData.get(startIndex);
         LocalDate periodEnd = allDatesWithData.get(endIndex);
-
-//        // TODO 根据市场情况进行市场择时
-//        if (adjustPosition(periodStart)) {
-//            nowPosition = traceBackCriteria.adjustPositionPercent;
-//        }
-
 
 
         List<String> filterWantedCodes = new ArrayList<>();
@@ -247,8 +289,13 @@ public class TraceBackStrategyCalculator {
      */
     private List<CumulativeReturn> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex, int endIndex, int maxHoldingNum) {
 
+        // 根据市场情况进行市场择时，调整仓位比例（holdingPeriod = endIndex - startIndex）
+//        boolean nowIsBullPosition = isBullPositions.get(periodSerial * (endIndex - startIndex));
+//        if (nowIsBullPosition) nowPosition = 1;
+//        else nowPosition = traceBackCriteria.adjustPositionPercent;
+
         //对挑选的股票做精细处理
-        pickedStockCodes = dealPickedStockCodes(pickedStockCodes, periodSerial, startIndex, endIndex, maxHoldingNum);
+        pickedStockCodes = dealPickedStockCodes(pickedStockCodes, periodStart, periodEnd, periodSerial, startIndex, endIndex, maxHoldingNum);
 
         List<CumulativeReturn> strategyCumulativeReturn = new LinkedList<>();
 
@@ -281,7 +328,6 @@ public class TraceBackStrategyCalculator {
         }
 
         // 依次处理每一交易日
-
         double thisPeriodStartMoney = nowMoney;
         for (Map.Entry<LocalDate, List<Double>> entry : forCalcu.entrySet()) {
 
@@ -295,45 +341,62 @@ public class TraceBackStrategyCalculator {
         return strategyCumulativeReturn;
     }
 
-    private List<String> dealPickedStockCodes(List<String> pickedStockCodes, int periodSerial, int startIndex, int endIndex, int maxHoldingNum){
-        //第一个周期，没有卖出的股票
+    private List<String> dealPickedStockCodes(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex, int endIndex, int maxHoldingNum){
+
+        // 第一个周期，没有卖出的股票
         if(periodSerial == 1){
             List<StageDetail> stageDetailList = new ArrayList<>();
-            for(int i = 0; i < pickedStockCodes.size();){
-                Stock startDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(startIndex));
-                Stock endDayStock = findStock(pickedStockCodes.get(i), allDatesWithData.get(endIndex));
-                //当日所选停牌，不能被买
-                if(startDayStock == null){
-                    pickedStockCodes.remove(i);
-                    continue;
-                }else {
-                    if(endDayStock == null){
-                        //该股票在末尾调仓日停牌，标志不能被卖出，且末尾调仓日的前复权为null
-                        stageDetailList.add(new StageDetail(pickedStockCodes.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), null));
-                        canNotBeSoldStocks.add(pickedStockCodes.get(i));
-                        currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),pickedStockCodes.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose()));
-                    }else {
-                        stageDetailList.add(new StageDetail(pickedStockCodes.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), endDayStock.getFrontAdjClose()));
-                        currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),pickedStockCodes.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose()));
-                    }
-                    i++;
+
+            // 先遍历，得到根据形成挑选出股票中真实能买到的股票
+            List<String> canBeHoldStocks = new ArrayList<>();
+            for (String tempCode : pickedStockCodes) {
+                Stock startDayStock = findStock(tempCode, periodStart);
+                if (startDayStock != null) {
+                    canBeHoldStocks.add(tempCode);
                 }
             }
+
+            // 再便利，精细处理
+            for (String tempCode : canBeHoldStocks) {
+                Stock startDayStock = findStock(tempCode, periodStart);
+                Stock endDayStock = findStock(tempCode, periodEnd);
+                if (endDayStock == null) {
+                    // 该股票在末尾调仓日停牌，标志不能被卖出，且末尾调仓日的前复权为最后一个有值日期的股票值
+                    List<Stock> tempStocks = findStockVOsWithinDay(tempCode, periodStart, periodEnd);
+                    endDayStock = tempStocks.get(tempStocks.size() - 1);
+
+                    canNotBeSoldStockCodes.add(tempCode);
+                }
+
+                stageDetailList.add(new StageDetail(tempCode, startDayStock.getName(), startDayStock.getClose(), endDayStock.getClose(),
+                        nowPosition / canBeHoldStocks.size(), nowMoney / canBeHoldStocks.size()));
+                currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(), tempCode, startDayStock.getStockID().getDate(), startDayStock.getClose()));
+            }
+
             stageDetails.put(periodSerial, stageDetailList);
             return pickedStockCodes;
         }
-        //不是第一个周期
+        // 不是第一个周期
         else {
-            //取无重复并集
-            pickedStockCodes.removeAll(canNotBeSoldStocks);
-            //两个集合相并大于最大持有股票数
-            if(pickedStockCodes.size() + canNotBeSoldStocks.size() > maxHoldingNum){
-                //此时已经是排好名的codes，可以直接截取
-                pickedStockCodes = pickedStockCodes.subList(0, maxHoldingNum - canNotBeSoldStocks.size());
+            // 取形成选取的股票的无重复并集
+            List<String> pickedAgainStockCodes = new ArrayList<>();
+            for (TransferDayDetail transferDayDetail : currentHoldingStocks) {
+                if (pickedStockCodes.contains(transferDayDetail.stockCode)){
+                    pickedAgainStockCodes.add(transferDayDetail.stockCode);
+                }
             }
+
+            pickedStockCodes.removeAll(canNotBeSoldStockCodes);
+            // 两个集合相并大于最大持有股票数
+            if(pickedStockCodes.size() + canNotBeSoldStockCodes.size() > maxHoldingNum){
+                //此时已经是排好名的codes，可以直接截取
+                pickedStockCodes = pickedStockCodes.subList(0, maxHoldingNum - canNotBeSoldStockCodes.size());
+            }
+
+            // 当前应该被买入卖出的股票
             List<String> canBeHoldStocks = new ArrayList<>();
             canBeHoldStocks.addAll(pickedStockCodes);
-            canBeHoldStocks.addAll(canNotBeSoldStocks);
+            canBeHoldStocks.addAll(canNotBeSoldStockCodes);
 
             // 若挑选的股票代码中没有当前持有股票的代码，则将该股票加入卖出的队列
             for(int i = 0; i < currentHoldingStocks.size(); ){
@@ -344,68 +407,136 @@ public class TraceBackStrategyCalculator {
                         break;
                     }
                 }
-                //需要被卖出的
+                // 需要被卖出的
                 if(isSold){
                     Stock stock = findStock(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
-                    //此时的stock已经不可能为空
+                    // 此时的stock已经不可能为空
                     assert (stock != null) : "逻辑有错，stock为空了";
-                    //每个持仓期的第一天作为调仓日期
-                    lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getFrontAdjClose()));
-                    //该支股票被卖出
+                    // 每个持仓期的第一天作为调仓日期
+                    lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getClose()));
+                    // 该支股票被卖出
                     currentHoldingStocks.remove(i);
                 }else {
                     i++;
                 }
             }
 
-            //更新当前持有股票
+            // 更新当前持有股票、当前不能被卖出的股票
             List<StageDetail> stageDetailList = new ArrayList<>();
-
             List<String> thisCanNotBeSoldStocks = new ArrayList<>();
-            for(int i = 0; i < canBeHoldStocks.size(); ){
-                Stock startDayStock = findStock(canBeHoldStocks.get(i), allDatesWithData.get(startIndex));
-                Stock endDayStock = findStock(canBeHoldStocks.get(i), allDatesWithData.get(endIndex));
 
-                //当日所选股票停牌
-                if(startDayStock == null){
-                    List<Stock> stockList = stockData.get(canBeHoldStocks.get(i));
-                    Stock stock = stockList.get(0);
 
-                    //虽然停牌，如果是上个周期就持有的，还是继续持有
-                    if(canNotBeSoldStocks.contains(canBeHoldStocks.get(i))){
-                        if(endDayStock == null){
-                            //该股票在末尾调仓日停牌，标志不能被卖出，且末尾调仓日的前复权为null
-                            stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), stock.getName(), null, null));
-                            thisCanNotBeSoldStocks.add(canBeHoldStocks.get(i));
-                        }else {
-                            stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), stock.getName(), null, endDayStock.getFrontAdjClose()));
-                        }
-                        i++;
-                    }else {
-                        pickedStockCodes.remove(i);
-                    }
-                }else {
-                    if(endDayStock == null){
-                        //该股票在末尾调仓日停牌，标志不能被卖出，且末尾调仓日的前复权为null
-                        stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), null));
-                        thisCanNotBeSoldStocks.add(canBeHoldStocks.get(i));
-                        currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),canBeHoldStocks.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose()));
-                    }else {
-                        stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), startDayStock.getName(), startDayStock.getFrontAdjClose(), endDayStock.getFrontAdjClose()));
-                        currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(),canBeHoldStocks.get(i),startDayStock.getStockID().getDate(),startDayStock.getClose()));
-                    }
-                    i++;
+            // 不会被卖掉的股票因为股票价格变动，自己的仓位会变化，其他新进的均分仓位
+            double canNotBeSoldPercent = 0;
+            for (StageDetail stageDetail : stageDetails.get(periodSerial - 1)) {
+                if (canNotBeSoldStockCodes.contains(stageDetail.stockCode)){
+                    canNotBeSoldPercent += adjustedPosition(stageDetail.curPositionMoney, nowMoney);
                 }
             }
+            double remainPosition = nowPosition - canNotBeSoldPercent;
+            double remainMoney = remainPosition * nowMoney;
 
-            //更新最终被持有的股票代码，应该加上在调仓日未被卖出的股票
-            pickedStockCodes.addAll(canNotBeSoldStocks);
-            //更新因调仓日停牌而不能卖出的股票
-            canNotBeSoldStocks = thisCanNotBeSoldStocks;
-            stageDetails.put(periodSerial, stageDetailList);
-            return pickedStockCodes;
+            if (remainPosition > 0) {
+                for(int i = 0; i < canBeHoldStocks.size(); ){
+                    Stock startDayStock = findStock(canBeHoldStocks.get(i), periodStart);
+                    Stock endDayStock = findStock(canBeHoldStocks.get(i), periodEnd);
+
+                    List<Stock> tempStocks = findStockVOsWithinDay(canBeHoldStocks.get(i), periodStart, periodEnd);
+
+                    // 要是这只股票这个周期一直停盘，它的周期起始价格由上一个周期这只股票的周期结束价格决定
+                    StageDetail pre = null;
+                    for (StageDetail temp : stageDetails.get(periodSerial - 1)) {
+                        if (temp.stockCode.equals(canBeHoldStocks.get(i))) {
+                            pre = temp;
+                            break;
+                        }
+                    }
+
+
+                    // 当日所选股票停牌，标志不能被买入
+                    if(startDayStock == null){
+                        if(canNotBeSoldStockCodes.contains(canBeHoldStocks.get(i))){
+
+                            double curStockPosition = adjustedPosition(pre.curPositionMoney, nowMoney);
+
+                            if (endDayStock == null) {
+                                // 不能买不能卖。虽然该股票在末尾调仓日停牌，如果是上个周期就持有的，还是继续持有
+
+                                if (tempStocks == null) {
+                                    // 这只股票在这个周期内一直停盘
+                                    stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), pre.stockName, pre.endPrice,
+                                            pre.endPrice, curStockPosition, pre.curPositionMoney));
+
+                                } else {
+                                    double cumulative = tempStocks.get(tempStocks.size()-1).getClose() / pre.endPrice;
+
+                                    stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), pre.stockName, pre.endPrice,
+                                            tempStocks.get(tempStocks.size()-1).getClose(), curStockPosition, pre.curPositionMoney * cumulative));
+
+                                }
+
+                                thisCanNotBeSoldStocks.add(canBeHoldStocks.get(i));
+                            } else {
+                                // 不能买，能卖。
+                                double cumulative = endDayStock.getClose() / pre.endPrice;
+
+                                stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), pre.stockName, pre.endPrice,
+                                        endDayStock.getClose(), curStockPosition, pre.curPositionMoney * cumulative));
+                            }
+                            i++;
+                        }else {
+                            pickedStockCodes.remove(i);
+                        }
+                    } else {
+                        if (endDayStock == null) {
+                            // 能买，不能卖。该股票在末尾调仓日停牌，标志不能被卖出
+                            stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), startDayStock.getName(), startDayStock.getClose(),
+                                    tempStocks.get(tempStocks.size() - 1).getClose(),
+                                    remainPosition / (canBeHoldStocks.size() - canNotBeSoldStockCodes.size()),
+                                    remainMoney / (canBeHoldStocks.size() - canNotBeSoldStockCodes.size())));
+
+                            thisCanNotBeSoldStocks.add(canBeHoldStocks.get(i));
+
+                        } else {
+                            // 能买，能卖。
+                            stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), startDayStock.getName(), startDayStock.getClose(),
+                                    endDayStock.getClose(), remainPosition / (canBeHoldStocks.size() - canNotBeSoldStockCodes.size()),
+                                    remainMoney / (canBeHoldStocks.size() - canNotBeSoldStockCodes.size())));
+                        }
+
+                        // 因为没有被再次选中，需要添加了，否则不需要添加
+                        if (!pickedAgainStockCodes.contains(canBeHoldStocks.get(i))){
+                            currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(), canBeHoldStocks.get(i),
+                                    startDayStock.getStockID().getDate(), startDayStock.getClose()));
+                        }
+
+                        i++;
+                    }
+                }
+
+                // 更新最终被持有的股票代码，应该加上在调仓日未被卖出的股票
+                pickedStockCodes.addAll(canNotBeSoldStockCodes);
+                //更新因调仓日停牌而不能卖出的股票
+                canNotBeSoldStockCodes = thisCanNotBeSoldStocks;
+                stageDetails.put(periodSerial, stageDetailList);
+                return pickedStockCodes;
+
+            } else {
+                // TODO 把因为占仓比太大的canNotBeSold的股票穿出去
+                return null;
+            }
         }
     }
+
+
+    /**
+     * 对已有股票进行仓位的调整
+     */
+    private double adjustedPosition(double prePositionMoney, double totalMoney) {
+        return prePositionMoney / totalMoney;
+    }
+
+
 
     // 计算value的平均值
     private double getAveYield(List<Double> value) {
@@ -415,27 +546,6 @@ public class TraceBackStrategyCalculator {
         }
 
         return sum / value.size();
-    }
-
-
-    /**
-     * 市场择时
-     * true表示需要进行调仓操作
-     */
-    private boolean adjustPosition(LocalDate periodStart){
-
-        int deathCross = 0;
-        for (MarketSelectingCondition condition : traceBackCriteria.marketSelectingConditions) {
-            AllMarketSelectingStrategy mss = MarketSelectingStrategyFactory.createMarketSelectingStrategyFactory(condition, allDatesWithData, baseStockData);
-            MarketSelectingResult result = mss.marketSelecting(periodStart, condition.criteria2, condition.criteria3, condition.criteria1);
-            if (result.isDeathCross) deathCross++;
-        }
-
-        // 死叉过多，进行调仓
-        if (deathCross >= traceBackCriteria.bullToBear_num) return true;
-
-
-        return false;
     }
 
 
