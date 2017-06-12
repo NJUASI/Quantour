@@ -49,7 +49,7 @@ public class TraceBackServiceImplTest {
         List<MarketSelectingCondition> marketSelectingConditions = new ArrayList<>();
 
         TraceBackCriteria criteria = new TraceBackCriteria(start, end, 10, new StockPoolCriteria(StType.EXCLUDE, blockTypes),5,
-                "沪深300", filterConditions, rankConditions, marketSelectingConditions, 0.5, 1, 1);
+                "沪深300", false, filterConditions, rankConditions, marketSelectingConditions, 0.5, 1, 1);
 
         try {
              TraceBackInfo traceBackInfo = traceBackService.traceBack(criteria);

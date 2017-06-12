@@ -911,16 +911,25 @@
 
         });
 
+
+
+        var myTraceBackPool = "";
+        // 界面初始化的时候加载这个，不要单独提出去
         $('#modifyPool').click(function () {
             $("#strategyPool").modal("toggle");
-            //TODO FJJ 从我的底层股票初始化编辑页面
-            $("#poolCode").val("123456 000001 000002");
+
+            // 修改用户的真实数据 TODO 高源 保存不保存，决定是否修改myTraceBackPool
+            for (var i = 0; i < ${myTraceBackPool.size()}; i++) {
+                myTraceBackPool.append("${myTraceBackPool.get(i)}").append(" ");
+            }
+            $("#nowPoolCode").val(myTraceBackPool);
         })
 
+
+
+
         $('#savePool').click(function () {
-            //TODO FJJ 从我的底层股票初始化编辑页面
-            //TODO FJJ  存数据库 需要 返回成功 或者哪个代码不存在
-            var codes = $("#poolCode").val().split(" ");
+            var codes = $("#nowPoolCode").val().split(" ");
 //            alert($("#poolCode").val());
             var reg = /^\d{6}$/;
             for (var i = 0; i < codes.length; i++) {
@@ -930,10 +939,33 @@
                     setTimeout("$(\"#poolCodeError\").html('')", 3000);
                     return false;
                 }
-            }
+            };
 
-            //TODO fjj codes 是保存的代码数组
+            alert("codes: \n" + codes);
 
+            $.ajax({
+                type: "post",
+                async: true,
+                url: "/user/modify",
+                data: {
+                    "user":JSON.stringify(modified_user)
+                },
+
+                success: function (result) {
+                    var array = result.split(";");
+
+                    if (array[0] == "1") {
+                        // TODO gaoyuan 登录成功用我说的那个小动画，修改全局变量myTraceBackPool
+                        alert("66666666");
+                    } else if (array[0] == "-1") {
+                        // TODO 高源 提示有哪些股票不存在
+                        alert(array[1]);
+                    }
+                },
+                error: function (result) {
+                    alert("错误" + result);
+                }
+            });
         });
 
 
@@ -1118,6 +1150,9 @@
     });
 
 
+    /**
+     * 获取股票回测的标准
+     */
     function getTraceBackCriteria() {
         var user = "<%= (User)session.getAttribute("user")%>";
         if (user == "null") {
@@ -1345,6 +1380,18 @@
         // 添加择时条件
         var marketSelectingConditions = new Array();
         var marketSelectingNum = 0;
+        $("#timingList").find("tr").each(function () {
+            var mstType = $(this).find(".timingName").html();
+            var params = separateMarketSelectingType(mstType, $(this).find(".timingParam").html());
+            var marketSelectingConditions[marketSelectingNum] = {
+                "type": mstType,
+                "baseStockName": params[0],
+                "cycle": params[1],
+                "criteria1": params[2],
+                "criteria2": params[3],
+                "criteria3": params[4],
+            }
+        });
 
         // "formativePeriod": $("#formativePeriod").val();
 
@@ -1358,27 +1405,10 @@
             return false;
         }
 
-        if (pool == "myPool") {
-            //TODO fjj 如果是自己的股票池从数据库得到股票池
-        } else {
-            //TODO 从界面拿各种板块信息
-        }
+        var isCustomized;
+        if (pool == "myPool") isCustomized = true;
+        else isCustomized = false;
 
-        //TODO fjj 大盘择时的数据 处理
-        if (timing == "yes") {
-            $("#timing_text1").val(); //由熊变牛
-            $("#timing_text2").val();//由牛变熊
-            $("#position").val();//仓位比例
-            $("#timingList").find("tr").each(function () {
-                alert($(this).find(".timingName").html());
-                alert($(this).find(".timingParam").html());
-            });
-        } else {
-            //不使用择时
-        }
-//        TODO fjj  行业和地狱的获得
-        $("#provinceBlock").val();
-        $("#industryBlock").val();
 
         var criteriaData = {
             "startDate": $("#startDate").val(),
@@ -1386,19 +1416,20 @@
             "holdingPeriod": $("#holdingPeriod").val(),
             "stockPoolCriteria": {
                 "stType": $("#stType").val(),
-                "blockTypes": $("#blockTypes").val()
+                "blockTypes": $("#blockTypes").val(),
+                "industryType": $("#industryBlock").val(),
+                "areaType": $("#provinceBlock").val()
             },
             "maxHoldingNum": $("#maxHolding").val(),
             "baseStockName": $("#baseStockEve").val(),
-            // "isCustomized": isCustomized,
+            "isCustomized": isCustomized,
             "filterConditions": filterConditions,
             "rankConditions": rankConditions,
             "marketSelectingConditions": marketSelectingConditions,
-            "adjustPositionPercent": null,
-            "bearToBull_num": null,
-            "bullToBear_num": null
+            "adjustPositionPercent": $("#position").val(),
+            "bearToBull_num": $("#timing_text1").val(),
+            "bullToBear_num": $("#timing_text2").val()
         };
-
 
         return criteriaData;
     }
@@ -1813,6 +1844,28 @@
         }
         alert("No Match IndicatorType");
     }
+
+
+    /**
+     * 解析市场择时参数
+     */
+    function separateMarketSelectingType(mstType, mstParam) {
+        var params = mstParam.split(",");
+        alert(params);
+
+        switch (mstType) {
+            case "MA":
+            case "TRIX":
+            case "MAVOL":
+                return [params[0], params[1], params[3], params[4], 0];
+            case "DMA":
+            case "MACD":
+                return [params[0], params[1], params[3], params[4], params[5]];
+        }
+        alert("No Match MarketSelectingType");
+
+    }
+
 
     /**
      * 股票策略创建界面引出

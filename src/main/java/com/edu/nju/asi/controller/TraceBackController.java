@@ -1,9 +1,11 @@
 package com.edu.nju.asi.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.TraceBackService;
+import com.edu.nju.asi.service.UserService;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
@@ -16,11 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by cuihua on 2017/5/13.
@@ -31,12 +35,31 @@ public class TraceBackController {
     @Autowired
     TraceBackService traceBackService;
 
+    @Autowired
+    UserService userService;
+
     /**
-     * 通过选择的条件进行股票回测
+     * 通过选择的条件进行股票回测，同时显示当前用户的自选股池
      */
     @GetMapping("/trace_back")
-    public String traceBackHome() {
-        return "traceBack";
+    public ModelAndView traceBackHome(HttpServletRequest request) {
+        // 限制进入
+        HttpSession session = request.getSession(false);
+        User thisUser = (User) request.getSession().getAttribute("user");
+        if (session == null || thisUser == null) {
+            System.out.println("未登录");
+            return new ModelAndView("index");
+        }
+
+        System.out.println("已登录：" + thisUser.getUserName());
+
+        ModelAndView mv = new ModelAndView("traceBack");
+
+        String traceBackPoolStringRepre = thisUser.getTraceBackPool();
+        List<String> myTraceBackPool = JSON.parseArray(traceBackPoolStringRepre, String.class);
+
+        mv.addObject("myTraceBackPool", myTraceBackPool);
+        return mv;
     }
 
 
