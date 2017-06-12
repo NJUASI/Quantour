@@ -1,5 +1,6 @@
 import tushare as ts
 import os
+import sys
 
 
 def _crawing_history(codes, filePath):
@@ -48,7 +49,7 @@ def _modify_path(filepath):
 
 
 def _get_root():
-    task_path = os.path.abspath('.') + os.path.sep + 'taskInfo.txt'
+    task_path = os.path.dirname(sys.argv[0]) + os.path.sep + 'taskInfo.txt'
     file = open(task_path, encoding='utf_8_sig')
     for line in file.readlines():
         if line.split('=')[0].strip() == 'root':
