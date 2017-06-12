@@ -21,13 +21,19 @@ import java.util.List;
  */
 public class StoreStockHelper {
 
+    //存放stock路径
     private String path;
+
+    //存放baseStock路径
     private String basePath;
 
+    //stock数据对象
     private StockDataHelper stockDataHelper;
 
+    //baseStock的数据对象
     private BaseStockDataHelper baseStockDataHelper;
 
+    //初始化成员信息
     public StoreStockHelper(String root) {
         if(!root.endsWith(File.separator)){
             root = root+File.separator;
@@ -39,13 +45,24 @@ public class StoreStockHelper {
         basePath = root+File.separator+"baseStocks";
     }
 
+    /**
+     * 存储股票和基准
+     *
+     * @author ByronDong
+     * @updateTime 2017/6/12
+     */
     public void handle() {
         this.store();
         this.storeBase();
     }
 
+    /**
+     * 存储股票
+     *
+     * @author ByronDong
+     * @updateTime 2017/6/12
+     */
     private void store() {
-
         File dir = new File(path);
         File files[] = dir.listFiles();
         List<Stock> stockList = new ArrayList<>();
@@ -104,6 +121,12 @@ public class StoreStockHelper {
         System.out.println("-------写入完成------------");
     }
 
+    /**
+     * 存储基准
+     *
+     * @author ByronDong
+     * @updateTime 2017/6/12
+     */
     private void storeBase() {
         File dir = new File(basePath);
         File files[] = dir.listFiles();
@@ -153,5 +176,4 @@ public class StoreStockHelper {
         baseStockDataHelper.addBaseStockAll(stockList);
         System.out.println("-------写入完成------------");
     }
-
 }

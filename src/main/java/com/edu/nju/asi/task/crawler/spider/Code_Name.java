@@ -1,4 +1,4 @@
-package com.edu.nju.asi.task.spider;
+package com.edu.nju.asi.task.crawler.spider;
 
 /**
  * Created by Harvey on 2017/5/15.

@@ -6,11 +6,11 @@ package com.edu.nju.asi.utilities.exceptions;
  * @lastChangedBy:Byron dong
  * @time:2016年12月10日
  */
-public class PasswordInputException extends Exception{
+public class EmailInputException extends Exception{
 
 	@Override
 	public String getMessage(){
-		return "密码不符合规范";
+		return "邮箱格式不符合规范";
 	}
 
 }

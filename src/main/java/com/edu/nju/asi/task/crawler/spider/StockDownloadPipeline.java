@@ -1,4 +1,4 @@
-package com.edu.nju.asi.task.spider;
+package com.edu.nju.asi.task.crawler.spider;
 import java.io.*;
 import java.util.Map;
 
