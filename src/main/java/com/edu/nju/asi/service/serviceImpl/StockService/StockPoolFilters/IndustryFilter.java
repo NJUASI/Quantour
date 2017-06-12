@@ -14,16 +14,23 @@ public class IndustryFilter extends StockPoolFilter {
 
     @Override
     public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria) {
-        if (criteria.industryType != IndustryType.all) {
-            IndustryType wantedIndustry = criteria.industryType;
-            for (int i = 0; i < stocks.size(); ) {
-                if (stocks.get(i).industryType != wantedIndustry) {
+        // 全部行业板块，则跳过此过滤器
+        if (criteria.industryTypes.get(0) != IndustryType.all) {
+            for (int i = 0; i < stocks.size(); i++) {
+                boolean isSelected = false;
+                for (IndustryType industry : criteria.industryTypes) {
+                    if (stocks.get(i).industryType == industry) {
+                        isSelected = true;
+                        break;
+                    }
+                }
+
+                if (!isSelected) {
                     stocks.remove(i);
                 } else {
                     i++;
                 }
             }
-
         }
 
         if (getNextFilter() == null) {

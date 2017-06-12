@@ -188,7 +188,6 @@
             <div style="width:85%;margin:0 auto;margin-bottom: 20px;border-top:1px solid #ddd"></div>
 
             <c:choose>
-                <%--TODO 冯俊杰 有创建策略的 还是不显示--%>
                 <c:when test="${myOwn!=null}">
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10">
@@ -248,8 +247,7 @@
                 <div class="col-md-offset-1 col-md-10">
 
                     <c:choose>
-                        <%--TODO 冯俊杰 有创建策略的 还是不显示--%>
-                        <c:when test="${mySubscribe==null}">
+                        <c:when test="${mySubscribe!=null}">
                             <div class="row">
                                 <div class="col-md-offset-1 col-md-10">
                                     <c:forEach items="${myOwn}" var="strategy" varStatus="vs">

@@ -228,6 +228,7 @@
                                     <option value="陶瓷行业" selected>陶瓷行业</option>
                                     <option value="船舶制造" selected>船舶制造</option>
                                     <option value="次新股" selected>次新股</option>
+                                    <option value="none" selected>其他</option>
                                 </select>
                             </div>
                         </div>
@@ -279,9 +280,9 @@
                                     <option value="河南" selected>河南</option>
                                     <option value="山西" selected>山西</option>
                                     <option value="江西" selected>江西</option>
-                                    <option value=" 安徽" selected>安徽</option>
-                                    <option value=" 湖北" selected>湖北</option>
-                                    <option value=" 内蒙" selected>内蒙</option>
+                                    <option value="安徽" selected>安徽</option>
+                                    <option value="湖北" selected>湖北</option>
+                                    <option value="内蒙" selected>内蒙</option>
                                     <option value="海南" selected>海南</option>
                                     <option value="四川" selected>四川</option>
                                     <option value="重庆" selected>重庆</option>
@@ -297,6 +298,7 @@
                                     <option value="青海" selected>青海</option>
                                     <option value="上海" selected>上海</option>
                                     <option value="西藏" selected>西藏</option>
+                                    <option value="none" selected>其他</option>
                                 </select>
                             </div>
                         </div>
@@ -911,18 +913,23 @@
 
         });
 
-
-
         var myTraceBackPool = "";
         // 界面初始化的时候加载这个，不要单独提出去
         $('#modifyPool').click(function () {
             $("#strategyPool").modal("toggle");
 
             // 修改用户的真实数据 TODO 高源 保存不保存，决定是否修改myTraceBackPool
-            for (var i = 0; i < ${myTraceBackPool.size()}; i++) {
-                myTraceBackPool.append("${myTraceBackPool.get(i)}").append(" ");
-            }
-            $("#nowPoolCode").val(myTraceBackPool);
+            alert(${myTraceBackPool});
+            alert(${myTraceBackPool != null});
+            alert(${myTraceBackPool.size() != 0});
+
+            <%--if (${myTraceBackPool != null && myTraceBackPool.size() != 0}) {--%>
+                <%--// TODO 不能下面这样写--%>
+                <%--for (var i = 0; i < ${myTraceBackPool.size()}; i++) {--%>
+                    <%--myTraceBackPool.append("${myTraceBackPool.get(i)}").append(" ");--%>
+                <%--}--%>
+                <%--$("#nowPoolCode").val(myTraceBackPool);--%>
+            <%--}--%>
         })
 
 
@@ -1381,16 +1388,17 @@
         var marketSelectingConditions = new Array();
         var marketSelectingNum = 0;
         $("#timingList").find("tr").each(function () {
-            var mstType = $(this).find(".timingName").html();
-            var params = separateMarketSelectingType(mstType, $(this).find(".timingParam").html());
-            var marketSelectingConditions[marketSelectingNum] = {
+            var mstType = $(this).find(".timingName").html().trim();
+            var params = separateMarketSelectingType(mstType, $(this).find(".timingParam").html().trim());
+            marketSelectingConditions[marketSelectingNum] = {
                 "type": mstType,
                 "baseStockName": params[0],
                 "cycle": params[1],
                 "criteria1": params[2],
                 "criteria2": params[3],
-                "criteria3": params[4],
+                "criteria3": params[4]
             }
+            marketSelectingNum++;
         });
 
         // "formativePeriod": $("#formativePeriod").val();
@@ -1401,7 +1409,7 @@
         if (end - start < 1000 * 60 * 60 * 24 * $("#holdingPeriod").val()) {
             $("#wholeMessage").show();
             $("#wholeError").html(" 你输入的日期少于持仓周期");
-            setTimeout("$('#wholeMessage').hide();", 3000)
+            setTimeout("$('#wholeMessage').hide();", 3000);
             return false;
         }
 
@@ -1417,8 +1425,8 @@
             "stockPoolCriteria": {
                 "stType": $("#stType").val(),
                 "blockTypes": $("#blockTypes").val(),
-                "industryType": $("#industryBlock").val(),
-                "areaType": $("#provinceBlock").val()
+                "industryTypes": $("#industryBlock").val(),
+                "areaTypes": $("#provinceBlock").val()
             },
             "maxHoldingNum": $("#maxHolding").val(),
             "baseStockName": $("#baseStockEve").val(),
@@ -1851,6 +1859,7 @@
      */
     function separateMarketSelectingType(mstType, mstParam) {
         var params = mstParam.split(",");
+        alert(mstType);
         alert(params);
 
         switch (mstType) {
