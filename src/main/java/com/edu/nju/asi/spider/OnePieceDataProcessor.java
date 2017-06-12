@@ -1,16 +1,11 @@
 package com.edu.nju.asi.spider;
 
-import com.edu.nju.asi.task.spider.Code_Name;
+import com.edu.nju.asi.task.crawler.spider.Code_Name;
 import com.edu.nju.asi.spider.Model.NormalStock;
-import com.edu.nju.asi.task.spider.Code_NamePipeline;
 import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
-import us.codecraft.webmagic.utils.HttpConstant;
 
 import java.util.ArrayList;
 import java.util.List;

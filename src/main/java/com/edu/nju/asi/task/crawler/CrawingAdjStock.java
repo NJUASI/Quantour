@@ -1,13 +1,24 @@
 package com.edu.nju.asi.task.crawler;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Created by Byron Dong on 2017/6/2.
  */
 public class CrawingAdjStock {
+
+    /**
+     * 爬取复权数据和区域，行业信息
+     *
+     * @author ByronDong
+     * @updateTime 2017/6/2
+     */
+    public void handle(){
+        this.crawArea();
+        this.crawIndustry();
+        this.crawHistoryFront();
+        this.crawHistoryAfter();
+    }
 
     /**
      * 爬取前复权数据（指定的时间段）

@@ -1,7 +1,4 @@
-package com.edu.nju.asi.task.spider;
-
-import com.edu.nju.asi.spider.DownloadDataHelper;
-import org.assertj.core.internal.cglib.core.Local;
+package com.edu.nju.asi.task.crawler.spider;
 
 import java.io.*;
 import java.net.HttpURLConnection;

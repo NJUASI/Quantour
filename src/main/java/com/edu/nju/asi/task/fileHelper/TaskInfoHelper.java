@@ -1,9 +1,8 @@
 package com.edu.nju.asi.task.fileHelper;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -11,30 +10,39 @@ import java.util.Properties;
  */
 public class TaskInfoHelper {
 
-    //taskInfo的peoperties对象
-    private Properties taskInfoHelper;
-
     //taskInfo文件路径
     private String taskInfoPath;
 
     //初始化信息
     public TaskInfoHelper() {
-        taskInfoPath = getClass().getClassLoader().getResource("python/taskInfo.properties").getPath();
-        loadInfo();
+        taskInfoPath = getClass().getClassLoader().getResource("python/taskInfo.txt").getPath();
     }
 
     /**
      * 写入信息
      *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
      * @param name key
      * @param info 内容
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
      * @updateTime 2017/6/11
      */
     public void writerInfo(String name, String info) {
-        taskInfoHelper.put(name,info);
-        storeInfo();
+        File file = new File(taskInfoPath);
+        List<String> allInfo = readInfo();
+        allInfo.add(name + "=" + info);
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            for (String line : allInfo) {
+                bufferedWriter.write(line);
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -45,22 +53,11 @@ public class TaskInfoHelper {
      * @updateTime 2017/6/11
      */
     public void clearInfo() {
-        taskInfoHelper.clear();
-        storeInfo();
-    }
-
-    /**
-     * 加载properties对象
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/6/11
-     */
-    private void loadInfo() {
+        File file = new File(taskInfoPath);
         try {
-            FileInputStream fileInputStream = new FileInputStream(taskInfoPath);
-            taskInfoHelper.load(fileInputStream);
-            fileInputStream.close();
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            bufferedWriter.newLine();
+            bufferedWriter.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -68,21 +65,21 @@ public class TaskInfoHelper {
         }
     }
 
-    /**
-     * 存储内容
-     *
-     * @author Byron Dong
-     * @lastUpdatedBy Byron Dong
-     * @updateTime 2017/6/11
-     */
-    private void storeInfo() {
+    private List<String> readInfo() {
+        File file = new File(taskInfoPath);
+        List<String> info = new ArrayList<>();
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(taskInfoPath);
-            taskInfoHelper.store(fileOutputStream,"commit");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                info.add(line);
+            }
+            bufferedReader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return info;
     }
 }

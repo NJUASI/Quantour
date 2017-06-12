@@ -2,6 +2,8 @@ package com.edu.nju.asi.infoCarrier.traceBack;
 
 /**
  * Created by Harvey on 2017/6/10.
+ *
+ * 阶段持仓详情的每一周期的每只股票详情
  */
 public class StageDetail {
 
@@ -16,35 +18,44 @@ public class StageDetail {
     public String stockName;
 
     /**
-     * 开始价格（前复权）
+     * 开始价格（不复权）
      */
-    public Double startPrice;
+    public double startPrice;
 
     /**
-     * 结束价格（后复权）
+     * 结束价格（不复权）
      */
-    public Double endPrice;
+    public double endPrice;
 
     /**
      * 涨跌幅
      */
-    public Double changeRate;
+    public double changeRate;
+
+    /**
+     * 当前仓位
+     */
+    public double curPosition;
+
+    /**
+     * 当前仓位所占的价值
+     */
+    public double curPositionMoney;
+
 
 
     public StageDetail() {
     }
 
-    public StageDetail(String stockCode, String stockName, Double startPrice, Double endPrice) {
+    public StageDetail(String stockCode, String stockName, double startPrice, double endPrice, double curPosition, double curPositionMoney) {
         this.stockCode = stockCode;
         this.stockName = stockName;
 
-        if(endPrice != null && startPrice != null){
-            this.startPrice = startPrice;
-            this.endPrice = endPrice;
-            this.changeRate = (endPrice - startPrice) / startPrice;
-        }else {
-            this.endPrice = null;
-            this.changeRate = null;
-        }
+        this.startPrice = startPrice;
+        this.endPrice = endPrice;
+        this.changeRate = (endPrice - startPrice) / startPrice;
+
+        this.curPosition = curPosition;
+        this.curPositionMoney = curPositionMoney;
     }
 }

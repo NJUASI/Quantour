@@ -1,6 +1,6 @@
 package com.edu.nju.asi.spider.onePieceStockDownload;
 
-import com.edu.nju.asi.task.spider.Code_Name;
+import com.edu.nju.asi.task.crawler.spider.Code_Name;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -23,7 +23,8 @@ public class NormalStockDownloadProcessor implements PageProcessor {
     static String NAME_LIST = "http://quotes\\.money\\.163\\.com/stocksearch/json.do\\?count=1&word=\\d{6}";
 
     //TODO
-    LocalDate today = LocalDate.now();
+    LocalDate startDay;
+    LocalDate endDay;
 
     //每页取的股票代码个数，最后一页除外
     int pageCount = 24;
@@ -34,6 +35,12 @@ public class NormalStockDownloadProcessor implements PageProcessor {
     boolean firstDone = false;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+
+    public NormalStockDownloadProcessor(LocalDate startDay, LocalDate endDay) {
+        this.startDay = startDay;
+        this.endDay = endDay;
+    }
 
     //部分一：抓取网站的相关配置，包括编码、抓取间隔、重试次数等
     private Site site = Site.me()
@@ -123,8 +130,8 @@ public class NormalStockDownloadProcessor implements PageProcessor {
             }
 
             //TODO 在这里调整日期,自动化的时候，start、end都做成今天就行了
-            String start = LocalDate.of(2017, 6, 2).format(formatter);
-            String end = today.format(formatter);
+            String start = startDay.format(formatter);
+            String end = endDay.format(formatter);
 
             System.out.println("开始日期:"+start+"------"+"结束日期:"+end);
 

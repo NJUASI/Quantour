@@ -1,6 +1,8 @@
 package com.edu.nju.asi.task.storer;
 
 import com.csvreader.CsvReader;
+import com.edu.nju.asi.dataHelper.HelperManager;
+import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
@@ -21,23 +23,44 @@ import java.util.List;
  */
 public class StoreAdjStockHelper {
 
+    //存放前复权数据的父类文件路径
     private String frontPath;
+
+    //存放后复权数据的父类文件路径
     private String afterPath;
 
-    public StoreAdjStockHelper(String root) {
+    //stock数据对象
+    private StockDataHelper stockDataHelper;
 
-        if(!root.endsWith(File.separator)){
-            root = root+File.separator;
+    //初始化成员信息
+    public StoreAdjStockHelper(String root) {
+        if (!root.endsWith(File.separator)) {
+            root = root + File.separator;
         }
-        frontPath = root+"adjData"+File.separator+"front";
-        afterPath = root+"adjData"+File.separator+"after";
+
+        frontPath = root + "adjData" + File.separator + "front";
+        afterPath = root + "adjData" + File.separator + "after";
+        stockDataHelper = HelperManager.stockDataHelper;
     }
 
+    /**
+     * 存储复权数据
+     *
+     * @author ByronDong
+     * @updateTime 2017/6/12
+     */
     public void handle() {
         storeFrontStock(frontPath);
         storeAfterStock(afterPath);
     }
 
+    /**
+     * 存储前复权数据
+     *
+     * @author ByronDong
+     * @param path 前复权数据的存放路径
+     * @updateTime 2017/6/12
+     */
     private void storeFrontStock(String path) {
         File dir = new File(path);
         File files[] = dir.listFiles();
@@ -47,7 +70,7 @@ public class StoreAdjStockHelper {
             List<Stock> oneStock = new ArrayList<>();
             try {
                 CsvReader reader = new CsvReader(path + File.separator + files[i].getName(), ',', Charset.forName("GBK"));
-                System.out.println("-------开始读取"+files[i].getName()+"------------");
+                System.out.println("-------开始读取" + files[i].getName() + "------------");
                 reader.readHeaders();
                 while (reader.readRecord()) {
 
@@ -67,10 +90,10 @@ public class StoreAdjStockHelper {
                     oneStock.add(stock);
                     System.out.println("Date: " + stock.getStockID().getDate().toString() + " " + "Code: " + stock.getStockID().getCode());
                 }
-                System.out.println("-------读取"+files[i].getName()+"完成------------");
-                System.out.println("-------开始写入"+files[i].getName()+"------------");
-                updateFront(setPreFrontClose(oneStock));
-                System.out.println("-------结束写入"+files[i].getName()+"------------");
+                System.out.println("-------读取" + files[i].getName() + "完成------------");
+                System.out.println("-------开始写入" + files[i].getName() + "------------");
+                stockDataHelper.updateFront(setPreFrontClose(oneStock));
+                System.out.println("-------结束写入" + files[i].getName() + "------------");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -80,6 +103,13 @@ public class StoreAdjStockHelper {
         System.out.println("-------所有文件完成读取与写入------------");
     }
 
+    /**
+     * 存储后复权数据
+     *
+     * @author ByronDong
+     * @param path 后复权数据的存放路径
+     * @updateTime 2017/6/12
+     */
     private void storeAfterStock(String path) {
         File dir = new File(path);
         File files[] = dir.listFiles();
@@ -89,7 +119,7 @@ public class StoreAdjStockHelper {
             List<Stock> oneStock = new ArrayList<>();
             try {
                 CsvReader reader = new CsvReader(path + File.separator + files[i].getName(), ',', Charset.forName("GBK"));
-                System.out.println("-------开始读取"+files[i].getName()+"------------");
+                System.out.println("-------开始读取" + files[i].getName() + "------------");
                 reader.readHeaders();
                 while (reader.readRecord()) {
 
@@ -109,10 +139,10 @@ public class StoreAdjStockHelper {
                     oneStock.add(stock);
                     System.out.println("Date: " + stock.getStockID().getDate().toString() + " " + "Code: " + stock.getStockID().getCode());
                 }
-                System.out.println("-------读取"+files[i].getName()+"完成------------");
-                System.out.println("-------开始写入"+files[i].getName()+"------------");
-                updateAfter(setPreAfterClose(oneStock));
-                System.out.println("-------结束写入"+files[i].getName()+"------------");
+                System.out.println("-------读取" + files[i].getName() + "完成------------");
+                System.out.println("-------开始写入" + files[i].getName() + "------------");
+                stockDataHelper.updateAfter(setPreAfterClose(oneStock));
+                System.out.println("-------结束写入" + files[i].getName() + "------------");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -122,102 +152,56 @@ public class StoreAdjStockHelper {
         System.out.println("-------所有文件完成读取与写入------------");
     }
 
-    private boolean updateFront(List<Stock> stocks) {
-        Connection connection = JDBCUtil.getConnection();
-        PreparedStatement preparedStatement = null;
-        String sql = "UPDATE stock SET frontAdjOpen=?,frontAdjHigh=?,frontAdjLow=?,frontAdjClose=?," +
-                "preFrontAdjClose=? WHERE code=? AND date=?";
-        boolean result = true;
+    /**
+     * 设置昨日前复权数据
+     *
+     * @author ByronDong
+     * @param stocks 需要设置昨日前复权数据列表
+     * @return List<Stock> 设置完成后的前复权数据
+     * @updateTime 2017/6/12
+     */
+    private List<Stock> setPreFrontClose(List<Stock> stocks) {
 
-        try {
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(sql);
-            for (Stock stock : stocks) {
-                preparedStatement.setDouble(1, stock.getFrontAdjOpen());
-                preparedStatement.setDouble(2, stock.getFrontAdjHigh());
-                preparedStatement.setDouble(3, stock.getFrontAdjLow());
-                preparedStatement.setDouble(4, stock.getFrontAdjClose());
-                preparedStatement.setDouble(5, stock.getPreFrontAdjClose());
-                preparedStatement.setString(6, stock.getStockID().getCode());
-                preparedStatement.setObject(7, stock.getStockID().getDate());
-                System.out.println("更新： "+stock.getStockID().getCode() + " " + stock.getStockID().getDate().toString());
-                preparedStatement.addBatch();
-            }
-            preparedStatement.executeBatch();
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            result = false;
-        } finally {
-            JDBCUtil.close(preparedStatement, connection);
+        System.out.println("-------开始设置" + stocks.get(0).getStockID().getCode() + "前复权收盘价------------");
+        for (int i = 0; i < stocks.size()-1; i++) {
+            stocks.get(i).setPreFrontAdjClose(stocks.get(i + 1).getFrontAdjClose());
+            System.out.println("--------设置" + stocks.get(i).getStockID().getDate().toString() + "------------");
         }
-        return result;
-    }
-
-    private boolean updateAfter(List<Stock> stocks) {
-        Connection connection = JDBCUtil.getConnection();
-        PreparedStatement preparedStatement = null;
-        String sql = "UPDATE stock SET afterAdjOpen=?,afterAdjHigh=?,afterAdjLow=?,afterAdjClose=?," +
-                "preAfterAdjClose=? WHERE code=? AND date=?";
-        boolean result = true;
-
-        try {
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(sql);
-            for (Stock stock : stocks) {
-                preparedStatement.setDouble(1, stock.getAfterAdjOpen());
-                preparedStatement.setDouble(2, stock.getAfterAdjHigh());
-                preparedStatement.setDouble(3, stock.getAfterAdjLow());
-                preparedStatement.setDouble(4, stock.getAfterAdjClose());
-                preparedStatement.setDouble(5, stock.getPreAfterAdjClose());
-                preparedStatement.setString(6, stock.getStockID().getCode());
-                preparedStatement.setObject(7, stock.getStockID().getDate());
-                System.out.println("更新： "+stock.getStockID().getCode() + " " + stock.getStockID().getDate().toString());
-                preparedStatement.addBatch();
-            }
-            preparedStatement.executeBatch();
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            result = false;
-        } finally {
-            JDBCUtil.close(preparedStatement, connection);
-        }
-        return result;
-    }
-
-    private List<Stock> setPreFrontClose(List<Stock> stocks){
-        System.out.println("-------开始设置"+stocks.get(0).getStockID().getCode()+"前复权收盘价------------");
-        for(int i = stocks.size()-1;i>0;i--){
-            stocks.get(i).setPreFrontAdjClose(stocks.get(i-1).getFrontAdjClose());
-            System.out.println("--------设置"+stocks.get(i).getStockID().getDate().toString()+"------------");
-        }
-        stocks.get(0).setPreFrontAdjClose(0);
-        System.out.println("-------完成设置"+stocks.get(0).getStockID().getCode()+"前复权收盘价------------");
+        Stock preStock = stockDataHelper.getLastStock(stocks.get(stocks.size()-1).getStockID().getCode());
+        stocks.get(stocks.size()-1).setPreFrontAdjClose(preStock.getFrontAdjClose());
+        System.out.println("-------完成设置" + stocks.get(0).getStockID().getCode() + "前复权收盘价------------");
         return stocks;
     }
 
-    private List<Stock> setPreAfterClose(List<Stock> stocks){
-        System.out.println("-------开始设置"+stocks.get(0).getStockID().getCode()+"后复权收盘价------------");
-        for(int i = stocks.size()-1;i>0;i--){
-            stocks.get(i).setPreAfterAdjClose(stocks.get(i-1).getAfterAdjClose());
-            System.out.println("--------设置"+stocks.get(i).getStockID().getDate().toString()+"------------");
+    /**
+     * 设置昨日后复权数据
+     *
+     * @author ByronDong
+     * @param stocks 需要设置昨日后复权数据列表
+     * @return 设置完成的后复权数据
+     * @updateTime 2017/6/12
+     */
+    private List<Stock> setPreAfterClose(List<Stock> stocks) {
+        System.out.println("-------开始设置" + stocks.get(0).getStockID().getCode() + "后复权收盘价------------");
+        for (int i = 0; i < stocks.size()-1; i++) {
+            stocks.get(i).setPreAfterAdjClose(stocks.get(i + 1).getAfterAdjClose());
+            System.out.println("--------设置" + stocks.get(i).getStockID().getDate().toString() + "------------");
         }
-        stocks.get(0).setPreAfterAdjClose(0);
-        System.out.println("-------完成设置"+stocks.get(0).getStockID().getCode()+"后复权收盘价------------");
+
+        Stock preStock = stockDataHelper.getLastStock(stocks.get(stocks.size()-1).getStockID().getCode());
+        stocks.get(stocks.size()-1).setPreAfterAdjClose(preStock.getAfterAdjClose());
+        System.out.println("-------完成设置" + stocks.get(0).getStockID().getCode() + "后复权收盘价------------");
         return stocks;
     }
 
+    /**
+     * 将不符合日期规范的日期修正为指定格式，如果已符合就不做操作
+     *
+     * @author ByronDong
+     * @param date 日期
+     * @return String 标准化后日期
+     * @updateTime 2017/6/12
+     */
     private static String format(String date) {
         if (date.indexOf("/") != -1) {
             String temp[] = date.split("/");

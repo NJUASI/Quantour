@@ -45,8 +45,11 @@ public class TraceBackServiceImplTest {
         List<RankCondition> rankConditions = new ArrayList<>();
         rankConditions.add(new RankCondition(IndicatorType.TURNOVER_RATE, RankType.DESC_RANK, 1, 5));
 
-        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 10, 5, new StockPoolCriteria(StType.EXCLUDE, blockTypes),
-                "沪深300", filterConditions, rankConditions);
+        //择时条件
+        List<MarketSelectingCondition> marketSelectingConditions = new ArrayList<>();
+
+        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 10, new StockPoolCriteria(StType.EXCLUDE, blockTypes),5,
+                "沪深300", filterConditions, rankConditions, marketSelectingConditions, 0.5, 1, 1);
 
         try {
              TraceBackInfo traceBackInfo = traceBackService.traceBack(criteria);

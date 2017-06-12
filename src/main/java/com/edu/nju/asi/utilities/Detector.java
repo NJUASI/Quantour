@@ -1,5 +1,6 @@
 package com.edu.nju.asi.utilities;
 
+import com.edu.nju.asi.utilities.exceptions.EmailInputException;
 import com.edu.nju.asi.utilities.exceptions.InvalidInputException;
 import com.edu.nju.asi.utilities.exceptions.PasswordInputException;
 
@@ -25,10 +26,28 @@ public class Detector {
 	 */
 	public boolean passwordDetector(String express) throws PasswordInputException {
 		
-		expression = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
+		expression = "^[[a-zA-Z]|\\d]{6,15}$";
 		
 		if(!this.getResultOfDetector(express)){
 			throw new PasswordInputException(); //密码必须是数字与字母的组合
+		}
+		return true;
+	}
+
+	/**
+	 * @author Byron Dong
+	 * @lastChangedBy Byron Dong
+	 * @updateTime 2016/6/12
+	 * @param express
+	 *            传入需要检查不合法符号的邮件
+	 * @return boolean 是否符合要求规范
+	 */
+	public boolean emailDetector(String express) throws EmailInputException {
+
+		expression =  "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
+
+		if(!this.getResultOfDetector(express)){
+			throw new EmailInputException(); //密码必须是数字与字母的组合
 		}
 		return true;
 	}

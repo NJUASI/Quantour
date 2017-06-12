@@ -114,5 +114,38 @@ public interface StockDataHelper {
      */
     List<LocalDate> getFirstAndLastDay(String stockCode);
 
-    void update(List<Stock> stocks);
+
+    //处理复权数据
+    /**
+     * 更新前复权信息
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/12
+     * @param stocks
+     * @return 是否更新成功
+     */
+    boolean updateFront(List<Stock> stocks);
+
+    /**
+     * 更新后复权信息
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/12
+     * @param stocks
+     * @return 是否更新成功
+     */
+    boolean updateAfter(List<Stock> stocks);
+
+    /**
+     * 获取数据库指定code的最新日期
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/12
+     * @param code 股票代号
+     * @return Stock 获取指定股票信息
+     */
+    Stock getLastStock(String code);
 }

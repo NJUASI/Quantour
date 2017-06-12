@@ -267,6 +267,125 @@ public class StockDataHelperImpl implements StockDataHelper {
         return result;
     }
 
+    /**
+     * 更新前复权信息
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/12
+     * @param stocks
+     * @return 是否更新成功
+     */
+    @Override
+    public boolean updateFront(List<Stock> stocks) {
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        String sql = "UPDATE stock SET frontAdjOpen=?,frontAdjHigh=?,frontAdjLow=?,frontAdjClose=?," +
+                "preFrontAdjClose=? WHERE code=? AND date=?";
+        boolean result = true;
+
+        try {
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql);
+            for (Stock stock : stocks) {
+                preparedStatement.setDouble(1, stock.getFrontAdjOpen());
+                preparedStatement.setDouble(2, stock.getFrontAdjHigh());
+                preparedStatement.setDouble(3, stock.getFrontAdjLow());
+                preparedStatement.setDouble(4, stock.getFrontAdjClose());
+                preparedStatement.setDouble(5, stock.getPreFrontAdjClose());
+                preparedStatement.setString(6, stock.getStockID().getCode());
+                preparedStatement.setObject(7, stock.getStockID().getDate());
+                System.out.println("更新： "+stock.getStockID().getCode() + " " + stock.getStockID().getDate().toString());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            result = false;
+        } finally {
+            JDBCUtil.close(preparedStatement, connection);
+        }
+        return result;
+    }
+
+    /**
+     * 更新后复权信息
+     *
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/12
+     * @param stocks
+     * @return 是否更新成功
+     */
+    @Override
+    public boolean updateAfter(List<Stock> stocks) {
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        String sql = "UPDATE stock SET afterAdjOpen=?,afterAdjHigh=?,afterAdjLow=?,afterAdjClose=?," +
+                "preAfterAdjClose=? WHERE code=? AND date=?";
+        boolean result = true;
+
+        try {
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql);
+            for (Stock stock : stocks) {
+                preparedStatement.setDouble(1, stock.getAfterAdjOpen());
+                preparedStatement.setDouble(2, stock.getAfterAdjHigh());
+                preparedStatement.setDouble(3, stock.getAfterAdjLow());
+                preparedStatement.setDouble(4, stock.getAfterAdjClose());
+                preparedStatement.setDouble(5, stock.getPreAfterAdjClose());
+                preparedStatement.setString(6, stock.getStockID().getCode());
+                preparedStatement.setObject(7, stock.getStockID().getDate());
+                System.out.println("更新： "+stock.getStockID().getCode() + " " + stock.getStockID().getDate().toString());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            result = false;
+        } finally {
+            JDBCUtil.close(preparedStatement, connection);
+        }
+        return result;
+    }
+
+    /**
+     * 获取数据库指定code的最新日期
+     *
+     * @param code 股票代号
+     * @return Stock 获取指定股票信息
+     * @author Byron Dong
+     * @lastUpdatedBy Byron Dong
+     * @updateTime 2017/6/12
+     */
+    @Override
+    public Stock getLastStock(String code) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "from Stock as stock1 where stock1.stockID.code=:code1 and stock1.stockID.date=" +
+                "(select max(stock2.stockID.date) from Stock as stock2 where stock2.stockID.code=:code2)";
+        Query query = session.createQuery(hql);
+        query.setParameter("code1",code);
+        query.setParameter("code2",code);
+        List<Stock> list = query.list();
+        transaction.commit();
+        session.close();
+        return list.get(0);
+    }
+
     private List<LocalDate> getAllDateByCode(String code){
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -324,35 +443,5 @@ public class StockDataHelperImpl implements StockDataHelper {
             e.printStackTrace();
         }
         return stocks;
-    }
-
-    public void update(List<Stock> stocks){
-        Connection connection = JDBCUtil.getConnection();
-        PreparedStatement preparedStatement = null;
-        String sql = "UPDATE stock SET preFrontAdjClose=?,preAfterAdjClose=? WHERE code=? AND date=?";
-
-        try {
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(sql);
-            for (Stock stock : stocks) {
-                preparedStatement.setDouble(1, stock.getPreFrontAdjClose());
-                preparedStatement.setDouble(2, stock.getPreAfterAdjClose());
-                preparedStatement.setString(3, stock.getStockID().getCode());
-                preparedStatement.setObject(4, stock.getStockID().getDate());
-                System.out.println("更新： "+stock.getStockID().getCode() + " " + stock.getStockID().getDate().toString());
-                preparedStatement.addBatch();
-            }
-            preparedStatement.executeBatch();
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        } finally {
-            JDBCUtil.close(preparedStatement, connection);
-        }
     }
 }
