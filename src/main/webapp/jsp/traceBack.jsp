@@ -97,6 +97,8 @@
                                 <option value="沪深300" selected>沪深300</option>
                                 <option value="创业板指">创业板指</option>
                                 <option value="中小板指">中小板指</option>
+                                <option value="上证指数">上证指数</option>
+                                <option value="深证指数">深证指数</option>
                             </select>
                         </div>
                     </div>
@@ -133,24 +135,23 @@
 
                 </div>
 
-                    <c:if test="${sessionScope.user!=null}">
-                        <div class="row " style="margin-top: 15px">
-                            <div class="col-md-offset-1 col-md-1">
-                                <div>
-                                    <label class="radio1">
-                                        <input class="radio_group" type="radio" name="pool" value="blockPool" checked>全部股票
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div>
-                                    <label class="radio1">
-                                        <input class="radio_group" type="radio" name="pool" value="myPool">我的股票
-                                    </label>
-                                </div>
-                            </div>
+
+                <div class="row " style="margin-top: 15px">
+                    <div class="col-md-offset-1 col-md-1">
+                        <div>
+                            <label class="radio1">
+                                <input class="radio_group" type="radio" name="pool" value="blockPool" checked>全部股票
+                            </label>
                         </div>
-                    </c:if>
+                    </div>
+                    <div class="col-md-1">
+                        <div>
+                            <label class="radio1">
+                                <input class="radio_group" type="radio" name="pool" value="myPool">我的股票
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
 
                 <div id="blockStock">
@@ -171,7 +172,7 @@
                         </div>
 
                         <div class="form-group col-md-3 inputBlock">
-                            <label class="col-md-5" style="margin-top: 7px">行业板块：</label>
+                            <label class="col-md-5" style="margin-top: 7px;margin-left: -50px">行业板块：</label>
                             <div class='col-md-7' style="margin-left: -30px">
                                 <select id="industryBlock" name="industryBlock" multiple data-live-search="true"
                                         data-live-search-placeholder="请选择行业" data-selected-text-format="count > 2"
@@ -239,7 +240,7 @@
                         </div>
 
                         <div class="row col-md-2 col-md-offset-2">
-                            <strong id="industryError" style="color:indianred;margin-left: 33px" hidden> <span
+                            <strong id="industryError" style=" color:indianred;margin-left: -45px" hidden> <span
                                     class="glyphicon glyphicon glyphicon-remove-circle"></span> 行业不能为空</strong>
                         </div>
 
@@ -258,7 +259,7 @@
                         </div>
 
                         <div class="form-group col-md-3 inputBlock">
-                            <label class="col-md-5" style="margin-top: 7px">地域板块：</label>
+                            <label class="col-md-5" style="margin-top: 7px;margin-left: -50px">地域板块：</label>
                             <div class='col-md-7' style="margin-left: -30px">
                                 <select id="provinceBlock" name="provinceBlock" multiple data-live-search="true"
                                         data-live-search-placeholder="请选择地域" data-selected-text-format="count > 2"
@@ -303,7 +304,7 @@
                     </div>
                     <div class="row">
                         <div class="row col-md-2 col-md-offset-6">
-                            <strong id="provinceError" style="color:indianred;margin-left: 0px" hidden> <span
+                            <strong id="provinceError" style="color:indianred;margin-left: -60px" hidden> <span
                                     class="glyphicon glyphicon glyphicon-remove-circle"></span> 地域不能为空</strong>
                         </div>
                     </div>
@@ -331,59 +332,175 @@
             <%@ include file="quotaSelect.jsp" %>
         </div>
 
+        <div class="panel panel-default col-md-10 col-md-offset-1 userBlock">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    大盘择时
+                </h4>
+            </div>
+            <div class="panel-body">
 
-        <div class="row">
-            <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        回测条件
-                    </h4>
+                <div class="row " style="margin-top: 15px">
+                    <div class="col-md-offset-1 col-md-1">
+                        <div>
+                            <label class="radio2">
+                                <input class="market_timing" type="radio" name="market_timing" value="no" checked>不择时
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div>
+                            <label class="radio2">
+                                <input class="market_timing" type="radio" name="market_timing" value="yes">使用择时
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
+                <div id="timingPanel">
+                    <div style="border-bottom: 1px solid #CCCCCC;width: 88%;margin:20px auto 20px"></div>
                     <div class="row">
+                        <label class="col-md-1 col-md-offset-1" style="margin-top: 7px">同时满足</label>
+                        <div class=' col-md-1 ' style="margin-left: -27px">
+                            <input id="timing_text1" type="text" class="form-control col-md-1" placeholder="条件数">
+                        </div>
+                        <label class="col-md-2" style="margin-top: 7px">个择时条件由熊变牛</label>
 
-                        <div class="col-md-3 col-md-offset-1 inputBlock">
+                        <label class="col-md-1" style="margin-top: 7px">同时满足</label>
+                        <div class=' col-md-1 ' style="margin-left: -27px">
+                            <input id="timing_text2" type="text" class="form-control col-md-1" placeholder="条件数">
+                        </div>
+                        <label class="col-md-3" style="margin-top: 7px">个择时条件由牛变熊</label>
 
-                            <label class="col-md-5" style="margin-top: 7px">开始日期：</label>
-                            <!--指定 date标记-->
-                            <div class='input-group date col-md-6' id='datetimeStart'>
-                                <input id="startDate" type='text' class="form-control form_datetime"/>
-                                <span class="input-group-addon">
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <!--左边选择栏  -->
+                        <div class="col-md-4 col-md-offset-1">
+                            <label class="" style="margin-bottom: 30px">
+                                择时指标:
+                            </label>
+
+
+                            <!-- 选项卡面板 -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">MA
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">MACD
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">DMA
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">TRIX
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">MAVOL
+                                    </button>
+                                </div>
+                            </div>
+                            <strong class="row col-md-offset-4" id="timingError"
+                                    style="color:indianred;margin-left: 4px" hidden><span
+                                    class="col-md-offset-2 glyphicon glyphicon glyphicon-remove-circle"></span><span> 你已经选择过此条件</span></strong>
+
+
+                        </div>
+                        <!--右边数据框-->
+                        <div class="col-md-6" style=" border-left: 1px solid slategray;">
+                            <label class="row col-md-3" style="margin-top:5px">
+                                择时条件:
+                            </label>
+                            <!-- 选项卡组件（菜单项nav-tabs）-->
+
+
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12"
+                                     style="height:200px;max-height: 240px;overflow-y: auto">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>择时条件</th>
+                                            <th>择时参数</th>
+                                            <th>编辑</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="timingList">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    回测条件
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="col-md-3 col-md-offset-1 inputBlock">
+
+                        <label class="col-md-5" style="margin-top: 7px">开始日期：</label>
+                        <!--指定 date标记-->
+                        <div class='input-group date col-md-6' id='datetimeStart'>
+                            <input id="startDate" type='text' class="form-control form_datetime"/>
+                            <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
 
-                            </div>
                         </div>
-                        <div class="col-md-3 inputBlock">
+                    </div>
+                    <div class="col-md-3 inputBlock">
 
-                            <label class="col-md-5" style="margin-top: 7px">结束日期：</label>
-                            <!--指定 date标记-->
-                            <div class='input-group date col-md-6' id='datetimeEnd'>
-                                <input id="endDate" type='text' class="form-control form_datetime"/>
-                                <span class="input-group-addon">
+                        <label class="col-md-5" style="margin-top: 7px">结束日期：</label>
+                        <!--指定 date标记-->
+                        <div class='input-group date col-md-6' id='datetimeEnd'>
+                            <input id="endDate" type='text' class="form-control form_datetime"/>
+                            <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
 
-                            </div>
-                        </div>
-
-                        <div class="col-md-1 col-md-offset-2 inputBlock">
-
-                            <button type="button" class="btn btn-info" onclick="traceback()"
-                                    style="margin-left: -70px;">开始回测
-                            </button>
-                        </div>
-                        <div class="col-md-1 inputBlock">
-
-                            <button type="button" class="btn btn-info" id="createStrategy"
-                                    style="margin-left: -40px;margin-bottom: 20px">创建策略
-                            </button>
                         </div>
                     </div>
-                    <div class="row col-md-offset-9" id="wholeMessage" hidden>
-                        <strong style="color:indianred;margin-left: 4px"><span
-                                class="glyphicon glyphicon glyphicon-remove-circle"></span><span id="wholeError"> 请输入合法股票数</span></strong>
+
+                    <div class="col-md-1 col-md-offset-2 inputBlock">
+
+                        <button type="button" class="btn btn-info" onclick="traceback()"
+                                style="margin-left: -70px;">开始回测
+                        </button>
                     </div>
+                    <div class="col-md-1 inputBlock">
+
+                        <button type="button" class="btn btn-info" id="createStrategy"
+                                style="margin-left: -40px;margin-bottom: 20px">创建策略
+                        </button>
+                    </div>
+                </div>
+                <div class="row col-md-offset-9" id="wholeMessage" hidden>
+                    <strong style="color:indianred;margin-left: 4px"><span
+                            class="glyphicon glyphicon glyphicon-remove-circle"></span><span
+                            id="wholeError"> 请输入合法股票数</span></strong>
                 </div>
             </div>
         </div>
@@ -692,7 +809,8 @@
             </div>
             <div class="modal-body">
                 <p class="static" style="margin-top: 5px;">股票列表:</p>
-                <textarea type="text" id="poolCode" class="form-control" rows="10" placeholder="请输入股票代码 以空格隔开"></textarea>
+                <textarea type="text" id="poolCode" class="form-control" rows="10"
+                          placeholder="请输入股票代码 以空格隔开"></textarea>
 
                 <strong id="poolCodeError" style="color:indianred;margin-left: 0px"></strong>
             </div>
@@ -739,6 +857,84 @@
     </div><!-- /.modal -->
 </div>
 
+<div class="modal fade" id="modifyTimingModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width:40%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">择时条件设定</h4>
+            </div>
+            <div class="modal-body">
+                <p>择时条件:<span id="theCondition">MA</span></p>
+                <p class="col-md-offset-1 ma indicator" hidden>以移动平均线(MA)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p class="col-md-offset-1 macd indicator" hidden>
+                    以指数平滑异同移动平均线(MACD)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p class="col-md-offset-1 dma indicator" hidden>以平均线差指标(DMA)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p class="col-md-offset-1 trix indicator" hidden>
+                    以三重指数平滑移动平均指标(TRIX)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p class="col-md-offset-1 mavol indicator" hidden>
+                    以指数成交量移动平均线(MAVOL)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p>择时参数:</p>
+                <div class="row inputBlock">
+                    <div class="col-md-offset-1 col-md-3" style="margin-top: 6px"><span>指数选择：</span>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="timingBlock" class="form-control">
+                            <option value="沪深300">沪深300</option>
+                            <option value="创业板指">创业板指</option>
+                            <option value="中小板指">中小板指</option>
+                            <option value="上证指数">上证指数</option>
+                            <option value="深证指数">深证指数</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row inputBlock">
+                    <div class="col-md-offset-1 col-md-3" style="margin-top: 6px"><span>周期选择：</span>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="timingType" class="form-control">
+                            <option value="日">日</option>
+                            <option value="周">周</option>
+                            <option value="月">月</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="textArea">
+
+                </div>
+
+                <%--<div class="range-box" style="display: none;"><span class="leftName">板块选择：</span><select class="form-control">--%>
+                <%--<option value="0">中小板</option><option value="1">主板</option><option value="2">创业板</option><option value="4">全市场</option><option value="1000001">上证指数</option><option value="1399905">中证500</option><option value="1000300">沪深300</option><option value="1399006">创业板指数</option><option value="1399005">中小板指数</option><option value="1399001">深证成指</option><option value="1000902">中证流通</option><option value="1000852">中证1000</option><option value="1399303">国证2000</option><option value="1000818">细分金融</option><option value="1000816">细分地产</option><option value="1000815">细分食品</option><option value="1000814">细分医药</option><option value="1000813">细分化工</option><option value="1000812">细分机械</option><option value="1000811">细分有色</option><option value="1000810">细分能源</option><option value="1000809">细分农业</option><option value="1801010">申万农林牧渔</option><option value="1801020">申万采掘</option><option value="1801030">申万化工</option><option value="1801040">申万钢铁</option><option value="1801050">申万有色金属</option><option value="1801080">申万电子</option><option value="1801110">申万家用电器</option><option value="1801120">申万食品饮料</option><option value="1801130">申万纺织服装</option><option value="1801140">申万轻工制造</option><option value="1801150">申万医药生物</option><option value="1801160">申万公用事业</option><option value="1801170">申万交通运输</option><option value="1801180">申万房地产</option><option value="1801200">申万商业贸易</option><option value="1801210">申万休闲服务</option><option value="1801230">申万综合</option><option value="1801710">申万建筑材料</option><option value="1801720">申万建筑装饰</option><option value="1801730">申万电气设备</option><option value="1801740">申万国防军工</option><option value="1801750">申万计算机</option><option value="1801760">申万传媒</option><option value="1801770">申万通信</option><option value="1801780">申万银行</option><option value="1801790">申万非银金融</option><option value="1801880">申万汽车</option><option value="1801890">申万机械设备</option></select></div>--%>
+                <%--<div class="clear"></div>--%>
+                <%--<div class="period-box"><span class="leftName">周期选择：</span><select class="form-control">--%>
+                <%--<option value="day">日</option>--%>
+                <%--<option value="week">周</option>--%>
+                <%--<option value="month">月</option>--%>
+                <%--</select></div>--%>
+                <%--<div class="clear"></div>--%>
+                <%--<div class="ma para-box" style="display: none;"><div class="short"><span class="leftName">MA短线：</span><input type="text" class="short text" value="5"><span class="unit">日</span></div><div class="long"><span class="leftName">MA长线：</span><input type="text" class="long text" value="60"><span class="unit">日</span></div><div class="zero"><input type="checkbox"><span class="txt">金叉必须短线上行， 死叉必须短线下行</span></div></div>--%>
+                <%--<div class="ema para-box" style="display: none;"><div class="short"><span class="leftName">EMA短线：</span><input type="text" class="short text" value="5"><span class="unit">日</span></div><div class="long"><span class="leftName">EMA长线：</span><input type="text" class="long text" value="60"><span class="unit">日</span></div><div class="zero"><input type="checkbox"><span class="txt">金叉必须短线上行， 死叉必须短线下行</span></div></div>--%>
+                <%--<div class="macd para-box" style="display: block;"><div class="short"><span class="leftName">DIF短线：</span><input type="text" class="short text" value="12"><span class="unit">日</span></div><div class="long"><span class="leftName">DIF长线：</span><input type="text" class="long text" value="26"><span class="unit">日</span></div><div class="long"><span class="leftName">DEA：</span><input type="text" class="m text" value="9"><span class="unit">日</span></div><div class="zero"><input type="checkbox" value="0"><span class="txt">金叉只出现在0轴上方，死叉只出现在0轴下方</span></div></div>--%>
+                <%--<div class="dma para-box" style="display: none;"><div class="short"><span class="leftName">MA短线：</span><input type="text" class="short text" value="5"><span class="unit">日</span></div><div class="long"><span class="leftName">MA长线：</span><input type="text" class="long text" value="60"><span class="unit">日</span></div><div class="long"><span class="leftName">AMA：</span><input type="text" class="m text" value="20"><span class="unit">日</span></div></div>--%>
+                <%--<div class="trix para-box" style="display: none;"><div class="short"><span class="leftName">TRIX：</span><input type="text" class="n text" value="120"><span class="unit">日</span></div><div class="long"><span class="leftName">MATRIX ：</span><input type="text" class="m text" value="5"><span class="unit">日</span></div></div>--%>
+                <%--<div class="mavol para-box" style="display: none;"><div class="short"><span class="leftName">MA短线：</span><input type="text" class="short text" value="5"><span class="unit">日</span></div><div class="long"><span class="leftName">MA长线：</span><input type="text" class="long text" value="60"><span class="unit">日</span></div><div class="zero"><input type="checkbox"><span class="txt">金叉必须短线上行， 死叉必须短线下行</span></div></div>--%>
+                <%--<div class="bias para-box" style="display: none;"><div class="short"><span class="leftName">MA短线：</span><input type="text" class="short text" value="1"><span class="unit">日</span></div><div class="long"><span class="leftName">MA长线：</span><input type="text" class="long text" value="20"><span class="unit">日</span></div><div class="low"><span class="leftName">下限：</span><input type="text" class="low text" value="-10"><span>%</span></div><div class="high"><span class="leftName">上限：</span><input type="text" class="high text" value="10"><span>%</span></div></div>--%>
+                <%--<div class="pe para-box" style="display: none;"><div class="low"><span class="leftName">下限：</span><input type="text" class="low text" value="15"></div><div class="high"><span class="leftName">上限：</span><input type="text" class="high text" value="30"></div></div>--%>
+                <%--<div class="pb para-box" style="display: none;"><div class="low"><span class="leftName">下限：</span><input type="text" class="low text" value="2"></div><div class="high"><span class="leftName">上限：</span><input type="text" class="high text" value="4"></div></div>--%>
+                <%--<div class="pe2 para-box" style="display: none;"><div class="low"><span class="leftName">下限：</span><input type="text" class="low text" value="40"></div><div class="high"><span class="leftName">上限：</span><input type="text" class="high text" value="60"></div></div>--%>
+                <%--<div class="pb2 para-box" style="display: none;"><div class="low"><span class="leftName">下限：</span><input type="text" class="low text" value="2"></div><div class="high"><span class="leftName">上限：</span><input type="text" class="high text" value="4"></div></div>--%>
+                <%--<p class="error"></p>--%>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary save">确定</button>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+</div>
+
 <%@ include file="logIn.jsp" %>
 
 <footer>
@@ -757,6 +953,7 @@
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
 <script src="../js/quotaSelect.js"></script>
+<%--<script src="../js/timingSelect.js"></script>--%>
 
 <script src="../js/icheck.js"></script>
 
@@ -770,10 +967,6 @@
 
 
     $(document).ready(function () {
-        $("#modifyBT").click(function () {
-            $("#passwordField").toggle("slow");
-            $("#passwordModify").toggle("slow");
-        });
 
         $("#stocks").click(function () {
             $("body").removeClass("loaded");
@@ -787,8 +980,8 @@
 
         $('.radio_group').on('ifChecked', function () {
 
-                $("#blockStock").slideToggle("slow");
-                $("#myStockPool").slideToggle("slow");
+            $("#blockStock").slideToggle("slow");
+            $("#myStockPool").slideToggle("slow");
 
         });
 
@@ -801,14 +994,14 @@
         $('#savePool').click(function () {
             //TODO FJJ 从我的底层股票初始化编辑页面
             //TODO FJJ  存数据库 需要 返回成功 或者哪个代码不存在
-            var codes=$("#poolCode").val().split(" ");
+            var codes = $("#poolCode").val().split(" ");
             alert($("#poolCode").val());
             var reg = /^\d{6}$/;
-            for(var i=0;i<codes.length; i++){
-                var code=codes[i];
-                if(!reg.test(code)){
-                    $("#poolCodeError").html("你输入的代码"+code+"格式不正确");
-                    setTimeout( "$(\"#poolCodeError\").html('')",3000);
+            for (var i = 0; i < codes.length; i++) {
+                var code = codes[i];
+                if (!reg.test(code)) {
+                    $("#poolCodeError").html("你输入的代码" + code + "格式不正确");
+                    setTimeout("$(\"#poolCodeError\").html('')", 3000);
                     return false;
                 }
             }
@@ -818,8 +1011,115 @@
         });
 
 
-
         $("#community").addClass("act");
+
+        //下面是择时js
+        $('.market_timing').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+
+        $('.market_timing').on('ifChecked', function () {
+            $("#timingPanel").slideToggle("slow");
+        });
+
+        $(".timing").click(function () {
+            var thisName = $(this).html().trim();
+            var isExist;
+            $(".timingName").each(function () {
+                if (thisName == $(this).html().trim()) {
+                    isExist = true;
+                    $("#timingError").show();
+                    setTimeout("$(\"#timingError\").hide()", 1000)
+                    return true;
+                }
+            });
+            if (isExist) {
+                return false;
+            }
+            var timingName = "<div class='timingName'>" + $(this).html() + "</div>";
+            var timingParam;
+            var name = $(this).html().trim();
+            switch (name) {
+                case "MA":
+                    timingParam = "<div class='timingParam'>上证指数,日线,5,60</div>";
+                    break;
+                case "DMA":
+                    timingParam = "<div class='timingParam'>上证指数,日线,5,60,20</div>";
+                    break;
+                case "TRIX":
+                    timingParam = "<div class='timingParam'>上证指数,日线,120,5</div>";
+                    break;
+                case "MAVOL":
+                    timingParam = "<div class='timingParam'>上证指数,日线,5,60</div>";
+                    break;
+                case "MACD":
+                    timingParam = "<div class='timingParam'>上证指数,日线,12,26,9</div>"
+                    break;
+            }
+
+
+            $("#timingList").append("<tr>" +
+                "<td class=\"col-md-2\">" + timingName + "</td>" +
+                "<td class=\"col-md-3\">" + timingParam + "</td>" +
+                "<td class=\"col-md-1\"><button class=\"btn  btn-primary modifyTimingBT\"><span class=\"glyphicon glyphicon-pencil\"></span></button></td>" +
+                "<td class=\"col-md-1\"><button class=\"btn  btn-primary removeTimingBT\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>" +
+                "</tr>");
+
+
+            $(".modifyTimingBT").unbind("click");
+            $(".modifyTimingBT").click(function (e) {
+                $("#modifyTimingModal").modal("toggle");
+                var clickName = $("#timingList").find("tr").eq($(".modifyTimingBT").index($(this))).find(".timingName").eq(0).html().trim();
+                var clickParam = $("#timingList").find("tr").eq($(".modifyTimingBT").index($(this))).find(".timingParam").eq(0).html().trim();
+                var myParam=clickParam.split(",");
+                $("#timingBlock").val(myParam[0]);
+                $("#timingType").val(myParam[1]);
+                $(".indicator").hide()
+                switch (clickName) {
+                    case "MA":
+                        $(".ma").show();
+                       $("#textArea").empty();
+                        $("#textArea").append()
+//                    <div class="row inputBlock">
+//                        <div class="col-md-offset-1 col-md-3" style="margin-top: 6px"><span
+//                    class="leftName">周期选择：</span>
+//                    </div>
+//                    <div class="col-md-2">
+//                        <input type="text" class="form-control rightNum">
+//                        </div>
+//                        <div class="col-md-3" style="margin-top: 6px"><span
+//                    class="rightName">日</span>
+//                    </div>
+//                    </div>
+                        break;
+                    case "DMA":
+                        $(".dma").show();
+                        break;
+                    case "TRIX":
+                        $(".trix").show();
+                        break;
+                    case "MAVOL":
+                        $(".mavol").show();
+                        break;
+                    case "MACD":
+                        $(".macd").show();
+                        break;
+                }
+                e.stopPropagation();
+                e.preventDefault()
+            });
+            function addText() {
+                
+            }
+            $(".removeTimingBT").unbind("click");
+            $(".removeTimingBT").click(function () {
+                $("#timingList").find("tr").eq($(".removeTimingBT").index($(this))).remove();
+            });
+
+        });
+
+
     });
 
 
@@ -912,9 +1212,9 @@
         });
 
         //自选股票池
-        var pool=$("input[name='pool']:checked").val();
-        if(pool=="myPool"){
-        }else{
+        var pool = $("input[name='pool']:checked").val();
+        if (pool == "myPool") {
+        } else {
             if ($("#blockTypes").val() == " " || $("#blockTypes").val() == "" || $("#blockTypes").val() == null) {
                 $('#blockTypesError').show();
                 setTimeout("$('#blockTypesError').hide();", 3000);
@@ -1024,9 +1324,9 @@
             return false;
         }
 
-        if(pool=="myPool"){
+        if (pool == "myPool") {
             //TODO fjj 如果是自己的股票池从数据库得到股票池
-        }else{
+        } else {
             //TODO 从界面拿各种板块信息
         }
 

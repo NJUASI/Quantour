@@ -14,8 +14,16 @@
             <li class="dropdown">
                 <a href="##" class="dropdown-toggle" data-toggle="dropdown">量化社区<span class="caret"></span></a>
                 <ul class="dropdown-menu" style="left:15px;max-width: 100px">
-                    <li><a href="/trace_back">创建策略</a></li>
-                    <li><a href="/strategy">使用策略</a></li>
+                    <c:choose>
+                        <c:when test="${sessionScope.user!=null}">
+                            <li><a href="/trace_back">创建策略</a></li>
+                            <li><a href="/strategy">使用策略</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="#" data-toggle="modal" data-target="#login">创建策略</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#login">使用策略</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </li>
             <li><a href="#">帮助</a></li>
