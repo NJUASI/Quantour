@@ -369,7 +369,13 @@
                         <div class=' col-md-1 ' style="margin-left: -27px">
                             <input id="timing_text2" type="text" class="form-control col-md-1" placeholder="条件数">
                         </div>
-                        <label class="col-md-3" style="margin-top: 7px">个择时条件由牛变熊</label>
+                        <label class="col-md-2" style="margin-top: 7px">个择时条件由牛变熊</label>
+
+                        <label class="col-md-1" style="margin-top: 7px">熊市仓位</label>
+                        <div class=' col-md-1 ' style="margin-left: -27px">
+                            <input id="position" type="text" class="form-control col-md-1" placeholder="比例">
+                        </div>
+                        <label class="col-md-1" style="margin-top: 7px">%</label>
 
                     </div>
                     <div class="row" style="margin-top: 20px">
@@ -1240,6 +1246,20 @@
                 $("#timing_text1").css("border", "2px solid red");
                 window.location.href = "#timePanel";
             }
+            if (!reg4.test($("#position").val())) {
+                isZero == false;
+                $('#timingError3').show();
+                setTimeout("$('#timingError3').hide();", 3000);
+                $("#position").css("border", "2px solid red");
+                window.location.href = "#timePanel";
+            }
+            if ($("#position").val()>100) {
+                isZero == false;
+                $('#timingError3').show();
+                setTimeout("$('#timingError3').hide();", 3000);
+                $("#position").css("border", "2px solid red");
+                window.location.href = "#timePanel";
+            }
             if ($("#timingList").find(".timingName").eq(0).html() == null) {
                 isZero == false;
                 $('#timingError2').show();
@@ -1348,6 +1368,7 @@
         if (timing == "yes") {
             $("#timing_text1").val(); //由熊变牛
             $("#timing_text2").val();//由牛变熊
+            $("#position").val();//仓位比例
             $("#timingList").find("tr").each(function () {
                 alert($(this).find(".timingName").html());
                 alert($(this).find(".timingParam").html());
