@@ -31,9 +31,11 @@ public class GeneralStrategy {
      */
     public LocalDate createDate;
 
+
     /**
      * 此策略的订阅人数
      */
+
     public int subscribeNum;
 
     /**
@@ -75,5 +77,68 @@ public class GeneralStrategy {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+    public String getStrategyID() {
+        return strategyID;
+    }
+
+    public void setStrategyID(String strategyID) {
+        this.strategyID = strategyID;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDate createDate) {
+        this.createDate = createDate;
+    }
+
+    public int getSubscribeNum() {
+        return subscribeNum;
+    }
+
+    public void setSubscribeNum(int subscribeNum) {
+        this.subscribeNum = subscribeNum;
+    }
+
+    public String getAnnualizedRateOfReturn() {
+        return annualizedRateOfReturn;
+    }
+
+    public void setAnnualizedRateOfReturn(String annualizedRateOfReturn) {
+        this.annualizedRateOfReturn = annualizedRateOfReturn;
+    }
+
+    public String getMaxStrategyTraceBackRate() {
+        return maxStrategyTraceBackRate;
+    }
+
+    public void setMaxStrategyTraceBackRate(String maxStrategyTraceBackRate) {
+        this.maxStrategyTraceBackRate = maxStrategyTraceBackRate;
+    }
+
+    public String getStrategyCumulativeReturnChart() {
+        return strategyCumulativeReturnChart;
+    }
+
+    public void setStrategyCumulativeReturnChart(String strategyCumulativeReturnChart) {
+        this.strategyCumulativeReturnChart = strategyCumulativeReturnChart;
+    }
+
+    public String getBaseCumulativeReturnChart() {
+        return baseCumulativeReturnChart;
+    }
+
+    public void setBaseCumulativeReturnChart(String baseCumulativeReturnChart) {
+        this.baseCumulativeReturnChart = baseCumulativeReturnChart;
     }
 }

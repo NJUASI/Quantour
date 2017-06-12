@@ -8,7 +8,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  response.setHeader("Pragma","No-cache");  response.setHeader("Cache-Control","no-cache");  response.setDateHeader("Expires", 0);  %>
+<% response.setHeader("Pragma", "No-cache");
+    response.setHeader("Cache-Control", "no-cache");
+    response.setDateHeader("Expires", 0); %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -23,6 +25,7 @@
     <link href="../css/startLoader.css" rel="stylesheet">
     <link href="../css/bootstrap-slider.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/flat/green.css" rel="stylesheet">
     <style type="text/css" rel="stylesheet">
         footer {
             margin-top: 700px;
@@ -30,7 +33,6 @@
             height: 100px;
             background-color: #444444;
         }
-
 
         /*#myTab{*/
         /*display: none;*/
@@ -99,159 +101,9 @@
                         </div>
                     </div>
 
-
-                    <div class="form-group  col-md-3 col-md-offset-1  inputBlock">
-                        <label class="col-md-3" style="margin-top: 7px;margin-left: -14px">ST：</label>
-                        <div class=' col-md-8'>
-                            <select id="stType" class="col-md-12 selectpicker show-tick form-inline">
-                                <option value="INCLUDE" selected>包含ST</option>
-                                <option value="EXCLUDE">排除ST</option>
-                                <option value="ONLY">仅有ST</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-
-                <div class="row">
-
-
-                    <div class="form-group row col-md-4 col-md-offset-1 inputBlock">
-                        <label class="col-md-4" style="margin-top: 7px">选择板块：</label>
-                        <div class='col-md-7' style="margin-left: -10px">
-                            <select id="blockTypes" name="blockTypes"
-                                    class=" selectpicker show-tick form-control"
-                                    multiple data-live-search="false" placeholder="请选择板块">
-                                <option value="ZB" selected>主板</option>
-                                <option value="ZXB" selected>中小板</option>
-                                <option value="CYB" selected>创业板</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-3 inputBlock">
-                        <label class="col-md-5" style="margin-top: 7px">行业板块：</label>
-                        <div class='col-md-7' style="margin-left: -30px">
-                            <select id="industryBlock" name="industryBlock" multiple data-live-search="true"  data-live-search-placeholder="请选择行业" data-selected-text-format="count > 2"
-                                    data-actions-box="true" rows="10" style="width:200px" class="selectpicker show-tick form-control col-md-7">
-
-                                <option value="金融行业" selected>金融行业</option>
-                                <option value="房地产" selected>房地产</option>
-                                <option value="综合行业" selected>综合行业</option>
-                                <option value="建筑建材" selected>建筑建材</option>
-                                <option value="玻璃行业" selected>玻璃行业</option>
-                                <option value="家电行业" selected>家电行业</option>
-                                <option value="纺织行业" selected>纺织行业</option>
-                                <option value="食品行业" selected>食品行业</option>
-                                <option value="电子信息" selected>电子信息</option>
-                                <option value="交通运输" selected>交通运输</option>
-                                <option value="汽车制造" selected>汽车制造</option>
-                                <option value="商业百货" selected>商业百货</option>
-                                <option value="电力行业" selected>电力行业</option>
-                                <option value="酒店旅游" selected>酒店旅游</option>
-                                <option value="机械行业" selected>机械行业</option>
-                                <option value="农林牧渔" selected>农林牧渔</option>
-                                <option value="电器行业" selected>电器行业</option>
-                                <option value="电子器件" selected>电子器件</option>
-                                <option value="石油行业" selected>石油行业</option>
-                                <option value="有色金属" selected>有色金属</option>
-                                <option value="生物制药" selected>生物制药</option>
-                                <option value="医疗器械" selected>医疗器械</option>
-                                <option value="物资外贸" selected>物资外贸</option>
-                                <option value="传媒娱乐" selected>传媒娱乐</option>
-                                <option value="发电设备" selected>发电设备</option>
-                                <option value="水泥行业" selected>水泥行业</option>
-                                <option value="塑料制品" selected>塑料制品</option>
-                                <option value="钢铁行业" selected>钢铁行业</option>
-                                <option value="化纤行业" selected>化纤行业</option>
-                                <option value="农药化肥" selected>农药化肥</option>
-                                <option value="公路桥梁" selected>公路桥梁</option>
-                                <option value="造纸行业" selected>造纸行业</option>
-                                <option value="化工行业" selected>化工行业</option>
-                                <option value="环保行业" selected>环保行业</option>
-                                <option value="煤炭行业" selected>煤炭行业</option>
-                                <option value="酿酒行业" selected>酿酒行业</option>
-                                <option value="供水供气" selected>供水供气</option>
-                                <option value="开发区" selected>开发区</option>
-                                <option value="印刷包装" selected>印刷包装</option>
-                                <option value="纺织机械" selected>纺织机械</option>
-                                <option value="仪器仪表" selected>仪器仪表</option>
-                                <option value="飞机制造" selected>飞机制造</option>
-                                <option value="其它行业" selected>其它行业</option>
-                                <option value="家具行业" selected>家具行业</option>
-                                <option value="摩托车" selected>摩托车</option>
-                                <option value="服装鞋类" selected>服装鞋类</option>
-                                <option value="陶瓷行业" selected>陶瓷行业</option>
-                                <option value="船舶制造" selected>船舶制造</option>
-                                <option value="次新股" selected>次新股</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3 inputBlock">
-                        <label class="col-md-5" style="margin-top: 7px">地域板块：</label>
-                        <div class='col-md-7' style="margin-left: -30px">
-                            <select id="provinceBlock" name="provinceBlock" multiple data-live-search="true"  data-live-search-placeholder="请选择行业" data-selected-text-format="count > 2"
-                                    data-actions-box="true" data-size="10" class="selectpicker show-tick form-control col-md-7">
-                                <option value="深圳" selected>深圳</option>
-                                <option value="北京" selected>北京</option>
-                                <option value="吉林" selected>吉林</option>
-                                <option value="江苏" selected>江苏</option>
-                                <option value="辽宁" selected>辽宁</option>
-                                <option value="广东" selected>广东</option>
-                                <option value="浙江" selected>浙江</option>
-                                <option value="湖南" selected>湖南</option>
-                                <option value="河北" selected>河北</option>
-                                <option value="新疆" selected>新疆</option>
-                                <option value="山东" selected>山东</option>
-                                <option value="河南" selected>河南</option>
-                                <option value="山西" selected>山西</option>
-                                <option value="江西" selected>江西</option>
-                               <option value=" 安徽" selected>安徽</option>
-                               <option value=" 湖北" selected>湖北</option>
-                               <option value=" 内蒙" selected>内蒙</option>
-                                <option value="海南" selected>海南</option>
-                                <option value="四川" selected>四川</option>
-                                <option value="重庆" selected>重庆</option>
-                                <option value="陕西" selected>陕西</option>
-                                <option value="广西" selected>广西</option>
-                                <option value="福建" selected>福建</option>
-                                <option value="天津" selected>天津</option>
-                                <option value="云南" selected>云南</option>
-                                <option value="贵州" selected>贵州</option>
-                                <option value="甘肃" selected>甘肃</option>
-                                <option value="黑龙江" selected>黑龙江</option>
-                                <option value="宁夏" selected>宁夏</option>
-                                <option value="青海" selected>青海</option>
-                                <option value="上海" selected>上海</option>
-                                <option value="西藏" selected>西藏</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="row col-md-2 col-md-offset-2">
-                        <strong id="blockTypesError"  style="color:indianred;margin-left: 33px" hidden> <span class="glyphicon glyphicon glyphicon-remove-circle"></span>板块不能为空</strong>
-                    </div>
-
-                    <div  class="row col-md-2 col-md-offset-2">
-                        <strong id="industryError" style="color:indianred;margin-left: 33px" hidden> <span class="glyphicon glyphicon glyphicon-remove-circle"></span> 行业不能为空</strong>
-                    </div>
-
-                    <div class="row col-md-2 col-md-offset-1">
-                        <strong id="provinceError" style="color:indianred;margin-left: 33px" hidden> <span class="glyphicon glyphicon glyphicon-remove-circle"></span> 地域不能为空</strong>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-offset-1 col-md-4 inputBlock">
-                        <label class="col-md-4" style="margin-top: 7px">调仓周期：</label>
-                        <div class=' col-md-4 ' style="margin-left: -10px">
+                    <div class="form-group col-md-4 inputBlock">
+                        <label class="col-md-4" style="margin-top: 7px;margin-left: 40px">调仓周期：</label>
+                        <div class=' col-md-4 ' style="margin-left: -30px">
                             <input id="holdingPeriod" type="text" class="form-control col-md-1"
                                    name="holdingPeriod" placeholder="请输入天数">
                         </div>
@@ -267,22 +119,204 @@
                         <label class="col-md-1" style="margin-top: 7px">支</label>
                     </div>
 
-
                 </div>
                 <div class="row">
-                    <div class="row col-md-2 col-md-offset-2" >
-                        <strong  id="holdingPeriodError" hidden style="color:indianred;margin-left: 33px"> <span class="glyphicon glyphicon glyphicon-remove-circle"></span> 请输入合法天数</strong>
+                    <div class="row col-md-2 col-md-offset-5">
+                        <strong id="holdingPeriodError" hidden style="color:indianred;margin-left: 50px"> <span
+                                class="glyphicon glyphicon glyphicon-remove-circle"></span> 请输入合法天数</strong>
                     </div>
 
-                    <div class="row col-md-2 col-md-offset-2" >
-                        <strong id="maxHoldingError" hidden style="color:indianred;margin-left: 4px"><span class="glyphicon glyphicon glyphicon-remove-circle"></span> 请输入合法股票数</strong>
+                    <div class="row col-md-2 col-md-offset-2">
+                        <strong id="maxHoldingError" hidden style="color:indianred;margin-left: 4px"><span
+                                class="glyphicon glyphicon glyphicon-remove-circle"></span> 请输入合法股票数</strong>
                     </div>
 
                 </div>
 
+                    <c:if test="${sessionScope.user!=null}">
+                        <div class="row " style="margin-top: 15px">
+                            <div class="col-md-offset-1 col-md-1">
+                                <div>
+                                    <label class="radio1">
+                                        <input class="radio_group" type="radio" name="pool" value="blockPool" checked>全部股票
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div>
+                                    <label class="radio1">
+                                        <input class="radio_group" type="radio" name="pool" value="myPool">我的股票
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+
+
+                <div id="blockStock">
+                    <div class="row">
+
+
+                        <div class="form-group row col-md-4 col-md-offset-1 inputBlock">
+                            <label class="col-md-4" style="margin-top: 7px">选择板块：</label>
+                            <div class='col-md-7' style="margin-left: -10px">
+                                <select id="blockTypes" name="blockTypes"
+                                        class=" selectpicker show-tick form-control"
+                                        multiple data-live-search="false" placeholder="请选择板块">
+                                    <option value="ZB" selected>主板</option>
+                                    <option value="ZXB" selected>中小板</option>
+                                    <option value="CYB" selected>创业板</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3 inputBlock">
+                            <label class="col-md-5" style="margin-top: 7px">行业板块：</label>
+                            <div class='col-md-7' style="margin-left: -30px">
+                                <select id="industryBlock" name="industryBlock" multiple data-live-search="true"
+                                        data-live-search-placeholder="请选择行业" data-selected-text-format="count > 2"
+                                        data-actions-box="true" rows="10" style="width:200px"
+                                        class="selectpicker show-tick form-control col-md-7">
+
+                                    <option value="金融行业" selected>金融行业</option>
+                                    <option value="房地产" selected>房地产</option>
+                                    <option value="综合行业" selected>综合行业</option>
+                                    <option value="建筑建材" selected>建筑建材</option>
+                                    <option value="玻璃行业" selected>玻璃行业</option>
+                                    <option value="家电行业" selected>家电行业</option>
+                                    <option value="纺织行业" selected>纺织行业</option>
+                                    <option value="食品行业" selected>食品行业</option>
+                                    <option value="电子信息" selected>电子信息</option>
+                                    <option value="交通运输" selected>交通运输</option>
+                                    <option value="汽车制造" selected>汽车制造</option>
+                                    <option value="商业百货" selected>商业百货</option>
+                                    <option value="电力行业" selected>电力行业</option>
+                                    <option value="酒店旅游" selected>酒店旅游</option>
+                                    <option value="机械行业" selected>机械行业</option>
+                                    <option value="农林牧渔" selected>农林牧渔</option>
+                                    <option value="电器行业" selected>电器行业</option>
+                                    <option value="电子器件" selected>电子器件</option>
+                                    <option value="石油行业" selected>石油行业</option>
+                                    <option value="有色金属" selected>有色金属</option>
+                                    <option value="生物制药" selected>生物制药</option>
+                                    <option value="医疗器械" selected>医疗器械</option>
+                                    <option value="物资外贸" selected>物资外贸</option>
+                                    <option value="传媒娱乐" selected>传媒娱乐</option>
+                                    <option value="发电设备" selected>发电设备</option>
+                                    <option value="水泥行业" selected>水泥行业</option>
+                                    <option value="塑料制品" selected>塑料制品</option>
+                                    <option value="钢铁行业" selected>钢铁行业</option>
+                                    <option value="化纤行业" selected>化纤行业</option>
+                                    <option value="农药化肥" selected>农药化肥</option>
+                                    <option value="公路桥梁" selected>公路桥梁</option>
+                                    <option value="造纸行业" selected>造纸行业</option>
+                                    <option value="化工行业" selected>化工行业</option>
+                                    <option value="环保行业" selected>环保行业</option>
+                                    <option value="煤炭行业" selected>煤炭行业</option>
+                                    <option value="酿酒行业" selected>酿酒行业</option>
+                                    <option value="供水供气" selected>供水供气</option>
+                                    <option value="开发区" selected>开发区</option>
+                                    <option value="印刷包装" selected>印刷包装</option>
+                                    <option value="纺织机械" selected>纺织机械</option>
+                                    <option value="仪器仪表" selected>仪器仪表</option>
+                                    <option value="飞机制造" selected>飞机制造</option>
+                                    <option value="其它行业" selected>其它行业</option>
+                                    <option value="家具行业" selected>家具行业</option>
+                                    <option value="摩托车" selected>摩托车</option>
+                                    <option value="服装鞋类" selected>服装鞋类</option>
+                                    <option value="陶瓷行业" selected>陶瓷行业</option>
+                                    <option value="船舶制造" selected>船舶制造</option>
+                                    <option value="次新股" selected>次新股</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="row col-md-2 col-md-offset-2">
+                            <strong id="blockTypesError" style="color:indianred;margin-left: 33px" hidden> <span
+                                    class="glyphicon glyphicon glyphicon-remove-circle"></span>板块不能为空</strong>
+                        </div>
+
+                        <div class="row col-md-2 col-md-offset-2">
+                            <strong id="industryError" style="color:indianred;margin-left: 33px" hidden> <span
+                                    class="glyphicon glyphicon glyphicon-remove-circle"></span> 行业不能为空</strong>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group row col-md-4 col-md-offset-1 inputBlock">
+                            <label class="col-md-4" style="margin-top: 7px">ST信息：</label>
+                            <div class=' col-md-7' style="margin-left: -25px">
+                                <select id="stType" class="col-md-10 selectpicker show-tick form-inline">
+                                    <option value="INCLUDE" selected>包含ST</option>
+                                    <option value="EXCLUDE">排除ST</option>
+                                    <option value="ONLY">仅有ST</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3 inputBlock">
+                            <label class="col-md-5" style="margin-top: 7px">地域板块：</label>
+                            <div class='col-md-7' style="margin-left: -30px">
+                                <select id="provinceBlock" name="provinceBlock" multiple data-live-search="true"
+                                        data-live-search-placeholder="请选择地域" data-selected-text-format="count > 2"
+                                        data-actions-box="true" data-size="10"
+                                        class="selectpicker show-tick form-control col-md-7">
+                                    <option value="深圳" selected>深圳</option>
+                                    <option value="北京" selected>北京</option>
+                                    <option value="吉林" selected>吉林</option>
+                                    <option value="江苏" selected>江苏</option>
+                                    <option value="辽宁" selected>辽宁</option>
+                                    <option value="广东" selected>广东</option>
+                                    <option value="浙江" selected>浙江</option>
+                                    <option value="湖南" selected>湖南</option>
+                                    <option value="河北" selected>河北</option>
+                                    <option value="新疆" selected>新疆</option>
+                                    <option value="山东" selected>山东</option>
+                                    <option value="河南" selected>河南</option>
+                                    <option value="山西" selected>山西</option>
+                                    <option value="江西" selected>江西</option>
+                                    <option value=" 安徽" selected>安徽</option>
+                                    <option value=" 湖北" selected>湖北</option>
+                                    <option value=" 内蒙" selected>内蒙</option>
+                                    <option value="海南" selected>海南</option>
+                                    <option value="四川" selected>四川</option>
+                                    <option value="重庆" selected>重庆</option>
+                                    <option value="陕西" selected>陕西</option>
+                                    <option value="广西" selected>广西</option>
+                                    <option value="福建" selected>福建</option>
+                                    <option value="天津" selected>天津</option>
+                                    <option value="云南" selected>云南</option>
+                                    <option value="贵州" selected>贵州</option>
+                                    <option value="甘肃" selected>甘肃</option>
+                                    <option value="黑龙江" selected>黑龙江</option>
+                                    <option value="宁夏" selected>宁夏</option>
+                                    <option value="青海" selected>青海</option>
+                                    <option value="上海" selected>上海</option>
+                                    <option value="西藏" selected>西藏</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="row col-md-2 col-md-offset-6">
+                            <strong id="provinceError" style="color:indianred;margin-left: 0px" hidden> <span
+                                    class="glyphicon glyphicon glyphicon-remove-circle"></span> 地域不能为空</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="myStockPool" hidden style="margin-top: 20px;margin-bottom: 20px">
+                    <div class="row col-md-offset-2">
+                        <button type="button" id="modifyPool" class="btn btn-primary">编辑我的股票池</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
 
@@ -293,374 +327,8 @@
                     选择策略
                 </h4>
             </div>
-            <div class="panel-body">
-                <div class="row" style="margin-top: 20px">
-                    <!--左边选择栏  -->
-                    <div class="col-md-4 col-md-offset-1">
-                        <label class="">
-                            选股指标:
-                        </label>
 
-                        <select id="searchQuota" class="selectpicker col-md-6" onchange=quotaChange();
-                                data-live-search="true" data-size="10" data-live-search-placeholder="Search"
-                                data-actions-box="true" title="搜索指标">
-                            <option><span class="quota">N日平均成交额</span></option>
-                            <option class="quota">N日平均成交量</option>
-                            <option class="quota">N日乖离率</option>
-                            <option class="quota">N日波动率</option>
-                            <option class="quota">N日涨幅</option>
-                            <option class="quota">N日换手率</option>
-                            <optgroup label="价格">
-                                <option class="quota">开盘价</option>
-                                <option class="quota">收盘价</option>
-                                <option class="quota">最高价</option>
-                                <option class="quota">最低价</option>
-                                <option class="quota">前日收盘价</option>
-                                <option class="quota">后复权收盘价</option>
-                                <option class="quota">后复权均价</option>
-                            </optgroup>
-                            <optgroup label="股本">
-                                <option class="quota">总股本</option>
-                                <option class="quota">流通股本</option>
-                                <option class="quota">总市值</option>
-                                <option class="quota">流通市值</option>
-                                <option class="quota">股价振幅</option>
-                            </optgroup>
-                            <optgroup label="估值">
-                                <option class="quota">市盈率</option>
-                                <option class="quota">市销率</option>
-                                <option class="quota">市净率</option>
-                                <option class="quota">静态市盈率</option>
-                                <option class="quota">动态市盈率</option>
-                            </optgroup>
-
-                        </select>
-
-                        <!-- 选项卡组件（菜单项nav-tabs）-->
-                        <ul id="myTab1" class="nav nav-tabs col-md-12 col-xs-12" style="margin-top: 20px"
-                            role="tablist">
-                            <li class="active"><a href="#bulletin" role="tab" data-toggle="tab">行情</a></li>
-                            <li><a href="#rule" role="tab" data-toggle="tab">技术指标</a></li>
-                            <li><a href="#forum" role="tab" data-toggle="tab">股指</a></li>
-                            <li><a href="#security" role="tab" data-toggle="tab">其他</a></li>
-                        </ul>
-                        <!-- 选项卡面板 -->
-                        <div id="myTabContent1" class="tab-content">
-                            <div class="tab-pane fade in active" id="bulletin">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                style="border: 0px solid white" data-toggle="dropdown">股票价格
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                            <li role="presentation" class="dropdown-header">当日价格</li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">开盘价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">收盘价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">最高价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">最低价</a>
-                                            </li>
-                                            <li role="presentation" class="dropdown-header">其他价格</li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">前日收盘价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">日均成交价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">后复权开盘价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">后复权收盘价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">后复权最高价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">后复权最低价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">前日后复权收盘价</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">后复权均价</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                style="border: 0px solid white" data-toggle="dropdown">成交额
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">当日成交额</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">5日平均成交额</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">20日平均成交额</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">60日平均成交额</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">N日平均成交额</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                style="border: 0px solid white" data-toggle="dropdown">成交量
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">当日成交量</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">5日平均成交量</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">20日平均成交量</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">60日平均成交量</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">N日平均成交量</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                style="border: 0px solid white" data-toggle="dropdown">股价涨幅
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">当日涨幅</a>
-                                                <%--<span class="	glyphicon glyphicon-search"></span>--%>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">5日涨幅</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">20日涨幅</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">60日涨幅</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">N日涨幅</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                style="border: 0px solid white" data-toggle="dropdown">累计换手率
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">当日换手率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">5日换手率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">20日换手率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">60日换手率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">N日换手率</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                style="border: 0px solid white" data-toggle="dropdown">股本和市值
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">总股本</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">流通股本</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">总市值</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">流通市值</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default quota"
-                                                style="border: 0px solid white">股价振幅
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="rule">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                style="border: 0px solid white" data-toggle="dropdown">乖离率
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">5日乖离率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">10日乖离率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">20日乖离率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">30日乖离率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">N日乖离率</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                style="border: 0px solid white" data-toggle="dropdown">波动率
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">5日波动率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">10日波动率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">20日波动率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">30日波动率</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="quota" tabindex="-1">N日波动率</a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="forum">
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                                        市盈率
-                                    </button>
-
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                                        市净率
-                                    </button>
-
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                                        市销率
-                                    </button>
-
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                                        静态市盈率
-                                    </button>
-
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                                        动态市盈率
-                                    </button>
-
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="security"></div>
-
-                        </div>
-                    </div>
-                    <!--右边数据框-->
-                    <div class="col-md-6" style=" border-left: 1px solid slategray;">
-                    <label class="row col-md-3" style="margin-top:5px">
-                        选股条件:
-                    </label>
-                        <!-- 选项卡组件（菜单项nav-tabs）-->
-
-                    <ul id="myTab2" class="nav nav-tabs col-md-12 col-xs-12" style="margin-top: 5px"role="tablist">
-                    <li class="active"><a href="#choose" role="tab" data-toggle="tab">筛选条件</a></li>
-                    <li><a href="#rank" role="tab" data-toggle="tab">排名条件</a></li>
-                    </ul>
-                    <!-- 选项卡面板 -->
-                    <div id="myTabContent2" class="tab-content">
-                        <div class="tab-pane fade in active" id="choose">
-
-                            <div class="col-md-12 col-xs-12"
-                                 style="height:200px;max-height: 240px;overflow-y: auto">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>指标</th>
-                                        <th>比较符</th>
-                                        <th>值</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="quotaList">
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade in" id="rank">
-
-                            <div class="col-md-12 col-xs-12"
-                                 style="height:200px;max-height:  240px;overflow-y: auto">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>指标</th>
-                                        <th>次序</th>
-                                        <th>权重</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="rankList">
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                    </div>
-
-                </div>
-            </div>
+            <%@ include file="quotaSelect.jsp" %>
         </div>
 
 
@@ -713,7 +381,8 @@
                         </div>
                     </div>
                     <div class="row col-md-offset-9" id="wholeMessage" hidden>
-                        <strong style="color:indianred;margin-left: 4px"><span class="glyphicon glyphicon glyphicon-remove-circle"></span><span id="wholeError"> 请输入合法股票数</span></strong>
+                        <strong style="color:indianred;margin-left: 4px"><span
+                                class="glyphicon glyphicon glyphicon-remove-circle"></span><span id="wholeError"> 请输入合法股票数</span></strong>
                     </div>
                 </div>
             </div>
@@ -832,25 +501,25 @@
         </div>
     </div>
     <div class="tab-pane" id="recentlySoldPanel">
-       <div class="row">
-           <div class="col-md-12 table-responsive">
-               <table class="table table-hover table-condensed">
-                   <thead>
-                   <tr>
-                       <th>股票名</th>
-                       <th>股票代码</th>
-                       <th>买入日期</th>
-                       <th>卖出日期</th>
-                       <th>买入价格</th>
-                       <th>卖出价格</th>
-                       <th>涨幅</th>
-                   </tr>
-                   </thead>
-                   <tbody id="sold_stock_detail">
-                   </tbody>
-               </table>
-           </div>
-       </div>
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>股票名</th>
+                        <th>股票代码</th>
+                        <th>买入日期</th>
+                        <th>卖出日期</th>
+                        <th>买入价格</th>
+                        <th>卖出价格</th>
+                        <th>涨幅</th>
+                    </tr>
+                    </thead>
+                    <tbody id="sold_stock_detail">
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </div>
 </div>
@@ -877,11 +546,14 @@
                     <div class="form-group col-md-offset-1 col-md-6">
                         <label class="col-md-3 control-label" style="margin-top: -10px">策略名称：</label>
                         <div class="col-md-5">
-                            <input type="text" id="strategyName" class="form-control" style="margin-top: -17px;margin-left: -30px"
+                            <input type="text" id="strategyName" class="form-control"
+                                   style="margin-top: -17px;margin-left: -30px"
                                    placeholder="">
                         </div>
                         <div class="col-md-offset-2 col-md-5" id="nameErrorPanel" hidden>
-                        <strong style="color:indianred;margin-left: 14px"><span class="glyphicon glyphicon glyphicon-remove-circle"></span><span id="nameError"></span></strong>
+                            <strong style="color:indianred;margin-left: 14px"><span
+                                    class="glyphicon glyphicon glyphicon-remove-circle"></span><span
+                                    id="nameError"></span></strong>
                         </div>
                     </div>
                 </div>
@@ -892,7 +564,7 @@
                         <div class="col-md-10">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="control-label">板块：</label><span id="strategyBlock">主板<option value="创业板，中小板</span>
+                                    <label class="control-label">板块：</label><span id="strategyBlock">主板，创业板，中小板</span>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="control-label">ST：</label><span id="strategyST">仅为ST</span>
@@ -961,11 +633,13 @@
                                     <label class="control-label">策略描述：</label>
                                 </div>
                                 <div class="col-md-10">
-                                    <textarea rows="4" id="strategyDescription" style="width: 90%; margin-left: -20px"></textarea>
+                                    <textarea rows="4" id="strategyDescription"
+                                              style="width: 90%; margin-left: -20px"></textarea>
                                 </div>
                             </div>
-                            <div id="descriptionError"  class="row col-md-offset-2" hidden>
-                                <strong style="color:indianred;margin-left: 14px"><span class="glyphicon glyphicon glyphicon-remove-circle"></span><span>输入策略描述吸引更多人订阅</span></strong>
+                            <div id="descriptionError" class="row col-md-offset-2" hidden>
+                                <strong style="color:indianred;margin-left: 14px"><span
+                                        class="glyphicon glyphicon glyphicon-remove-circle"></span><span>输入策略描述吸引更多人订阅</span></strong>
                             </div>
                         </div>
                     </div>
@@ -995,7 +669,10 @@
                                 <button type="button" onclick='ensureCreate()' class="btn btn-primary">创建策略</button>
                             </c:when>
                             <c:otherwise>
-                                <button type="button" onclick='ensureCreate("<%=((User)session.getAttribute("user")).getUserName()%>")' class="btn btn-primary">创建策略</button>
+                                <button type="button"
+                                        onclick='ensureCreate("<%=((User)session.getAttribute("user")).getUserName()%>")'
+                                        class="btn btn-primary">创建策略
+                                </button>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -1009,31 +686,24 @@
     <div class="modal-dialog" style="width: 40%">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">新建静态股票池</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">编辑股票池</h4>
             </div>
             <div class="modal-body">
-                <p class="" style="margin-top: 5px">股票池名称:</p>
-                <input type="text" class="form-control" placeholder="取个好名字" aria-describedby="basic-addon1">
-                <p class="error" style="display: none;"></p>
-                <p class="" style="margin-top: 5px">股票池说明:</p>
-                <textarea type="text" class="form-control" placeholder="股票池说明"></textarea>
-                <p class="error" style="display: none;"></p>
-                <div class="" style="margin-top: 5px;">
-                    <p class="static">股票列表:</p>
-                    <textarea type="text" class="form-control" rows="10" placeholder="请输入股票代码 以空格隔开"></textarea>
-                </div>
-                <p class="error"></p>
+                <p class="static" style="margin-top: 5px;">股票列表:</p>
+                <textarea type="text" id="poolCode" class="form-control" rows="10" placeholder="请输入股票代码 以空格隔开"></textarea>
+
+                <strong id="poolCodeError" style="color:indianred;margin-left: 0px"></strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary save ">保存</button>
+                <button type="button" id="savePool" class="btn btn-primary">保存</button>
             </div>
         </div>
     </div><!-- /.modal -->
 </div>
 
-<%@ include file="logIn.jsp" %>
 <div class="modal fade" id="circleModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:70%">
         <div class="modal-content">
@@ -1069,6 +739,8 @@
     </div><!-- /.modal -->
 </div>
 
+<%@ include file="logIn.jsp" %>
+
 <footer>
 
 </footer>
@@ -1086,6 +758,7 @@
 <script src="../js/logIn.js"></script>
 <script src="../js/quotaSelect.js"></script>
 
+<script src="../js/icheck.js"></script>
 
 <script src="../js/bootstrap-slider.js"></script>
 <script src="../js/bootstrap-select.js"></script>
@@ -1106,98 +779,119 @@
             $("body").removeClass("loaded");
             window.location.href = "/stocks";
         });
+
+        $('.radio_group').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+
+        $('.radio_group').on('ifChecked', function () {
+
+                $("#blockStock").slideToggle("slow");
+                $("#myStockPool").slideToggle("slow");
+
+        });
+
+        $('#modifyPool').click(function () {
+            $("#strategyPool").modal("toggle");
+            //TODO FJJ 从我的底层股票初始化编辑页面
+            $("#poolCode").val("123456 000001 000002");
+        })
+
+        $('#savePool').click(function () {
+            //TODO FJJ 从我的底层股票初始化编辑页面
+            //TODO FJJ  存数据库 需要 返回成功 或者哪个代码不存在
+            var codes=$("#poolCode").val().split(" ");
+            alert($("#poolCode").val());
+            var reg = /^\d{6}$/;
+            for(var i=0;i<codes.length; i++){
+                var code=codes[i];
+                if(!reg.test(code)){
+                    $("#poolCodeError").html("你输入的代码"+code+"格式不正确");
+                    setTimeout( "$(\"#poolCodeError\").html('')",3000);
+                    return false;
+                }
+            }
+
+            //TODO fjj codes 是保存的代码数组
+
+        });
+
+
+
         $("#community").addClass("act");
     });
 
 
-
-
     function getTraceBackCriteria() {
         var user = "<%= (User)session.getAttribute("user")%>";
-        if(user=="null" ){
+        if (user == "null") {
             $("#login").modal("toggle");
             $("#wholeMessage").show();
             $("#wholeError").html("请先登录");
-            setTimeout("$('#wholeMessage').hide();",5000);
+            setTimeout("$('#wholeMessage').hide();", 5000);
             return false;
         }
         // alert($("#startDate").val() + "\n" + $("#endDate").val() + "\n" + $("#formativePeriod").val() + "\n" + $("#holdingPeriod").val()
         //     + "\n" + $("#stType").val() + "\n" +$("#blockTypes").val() + "\n" +$("#baseStockEve").val() + "\n" + isCustomized
         //     + "\n" +$("#formativeStrategy").val() + "\n" +$("#pickStrategy").val() + "\n"+$("#rank").val());
         var isZero;
-        if( $("#blockTypes").val()==" "||$("#blockTypes").val()==""||$("#blockTypes").val()==null){
-            $('#blockTypesError').show();
-            setTimeout("$('#blockTypesError').hide();",3000);
-            window.location.href="#";
-            isZero= false;
-        }
 
-        if($("#industryBlock").val()==" "||$("#industryBlock").val()==""||$("#industryBlock").val()==null){
-            $('#industryError').show();
-            setTimeout("$('#industryError').hide();",3000);
-            window.location.href="#";
-            isZero= false;
-        }
-        if($("#provinceBlock").val()[0]==""||$("#provinceBlock").val()[0]==null){
-            $('#provinceError').show();
-            setTimeout("$('#provinceError').hide();",3000);
-            window.location.href="#";
-            isZero= false;
-        }
 
         var reg = /^\d{1,2}$/;
         if (!reg.test($('#maxHolding').val())) {
             $('#maxHoldingError').show();
-            $('#maxHolding').css("border","1px solid red");
-            window.location.href="#";
-            isZero= false;
+            $('#maxHolding').css("border", "1px solid red");
+            window.location.href = "#";
+            isZero = false;
         }
         if (!reg.test($("#holdingPeriod").val())) {
             $('#holdingPeriodError').show();
-            $("#holdingPeriod").css("border","1px solid red");
-            window.location.href="#";
-            isZero= false;
-        };
+            $("#holdingPeriod").css("border", "1px solid red");
+            window.location.href = "#";
+            isZero = false;
+        }
+        ;
 
         var reg2 = /^[1-9]$/;
         $(".quotaWeight").each(function () {
-            var num=$(this).val();
-            if(num==0||num=="0"){
-                $(this).css("border","2px solid red");
+            var num = $(this).val();
+            if (num == 0 || num == "0") {
+                $(this).css("border", "2px solid red");
                 $("#wholeMessage").show();
                 $("#wholeError").html(" 你输入的排名条件错误");
-                setTimeout("$('#wholeMessage').hide();",3000)
-                isZero=false;
-            }else if (!reg2.test($(this).val())) {
-                $(this).css("border","2px solid red");
+                setTimeout("$('#wholeMessage').hide();", 3000)
+                isZero = false;
+            } else if (!reg2.test($(this).val())) {
+                $(this).css("border", "2px solid red");
                 $("#wholeMessage").show();
                 $("#wholeError").html(" 你输入的排名条件错误");
-                setTimeout("$('#wholeMessage').hide();",3000)
-                isZero=false;
+                setTimeout("$('#wholeMessage').hide();", 3000)
+                isZero = false;
             }
         });
         var reg3 = /^\d{1,20}$/;
         var isZero;
         $(".quotaNum").each(function () {
-            var num=$(this).val();
-            if(num==0||num=="0"){
-                $(this).css("border","2px solid red");
+            var num = $(this).val();
+            if (num == 0 || num == "0") {
+                $(this).css("border", "2px solid red");
                 $("#wholeMessage").show();
                 $("#wholeError").html("你输入的筛选条件错误");
-                setTimeout("$('#wholeMessage').hide();",3000)
-                isZero=false;
-            }else if (!reg3.test($(this).val())) {
-                $(this).css("border","2px solid red");
+                setTimeout("$('#wholeMessage').hide();", 3000)
+                isZero = false;
+            } else if (!reg3.test($(this).val())) {
+                $(this).css("border", "2px solid red");
                 $("#wholeMessage").show();
                 $("#wholeError").html(" 你输入的筛选条件错误");
-                setTimeout("$('#wholeMessage').hide();",3000)
-                isZero=false;
+                setTimeout("$('#wholeMessage').hide();", 3000)
+                isZero = false;
             }
         });
         var reg4 = /^\d{1,3}$/;
         $(".numOfN").each(function () {
-            var temp= $(this).is(":hidden");
-            if(!temp) {
+            var temp = $(this).is(":hidden");
+            if (!temp) {
                 var num = $(this).val();
                 if (num == 0 || num == "0") {
                     $(this).css("border", "2px solid red");
@@ -1216,12 +910,38 @@
                 }
             }
         });
-        if(isZero==false){
+
+        //自选股票池
+        var pool=$("input[name='pool']:checked").val();
+        if(pool=="myPool"){
+        }else{
+            if ($("#blockTypes").val() == " " || $("#blockTypes").val() == "" || $("#blockTypes").val() == null) {
+                $('#blockTypesError').show();
+                setTimeout("$('#blockTypesError').hide();", 3000);
+                window.location.href = "#";
+                isZero = false;
+            }
+
+            if ($("#industryBlock").val() == " " || $("#industryBlock").val() == "" || $("#industryBlock").val() == null) {
+                $('#industryError').show();
+                setTimeout("$('#industryError').hide();", 3000);
+                window.location.href = "#";
+                isZero = false;
+            }
+            if ($("#provinceBlock").val()[0] == "" || $("#provinceBlock").val()[0] == null) {
+                $('#provinceError').show();
+                setTimeout("$('#provinceError').hide();", 3000);
+                window.location.href = "#";
+                isZero = false;
+            }
+        }
+
+        if (isZero == false) {
             return false;
         }
         // 添加选股条件
         var filterConditions = new Array();
-            var filterNum = 0;
+        var filterNum = 0;
         $(".quotaRow").each(function () {
             var dateOfIndicator = $(this).find(".numOfN").val();
             var separatorResult = separateIndicator($(this).find(".quotaName").html().trim());
@@ -1280,12 +1000,13 @@
             }
             rankNum++;
         });
-        if(rankNum+filterNum==0){
+        if (rankNum + filterNum == 0) {
             $("#wholeMessage").show();
             $("#wholeError").html(" 请选择筛选条件或者排名条件");
-            setTimeout("$('#wholeMessage').hide();",3000)
+            setTimeout("$('#wholeMessage').hide();", 3000)
             return false;
         }
+
 
         // 添加择时条件
         var marketSelectingConditions = new Array();
@@ -1294,16 +1015,20 @@
         // "formativePeriod": $("#formativePeriod").val();
 
 //        alert("filterConditions: " +  filterConditions + "\n\n" + "rankConditions: " + rankConditions);
-        var start=new Date( $("#startDate").val());
-        var end=new Date($("#endDate").val());
-        if(end-start<1000*60*60*24*$("#holdingPeriod").val()){
+        var start = new Date($("#startDate").val());
+        var end = new Date($("#endDate").val());
+        if (end - start < 1000 * 60 * 60 * 24 * $("#holdingPeriod").val()) {
             $("#wholeMessage").show();
             $("#wholeError").html(" 你输入的日期少于持仓周期");
-            setTimeout("$('#wholeMessage').hide();",3000)
+            setTimeout("$('#wholeMessage').hide();", 3000)
             return false;
         }
 
-
+        if(pool=="myPool"){
+            //TODO fjj 如果是自己的股票池从数据库得到股票池
+        }else{
+            //TODO 从界面拿各种板块信息
+        }
 
 //        TODO fjj  行业和地狱的获得
         $("#provinceBlock").val();
@@ -1340,7 +1065,7 @@
 
         var jsonData = getTraceBackCriteria();
 
-        if(jsonData==false){
+        if (jsonData == false) {
             return false;
         }
 
@@ -1398,34 +1123,34 @@
 
                     // 股票周期的对比图
                     $("#tb_cycle_ab").empty();
-                    $("#tb_cycle_ab").append("<tr>"+
-                  "<td>" + abReturnPeriod["positivePeriodsNum"] + "</td>"+
-                  "<td>" + abReturnPeriod["negativePeriodNum"] + "</td>"+
-                  "<td>" + abReturnPeriod["winRate"] + "</td>"+
-                  "</tr>");
+                    $("#tb_cycle_ab").append("<tr>" +
+                        "<td>" + abReturnPeriod["positivePeriodsNum"] + "</td>" +
+                        "<td>" + abReturnPeriod["negativePeriodNum"] + "</td>" +
+                        "<td>" + abReturnPeriod["winRate"] + "</td>" +
+                        "</tr>");
 
                     $("#tb_cycle_re").empty();
-                    $("#tb_cycle_re").append("<tr>"+
-                    "<td>" + reReturnPeriod["positivePeriodsNum"] + "</td>"+
-                    "<td>" + reReturnPeriod["negativePeriodNum"] + "</td>"+
-                    "<td>" + reReturnPeriod["winRate"] + "</td>"+
-                    "</tr>");
+                    $("#tb_cycle_re").append("<tr>" +
+                        "<td>" + reReturnPeriod["positivePeriodsNum"] + "</td>" +
+                        "<td>" + reReturnPeriod["negativePeriodNum"] + "</td>" +
+                        "<td>" + reReturnPeriod["winRate"] + "</td>" +
+                        "</tr>");
                     // alert("--------------------2----------------");
 
 
                     // 持有周期详情
                     $("#tb_detail").empty();
                     for (var i = 0; i < holdingDetails.length; i++) {
-                        $("#tb_detail").append("<tr>"+
-                        "<td style='text-align: center'><span class='circle' style='color:#7291CA'>" + holdingDetails[i]["periodSerial"] + "<span></td>"+
-                        "<td>" + holdingDetails[i]["startDate"] + "</td>"+
-                        "<td>" + holdingDetails[i]["endDate"] + "</td>"+
-                        "<td>" + holdingDetails[i]["holdingNum"] + "</td>"+
-                        "<td>" + (holdingDetails[i]["strategyReturn"] * 100).toFixed(2) + "%" + "</td>"+
-                        "<td>" + (holdingDetails[i]["baseReturn"] * 100).toFixed(2) + "%" + "</td>"+
-                        "<td>" + (holdingDetails[i]["excessReturn"] * 100).toFixed(2) + "%" + "</td>"+
-                        "<td>" + holdingDetails[i]["remainInvestment"].toFixed(2) + "</td>"+
-                        "</tr>");
+                        $("#tb_detail").append("<tr>" +
+                            "<td style='text-align: center'><span class='circle' style='color:#7291CA'>" + holdingDetails[i]["periodSerial"] + "<span></td>" +
+                            "<td>" + holdingDetails[i]["startDate"] + "</td>" +
+                            "<td>" + holdingDetails[i]["endDate"] + "</td>" +
+                            "<td>" + holdingDetails[i]["holdingNum"] + "</td>" +
+                            "<td>" + (holdingDetails[i]["strategyReturn"] * 100).toFixed(2) + "%" + "</td>" +
+                            "<td>" + (holdingDetails[i]["baseReturn"] * 100).toFixed(2) + "%" + "</td>" +
+                            "<td>" + (holdingDetails[i]["excessReturn"] * 100).toFixed(2) + "%" + "</td>" +
+                            "<td>" + holdingDetails[i]["remainInvestment"].toFixed(2) + "</td>" +
+                            "</tr>");
                     }
 
                     $(".circle").click(function () {
@@ -1446,13 +1171,13 @@
 //                                "<td>" + 股价振幅 + "</td>"+
 //                                "</tr>");
 //                        }
-                          $("#circleModal").modal("toggle");
+                        $("#circleModal").modal("toggle");
                     })
 
                     $(".circle").hover(function () {
-                        $(this).css({"cursor": "pointer","text-decoration":" underline"});
+                        $(this).css({"cursor": "pointer", "text-decoration": " underline"});
                     }, function () {
-                        $(this).css({"color":"#7291CA","text-decoration":" none"});
+                        $(this).css({"color": "#7291CA", "text-decoration": " none"});
                     });
 
                     // alert("--------------------3----------------");
@@ -1460,18 +1185,17 @@
                     // 卖出的股票详情
                     $("#sold_stock_detail").empty();
                     for (var i = 0; i < transferDetails.length; i++) {
-                        $("#sold_stock_detail").append("<tr>"+
-                       "<td>" + transferDetails[i]["stockName"] + "</td>"+
-                       "<td>" + transferDetails[i]["stockCode"] + "</td>"+
-                       "<td>" + transferDetails[i]["buyDate"] + "</td>"+
-                       "<td>" + transferDetails[i]["sellDate"] + "</td>"+
-                       "<td>" + transferDetails[i]["buyPrice"]+ "</td>"+
-                       "<td>" + transferDetails[i]["sellPrice"]+ "</td>"+
-                       "<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>"+
-                       "</tr>");
+                        $("#sold_stock_detail").append("<tr>" +
+                            "<td>" + transferDetails[i]["stockName"] + "</td>" +
+                            "<td>" + transferDetails[i]["stockCode"] + "</td>" +
+                            "<td>" + transferDetails[i]["buyDate"] + "</td>" +
+                            "<td>" + transferDetails[i]["sellDate"] + "</td>" +
+                            "<td>" + transferDetails[i]["buyPrice"] + "</td>" +
+                            "<td>" + transferDetails[i]["sellPrice"] + "</td>" +
+                            "<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>" +
+                            "</tr>");
                     }
                     // alert("--------------------4----------------");
-
 
 
                     // // 固定形成期的赢率分析
@@ -1526,12 +1250,12 @@
                     $("#coverPanel").show();
                     $("#wholeMessage").show();
                     $("#wholeError").html("请再次确认您输入的内容是否合法");
-                    setTimeout("$('#wholeMessage').hide();",3000)
+                    setTimeout("$('#wholeMessage').hide();", 3000)
                 } else {
                     $("#coverPanel").show();
                     $("#wholeMessage").show();
                     $("#wholeError").html("请再次确认您输入的内容是否合法");
-                    setTimeout("$('#wholeMessage').hide();",3000)
+                    setTimeout("$('#wholeMessage').hide();", 3000)
                 }
             },
 
@@ -1539,33 +1263,32 @@
                 $("#coverPanel").show();
                 $("#wholeMessage").show();
                 $("#wholeError").html("请再次确认您输入的内容是否合法");
-                setTimeout("$('#wholeMessage').hide();",3000)
+                setTimeout("$('#wholeMessage').hide();", 3000)
             }
         });
     }
 
 
-
     /**
      * 用户确认保存策略
      */
-    function ensureCreate(curUser){
+    function ensureCreate(curUser) {
 
-            if($("#strategyName").val().trim()==""){
-                $('#nameErrorPanel').show();
-                $('#nameError').html("策略名称必须填写");
-                return false;
-            }else{
-                $('#nameErrorPanel').hide();
-            }
+        if ($("#strategyName").val().trim() == "") {
+            $('#nameErrorPanel').show();
+            $('#nameError').html("策略名称必须填写");
+            return false;
+        } else {
+            $('#nameErrorPanel').hide();
+        }
 
 
-            if($("#strategyDescription").val().trim()==""){
-                $('#descriptionError').show();
-                return false;
-            }else{
-                $('#descriptionError').hide();
-            }
+        if ($("#strategyDescription").val().trim() == "") {
+            $('#descriptionError').show();
+            return false;
+        } else {
+            $('#descriptionError').hide();
+        }
 
         alert("--------ENTER--------");
         var strategyID = $("#strategyName").val();
@@ -1590,7 +1313,7 @@
             type: "post",
             async: true,
             url: "/strategy/save",
-            data:{
+            data: {
                 "strategy": JSON.stringify(strategyData)
             },
 
@@ -1605,7 +1328,7 @@
                     // 提示错误信息
                     $('#nameErrorPanel').show();
                     $('#nameError').html(array[1]);
-                } else if  (array[0] == "-2"){
+                } else if (array[0] == "-2") {
                     $('#nameErrorPanel').show();
                     $('#nameError').html("策略名称已被创建");
                 }
@@ -1752,9 +1475,9 @@
         $("#createStrategy").click(function () {
 
             var jsonData = getTraceBackCriteria();
-            if(jsonData==false){
+            if (jsonData == false) {
                 return false;
-            }else {
+            } else {
                 $("#mymodal").modal("toggle");
                 var blockType = "";
                 for (var i = 0; i < $("#blockTypes").val().length; i++) {

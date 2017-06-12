@@ -343,7 +343,7 @@
       ];
     },
     selectAllText: '全选',
-    deselectAllText: 'Deselect All',
+    deselectAllText: '全删',
     doneButton: false,
     doneButtonText: 'Close',
     multipleSeparator: ', ',
