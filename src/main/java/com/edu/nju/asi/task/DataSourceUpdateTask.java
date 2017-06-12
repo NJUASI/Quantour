@@ -53,14 +53,15 @@ public class DataSourceUpdateTask {
      */
     private void handle(){
         init();
-        fileHelper.create();
-        crawler.handleStock();
-        storer.storeStock();
-        storer.storeStockSearch();
-        crawler.handleAdjStock();
-        storer.storeAdjData();
-        fileHelper.delete();
-        taskInfoHelper.clearInfo();
+//        fileHelper.create();
+//        crawler.handleStock();
+        crawler.handleAreaAndIndustry();
+//        storer.storeStock();
+//        storer.storeStockSearch();
+//        crawler.handleAdjStock();
+//        storer.storeAdjData();
+//        fileHelper.delete();
+//        taskInfoHelper.clearInfo();
     }
 
     /**

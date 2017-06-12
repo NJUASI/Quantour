@@ -8,16 +8,25 @@ import java.io.IOException;
 public class CrawingAdjStock {
 
     /**
-     * 爬取复权数据和区域，行业信息
+     * 爬取复权数据
      *
      * @author ByronDong
      * @updateTime 2017/6/2
      */
-    public void handle(){
-        this.crawArea();
-        this.crawIndustry();
+    public void handleAdj(){
         this.crawHistoryFront();
         this.crawHistoryAfter();
+    }
+
+    /**
+     * 爬取区域，行业信息
+     *
+     * @author ByronDong
+     * @updateTime 2017/6/2
+     */
+    public void handleAreaAndIndustry(){
+        this.crawArea();
+        this.crawIndustry();
     }
 
     /**
@@ -63,10 +72,13 @@ public class CrawingAdjStock {
      * @updateTime 2017/6/2
      */
     public void crawArea(){
+        System.out.println("----------------------------enterArea-------------------------------------");
         try {
             String path = getClass().getClassLoader().getResource("python/_crawing_area.py").getPath();
+            System.out.println(path);
             Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
             proc.waitFor();
+            System.out.println("----------------------------endArea-------------------------------------");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -81,10 +93,13 @@ public class CrawingAdjStock {
      * @updateTime 2017/6/2
      */
     public void crawIndustry(){
+        System.out.println("----------------------------enterIndustry-------------------------------------");
         try {
             String path = getClass().getClassLoader().getResource("python/_crawing_industry.py").getPath();
+            System.out.println(path);
             Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
             proc.waitFor();
+            System.out.println("----------------------------endArea-------------------------------------");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
