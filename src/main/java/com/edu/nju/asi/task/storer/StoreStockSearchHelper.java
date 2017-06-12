@@ -97,10 +97,11 @@ public class StoreStockSearchHelper {
      * @updateTime 2017/6/12
      */
     private void createStockData(LocalDate start, LocalDate end) {
-        List<StockSearch> stockSearches = stockSearchDataHelper.getAllStockSearch();
+        List<StockSearch> stockSearches = stockSearchDataHelper.getAllStockSearchWithoutBase();
         List<String> info = new ArrayList<>();
         for (StockSearch stockSearch : stockSearches) {
             List<LocalDate> date = stockDataHelper.getFirstAndLastDay(stockSearch.getSearchID().getCode());
+            System.out.println("检测："+stockSearch.getSearchID().getCode()+" "+date);
             if (!date.get(1).isBefore(start)) {
                 String line = stockSearch.getSearchID().getCode() + ";" + String.valueOf(stockSearch.getSearchID().getMarket().getRepre()) +
                         ";" + stockSearch.getSearchID().getName() + ";" + stockSearch.getFirstLetters() + ";" + start.toString() + ";" +

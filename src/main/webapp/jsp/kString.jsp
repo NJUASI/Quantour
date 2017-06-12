@@ -390,8 +390,7 @@
 
     <%--var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});--%>
     function openStock() {
-        $("body").removeClass('loaded');
-        window.location.href="/stocks"
+        window.history.go(-1);
     }
     $("#stocks").addClass("act");
 </script>

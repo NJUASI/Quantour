@@ -19,6 +19,11 @@ public interface StockSearchDataHelper {
     List<StockSearch> getAllStockSearch();
 
     /**
+     * @return 所有股票(除去基准股)名称的首字母缩写及其名称、代码
+     */
+    List<StockSearch> getAllStockSearchWithoutBase();
+
+    /**
      * @return 返回所有股票的代码及其名称，代码作为键值
      */
     Map<String,String> getAllStocksCode();

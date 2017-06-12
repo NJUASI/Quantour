@@ -46,6 +46,23 @@ public class StockSearchDataHelperImpl implements StockSearchDataHelper {
     }
 
     /**
+     * @return 所有股票(除去基准股)名称的首字母缩写及其名称、代码
+     */
+    @Override
+    public List<StockSearch> getAllStockSearchWithoutBase() {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "from StockSearch where isBase=:isBase";
+        Query query = session.createQuery(hql);
+        query.setParameter("isBase",false);
+        List<StockSearch> list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
+    /**
      * @return 返回所有股票的代码及其名称，代码作为键值
      */
     @Override

@@ -111,4 +111,52 @@ public class TraceBackCriteria {
         this.filterConditions = criteria.filterConditions;
         this.rankConditions = criteria.rankConditions;
     }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public int getHoldingPeriod() {
+        return holdingPeriod;
+    }
+
+    public StockPoolCriteria getStockPoolCriteria() {
+        return stockPoolCriteria;
+    }
+
+    public int getMaxHoldingNum() {
+        return maxHoldingNum;
+    }
+
+    public String getBaseStockName() {
+        return baseStockName;
+    }
+
+    public List<FilterCondition> getFilterConditions() {
+        return filterConditions;
+    }
+
+    public List<RankCondition> getRankConditions() {
+        return rankConditions;
+    }
+
+    public List<MarketSelectingCondition> getMarketSelectingConditions() {
+        return marketSelectingConditions;
+    }
+
+    public double getAdjustPositionPercent() {
+        return adjustPositionPercent;
+    }
+
+    public int getBearToBull_num() {
+        return bearToBull_num;
+    }
+
+    public int getBullToBear_num() {
+        return bullToBear_num;
+    }
 }
