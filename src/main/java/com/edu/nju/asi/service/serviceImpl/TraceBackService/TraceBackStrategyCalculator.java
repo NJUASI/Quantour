@@ -64,7 +64,7 @@ public class TraceBackStrategyCalculator {
     protected Map<String, List<Stock>> stockData;
 
     /**
-     * 所有的股指数据
+     * 所有的股指数据，键值为股指名称（如沪深300）
      */
     protected Map<String, List<BaseStock>> baseStockData;
 
@@ -220,11 +220,11 @@ public class TraceBackStrategyCalculator {
             int goldenFork = 0;
             int deathCross = 0;
 
-            // 依次处理每种择时情况，只有在周期上才检查
+            // 依次处理每种择时情况，只有在周期上才检查 TODO 冯俊杰 择时对前一日进行检查，然后择时
             for (MarketSelectingCondition condition : conditions) {
                 if ((i - allStartIndex + 1) % condition.cycle == 0) {
                     AllMarketSelectingStrategy mss = MarketSelectingStrategyFactory.createMarketSelectingStrategyFactory(condition, allDatesWithData, baseStockData);
-                    MarketSelectingResult tempResult = mss.marketSelecting(allDatesWithData.get(allStartIndex), condition.criteria2, condition.criteria3, condition.criteria1);
+                    MarketSelectingResult tempResult = mss.marketSelecting(i, condition.criteria1, condition.criteria2, condition.criteria3);
                     if (tempResult.isGoldenFork) goldenFork++;
                     if (tempResult.isDeathCross) deathCross++;
                 }

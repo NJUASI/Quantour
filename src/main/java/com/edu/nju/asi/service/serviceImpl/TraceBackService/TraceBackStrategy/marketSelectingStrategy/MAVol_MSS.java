@@ -20,7 +20,42 @@ public class MAVol_MSS extends AllMarketSelectingStrategy {
     }
 
     @Override
-    public MarketSelectingResult marketSelecting(LocalDate periodStart, int criteria2, int criteria3, int criteria1) {
-        return null;
+    public MarketSelectingResult marketSelecting(int neededSelectDayIndex, int criteria1, int criteria2, int criteria3) {
+        double maVolShort_today = maVol(neededSelectDayIndex, criteria1);
+        double maVolShort_pre = maVol(neededSelectDayIndex - 1, criteria1);
+
+        double dmaVol_today = dmaVol(neededSelectDayIndex, criteria1, criteria2);
+        double dmaVol_pre = dmaVol(neededSelectDayIndex - 1, criteria1, criteria2);
+
+        MarketSelectingResult result = new MarketSelectingResult();
+        if (maVolShort_today > maVolShort_pre && dmaVol_today > 0 && dmaVol_pre < 0) {
+            result.isGoldenFork = true;
+        }
+
+        if (maVolShort_today < maVolShort_pre && dmaVol_today < 0 && dmaVol_pre > 0) {
+            result.isDeathCross = true;
+        }
+
+        return result;
+    }
+
+    /**
+     * 计算MA(baseStockName交易量, day)
+     */
+    protected double maVol(int neededSelectDayIndex, int day) {
+        List<BaseStock> wanted = findBaseStocksWithinDay(neededSelectDayIndex - day + 1, neededSelectDayIndex);
+
+        long sum = 0;
+        for (BaseStock bs : wanted) {
+            sum += Long.parseLong(bs.getVolume());
+        }
+        return sum / wanted.size();
+    }
+
+    /**
+     * 计算DMA(baseStockName交易量, MAVOL_short, MAVOL_long)
+     */
+    protected double dmaVol(int neededSelectDayIndex, int shortDay, int longDay) {
+        return maVol(neededSelectDayIndex, shortDay) - maVol(neededSelectDayIndex, longDay);
     }
 }
