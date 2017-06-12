@@ -25,10 +25,25 @@ public class RankConditionChinese {
      */
     public int weight;
 
+    public RankConditionChinese(){
+
+    }
     public RankConditionChinese(RankCondition rankCondition) {
         this.indicatorType = IndicatorTypeHelper.convertIndicatorType(rankCondition.indicatorType, rankCondition.formativePeriod);
         this.rankType = rankCondition.rankType.getRepre();
         this.weight = rankCondition.weight;
 
+    }
+
+    public String getIndicatorType() {
+        return indicatorType;
+    }
+
+    public String getRankType() {
+        return rankType;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }
