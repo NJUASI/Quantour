@@ -4,6 +4,9 @@ package com.edu.nju.asi.task;
 import com.edu.nju.asi.task.fileHelper.FileHelper;
 import com.edu.nju.asi.task.fileHelper.TaskInfoHelper;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+
 /**
  * Created by Byron Dong on 2017/6/2.
  */
@@ -23,8 +26,10 @@ public class Main {
         try {
             System.out.println(getClass().getClassLoader().getResource("python/CrawingToday.py").getPath());
             String path =getClass().getClassLoader().getResource("python/CrawingToday.py").getPath();
-            Process proc = Runtime.getRuntime().exec("python "+path.substring(1));
-            proc.waitFor();
+            String pythonPath = "D:\\151250032\\Quantour\\src\\main\\resources\\python\\CrawingToday.py";
+            String type = "python";
+            String[] cmd = {type,pythonPath};
+            Process proc = Runtime.getRuntime().exec(cmd);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
