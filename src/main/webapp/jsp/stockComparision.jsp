@@ -394,8 +394,8 @@
             });
         };
         function openStock() {
-            $("body").removeClass('loaded');
-            window.location.href="/stocks"
+//            $("body").removeClass('loaded');
+            window.history.go(-1);
         }
         $("#stocks").addClass("act");
 

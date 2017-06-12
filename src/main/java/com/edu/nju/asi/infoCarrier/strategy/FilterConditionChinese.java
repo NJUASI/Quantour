@@ -26,10 +26,24 @@ public class FilterConditionChinese {
      */
     public int value;
 
+    public FilterConditionChinese(){
+
+    }
     public FilterConditionChinese(FilterCondition filterCondition) {
         this.indicatorType = IndicatorTypeHelper.convertIndicatorType(filterCondition.indicatorType, filterCondition.formativePeriod);
         this.comparatorType = filterCondition.comparatorType.getRepre();
         this.value = filterCondition.value;
     }
 
+    public String getIndicatorType() {
+        return indicatorType;
+    }
+
+    public String getComparatorType() {
+        return comparatorType;
+    }
+
+    public int getValue() {
+        return value;
+    }
 }
