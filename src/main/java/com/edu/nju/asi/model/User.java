@@ -31,6 +31,11 @@ public class User implements Serializable {
     @Column(length = 100,nullable = true)
     private String email;
 
+    //回测股池
+    @Basic
+    @Column(columnDefinition = "TEXT",nullable = true)
+    private String traceBackPool;
+
     @ManyToMany(cascade={CascadeType.ALL},fetch = FetchType.EAGER)
     @JoinTable(name = "user_strategy",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "userName")},
@@ -49,6 +54,13 @@ public class User implements Serializable {
         this.userName = userName;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String userName,String password, String email, String traceBackPool) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.traceBackPool = traceBackPool;
     }
 
     public String getUserName() {
@@ -73,6 +85,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getTraceBackPool() {
+        return traceBackPool;
+    }
+
+    public void setTraceBackPool(String traceBackPool) {
+        this.traceBackPool = traceBackPool;
     }
 
     public List<Strategy> getStrategies() {

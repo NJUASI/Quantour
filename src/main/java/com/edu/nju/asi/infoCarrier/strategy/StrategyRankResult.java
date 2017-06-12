@@ -32,6 +32,10 @@ public class StrategyRankResult {
      */
     public double reailty;
 
+
+    public StrategyRankResult() {
+    }
+
     public StrategyRankResult(double profit, double antiRisk, double fluidity, double stability, double reailty) {
         this.profit = profit;
         this.antiRisk = antiRisk;

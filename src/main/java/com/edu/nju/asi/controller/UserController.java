@@ -1,5 +1,6 @@
 package com.edu.nju.asi.controller;
 
+import com.edu.nju.asi.infoCarrier.strategy.GeneralStrategy;
 import com.edu.nju.asi.model.OptionalStockID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.Strategy;
@@ -66,13 +67,13 @@ public class UserController {
 
 
             // 股票策略信息
-            List<Strategy> myOwn = new LinkedList<>();
-            List<Strategy> mySubscribe = new LinkedList<>();
+            List<GeneralStrategy> myOwn = new LinkedList<>();
+            List<GeneralStrategy> mySubscribe = new LinkedList<>();
 
             List<Strategy> myStrategies = strategyService.getMyStrategies(user);
             for (Strategy temp : myStrategies) {
-                if (temp.isPrivate()) myOwn.add(temp);
-                else mySubscribe.add(temp);
+                if (temp.getCreator().equals(user.getUserName())) myOwn.add(new GeneralStrategy(temp));
+                else mySubscribe.add(new GeneralStrategy(temp));
             }
 
             System.out.println("psList size: " + psList.size());

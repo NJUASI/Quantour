@@ -3,13 +3,14 @@ import os
 import sys
 
 
-def _crawing_industry(filePath):
-    df = ts.get_industry_classified()
+def _crawing_area(filePath):
+    df = ts.get_area_classified()
     df.to_csv(filePath)
 
 
 def _get_root():
     task_path = os.path.dirname(sys.argv[0]) + os.path.sep + 'taskInfo.txt'
+    print(task_path)
     file = open(task_path, encoding='utf_8_sig')
     for line in file.readlines():
         if line.split('=')[0].strip() == 'root':
@@ -39,4 +40,7 @@ def _modify_path(filepath):
         return result
     return 'none'
 
-_crawing_industry(_modify_path(_get_root())+'industry.csv')
+
+file = open('f:/info.txt','w+')
+file.write(_get_root())
+# _crawing_area(_modify_path(_get_root())+'area.csv')

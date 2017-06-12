@@ -50,6 +50,16 @@ public class CrawlerController {
      * @updateTime 2017/6/12
      */
     public void handleAdjStock(){
-        crawlerOfAdj.handle();
+        crawlerOfAdj.handleAdj();
+    }
+
+    /**
+     * 爬取区域与行业的信息
+     *
+     * @author ByronDong
+     * @updateTime 2017/6/12
+     */
+    public void handleAreaAndIndustry(){
+        crawlerOfAdj.handleAreaAndIndustry();
     }
 }

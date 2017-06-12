@@ -17,14 +17,6 @@ public class FileHelper {
     //基准股票
     private String baseStocksPath;
 
-    //财务报告表
-    private String financialStatementPath;
-    private String balanceSheetPath;
-    private String profitabilityPath;
-    private String profitStatementPath;
-    private String repaymentAbilityPath;
-    private String statementOfCashFlowPath;
-
     //复权数据
     private String adjPath;
     private String front;
@@ -46,13 +38,6 @@ public class FileHelper {
         stocksPath = root+"stocks"+ File.separator;
         //基准股票
         baseStocksPath = root+"baseStocks"+File.separator;
-        //财务报告表
-        financialStatementPath = root+"cwzb"+File.separator;
-        balanceSheetPath = financialStatementPath+"zcfzb"+File.separator;
-        profitabilityPath = financialStatementPath+"ylnl"+File.separator;
-        profitStatementPath = financialStatementPath+"lrb"+File.separator;
-        repaymentAbilityPath = financialStatementPath+"chnl"+File.separator;
-        statementOfCashFlowPath = financialStatementPath+"xjllb"+File.separator;
         //复权数据
         adjPath = root+"adjData"+File.separator;
         front = adjPath+"front"+File.separator;
@@ -74,13 +59,6 @@ public class FileHelper {
         createDir(stocksPath);
         //基准股票
         createDir(baseStocksPath);
-        //财务报告表
-        createDir(financialStatementPath);
-        createDir(balanceSheetPath);
-        createDir(profitabilityPath);
-        createDir(profitStatementPath);
-        createDir(statementOfCashFlowPath);
-        createDir(repaymentAbilityPath);
         //复权数据
         createDir(adjPath);
         createDir(front);
@@ -100,13 +78,6 @@ public class FileHelper {
     public void delete(){
         deleteDir(stocksPath);
         deleteDir(baseStocksPath);
-
-        deleteDir(balanceSheetPath);
-        deleteDir(profitStatementPath);
-        deleteDir(profitabilityPath);
-        deleteDir(repaymentAbilityPath);
-        deleteDir(statementOfCashFlowPath);
-        deleteDir(financialStatementPath);
 
         deleteDir(front);
         deleteDir(after);

@@ -97,6 +97,8 @@
                                 <option value="沪深300" selected>沪深300</option>
                                 <option value="创业板指">创业板指</option>
                                 <option value="中小板指">中小板指</option>
+                                <option value="上证指数">上证指数</option>
+                                <option value="深证指数">深证指数</option>
                             </select>
                         </div>
                     </div>
@@ -121,36 +123,33 @@
 
                 </div>
                 <div class="row">
-                    <div class="row col-md-2 col-md-offset-5">
+                    <div class="row col-md-3 col-md-offset-5">
                         <strong id="holdingPeriodError" hidden style="color:indianred;margin-left: 50px"> <span
                                 class="glyphicon glyphicon glyphicon-remove-circle"></span> 请输入合法天数</strong>
                     </div>
-
-                    <div class="row col-md-2 col-md-offset-2">
+                    <div class="row col-md-3 col-md-offset-1">
                         <strong id="maxHoldingError" hidden style="color:indianred;margin-left: 4px"><span
                                 class="glyphicon glyphicon glyphicon-remove-circle"></span> 请输入合法股票数</strong>
                     </div>
-
                 </div>
 
-                    <c:if test="${sessionScope.user!=null}">
-                        <div class="row " style="margin-top: 15px">
-                            <div class="col-md-offset-1 col-md-1">
-                                <div>
-                                    <label class="radio1">
-                                        <input class="radio_group" type="radio" name="pool" value="blockPool" checked>全部股票
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div>
-                                    <label class="radio1">
-                                        <input class="radio_group" type="radio" name="pool" value="myPool">我的股票
-                                    </label>
-                                </div>
-                            </div>
+
+                <div class="row " style="margin-top: 15px">
+                    <div class="col-md-offset-1 col-md-2">
+                        <div>
+                            <label class="radio1">
+                                <input class="radio_group" type="radio" name="pool" value="blockPool" checked>全部股票
+                            </label>
                         </div>
-                    </c:if>
+                    </div>
+                    <div class="col-md-2">
+                        <div>
+                            <label class="radio1">
+                                <input class="radio_group" type="radio" name="pool" value="myPool">我的股票
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
 
                 <div id="blockStock">
@@ -171,7 +170,7 @@
                         </div>
 
                         <div class="form-group col-md-3 inputBlock">
-                            <label class="col-md-5" style="margin-top: 7px">行业板块：</label>
+                            <label class="col-md-5" style="margin-top: 7px;margin-left: -50px">行业板块：</label>
                             <div class='col-md-7' style="margin-left: -30px">
                                 <select id="industryBlock" name="industryBlock" multiple data-live-search="true"
                                         data-live-search-placeholder="请选择行业" data-selected-text-format="count > 2"
@@ -239,7 +238,7 @@
                         </div>
 
                         <div class="row col-md-2 col-md-offset-2">
-                            <strong id="industryError" style="color:indianred;margin-left: 33px" hidden> <span
+                            <strong id="industryError" style=" color:indianred;margin-left: -45px" hidden> <span
                                     class="glyphicon glyphicon glyphicon-remove-circle"></span> 行业不能为空</strong>
                         </div>
 
@@ -258,7 +257,7 @@
                         </div>
 
                         <div class="form-group col-md-3 inputBlock">
-                            <label class="col-md-5" style="margin-top: 7px">地域板块：</label>
+                            <label class="col-md-5" style="margin-top: 7px;margin-left: -50px">地域板块：</label>
                             <div class='col-md-7' style="margin-left: -30px">
                                 <select id="provinceBlock" name="provinceBlock" multiple data-live-search="true"
                                         data-live-search-placeholder="请选择地域" data-selected-text-format="count > 2"
@@ -303,7 +302,7 @@
                     </div>
                     <div class="row">
                         <div class="row col-md-2 col-md-offset-6">
-                            <strong id="provinceError" style="color:indianred;margin-left: 0px" hidden> <span
+                            <strong id="provinceError" style="color:indianred;margin-left: -60px" hidden> <span
                                     class="glyphicon glyphicon glyphicon-remove-circle"></span> 地域不能为空</strong>
                         </div>
                     </div>
@@ -320,7 +319,7 @@
     </div>
 
 
-    <div class="row">
+    <div id="strategyPanel" class="row">
         <div class="panel panel-default col-md-10 col-md-offset-1 userBlock">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -331,59 +330,187 @@
             <%@ include file="quotaSelect.jsp" %>
         </div>
 
+        <div id="timePanel" class="panel panel-default col-md-10 col-md-offset-1 userBlock">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    大盘择时
+                </h4>
+            </div>
+            <div class="panel-body">
 
-        <div class="row">
-            <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        回测条件
-                    </h4>
+                <div class="row " style="margin-top: 15px">
+                    <div class="col-md-offset-1 col-md-1">
+                        <div>
+                            <label class="radio2">
+                                <input class="market_timing" type="radio" name="market_timing" value="no" checked>不择时
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div>
+                            <label class="radio2">
+                                <input class="market_timing" type="radio" name="market_timing" value="yes">使用择时
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
+                <div id="timingPanel" hidden>
+                    <div style="border-bottom: 1px solid #CCCCCC;width: 88%;margin:20px auto 20px"></div>
                     <div class="row">
+                        <label class="col-md-1 col-md-offset-1" style="margin-top: 7px">同时满足</label>
+                        <div class=' col-md-1 ' style="margin-left: -27px">
+                            <input id="timing_text1" type="text" class="form-control col-md-1" placeholder="条件数">
+                        </div>
+                        <label class="col-md-2" style="margin-top: 7px">个择时条件由熊变牛</label>
 
-                        <div class="col-md-3 col-md-offset-1 inputBlock">
+                        <label class="col-md-1" style="margin-top: 7px">同时满足</label>
+                        <div class=' col-md-1 ' style="margin-left: -27px">
+                            <input id="timing_text2" type="text" class="form-control col-md-1" placeholder="条件数">
+                        </div>
+                        <label class="col-md-2" style="margin-top: 7px">个择时条件由牛变熊</label>
 
-                            <label class="col-md-5" style="margin-top: 7px">开始日期：</label>
-                            <!--指定 date标记-->
-                            <div class='input-group date col-md-6' id='datetimeStart'>
-                                <input id="startDate" type='text' class="form-control form_datetime"/>
-                                <span class="input-group-addon">
+                        <label class="col-md-1" style="margin-top: 7px">熊市仓位</label>
+                        <div class=' col-md-1 ' style="margin-left: -27px">
+                            <input id="position" type="text" class="form-control col-md-1" placeholder="比例">
+                        </div>
+                        <label class="col-md-1" style="margin-top: 7px">%</label>
+
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <!--左边选择栏  -->
+                        <div class="col-md-4 col-md-offset-1">
+                            <label class="" style="margin-bottom: 30px">
+                                择时指标:
+                            </label>
+
+
+                            <!-- 选项卡面板 -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">MA
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">MACD
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">DMA
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">TRIX
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default timing"
+                                            style="border: 0px solid white">MAVOL
+                                    </button>
+                                </div>
+                            </div>
+                            <strong class="row col-md-offset-4" id="timingError"
+                                    style="color:indianred;margin-left: 4px" hidden><span
+                                    class="col-md-offset-2 glyphicon glyphicon glyphicon-remove-circle"></span><span> 你已经选择过此条件</span></strong>
+                            <strong class="row col-md-offset-4" id="timingError2"
+                                    style="color:indianred;margin-left: 4px" hidden><span
+                                    class="col-md-offset-2 glyphicon glyphicon glyphicon-remove-circle"></span><span> 请选择择时指标</span></strong>
+                            <strong class="row col-md-offset-4" id="timingError3"
+                                    style="color:indianred;margin-left: 4px" hidden><span
+                                    class="col-md-offset-2 glyphicon glyphicon glyphicon-remove-circle"></span><span> 你的条件数填写错误</span></strong>
+
+
+                        </div>
+                        <!--右边数据框-->
+                        <div class="col-md-6" style=" border-left: 1px solid slategray;">
+                            <label class="row col-md-3" style="margin-top:5px">
+                                择时条件:
+                            </label>
+                            <!-- 选项卡组件（菜单项nav-tabs）-->
+
+
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12"
+                                     style="height:200px;max-height: 240px;overflow-y: auto">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>择时条件</th>
+                                            <th>择时参数</th>
+                                            <th>编辑</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="timingList">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    回测条件
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="col-md-3 col-md-offset-1 inputBlock">
+
+                        <label class="col-md-5" style="margin-top: 7px">开始日期：</label>
+                        <!--指定 date标记-->
+                        <div class='input-group date col-md-6' id='datetimeStart'>
+                            <input id="startDate" type='text' class="form-control form_datetime"/>
+                            <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
 
-                            </div>
                         </div>
-                        <div class="col-md-3 inputBlock">
+                    </div>
+                    <div class="col-md-3 inputBlock">
 
-                            <label class="col-md-5" style="margin-top: 7px">结束日期：</label>
-                            <!--指定 date标记-->
-                            <div class='input-group date col-md-6' id='datetimeEnd'>
-                                <input id="endDate" type='text' class="form-control form_datetime"/>
-                                <span class="input-group-addon">
+                        <label class="col-md-5" style="margin-top: 7px">结束日期：</label>
+                        <!--指定 date标记-->
+                        <div class='input-group date col-md-6' id='datetimeEnd'>
+                            <input id="endDate" type='text' class="form-control form_datetime"/>
+                            <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
 
-                            </div>
-                        </div>
-
-                        <div class="col-md-1 col-md-offset-2 inputBlock">
-
-                            <button type="button" class="btn btn-info" onclick="traceback()"
-                                    style="margin-left: -70px;">开始回测
-                            </button>
-                        </div>
-                        <div class="col-md-1 inputBlock">
-
-                            <button type="button" class="btn btn-info" id="createStrategy"
-                                    style="margin-left: -40px;margin-bottom: 20px">创建策略
-                            </button>
                         </div>
                     </div>
-                    <div class="row col-md-offset-9" id="wholeMessage" hidden>
-                        <strong style="color:indianred;margin-left: 4px"><span
-                                class="glyphicon glyphicon glyphicon-remove-circle"></span><span id="wholeError"> 请输入合法股票数</span></strong>
+
+                    <div class="col-md-1 col-md-offset-2 inputBlock">
+
+                        <button type="button" class="btn btn-info" onclick="traceback()"
+                                style="margin-left: -70px;">开始回测
+                        </button>
                     </div>
+                    <div class="col-md-1 inputBlock">
+
+                        <button type="button" class="btn btn-info" id="createStrategy"
+                                style="margin-left: -40px;margin-bottom: 20px">创建策略
+                        </button>
+                    </div>
+                </div>
+                <div class="row col-md-offset-9" id="wholeMessage" hidden>
+                    <strong style="color:indianred;margin-left: 4px"><span
+                            class="glyphicon glyphicon glyphicon-remove-circle"></span><span
+                            id="wholeError"> 请输入合法股票数</span></strong>
                 </div>
             </div>
         </div>
@@ -395,145 +522,12 @@
 
 </div>
 
-<div class="row" style="z-index: 2">
 
-    <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-tabs" role="tablist">
-        <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
-        <li><a href="#cyclePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
-        <li><a href="#holdingDetailPanel" role="tab" data-toggle="tab">交易详情</a></li>
-        <li><a href="#recentlySoldPanel" role="tab" data-toggle="tab">卖出股票</a></li>
-    </ul>
-</div>
+<%@ include file="tracebackAnalyse.jsp" %>
 
-<%--<c:choose>--%>
-<%--<c:when test="${traceBackNums != null}">--%>
-<!-- 选项卡面板 -->
-<div id="myTabContent" class="col-md-10 col-lg-offset-1 tab-content">
-
-    <div class="tab-pane active" id="chartPanel">
-        <div class="col-md-12 table-responsive">
-            <table class="table table-hover table-condensed">
-                <thead>
-                <tr>
-                    <th>投资组合</th>
-                    <th>总收益</th>
-                    <th>年化收益</th>
-                    <th>夏普比率</th>
-                    <th>最大回撤率</th>
-                    <th>收益波动率</th>
-                    <th>贝塔率</th>
-                    <th>阿尔法比率</th>
-                </tr>
-                </thead>
-                <tbody id="tb_chart">
-                </tbody>
-            </table>
-        </div>
-        <div class="row">
-            <div id="trace_back_chart" style="margin:0px auto; width:1100px;height:500px"></div>
-        </div>
-    </div>
-    <div class="tab-pane" id="cyclePanel">
-        <div class="row">
-            <div class="col-md-4 table-responsive">
-                <table class="table table-hover table-condensed">
-                    <caption class="text-center"><h3>绝对收益直方图</h3></caption>
-                    <thead>
-                    <tr>
-                        <th>正收益周期数</th>
-                        <th>负收益周期数</th>
-                        <th>赢率</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tb_cycle_ab">
-                    </tbody>
-                </table>
-            </div>
-            <div class="row col-md-6">
-                <div id="absolute_histogram_chart" style="width:600px;height:300px"></div>
-            </div>
-
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 table-responsive">
-                <table class="table table-hover table-condensed">
-                    <caption class="text-center"><h3>相对收益直方图</h3></caption>
-                    <thead>
-                    <tr>
-                        <th>正收益周期数</th>
-                        <th>负收益周期数</th>
-                        <th>赢率</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tb_cycle_re">
-                    </tbody>
-                </table>
-            </div>
-            <div class="row col-md-6">
-                <div id="relative_histogram_chart" style="width:600px;height:300px"></div>
-            </div>
-        </div>
-
-
-    </div>
-    <div class="tab-pane" id="holdingDetailPanel">
-        <div class="row">
-            <div class="col-md-12 table-responsive pre-scrollable" style="max-height: 640px">
-                <table class="table table-hover table-condensed">
-                    <thead>
-                    <tr>
-                        <th>周期序号</th>
-                        <th>开始日期</th>
-                        <th>结束日期</th>
-                        <th>股票持有只数</th>
-                        <th>策略收益</th>
-                        <th>基准收益</th>
-                        <th>超额收益</th>
-                        <th>模拟投资</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tb_detail">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab-pane" id="recentlySoldPanel">
-        <div class="row">
-            <div class="col-md-12 table-responsive">
-                <table class="table table-hover table-condensed">
-                    <thead>
-                    <tr>
-                        <th>股票名</th>
-                        <th>股票代码</th>
-                        <th>买入日期</th>
-                        <th>卖出日期</th>
-                        <th>买入价格</th>
-                        <th>卖出价格</th>
-                        <th>涨幅</th>
-                    </tr>
-                    </thead>
-                    <tbody id="sold_stock_detail">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<%--</c:when>--%>
-<%--<c:otherwise>--%>
-<%--显示一张图片好了。。--%>
-<%--</c:otherwise>--%>
-<%--</c:choose>--%>
-
-<!-- 登录模态框（Modal） -->
 
 <div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:70%">
+    <div class="modal-dialog" style="width:40%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
@@ -544,121 +538,53 @@
 
                 <div class="row">
                     <div class="form-group col-md-offset-1 col-md-6">
-                        <label class="col-md-3 control-label" style="margin-top: -10px">策略名称：</label>
-                        <div class="col-md-5">
+                        <label class="col-md-5 control-label" style="margin-top: -10px">策略名称：</label>
+                        <div class="col-md-7">
                             <input type="text" id="strategyName" class="form-control"
                                    style="margin-top: -17px;margin-left: -30px"
                                    placeholder="">
                         </div>
+                    </div>
+                </div>
+                <div class="row">
                         <div class="col-md-offset-2 col-md-5" id="nameErrorPanel" hidden>
                             <strong style="color:indianred;margin-left: 14px"><span
                                     class="glyphicon glyphicon glyphicon-remove-circle"></span><span
                                     id="nameError"></span></strong>
                         </div>
-                    </div>
                 </div>
                 <div style="width:90%;margin:0px auto;margin-bottom:30px;border-top:1px solid #ddd"></div>
 
                 <div class="row" style="margin-bottom: 10px">
                     <div class="col-md-offset-1 col-md-11">
-                        <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label class="control-label">板块：</label><span id="strategyBlock">主板，创业板，中小板</span>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="control-label">ST：</label><span id="strategyST">仅为ST</span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="control-label">收益基准：</label><span id="strategyBace">沪深300</span>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 15px">
-                                <div class="col-md-4 ">
-                                    <label class="control-label">调仓周期：</label><span id="strategyPeriod"></span>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="control-label">最大持股：</label><span id="strategyHolding"></span>
-                                </div>
+                        <label class="control-label">策略描述：</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10">
+                                    <textarea rows="10" style="width: 100%" id="strategyDescription"></textarea>
+                    </div>
 
-                            </div>
-                            <div class="row" style="margin-top: 15px; margin-bottom: 15px">
-                                <div class="col-md-2">
-                                    <label class="control-label">筛选条件：</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="row " id="quotaCreate">
-
-                                        <div class=" col-md-10">
-                                            <strong class="col-md-5">指标</strong><strong class="col-md-4">比较符</strong>
-                                            <strong class="col-md-2">值</strong>
-                                        </div>
-                                        <div class=" col-md-10">
-                                            <span class="col-md-5">10日平均成交量</span><span class="col-md-4">排名最大</span>
-                                            <span class="col-md-2">20</span>
-                                        </div>
-                                        <div class=" col-md-10">
-                                            <span class="col-md-5">10日平均成交量</span><span class="col-md-4">排名最大</span>
-                                            <span class="col-md-2">20</span>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 15px; margin-bottom: 15px">
-                                <div class="col-md-2">
-                                    <label class="control-label">排名条件：</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="row " id="rankCreate">
-
-                                        <div class=" col-md-10">
-                                            <strong class="col-md-5">指标</strong><strong class="col-md-4">次序</strong>
-                                            <strong class="col-md-2">权重</strong>
-                                        </div>
-                                        <div class=" col-md-10">
-                                            <span class="col-md-5">10日平均成交量</span><span class="col-md-4">排名最大</span>
-                                            <span class="col-md-2">20</span>
-                                        </div>
-                                        <div class=" col-md-10">
-                                            <span class="col-md-5">10日平均成交量</span><span class="col-md-4">排名最大</span>
-                                            <span class="col-md-2">20</span>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 15px; margin-bottom: 15px">
-                                <div class="col-md-2">
-                                    <label class="control-label">策略描述：</label>
-                                </div>
-                                <div class="col-md-10">
-                                    <textarea rows="4" id="strategyDescription"
-                                              style="width: 90%; margin-left: -20px"></textarea>
-                                </div>
-                            </div>
-                            <div id="descriptionError" class="row col-md-offset-2" hidden>
-                                <strong style="color:indianred;margin-left: 14px"><span
+                    <div id="descriptionError" class="row col-md-offset-2" hidden>
+                        <strong style="color:indianred;margin-left: 14px"><span
                                         class="glyphicon glyphicon glyphicon-remove-circle"></span><span>输入策略描述吸引更多人订阅</span></strong>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <div class="row">
-                        <div class=" col-md-offset-8 col-md-1" style="padding-right: 0px">
+                        <div class=" col-md-offset-4 col-md-2" style="padding-right: 0px">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="radios3" id="radios1" value="true" checked>
+                                    <input type="radio" name="radios3" id="radios1" value="true">
                                     私密
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-1" style="padding-left: 0px">
+                        <div class="col-md-2" style="padding-left: 0px">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="radios3" id="radios2" value="false">
+                                    <input type="radio" name="radios3" id="radios2" value="false" checked>
                                     公开
                                 </label>
                             </div>
@@ -692,7 +618,8 @@
             </div>
             <div class="modal-body">
                 <p class="static" style="margin-top: 5px;">股票列表:</p>
-                <textarea type="text" id="poolCode" class="form-control" rows="10" placeholder="请输入股票代码 以空格隔开"></textarea>
+                <textarea type="text" id="poolCode" class="form-control" rows="10"
+                          placeholder="请输入股票代码 以空格隔开"></textarea>
 
                 <strong id="poolCodeError" style="color:indianred;margin-left: 0px"></strong>
             </div>
@@ -704,38 +631,64 @@
     </div><!-- /.modal -->
 </div>
 
-<div class="modal fade" id="circleModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:70%">
+
+<div class="modal fade" id="modifyTimingModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width:40%">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
-                <h4 class="modal-title">周期买卖详情</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">择时条件设定</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>股票代码</th>
-                        <th>股票名</th>
-                        <th>行业分类</th>
-                        <th>开始价格</th>
-                        <th>结束价格</th>
-                        <th>涨幅</th>
-                        <th>本期起始仓</th>
-                        <th>当日成交额</th>
-                        <th>股价振幅</th>
-                    </tr>
-                    </thead>
-                    <tbody id="circleList">
+                <p>择时条件:<span id="theCondition">MA</span></p>
+                <p class="col-md-offset-1 ma indicator" hidden>以移动平均线(MA)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p class="col-md-offset-1 macd indicator" hidden>
+                    以指数平滑异同移动平均线(MACD)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p class="col-md-offset-1 dma indicator" hidden>以平均线差指标(DMA)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p class="col-md-offset-1 trix indicator" hidden>
+                    以三重指数平滑移动平均指标(TRIX)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p class="col-md-offset-1 mavol indicator" hidden>
+                    以指数成交量移动平均线(MAVOL)的金叉死叉分别作为牛市和熊市的转换条件。设立择时条件将影响策略回测结果。</p>
+                <p>择时参数:</p>
+                <div class="row inputBlock">
+                    <div class="col-md-offset-1 col-md-3" style="margin-top: 6px"><span>指数选择：</span>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="timingBlock" class="form-control">
+                            <option value="沪深300">沪深300</option>
+                            <option value="创业板指">创业板指</option>
+                            <option value="中小板指">中小板指</option>
+                            <option value="上证指数">上证指数</option>
+                            <option value="深证指数">深证指数</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row inputBlock">
+                    <div class="col-md-offset-1 col-md-3" style="margin-top: 6px"><span>周期选择：</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" id="circleNum" class="form-control" value=''>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="timingType" name="timingType" class="form-control">
+                            <option value="日">日</option>
+                            <option value="周" disabled>周</option>
+                            <option value="月" disabled>月</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="textArea">
 
-                    </tbody>
-                </table>
+                </div>
             </div>
             <div class="modal-footer">
-
+                <strong id="timePanelError" style="color:indianred;margin-left: 0px"></strong>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="saveTiming" class="btn btn-primary">确定</button>
             </div>
-        </div><!-- /.modal-dialog -->
+        </div>
     </div><!-- /.modal -->
 </div>
 
@@ -757,6 +710,7 @@
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
 <script src="../js/quotaSelect.js"></script>
+<%--<script src="../js/timingSelect.js"></script>--%>
 
 <script src="../js/icheck.js"></script>
 
@@ -770,10 +724,6 @@
 
 
     $(document).ready(function () {
-        $("#modifyBT").click(function () {
-            $("#passwordField").toggle("slow");
-            $("#passwordModify").toggle("slow");
-        });
 
         $("#stocks").click(function () {
             $("body").removeClass("loaded");
@@ -787,8 +737,8 @@
 
         $('.radio_group').on('ifChecked', function () {
 
-                $("#blockStock").slideToggle("slow");
-                $("#myStockPool").slideToggle("slow");
+            $("#blockStock").slideToggle("slow");
+            $("#myStockPool").slideToggle("slow");
 
         });
 
@@ -801,14 +751,14 @@
         $('#savePool').click(function () {
             //TODO FJJ 从我的底层股票初始化编辑页面
             //TODO FJJ  存数据库 需要 返回成功 或者哪个代码不存在
-            var codes=$("#poolCode").val().split(" ");
-            alert($("#poolCode").val());
+            var codes = $("#poolCode").val().split(" ");
+//            alert($("#poolCode").val());
             var reg = /^\d{6}$/;
-            for(var i=0;i<codes.length; i++){
-                var code=codes[i];
-                if(!reg.test(code)){
-                    $("#poolCodeError").html("你输入的代码"+code+"格式不正确");
-                    setTimeout( "$(\"#poolCodeError\").html('')",3000);
+            for (var i = 0; i < codes.length; i++) {
+                var code = codes[i];
+                if (!reg.test(code)) {
+                    $("#poolCodeError").html("你输入的代码" + code + "格式不正确");
+                    setTimeout("$(\"#poolCodeError\").html('')", 3000);
                     return false;
                 }
             }
@@ -818,8 +768,184 @@
         });
 
 
-
         $("#community").addClass("act");
+
+        //下面是择时js
+        $('.market_timing').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+
+        $('.market_timing').on('ifChecked', function () {
+            $("#timingPanel").slideToggle("slow");
+        });
+
+        $(".timing").click(function () {
+            var thisName = $(this).html().trim();
+            var isExist;
+            $(".timingName").each(function () {
+                if (thisName == $(this).html().trim()) {
+                    isExist = true;
+                    $("#timingError").show();
+                    setTimeout("$(\"#timingError\").hide()", 1000)
+                    return true;
+                }
+            });
+            if (isExist) {
+                return false;
+            }
+            var timingName = "<div class='timingName'>" + $(this).html() + "</div>";
+            var timingParam;
+            var name = $(this).html().trim();
+            switch (name) {
+                case "MA":
+                    timingParam = "<div class='timingParam'>沪深300,10,日线,5,60</div>";
+                    break;
+                case "DMA":
+                    timingParam = "<div class='timingParam'>沪深300,10,日线,5,60,20</div>";
+                    break;
+                case "TRIX":
+                    timingParam = "<div class='timingParam'>沪深300,10,日线,120,5</div>";
+                    break;
+                case "MAVOL":
+                    timingParam = "<div class='timingParam'>沪深300,10,日线,5,60</div>";
+                    break;
+                case "MACD":
+                    timingParam = "<div class='timingParam'>沪深300,10,日线,12,26,9</div>"
+                    break;
+            }
+
+
+            $("#timingList").append("<tr>" +
+                "<td class=\"col-md-2\">" + timingName + "</td>" +
+                "<td class=\"col-md-3\">" + timingParam + "</td>" +
+                "<td class=\"col-md-1\"><button class=\"btn  btn-primary modifyTimingBT\"><span class=\"glyphicon glyphicon-pencil\"></span></button></td>" +
+                "<td class=\"col-md-1\"><button class=\"btn  btn-primary removeTimingBT\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>" +
+                "</tr>");
+
+
+            $(".modifyTimingBT").unbind("click");
+            $(".modifyTimingBT").click(function (e) {
+                $("#modifyTimingModal").modal("toggle");
+                var clickName = $("#timingList").find("tr").eq($(".modifyTimingBT").index($(this))).find(".timingName").eq(0).html().trim();
+                var clickParam = $("#timingList").find("tr").eq($(".modifyTimingBT").index($(this))).find(".timingParam").eq(0).html().trim();
+                var myParam = clickParam.split(",");
+                $("#theCondition").html(clickName);
+                $("#circleNum").val(myParam[1])
+                $("#timingBlock").val(myParam[0]);
+                $("#timingType").val(myParam[2].substring(0, 1));
+                $(".indicator").hide()
+                switch (clickName) {
+                    case "MA":
+                        $(".ma").show();
+                        $("#textArea").empty();
+                        $("#textArea").append(addText("MA短线：", myParam[2].substring(0, 1), myParam[3]))
+                        $("#textArea").append(addText("MA长线：", myParam[2].substring(0, 1), myParam[4]))
+                        break;
+                    case "DMA":
+                        $(".dma").show();
+                        $("#textArea").empty();
+                        $("#textArea").append(addText("MA短线：", myParam[2].substring(0, 1), myParam[3]))
+                        $("#textArea").append(addText("MA长线：", myParam[2].substring(0, 1), myParam[4]))
+                        $("#textArea").append(addText("AMA：", myParam[2].substring(0, 1), myParam[5]))
+                        break;
+                    case "TRIX":
+                        $(".trix").show();
+                        $("#textArea").empty();
+                        $("#textArea").append(addText("TRIX：", myParam[2].substring(0, 1), myParam[3]))
+                        $("#textArea").append(addText("MATRIX：", myParam[2].substring(0, 1), myParam[4]))
+                        break;
+                    case "MAVOL":
+                        $(".mavol").show();
+                        $("#textArea").empty();
+                        $("#textArea").append(addText("MA短线：", myParam[2].substring(0, 1), myParam[3]))
+                        $("#textArea").append(addText("MA长线：", myParam[2].substring(0, 1), myParam[4]))
+                        break;
+                    case "MACD":
+                        $(".macd").show();
+                        $("#textArea").empty();
+                        $("#textArea").append(addText("DIF短线：", myParam[2].substring(0, 1), myParam[3]))
+                        $("#textArea").append(addText("DIF长线：", myParam[2].substring(0, 1), myParam[4]))
+                        $("#textArea").append(addText("DEA：", myParam[2].substring(0, 1), myParam[5]))
+                        break;
+                }
+                $('#timingType').change(function () {
+                    $(".rightName").html($("#timingType").val());
+                });
+                e.stopPropagation();
+                e.preventDefault()
+            });
+            function addText(param1, param2, num) {
+                var temp = '<div class="row inputBlock">' +
+                    '<div class="col-md-offset-1 col-md-3" style="margin-top: 6px"><span class="leftName">' + param1 + '</span>' +
+                    '</div>' +
+                    '<div class="col-md-2">' +
+                    '    <input type="text" class="form-control rightNum" value=' + num + '>' +
+                    '    </div>' +
+                    '    <div class="col-md-3" style="margin-top: 6px"><span class="rightName">' + param2 + '</span>' +
+                    '</div>' +
+                    '</div>';
+                return temp;
+            }
+
+            $(".removeTimingBT").unbind("click");
+            $(".removeTimingBT").click(function () {
+                $("#timingList").find("tr").eq($(".removeTimingBT").index($(this))).remove();
+            });
+            $("#saveTiming").unbind("click");
+            $("#saveTiming").click(function () {
+                var reg4 = /^\d{1,3}$/;
+                var b = true;
+                if (!reg4.test($("#circleNum").val())) {
+                    $("#timePanelError").html(" 你输入的数字错误");
+                    setTimeout("$('#timePanelError').html(' ');", 3000)
+                    b = false;
+                }
+                $(".rightNum").each(function () {
+                    var num = $(this).val();
+                    if (num == 0 || num == "0") {
+                        $("#timePanelError").html("你输入的数字错误");
+                        setTimeout("$('#timePanelError').html(' ');", 3000)
+                        b = false;
+                        return false;
+                    } else if (!reg4.test(num)) {
+                        $("#timePanelError").html(" 你输入的数字错误");
+                        setTimeout("$('#timePanelError').html(' ');", 3000)
+                        b = false;
+                        return false;
+                    } else {
+                        $(this).css("border", "1px solid #CCCCCC");
+                    }
+                });
+
+
+                if (b == false) {
+                    return false;
+                }
+
+                var name = $("#theCondition").html().trim();
+                var param = $("#timingBlock").val() + "," + $("#circleNum").val() + "," + $("#timingType").val() + "线";
+                $('.rightNum').each(function () {
+                    param += (',' + $(this).val());
+                });
+                var isOver = true;
+                $("#timingList").find("tr").each(function () {
+                    if ($(this).find(".timingName").eq(0).html().trim() == name) {
+                        $(this).find(".timingParam").html(param);
+                        isOver = false;
+                        return false;
+                    }
+                });
+//                $("#modifyTimingModal").modal("toggle");
+                if (!isOver) {
+                    $("#modifyTimingModal").modal("toggle");
+                    return 0;
+                }
+
+            });
+        });
+
+
     });
 
 
@@ -912,9 +1038,9 @@
         });
 
         //自选股票池
-        var pool=$("input[name='pool']:checked").val();
-        if(pool=="myPool"){
-        }else{
+        var pool = $("input[name='pool']:checked").val();
+        if (pool == "myPool") {
+        } else {
             if ($("#blockTypes").val() == " " || $("#blockTypes").val() == "" || $("#blockTypes").val() == null) {
                 $('#blockTypesError').show();
                 setTimeout("$('#blockTypesError').hide();", 3000);
@@ -935,7 +1061,45 @@
                 isZero = false;
             }
         }
+        var timing = $("input[name='market_timing']:checked").val();
+        if (timing == "yes") {
+            if (!reg4.test($("#timing_text2").val())) {
+                isZero == false;
+                $('#timingError3').show();
+                setTimeout("$('#timingError3').hide();", 3000);
+                $("#timing_text2").css("border", "2px solid red");
+                window.location.href = "#timePanel";
+            }
+            if (!reg4.test($("#timing_text1").val())) {
+                isZero == false;
+                $('#timingError3').show();
+                setTimeout("$('#timingError3').hide();", 3000);
+                $("#timing_text1").css("border", "2px solid red");
+                window.location.href = "#timePanel";
+            }
+            if (!reg4.test($("#position").val())) {
+                isZero == false;
+                $('#timingError3').show();
+                setTimeout("$('#timingError3').hide();", 3000);
+                $("#position").css("border", "2px solid red");
+                window.location.href = "#timePanel";
+            }
+            if ($("#position").val()>100) {
+                isZero == false;
+                $('#timingError3').show();
+                setTimeout("$('#timingError3').hide();", 3000);
+                $("#position").css("border", "2px solid red");
+                window.location.href = "#timePanel";
+            }
+            if ($("#timingList").find(".timingName").eq(0).html() == null) {
+                isZero == false;
+                $('#timingError2').show();
+                setTimeout("$('#timingError2').hide();", 3000);
+                window.location.href = "#timePanel";
+            }
+        } else {
 
+        }
         if (isZero == false) {
             return false;
         }
@@ -1004,6 +1168,7 @@
             $("#wholeMessage").show();
             $("#wholeError").html(" 请选择筛选条件或者排名条件");
             setTimeout("$('#wholeMessage').hide();", 3000)
+            window.location.href = "#strategyPanel";
             return false;
         }
 
@@ -1024,12 +1189,24 @@
             return false;
         }
 
-        if(pool=="myPool"){
+        if (pool == "myPool") {
             //TODO fjj 如果是自己的股票池从数据库得到股票池
-        }else{
+        } else {
             //TODO 从界面拿各种板块信息
         }
 
+        //TODO fjj 大盘择时的数据 处理
+        if (timing == "yes") {
+            $("#timing_text1").val(); //由熊变牛
+            $("#timing_text2").val();//由牛变熊
+            $("#position").val();//仓位比例
+            $("#timingList").find("tr").each(function () {
+                alert($(this).find(".timingName").html());
+                alert($(this).find(".timingParam").html());
+            });
+        } else {
+            //不使用择时
+        }
 //        TODO fjj  行业和地狱的获得
         $("#provinceBlock").val();
         $("#industryBlock").val();
@@ -1156,7 +1333,7 @@
                     $(".circle").click(function () {
                         alert($(this).html());
 
-                        //TODO $(this).html() 为当前需要看的周期，加一下此周期持有股票信息
+                        //TODO fjj $(this).html() 为当前需要看的周期，加一下此周期持有股票信息
 //                        $("#circleList").empty();
 //                        for (var i = 0; i < circleList.length; i++) {
 //                            $("#circleList").append("<tr>"+

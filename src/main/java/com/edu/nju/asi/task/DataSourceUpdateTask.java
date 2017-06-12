@@ -53,14 +53,15 @@ public class DataSourceUpdateTask {
      */
     private void handle(){
         init();
-        fileHelper.create();
-        crawler.handleStock();
-        storer.storeStock();
+//        fileHelper.create();
+//        crawler.handleStock();
+//        crawler.handleAreaAndIndustry();
+//        storer.storeStock();
         storer.storeStockSearch();
-        crawler.handleAdjStock();
-        storer.storeAdjData();
-        fileHelper.delete();
-        taskInfoHelper.clearInfo();
+//        crawler.handleAdjStock();
+//        storer.storeAdjData();
+//        fileHelper.delete();
+//        taskInfoHelper.clearInfo();
     }
 
     /**
@@ -71,8 +72,8 @@ public class DataSourceUpdateTask {
      */
     private void init(){
         root = System.getProperty("user.dir")+ File.separator+"attachment";
-        start = LocalDate.now();
-        end = LocalDate.now();
+        start = LocalDate.of(2017,6,12);
+        end = LocalDate.of(2017,6,12);
         fileHelper = new FileHelper(root);
         storer = new StoreController(root,start,end);
         crawler = new CrawlerController(root,start,end);

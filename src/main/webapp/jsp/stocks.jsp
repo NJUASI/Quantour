@@ -119,7 +119,7 @@
                         </ol>
                         <!-- 轮播（Carousel）项目 -->
 
-                        <%--TODO 高源 没数据的话怎么显示--%>
+
                         <div class="carousel-inner row">
                             <c:forEach items="${base_stock_list}" var="base_stock" varStatus="vs">
                                 <div class="item  col-md-12">
@@ -575,11 +575,11 @@
     $(".pagination").find("li").click(function () {
         if ($(this).find("a").html() == "···") {
 //            alert($(this).next("li").find("a").html());
-            if (($(this).next("li").find("a").html()) == totalPageNum) {
-                nowPage = curPageNum + 4;
-            } else {
-                nowPage = curPageNum - 4;
-            }
+//            if (($(this).next("li").find("a").html()) == totalPageNum) {
+                nowPage = 9;
+//            } else {
+//                nowPage = curPageNum - 4;
+//            }
         } else {
             nowPage = $(this).find("a").html();
         }
