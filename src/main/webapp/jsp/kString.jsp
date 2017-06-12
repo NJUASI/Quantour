@@ -256,9 +256,45 @@
             echarts.connect([chart1,chart2]);
         }
 
-        // 调整日期 TODO 高源 把日期格式化为yyyy-MM-dd
-        $("#datetimeStart>input").attr('value', ${startDate.year} + "-" + ${startDate.monthValue} + "-" + ${startDate.dayOfMonth});
-        $("#datetimeEnd>input").attr('value', ${stockOfEndDay.stockID.date.year} + "-" + ${stockOfEndDay.stockID.date.monthValue} + "-" + ${stockOfEndDay.stockID.date.dayOfMonth});
+
+
+        var endTime =  ${stockOfEndDay.stockID.date.year} + "-";
+        var startTime = ${startDate.year} + "-";
+
+        var month = ${startDate.monthValue};
+        var dayOfMonth = ${startDate.dayOfMonth};
+
+
+        if (month < 10) {
+            startTime += "0" + month;
+        } else {
+            startTime += month;
+        }
+        if (dayOfMonth < 10) {
+            startTime += "-0" + dayOfMonth;
+        } else {
+            startTime += "-" + dayOfMonth;
+        }
+
+        month = ${stockOfEndDay.stockID.date.monthValue};
+        dayOfMonth =  ${stockOfEndDay.stockID.date.dayOfMonth};
+
+        if (month < 10) {
+            endTime += "0" + month;
+        } else {
+            endTime += month;
+        }
+        if (dayOfMonth < 10) {
+            endTime += "-0" + dayOfMonth;
+        } else {
+            endTime += "-" + dayOfMonth;
+        }
+
+
+
+
+        $("#datetimeStart>input").attr('value', startTime);
+        $("#datetimeEnd>input").attr('value', endTime);
 
         // 画图
         var bollData = ${bollData};

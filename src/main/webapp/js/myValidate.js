@@ -89,3 +89,20 @@ $("#timing_text2").bind('input propertychange', function () {
         $(this).css("border","1px solid #CCCCCC");
     }
 });
+$("#position").bind('input propertychange', function () {
+
+    if (!reg6.test($(this).val())) {
+        $('#timingError3').show();
+        $(this).css("border","2px solid red");
+        return false;
+    }
+    if ($(this).val()>100) {
+        $('#timingError3').show();
+        $(this).css("border","2px solid red");
+        return false;
+    }
+    else{
+        $('#timingError3').hide();
+        $(this).css("border","1px solid #CCCCCC");
+    }
+});
