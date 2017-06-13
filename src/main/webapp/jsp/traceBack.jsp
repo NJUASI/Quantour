@@ -759,7 +759,7 @@
                 <%--for (var i = 0; i < ${myTraceBackPool.size()}; i++) {--%>
                     <%--myTraceBackPool.append("${myTraceBackPool.get(i)}").append(" ");--%>
                 <%--}--%>
-                <%--$("#nowPoolCode").val(myTraceBackPool);--%>
+                <%--$("#poolCode").val(myTraceBackPool);--%>
             <%--}--%>
         })
 
@@ -767,8 +767,8 @@
 
 
         $('#savePool').click(function () {
-            var codes = $("#nowPoolCode").val().split(" ");
-//            alert($("#poolCode").val());
+            var codes = $("#poolCode").val().split(" ");
+            alert($("#poolCode").val());
             var reg = /^\d{6}$/;
             for (var i = 0; i < codes.length; i++) {
                 var code = codes[i];
@@ -786,14 +786,15 @@
                 async: true,
                 url: "/user/modify",
                 data: {
-                    "user":JSON.stringify(modified_user)
+//                    TODO fjj 这里的用户是什么
+//                    "user":JSON.stringify(modified_user)
                 },
 
                 success: function (result) {
                     var array = result.split(";");
 
                     if (array[0] == "1") {
-                        // TODO gaoyuan 登录成功用我说的那个小动画，修改全局变量myTraceBackPool
+                        // TODO gaoyuan 成功用我说的那个小动画，修改全局变量myTraceBackPool
                         alert("66666666");
                     } else if (array[0] == "-1") {
                         // TODO 高源 提示有哪些股票不存在
