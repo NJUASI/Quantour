@@ -618,7 +618,7 @@
                         aria-hidden="true">×</span></button>
                 <h4 class="modal-title">编辑股票池</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body"  style="margin-top: -10px">
                 <p class="static" style="margin-top: 5px;">股票列表:</p>
                 <textarea type="text" id="poolCode" class="form-control" rows="10"
                           placeholder="请输入股票代码 以空格隔开"></textarea>
