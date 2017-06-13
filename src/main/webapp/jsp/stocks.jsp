@@ -21,6 +21,9 @@
     <%--<link href="../css/reset.css" rel="stylesheet">--%>
     <link href="../css/index.css" rel="stylesheet">
     <link href="../css/startLoader.css" rel="stylesheet">
+
+    <!-- 加载动画 -->
+    <link href="../css/spinner.css" rel="stylesheet">
     <style type="text/css" rel="stylesheet">
         .tabPanel {
             background-color: #f7f7f7;
@@ -334,7 +337,7 @@
 
                             <c:forEach items="${stock_list}" var="stock" varStatus="vs">
                                 <tr>
-                                    <td> <span class="code" style="color:#7291CA">${stock.stockID.code}</span></td>
+                                    <td><span class="code" style="color:#7291CA">${stock.stockID.code}</span></td>
                                     <td>${stock.name}</td>
                                     <td>${stock.open}</td>
                                     <td>${stock.close}</td>
@@ -400,11 +403,11 @@
 <script src="../js/jquery.validate.js"></script>
 <script type="text/javascript">
 
-   if(${base_stock_list == null}){
-       $("#analysePanel").hide();
-   }else{
-       $("#dateMessage").hide();
-   }
+    if (${base_stock_list == null}) {
+        $("#analysePanel").hide();
+    } else {
+        $("#dateMessage").hide();
+    }
     // 画出热搜榜的图
     createPieChart("hot_search_chart", ${topClicksChartData});
 
@@ -441,8 +444,6 @@
                 date += "-" + dayOfMonth;
             }
             $(".form_date > input").attr('value', date);
-
-
 
 
             $('#search-input').bind('input propertychange', function () {
@@ -576,7 +577,7 @@
         if ($(this).find("a").html() == "···") {
 //            alert($(this).next("li").find("a").html());
 //            if (($(this).next("li").find("a").html()) == totalPageNum) {
-                nowPage = 9;
+            nowPage = 9;
 //            } else {
 //                nowPage = curPageNum - 4;
 //            }
@@ -609,6 +610,12 @@
                 "areaType": areaType
             },
 
+            beforeSend: function () {
+                $("body").addClass("spinner");
+            },
+            complete: function () {
+                $("body").removeClass("spinner");
+            },
             success: function (result) {
 //                alert(result);
                 $("body").addClass("loaded");
@@ -736,9 +743,9 @@
                     })
 
                     $(".code").hover(function () {
-                        $(this).css({"cursor": "pointer","text-decoration":" underline"});
+                        $(this).css({"cursor": "pointer", "text-decoration": " underline"});
                     }, function () {
-                        $(this).css({"color":"#7291CA","text-decoration":" none"});
+                        $(this).css({"color": "#7291CA", "text-decoration": " none"});
                     });
 
                     // 处理热搜榜图表数据
@@ -802,7 +809,7 @@
             } else {
                 window.location.href = "/stocks/" + wantedStockCode;
             }
-        }else{
+        } else {
 
         }
     });
@@ -817,20 +824,20 @@
         window.location.href = "/stocks/" + code;
     });
 
-   $(".code").click(function () {
-       window.location.href = "/stocks/" + $(this).html();
-   })
+    $(".code").click(function () {
+        window.location.href = "/stocks/" + $(this).html();
+    })
 
-   $(".code").hover(function () {
-       $(this).css({"cursor": "pointer","text-decoration":" underline"});
-   }, function () {
-       $(this).css({"color":"#7291CA","text-decoration":" none"});
-   });
-//    $("td").hover(function () {
-//        $(this).css({"cursor": "default"});
-//    }, function () {
-//        $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
-//    });
+    $(".code").hover(function () {
+        $(this).css({"cursor": "pointer", "text-decoration": " underline"});
+    }, function () {
+        $(this).css({"color": "#7291CA", "text-decoration": " none"});
+    });
+    //    $("td").hover(function () {
+    //        $(this).css({"cursor": "default"});
+    //    }, function () {
+    //        $(this).css({"margin-top": "0px", "margin-bottom": "40px", "border": "none"});
+    //    });
 
     $("#industryTab").find("div").addClass("col-md-2");
     $("#industryTab").find("div").css({"padding": "1px", "margin-top": "3px"});
@@ -898,7 +905,6 @@
         areaType = '全部';
         updatePanel();
     }
-
 
 
 </script>

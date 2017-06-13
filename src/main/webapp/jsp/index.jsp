@@ -104,7 +104,7 @@
 <script type="text/javascript">
     $("#stocks").click(function() {
         $("body").removeClass('loaded');
-        window.location.href = "/stocks"
+        window.location.href = "/stocks";
        $("#stocks").unbind("click");
     });
     $("#homePage").addClass("act");
