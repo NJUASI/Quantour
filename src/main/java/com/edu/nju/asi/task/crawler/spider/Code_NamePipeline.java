@@ -58,7 +58,7 @@ public class Code_NamePipeline implements Pipeline {
     public void addCode_Name(Code_Name code_name){
         FileWriter fw = null;
         try {
-            fw = new FileWriter(new File(rootPath+File.separator+"stockSearch.txt"), true);
+            fw = new FileWriter(new File(rootPath+"stockSearch.txt"), true);
         } catch (IOException e) {
             e.printStackTrace();
         }

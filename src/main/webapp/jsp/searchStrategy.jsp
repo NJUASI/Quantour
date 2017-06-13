@@ -49,7 +49,7 @@
     <title>策略详情</title>
 </head>
 
-<body>
+<body >
 <header>
     <%@ include file="header.jsp" %>
 </header>
@@ -75,6 +75,11 @@
                 <span class="txt">编辑</span>
             </button>
             </div>
+            <div id="optimization">
+                <button id="optimizationBt" class="btn btn-primary btn  col-md-1 col-md-offset-1"  style="margin-top: 20px">
+                    <span class="txt">编辑</span>
+                </button>
+            </div>
             <div hidden id="delete">
             <button id="deleteBt" class="btn btn-primary btn  col-md-1 col-md-offset-1"  style="margin-top: 20px">
                 <span class="txt">删除</span>
@@ -93,7 +98,6 @@
                 <div class="col-md-5 row ">
                     <div class="row col-md-12">
                         <ul id="strategyDetail" class="list-inline">
-                            <%--TODO 数据添加--%>
                             <li>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者:&nbsp; <span>${nowStrategy.creator}</span></li>
                             <%--<li>板&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;块:&nbsp; <span>${traceBackCriteria.stockPoolCriteria}</span></li>--%>
                             <li>创建日期:&nbsp; <span>${nowStrategy.date}</span></li>
@@ -147,7 +151,7 @@
                     </p>
                 </div>
                 <div class="col-md-4" style="border-left: 1px solid slategray">
-                    <div id="candlestick" style=" width:100%;height:220px"></div>
+                    <div id="radar" style=" width:100%;height:220px"></div>
                 </div>
             </div>
         </div>
@@ -155,10 +159,338 @@
 </div>
 
 
+<div class="row" style="z-index: 2">
 
-<%@ include file="tracebackAnalyse.jsp" %>
+    <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-tabs" role="tablist">
+        <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
+        <li><a href="#cyclePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
+        <li><a href="#holdingDetailPanel" role="tab" data-toggle="tab">交易详情</a></li>
+        <li><a href="#recentlySoldPanel" role="tab" data-toggle="tab">卖出股票</a></li>
+    </ul>
+</div>
+<div id="myTabContent" class="col-md-10 col-lg-offset-1 tab-content">
+
+    <div class="tab-pane active" id="chartPanel">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th>投资组合</th>
+                    <th>总收益</th>
+                    <th>年化收益</th>
+                    <th>夏普比率</th>
+                    <th>最大回撤率</th>
+                    <th>收益波动率</th>
+                    <th>贝塔率</th>
+                    <th>阿尔法比率</th>
+                </tr>
+                </thead>
+                <tbody id="tb_chart">
+                <tr>
+                    <td>${traceBackNums.get(0)}</td>
+                    <td>${traceBackNums.get(1)}</td>
+                    <td>${traceBackNums.get(2)}</td>
+                    <td>${traceBackNums.get(3)}</td>
+                    <td>${traceBackNums.get(4)}</td>
+                    <td>${traceBackNums.get(5)}</td>
+                    <td>${traceBackNums.get(6)}</td>
+                </tr>
+                <tr>
+                    <td>${traceBackNums.get(7)}</td>
+                    <td>${traceBackNums.get(8)}</td>
+                    <td>${traceBackNums.get(9)}</td>
+                    <td>${traceBackNums.get(10)}</td>
+                    <td>${traceBackNums.get(11)}</td>
+                    <td>${traceBackNums.get(12)}</td>
+                    <td>${traceBackNums.get(13)}</td>
+                </tr>
+                <tr>
+                    <td>${traceBackNums.get(14)}</td>
+                    <td>${traceBackNums.get(15)}</td>
+                    <td>${traceBackNums.get(16)}</td>
+                    <td>${traceBackNums.get(17)}</td>
+                    <td>${traceBackNums.get(18)}</td>
+                    <td>${traceBackNums.get(19)}</td>
+                    <td>${traceBackNums.get(20)}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div id="trace_back_chart" style="margin:0px auto; width:1100px;height:500px"></div>
+        </div>
+    </div>
+    <div class="tab-pane" id="cyclePanel">
+        <div class="row">
+            <div class="col-md-4 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <caption class="text-center"><h3>绝对收益直方图</h3></caption>
+                    <thead>
+                    <tr>
+                        <th>正收益周期数</th>
+                        <th>负收益周期数</th>
+                        <th>赢率</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tb_cycle_ab">
+                    <tr>
+                        <td>${absoluteReturnPeriod.positivePeriodsNum}</td>
+                        <td>${absoluteReturnPeriod.negativePeriodNum}</td>
+                        <td>${absoluteReturnPeriod.winRate}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-md-6">
+                <div id="absolute_histogram_chart" style="width:600px;height:300px"></div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <caption class="text-center"><h3>相对收益直方图</h3></caption>
+                    <thead>
+                    <tr>
+                        <th>正收益周期数</th>
+                        <th>负收益周期数</th>
+                        <th>赢率</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tb_cycle_re">
+                    <tr>
+                        <td>${relativeReturnPeriod.positivePeriodsNum}</td>
+                        <td>${relativeReturnPeriod.negativePeriodNum}</td>
+                        <td>${relativeReturnPeriod.winRate}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-md-6">
+                <div id="relative_histogram_chart" style="width:600px;height:300px"></div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="tab-pane" id="holdingDetailPanel">
+        <div class="row">
+            <div class="col-md-12 table-responsive pre-scrollable" style="max-height: 640px">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>周期序号</th>
+                        <th>开始日期</th>
+                        <th>结束日期</th>
+                        <th>股票持有只数</th>
+                        <th>策略收益</th>
+                        <th>基准收益</th>
+                        <th>超额收益</th>
+                        <th>模拟投资</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tb_detail">
+                    <c:forEach items="${holdingDetails}" var="holdingDetail" varStatus="vs">
+                        <tr>
+                            <td>${holdingDetail.periodSerial}</td>
+                            <td>${holdingDetail.startDate}</td>
+                            <td>${holdingDetail.endDate}</td>
+                            <td>${holdingDetail.holdingNum}</td>
+                            <td>${holdingDetail.strategyReturn}</td>
+                            <td>${holdingDetail.baseReturn}</td>
+                            <td>${holdingDetail.excessReturn}</td>
+                            <td>${holdingDetail.remainInvestment}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="recentlySoldPanel">
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>股票名</th>
+                        <th>股票代码</th>
+                        <th>买入日期</th>
+                        <th>卖出日期</th>
+                        <th>买入价格</th>
+                        <th>卖出价格</th>
+                        <th>涨幅</th>
+                    </tr>
+                    </thead>
+                    <tbody id="sold_stock_detail">
+                    <c:forEach items="${transferDayDetails}" var="transferDayDetail" varStatus="vs">
+                        <tr>
+                            <td>${transferDayDetail.stockName}</td>
+                            <td>${transferDayDetail.stockCode}</td>
+                            <td>${transferDayDetail.buyDate}</td>
+                            <td>${transferDayDetail.sellDate}</td>
+                            <td>${transferDayDetail.buyPrice}</td>
+                            <td>${transferDayDetail.sellPrice}</td>
+                            <td>${transferDayDetail.changeRate}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="circleModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">周期买卖详情</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>股票代码</th>
+                        <th>股票名</th>
+                        <th>行业分类</th>
+                        <th>开始价格</th>
+                        <th>结束价格</th>
+                        <th>涨幅</th>
+                        <th>本期起始仓</th>
+                        <th>当日成交额</th>
+                        <th>股价振幅</th>
+                    </tr>
+                    </thead>
+                    <tbody id="circleList">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+
 
 <%@ include file="logIn.jsp" %>
+
+<div class="modal fade" id="optimizationModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">智能优化参数设置</h4>
+            </div>
+            <div class="modal-body" style="margin-top: -10px">
+
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-offset-1 col-md-1">
+                        <span>策略: </span>
+                    </div>
+                    <div class="col-md-offset-1 col-md-3">
+                        <span class="nameOfStrategy">6bushibu</span>
+                    </div>
+                    <div class="col-md-offset-2 col-md-3">
+                        <span class="">搜索空间节点数 </span><span id="resultNum" style="color:indianred">1</span><span> 个</span>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-offset-1 col-md-2">
+                        <span style="margin-top: 10px">目标核心函数: </span>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" id="mainFunc">
+                            <option value="夏普比率">夏普比率</option>
+                            <option value="年化收益">年化收益</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-offset-2 col-md-3" hidden  id="inputError">
+                        <strong style="color:indianred">参数原值不得超出最大最小值范围</strong>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-1"><p>筛选条件</p></div>
+                    <div class="col-md-8" style="margin-left: -40px">
+                        <div class="row ">
+                            <div class=" col-md-6 ">
+                                <span class="col-md-6">指标</span><span class="col-md-4">比较符</span> <span class="col-md-1">值</span>
+                            </div>
+                        </div>
+
+                       <c:forEach items="${filterConditions}" var="condition" varStatus="vs">
+                           <div class="row chooseRow">
+                               <div class=" col-md-6 ">
+                                   <span class="col-md-6 indicatorType">${condition.indicatorType}</span><span class="col-md-4 comparatorType">${condition.comparatorType}</span> <span class="col-md-1 value">${condition.value}</span>
+                               </div>
+                               <div class=" col-md-6 ">
+                                   <div class="col-md-4">
+                                       <input type="text" class="form-control max_num num"    placeholder="最大">
+                                   </div>
+                                   <div class="col-md-4">
+                                       <input type="text" class="form-control min_num num"   placeholder="最小">
+                                   </div>
+                                   <div class="col-md-4">
+                                       <input type="text" class="form-control length_num num"   placeholder="步长">
+                                   </div>
+                               </div>
+                           </div>
+                        </c:forEach>
+
+                    </div>
+
+                </div>
+                <div class="row" style="margin-top: 5px">
+                    <div class="col-md-2 col-md-offset-1"><p>排名条件</p></div>
+                    <div class="col-md-8" style="margin-left: -40px">
+                        <div class="row ">
+                            <div class=" col-md-6 ">
+                                <span class="col-md-6">指标</span><span class="col-md-4">次序</span> <span class="col-md-2" style="padding-right: 0px">权重</span>
+                            </div>
+                        </div>
+                        <!--<c:forEach items="${rankConditions}" var="condition" varStatus="vs">-->
+                        <div class="row rankRow">
+                            <div class=" col-md-6 ">
+                                <span class="col-md-6 indicatorType">${condition.indicatorType}</span><span class="col-md-4 rankType">${condition.rankType}</span> <span class="col-md-1 weight">${condition.weight}</span>
+                            </div>
+                            <div class=" col-md-6 ">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control max_num num"    placeholder="最大">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control min_num num"   placeholder="最小">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control length_num num"   placeholder="步长">
+                                </div>
+                            </div>
+                        </div>
+                        <!--</c:forEach>-->
+
+                    </div>
+                </div>
+                <button class="btn btn-primary submit col-md-offset-6" style="margin-top: 20px;margin-bottom: 20px">提交调优</button>
+
+
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div><!-- /.modal -->
+</div>
+
 
 <div class="modal fade" id="modifyPanel" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:90%">
@@ -192,7 +524,7 @@
                 </div>
 
 
-                <div style="width:90%;margin:0 auto;2px;margin-bottom: 30px;border-top:1px solid #ddd"></div>
+                <div style="width:90%;margin:0 auto;margin-bottom: 30px;border-top:1px solid #ddd"></div>
                 <form>
                     <div class="row" style="margin-bottom: 10px">
                         <div class="col-md-offset-1 col-md-11">
@@ -648,10 +980,9 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<footer>
+<footer style="margin-top: 700px">
 
 </footer>
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
 <script src="../js/jquery.validate.js"></script>
@@ -664,12 +995,18 @@
 <script src="../js/quotaSelect.js"></script>
 <script src="../js/startLoaded.js"></script>
 <script src="../js/logIn.js"></script>
+<script src="../js/optimization.js"></script>
 <%--<script src="../js/dbDatePicker.js"></script>--%>
 
 <script src="../js/bootstrap-select.js"></script>
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
+
+    $("#optimizationBt").click(function () {
+        $("#optimizationModal").modal("toggle");
+    })
+
     var user = "<%= ((User)session.getAttribute("user")).getUserName()%>";
     var creator="${nowStrategy.creator}";;
     if(user==creator){
@@ -687,9 +1024,8 @@
     $("#strategyDetail").find("li").addClass("col-md-6 ");
     $("#strategyDetail").find("li").find("span").css("color", "#9e9e9e");
     $("#strategyDetail").find("li").css("margin-bottom", "10px")
-    var paramter = ["我去", 2, 3, 4, 5];
-    var data1 = [[2.6, 5.9, 9.0, 26.4, 28.7]];
-    createRadarChart('candlestick', data1, ['1'], paramter);
+    
+    
     $(function () {
         $("#modifyBt").click(function () {
 //            alert(123);
@@ -707,133 +1043,53 @@
     });
     $("#commity").addClass("act");
 
-//TODO fjj 你把下面的注释全部去掉加图表
 
-    <%--var numberValues = eval("(" +  ${traceBackNums} + ")");          // List<String>--%>
-    <%--var abReturnPeriod = ${absoluteReturnPeriod};            // ReturnPeriod--%>
-    <%--var reReturnPeriod =${relativeReturnPeriod};            // ReturnPeriod--%>
-    <%--var holdingDetails = ${holdingDetails};            // List<HoldingDetail>--%>
-    <%--var transferDetails = ${transferDayDetails};           // List<TransferDetail>--%>
-    <%--// var certainFormates = eval("(" + array[5] + ")");           // List<ExcessAndWinRateDist>--%>
-    <%--// var certainHoldings = eval("(" + array[6] + ")");           // List<ExcessAndWinRateDist>--%>
+    $(".circle").click(function () {
+        var k = $(this).html();
+        alert(k);
 
-    <%--// 回测的数值型数据--%>
-    <%--$("#tb_chart").empty();--%>
-    <%--for (var i = 0; i < 3; i++) {--%>
-        <%--$("#tb_chart").append("<tr>");--%>
+        //TODO $(this).html() 为当前需要看的周期，加一下此周期持有股票信息
+//        $("#circleList").empty();
+//        for (var i = 0; i < circleList.length; i++) {
+//            $("#circleList").append("<tr>" +
+//                "<td>" + 股票代码 + "</td>" +
+//                "<td>" + 股票名
+//            " + " < / td > "+
+//            "<td>" + 行业分类 + "</td>" +
+//            "<td>" + 开始价格 + "</td>" +
+//            "<td>" + 结束价格 + "%" + "</td>" +
+//            "<td>" + 涨幅 + "</td>" +
+//            "<td>" + 本期起始仓 + "</td>" +
+//            "<td>" + 当日成交额 + "</td>" +
+//            "<td>" + 股价振幅 + "</td>" +
+//            "</tr>";
+//        )
+//        $("#circleModal").modal("toggle");
+    });
 
-        <%--switch (i) {--%>
-            <%--case 0:--%>
-                <%--$("#tb_chart").append("<td>本策略</td>");--%>
-                <%--break;--%>
-            <%--case 1:--%>
-                <%--$("#tb_chart").append("<td>基准股票</td>");--%>
-                <%--break;--%>
-            <%--case 2:--%>
-                <%--$("#tb_chart").append("<td>相对收益</td>");--%>
-                <%--break;--%>
-        <%--}--%>
+    $(".circle").hover(function () {
+        $(this).css({"cursor": "pointer", "text-decoration": " underline"});
+    }, function () {
+        $(this).css({"color": "#7291CA", "text-decoration": " none"});
+    });
 
-        <%--for (var j = 0; j < 7; j++) {--%>
-            <%--$("#tb_chart").append("<td>" + numberValues[i * 7 + j] + "</td>");--%>
-        <%--}--%>
-        <%--$("#tb_chart").append("</tr>");--%>
-    <%--}--%>
-    <%--// alert("--------------------1----------------");--%>
-
-    <%--// 股票周期的对比图--%>
-    <%--$("#tb_cycle_ab").empty();--%>
-    <%--$("#tb_cycle_ab").append("<tr>" +--%>
-        <%--"<td>" + abReturnPeriod["positivePeriodsNum"] + "</td>" +--%>
-        <%--"<td>" + abReturnPeriod["negativePeriodNum"] + "</td>" +--%>
-        <%--"<td>" + abReturnPeriod["winRate"] + "</td>" +--%>
-        <%--"</tr>");--%>
-
-    <%--$("#tb_cycle_re").empty();--%>
-    <%--$("#tb_cycle_re").append("<tr>" +--%>
-        <%--"<td>" + reReturnPeriod["positivePeriodsNum"] + "</td>" +--%>
-        <%--"<td>" + reReturnPeriod["negativePeriodNum"] + "</td>" +--%>
-        <%--"<td>" + reReturnPeriod["winRate"] + "</td>" +--%>
-        <%--"</tr>");--%>
-    <%--// alert("--------------------2----------------");--%>
+    // alert("--------------------3----------------");
 
 
-    <%--// 持有周期详情--%>
-    <%--$("#tb_detail").empty();--%>
-    <%--for (var i = 0; i < holdingDetails.length; i++) {--%>
-        <%--$("#tb_detail").append("<tr>" +--%>
-            <%--"<td style='text-align: center'><span class='circle' style='color:#7291CA'>" + holdingDetails[i]["periodSerial"] + "<span></td>" +--%>
-            <%--"<td>" + holdingDetails[i]["startDate"] + "</td>" +--%>
-            <%--"<td>" + holdingDetails[i]["endDate"] + "</td>" +--%>
-            <%--"<td>" + holdingDetails[i]["holdingNum"] + "</td>" +--%>
-            <%--"<td>" + (holdingDetails[i]["strategyReturn"] * 100).toFixed(2) + "%" + "</td>" +--%>
-            <%--"<td>" + (holdingDetails[i]["baseReturn"] * 100).toFixed(2) + "%" + "</td>" +--%>
-            <%--"<td>" + (holdingDetails[i]["excessReturn"] * 100).toFixed(2) + "%" + "</td>" +--%>
-            <%--"<td>" + holdingDetails[i]["remainInvestment"].toFixed(2) + "</td>" +--%>
-            <%--"</tr>");--%>
-    <%--}--%>
+    // 处理图表的信息
+    var strategyData = ${strategyCumulativeReturnChart};
+    var baseData = ${baseCumulativeReturnChart};
+    createTraceBackChart("trace_back_chart", strategyData, baseData, ['策略', '基准'], '1', '1');
 
-    <%--$(".circle").click(function () {--%>
-        <%--alert($(this).html());--%>
+    var abHistogramData =${absoluteReturnPeriodChart};
+    createHistogramChart("absolute_histogram_chart", abHistogramData, " ");
 
-        <%--//TODO $(this).html() 为当前需要看的周期，加一下此周期持有股票信息--%>
-<%--//                        $("#circleList").empty();--%>
-<%--//                        for (var i = 0; i < circleList.length; i++) {--%>
-<%--//                            $("#circleList").append("<tr>"+--%>
-<%--//                                "<td>" + 股票代码+ "</td>"+--%>
-<%--//                                "<td>" + 股票名" + "</td>"+--%>
-<%--//                                "<td>" + 行业分类+ "</td>"+--%>
-<%--//                                "<td>" + 开始价格+ "</td>"+--%>
-<%--//                                "<td>" + 结束价格 + "%" + "</td>"+--%>
-<%--//                                "<td>" + 涨幅 + "</td>"+--%>
-<%--//                                "<td>" + 本期起始仓 + "</td>"+--%>
-<%--//                                "<td>" + 当日成交额 + "</td>"+--%>
-<%--//                                "<td>" + 股价振幅 + "</td>"+--%>
-<%--//                                "</tr>");--%>
-<%--//                        }--%>
-        <%--$("#circleModal").modal("toggle");--%>
-    <%--})--%>
+    var reHistogramData = ${relativeReturnPeriodChart};
+    createHistogramChart("relative_histogram_chart", reHistogramData, " ");
 
-    <%--$(".circle").hover(function () {--%>
-        <%--$(this).css({"cursor": "pointer", "text-decoration": " underline"});--%>
-    <%--}, function () {--%>
-        <%--$(this).css({"color": "#7291CA", "text-decoration": " none"});--%>
-    <%--});--%>
-
-    <%--// alert("--------------------3----------------");--%>
-
-    <%--// 卖出的股票详情--%>
-    <%--$("#sold_stock_detail").empty();--%>
-    <%--for (var i = 0; i < transferDetails.length; i++) {--%>
-        <%--$("#sold_stock_detail").append("<tr>" +--%>
-            <%--"<td>" + transferDetails[i]["stockName"] + "</td>" +--%>
-            <%--"<td>" + transferDetails[i]["stockCode"] + "</td>" +--%>
-            <%--"<td>" + transferDetails[i]["buyDate"] + "</td>" +--%>
-            <%--"<td>" + transferDetails[i]["sellDate"] + "</td>" +--%>
-            <%--"<td>" + transferDetails[i]["buyPrice"] + "</td>" +--%>
-            <%--"<td>" + transferDetails[i]["sellPrice"] + "</td>" +--%>
-            <%--"<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>" +--%>
-            <%--"</tr>");--%>
-    <%--}--%>
-
-
-    <%--// 处理图表的信息--%>
-    <%--var strategyData = ${strategyCumulativeReturnChart};            //List<List<String>>--%>
-    <%--var baseData = ${baseCumulativeReturnChart};                //List<List<String>>--%>
-    <%--var abHistogramData =${absoluteReturnPeriodChart};--%>
-    <%--var reHistogramData = ${relativeReturnPeriodChart};--%>
-    <%--// var formateExcessData = JSON.parse(array[11]);--%>
-    <%--// var formateWinData = JSON.parse(array[12]);--%>
-    <%--// var holdingExcessData = JSON.parse(array[13]);--%>
-    <%--// var holdingWinData = JSON.parse(array[14]);--%>
-
-    <%--// alert(strategyData + "\n\n" + baseData + "\n\n" + abHistogramData + "\n\n" + reHistogramData + "\n\n" + formateExcessData--%>
-    <%--//     + "\n\n" + formateExcessData + "\n\n" + holdingExcessData + "\n\n" + holdingWinData);--%>
-
-
-    <%--var trace_back_chart = createTraceBackChart("trace_back_chart", strategyData, baseData, ['策略', '基准'], '1', '1');--%>
-    <%--var absolute_histogram_chart = createHistogramChart("absolute_histogram_chart", abHistogramData, " ");--%>
-    <%--var relative_histogram_chart = createHistogramChart("relative_histogram_chart", reHistogramData, " ");--%>
+    var radarData = ${rankResult};
+    var radar_paramter = ["收益分数", "抗风险分数", "流动性分数", "稳定性分数", "实盘分数"];
+    createRadarChart("radar", radarData, ["1"], radar_paramter);
 
 </script>
 </body>

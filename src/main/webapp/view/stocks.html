@@ -383,28 +383,124 @@
 </div>
 
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 40%">
+    <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">新建静态股票池</h4>
+                <h4 class="modal-title">智能优化参数设置</h4>
             </div>
-            <div class="modal-body">
-                <p class="" style="margin-top: 5px">股票池名称:</p>
-                <input type="text" class="form-control" placeholder="取个好名字" aria-describedby="basic-addon1">
-                <p class="error" style="display: none;"></p>
-                <p class="" style="margin-top: 5px">股票池说明:</p>
-                <textarea type="text" class="form-control" placeholder="股票池说明"></textarea>
-                <p class="error" style="display: none;"></p>
-                <div class="" style="margin-top: 5px;">
-                    <p class="static">股票列表:</p>
-                    <textarea type="text" class="form-control" rows="10" placeholder="请输入股票代码 以空格隔开"></textarea>
+            <div class="modal-body" style="margin-top: -10px">
+
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-offset-1 col-md-1">
+                         <span>策略: </span>
+                    </div>
+                    <div class="col-md-offset-1 col-md-3">
+                        <span class="nameOfStrategy">6bushibu</span>
+                    </div>
+                    <div class="col-md-offset-2 col-md-3">
+                        <span class="">搜索空间节点数 </span><span id="resultNum" style="color:indianred">1</span><span> 个</span>
+                    </div>
                 </div>
-                <p class="error"></p>
+
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-offset-1 col-md-2">
+                        <span style="margin-top: 10px">目标核心函数: </span>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" id="mainFunc">
+                            <option value="夏普比率">夏普比率</option>
+                            <option value="年化收益">年化收益</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-offset-2 col-md-3" hidden  id="inputError">
+                        <strong style="color:indianred">参数原值不得超出最大最小值范围</strong>
+                    </div>
+                </div>
+
+                <div class="row">
+                        <div class="col-md-2 col-md-offset-1"><p>筛选条件</p></div>
+                        <div class="col-md-8" style="margin-left: -40px">
+                            <div class="row ">
+                                <div class=" col-md-6 ">
+                                    <span class="col-md-6">指标</span><span class="col-md-4">比较符</span> <span class="col-md-1">值</span>
+                                </div>
+                            </div>
+
+                                <!--<c:forEach items="${filterConditions}" var="condition" varStatus="vs">-->
+                            <!--<div class="row chooseRow">-->
+                                <!--<div class=" col-md-6 ">-->
+                                    <!--<span class="col-md-6">${condition.indicatorType}</span><span class="col-md-4">${condition.comparatorType}</span> <span class="col-md-1">${condition.value}</span>-->
+                                <!--</div>-->
+                                <!--<div class=" col-md-6 ">-->
+                                    <!--<div class="col-md-4">-->
+                                        <!--<input type="text" class="form-control max_num"    placeholder="最大">-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-4">-->
+                                        <!--<input type="text" class="form-control min_num"   placeholder="最小">-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-4">-->
+                                        <!--<input type="text" class="form-control length_num"   placeholder="步长">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                                <!--</c:forEach>-->
+                            <div class="row chooseRow">
+                                <div class=" col-md-6 ">
+                                    <span class="col-md-6 indicatorType">${condition.indicatorType}</span><span class="col-md-4 comparatorType">${condition.comparatorType}</span> <span class="col-md-1 value">${condition.value}</span>
+                                </div>
+                                <div class=" col-md-6 ">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control max_num num"    placeholder="最大">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control min_num num"   placeholder="最小">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control length_num num"   placeholder="步长">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                <div class="row" style="margin-top: 5px">
+                        <div class="col-md-2 col-md-offset-1"><p>排名条件</p></div>
+                        <div class="col-md-8" style="margin-left: -40px">
+                            <div class="row ">
+                                <div class=" col-md-6 ">
+                                    <span class="col-md-6">指标</span><span class="col-md-4">次序</span> <span class="col-md-2" style="padding-right: 0px">权重</span>
+                                </div>
+                            </div>
+                                <!--<c:forEach items="${rankConditions}" var="condition" varStatus="vs">-->
+                            <div class="row rankRow">
+                                    <div class=" col-md-6 ">
+                                        <span class="col-md-6 indicatorType">${condition.indicatorType}</span><span class="col-md-4 rankType">${condition.rankType}</span> <span class="col-md-1 weight">${condition.weight}</span>
+                                    </div>
+                                    <div class=" col-md-6 ">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control max_num num"    placeholder="最大">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control min_num num"   placeholder="最小">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control length_num num"   placeholder="步长">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--</c:forEach>-->
+
+                        </div>
+                    </div>
+                <button class="btn btn-primary submit col-md-offset-6">提交调优</button>
+
+
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary save ">保存</button>
+
             </div>
         </div>
     </div><!-- /.modal -->
@@ -429,124 +525,105 @@
 
 
 <script type="text/javascript">
-
-    $(".quota").hover(function () {
-        $(this).css({"cursor": "pointer"});
-    });
-
-    $(".quota").click(function () {
-        var quotaName;
-//       alert($(this).html())
-        if($(this).html().substring(0,1)=="N"){
-            quotaName="<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>"+$(this).html().substring(1,)+"</div>"
+     $(".num").css({"margin-top": "-7px","margin-bottom": "15px"});
+    $(".num").bind('input propertychange', function () {
+      var isValid=true;
+        $(".num").each(function () {
+           isValid=validate($(this).val());
+           if(isValid==false) {
+               return false;
+           }
+        });
+        if(isValid==false){
+            return false
         }else{
-            quotaName="<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>"+$(this).html()+"</div>"
+            calculateNum();
         }
-
-        $("#quotaList").append( "<tr class='quotaRow'>"+
-            "<td class=\"col-md-4\"><div class='row'>"+quotaName+"</div></td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">"+
-            "<option>排名最大</option>"+
-            "<option>排名最小</option>"+
-            "<option>排名%最大</option>"+
-            "<option>排名%最小</option>"+
-            "</select>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<div class=\"col-md-10\">"+
-            "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>"+
-            "</div>"+
-            "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<div class=\"col-md-9\">"+
-            "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>"+
-            "</div>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>"+
-            "</tr>");
-
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click( function() {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-            commit();
-        });
-        $(".quotaRank").unbind("input propertychange");
-        $(".quotaRank").bind('input propertychange', function () {
-            if($(this).val()=="排名最大"||$(this).val()=="排名最小"){
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility","hidden");
-            }else{
-                $("#quotaList").find("tr").eq($(".quotaRank").index($(this))).find(".percent").css("visibility","visible");
-            }
-        })
-
     });
-
-    function commit() {
-        $(".quotaRow").each(function () {
-//           分别对应指标名称 指标排名方式 选股的多少 权重
-            alert($(this).find(".numOfN").val()+$(this).find(".quotaName").html());
-            alert($(this).find(".quotaRank").val());
-            alert($(this).find(".quotaNum").val());
-            alert($(this).find(".quotaWeight").val());
-        });
-    }
-    $('#searchQuota').bind('input propertychange', function() {
-      alert("11");
-    });
-    function quotaChange() {
-        var quotaName;
-//       alert($(this).html())
-        if($('#searchQuota').val().substring(0,1)=="N"){
-            quotaName="<div class='col-md-5'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>"+$('#searchQuota').val().substring(1,)+"</div>"
-        }else{
-            quotaName="<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>"+$('#searchQuota').val()+"</div>"
+     function calculateNum() {
+         var num=1;
+         $(".chooseRow").each(function () {
+             var thisValue=$(this).find(".value").eq(0).val();
+             var max=$(this).find(".max_num").eq(0).val();
+             var min=$(this).find(".min_num").eq(0).val();
+             var length=$(this).find(".length_num").eq(0).val();
+//             if(thisValue<min||thisValue>max){
+//                 $("#inputError").show();
+//                 setTimeout('$("#inputError").show();',2000);
+//             }
+             num*=(max-min)/length-1;
+         });
+         $(".rankRow").each(function () {
+             var thisValue=$(this).find(".weight").eq(0).html();
+             var max=$(this).find(".max_num").eq(0).val();
+             var min=$(this).find(".min_num").eq(0).val();
+             var length=$(this).find(".length_num").eq(0).val();
+//             if(thisValue<min||thisValue>max){
+//                 $("#inputError").show();
+//                 setTimeout('$("#inputError").show();',2000);
+//             }
+             num*=(max-min)/length-1;
+         });
+         $("#resultNum").html(num);
+     }
+    function validate(num){
+        var reg = /^\d{1,3}$/;
+        if(!reg.test(num)){
+            return false;
         }
-
-        $("#quotaList").append( "<tr class='quotaRow'>"+
-            "<td class=\"col-md-4\"><div class='row'>"+quotaName+"</div></td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<select class=\"form-control col-md-12 quotaRank\" style=\"padding-left: 5px;padding-right: 5px\">"+
-            "<option>排名最大</option>"+
-            "<option>排名最小</option>"+
-            "<option>排名%最大</option>"+
-            "<option>排名%最小</option>"+
-            "</select>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<div class=\"col-md-10\">"+
-            "<input type=\"text\" class=\"form-control quotaNum\" value=\"10\"/>"+
-            "</div>"+
-            "<div class='percent' style=\"margin-left: -10px;display: inline-block;visibility: hidden;margin-top: 5px\" >%</div>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-2\">"+
-            "<div class=\"row\">"+
-            "<div class=\"col-md-9\">"+
-            "<input type=\"text\" class=\"form-control quotaWeight\" value=\"1\"/>"+
-            "</div>"+
-            "</div>"+
-            "</td>"+
-            "<td class=\"col-md-1\"><button class=\"btn  btn-primary quotaBt\"><span class=\"glyphicon glyphicon-remove\"></span></button></td>"+
-            "</tr>");
-
-        $(".quotaBt").unbind("click");
-        $(".quotaBt").click( function() {
-            $("#quotaList").find("tr").eq($(".quotaBt").index($(this))).remove();
-            commit();
-        });
-
     }
+     $(".submit").click(function () {
+         var isValid=true;
+         $(".chooseRow").each(function () {
+             var thisValue=$(this).find(".value").eq(0).html();
+             var max=$(this).find(".max_num").eq(0).val();
+             var min=$(this).find(".min_num").eq(0).val();
+
+//            if(thisValue<min||thisValue>max){
+//                $("#inputError").show();
+//                setTimeout('$("#inputError").show();',2000);
+//                isValid=false;
+//                return false;
+//            }
+         });
+         $(".chooseRow").each(function () {
+             var thisValue=$(this).find(".weight").eq(0).html();
+             var max=$(this).find(".max_num").eq(0).val();
+             var min=$(this).find(".min_num").eq(0).val();
+//            if(thisValue<min||thisValue>max){
+//                $("#inputError").show();
+//                setTimeout('$("#inputError").show();',2000);
+//                isValid=false;
+//                return false;
+//            }
+         });
+         $(".num").each(function () {
+             isValid=validate($(this).val());
+             if(isValid==false) {
+                 return false;
+             }
+         });
+         if(isValid==false){
+//            return false;
+         }
+
+         alert($("#mainFunc").val());
+         alert($("#resultNum").html());
+
+         //TODO fjj 传递优化数据！
+
+         $(".chooseRow").each(function () {
+             alert($(this).find(".max_num").eq(0).val());
+             alert($(this).find(".min_num").eq(0).val());
+             alert($(this).find(".length_num").eq(0).val());
+         });
+         $(".rankRow").each(function (){
+             alert($(this).find(".max_num").eq(0).val());
+             alert($(this).find(".min_num").eq(0).val());
+             alert($(this).find(".length_num").eq(0).val());
+         });
+
+     })
 </script>
 
 <script src="../js/bootstrap-select.js"></script>

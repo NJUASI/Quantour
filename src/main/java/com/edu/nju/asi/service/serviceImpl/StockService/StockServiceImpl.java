@@ -138,10 +138,14 @@ public class StockServiceImpl implements StockService {
         StockPoolFilter stockPoolFilter = new StockPoolFilter();
         StockPoolFilter blockCriteriaFilter = new BlockCriteriaFilter();
         StockPoolFilter stCriteriaFilter = new StCriteriaFilter();
+        StockPoolFilter industryFilter = new IndustryFilter();
+        StockPoolFilter areaFilter = new AreaFilter();
 
         //设置责任链
         stockPoolFilter.setNextFilter(blockCriteriaFilter);
         blockCriteriaFilter.setNextFilter(stCriteriaFilter);
+        stCriteriaFilter.setNextFilter(industryFilter);
+        industryFilter.setNextFilter(areaFilter);
 
 
         List<String> stockPoolCodes = new ArrayList<String>();

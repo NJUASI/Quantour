@@ -47,7 +47,7 @@ public class TraceBackServiceImplTest {
 
         //择时条件
         List<MarketSelectingCondition> marketSelectingConditions = new ArrayList<>();
-        marketSelectingConditions.add(new MarketSelectingCondition(MarketSelectingType.MA, "上证指数", 1, 3, 20, 0));
+        marketSelectingConditions.add(new MarketSelectingCondition(MarketSelectingType.MAVol, "上证指数", 1, 5, 60, 0));
 
         TraceBackCriteria criteria = new TraceBackCriteria(start, end, 10, new StockPoolCriteria(StType.EXCLUDE, blockTypes),5,
                 "沪深300", false, filterConditions, rankConditions, marketSelectingConditions, 0.5, 1, 1);

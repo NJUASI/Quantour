@@ -16,7 +16,7 @@ public class IndustryFilter extends StockPoolFilter {
     public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria) {
         // 全部行业板块，则跳过此过滤器
         if (criteria.industryTypes.get(0) != IndustryType.all) {
-            for (int i = 0; i < stocks.size(); i++) {
+            for (int i = 0; i < stocks.size();) {
                 boolean isSelected = false;
                 for (IndustryType industry : criteria.industryTypes) {
                     if (stocks.get(i).industryType == industry) {

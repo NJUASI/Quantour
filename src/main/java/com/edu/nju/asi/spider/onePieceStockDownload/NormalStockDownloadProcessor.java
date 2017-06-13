@@ -80,7 +80,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
                 //添加股票代码今天的数据页面
                 page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html");
                 //添加通过代码搜索股票的界面
-//                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
+                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
             }
 
             totalStocks += codes.size();
@@ -108,7 +108,7 @@ public class NormalStockDownloadProcessor implements PageProcessor {
                 //TODO
                 page.addTargetRequest("http://quotes.money.163.com/trade/lsjysj_"+codes.get(i)+".html#01b07");
                 //添加通过代码搜索股票的界面
-//                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
+                page.addTargetRequest("http://quotes.money.163.com/stocksearch/json.do?count=1&word="+codes.get(i));
             }
 
             totalStocks += codes.size();

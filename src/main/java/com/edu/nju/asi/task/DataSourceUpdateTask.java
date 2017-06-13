@@ -57,11 +57,11 @@ public class DataSourceUpdateTask {
 //        crawler.handleStock();
 //        crawler.handleAreaAndIndustry();
 //        storer.storeStock();
-        storer.storeStockSearch();
+//        storer.storeStockSearch();
 //        crawler.handleAdjStock();
 //        storer.storeAdjData();
-//        fileHelper.delete();
-//        taskInfoHelper.clearInfo();
+        fileHelper.delete();
+        taskInfoHelper.clearInfo();
     }
 
     /**

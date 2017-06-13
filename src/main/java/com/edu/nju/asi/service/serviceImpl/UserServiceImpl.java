@@ -134,6 +134,7 @@ public class UserServiceImpl implements UserService {
 
         if (notExistCodes.size() != 0) throw new TraceBackStockExistedException(notExistCodes);
         else {
+            curUser.setPassword(MD5Util.encodeMD5(curUser.getPassword()));
             curUser.setTraceBackPool(JSON.toJSONString(modifiedTraceBackPool));
             return userDao.modify(curUser);
         }

@@ -38,6 +38,7 @@ def _modify_path(filepath):
 
     if filepath.find('\\', 0, len(filepath)) != -1:
         infos = filepath.split('\\')
+        print(infos)
         result = infos[0].strip() + os.path.sep
         count = 1
         while count < len(infos) - 1:
@@ -58,5 +59,5 @@ def _get_root():
 
 
 root = _modify_path(_get_root())
-codes = _read_codes(root + os.path.sep + 'stockData.txt')
-_crawing_history(codes, root + os.path.sep + 'adjData' + os.path.sep + 'after')
+codes = _read_codes(root + 'stockData.txt')
+_crawing_history(codes, root + 'adjData' + os.path.sep + 'after')

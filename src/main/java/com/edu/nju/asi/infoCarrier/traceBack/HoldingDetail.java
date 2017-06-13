@@ -74,4 +74,85 @@ public class HoldingDetail {
         this.excessReturn = Double.parseDouble(NumberFormat.decimaFormat(excessReturn, 4));
         this.remainInvestment = Double.parseDouble(NumberFormat.decimaFormat(remainInvestment, 2));
     }
+
+
+    public int getPeriodSerial() {
+        return periodSerial;
+    }
+
+    public void setPeriodSerial(int periodSerial) {
+        this.periodSerial = periodSerial;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getHoldingNum() {
+        return holdingNum;
+    }
+
+    public void setHoldingNum(int holdingNum) {
+        this.holdingNum = holdingNum;
+    }
+
+    public int getBuyNum() {
+        return buyNum;
+    }
+
+    public void setBuyNum(int buyNum) {
+        this.buyNum = buyNum;
+    }
+
+    public int getSellNum() {
+        return sellNum;
+    }
+
+    public void setSellNum(int sellNum) {
+        this.sellNum = sellNum;
+    }
+
+    public double getStrategyReturn() {
+        return strategyReturn;
+    }
+
+    public void setStrategyReturn(double strategyReturn) {
+        this.strategyReturn = strategyReturn;
+    }
+
+    public double getBaseReturn() {
+        return baseReturn;
+    }
+
+    public void setBaseReturn(double baseReturn) {
+        this.baseReturn = baseReturn;
+    }
+
+    public double getExcessReturn() {
+        return excessReturn;
+    }
+
+    public void setExcessReturn(double excessReturn) {
+        this.excessReturn = excessReturn;
+    }
+
+    public double getRemainInvestment() {
+        return remainInvestment;
+    }
+
+    public void setRemainInvestment(double remainInvestment) {
+        this.remainInvestment = remainInvestment;
+    }
 }

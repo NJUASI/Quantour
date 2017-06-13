@@ -100,7 +100,6 @@
                         <th>周期序号</th>
                         <th>开始日期</th>
                         <th>结束日期</th>
-                        <th>股票持有只数</th>
                         <th>策略收益</th>
                         <th>基准收益</th>
                         <th>超额收益</th>
@@ -150,13 +149,10 @@
                     <tr>
                         <th>股票代码</th>
                         <th>股票名</th>
-                        <th>行业分类</th>
                         <th>开始价格</th>
                         <th>结束价格</th>
                         <th>涨幅</th>
                         <th>本期起始仓</th>
-                        <th>当日成交额</th>
-                        <th>股价振幅</th>
                     </tr>
                     </thead>
                     <tbody id="circleList">

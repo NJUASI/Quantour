@@ -102,6 +102,11 @@ public class StoreStockSearchHelper {
         for (StockSearch stockSearch : stockSearches) {
             List<LocalDate> date = stockDataHelper.getFirstAndLastDay(stockSearch.getSearchID().getCode());
             System.out.println("检测："+stockSearch.getSearchID().getCode()+" "+date);
+            if(date==null||date.isEmpty()){
+                System.out.println(stockSearch.getSearchID().getCode()+" 在数据库中无数据,拒绝爬取复权数据");
+                continue;
+            }
+
             if (!date.get(1).isBefore(start)) {
                 String line = stockSearch.getSearchID().getCode() + ";" + String.valueOf(stockSearch.getSearchID().getMarket().getRepre()) +
                         ";" + stockSearch.getSearchID().getName() + ";" + stockSearch.getFirstLetters() + ";" + start.toString() + ";" +
@@ -183,10 +188,13 @@ public class StoreStockSearchHelper {
     private List<StockSearch> getNewStockInfo() {
         List<StockSearch> newCodeInfos = clearUnuseCode();
         List<StockSearch> oldCodeInfos = stockSearchDataHelper.getAllStockSearch();
+        List<SearchID> oldCodeInfoIDs = convertSearchID(oldCodeInfos);
         List<StockSearch> stockSearches = new ArrayList<>();
-        for (StockSearch stockSearch : newCodeInfos) {
-            if (oldCodeInfos.indexOf(stockSearch) == -1) {
-                stockSearches.add(stockSearch);
+        for (int i=0;i<newCodeInfos.size();i++) {
+            if (oldCodeInfoIDs.indexOf(newCodeInfos.get(i).getSearchID()) == -1) {
+                stockSearches.add(newCodeInfos.get(i));
+                System.out.println("新股："+newCodeInfos.get(i).getSearchID().getCode()+"--"+newCodeInfos.get(i).getSearchID().getMarket()
+                        +"--"+newCodeInfos.get(i).getSearchID().getName());
             }
         }
         return stockSearches;
@@ -281,6 +289,21 @@ public class StoreStockSearchHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 获取StockSearch的SearchID列表
+     *
+     * @param stockSearches 需要转换列表
+     * @author ByronDong
+     * @updateTime 2017/6/13
+     */
+    private List<SearchID> convertSearchID(List<StockSearch> stockSearches){
+        List<SearchID> searchIDS = new ArrayList<>();
+        for(StockSearch stockSearch:stockSearches){
+            searchIDS.add(stockSearch.getSearchID());
+        }
+        return searchIDS;
     }
 
     /**

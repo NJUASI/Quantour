@@ -34,4 +34,44 @@ public class ReturnPeriod {
      */
     public Map<Double, Integer> negativeNums;
 
+
+    public int getPositivePeriodsNum() {
+        return positivePeriodsNum;
+    }
+
+    public void setPositivePeriodsNum(int positivePeriodsNum) {
+        this.positivePeriodsNum = positivePeriodsNum;
+    }
+
+    public int getNegativePeriodNum() {
+        return negativePeriodNum;
+    }
+
+    public void setNegativePeriodNum(int negativePeriodNum) {
+        this.negativePeriodNum = negativePeriodNum;
+    }
+
+    public double getWinRate() {
+        return winRate;
+    }
+
+    public void setWinRate(double winRate) {
+        this.winRate = winRate;
+    }
+
+    public Map<Double, Integer> getPositiveNums() {
+        return positiveNums;
+    }
+
+    public void setPositiveNums(Map<Double, Integer> positiveNums) {
+        this.positiveNums = positiveNums;
+    }
+
+    public Map<Double, Integer> getNegativeNums() {
+        return negativeNums;
+    }
+
+    public void setNegativeNums(Map<Double, Integer> negativeNums) {
+        this.negativeNums = negativeNums;
+    }
 }
