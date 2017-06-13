@@ -50,7 +50,7 @@ function validate(num){
         return false;
     }
 }
-$(".submit").click(function () {
+$("#submitBt").click(function () {
     var isValid=true;
     $(".chooseRow").each(function () {
         var thisValue=parseInt($(this).find(".value").eq(0).html());
@@ -100,4 +100,32 @@ $(".submit").click(function () {
         alert($(this).find(".min_num").eq(0).val());
         alert($(this).find(".length_num").eq(0).val());
     });
+
+
+
+
+        //TODO fjj 初始化表头
+        $("#optimizationHead").empty()
+        $("#optimizationHead").append("<th>策略定义</th>"+
+            "<th>年化收益</th>"+
+            "<th>夏普比率</th>"+
+            "<th>最大回撤率</th>"+
+            "<th>收益波动率</th>"+//TODO 加你传下来自己的名称的权重
+            "<th>收盘价_权重</th>"+
+            "<th>总市值_权重</th>"
+        );
+        $("#optimizationList").empty();
+        //TODO 遍历添加你自己的数据
+//        for (var i = 0; i < transferDetails.length; i++) {
+        $("#optimizationList").append("<tr>" +
+//                "<td>" + transferDetails[i]["stockName"] + "</td>" +
+//                "<td>" + transferDetails[i]["stockCode"] + "</td>" +
+//                "<td>" + transferDetails[i]["buyDate"] + "</td>" +
+//                "<td>" + transferDetails[i]["sellDate"] + "</td>" +
+//                "<td>" + transferDetails[i]["buyPrice"] + "</td>" +
+//                "<td>" + transferDetails[i]["sellPrice"] + "</td>" +
+//                "<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>" +
+            "</tr>");
+
+
 });

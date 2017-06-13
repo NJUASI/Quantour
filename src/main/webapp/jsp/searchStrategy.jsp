@@ -360,7 +360,7 @@
                         <span>策略: </span>
                     </div>
                     <div class="col-md-offset-1 col-md-3">
-                        <span class="nameOfStrategy">6bushibu</span>
+                        <span class="nameOfStrategy">${nowStrategy.strategyID}</span>
                     </div>
                     <div class="col-md-offset-2 col-md-3">
                         <span class="">搜索空间节点数 </span><span id="resultNum" style="color:indianred">1</span><span> 个</span>
@@ -443,9 +443,21 @@
 
                     </div>
                 </div>
-                <button class="btn btn-primary submit col-md-offset-6" style="margin-top: 20px;margin-bottom: 20px">提交调优</button>
+                <button class="btn btn-primary col-md-offset-6" id="submitBt" style="margin-top: 20px;margin-bottom: 30px">提交调优</button>
 
+                <div class="row" id="optimizationTable">
+                    <div class="col-md-12 table-responsive pre-scrollable" style="max-height: 640px">
+                        <table class="table table-hover table-condensed">
+                            <thead>
+                            <tr id="optimizationHead">
 
+                            </tr>
+                            </thead>
+                            <tbody id="optimizationList">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
             </div>
             <div class="modal-footer">
@@ -523,13 +535,6 @@
 //        window.location.href=""
     });
 
-
-    $(function () {
-        $("#modifyBt").click(function () {
-//            alert(123);
-            $("#modifyPanel").modal("toggle");
-        });
-    });
 
 
 
