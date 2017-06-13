@@ -492,8 +492,9 @@
 
 
     $("#optimizationBt").click(function () {
-        $("#optimizationModal").modal("toggle");
+        $("#optimizationModal").modal().css({"margin-top":"100px"});
     })
+
 
     var user = "<%= ((User)session.getAttribute("user")).getUserName()%>";
     var creator="${nowStrategy.creator}";

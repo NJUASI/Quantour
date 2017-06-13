@@ -1411,7 +1411,7 @@
                                 "<td>" + changeToPercent(stageDetails[k][i]["curPosition"])+ "</td>"+
                                 "</tr>");
                         }
-                        $("#circleModal").modal("toggle");
+                        $("#circleModal").modal("toggle").css({"margin-top":"100px"});
                     });
 
                     $(".circle").hover(function () {
@@ -1547,7 +1547,7 @@
             $('#descriptionError').hide();
         }
 
-        alert("--------ENTER--------");
+//        alert("--------ENTER--------");
         var strategyID = $("#strategyName").val();
         var description = $("#strategyDescription").val();
         var isPrivate = $('input[name="radios3"]:checked').val();
@@ -1731,8 +1731,8 @@
      */
     function separateMarketSelectingType(mstType, mstParam) {
         var params = mstParam.split(",");
-        alert(mstType);
-        alert(params);
+//        alert(mstType);
+//        alert(params);
 
         switch (mstType) {
             case "MA":
@@ -1758,7 +1758,7 @@
             if (jsonData == false) {
                 return false;
             } else {
-                $("#mymodal").modal("toggle");
+                $("#mymodal").modal().css({"margin-top":"100px"});
                 var blockType = "";
                 for (var i = 0; i < $("#blockTypes").val().length; i++) {
                     if ($("#blockTypes").val()[i] == "ZB") {

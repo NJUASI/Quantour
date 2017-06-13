@@ -26,7 +26,7 @@
                     </c:choose>
                 </ul>
             </li>
-            <li><a href="#">帮助</a></li>
+            <li><a href="../jsp/help.jsp" id = "help">帮助</a></li>
             <c:choose>
                 <c:when test="${sessionScope.user!=null}">
                     <li><a href="/user/welcome">用户管理</a></li>

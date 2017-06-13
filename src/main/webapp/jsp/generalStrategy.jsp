@@ -94,9 +94,9 @@
                                         <%--${strategy.strategyCumulativeReturnChart}--%>
                                     </li>
                                 </ul>
-                                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                                    <img class="img-responsive " src="../img/traceback4.png">
-                                </figure>
+                                <div class="col-md-12" id="${strategy.strategyID}" style="width: 100%;height:80px;margin-top: -30px;z-index: 3">
+
+                                </div>
                                 <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>
                                 <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">创建者</span><span class="col-md-4 small" style="text-align: right">${strategy.creator}</span>
                                 <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">年化收益率</span><span class="col-md-4 small" style="text-align: right">${strategy.annualizedRateOfReturn}</span>
