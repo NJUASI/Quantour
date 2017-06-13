@@ -42,4 +42,13 @@ public class MarketSelectingCondition {
 
     public MarketSelectingCondition() {
     }
+
+    public MarketSelectingCondition(MarketSelectingType type, String baseStockName, int cycle, int criteria1, int criteria2, int criteria3) {
+        this.type = type;
+        this.baseStockName = baseStockName;
+        this.cycle = cycle;
+        this.criteria1 = criteria1;
+        this.criteria2 = criteria2;
+        this.criteria3 = criteria3;
+    }
 }

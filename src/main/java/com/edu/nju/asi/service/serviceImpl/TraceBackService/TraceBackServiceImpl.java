@@ -149,9 +149,9 @@ public class TraceBackServiceImpl implements TraceBackService {
         // 获取所有股指信息
         Set<String> baseStockNames = new HashSet<>();
         baseStockNames.add(criteria.baseStockName);
-//        for (MarketSelectingCondition condition : criteria.marketSelectingConditions) {
-//            baseStockNames.add(condition.baseStockName);
-//        }
+        for (MarketSelectingCondition condition : criteria.marketSelectingConditions) {
+            baseStockNames.add(condition.baseStockName);
+        }
 
         baseStockData = new HashMap<>();
         for (String bsName : baseStockNames) {

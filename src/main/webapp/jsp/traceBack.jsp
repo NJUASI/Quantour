@@ -784,10 +784,9 @@
             $.ajax({
                 type: "post",
                 async: true,
-                url: "/user/modify",
+                url: "/user/modify_my_trace_back_pool",
                 data: {
-//                    TODO fjj 这里的用户是什么
-//                    "user":JSON.stringify(modified_user)
+                    "myTraceBackPool": $("#poolCode").val()
                 },
 
                 success: function (result) {

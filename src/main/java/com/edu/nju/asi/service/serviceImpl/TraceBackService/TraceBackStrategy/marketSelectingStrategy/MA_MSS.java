@@ -36,6 +36,8 @@ public class MA_MSS extends AllMarketSelectingStrategy {
             result.isDeathCross = true;
         }
 
+        System.out.println();
+        System.out.println();
         return result;
     }
 }

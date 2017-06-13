@@ -106,7 +106,7 @@ public class TraceBackStrategyCalculator {
     /**
      * 财务指标
      */
-    protected Map<String,List<BasicData>> financialData;
+    protected Map<String, List<BasicData>> financialData;
 
     BasicDataDao basicDataDao = new BasicDataDaoImpl();
 
@@ -155,7 +155,7 @@ public class TraceBackStrategyCalculator {
                 thisEnd = thisEnd.minusDays(1);
             }
             //中间没有数据
-            if(thisStart.isAfter(thisEnd)){
+            if (thisStart.isAfter(thisEnd)) {
                 throw new NoDataWithinException("all");
             }
         }
@@ -164,7 +164,7 @@ public class TraceBackStrategyCalculator {
 
 
         // 一次性获得所有择时调仓的结果，以便之后查看
-//        setUpMarketSelectingResults(traceBackCriteria.marketSelectingConditions, allStartIndex, allEndIndex);
+        setUpMarketSelectingResults(traceBackCriteria.marketSelectingConditions, allStartIndex, allEndIndex);
 
 
         // 回测周期开始
@@ -179,17 +179,17 @@ public class TraceBackStrategyCalculator {
                 int startIndex = allStartIndex + i * holdingPeriod;
                 int endIndex = startIndex + holdingPeriod;
                 //最后一个周期且刚好满足整数的周期,没有末尾的调仓日
-                if(i == cycles-1 && (allEndIndex - allStartIndex + 1) % holdingPeriod == 0){
+                if (i == cycles - 1 && (allEndIndex - allStartIndex + 1) % holdingPeriod == 0) {
                     endIndex = endIndex - 1;
                 }
-                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i+1, traceBackCriteria.maxHoldingNum));
+                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, i + 1, traceBackCriteria.maxHoldingNum));
             }
 
             // 最后一个不足周期的计算
             if ((allEndIndex - allStartIndex + 1) % holdingPeriod != 0) {
                 int startIndex = allStartIndex + cycles * holdingPeriod;
                 int endIndex = allEndIndex;
-                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, cycles+1, traceBackCriteria.maxHoldingNum));
+                strategyCumulativeReturn.addAll(cycleCalcu(startIndex, endIndex, cycles + 1, traceBackCriteria.maxHoldingNum));
             }
         }
 
@@ -220,11 +220,13 @@ public class TraceBackStrategyCalculator {
             int goldenFork = 0;
             int deathCross = 0;
 
-            // 依次处理每种择时情况，只有在周期上才检查 TODO 冯俊杰 择时对前一日进行检查，然后择时
+            // 依次处理每种择时情况，只有在周期上才检查
             for (MarketSelectingCondition condition : conditions) {
                 if ((i - allStartIndex + 1) % condition.cycle == 0) {
                     AllMarketSelectingStrategy mss = MarketSelectingStrategyFactory.createMarketSelectingStrategyFactory(condition, allDatesWithData, baseStockData);
-                    MarketSelectingResult tempResult = mss.marketSelecting(i, condition.criteria1, condition.criteria2, condition.criteria3);
+
+                    System.out.println("check: " + allDatesWithData.get(i-1));
+                    MarketSelectingResult tempResult = mss.marketSelecting(i - 1, condition.criteria1, condition.criteria2, condition.criteria3);
                     if (tempResult.isGoldenFork) goldenFork++;
                     if (tempResult.isDeathCross) deathCross++;
                 }
@@ -252,7 +254,7 @@ public class TraceBackStrategyCalculator {
 
         List<String> filterWantedCodes = new ArrayList<>();
         //通过筛选条件筛选出该周期需要回测的股票代码
-        if(filterConditions.size() != 0){
+        if (filterConditions.size() != 0) {
             filterWantedCodes = filterCodes(filterConditions, periodStart);
         }
 
@@ -261,19 +263,19 @@ public class TraceBackStrategyCalculator {
         List<RankConditionRate> rankConditionRates = rankCodes(codesNeedToRank, periodStart);
 
         // 筛选排名后的股票数依然大于最大持有股票数,应该按评分排名
-        if(rankConditionRates.size() > maxHoldingNum){
+        if (rankConditionRates.size() > maxHoldingNum) {
             rankConditionRates.sort(new Comparator<RankConditionRate>() {
                 @Override
                 public int compare(RankConditionRate o1, RankConditionRate o2) {
-                    return (int) Math.ceil(o2.score-o1.score);
+                    return (int) Math.ceil(o2.score - o1.score);
                 }
             });
-            rankConditionRates = rankConditionRates.subList(0,maxHoldingNum);
+            rankConditionRates = rankConditionRates.subList(0, maxHoldingNum);
         }
 
         //添加计算的股票代码
         List<String> wantedStockCodes = new ArrayList<>();
-        for(RankConditionRate rankConditionRate : rankConditionRates) {
+        for (RankConditionRate rankConditionRate : rankConditionRates) {
             wantedStockCodes.add(rankConditionRate.stockCode);
         }
 
@@ -301,7 +303,7 @@ public class TraceBackStrategyCalculator {
 
         //初始化
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
-        for(int i = startIndex+1; i <= endIndex; i++){
+        for (int i = startIndex + 1; i <= endIndex; i++) {
             forCalcu.put(allDatesWithData.get(i), new ArrayList<>());
         }
 
@@ -346,7 +348,7 @@ public class TraceBackStrategyCalculator {
 
                     if (stockIndex == ss.size()) {
                         while (startIndex + i + 1 <= endIndex) {
-                            profit = prePrice  / basePrice - 1;
+                            profit = prePrice / basePrice - 1;
                             forCalcu.get(allDatesWithData.get(startIndex + i + 1)).add(profit * curPosition);
                             i++;
                         }
@@ -371,10 +373,10 @@ public class TraceBackStrategyCalculator {
         return strategyCumulativeReturn;
     }
 
-    private List<String> dealPickedStockCodes(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex, int endIndex, int maxHoldingNum){
+    private List<String> dealPickedStockCodes(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex, int endIndex, int maxHoldingNum) {
 
         // 第一个周期，没有卖出的股票
-        if(periodSerial == 1){
+        if (periodSerial == 1) {
             List<StageDetail> stageDetailList = new ArrayList<>();
 
             // 先遍历，得到根据形成挑选出股票中真实能买到的股票
@@ -411,14 +413,14 @@ public class TraceBackStrategyCalculator {
             // 取形成选取的股票的无重复并集
             List<String> pickedAgainStockCodes = new ArrayList<>();
             for (TransferDayDetail transferDayDetail : currentHoldingStocks) {
-                if (pickedStockCodes.contains(transferDayDetail.stockCode)){
+                if (pickedStockCodes.contains(transferDayDetail.stockCode)) {
                     pickedAgainStockCodes.add(transferDayDetail.stockCode);
                 }
             }
 
             pickedStockCodes.removeAll(canNotBeSoldStockCodes);
             // 两个集合相并大于最大持有股票数
-            if(pickedStockCodes.size() + canNotBeSoldStockCodes.size() > maxHoldingNum){
+            if (pickedStockCodes.size() + canNotBeSoldStockCodes.size() > maxHoldingNum) {
                 //此时已经是排好名的codes，可以直接截取
                 pickedStockCodes = pickedStockCodes.subList(0, maxHoldingNum - canNotBeSoldStockCodes.size());
             }
@@ -429,16 +431,16 @@ public class TraceBackStrategyCalculator {
             canBeHoldStocks.addAll(canNotBeSoldStockCodes);
 
             // 若挑选的股票代码中没有当前持有股票的代码，则将该股票加入卖出的队列
-            for(int i = 0; i < currentHoldingStocks.size(); ){
+            for (int i = 0; i < currentHoldingStocks.size(); ) {
                 boolean isSold = true;
-                for(int j = 0; j < canBeHoldStocks.size(); j++){
-                    if(currentHoldingStocks.get(i).stockCode.equals(canBeHoldStocks.get(j))){
+                for (int j = 0; j < canBeHoldStocks.size(); j++) {
+                    if (currentHoldingStocks.get(i).stockCode.equals(canBeHoldStocks.get(j))) {
                         isSold = false;
                         break;
                     }
                 }
                 // 需要被卖出的
-                if(isSold){
+                if (isSold) {
                     Stock stock = findStock(currentHoldingStocks.get(i).stockCode, allDatesWithData.get(startIndex));
                     // 此时的stock已经不可能为空
                     assert (stock != null) : "逻辑有错，stock为空了";
@@ -446,7 +448,7 @@ public class TraceBackStrategyCalculator {
                     lastSoldStocks.add(new TransferDayDetail(currentHoldingStocks.get(i), stock.getStockID().getDate(), stock.getClose()));
                     // 该支股票被卖出
                     currentHoldingStocks.remove(i);
-                }else {
+                } else {
                     i++;
                 }
             }
@@ -459,7 +461,7 @@ public class TraceBackStrategyCalculator {
             // 不会被卖掉的股票因为股票价格变动，自己的仓位会变化，其他新进的均分仓位
             double canNotBeSoldPercent = 0;
             for (StageDetail stageDetail : stageDetails.get(periodSerial - 1)) {
-                if (canNotBeSoldStockCodes.contains(stageDetail.stockCode)){
+                if (canNotBeSoldStockCodes.contains(stageDetail.stockCode)) {
                     canNotBeSoldPercent += adjustedPosition(stageDetail.curPositionMoney * (stageDetail.endPrice / stageDetail.startPrice), nowMoney);
                 }
             }
@@ -468,7 +470,7 @@ public class TraceBackStrategyCalculator {
 
             assert remainPosition > 0 : "remainPosition < 0 ！！震惊！！";
             if (remainPosition > 0) {
-                for(int i = 0; i < canBeHoldStocks.size(); ){
+                for (int i = 0; i < canBeHoldStocks.size(); ) {
                     Stock startDayStock = findStock(canBeHoldStocks.get(i), periodStart);
                     Stock endDayStock = findStock(canBeHoldStocks.get(i), periodEnd);
 
@@ -485,8 +487,8 @@ public class TraceBackStrategyCalculator {
 
 
                     // 当日所选股票停牌，标志不能被买入
-                    if(startDayStock == null){
-                        if(canNotBeSoldStockCodes.contains(canBeHoldStocks.get(i))){
+                    if (startDayStock == null) {
+                        if (canNotBeSoldStockCodes.contains(canBeHoldStocks.get(i))) {
 
                             double curStockPosition = adjustedPosition(pre.curPositionMoney * (pre.endPrice / pre.startPrice), nowMoney);
 
@@ -499,10 +501,10 @@ public class TraceBackStrategyCalculator {
                                             pre.endPrice, curStockPosition, pre.curPositionMoney));
 
                                 } else {
-                                    double cumulative = tempStocks.get(tempStocks.size()-1).getClose() / pre.endPrice;
+                                    double cumulative = tempStocks.get(tempStocks.size() - 1).getClose() / pre.endPrice;
 
                                     stageDetailList.add(new StageDetail(canBeHoldStocks.get(i), pre.stockName, pre.endPrice,
-                                            tempStocks.get(tempStocks.size()-1).getClose(), curStockPosition, pre.curPositionMoney * cumulative));
+                                            tempStocks.get(tempStocks.size() - 1).getClose(), curStockPosition, pre.curPositionMoney * cumulative));
 
                                 }
 
@@ -537,7 +539,7 @@ public class TraceBackStrategyCalculator {
                         }
 
                         // 因为没有被再次选中，需要添加了，否则不需要添加
-                        if (!pickedAgainStockCodes.contains(canBeHoldStocks.get(i))){
+                        if (!pickedAgainStockCodes.contains(canBeHoldStocks.get(i))) {
                             currentHoldingStocks.add(new TransferDayDetail(startDayStock.getName(), canBeHoldStocks.get(i),
                                     startDayStock.getStockID().getDate(), startDayStock.getClose()));
                         }
@@ -569,7 +571,6 @@ public class TraceBackStrategyCalculator {
     }
 
 
-
     // 计算value的累计总值
     private double getYield(List<Double> value) {
         double sum = 0;
@@ -584,13 +585,13 @@ public class TraceBackStrategyCalculator {
     /**
      * 筛选股票
      */
-    private List<String> filterCodes(List<FilterCondition> filterConditions, LocalDate periodStart){
+    private List<String> filterCodes(List<FilterCondition> filterConditions, LocalDate periodStart) {
 
         // 通过不同的筛选条件进行筛选
         List<List<String>> allFilterWantedCodes = new ArrayList<>();
 
-        for(FilterCondition filterCondition : filterConditions){
-            AllFormateStrategy formateStrategy = FormateStrategyFactory.createFormateStrategy(filterCondition.indicatorType,allDatesWithData,stockData,financialData);
+        for (FilterCondition filterCondition : filterConditions) {
+            AllFormateStrategy formateStrategy = FormateStrategyFactory.createFormateStrategy(filterCondition.indicatorType, allDatesWithData, stockData, financialData);
             AllPickStrategy pickStrategy = PickStrategyFactory.createPickStrategy(filterCondition.comparatorType, filterCondition.value);
             try {
                 allFilterWantedCodes.add(pickStrategy.pick(formateStrategy.formate(traceBackStockPool, periodStart, filterCondition.formativePeriod)));
@@ -603,20 +604,19 @@ public class TraceBackStrategyCalculator {
         List<String> filterWantedCodes = allFilterWantedCodes.get(0);
 
         //多于一个筛选条件
-        if(filterConditions.size() > 1){
-            for(int i = 1 ; i < allFilterWantedCodes.size();i++){
-                for(int j = 0; j < filterWantedCodes.size();){
+        if (filterConditions.size() > 1) {
+            for (int i = 1; i < allFilterWantedCodes.size(); i++) {
+                for (int j = 0; j < filterWantedCodes.size(); ) {
                     boolean isFound = false;
-                    for(int k = 0; k < allFilterWantedCodes.get(i).size(); k++){
-                        if(filterWantedCodes.get(j).equals(allFilterWantedCodes.get(i).get(k))){
+                    for (int k = 0; k < allFilterWantedCodes.get(i).size(); k++) {
+                        if (filterWantedCodes.get(j).equals(allFilterWantedCodes.get(i).get(k))) {
                             isFound = true;
                             break;
                         }
                     }
-                    if(isFound){
+                    if (isFound) {
                         j++;
-                    }
-                    else {
+                    } else {
                         filterWantedCodes.remove(j);
                     }
                 }
@@ -628,13 +628,14 @@ public class TraceBackStrategyCalculator {
 
     /**
      * 通过排名筛选应该回测股票
+     *
      * @param codesNeedToRank
      * @param periodStart
      * @return 需要回测股票的代码
      */
-    private List<RankConditionRate> rankCodes(List<String> codesNeedToRank, LocalDate periodStart){
+    private List<RankConditionRate> rankCodes(List<String> codesNeedToRank, LocalDate periodStart) {
 
-        if(rankConditions.size() == 0){
+        if (rankConditions.size() == 0) {
             //若排名条件为空，则默认以当日成交额从大到小排名
             rankConditions.add(new RankCondition(IndicatorType.TRANSACTION_AMOUNT, RankType.DESC_RANK, 1, 1));
         }
@@ -642,8 +643,8 @@ public class TraceBackStrategyCalculator {
         // 通过不同的筛选条件进行筛选
         List<List<RankConditionRate>> allRankConditionRates = new ArrayList<>();
 
-        for(RankCondition rankCondition : rankConditions){
-            AllFormateStrategy formateStrategy = FormateStrategyFactory.createFormateStrategy(rankCondition.indicatorType,allDatesWithData,stockData,financialData);
+        for (RankCondition rankCondition : rankConditions) {
+            AllFormateStrategy formateStrategy = FormateStrategyFactory.createFormateStrategy(rankCondition.indicatorType, allDatesWithData, stockData, financialData);
             RankStrategy rankStrategy = new RankStrategy(rankCondition.weight, rankCondition.rankType);
             try {
                 allRankConditionRates.add(rankStrategy.mark(formateStrategy.formate(codesNeedToRank, periodStart, rankCondition.formativePeriod)));
@@ -656,20 +657,19 @@ public class TraceBackStrategyCalculator {
         List<RankConditionRate> rankConditionRates = allRankConditionRates.get(0);
 
         //多于一个筛选条件
-        if(rankConditions.size() > 1){
-            for(int i = 1 ; i < allRankConditionRates.size();i++){
-                for(int j = 0; j < rankConditionRates.size();){
+        if (rankConditions.size() > 1) {
+            for (int i = 1; i < allRankConditionRates.size(); i++) {
+                for (int j = 0; j < rankConditionRates.size(); ) {
                     boolean isFound = false;
-                    for(int k = 0; k < allRankConditionRates.get(i).size(); k++){
-                        if(rankConditionRates.get(j) .equals(allRankConditionRates.get(i).get(k))){
+                    for (int k = 0; k < allRankConditionRates.get(i).size(); k++) {
+                        if (rankConditionRates.get(j).equals(allRankConditionRates.get(i).get(k))) {
                             isFound = true;
                             break;
                         }
                     }
-                    if(isFound){
+                    if (isFound) {
                         j++;
-                    }
-                    else {
+                    } else {
                         rankConditionRates.remove(j);
                     }
                 }
@@ -679,43 +679,42 @@ public class TraceBackStrategyCalculator {
         return rankConditionRates;
     }
 
-    protected Stock findStock(String stockCode, LocalDate date){
+    protected Stock findStock(String stockCode, LocalDate date) {
 
         List<Stock> stockVOList = stockData.get(stockCode);
 
         List<LocalDate> dates = new ArrayList<>();
-        for(int j = 0; j < stockVOList.size(); j++){
+        for (int j = 0; j < stockVOList.size(); j++) {
             dates.add(stockVOList.get(j).getStockID().getDate());
         }
 
-        if(dates.contains(date)){
+        if (dates.contains(date)) {
             return stockVOList.get(dates.indexOf(date));
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    protected List<Stock> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end){
+    protected List<Stock> findStockVOsWithinDay(String stockCode, LocalDate start, LocalDate end) {
         LocalDate thisStart = start;
         LocalDate thisEnd = end;
 
         List<Stock> stockVOList = stockData.get(stockCode);
 
         List<LocalDate> dates = new ArrayList<>();
-        for(int j = 0; j < stockVOList.size(); j++){
+        for (int j = 0; j < stockVOList.size(); j++) {
             dates.add(stockVOList.get(j).getStockID().getDate());
         }
 
-        while(!dates.contains(thisStart) || !dates.contains(thisEnd)){
-            if(!dates.contains(thisStart)){
+        while (!dates.contains(thisStart) || !dates.contains(thisEnd)) {
+            if (!dates.contains(thisStart)) {
                 thisStart = thisStart.plusDays(1);
             }
-            if(!dates.contains(thisEnd)){
+            if (!dates.contains(thisEnd)) {
                 thisEnd = thisEnd.minusDays(1);
             }
             //中间没有数据
-            if(thisStart.isAfter(thisEnd)){
+            if (thisStart.isAfter(thisEnd)) {
                 return null;
             }
         }
@@ -723,10 +722,10 @@ public class TraceBackStrategyCalculator {
         int endIndex = dates.indexOf(thisEnd);
 
         //没有数据
-        if(startIndex == -1){
+        if (startIndex == -1) {
             return null;
         }
 
-        return stockVOList.subList(startIndex, endIndex+1);
+        return stockVOList.subList(startIndex, endIndex + 1);
     }
 }

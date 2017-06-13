@@ -170,13 +170,19 @@ public class UserController {
 
     @PostMapping("/modify_my_trace_back_pool")
     public @ResponseBody
-    String modifyMyTraceBackPool(@RequestParam("myTraceBackPool") List<String> myTraceBackPool,
+    String modifyMyTraceBackPool(@RequestParam("myTraceBackPool") String myTraceBackPoolString,
                                  HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         System.out.println(user.getUserName());
 
         try {
+            List<String> myTraceBackPool = new LinkedList<>();
+            for (String temp : myTraceBackPoolString.split(" ")) {
+                System.out.println(temp);
+                myTraceBackPool.add(temp);
+            }
+
             userService.modifyMyTraceBackPool(myTraceBackPool, user);
             return "1;修改成功";
         } catch (TraceBackStockExistedException e) {

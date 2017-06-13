@@ -58,7 +58,15 @@ public class TraceBackController {
         String traceBackPoolStringRepre = thisUser.getTraceBackPool();
         List<String> myTraceBackPool = JSON.parseArray(traceBackPoolStringRepre, String.class);
 
-        mv.addObject("myTraceBackPool", myTraceBackPool);
+        // 转换为界面所需的以空格隔开的字符串
+        StringBuffer sb = new StringBuffer();
+        if (myTraceBackPool != null) {
+            for (String temp : myTraceBackPool) {
+                sb.append(temp).append(" ");
+            }
+        }
+
+        mv.addObject("myTraceBackPool", sb.toString());
         return mv;
     }
 

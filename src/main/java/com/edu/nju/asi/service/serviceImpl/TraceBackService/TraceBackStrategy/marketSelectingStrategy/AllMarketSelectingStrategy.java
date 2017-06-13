@@ -45,6 +45,7 @@ public abstract class AllMarketSelectingStrategy {
      * 计算MA(baseStockName收盘价, day)
      */
     protected double ma(int neededSelectDayIndex, int day) {
+        System.out.println("need: " + baseStocks.get(neededSelectDayIndex).getStockID().getDate());
         List<BaseStock> wanted = findBaseStocksWithinDay(neededSelectDayIndex - day + 1, neededSelectDayIndex);
 
         double sum = 0;
@@ -98,7 +99,11 @@ public abstract class AllMarketSelectingStrategy {
 
 
     protected List<BaseStock> findBaseStocksWithinDay(int periodStart, int periodEnd) {
+        System.out.println(baseStocks.get(periodStart).getStockID().getDate() + "   " + allDatesWithData.get(periodStart));
+        System.out.println(baseStocks.get(periodEnd).getStockID().getDate() + "   " + allDatesWithData.get(periodEnd));
+
+
         if (periodStart < 0) return null;
-        return baseStocks.subList(periodStart, periodEnd);
+        return baseStocks.subList(periodStart, periodEnd+1);
     }
 }
