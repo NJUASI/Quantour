@@ -20,4 +20,9 @@ public class AdjustCriteria {
      */
     public int step;
 
+    public AdjustCriteria(int minVal, int maxVal, int step) {
+        this.minVal = minVal;
+        this.maxVal = maxVal;
+        this.step = step;
+    }
 }

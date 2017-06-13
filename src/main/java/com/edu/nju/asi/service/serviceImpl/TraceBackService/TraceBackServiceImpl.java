@@ -63,6 +63,11 @@ public class TraceBackServiceImpl implements TraceBackService {
      */
     private List<BaseStock> baseStocks;
 
+    /**
+     * 保存优化时回测策略
+     */
+    private TraceBackCriteria originTraceBackCriteria;
+
 
     public TraceBackServiceImpl() throws IOException {
         stockService = new StockServiceImpl();
@@ -145,6 +150,23 @@ public class TraceBackServiceImpl implements TraceBackService {
     @Override
     public void setOriginTraceBackCriteria(TraceBackCriteria traceBackCriteria) {
         //TODO gcm
+        try {
+            this.originTraceBackCriteria = traceBackCriteria;
+            init();
+            traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
+            setUpStockData(traceBackCriteria);
+            System.out.println("---------------优化策略set完毕------------");
+
+
+            // 累计基准收益率
+            baseCumulativeReturn = getBase(traceBackCriteria);
+            System.out.println("---------------1------------");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnhandleBlockTypeException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -155,9 +177,30 @@ public class TraceBackServiceImpl implements TraceBackService {
      * @return 回测结果
      */
     @Override
-    public TraceBackInfo optimize(List<FilterCondition> filterConditions, List<RankCondition> rankConditions) {
-        //TODO
-        return null;
+    public TraceBackInfo optimize(List<FilterCondition> filterConditions, List<RankCondition> rankConditions) throws IOException, UnhandleBlockTypeException, DataSourceFirstDayException, NoDataWithinException, DateNotWithinException {
+        TraceBackInfo traceBackInfo = new TraceBackInfo();
+        TraceBackCriteria traceBackCriteria = new TraceBackCriteria(originTraceBackCriteria, filterConditions, rankConditions);
+
+        //选择策略
+        traceBackStrategyCalculator = new TraceBackStrategyCalculator(traceBackStockPool, traceBackCriteria, allDatesWithData, stockData, baseStockData);
+        System.out.println("---------------选择策略------------");
+
+        //策略回测
+        StrategyCumulativeAndTransferDetail strategyCumulativeAndTransferDetail = traceBackStrategyCalculator.traceBack(traceBackCriteria);
+        traceBackInfo.strategyCumulativeReturn = strategyCumulativeAndTransferDetail.strategyCumulativeReturn;
+        traceBackInfo.transferDayDetails = strategyCumulativeAndTransferDetail.lastSoldStocks;
+        traceBackInfo.stageDetails = strategyCumulativeAndTransferDetail.stageDetails;
+        System.out.println("---------------策略回测------------");
+
+        //计算策略回撤的相关信息
+        traceBackInfo.maxTraceBack = maxRetracement(traceBackInfo.strategyCumulativeReturn, baseCumulativeReturn);
+        System.out.println("---------------计算策略回撤的相关信息------------");
+
+        // TraceBackParameter 计算贝塔系数等
+        TraceBackParam param = new TraceBackParam(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStocks);
+        traceBackInfo.traceBackNumVal = param.getNumericalVal();
+        System.out.println("---------------计算统计数据------------");
+        return traceBackInfo;
     }
 
     private void setUpStockData(TraceBackCriteria criteria) throws IOException {

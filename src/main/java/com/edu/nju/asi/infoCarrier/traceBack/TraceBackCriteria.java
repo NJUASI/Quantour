@@ -119,6 +119,7 @@ public class TraceBackCriteria {
         this.stockPoolCriteria = originTraceBackCriteria.stockPoolCriteria;
         this.maxHoldingNum = originTraceBackCriteria.maxHoldingNum;
         this.baseStockName = originTraceBackCriteria.baseStockName;
+        this.isCustomized = originTraceBackCriteria.isCustomized;
         this.filterConditions = filterConditions;
         this.rankConditions = rankConditions;
         this.marketSelectingConditions = originTraceBackCriteria.marketSelectingConditions;

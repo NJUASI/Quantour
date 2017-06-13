@@ -10,6 +10,10 @@ import com.edu.nju.asi.service.serviceImpl.optimizationService.optimization.Adju
 import com.edu.nju.asi.service.serviceImpl.optimizationService.optimization.Genome;
 import com.edu.nju.asi.service.serviceImpl.optimizationService.optimization.OptimizationCriteria;
 import com.edu.nju.asi.utilities.enums.TargetFuncType;
+import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.rank.Max;
 import org.apache.commons.math3.stat.descriptive.rank.Min;
@@ -19,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 /**
@@ -75,9 +80,7 @@ public class GenEngine {
 
     public GenEngine() throws IOException {
         traceBackService = new TraceBackServiceImpl();
-
-        //初始化变异率、交叉率、种群个数、最大代数
-        init(10, 0.0075, 0.9, 10);
+        allTraceBackInfo = new TreeMap<>();
     }
 
     /**
@@ -86,103 +89,155 @@ public class GenEngine {
      * @param optimizationCriteria 需要优化的参数标准
      * @return 每一个选出来的回测条件对应的回测的详细信息
      */
-    public Map<TraceBackCriteria, TraceBackInfo> optimization(OptimizationCriteria optimizationCriteria) {
+    public Map<TraceBackCriteria, TraceBackInfo> optimization(OptimizationCriteria optimizationCriteria) throws IOException, UnhandleBlockTypeException, NoDataWithinException, DateNotWithinException, DataSourceFirstDayException {
 
-        //保存当前代的回测结果
-        List<TraceBackInfo> curTracBackInfo = new ArrayList<>();
-        //TODO 回测
-        for (int i = 0; i < popSize; i++) {
-            //原来回测筛选条件和排名条件
-            List<FilterCondition> filterConditions = optimizationCriteria.originTraceBackCriteria.filterConditions;
-            List<RankCondition> rankConditions = optimizationCriteria.originTraceBackCriteria.rankConditions;
 
-            for (int j = 0; j < filterConditions.size(); j++) {
-                filterConditions.get(i).value = curGeneration.get(i).filterGenome.get(j).intValue();
+        this.filterAdjustCriteria = optimizationCriteria.filterAdjust;
+        this.rankAdjustCriteria = optimizationCriteria.rankAdjust;
+        //初始化变异率、交叉率、种群个数、最大代数
+        init(10, 0.0075, 0.9, 10);
+
+        //先初始化service
+        traceBackService.setOriginTraceBackCriteria(optimizationCriteria.originTraceBackCriteria);
+
+        //如果搜索空间大小大于默认最大的数量
+        if (optimizationCriteria.searchNodes > popSize * maxGeneration) {
+            while (generation <= maxGeneration) {
+                //保存当前代的回测结果
+                List<TraceBackInfo> curTracBackInfo = new ArrayList<>();
+                //TODO 回测
+                for (int i = 0; i < popSize; i++) {
+                    //原来回测筛选条件和排名条件
+                    List<FilterCondition> filterConditions = optimizationCriteria.originTraceBackCriteria.filterConditions;
+                    List<RankCondition> rankConditions = optimizationCriteria.originTraceBackCriteria.rankConditions;
+
+                    for (int j = 0; j < filterConditions.size(); j++) {
+                        filterConditions.get(j).value = curGeneration.get(i).filterGenome.get(j).intValue();
+                    }
+
+                    for (int j = 0; j < rankConditions.size(); j++) {
+                        rankConditions.get(j).weight = curGeneration.get(i).filterGenome.get(j).intValue();
+                    }
+
+                    curTracBackInfo.add(traceBackService.optimize(filterConditions, rankConditions));
+                }
+
+                //填入当前代的适应度
+                //以年化收益率为目标函数
+                if (optimizationCriteria.targetFuncType == TargetFuncType.ANNUALIZED_RETURN) {
+                    for (int i = 0; i < curGeneration.size(); i++) {
+                        curGeneration.get(i).fitness = curTracBackInfo.get(i).traceBackNumVal.annualizedRateOfReturn;
+                    }
+                    //以夏普比率为目标函数
+                } else if (optimizationCriteria.targetFuncType == TargetFuncType.SHARP) {
+                    for (int i = 0; i < curGeneration.size(); i++) {
+                        curGeneration.get(i).fitness = curTracBackInfo.get(i).traceBackNumVal.sharpeRatio;
+                    }
+                }
+
+                //计算适应度，最大，最小，平均
+                double[] thisGenFitness = new double[curGeneration.size()];
+                for (int i = 0; i < curGeneration.size(); i++) {
+                    thisGenFitness[i] = curGeneration.get(i).fitness;
+                }
+
+                Sum sum = new Sum();
+                Max max = new Max();
+                Min min = new Min();
+                Mean mean = new Mean();
+                double totalFitness = sum.evaluate(thisGenFitness);
+                double bestFitness = max.evaluate(thisGenFitness);
+                double worstFitness = min.evaluate(thisGenFitness);
+                double meanFitness = mean.evaluate(thisGenFitness);
+
+
+                //选择运算,轮盘赌，选择出popSize个前代作为下一代的基础
+                List<Genome> yieldGenomes = new ArrayList<>();
+                for (int i = 0; i < popSize; i++) {
+                    yieldGenomes.add(roulette(totalFitness));
+                }
+                curGeneration = yieldGenomes;
+
+                //交叉运算
+                for (int i = 0; i < popSize; i++) {
+                    int firstPicked = (int) ((Math.random()) * popSize);
+                    int secondPicked = (int) ((Math.random()) * popSize);
+
+                    List<Genome> cross = crossover(firstPicked, secondPicked);
+
+                    //有发生交叉
+                    if (cross.size() > 0) {
+                        curGeneration.set(firstPicked, cross.get(0));
+                        curGeneration.set(secondPicked, cross.get(1));
+                    }
+                }
+
+                //变异运算
+                for (int i = 0; i < popSize; i++) {
+                    curGeneration.set(i, mutate(curGeneration.get(i)));
+                }
+
+                //结果处理
+
+                //原来回测筛选条件和排名条件
+                TraceBackCriteria originTraceBackCriteria = optimizationCriteria.originTraceBackCriteria;
+                List<FilterCondition> filterConditions = optimizationCriteria.originTraceBackCriteria.filterConditions;
+                List<RankCondition> rankConditions = optimizationCriteria.originTraceBackCriteria.rankConditions;
+                for (int i = 0; i < popSize; i++) {
+
+                    for (int j = 0; j < filterConditions.size(); j++) {
+                        filterConditions.get(i).value = curGeneration.get(i).filterGenome.get(j).intValue();
+                    }
+
+                    for (int j = 0; j < rankConditions.size(); j++) {
+                        rankConditions.get(i).weight = curGeneration.get(i).filterGenome.get(j).intValue();
+                    }
+
+                    allTraceBackInfo.put(new TraceBackCriteria(originTraceBackCriteria, filterConditions, rankConditions), curTracBackInfo.get(i));
+                }
             }
-
-            for (int j = 0; j < rankConditions.size(); j++) {
-                rankConditions.get(i).weight = curGeneration.get(i).filterGenome.get(j).intValue();
-            }
-
-            curTracBackInfo.add(traceBackService.optimize(filterConditions, rankConditions));
         }
-
-        //填入当前代的适应度
-        //以年化收益率为目标函数
-        if (optimizationCriteria.targetFuncType == TargetFuncType.ANNUALIZED_RETURN) {
-            for (int i = 0; i < curGeneration.size(); i++) {
-                curGeneration.get(i).fitness = curTracBackInfo.get(i).traceBackNumVal.annualizedRateOfReturn;
-            }
-            //以夏普比率为目标函数
-        } else if (optimizationCriteria.targetFuncType == TargetFuncType.SHARP) {
-            for (int i = 0; i < curGeneration.size(); i++) {
-                curGeneration.get(i).fitness = curTracBackInfo.get(i).traceBackNumVal.sharpeRatio;
-            }
-        }
-
-        //计算适应度，最大，最小，平均
-        double[] thisGenFitness = new double[curGeneration.size()];
-        for (int i = 0; i < curGeneration.size(); i++) {
-            thisGenFitness[i] = curGeneration.get(i).fitness;
-        }
-
-        Sum sum = new Sum();
-        Max max = new Max();
-        Min min = new Min();
-        Mean mean = new Mean();
-        double totalFitness = sum.evaluate(thisGenFitness);
-        double bestFitness = max.evaluate(thisGenFitness);
-        double worstFitness = min.evaluate(thisGenFitness);
-        double meanFitness = mean.evaluate(thisGenFitness);
-
-
-        //选择运算,轮盘赌，选择出popSize个前代作为下一代的基础
-        List<Genome> yieldGenomes = new ArrayList<>();
-        for (int i = 0; i < popSize; i++){
-            yieldGenomes.add(roulette(totalFitness));
-        }
-        curGeneration = yieldGenomes;
-
-        //交叉运算
-        for(int i = 0; i < popSize; i++){
-            int firstPicked = (int) ((Math.random()) * popSize);
-            int secondPicked = (int) ((Math.random()) * popSize);
-
-            List<Genome> cross = crossover(firstPicked, secondPicked);
-
-            //有发生交叉
-            if(cross.size() > 0){
-                curGeneration.set(firstPicked, cross.get(0));
-                curGeneration.set(secondPicked, cross.get(1));
-            }
-        }
-
-        //变异运算
-        for (int i = 0; i < popSize; i++){
-            curGeneration.set(i, mutate(curGeneration.get(i)));
-        }
-
-        //结果处理
-
-        //原来回测筛选条件和排名条件
-        TraceBackCriteria originTraceBackCriteria = optimizationCriteria.originTraceBackCriteria;
-        List<FilterCondition> filterConditions = optimizationCriteria.originTraceBackCriteria.filterConditions;
-        List<RankCondition> rankConditions = optimizationCriteria.originTraceBackCriteria.rankConditions;
-        for(int i = 0; i < popSize; i++){
-
-            for (int j = 0; j < filterConditions.size(); j++) {
-                filterConditions.get(i).value = curGeneration.get(i).filterGenome.get(j).intValue();
-            }
-
-            for (int j = 0; j < rankConditions.size(); j++) {
-                rankConditions.get(i).weight = curGeneration.get(i).filterGenome.get(j).intValue();
-            }
-
-            allTraceBackInfo.put(new TraceBackCriteria(originTraceBackCriteria, filterConditions, rankConditions ), curTracBackInfo.get(i));
+        //搜索空间比较小，直接用穷举法
+        else {
+            //TODO
+//            List<int[]> allPosibleVals = new ArrayList<>();
+//
+//            int[] values = new int[filterAdjustCriteria.size()+rankAdjustCriteria.size()];
+//            if(filterAdjustCriteria.size() > 0 && rankAdjustCriteria.size() > 0){
+//                allPosibleVals = recursive1(0, filterAdjustCriteria, rankAdjustCriteria, values, allPosibleVals);
+//            }
+//            else if(rankAdjustCriteria.size() > 0){
+//
+//            }
+//
+//            for(int i = 0; i < rankAdjustCriteria.size(); i++){
+//
+//            }
         }
 
         return allTraceBackInfo;
     }
+
+//    private List<int[]> recursive1(int index, List<AdjustCriteria> first, List<AdjustCriteria> second, int[] values, List<int[]> allPosibleVals){
+//        //进入第二个递归
+//        if(index == first.size()){
+//            return recursive2(0, second, values);
+//        }
+//        else {
+//            AdjustCriteria adjustCriteria = first.get(index);
+//            int minVal = adjustCriteria.minVal;
+//            int maxVal = adjustCriteria.maxVal;
+//            int step = adjustCriteria.step;
+//            for(int i = minVal; i <= maxVal; i = i+step){
+//                values[index] = i;
+//                values = recursive1(index++, first, second, values, );
+//            }
+//        }
+//    }
+//
+//    private List<int[]> recursive2(int index, List<AdjustCriteria> criteria, int[] values){
+//
+//    }
 
 
     private void init(int popsize, double mutationRate, double crossoverRate, int maxGeneration) {
@@ -197,7 +252,9 @@ public class GenEngine {
 
         //产生随机种群
         for (int i = 0; i < popSize; i++) {
+
             curGeneration.add(new Genome());
+
             for (int j = 0; j < filterAdjustCriteria.size(); j++) {
                 int minVal = filterAdjustCriteria.get(j).minVal;
                 int maxVal = filterAdjustCriteria.get(j).maxVal;
@@ -214,6 +271,9 @@ public class GenEngine {
                 curGeneration.get(i).rankGenome.add((int) (Math.random() * (maxVal - minVal)) + minVal);
             }
         }
+
+        //代数自增
+        generation++;
     }
 
     /**
@@ -241,7 +301,7 @@ public class GenEngine {
         return chosenOne;
     }
 
-    private List<Genome> crossover(int firstPicked, int secondPicked){
+    private List<Genome> crossover(int firstPicked, int secondPicked) {
 
         Genome first = curGeneration.get(firstPicked);
         Genome second = curGeneration.get(secondPicked);
@@ -249,7 +309,7 @@ public class GenEngine {
         List<Genome> crossOvered = new ArrayList<>();
 
         //筛选条件交叉
-        if((Math.random()) < crossoverRate && filterAdjustCriteria.size() > 0){
+        if ((Math.random()) < crossoverRate && filterAdjustCriteria.size() > 0) {
             int pos = (int) ((Math.random()) * first.filterGenome.size());
 
             int temp = second.filterGenome.get(pos).intValue();
@@ -261,7 +321,7 @@ public class GenEngine {
         }
 
         //选择条件交叉
-        if((Math.random()) < crossoverRate && rankAdjustCriteria.size() > 0){
+        if ((Math.random()) < crossoverRate && rankAdjustCriteria.size() > 0) {
             int pos = (int) ((Math.random()) * first.rankGenome.size());
 
             int temp = second.rankGenome.get(pos).intValue();

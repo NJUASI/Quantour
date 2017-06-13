@@ -29,7 +29,7 @@ public interface TraceBackService {
      * @param traceBackCriteria 原策略的标准
      * @return
      */
-    public void setOriginTraceBackCriteria(TraceBackCriteria traceBackCriteria);
+    public void setOriginTraceBackCriteria(TraceBackCriteria traceBackCriteria) throws IOException;
 
     /**
      * 进行一次适应函数的计算
@@ -37,7 +37,7 @@ public interface TraceBackService {
      * @param rankConditions 经过遗传算法变更过参数的排名条件
      * @return 回测结果
      */
-    public TraceBackInfo optimize(List<FilterCondition> filterConditions, List<RankCondition> rankConditions);
+    public TraceBackInfo optimize(List<FilterCondition> filterConditions, List<RankCondition> rankConditions) throws IOException, UnhandleBlockTypeException, DataSourceFirstDayException, NoDataWithinException, DateNotWithinException;
 
 
 
