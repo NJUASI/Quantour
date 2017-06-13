@@ -114,7 +114,7 @@
     </div>
     <div class="tab-pane" id="recentlySoldPanel">
         <div class="row">
-            <div class="col-md-12 table-responsive">
+            <div class="col-md-12 table-responsive  pre-scrollable" style="max-height: 640px">
                 <table class="table table-hover table-condensed">
                     <thead>
                     <tr>

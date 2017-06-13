@@ -727,10 +727,16 @@
 
     $(document).ready(function () {
 
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
+
         $("#stocks").click(function () {
             $("body").removeClass("loaded");
             window.location.href = "/stocks";
+            $("#stocks").unbind("click");
         });
+
+        $("#holdingDetailPanel").find("th").css("text-align","center");
+
 
         $('.radio_group').iCheck({
             checkboxClass: 'icheckbox_flat-green',
@@ -756,7 +762,7 @@
 
         $('#savePool').click(function () {
             var codes = $("#poolCode").val().trim().split(" ");
-            alert($("#poolCode").val());
+//            alert($("#poolCode").val());
             var reg = /^\d{6}$/;
             for (var i = 0; i < codes.length; i++) {
                 var code = codes[i];
@@ -767,7 +773,7 @@
                 }
             };
 
-            alert("codes: \n" + codes);
+//            alert("codes: \n" + codes);
 
             $.ajax({
                 type: "post",
@@ -1449,8 +1455,9 @@
                     // var formates_win_chart = createAreaChart("formates_win_chart", formateWinData, '赢率');
                     // var holdings_excess_chart = createAreaChart("holdings_excess_chart", holdingExcessData, '胜率');
                     // var holdings_win_chart = createAreaChart("holdings_win_chart", holdingWinData, '赢率');
-
-
+                    $("#holdingDetailPanel").find("td").css("text-align","center");
+                    $("#recentlySoldPanel").find("th").css("text-align","center");
+                    $("#recentlySoldPanel").find("td").css("text-align","center");
                 } else if (array[0] == "-1") {
                     // 提示错误信息
                     $("#coverPanel").show();
@@ -1480,7 +1487,7 @@
      */
     function changeToPercent(num){
         if(!/\d+\.?\d+/.test(num)){
-            alert("必须为数字");
+//            alert(num);
         }
         var result = (num * 100).toString(),
             index = result.indexOf(".");
