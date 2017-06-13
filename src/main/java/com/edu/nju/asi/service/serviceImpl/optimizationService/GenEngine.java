@@ -171,8 +171,8 @@ public class GenEngine {
                 //交叉运算
                 for (int i = 0; i < popSize; i++) {
                     //TODO
-                    int firstPicked = 0;
-                    int secondPicked = 1;
+                    int firstPicked = (int)(Math.random() * popSize);
+                    int secondPicked = (int)(Math.random() * popSize);
 
                     System.out.println("交叉开始:第"+(i+1)+"次");
                     List<Genome> cross = crossover(firstPicked, secondPicked);

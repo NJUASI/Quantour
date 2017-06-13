@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <div class="row" id="dateMessage" style="margin-top: 60px;margin-bottom: 200px;">
+        <div class="row" id="dateMessage" hidden style="margin-top: 60px;margin-bottom: 200px;">
             <p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"
                                                class="picture"/></p>
             <div class="text-center" style="margin-top: 20px;margin-bottom: 40px">
@@ -598,7 +598,7 @@
 
     //通过界面的数据post更改界面内容
     function updatePanel() {
-        $("body").addClass('loaded');
+        $("body").removeClass('loaded');
         $.ajax({
             type: "post",
             async: true,
@@ -611,18 +611,18 @@
                 "areaType": areaType
             },
 
-            beforeSend: function () {
-                $("#spin").addClass("spinner");
-                //TODO body应该蒙灰且不可选
-            },
-            complete: function () {
-                $("#spin").removeClass("spinner");
-                //TODO body应该蒙灰且不可选
-
-            },
+//            beforeSend: function () {
+//                $("#spin").addClass("spinner");
+//                //TODO body应该蒙灰且不可选
+//            },
+//            complete: function () {
+//                $("#spin").removeClass("spinner");
+//                //TODO body应该蒙灰且不可选
+//
+//            },
             success: function (result) {
 //                alert(result);
-//                $("body").addClass("loaded");
+                $("body").addClass("loaded");
                 var array = result.split(";");
 
                 if (array[0] == "1") {

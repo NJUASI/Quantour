@@ -1307,7 +1307,7 @@
             return false;
         }
 
-//        $("body").removeClass("loaded");
+        $("body").removeClass("loaded");
         // alert(JSON.stringify(jsonData));
 
         $.ajax({
@@ -1318,12 +1318,12 @@
                 "criteriaData": JSON.stringify(jsonData)
             },
 
-            beforeSend: function () {
-                $("#spin").addClass("spinner");
-            },
-            complete: function () {
-                $("#spin").removeClass("spinner");
-            },
+//            beforeSend: function () {
+//                $("#spin").addClass("spinner");
+//            },
+//            complete: function () {
+//                $("#spin").removeClass("spinner");
+//            },
             success: function (result) {
                 // $("#myTab").fadeIn("slow");
                 // $("#chartPanel").fadeIn("slow");
