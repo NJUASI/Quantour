@@ -5,9 +5,10 @@
     <title>Histogram</title>
 </head>
 <body>
-<div id="candlestick" style="width:50%;height:400px"></div>
+<div id="我的" style="width:50%;height:400px"></div>
 <script src="../../js/echarts.min.js"></script>
 <script src="../../js/chart.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 
     var data1 = [['1','12'],
@@ -41,7 +42,59 @@
         ['13','1'],
         ['14','14'],
         ['15','17']];
-    createWithoutDecorationChart("candlestick",data1,data2);
+    createWithoutDecorationChart(我的,data1,data2);
+    function createWithoutDecorationChart(id, data1, data2) {
+        function splitSeriesData(rawData) {
+            var categoryData = [];
+            var values = [];
+
+            for (var i = 0; i < rawData.length; i++) {
+                categoryData.push(rawData[i].splice(0, 1)[0]);
+                values.push(rawData[i].splice(0, 1)[0]);
+            }
+            return {
+                categoryData: categoryData,
+                values: values
+            };
+        }
+
+        var series1 = splitSeriesData(data1);
+        var series2 = splitSeriesData(data2);
+        var chart = echarts.init(id);
+        chart.showLoading();
+
+        var option = {
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: series1.categoryData,
+                splitNumber: 10,
+                show: false
+            },
+            yAxis: {
+                type: 'value',
+                scale: true,
+                show: false
+            },
+            series: [
+                {
+                    name: 'series1',
+                    type: 'line',
+                    data: series1.values,
+                    smooth: true
+                },
+                {
+                    name: 'series2',
+                    type: 'line',
+                    data: series2.values,
+                    smooth: true
+                }
+            ]
+        };
+        chart.setOption(option, true);
+        chart.hideLoading();
+        return chart;
+    }
 </script>
 </body>
 </html>
