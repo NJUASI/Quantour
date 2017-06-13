@@ -79,6 +79,7 @@
     <%@ include file="header.jsp" %>
 </header>
 
+<div id="spin"></div>
 <form role="form" style="position:relative;margin-top: 60px;">
     <div class="row">
         <div class="panel panel-default col-lg-10 col-lg-offset-1 userBlock">
@@ -1300,10 +1301,10 @@
             },
 
             beforeSend: function () {
-                $("body").addClass("spinner");
+                $("#spin").addClass("spinner");
             },
             complete: function () {
-                $("body").removeClass("spinner");
+                $("#spin").removeClass("spinner");
             },
             success: function (result) {
                 // $("#myTab").fadeIn("slow");

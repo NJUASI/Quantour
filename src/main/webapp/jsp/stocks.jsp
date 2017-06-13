@@ -38,6 +38,7 @@
     <%@ include file="header.jsp" %>
 </header>
 <body class="loaded" style="margin-top: 60px;">
+<div id="#spin"></div>
 <div class="content">
     <div class="container">
         <div class="row panel_title_wrapper" style="z-index: 5;">
@@ -611,14 +612,17 @@
             },
 
             beforeSend: function () {
-                $("body").addClass("spinner");
+                $("#spin").addClass("spinner");
+                //TODO body应该蒙灰且不可选
             },
             complete: function () {
-                $("body").removeClass("spinner");
+                $("#spin").removeClass("spinner");
+                //TODO body应该蒙灰且不可选
+
             },
             success: function (result) {
 //                alert(result);
-                $("body").addClass("loaded");
+//                $("body").addClass("loaded");
                 var array = result.split(";");
 
                 if (array[0] == "1") {
