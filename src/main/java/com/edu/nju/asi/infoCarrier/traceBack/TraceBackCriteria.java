@@ -107,6 +107,23 @@ public class TraceBackCriteria {
         this.rankConditions = criteria.rankConditions;
     }
 
+    public TraceBackCriteria(TraceBackCriteria originTraceBackCriteria, List<FilterCondition> filterConditions, List<RankCondition> rankConditions) {
+        this.startDate = originTraceBackCriteria.startDate;
+        this.endDate = originTraceBackCriteria.endDate;
+        this.holdingPeriod = originTraceBackCriteria.holdingPeriod;
+        this.stockPoolCriteria = originTraceBackCriteria.stockPoolCriteria;
+        this.maxHoldingNum = originTraceBackCriteria.maxHoldingNum;
+        this.baseStockName = originTraceBackCriteria.baseStockName;
+        this.filterConditions = filterConditions;
+        this.rankConditions = rankConditions;
+        this.marketSelectingConditions = originTraceBackCriteria.marketSelectingConditions;
+        this.adjustPositionPercent = originTraceBackCriteria.adjustPositionPercent;
+        this.bearToBull_num = originTraceBackCriteria.bearToBull_num;
+        this.bullToBear_num = originTraceBackCriteria.bullToBear_num;
+
+
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }
