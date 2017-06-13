@@ -2,6 +2,7 @@ package com.edu.nju.asi.utilities.util;
 
 import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.StocksPage;
+import com.edu.nju.asi.infoCarrier.strategy.StrategyRankResult;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
@@ -92,7 +93,6 @@ public class JsonConverter {
 
         StandardDeviation stdev = new StandardDeviation();
 
-
         for (int i = 0; i < stocks.size(); i++) {
             // 默认为20日布林线，当开始没有数据就跳过
             if (i < 20) {
@@ -100,20 +100,20 @@ public class JsonConverter {
                 mid.add("-");
                 lower.add("-");
             } else {
-                double[] afterAdjCloses = new double[20];
+                double[] closes = new double[20];
                 double sum = 0;
                 for (int j = 0; j < 20; j++) {
-                    double tempAfterAdjClose = stocks.get(i - j).getAfterAdjClose();
-                    sum += tempAfterAdjClose;
-                    afterAdjCloses[j] = tempAfterAdjClose;
+                    double tempClose = stocks.get(i - j).getClose();
+                    sum += tempClose;
+                    closes[j] = tempClose;
                 }
                 double mean = sum / 20;
-                double stdev_afterAdjCloses = stdev.evaluate(afterAdjCloses);
+                double stdev_afterAdjCloses = stdev.evaluate(closes);
 
                 // 因单位问题转化数据量大小
-                upper.add(NumberFormat.decimaFormat((mean + 2 * stdev_afterAdjCloses) / 100, 2));
-                mid.add(NumberFormat.decimaFormat(mean / 100, 2));
-                lower.add(NumberFormat.decimaFormat((mean - 2 * stdev_afterAdjCloses) / 100, 2));
+                upper.add(NumberFormat.decimaFormat(mean + 2 * stdev_afterAdjCloses, 2));
+                mid.add(NumberFormat.decimaFormat(mean, 2));
+                lower.add(NumberFormat.decimaFormat(mean - 2 * stdev_afterAdjCloses, 2));
             }
         }
 
@@ -158,7 +158,7 @@ public class JsonConverter {
             List<String> temp = new ArrayList<>();
             // 默认为26 + 9 = 35日后才开始能计算长线，当开始没有数据就跳过
             if (i < 35) {
-                temp.add("-");
+                temp.add(stocks.get(i).getStockID().getDate().toString());
                 temp.add("-");
                 temp.add("-");
                 temp.add("-");
@@ -539,10 +539,10 @@ public class JsonConverter {
         double k = 2.0 / (stockList.size() + 1);
 
         //第一天ema等于当天的收盘价
-        double ema = stockList.get(0).getAfterAdjClose();
+        double ema = stockList.get(0).getClose();
         for (int i = 1; i < stockList.size(); i++) {
             //第二天以后，当天收盘价 * 系数 加上昨天的ema*系数-1
-            ema = k * stockList.get(i).getAfterAdjClose() + (1 - k) * ema;
+            ema = k * stockList.get(i).getClose() + (1 - k) * ema;
         }
 
         return ema;

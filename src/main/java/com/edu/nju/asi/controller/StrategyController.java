@@ -120,7 +120,7 @@ public class StrategyController {
         mv.addObject("relativeReturnPeriod", JsonConverter.convertReturnPeriod(info.relativeReturnPeriod));
         mv.addObject("holdingDetails", JsonConverter.convertHoldingPeriod(info.holdingDetails));
         mv.addObject("transferDayDetails", JsonConverter.convertTransferDayDetail(info.transferDayDetails));
-        mv.addObject("stageDetails", info.stageDetails);
+//        mv.addObject("stageDetails", info.stageDetails);
 
         // 图表数据
         try {
