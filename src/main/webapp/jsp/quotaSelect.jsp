@@ -69,41 +69,41 @@
                             <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                 <li role="presentation" class="dropdown-header">当日价格</li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">开盘价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">开盘价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日开盘价" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">收盘价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">收盘价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日收盘价" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">最高价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">最高价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日最高价" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">最低价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">最低价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日最低价" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation" class="dropdown-header">其他价格</li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">前日收盘价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">前日收盘价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票昨日收盘价" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">日均成交价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">日均成交价<span> </span><span  data-toggle="tooltip" data-placement="top" title="当日股票平均成交价格，等于当日成交额除以当日成交量" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">后复权开盘价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">后复权开盘价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票后复权开盘价。在2006年1月4日前上市的股票，以2006年1月4日的收盘价为复权原点。在2006年1月4日后上市的股票以股票上市日的收盘价为复权原点" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">后复权收盘价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">后复权收盘价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票后复权收盘价。在2006年1月4日前上市的股票，以2006年1月4日的收盘价为复权原点。在2006年1月4日后上市的股票以股票上市日的收盘价为复权原点" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">后复权最高价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">后复权最高价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票后复权最高价。在2006年1月4日前上市的股票，以2006年1月4日的收盘价为复权原点。在2006年1月4日后上市的股票以股票上市日的收盘价为复权原点" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">后复权最低价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">后复权最低价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票后复权最低价。在2006年1月4日前上市的股票，以2006年1月4日的收盘价为复权原点。在2006年1月4日后上市的股票以股票上市日的收盘价为复权原点" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">前日后复权收盘价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">前日后复权收盘价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票昨日后复权收盘价。在2006年1月4日前上市的股票，以2006年1月4日的收盘价为复权原点。在2006年1月4日后上市的股票以股票上市日的收盘价为复权原点" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">后复权均价<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">后复权均价<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票后复权日均成交价。在2006年1月4日前上市的股票，以2006年1月4日的收盘价为复权原点。在2006年1月4日后上市的股票以股票上市日的收盘价为复权原点" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -114,19 +114,19 @@
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">当日成交额<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">当日成交额<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日成交金额" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">5日平均成交额<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">5日平均成交额<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票5日成交金额" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">20日平均成交额<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">20日平均成交额<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票20日成交金额" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">60日平均成交额<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">60日平均成交额<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票60日成交金额" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">N日平均成交额<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">N日平均成交额<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票N日成交金额" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -137,19 +137,19 @@
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">当日成交量<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">当日成交量<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日成交股数" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">5日平均成交量<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">5日平均成交量<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票5日成交股数" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">20日平均成交量<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">20日平均成交量<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票20日成交股数" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">60日平均成交量<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">60日平均成交量<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票60日成交股数" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">N日平均成交量<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">N日平均成交量<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票N日成交股数" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -160,20 +160,20 @@
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">当日涨幅<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">当日涨幅<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日涨跌幅，百分比" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                     <%--<span class="	glyphicon glyphicon-search"></span>--%>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">5日涨幅<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">5日涨幅<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票5日累计涨跌幅，百分比" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">20日涨幅<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">20日涨幅<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票20日累计涨跌幅，百分比" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">60日涨幅<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">60日涨幅<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票60日累计涨跌幅，百分比" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">N日涨幅<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">N日涨幅<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票N日累计涨跌幅，百分比" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -184,19 +184,19 @@
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">当日换手率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">当日换手率<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日换手率，换手率越高的股票的流动性越好，越容易被买进或卖出" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">5日换手率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">5日换手率<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票5日累计换手率" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">20日换手率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">20日换手率<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票20日累计换手率" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">60日换手率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">60日换手率<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票60日累计换手率" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">N日换手率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">N日换手率<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票N日累计换手率" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -207,22 +207,22 @@
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">总股本<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">总股本<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日总股数" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">流通股本<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">流通股本<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日总流通股数" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">总市值<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">总市值<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票总股本乘以当日收盘价" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">流通市值<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">流通市值<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票流通股本乘以当日收盘价" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-md-4">
                             <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                                股价振幅<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                                股价振幅<span> </span><span  data-toggle="tooltip" data-placement="top" title="股票当日最高价最低价之差除以前日收盘价" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                             </button>
 
                         </div>
@@ -237,19 +237,19 @@
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">5日乖离率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">5日乖离率<span> </span><span  data-toggle="tooltip" data-placement="top" title="当日收盘价与5日均线之间的差距。等于后复权收盘价/5日复权均价-1" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">10日乖离率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">10日乖离率<span> </span><span  data-toggle="tooltip" data-placement="top" title="当日收盘价与10日均线之间的差距。等于后复权收盘价/10日复权均价-1" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">20日乖离率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">20日乖离率<span> </span><span  data-toggle="tooltip" data-placement="top" title="当日收盘价与20日均线之间的差距。等于后复权收盘价/20日复权均价-1" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">30日乖离率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">30日乖离率<span> </span><span  data-toggle="tooltip" data-placement="top" title="当日收盘价与30日均线之间的差距。等于后复权收盘价/30日复权均价-1" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">N日乖离率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">N日乖离率<span> </span><span  data-toggle="tooltip" data-placement="top" title="当日收盘价与N日均线之间的差距。等于后复权收盘价/N日复权均价-1" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -260,19 +260,19 @@
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="">
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">5日波动率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">5日波动率<span> </span><span  data-toggle="tooltip" data-placement="top" title="5日收益波动率。等于stdev(1日涨幅，5)*sqrt(5)" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">10日波动率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">10日波动率<span> </span><span  data-toggle="tooltip" data-placement="top" title="10日收益波动率。等于stdev(1日涨幅，10)*sqrt(10)" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">20日波动率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">20日波动率<span> </span><span  data-toggle="tooltip" data-placement="top" title="20日收益波动率。等于stdev(1日涨幅，20)*sqrt(20)" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">30日波动率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">30日波动率<span> </span><span  data-toggle="tooltip" data-placement="top" title="30日收益波动率。等于stdev(1日涨幅，30)*sqrt(30)" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" class="quota" tabindex="-1">N日波动率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
+                                    <a role="menuitem" class="quota" tabindex="-1">N日波动率<span> </span><span  data-toggle="tooltip" data-placement="top" title="N日收益波动率。等于stdev(1日涨幅，N)*sqrt(N)" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span></a>
                                 </li>
 
                             </ul>
@@ -283,31 +283,31 @@
                 <div class="tab-pane fade" id="forum">
                     <div class="col-md-4">
                         <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                            市盈率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
+                            市盈率<span> </span><span  data-toggle="tooltip" data-placement="top" title="即PE_TTM,等于总市值除以过去12个月的归属于母公司所有者的净利润。PE越小，股价相对于公司的盈利能力越便宜。盈利为负的股票，没有PE值。" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
                         </button>
 
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                            市净率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
+                            市净率<span> </span><span  data-toggle="tooltip" data-placement="top" title="即PB，等于总市值除以归属于母公司股东权益合计。PB越小，股价相对于公司资产越便宜。" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
                         </button>
 
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                            市销率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                            市销率<span> </span><span  data-toggle="tooltip" data-placement="top" title="即PS_TTM,等于总市值除以过去12个月的营业总收入。PS越小，股价相对公司销售额越便宜。" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                         </button>
 
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                            静态市盈率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
+                            静态市盈率<span> </span><span  data-toggle="tooltip" data-placement="top" title="等于总市值/最近年报的归属于母公司所有者的净利润。盈利为负的股票，没有静态市盈率。" class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
                         </button>
 
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-default quota" style="border: 0px solid white">
-                            动态市盈率<span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                            动态市盈率<span> </span><span  data-toggle="tooltip" data-placement="top" title="等于总市值/归属于母公司所有者的净利润，净利润根据每期财报动态拓展到年报数据。盈利为负的股票，没有动态市盈率" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                         </button>
 
                     </div>

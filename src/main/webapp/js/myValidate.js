@@ -61,12 +61,14 @@ $("#holdingPeriod").bind('input propertychange', function () {
 var reg6 = /^\d{1,3}$/;
 $("#timing_text1").bind('input propertychange', function () {
     if($(this).val()==""||$(this).val()==0||$(this).val()=="0"){
+        $('#timingError3').html("你的条件数填写错误");
         $('#timingError3').show();
         $(this).css("border","2px solid red");
         return false;
     }
     else if (!reg6.test($(this).val())) {
-        $('#timingError2').show();
+        $('#timingError3').show();
+        $('#timingError3').html("你的条件数填写错误");
         $(this).css("border","2px solid red");
         return false;
     }else{
@@ -77,11 +79,13 @@ $("#timing_text1").bind('input propertychange', function () {
 $("#timing_text2").bind('input propertychange', function () {
     if($(this).val()==""||$(this).val()==0||$(this).val()=="0"){
         $('#timingError3').show();
+        $('#timingError3').html("你的条件数填写错误");
         $(this).css("border","2px solid red");
         return false;
     }
     else if (!reg6.test($(this).val())) {
         $('#timingError3').show();
+        $('#timingError3').html("你的条件数填写错误");
         $(this).css("border","2px solid red");
         return false;
     }else{
@@ -90,13 +94,14 @@ $("#timing_text2").bind('input propertychange', function () {
     }
 });
 $("#position").bind('input propertychange', function () {
-
     if (!reg6.test($(this).val())) {
+        $('#timingError3').html("你的仓位数填写错误");
         $('#timingError3').show();
         $(this).css("border","2px solid red");
         return false;
     }
     if ($(this).val()>100) {
+        $('#timingError3').html("你的仓位数填写错误");
         $('#timingError3').show();
         $(this).css("border","2px solid red");
         return false;

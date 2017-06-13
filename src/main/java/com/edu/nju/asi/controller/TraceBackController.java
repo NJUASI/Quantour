@@ -90,7 +90,10 @@ public class TraceBackController {
 
         TraceBackInfo traceBackInfo = null;
         try {
-            traceBackInfo = traceBackService.traceBack(criteria);
+            String traceBackPoolStringRepre = thisUser.getTraceBackPool();
+            List<String> customizedStockPool = JSON.parseArray(traceBackPoolStringRepre, String.class);
+
+            traceBackInfo = traceBackService.traceBack(criteria, customizedStockPool);
         } catch (IOException e) {
             e.printStackTrace();
             return "-1;IO读取失败！";

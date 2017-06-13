@@ -118,9 +118,9 @@ public class StrategyController {
         mv.addObject("traceBackNums", JsonConverter.convertTraceBackNumVal(info));
         mv.addObject("absoluteReturnPeriod", JsonConverter.convertReturnPeriod(info.absoluteReturnPeriod));
         mv.addObject("relativeReturnPeriod", JsonConverter.convertReturnPeriod(info.relativeReturnPeriod));
-        mv.addObject("holdingDetails", info.holdingDetails);
-        mv.addObject("transferDayDetails", info.transferDayDetails);
-        mv.addObject("stageDetails", info.stageDetails);
+        mv.addObject("holdingDetails", JsonConverter.convertHoldingPeriod(info.holdingDetails));
+        mv.addObject("transferDayDetails", JsonConverter.convertTransferDayDetail(info.transferDayDetails));
+//        mv.addObject("stageDetails", info.stageDetails);
 
         // 图表数据
         try {
@@ -162,7 +162,7 @@ public class StrategyController {
         if (strategyService.isExist(newStrategy.getStrategyID())) return "-2;此策略名称已存在";
 
         newStrategy.setDate(LocalDate.now());
-        boolean saveResult = strategyService.saveStrategy(newStrategy);
+        boolean saveResult = strategyService.saveStrategy(newStrategy, thisUser);
         if (saveResult) return "1;保存成功";
         else return "-1;保存失败";
     }
@@ -184,7 +184,7 @@ public class StrategyController {
         }
         System.out.println("已登录：" + thisUser.getUserName());
 
-        boolean modifyResult = strategyService.modify(modifiedStrategy);
+        boolean modifyResult = strategyService.modify(modifiedStrategy, thisUser);
         if (modifyResult) return "1;修改成功";
         else return "-1;修改失败";
     }

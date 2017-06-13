@@ -40,8 +40,10 @@ public class CrawingAdjStock {
     public void crawHistoryFront(){
         try {
             String path = getClass().getClassLoader().getResource("python/_crawing_history_front.py").getPath();
-            Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-//            proc.waitFor();
+            if(isWin()){
+                path = path.substring(1);
+            }
+            Process proc = Runtime.getRuntime().exec("python " + path);
             printInfo(proc);
         }  catch (IOException e) {
             e.printStackTrace();
@@ -57,8 +59,10 @@ public class CrawingAdjStock {
     public void crawHistoryAfter(){
         try {
             String path = getClass().getClassLoader().getResource("python/_crawing_history_after.py").getPath();
-            Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-//            proc.waitFor();
+            if(isWin()){
+                path = path.substring(1);
+            }
+            Process proc = Runtime.getRuntime().exec("python " + path);
             printInfo(proc);
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,9 +78,10 @@ public class CrawingAdjStock {
     public void crawArea(){
         try {
             String path = getClass().getClassLoader().getResource("python/_crawing_area.py").getPath();
-            System.out.println(path);
-            Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-//            proc.waitFor();
+            if(isWin()){
+                path = path.substring(1);
+            }
+            Process proc = Runtime.getRuntime().exec("python " + path);
             printInfo(proc);
         }  catch (IOException e) {
             e.printStackTrace();
@@ -92,9 +97,10 @@ public class CrawingAdjStock {
     public void crawIndustry(){
         try {
             String path = getClass().getClassLoader().getResource("python/_crawing_industry.py").getPath();
-            System.out.println(path);
-            Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-//            proc.waitFor();
+            if(isWin()){
+                path = path.substring(1);
+            }
+            Process proc = Runtime.getRuntime().exec("python " + path);
             printInfo(proc);
         }  catch (IOException e) {
             e.printStackTrace();
@@ -128,6 +134,21 @@ public class CrawingAdjStock {
             System.out.println("--------------------------错误信息输出结束-------------------------------------");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 判断当前系统是否为windows
+     *
+     * @author ByronDong
+     * @updateTime 2017/6/2
+     */
+    private boolean isWin(){
+        String name = System.getProperties().getProperty("os.name");
+        if(name.startsWith("Win")){
+            return true;
+        } else{
+            return false;
         }
     }
 }

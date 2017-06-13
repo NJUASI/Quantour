@@ -91,7 +91,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     @Override
-    public TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException {
+    public TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria, List<String> customizedStockPool) throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException {
         init();
 
         long enter = System.currentTimeMillis();

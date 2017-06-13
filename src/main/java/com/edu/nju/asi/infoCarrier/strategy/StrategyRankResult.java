@@ -30,17 +30,57 @@ public class StrategyRankResult {
     /**
      * 实盘分数
      */
-    public double reailty;
+    public double reality;
 
 
     public StrategyRankResult() {
     }
 
-    public StrategyRankResult(double profit, double antiRisk, double fluidity, double stability, double reailty) {
+    public StrategyRankResult(double profit, double antiRisk, double fluidity, double stability, double reality) {
         this.profit = profit;
         this.antiRisk = antiRisk;
         this.fluidity = fluidity;
         this.stability = stability;
-        this.reailty = reailty;
+        this.reality = reality;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
+    }
+
+    public double getAntiRisk() {
+        return antiRisk;
+    }
+
+    public void setAntiRisk(double antiRisk) {
+        this.antiRisk = antiRisk;
+    }
+
+    public double getFluidity() {
+        return fluidity;
+    }
+
+    public void setFluidity(double fluidity) {
+        this.fluidity = fluidity;
+    }
+
+    public double getStability() {
+        return stability;
+    }
+
+    public void setStability(double stability) {
+        this.stability = stability;
+    }
+
+    public double getReality() {
+        return reality;
+    }
+
+    public void setReality(double reality) {
+        this.reality = reality;
     }
 }

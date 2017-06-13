@@ -74,9 +74,9 @@
 
 
 <div class="row stock" style="margin-top: 70px">
-    <span class="col-md-3 col-md-offset-2"><span id="stockName" style="font-size: 200%">${stockOfEndDay.name}</span>&nbsp;<i style="font-size: 120%" id="stockCode">${stockOfEndDay.stockID.code}</i></span>
+    <span class="col-md-4 col-md-offset-2"><span id="stockName" style="font-size: 200%">${stockOfEndDay.name}</span>&nbsp;<i style="font-size: 120%" id="stockCode">${stockOfEndDay.stockID.code}</i></span>
     <c:if test="${sessionScope.user!=null}">
-        <span id="addBtn"><button class="btn"></button></span>
+        <span id="addBtn" ><button class="btn" style="margin-top:10px "></button></span>
     </c:if>
 
 </div>
@@ -131,7 +131,7 @@
         </div>
     </div>
     <div class="col-lg-1 col-lg-offset-1 userBlockLeft">
-        <a class="btn btn-info" onclick="changeSingleStockDetail()" style="margin-top: 15px;margin-left: -40px;">查看区间</a>
+        <a class="btn btn-info" onclick="changeSingleStockDetail()" style="margin-top: 25px;margin-left: -40px;">查看区间</a>
     </div>
     <div id="dateError"  class=" row col-md-offset-6 col-md-3" hidden>
         <strong  style="margin-top: 20px;color:red">选择区间没有数据，请重新选择~~~</strong>

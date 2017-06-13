@@ -11,9 +11,14 @@
 <script src="../../js/echarts-liquidfill.js"></script>
 <script type="text/javascript">
 
-    var paramter = [1,2,3,4,5,6,7,8,9,10,11,12];
-    var data1 =[[9, 50.9, 90.0, 26.4, 28.7, 70.7, 75.6, 82.2, 48.7, 18.8, 60.0, 20.3],[10, 40.9, 70.0, 23.2, 25.6, 76.7, 35.6, 62.2, 32.6, 20.0, 60.4, 30.3]];
-    createRadarChart('candlestick',data1,['1','2'],paramter);
+//    var paramter = [1,2,3,4,5,6,7,8,9,10,11,12];
+//    var data1 =[[9, 50.9, 90.0, 26.4, 28.7, 70.7, 75.6, 82.2, 48.7, 18.8, 60.0, 20.3],[10, 40.9, 70.0, 23.2, 25.6, 76.7, 35.6, 62.2, 32.6, 20.0, 60.4, 30.3]];
+//    createRadarChart('candlestick',data1,['1','2'],paramter);
+
+    var radar_paramter = ["收益分数", "抗风险分数", "流动性分数", "稳定性分数", "实盘分数"];
+    var data =[[0.0000734525559053403,99.97673709209644,43.381616738909635,2.017173241867609,0]];
+    createRadarChart('candlestick',data,['1'],radar_paramter);
+
 </script>
 </body>
 </html>

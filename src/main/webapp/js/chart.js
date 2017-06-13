@@ -487,14 +487,14 @@ function createVolume(id, volumes) {
         }],
         dataZoom: [{
             type: 'inside',
-            start: 1,
-            end: 100
+            start: 10,
+            end: 60
         }, {
             show: true,
             type: 'slider',
             top: '85%',
-            start: 1,
-            end: 100
+            start: 10,
+            end: 60
         }],
         series: [{
             name: 'volume',
@@ -587,13 +587,13 @@ function createMACD(id, datas) {
         }],
         dataZoom: [{
             type: 'inside',
-            start: 1,
-            end: 100
+            start: 10,
+            end: 60
         }, {
             type: 'slider',
             show: true,
-            start: 1,
-            end: 100
+            start: 10,
+            end: 60
         }],
         series: [{
             name: 'MACD',

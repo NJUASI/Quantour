@@ -357,8 +357,7 @@
                         </div>
                     </div>
                     <div class="col-md-1" style="margin-left:-30px">
-                        <span data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip"
-                              class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
+                        <span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                     </div>
                 </div>
                 <div id="timingPanel" hidden>
@@ -395,39 +394,27 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MA <span> </span><span data-toggle="tooltip"
-                                                                                                   data-placement="right"
-                                                                                                   title="右侧的 Tooltip"
-                                                                                                   class="glyphicon glyphicon-question-sign"
-                                                                                                   style="color:#337ab7"></span>
+                                            style="border: 0px solid white">MA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MACD <span> </span><span
-                                            data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip"
-                                            class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
+                                            style="border: 0px solid white">MACD <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">DMA <span> </span><span
-                                            data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip"
-                                            class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
+                                            style="border: 0px solid white">DMA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white" disabled>TRIX <span> </span><span
-                                            data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip"
-                                            class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
+                                            style="border: 0px solid white" disabled>TRIX <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MAVOL <span> </span><span
-                                            data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip"
-                                            class="glyphicon glyphicon-question-sign" style="color:#337ab7"></span>
+                                            style="border: 0px solid white">MAVOL <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                             </div>
@@ -566,11 +553,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-offset-2 col-md-5" id="nameErrorPanel" hidden>
-                        <strong style="color:indianred;margin-left: 14px"><span
-                                class="glyphicon glyphicon glyphicon-remove-circle"></span><span
-                                id="nameError"></span></strong>
-                    </div>
+                        <div class="col-md-offset-2 col-md-5" id="nameErrorPanel" hidden>
+                            <strong style="color:indianred;margin-left: 14px"><span
+                                    class="glyphicon glyphicon glyphicon-remove-circle"></span><span
+                                    id="nameError"></span></strong>
+                        </div>
                 </div>
                 <div style="width:90%;margin:0px auto;margin-bottom:30px;border-top:1px solid #ddd"></div>
 
@@ -581,12 +568,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10">
-                        <textarea rows="10" style="width: 100%" id="strategyDescription"></textarea>
+                                    <textarea rows="10" style="width: 100%" id="strategyDescription"></textarea>
                     </div>
 
                     <div id="descriptionError" class="row col-md-offset-2" hidden>
                         <strong style="color:indianred;margin-left: 14px"><span
-                                class="glyphicon glyphicon glyphicon-remove-circle"></span><span>输入策略描述吸引更多人订阅</span></strong>
+                                        class="glyphicon glyphicon glyphicon-remove-circle"></span><span>输入策略描述吸引更多人订阅</span></strong>
                     </div>
 
                 </div>
@@ -635,7 +622,7 @@
                         aria-hidden="true">×</span></button>
                 <h4 class="modal-title">编辑股票池</h4>
             </div>
-            <div class="modal-body" style="margin-top: -10px">
+            <div class="modal-body"  style="margin-top: -10px">
                 <p class="static" style="margin-top: 5px;">股票列表:</p>
                 <textarea type="text" id="poolCode" class="form-control" rows="10"
                           placeholder="请输入股票代码 以空格隔开"></textarea>
@@ -744,9 +731,7 @@
 
     $(document).ready(function () {
 
-        $(function () {
-            $("[data-toggle='tooltip']").tooltip();
-        });
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
 
         $("#stocks").click(function () {
             $("body").removeClass("loaded");
@@ -754,7 +739,7 @@
             $("#stocks").unbind("click");
         });
 
-        $("#holdingDetailPanel").find("th").css("text-align", "center");
+        $("#holdingDetailPanel").find("th").css("text-align","center");
 
 
         $('.radio_group').iCheck({
@@ -777,6 +762,8 @@
         })
 
 
+
+
         $('#savePool').click(function () {
             var codes = $("#poolCode").val().trim().split(" ");
 //            alert($("#poolCode").val());
@@ -788,8 +775,7 @@
                     setTimeout("$(\"#poolCodeError\").html('')", 3000);
                     return false;
                 }
-            }
-            ;
+            };
 
 //            alert("codes: \n" + codes);
 
@@ -806,11 +792,11 @@
 
                     if (array[0] == "1") {
                         // TODO gaoyuan 成功用我说的那个小动画，
-                        myTraceBackPool = $("#poolCode").val();
+                        myTraceBackPool= $("#poolCode").val();
 
                         $("#poolCodeError").html("自选股票池保存成功");
                         setTimeout("$(\"#poolCodeError\").html('')", 2000);
-                        setTimeout("$(\"#strategyPool\").modal(\"toggle\")", 2000);
+                        setTimeout("$(\"#strategyPool\").modal(\"toggle\")",2000);
 
                     } else if (array[0] == "-1") {
                         $("#poolCodeError").html("你输入的代码" + array[1] + "不存在");
@@ -852,7 +838,7 @@
             }
             var timingName = "<div class='timingName'>" + thisName + "</div>";
             var timingParam;
-            var name = thisName.trim();
+            var name =thisName.trim();
             switch (name) {
                 case "MA":
                     timingParam = "<div class='timingParam'>沪深300,10,日线,5,60</div>";
@@ -1143,7 +1129,7 @@
                 $("#position").css("border", "2px solid red");
                 window.location.href = "#timePanel";
             }
-            if ($("#position").val() > 100) {
+            if ($("#position").val()>100) {
                 isZero == false;
                 $('#timingError3').show();
                 setTimeout("$('#timingError3').hide();", 3000);
@@ -1397,13 +1383,13 @@
                         $("#circleList").empty();
                         for (var i = 0; i < stageDetails[k].length; i++) {
                             $("#circleList").append(
-                                "<tr>" +
-                                "<td>" + (stageDetails[k][i]["stockCode"]) + "</td>" +
-                                "<td>" + (stageDetails[k][i]["stockName"]) + "</td>" +
-                                "<td>" + (stageDetails[k][i]["startPrice"]) + "</td>" +
-                                "<td>" + (stageDetails[k][i]["endPrice"]) + "</td>" +
-                                "<td>" + changeToPercent(stageDetails[k][i]["changeRate"]) + "</td>" +
-                                "<td>" + changeToPercent(stageDetails[k][i]["curPosition"]) + "</td>" +
+                                "<tr>"+
+                                "<td>" + (stageDetails[k][i]["stockCode"])+ "</td>"+
+                                "<td>" + (stageDetails[k][i]["stockName"])+ "</td>"+
+                                "<td>" + (stageDetails[k][i]["startPrice"])+ "</td>"+
+                                "<td>" + (stageDetails[k][i]["endPrice"])+ "</td>"+
+                                "<td>" + changeToPercent(stageDetails[k][i]["changeRate"])+ "</td>"+
+                                "<td>" + changeToPercent(stageDetails[k][i]["curPosition"])+ "</td>"+
                                 "</tr>");
                         }
                         $("#circleModal").modal("toggle");
@@ -1478,9 +1464,9 @@
                     // var formates_win_chart = createAreaChart("formates_win_chart", formateWinData, '赢率');
                     // var holdings_excess_chart = createAreaChart("holdings_excess_chart", holdingExcessData, '胜率');
                     // var holdings_win_chart = createAreaChart("holdings_win_chart", holdingWinData, '赢率');
-                    $("#holdingDetailPanel").find("td").css("text-align", "center");
-                    $("#recentlySoldPanel").find("th").css("text-align", "center");
-                    $("#recentlySoldPanel").find("td").css("text-align", "center");
+                    $("#holdingDetailPanel").find("td").css("text-align","center");
+                    $("#recentlySoldPanel").find("th").css("text-align","center");
+                    $("#recentlySoldPanel").find("td").css("text-align","center");
                 } else if (array[0] == "-1") {
                     // 提示错误信息
                     $("#coverPanel").show();
@@ -1508,13 +1494,13 @@
     /**
      * 将小数变为百分比
      */
-    function changeToPercent(num) {
-        if (!/\d+\.?\d+/.test(num)) {
+    function changeToPercent(num){
+        if(!/\d+\.?\d+/.test(num)){
 //            alert(num);
         }
         var result = (num * 100).toString(),
             index = result.indexOf(".");
-        if (index == -1 || result.substr(index + 1).length <= 2) {
+        if(index == -1 || result.substr(index+1).length <= 2){
             return result + "%";
         }
         return result.substr(0, index + 3) + "%";

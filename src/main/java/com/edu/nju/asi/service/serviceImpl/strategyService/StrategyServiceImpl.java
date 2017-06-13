@@ -49,7 +49,7 @@ public class StrategyServiceImpl implements StrategyService {
     }
 
     @Override
-    public boolean saveStrategy(Strategy newStrategy) {
+    public boolean saveStrategy(Strategy newStrategy, User thisUser) {
         boolean fakeSave = strategyDao.saveStrategy(newStrategy);
 
         if (fakeSave) {
@@ -60,7 +60,7 @@ public class StrategyServiceImpl implements StrategyService {
 
         // 另开一个线程跑回测，跑完了将回测的数据存入数据库
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSaver(traceBackService, strategyDao, newStrategy));
+        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSaver(traceBackService, strategyDao, newStrategy, thisUser));
         executor.submit(ft);
         executor.shutdown();
 
@@ -78,7 +78,7 @@ public class StrategyServiceImpl implements StrategyService {
     }
 
     @Override
-    public boolean modify(Strategy modified) {
+    public boolean modify(Strategy modified, User thisUser) {
         boolean fakeModify = strategyDao.updateStrategy(modified);
 
         if (fakeModify) {
@@ -88,7 +88,7 @@ public class StrategyServiceImpl implements StrategyService {
 
         // 另开一个线程对策略重新进行回测，跑完了将回测的数据存入数据库
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSaver(traceBackService, strategyDao, modified));
+        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSaver(traceBackService, strategyDao, modified, thisUser));
         executor.submit(ft);
         executor.shutdown();
 
