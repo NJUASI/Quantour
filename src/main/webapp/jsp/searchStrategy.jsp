@@ -187,6 +187,7 @@
                 </thead>
                 <tbody id="tb_chart">
                 <tr>
+                    <td>本策略</td>
                     <td>${traceBackNums.get(0)}</td>
                     <td>${traceBackNums.get(1)}</td>
                     <td>${traceBackNums.get(2)}</td>
@@ -196,6 +197,7 @@
                     <td>${traceBackNums.get(6)}</td>
                 </tr>
                 <tr>
+                    <td>基准股票</td>
                     <td>${traceBackNums.get(7)}</td>
                     <td>${traceBackNums.get(8)}</td>
                     <td>${traceBackNums.get(9)}</td>
@@ -205,6 +207,7 @@
                     <td>${traceBackNums.get(13)}</td>
                 </tr>
                 <tr>
+                    <td>相对收益</td>
                     <td>${traceBackNums.get(14)}</td>
                     <td>${traceBackNums.get(15)}</td>
                     <td>${traceBackNums.get(16)}</td>
@@ -284,7 +287,6 @@
                         <th>周期序号</th>
                         <th>开始日期</th>
                         <th>结束日期</th>
-                        <th>股票持有只数</th>
                         <th>策略收益</th>
                         <th>基准收益</th>
                         <th>超额收益</th>
@@ -294,14 +296,13 @@
                     <tbody id="tb_detail">
                     <c:forEach items="${holdingDetails}" var="holdingDetail" varStatus="vs">
                         <tr>
-                            <td>${holdingDetail.periodSerial}</td>
-                            <td>${holdingDetail.startDate}</td>
-                            <td>${holdingDetail.endDate}</td>
-                            <td>${holdingDetail.holdingNum}</td>
-                            <td>${holdingDetail.strategyReturn}</td>
-                            <td>${holdingDetail.baseReturn}</td>
-                            <td>${holdingDetail.excessReturn}</td>
-                            <td>${holdingDetail.remainInvestment}</td>
+                            <td>${holdingDetail.get(0)}</td>
+                            <td>${holdingDetail.get(1)}</td>
+                            <td>${holdingDetail.get(2)}</td>
+                            <td>${holdingDetail.get(3)}</td>
+                            <td>${holdingDetail.get(4)}</td>
+                            <td>${holdingDetail.get(5)}</td>
+                            <td>${holdingDetail.get(6)}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -327,13 +328,13 @@
                     <tbody id="sold_stock_detail">
                     <c:forEach items="${transferDayDetails}" var="transferDayDetail" varStatus="vs">
                         <tr>
-                            <td>${transferDayDetail.stockName}</td>
-                            <td>${transferDayDetail.stockCode}</td>
-                            <td>${transferDayDetail.buyDate}</td>
-                            <td>${transferDayDetail.sellDate}</td>
-                            <td>${transferDayDetail.buyPrice}</td>
-                            <td>${transferDayDetail.sellPrice}</td>
-                            <td>${transferDayDetail.changeRate}</td>
+                            <td>${transferDayDetail.get(0)}</td>
+                            <td>${transferDayDetail.get(1)}</td>
+                            <td>${transferDayDetail.get(2)}</td>
+                            <td>${transferDayDetail.get(3)}</td>
+                            <td>${transferDayDetail.get(4)}</td>
+                            <td>${transferDayDetail.get(5)}</td>
+                            <td>${transferDayDetail.get(6)}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -357,13 +358,10 @@
                     <tr>
                         <th>股票代码</th>
                         <th>股票名</th>
-                        <th>行业分类</th>
                         <th>开始价格</th>
                         <th>结束价格</th>
                         <th>涨幅</th>
                         <th>本期起始仓</th>
-                        <th>当日成交额</th>
-                        <th>股价振幅</th>
                     </tr>
                     </thead>
                     <tbody id="circleList">
@@ -1002,6 +1000,25 @@
 <script src="../js/bootstrap-datetimepicker.js"></script>
 <script src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript">
+
+
+
+    /**
+     * 将小数变为百分比
+     */
+    function changeToPercent(num){
+        if(!/\d+\.?\d+/.test(num)){
+            alert("必须为数字");
+        }
+        var result = (num * 100).toString(),
+            index = result.indexOf(".");
+        if(index == -1 || result.substr(index+1).length <= 2){
+            return result + "%";
+        }
+        return result.substr(0, index + 3) + "%";
+    }
+
+
 
     $("#optimizationBt").click(function () {
         $("#optimizationModal").modal("toggle");

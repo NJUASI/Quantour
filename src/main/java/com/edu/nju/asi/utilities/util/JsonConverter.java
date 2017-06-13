@@ -318,6 +318,54 @@ public class JsonConverter {
         return returnPeriod;
     }
 
+
+    /**
+     * 通过ModelAndView传数据的时候将数据修改为百分比
+     */
+    public static List<List<String>> convertHoldingPeriod(List<HoldingDetail> holdingDetails) {
+        List<List<String>> result = new LinkedList<>();
+
+        for (HoldingDetail hd : holdingDetails) {
+            List<String> temp = new LinkedList<>();
+
+            temp.add(String.valueOf(hd.periodSerial));
+            temp.add(hd.startDate.toString());
+            temp.add(hd.endDate.toString());
+            temp.add(NumberFormat.percentFormat(hd.strategyReturn, 2));
+            temp.add(NumberFormat.percentFormat(hd.baseReturn, 2));
+            temp.add(NumberFormat.percentFormat(hd.excessReturn, 2));
+            temp.add(String.valueOf(hd.excessReturn));
+
+            result.add(temp);
+        }
+
+        return result;
+    }
+
+    /**
+     * 通过ModelAndView传数据的时候将数据修改为百分比
+     */
+    public static List<List<String>> convertTransferDayDetail(List<TransferDayDetail> transferDayDetails) {
+        List<List<String>> result = new LinkedList<>();
+
+        for (TransferDayDetail tdd: transferDayDetails) {
+            List<String> temp = new LinkedList<>();
+
+            temp.add(tdd.stockName);
+            temp.add(tdd.stockCode);
+            temp.add(tdd.buyDate.toString());
+            temp.add(tdd.sellDate.toString());
+            temp.add(String.valueOf(tdd.buyPrice));
+            temp.add(String.valueOf(tdd.sellPrice));
+            temp.add(NumberFormat.percentFormat(tdd.changeRate, 2));
+
+            result.add(temp);
+        }
+
+        return result;
+    }
+
+
     public static List<String> convertTraceBackNumVal(TraceBackInfo info) {
         TraceBackNumVal val = info.traceBackNumVal;
         MaxTraceBack maxTraceBack = info.maxTraceBack;
