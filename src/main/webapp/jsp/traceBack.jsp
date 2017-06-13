@@ -1132,6 +1132,7 @@
             if ($("#position").val()>100) {
                 isZero == false;
                 $('#timingError3').show();
+                $('#timingError3').html("你的条件数填写错误");
                 setTimeout("$('#timingError3').hide();", 3000);
                 $("#position").css("border", "2px solid red");
                 window.location.href = "#timePanel";
@@ -1140,6 +1141,23 @@
                 isZero == false;
                 $('#timingError2').show();
                 setTimeout("$('#timingError2').hide();", 3000);
+                window.location.href = "#timePanel";
+            }
+            if ($("#timing_text1").val()>numOfTiming) {
+                isZero == false;
+                $('#timingError3').html("条件数不能大于选择数");
+                $('#timingError3').show();
+                setTimeout("$('#timingError3').hide();", 3000);
+
+                $("#timing_text1").css("border", "2px solid red");
+                window.location.href = "#timePanel";
+            }
+            if ($("#timing_text2").val()>numOfTiming) {
+                isZero == false;
+                $('#timingError3').html("条件数不能大于选择数");
+                $('#timingError3').show();
+                setTimeout("$('#timingError3').hide();", 3000);
+                $("#timing_text2").css("border", "2px solid red");
                 window.location.href = "#timePanel";
             }
         } else {
@@ -1544,8 +1562,8 @@
             "users": null
         };
 
-        alert("--------END--------");
-        alert(JSON.stringify(strategyData));
+//        alert("--------END--------");
+//        alert(JSON.stringify(strategyData));
 
         $.ajax({
             type: "post",
@@ -1572,7 +1590,7 @@
                 }
             },
             error: function (result) {
-                alert("错误" + result);
+//                alert("错误" + result);
             }
 
         });
@@ -1618,7 +1636,7 @@
      * 在JS中实现 IndicatorType.getEnum()方法，能够在JS中调用Java代码后修改
      */
     function convertIndicator(indicatorType) {
-        switch (indicatorType) {
+        switch (indicatorType.split("<")[0].trim()) {
             case "开盘价":
                 return "OPEN";
             case "收盘价":
