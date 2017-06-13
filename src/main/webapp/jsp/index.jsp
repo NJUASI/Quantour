@@ -102,10 +102,11 @@
 <script src="../js/logIn.js"></script>
 <script src="../js/startLoaded.js"></script>
 <script type="text/javascript">
-    function openStock() {
+    $("#stocks").click(function() {
         $("body").removeClass('loaded');
-        window.location.href="/stocks"
-    }
+        window.location.href = "/stocks"
+       $("#stocks").unbind("click");
+    });
     $("#homePage").addClass("act");
 
 </script>

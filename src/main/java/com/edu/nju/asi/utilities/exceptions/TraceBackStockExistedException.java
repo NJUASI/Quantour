@@ -18,11 +18,9 @@ public class TraceBackStockExistedException extends Exception {
     @Override
     public String getMessage() {
         StringBuffer sb = new StringBuffer();
-        sb.append("股票");
         for (int i = 0; i < notExistCodes.size()-1; i++) {
-            sb.append(notExistCodes.get(i)).append("、");
+            sb.append(notExistCodes.get(i)).append(" ");
         }
-        sb.append(notExistCodes.get(notExistCodes.size()-1)).append("不存在！请检查后重试！");
         return sb.toString();
     }
 }

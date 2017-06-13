@@ -899,11 +899,7 @@
         updatePanel();
     }
 
-    function openStock() {
-        $("body").removeClass('loaded');
-        window.location.href = "/stocks"
-    }
-    $("#stocks").addClass("act");
+
 
 </script>
 </body>

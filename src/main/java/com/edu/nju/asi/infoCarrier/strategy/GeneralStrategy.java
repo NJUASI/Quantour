@@ -1,6 +1,7 @@
 package com.edu.nju.asi.infoCarrier.strategy;
 
 import com.alibaba.fastjson.JSON;
+import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.utilities.NumberFormat;
@@ -31,11 +32,18 @@ public class GeneralStrategy {
      */
     public LocalDate createDate;
 
+    public String getBaseStockName() {
+        return baseStockName;
+    }
+
+    /**
+     * 策略股指
+     */
+    public String baseStockName;
 
     /**
      * 此策略的订阅人数
      */
-
     public int subscribeNum;
 
     /**
@@ -64,6 +72,8 @@ public class GeneralStrategy {
         this.createDate = strategy.getDate();
         this.subscribeNum = strategy.getUsers().size() - 1;
 
+        TraceBackCriteria criteria = JSON.parseObject(strategy.getContent(), TraceBackCriteria.class);
+        this.baseStockName = criteria.baseStockName;
 
         String[] parts = strategy.getTraceBackInfo().split(";");
 
