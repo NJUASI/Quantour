@@ -112,7 +112,7 @@ public class StrategyController {
         mv.addObject("rankConditions", convertChinese_rank(criteria.rankConditions));
 
         /*
-        回测策略的结果 TODO 高源 不需要修改  表格和图表直接加入就行吧
+        回测策略的结果
          */
         // 表格数据
         mv.addObject("traceBackNums", JsonConverter.convertTraceBackNumVal(info));
@@ -120,6 +120,7 @@ public class StrategyController {
         mv.addObject("relativeReturnPeriod", JsonConverter.convertReturnPeriod(info.relativeReturnPeriod));
         mv.addObject("holdingDetails", info.holdingDetails);
         mv.addObject("transferDayDetails", info.transferDayDetails);
+        mv.addObject("stageDetails", info.stageDetails);
 
         // 图表数据
         try {

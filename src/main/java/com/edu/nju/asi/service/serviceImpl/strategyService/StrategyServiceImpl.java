@@ -11,7 +11,6 @@ import com.edu.nju.asi.utilities.enums.MailNotificationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -61,7 +60,7 @@ public class StrategyServiceImpl implements StrategyService {
 
         // 另开一个线程跑回测，跑完了将回测的数据存入数据库
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSave(traceBackService, strategyDao, newStrategy));
+        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSaver(traceBackService, strategyDao, newStrategy));
         executor.submit(ft);
         executor.shutdown();
 
@@ -89,7 +88,7 @@ public class StrategyServiceImpl implements StrategyService {
 
         // 另开一个线程对策略重新进行回测，跑完了将回测的数据存入数据库
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSave(traceBackService, strategyDao, modified));
+        FutureTask<Boolean> ft = new FutureTask<>(new TraceBackSaver(traceBackService, strategyDao, modified));
         executor.submit(ft);
         executor.shutdown();
 

@@ -215,32 +215,37 @@ public class TraceBackStrategyCalculator {
         isBullPositions = new LinkedList<>();
         boolean curIsBull = true;
 
-        // 依次对每天进行处理
-        for (int i = allStartIndex; i <= allEndIndex; i++) {
-            int goldenFork = 0;
-            int deathCross = 0;
+        // 依次对每天进行处理，根据回测周期的前一天取得数据择时
+        if (conditions.size() > 0) {
+            for (int i = allStartIndex - 1; i < allEndIndex; i++) {
+                int goldenFork = 0;
+                int deathCross = 0;
 
-            // 依次处理每种择时情况，只有在周期上才检查
-            for (MarketSelectingCondition condition : conditions) {
-                if ((i - allStartIndex + 1) % condition.cycle == 0) {
-                    AllMarketSelectingStrategy mss = MarketSelectingStrategyFactory.createMarketSelectingStrategyFactory(condition, allDatesWithData, baseStockData);
+                // 依次处理每种择时情况，只有在周期上才检查
+                for (MarketSelectingCondition condition : conditions) {
+                    if ((i - allStartIndex + 1) % condition.cycle == 0) {
+                        AllMarketSelectingStrategy mss = MarketSelectingStrategyFactory.createMarketSelectingStrategyFactory(condition, allDatesWithData, baseStockData);
 
-                    System.out.println("check: " + allDatesWithData.get(i-1));
-                    MarketSelectingResult tempResult = mss.marketSelecting(i - 1, condition.criteria1, condition.criteria2, condition.criteria3);
-                    if (tempResult.isGoldenFork) goldenFork++;
-                    if (tempResult.isDeathCross) deathCross++;
+                        System.out.println("check: " + allDatesWithData.get(i));
+                        MarketSelectingResult tempResult = mss.marketSelecting(i, condition.criteria1, condition.criteria2, condition.criteria3);
+                        if (tempResult.isGoldenFork) goldenFork++;
+                        if (tempResult.isDeathCross) deathCross++;
+                    }
                 }
-            }
 
-            if (curIsBull) {
-                // 之前为为金叉形成的牛市，只因死叉而调仓
-                if (deathCross >= traceBackCriteria.bullToBear_num) curIsBull = false;
-            } else {
-                // 之前为为死叉形成的熊市，只因金叉而调仓
-                if (goldenFork >= traceBackCriteria.bearToBull_num) curIsBull = true;
+                if (curIsBull) {
+                    // 之前为为金叉形成的牛市，只因死叉而调仓
+                    if (deathCross >= traceBackCriteria.bullToBear_num) curIsBull = false;
+                } else {
+                    // 之前为为死叉形成的熊市，只因金叉而调仓
+                    if (goldenFork >= traceBackCriteria.bearToBull_num) curIsBull = true;
+                }
+                isBullPositions.add(curIsBull);
             }
-            isBullPositions.add(curIsBull);
-
+        } else {
+            for (int i = allStartIndex - 1; i < allEndIndex; i++) {
+                isBullPositions.add(true);
+            }
         }
     }
 
@@ -292,22 +297,22 @@ public class TraceBackStrategyCalculator {
     private List<CumulativeReturn> calculate(List<String> pickedStockCodes, LocalDate periodStart, LocalDate periodEnd, int periodSerial, int startIndex, int endIndex, int maxHoldingNum) {
 
         // 根据市场情况进行市场择时，调整仓位比例（holdingPeriod = endIndex - startIndex）
-//        boolean nowIsBullPosition = isBullPositions.get(periodSerial * (endIndex - startIndex));
-//        if (nowIsBullPosition) nowPosition = 1;
-//        else nowPosition = traceBackCriteria.adjustPositionPercent;
+        boolean nowIsBullPosition = isBullPositions.get(periodSerial * (endIndex - startIndex));
+        if (nowIsBullPosition) nowPosition = 1;
+        else nowPosition = traceBackCriteria.adjustPositionPercent;
 
-        //对挑选的股票做精细处理
+        // 对挑选的股票做精细处理
         pickedStockCodes = dealPickedStockCodes(pickedStockCodes, periodStart, periodEnd, periodSerial, startIndex, endIndex, maxHoldingNum);
 
         List<CumulativeReturn> strategyCumulativeReturn = new LinkedList<>();
 
-        //初始化
+        // 初始化
         Map<LocalDate, List<Double>> forCalcu = new TreeMap<>();
         for (int i = startIndex + 1; i <= endIndex; i++) {
             forCalcu.put(allDatesWithData.get(i), new ArrayList<>());
         }
 
-        //每个周期的起始调仓日不计算入收益中
+        // 每个周期的起始调仓日不计算入收益中
         periodStart = allDatesWithData.get(startIndex + 1);
 
         // 对阶段内的每只股票进行数据读取
@@ -334,7 +339,8 @@ public class TraceBackStrategyCalculator {
                 double prePrice = basePrice;
                 for (int i = 1; i <= endIndex - startIndex; i++) {
 
-                    double profit = 0;
+                    double profit;
+                    // 这一天
                     if (ss.get(stockIndex).getStockID().getDate().equals(allDatesWithData.get(startIndex + i))) {
                         profit = ss.get(stockIndex).getClose() / basePrice - 1;
 
@@ -343,7 +349,8 @@ public class TraceBackStrategyCalculator {
                         stockIndex++;
                     } else {
                         profit = prePrice / basePrice - 1;
-                        forCalcu.get(allDatesWithData.get(i)).add(profit * curPosition);
+                        System.out.println((startIndex + i) + "   " + allDatesWithData.get(startIndex + i));
+                        forCalcu.get(allDatesWithData.get(startIndex + i)).add(profit * curPosition);
                     }
 
                     if (stockIndex == ss.size()) {
@@ -363,9 +370,11 @@ public class TraceBackStrategyCalculator {
         double thisPeriodStartMoney = nowMoney;
         for (Map.Entry<LocalDate, List<Double>> entry : forCalcu.entrySet()) {
 
+            // 当前周期收益率
             double thisYield = getYield(entry.getValue());
 
-            nowMoney = (1 + thisYield) * thisPeriodStartMoney;
+            // 钱 = 本金 + 当前收益率 * 当前投进去的钱
+            nowMoney = thisPeriodStartMoney + thisYield * thisPeriodStartMoney * nowPosition;
             thisYield = nowMoney / initMoney - 1;
 
             strategyCumulativeReturn.add(new CumulativeReturn(entry.getKey(), thisYield, false));

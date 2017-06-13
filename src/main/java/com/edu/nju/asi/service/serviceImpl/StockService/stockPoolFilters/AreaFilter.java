@@ -16,7 +16,7 @@ public class AreaFilter extends StockPoolFilter {
     public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria) {
         // 全部地域板块，则跳过此过滤器
         if (criteria.areaTypes.get(0) != AreaType.all) {
-            for (int i = 0; i < stocks.size(); i++) {
+            for (int i = 0; i < stocks.size();) {
                 boolean isSelected = false;
                 for (AreaType areaType : criteria.areaTypes) {
                     if (stocks.get(i).areaType == areaType) {

@@ -8,11 +8,11 @@ import java.util.List;
 
 /**
  * Created by cuihua on 2017/6/11.
- * <p>
+ * <p>TODO 算得有点问题
  * DIF(快线) = EMA短线 - EMA长线 （EMA短线默认为上证12日指数移动平均线，EMA长线默认为上证26日指数移动平均线。）
  * DEA(慢线)= EMA(DIF, M ) (DEA 默认为DIF的9日指数移动平均线。)
- * 金叉条件：DIF(t) > 0 and DIF(t) >DIF(t-1) and DIF (t) > DEA(t) and DIF (t -1) < DEA(t-1)
- * 死叉条件：DIF(t)<0 and DIF(t) < DIF(t-1) and DIF (t) < DEA(t) and DIF (t -1) > DEA(t-1)
+ * 金叉条件：DIF(t) > 0 and DIF(t) > DIF(t-1) and DIF (t) > DEA(t) and DIF (t -1) < DEA(t-1)
+ * 死叉条件：DIF(t) < 0 and DIF(t) < DIF(t-1) and DIF (t) < DEA(t) and DIF (t -1) > DEA(t-1)
  */
 public class MACD_MSS extends AllMarketSelectingStrategy {
 

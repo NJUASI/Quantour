@@ -174,7 +174,7 @@
                             <div class='col-md-7' style="margin-left: -30px">
                                 <select id="industryBlock" name="industryBlock" multiple data-live-search="true"
                                         data-live-search-placeholder="请选择行业" data-selected-text-format="count > 2"
-                                        data-actions-box="true" rows="10" style="width:200px"
+                                        data-actions-box="true" data-size="10" style="width:200px"
                                         class="selectpicker show-tick form-control col-md-7">
 
                                     <option value="金融行业" selected>金融行业</option>
@@ -749,17 +749,6 @@
         $('#modifyPool').click(function () {
             $("#strategyPool").modal("toggle");
             $("#poolCode").val(myTraceBackPool);
-            // 修改用户的真实数据 TODO 高源 保存不保存，决定是否修改myTraceBackPool
-            <%--alert(${myTraceBackPool != null});--%>
-            <%--alert(${myTraceBackPool.size() != 0});--%>
-
-            <%--if (${myTraceBackPool != null && myTraceBackPool.size() != 0}) {--%>
-                <%--// TODO 不能下面这样写--%>
-                <%--for (var i = 0; i < ${myTraceBackPool.size()}; i++) {--%>
-                    <%--myTraceBackPool.append("${myTraceBackPool.get(i)}").append(" ");--%>
-                <%--}--%>
-                <%--$("#poolCode").val(myTraceBackPool);--%>
-            <%--}--%>
         })
 
 
@@ -800,7 +789,6 @@
                         setTimeout("$(\"#strategyPool\").modal(\"toggle\")",2000);
 
                     } else if (array[0] == "-1") {
-                        // TODO 高源 提示有哪些股票不存在
                         $("#poolCodeError").html("你输入的代码" + array[1] + "不存在");
                         setTimeout("$(\"#poolCodeError\").html('')", 4000);
                     }
@@ -1314,7 +1302,8 @@
                     var abReturnPeriod = eval("(" + array[2] + ")");            // ReturnPeriod
                     var reReturnPeriod = eval("(" + array[3] + ")");            // ReturnPeriod
                     var holdingDetails = eval("(" + array[4] + ")");            // List<HoldingDetail>
-                    var transferDetails = eval("(" + array[5] + ")");           // List<TransferDetail>
+                    var stageDetails = eval("(" + array[5] + ")");              // Map<Integer, List<StageDetail>>
+                    var transferDetails = eval("(" + array[6] + ")");           // List<TransferDetail>
                     // var certainFormates = eval("(" + array[5] + ")");           // List<ExcessAndWinRateDist>
                     // var certainHoldings = eval("(" + array[6] + ")");           // List<ExcessAndWinRateDist>
 
@@ -1363,10 +1352,9 @@
                     $("#tb_detail").empty();
                     for (var i = 0; i < holdingDetails.length; i++) {
                         $("#tb_detail").append("<tr>" +
-                            "<td style='text-align: center'><span class='circle' style='color:#7291CA'>" + holdingDetails[i]["periodSerial"] + "<span></td>" +
+                            "<td style='text-align: center'><span class='circle' style='color:#7291CA'>" + holdingDetails[i]["periodSerial"] + "</span></td>" +
                             "<td>" + holdingDetails[i]["startDate"] + "</td>" +
                             "<td>" + holdingDetails[i]["endDate"] + "</td>" +
-                            "<td>" + holdingDetails[i]["holdingNum"] + "</td>" +
                             "<td>" + (holdingDetails[i]["strategyReturn"] * 100).toFixed(2) + "%" + "</td>" +
                             "<td>" + (holdingDetails[i]["baseReturn"] * 100).toFixed(2) + "%" + "</td>" +
                             "<td>" + (holdingDetails[i]["excessReturn"] * 100).toFixed(2) + "%" + "</td>" +
@@ -1375,25 +1363,22 @@
                     }
 
                     $(".circle").click(function () {
-                        alert($(this).html());
+                        var k = $(this).html();
 
-                        //TODO fjj $(this).html() 为当前需要看的周期，加一下此周期持有股票信息
-//                        $("#circleList").empty();
-//                        for (var i = 0; i < circleList.length; i++) {
-//                            $("#circleList").append("<tr>"+
-//                                "<td>" + 股票代码+ "</td>"+
-//                                "<td>" + 股票名" + "</td>"+
-//                                "<td>" + 行业分类+ "</td>"+
-//                                "<td>" + 开始价格+ "</td>"+
-//                                "<td>" + 结束价格 + "%" + "</td>"+
-//                                "<td>" + 涨幅 + "</td>"+
-//                                "<td>" + 本期起始仓 + "</td>"+
-//                                "<td>" + 当日成交额 + "</td>"+
-//                                "<td>" + 股价振幅 + "</td>"+
-//                                "</tr>");
-//                        }
+                        $("#circleList").empty();
+                        for (var i = 0; i < stageDetails[k].length; i++) {
+                            $("#circleList").append(
+                                "<tr>"+
+                                "<td>" + (stageDetails[k][i]["stockCode"])+ "</td>"+
+                                "<td>" + (stageDetails[k][i]["stockName"])+ "</td>"+
+                                "<td>" + (stageDetails[k][i]["startPrice"])+ "</td>"+
+                                "<td>" + (stageDetails[k][i]["endPrice"])+ "</td>"+
+                                "<td>" + changeToPercent(stageDetails[k][i]["changeRate"])+ "</td>"+
+                                "<td>" + changeToPercent(stageDetails[k][i]["curPosition"])+ "</td>"+
+                                "</tr>");
+                        }
                         $("#circleModal").modal("toggle");
-                    })
+                    });
 
                     $(".circle").hover(function () {
                         $(this).css({"cursor": "pointer", "text-decoration": " underline"});
@@ -1444,10 +1429,10 @@
 
 
                     // 处理图表的信息
-                    var strategyData = JSON.parse(array[6]);            //List<List<String>>
-                    var baseData = JSON.parse(array[7]);                //List<List<String>>
-                    var abHistogramData = JSON.parse(array[8]);
-                    var reHistogramData = JSON.parse(array[9]);
+                    var strategyData = JSON.parse(array[7]);            //List<List<String>>
+                    var baseData = JSON.parse(array[8]);                //List<List<String>>
+                    var abHistogramData = JSON.parse(array[9]);
+                    var reHistogramData = JSON.parse(array[10]);
                     // var formateExcessData = JSON.parse(array[11]);
                     // var formateWinData = JSON.parse(array[12]);
                     // var holdingExcessData = JSON.parse(array[13]);
@@ -1487,6 +1472,22 @@
                 setTimeout("$('#wholeMessage').hide();", 3000)
             }
         });
+    }
+
+
+    /**
+     * 将小数变为百分比
+     */
+    function changeToPercent(num){
+        if(!/\d+\.?\d+/.test(num)){
+            alert("必须为数字");
+        }
+        var result = (num * 100).toString(),
+            index = result.indexOf(".");
+        if(index == -1 || result.substr(index+1).length <= 2){
+            return result + "%";
+        }
+        return result.substr(0, index + 3) + "%";
     }
 
 

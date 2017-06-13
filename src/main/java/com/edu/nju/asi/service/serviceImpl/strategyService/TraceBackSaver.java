@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
  * <p>
  * 在保存策略时另开一线程，对当前策略进行回测，然后保存进数据库
  */
-public class TraceBackSave implements Callable<Boolean> {
+public class TraceBackSaver implements Callable<Boolean> {
 
     TraceBackService traceBackService;
     StrategyDao strategyDao;
@@ -26,7 +26,7 @@ public class TraceBackSave implements Callable<Boolean> {
 
     final LocalDate defaultDate = LocalDate.of(2017, 5, 1);
 
-    public TraceBackSave(TraceBackService traceBackService, StrategyDao strategyDao, Strategy strategy) {
+    public TraceBackSaver(TraceBackService traceBackService, StrategyDao strategyDao, Strategy strategy) {
         this.traceBackService = traceBackService;
         this.strategyDao = strategyDao;
         this.strategy = strategy;

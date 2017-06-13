@@ -266,8 +266,9 @@ public class JsonConverter {
         holder.append(jsonOfObject(convertReturnPeriod(traceBackInfo.relativeReturnPeriod))).append(";");
         System.out.println("numbers2 over");
 
-        // holdingDetails
+        // holdingDetails, stageDetails
         holder.append(JSON.toJSONString(traceBackInfo.holdingDetails)).append(";");
+        holder.append(JSON.toJSONString(traceBackInfo.stageDetails)).append(";");
         System.out.println("numbers3 over");
 
         // lastSoldStocks

@@ -96,4 +96,60 @@ public class TransferDayDetail {
 
         this.changeRate = (sellPrice - buyPrice) / buyPrice;
     }
+
+    public String getStockName() {
+        return stockName;
+    }
+
+    public void setStockName(String stockName) {
+        this.stockName = stockName;
+    }
+
+    public String getStockCode() {
+        return stockCode;
+    }
+
+    public void setStockCode(String stockCode) {
+        this.stockCode = stockCode;
+    }
+
+    public LocalDate getBuyDate() {
+        return buyDate;
+    }
+
+    public void setBuyDate(LocalDate buyDate) {
+        this.buyDate = buyDate;
+    }
+
+    public LocalDate getSellDate() {
+        return sellDate;
+    }
+
+    public void setSellDate(LocalDate sellDate) {
+        this.sellDate = sellDate;
+    }
+
+    public double getBuyPrice() {
+        return buyPrice;
+    }
+
+    public void setBuyPrice(double buyPrice) {
+        this.buyPrice = buyPrice;
+    }
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public double getChangeRate() {
+        return changeRate;
+    }
+
+    public void setChangeRate(double changeRate) {
+        this.changeRate = changeRate;
+    }
 }

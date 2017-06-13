@@ -11,7 +11,7 @@ import java.util.List;
  * <p>
  * 股指进行择时的接口
  * <p>
- * 趋势择时，即根据大盘指数的均线金叉死叉来判断趋势的转换。趋势择时有一定的滞后性，即大盘趋势转换一定时间后，才会发出信号。
+ * 趋势择时，即w。趋势择时有一定的滞后性，即大盘趋势转换一定时间后，才会发出信号。
  * DMA_MSS, MA_MSS, MACD_MSS, MAVol_MSS, TRIX_MSS
  * <p>
  * 反转择时，即抄底逃顶择时，就是在大盘跌破某个下限时转为买入，在大盘涨破上限时卖出。反转择时有一定的提前性，即大盘趋势还没有发生转换就会发出信号。
@@ -46,7 +46,7 @@ public abstract class AllMarketSelectingStrategy {
      */
     protected double ma(int neededSelectDayIndex, int day) {
         System.out.println("need: " + baseStocks.get(neededSelectDayIndex).getStockID().getDate());
-        List<BaseStock> wanted = findBaseStocksWithinDay(neededSelectDayIndex - day + 1, neededSelectDayIndex);
+        List<BaseStock> wanted = findBaseStocksWithinDay(neededSelectDayIndex - day, neededSelectDayIndex - 1);
 
         double sum = 0;
         for (BaseStock bs : wanted) {
@@ -104,6 +104,6 @@ public abstract class AllMarketSelectingStrategy {
 
 
         if (periodStart < 0) return null;
-        return baseStocks.subList(periodStart, periodEnd+1);
+        return baseStocks.subList(periodStart, periodEnd + 1);
     }
 }
