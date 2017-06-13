@@ -8,7 +8,7 @@ import java.util.List;
  *
  * 保存用户在界面上选择的回测的条件
  */
-public class TraceBackCriteria {
+public class TraceBackCriteria implements Comparable<TraceBackCriteria>{
 
     /**
      * 回测区间的起始时间
@@ -176,5 +176,11 @@ public class TraceBackCriteria {
 
     public int getBullToBear_num() {
         return bullToBear_num;
+    }
+
+
+    @Override
+    public int compareTo(TraceBackCriteria o) {
+        return 0;
     }
 }

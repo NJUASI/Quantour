@@ -40,7 +40,16 @@ public class GenEngineTest {
     @Test
     public void optimization() throws UnhandleBlockTypeException, DateNotWithinException, DataSourceFirstDayException, NoDataWithinException, IOException {
         List<BlockType> blockTypes = new LinkedList<>();
+        blockTypes.add(BlockType.ZB);
+        blockTypes.add(BlockType.CYB);
         blockTypes.add(BlockType.ZXB);
+
+
+        List<IndustryType> industryTypes = new ArrayList<>();
+        List<AreaType> areaTypes = new ArrayList<>();
+
+        industryTypes.add(IndustryType.金融行业);
+        areaTypes.add(AreaType.all);
 
         //筛选条件
         List<FilterCondition> filterConditions = new ArrayList<>();
@@ -54,16 +63,16 @@ public class GenEngineTest {
         List<MarketSelectingCondition> marketSelectingConditions = new ArrayList<>();
 //        marketSelectingConditions.add(new MarketSelectingCondition(MarketSelectingType.MA, "上证指数", 1, 3, 20, 0));
 
-        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 10, new StockPoolCriteria(StType.EXCLUDE, blockTypes), 5,
+        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 10, new StockPoolCriteria(StType.EXCLUDE, blockTypes, industryTypes, areaTypes), 5,
                 "沪深300", false, filterConditions, rankConditions, marketSelectingConditions, 0.5, 1, 1);
 
 
         List<AdjustCriteria> filterAdjustCriteria = new ArrayList<>();
         List<AdjustCriteria> rankAdjustCriteria = new ArrayList<>();
 
-        rankAdjustCriteria.add(new AdjustCriteria(0, 400, 2));
+        rankAdjustCriteria.add(new AdjustCriteria(0, 100, 2));
 
-        OptimizationCriteria optimizationCriteria = new OptimizationCriteria(criteria,filterAdjustCriteria,rankAdjustCriteria,TargetFuncType.ANNUALIZED_RETURN,201);
+        OptimizationCriteria optimizationCriteria = new OptimizationCriteria(criteria,filterAdjustCriteria,rankAdjustCriteria,TargetFuncType.ANNUALIZED_RETURN,51);
 
         Map<TraceBackCriteria, TraceBackInfo> map = genEngine.optimization(optimizationCriteria);
         System.out.println();

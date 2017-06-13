@@ -28,8 +28,8 @@ public class TraceBackServiceImplTest {
     @Before
     public void setUp() throws IOException {
         traceBackService = new TraceBackServiceImpl();
-        start = LocalDate.of(2017,2,1);
-        end = LocalDate.of(2017,5,29);
+        start = LocalDate.of(2017,4,18);
+        end = LocalDate.of(2017,5,2);
     }
 
     @Test
@@ -43,13 +43,13 @@ public class TraceBackServiceImplTest {
 
         //排名条件
         List<RankCondition> rankConditions = new ArrayList<>();
-        rankConditions.add(new RankCondition(IndicatorType.TURNOVER_RATE, RankType.DESC_RANK, 1, 5));
+        rankConditions.add(new RankCondition(IndicatorType.BOLL_UP_BANDS, RankType.DESC_RANK, 1, 5));
 
         //择时条件
         List<MarketSelectingCondition> marketSelectingConditions = new ArrayList<>();
-        marketSelectingConditions.add(new MarketSelectingCondition(MarketSelectingType.MAVol, "上证指数", 1, 5, 60, 0));
+//        marketSelectingConditions.add(new MarketSelectingCondition(MarketSelectingType.MAVol, "上证指数", 1, 5, 60, 0));
 
-        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 10, new StockPoolCriteria(StType.EXCLUDE, blockTypes),5,
+        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, new StockPoolCriteria(StType.EXCLUDE, blockTypes),2,
                 "沪深300", false, filterConditions, rankConditions, marketSelectingConditions, 0.5, 1, 1);
 
         try {
