@@ -7,6 +7,7 @@ import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.NumberFormat;
+import com.edu.nju.asi.utilities.comparator.StockSearchRandomComparator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
@@ -233,6 +234,8 @@ public class JsonConverter {
         List<List<String>> result = new ArrayList<>();
 
         if (topClicks != null) {
+            // TODO 冯俊杰
+            topClicks.sort(new StockSearchRandomComparator());
             for (StockSearch stockSearch : topClicks) {
                 List<String> temp = new ArrayList<>();
                 temp.add(stockSearch.getSearchID().getName());

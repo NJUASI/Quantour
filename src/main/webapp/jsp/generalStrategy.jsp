@@ -89,6 +89,9 @@
                                     </li>
                                     <li class="" style="font-size: 90%; color:blueviolet">
                                         策略收益率
+                                        <%--TODO gaoyuan 小图--%>
+                                        <%--${strategy.baseCumulativeReturnChart}--%>
+                                        <%--${strategy.strategyCumulativeReturnChart}--%>
                                     </li>
                                 </ul>
                                 <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
