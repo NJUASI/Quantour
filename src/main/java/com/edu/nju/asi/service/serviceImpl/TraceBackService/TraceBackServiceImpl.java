@@ -179,6 +179,10 @@ public class TraceBackServiceImpl implements TraceBackService {
     @Override
     public TraceBackInfo optimize(List<FilterCondition> filterConditions, List<RankCondition> rankConditions) throws IOException, UnhandleBlockTypeException, DataSourceFirstDayException, NoDataWithinException, DateNotWithinException {
         TraceBackInfo traceBackInfo = new TraceBackInfo();
+
+        //不用每次计算基准收益率
+        traceBackInfo.baseCumulativeReturn = baseCumulativeReturn;
+
         TraceBackCriteria traceBackCriteria = new TraceBackCriteria(originTraceBackCriteria, filterConditions, rankConditions);
 
         //选择策略
