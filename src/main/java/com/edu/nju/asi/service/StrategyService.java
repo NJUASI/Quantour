@@ -36,9 +36,10 @@ public interface StrategyService {
     /**
      *
      * @param newStrategy 当前用户想要操作创建的的策略实体
+     * @param thisUser
      * @return 用户是否成功创建策略
      */
-    boolean saveStrategy(Strategy newStrategy);
+    boolean saveStrategy(Strategy newStrategy, User thisUser);
 
     /**
      *
@@ -63,9 +64,10 @@ public interface StrategyService {
     /**
      *
      * @param modified 被修改后的策略实体
+     * @param thisUser
      * @return 是否成功被修改
      */
-    boolean modify(Strategy modified);
+    boolean modify(Strategy modified, User thisUser);
 
     /**
      *

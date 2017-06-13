@@ -52,8 +52,11 @@ public class TraceBackServiceImplTest {
         TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, new StockPoolCriteria(StType.EXCLUDE, blockTypes),2,
                 "沪深300", false, filterConditions, rankConditions, marketSelectingConditions, 0.5, 1, 1);
 
+        List<String> customisedStockPool = new LinkedList<>();
+        customisedStockPool.add("000001");
+
         try {
-             TraceBackInfo traceBackInfo = traceBackService.traceBack(criteria);
+             TraceBackInfo traceBackInfo = traceBackService.traceBack(criteria, customisedStockPool);
              System.out.println();
         } catch (IOException e) {
             e.printStackTrace();

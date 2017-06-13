@@ -6,9 +6,11 @@ import com.edu.nju.asi.infoCarrier.strategy.StrategyRankResult;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.Strategy;
+import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.TraceBackService;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -22,14 +24,16 @@ public class TraceBackSaver implements Callable<Boolean> {
     StrategyDao strategyDao;
 
     Strategy strategy;
+    User thisUser;
 
 
     final LocalDate defaultDate = LocalDate.of(2017, 5, 1);
 
-    public TraceBackSaver(TraceBackService traceBackService, StrategyDao strategyDao, Strategy strategy) {
+    public TraceBackSaver(TraceBackService traceBackService, StrategyDao strategyDao, Strategy strategy, User thisUser) {
         this.traceBackService = traceBackService;
         this.strategyDao = strategyDao;
         this.strategy = strategy;
+        this.thisUser = thisUser;
     }
 
     @Override
@@ -43,8 +47,11 @@ public class TraceBackSaver implements Callable<Boolean> {
         criteria.endDate = defaultDate;
         criteria.startDate = defaultDate.minusMonths(1);
 
+        String traceBackPoolStringRepre = thisUser.getTraceBackPool();
+        List<String> customizedStockPool = JSON.parseArray(traceBackPoolStringRepre, String.class);
+
         // 回测结果并打分
-        TraceBackInfo info = traceBackService.traceBack(criteria);
+        TraceBackInfo info = traceBackService.traceBack(criteria, customizedStockPool);
 
         StrategyRanker ranker = new StrategyRanker();
         StrategyRankResult rankResult = ranker.getRank(criteria, info);

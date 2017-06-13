@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -91,12 +90,8 @@ public class TraceBackController {
 
         TraceBackInfo traceBackInfo = null;
         try {
-            List<String> customizedStockPool = new LinkedList<>();
-            if (criteria.isCustomized) {
-                String traceBackPoolStringRepre = thisUser.getTraceBackPool();
-                List<String> myTraceBackPool = JSON.parseArray(traceBackPoolStringRepre, String.class);
-                customizedStockPool.addAll(myTraceBackPool);
-            }
+            String traceBackPoolStringRepre = thisUser.getTraceBackPool();
+            List<String> customizedStockPool = JSON.parseArray(traceBackPoolStringRepre, String.class);
 
             traceBackInfo = traceBackService.traceBack(criteria, customizedStockPool);
         } catch (IOException e) {
