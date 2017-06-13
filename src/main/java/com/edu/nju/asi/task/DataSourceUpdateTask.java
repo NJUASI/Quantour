@@ -39,8 +39,8 @@ public class DataSourceUpdateTask {
     //结束日期
     private LocalDate end;
 
-    // TODO 每晚23点整更新数据源
-    @Scheduled(cron = "0 0 23 * * ?")
+    // 凌晨1点整更新昨日数据源
+    @Scheduled(cron = "0 0 1 * * ?")
     public void update() {
         this.handle();
     }
@@ -58,8 +58,8 @@ public class DataSourceUpdateTask {
 //        crawler.handleAreaAndIndustry();
 //        storer.storeStock();
 //        storer.storeStockSearch();
-//        crawler.handleAdjStock();
-//        storer.storeAdjData();
+        crawler.handleAdjStock();
+        storer.storeAdjData();
         fileHelper.delete();
         taskInfoHelper.clearInfo();
     }
@@ -72,12 +72,11 @@ public class DataSourceUpdateTask {
      */
     private void init(){
         root = System.getProperty("user.dir")+ File.separator+"attachment";
-        start = LocalDate.of(2017,6,12);
-        end = LocalDate.of(2017,6,12);
+        start = LocalDate.now();
+        end = LocalDate.now();
         fileHelper = new FileHelper(root);
         storer = new StoreController(root,start,end);
         crawler = new CrawlerController(root,start,end);
         taskInfoHelper = new TaskInfoHelper();
     }
-
 }

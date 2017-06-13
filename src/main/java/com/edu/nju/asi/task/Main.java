@@ -28,7 +28,11 @@ public class Main {
         try {
             String path =getClass().getClassLoader().getResource("python/CrawingToday.py").getPath();
             String type = "python";
-            String[] cmd = {type,path.substring(1)};
+            String name = System.getProperties().getProperty("os.name");
+            if(name.startsWith("Win")){
+                path = path.substring(1);
+            }
+            String[] cmd = {type,path};
             Process process = Runtime.getRuntime().exec(cmd);
             System.out.println("--------------------------正常信息输出-------------------------------------");
             BufferedReader infoReader = new BufferedReader(new InputStreamReader(process.getInputStream()));

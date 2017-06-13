@@ -41,6 +41,7 @@ def _modify_path(filepath):
     return 'none'
 
 
-file = open('f:/info.txt','w+')
-file.write(_get_root())
+# file = open('f:/info.txt','w+')
+# file.write(_get_root())
 # _crawing_area(_modify_path(_get_root())+'area.csv')
+print('hello')

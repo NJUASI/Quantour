@@ -226,6 +226,7 @@ public class NormalStock {
     }
 
     public void setDate(String date) {
+
         this.date = LocalDate.parse(date);
     }
 

@@ -356,7 +356,7 @@
                         </div>
                     </div>
                     <div class="col-md-1" style="margin-left:-30px">
-                        <span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                        <span  data-toggle="tooltip" data-placement="top" title="使用大盘择时信号，决定策略总体持股仓位" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                     </div>
                 </div>
                 <div id="timingPanel" hidden>
@@ -393,27 +393,27 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                                            style="border: 0px solid white">MA <span> </span><span  data-toggle="tooltip" data-placement="top" title="指数移动平均" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MACD <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                                            style="border: 0px solid white">MACD <span> </span><span  data-toggle="tooltip" data-placement="top" title="指数平滑异同移动平均线" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">DMA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                                            style="border: 0px solid white">DMA <span> </span><span  data-toggle="tooltip" data-placement="top" title="指数平均线差指标" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white" disabled>TRIX <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                                            style="border: 0px solid white" disabled>TRIX <span> </span><span  data-toggle="tooltip" data-placement="top" title="三重指数平滑移动平均指标" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MAVOL <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                                            style="border: 0px solid white">MAVOL <span> </span><span  data-toggle="tooltip" data-placement="top" title="指数成交量平均" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                             </div>
