@@ -405,7 +405,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">TRIX
+                                            style="border: 0px solid white" disabled>TRIX
                                     </button>
                                 </div>
                                 <div class="col-md-4">
@@ -744,22 +744,21 @@
 
         });
 
-        var myTraceBackPool = "";
+        var myTraceBackPool = "${myTraceBackPool}";
         // 界面初始化的时候加载这个，不要单独提出去
         $('#modifyPool').click(function () {
             $("#strategyPool").modal("toggle");
-
+            $("#poolCode").val(myTraceBackPool);
             // 修改用户的真实数据 TODO 高源 保存不保存，决定是否修改myTraceBackPool
-            alert(${myTraceBackPool});
-            alert(${myTraceBackPool != null});
-            alert(${myTraceBackPool.size() != 0});
+            <%--alert(${myTraceBackPool != null});--%>
+            <%--alert(${myTraceBackPool.size() != 0});--%>
 
             <%--if (${myTraceBackPool != null && myTraceBackPool.size() != 0}) {--%>
                 <%--// TODO 不能下面这样写--%>
                 <%--for (var i = 0; i < ${myTraceBackPool.size()}; i++) {--%>
                     <%--myTraceBackPool.append("${myTraceBackPool.get(i)}").append(" ");--%>
                 <%--}--%>
-                <%--$("#nowPoolCode").val(myTraceBackPool);--%>
+                <%--$("#poolCode").val(myTraceBackPool);--%>
             <%--}--%>
         })
 
@@ -767,8 +766,8 @@
 
 
         $('#savePool').click(function () {
-            var codes = $("#nowPoolCode").val().split(" ");
-//            alert($("#poolCode").val());
+            var codes = $("#poolCode").val().trim().split(" ");
+            alert($("#poolCode").val());
             var reg = /^\d{6}$/;
             for (var i = 0; i < codes.length; i++) {
                 var code = codes[i];
@@ -784,20 +783,26 @@
             $.ajax({
                 type: "post",
                 async: true,
-                url: "/user/modify",
+                url: "/user/modify_my_trace_back_pool",
                 data: {
-                    "user":JSON.stringify(modified_user)
+                    "myTraceBackPool": $("#poolCode").val().trim()
                 },
 
                 success: function (result) {
                     var array = result.split(";");
 
                     if (array[0] == "1") {
-                        // TODO gaoyuan 登录成功用我说的那个小动画，修改全局变量myTraceBackPool
-                        alert("66666666");
+                        // TODO gaoyuan 成功用我说的那个小动画，
+                        myTraceBackPool= $("#poolCode").val();
+
+                        $("#poolCodeError").html("自选股票池保存成功");
+                        setTimeout("$(\"#poolCodeError\").html('')", 2000);
+                        setTimeout("$(\"#strategyPool\").modal(\"toggle\")",2000);
+
                     } else if (array[0] == "-1") {
                         // TODO 高源 提示有哪些股票不存在
-                        alert(array[1]);
+                        $("#poolCodeError").html("你输入的代码" + array[1] + "不存在");
+                        setTimeout("$(\"#poolCodeError\").html('')", 4000);
                     }
                 },
                 error: function (result) {

@@ -10,7 +10,7 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li><a id="homePage" href="/">首页</a></li>
-            <li><a id="stocks" onclick="openStock()" style="cursor: pointer">大盘详情</a></li>
+            <li><a id="stocks" style="cursor: pointer">大盘详情</a></li>
             <li class="dropdown">
                 <a href="##" class="dropdown-toggle" data-toggle="dropdown">量化社区<span class="caret"></span></a>
                 <ul class="dropdown-menu" style="left:15px;max-width: 100px">

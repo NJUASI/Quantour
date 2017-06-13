@@ -136,6 +136,30 @@ public class TraceBackServiceImpl implements TraceBackService {
         return traceBackInfo;
     }
 
+    /**
+     * 策略优化时，先设置原策略的条件
+     *
+     * @param traceBackCriteria 原策略的标准
+     * @return
+     */
+    @Override
+    public void setOriginTraceBackCriteria(TraceBackCriteria traceBackCriteria) {
+        //TODO gcm
+    }
+
+    /**
+     * 进行一次适应函数的计算
+     *
+     * @param filterConditions 经过遗传算法变更过参数的筛选条件
+     * @param rankConditions   经过遗传算法变更过参数的排名条件
+     * @return 回测结果
+     */
+    @Override
+    public TraceBackInfo optimize(List<FilterCondition> filterConditions, List<RankCondition> rankConditions) {
+        //TODO
+        return null;
+    }
+
     private void setUpStockData(TraceBackCriteria criteria) throws IOException {
 
         // 所有股票数据
@@ -149,9 +173,9 @@ public class TraceBackServiceImpl implements TraceBackService {
         // 获取所有股指信息
         Set<String> baseStockNames = new HashSet<>();
         baseStockNames.add(criteria.baseStockName);
-//        for (MarketSelectingCondition condition : criteria.marketSelectingConditions) {
-//            baseStockNames.add(condition.baseStockName);
-//        }
+        for (MarketSelectingCondition condition : criteria.marketSelectingConditions) {
+            baseStockNames.add(condition.baseStockName);
+        }
 
         baseStockData = new HashMap<>();
         for (String bsName : baseStockNames) {

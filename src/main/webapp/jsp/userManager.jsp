@@ -573,10 +573,11 @@
     }, function () {
         $(this).css({"color":"#7291CA","text-decoration":" none"});
     });
-    function openStock() {
+    $("#stocks").click(function() {
         $("body").removeClass('loaded');
-        window.location.href="/stocks"
-    }
+        window.location.href = "/stocks"
+        $("#stocks").unbind("click");
+    });
 
     $("#userManager").addClass("act");
 </script>
