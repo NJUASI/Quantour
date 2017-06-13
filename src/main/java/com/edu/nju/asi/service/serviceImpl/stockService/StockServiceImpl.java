@@ -57,7 +57,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<Stock> getAllStocks(LocalDate date, StocksSortCriteria sortCriteria, IndustryType industryType, AreaType areaType) throws IOException, UnhandleBlockTypeException {
-        System.out.println("getAllStocks" + stockDao);
+        System.out.println("getAllStocks: " + stockDao);
 
         // 设置责任链并基于条件对股票进行筛选
         StockPoolCriteria criteria = new StockPoolCriteria(industryType, areaType);
@@ -108,7 +108,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<StockSearch> searchStock(String searchString){
-        System.out.println("searchStock" + stockDao);
+        System.out.println("searchStock: " + stockDao);
         return stockDao.searchStock(searchString);
     }
 
@@ -131,7 +131,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<String> getStockPool(StockPoolCriteria stockPoolCriteria) throws IOException, UnhandleBlockTypeException {
-        System.out.println("getStockPool" + stockDao);
+        System.out.println("getStockPool: " + stockDao);
 
         //新建所有filter对象
         StockPoolFilter stockPoolFilter = new StockPoolFilter();

@@ -2,18 +2,16 @@ package com.edu.nju.asi.service.serviceImpl.traceBackService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.BaseStockDaoImpl;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
-import com.edu.nju.asi.service.serviceImpl.stockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,11 +24,11 @@ import java.util.*;
 @Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
-//    @Autowired
+    @Autowired
     private StockService stockService;
-//    @Autowired
+    @Autowired
     private StockDao stockDao;
-//    @Autowired
+    @Autowired
     private BaseStockDao baseStockDao;
 
     private List<String> traceBackStockPool;
@@ -70,9 +68,9 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     public TraceBackServiceImpl() throws IOException {
-        stockService = new StockServiceImpl();
-        stockDao = new StockDaoImpl();
-        baseStockDao = new BaseStockDaoImpl();
+//        stockService = new StockServiceImpl();
+//        stockDao = new StockDaoImpl();
+//        baseStockDao = new BaseStockDaoImpl();
 
         //获取所有数据的日期
 //        allDatesWithData = stockDao.getDateWithData();
@@ -131,7 +129,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackInfo.relativeReturnPeriod = countReturnPeriod(traceBackInfo.holdingDetails, false);
         System.out.println("---------------6------------");
 
-        System.out.println("计算目标策略算法给定形成期、持有期所用时间: "+ (System.currentTimeMillis()-enter));
+        System.out.println("计算目标策略算法给定形成期、持有期所用时间: " + (System.currentTimeMillis() - enter));
 
         // TraceBackParameter 计算贝塔系数等
         TraceBackParam param = new TraceBackParam(traceBackCriteria, traceBackInfo, stockData, traceBackStockPool, baseStocks);
@@ -243,16 +241,16 @@ public class TraceBackServiceImpl implements TraceBackService {
         int holdingSerial = 1;
 
         //每个持仓周期包含进起始和末尾的调仓日
-        for (int i = 0; i < baseCumulativeReturn.size(); i += (holdingPeriod+1)) {
+        for (int i = 0; i < baseCumulativeReturn.size(); i += (holdingPeriod + 1)) {
             holdingPeriodStart = i;
             holdingPeriodEnd = i + holdingPeriod;
 
-            if(holdingSerial != 1){
+            if (holdingSerial != 1) {
                 holdingPeriodStart = i - 1;
             }
 
-            if(holdingPeriodEnd > baseCumulativeReturn.size()-1){
-                holdingPeriodEnd = baseCumulativeReturn.size()-1;
+            if (holdingPeriodEnd > baseCumulativeReturn.size() - 1) {
+                holdingPeriodEnd = baseCumulativeReturn.size() - 1;
             }
 
             double startBaseReturn = baseCumulativeReturn.get(holdingPeriodStart).cumulativeReturn;
@@ -291,6 +289,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     /**
      * 计算一只基准股的累计收益率
+     *
      * @param stockName 单一股票的信息
      * @param start     起始日期
      * @param end       结束日期
@@ -298,7 +297,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      */
     private List<CumulativeReturn> getCumulativeReturnOfOneStock(String stockName, LocalDate start, LocalDate end) {
 
-        System.out.println("in getCumulativeReturnOfOneStock-------------"+stockName+"--------------");
+        System.out.println("in getCumulativeReturnOfOneStock-------------" + stockName + "--------------");
 
         List<CumulativeReturn> cumulativeReturns = new ArrayList<>();
 
@@ -315,7 +314,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
         //将第一天的收益率设置为0
         cumulativeReturns.get(0).cumulativeReturn = 0;
-        System.out.println("finished getCumulativeReturnOfOneStock--------------"+stockName+"----------------");
+        System.out.println("finished getCumulativeReturnOfOneStock--------------" + stockName + "----------------");
 
         return cumulativeReturns;
     }
@@ -324,7 +323,7 @@ public class TraceBackServiceImpl implements TraceBackService {
      * 计算最大回撤点
      *
      * @param strategyCumulativeReturn 未计算最大回撤的基准累计收益率
-     * @param baseCumulativeReturn 未计算回撤的策略累计收益率
+     * @param baseCumulativeReturn     未计算回撤的策略累计收益率
      * @return MaxTraceBack 记录基准和策略最大回撤信息的载体
      */
     public MaxTraceBack maxRetracement(List<CumulativeReturn> strategyCumulativeReturn, List<CumulativeReturn> baseCumulativeReturn) {
@@ -375,9 +374,8 @@ public class TraceBackServiceImpl implements TraceBackService {
     }
 
     /**
-     *
      * @param holdingDetails 持仓周期详情用于计算
-     * @param isAbsolute true计算绝对，false计算相对
+     * @param isAbsolute     true计算绝对，false计算相对
      * @return 绝对／相对收益
      */
     private ReturnPeriod countReturnPeriod(List<HoldingDetail> holdingDetails, boolean isAbsolute) {
@@ -420,7 +418,7 @@ public class TraceBackServiceImpl implements TraceBackService {
         returnPeriod.negativePeriodNum = negativePeriodNum;
         returnPeriod.positiveNums = positiveNums;
         returnPeriod.negativeNums = negativeNums;
-        returnPeriod.winRate = ((double)positivePeriodsNum) / holdingDetails.size();
+        returnPeriod.winRate = ((double) positivePeriodsNum) / holdingDetails.size();
 
         return returnPeriod;
     }
