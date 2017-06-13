@@ -1,4 +1,4 @@
-package com.edu.nju.asi.service.serviceImpl.TraceBackService;
+package com.edu.nju.asi.service.serviceImpl.traceBackService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
@@ -9,7 +9,7 @@ import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
-import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
+import com.edu.nju.asi.service.serviceImpl.stockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;

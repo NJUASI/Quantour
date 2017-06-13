@@ -1,24 +1,23 @@
-package com.edu.nju.asi.service.serviceImpl.StockService;
+package com.edu.nju.asi.service.serviceImpl.stockService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.BaseStockDaoImpl;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.SearchID;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.service.StockService;
-import com.edu.nju.asi.service.serviceImpl.StockService.stockPoolFilters.AreaFilter;
-import com.edu.nju.asi.service.serviceImpl.StockService.stockPoolFilters.BlockCriteriaFilter;
-import com.edu.nju.asi.service.serviceImpl.StockService.stockPoolFilters.IndustryFilter;
-import com.edu.nju.asi.service.serviceImpl.StockService.stockPoolFilters.StCriteriaFilter;
+import com.edu.nju.asi.service.serviceImpl.stockService.stockPoolFilters.AreaFilter;
+import com.edu.nju.asi.service.serviceImpl.stockService.stockPoolFilters.BlockCriteriaFilter;
+import com.edu.nju.asi.service.serviceImpl.stockService.stockPoolFilters.IndustryFilter;
+import com.edu.nju.asi.service.serviceImpl.stockService.stockPoolFilters.StCriteriaFilter;
 import com.edu.nju.asi.utilities.enums.AreaType;
 import com.edu.nju.asi.utilities.enums.IndustryType;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
 import com.edu.nju.asi.utilities.exceptions.*;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -36,14 +35,14 @@ import java.util.*;
 @Service("StockService")
 public class StockServiceImpl implements StockService {
 
-//    @Autowired
+    @Autowired
     StockDao stockDao;
-//    @Autowired
+    @Autowired
     BaseStockDao baseStockDao;
 
     public StockServiceImpl() {
-        stockDao = new StockDaoImpl();
-        baseStockDao = new BaseStockDaoImpl();
+//        stockDao = new StockDaoImpl();
+//        baseStockDao = new BaseStockDaoImpl();
     }
 
     /**

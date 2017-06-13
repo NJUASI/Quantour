@@ -100,5 +100,4 @@ $(".submit").click(function () {
         alert($(this).find(".min_num").eq(0).val());
         alert($(this).find(".length_num").eq(0).val());
     });
-
-})
+});
