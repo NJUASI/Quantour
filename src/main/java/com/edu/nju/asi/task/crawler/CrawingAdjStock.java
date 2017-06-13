@@ -41,11 +41,9 @@ public class CrawingAdjStock {
         try {
             String path = getClass().getClassLoader().getResource("python/_crawing_history_front.py").getPath();
             Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-            proc.waitFor();
+//            proc.waitFor();
             printInfo(proc);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -60,10 +58,8 @@ public class CrawingAdjStock {
         try {
             String path = getClass().getClassLoader().getResource("python/_crawing_history_after.py").getPath();
             Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-            proc.waitFor();
+//            proc.waitFor();
             printInfo(proc);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,11 +76,9 @@ public class CrawingAdjStock {
             String path = getClass().getClassLoader().getResource("python/_crawing_area.py").getPath();
             System.out.println(path);
             Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-            proc.waitFor();
+//            proc.waitFor();
             printInfo(proc);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -100,11 +94,9 @@ public class CrawingAdjStock {
             String path = getClass().getClassLoader().getResource("python/_crawing_industry.py").getPath();
             System.out.println(path);
             Process proc = Runtime.getRuntime().exec("python " + path.substring(1));
-            proc.waitFor();
+//            proc.waitFor();
             printInfo(proc);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
     }
