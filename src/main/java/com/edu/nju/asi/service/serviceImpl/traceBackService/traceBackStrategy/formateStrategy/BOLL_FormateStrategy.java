@@ -4,6 +4,7 @@ import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 import java.time.LocalDate;
@@ -35,6 +36,7 @@ public class BOLL_FormateStrategy extends AllFormateStrategy {
         List<FormateRate> formateRate = new ArrayList<>();
 
         StandardDeviation stdev = new StandardDeviation();
+        Mean mean = new Mean();
 
         for(int i = 0; i < stockCodes.size(); i++){
 
@@ -50,7 +52,7 @@ public class BOLL_FormateStrategy extends AllFormateStrategy {
                 afterAdjClose[j] = stockList_20Days.get(j).getAfterAdjClose();
             }
 
-            double mean_20Days = computeMeanValue(stockList_20Days, "afterAdjClose");
+            double mean_20Days = mean.evaluate(afterAdjClose);
             double stdev_afterAdjClose = stdev.evaluate(afterAdjClose);
 
             double value = 0;

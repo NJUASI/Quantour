@@ -2,11 +2,14 @@ package com.edu.nju.asi.service.serviceImpl.traceBackService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
+import com.edu.nju.asi.dao.daoImpl.BaseStockDaoImpl;
+import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
+import com.edu.nju.asi.service.serviceImpl.stockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
@@ -24,11 +27,11 @@ import java.util.*;
 @Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
-    @Autowired
+    //    @Autowired
     private StockService stockService;
-    @Autowired
+    //    @Autowired
     private StockDao stockDao;
-    @Autowired
+    //    @Autowired
     private BaseStockDao baseStockDao;
 
     private List<String> traceBackStockPool;
@@ -68,9 +71,9 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     public TraceBackServiceImpl() throws IOException {
-//        stockService = new StockServiceImpl();
-//        stockDao = new StockDaoImpl();
-//        baseStockDao = new BaseStockDaoImpl();
+        stockService = new StockServiceImpl();
+        stockDao = new StockDaoImpl();
+        baseStockDao = new BaseStockDaoImpl();
 
         //获取所有数据的日期
 //        allDatesWithData = stockDao.getDateWithData();
