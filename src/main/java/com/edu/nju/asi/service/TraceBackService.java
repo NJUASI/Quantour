@@ -20,9 +20,10 @@ public interface TraceBackService {
     /**
      *
      * @param traceBackCriteria 回测标准
+     * @param customizedStockPool 自选股池
      * @return 回测所要展示的数据
      */
-    public TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria)  throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException;
+    public TraceBackInfo traceBack(TraceBackCriteria traceBackCriteria, List<String> customizedStockPool)  throws IOException, DataSourceFirstDayException, DateNotWithinException, NoDataWithinException, UnhandleBlockTypeException;
 
     /**
      * 策略优化时，先设置原策略的条件
