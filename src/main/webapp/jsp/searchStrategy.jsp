@@ -54,100 +54,6 @@
     <%@ include file="header.jsp" %>
 </header>
 
-
-<%--<div class="row ">--%>
-    <%--<div class="col-md-8 col-md-offset-2">--%>
-        <%--<div class="row">--%>
-            <%--<h3 class="col-md-2" style="color:#4890c8">中小板股指</h3>--%>
-            <%--&lt;%&ndash;TODO 高源 收藏、取消收藏、编辑修改、删除策略 (strategy.js  strategy_modify...) &ndash;%&gt;--%>
-            <%--<button class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">--%>
-                <%--<span class="glyphicon glyphicon-heart"></span>--%>
-                <%--<span class="txt">收藏</span>--%>
-            <%--</button>--%>
-
-            <%--<button class="btn btn-default  col-md-1 col-md-offset-1" style="margin-top: 20px">--%>
-                <%--<span class="txt">取消收藏</span>--%>
-            <%--</button>--%>
-
-            <%--<button id="modifyBt" class="btn btn-primary btn  col-md-1 col-md-offset-1" style="margin-top: 20px">--%>
-                <%--<span class="txt">编辑</span>--%>
-            <%--</button>--%>
-
-        <%--</div>--%>
-
-
-    <%--</div>--%>
-<%--</div>--%>
-
-<%--<div class="row">--%>
-    <%--<div class="panel panel-default col-md-8 col-md-offset-2">--%>
-        <%--<div class="panel-body">--%>
-            <%--<div class="row" style="margin-top: 20px">--%>
-                <%--<div class="col-md-5 row ">--%>
-                    <%--<div class="row col-md-12">--%>
-                    <%--<ul id="strategyDetail" class="list-inline">--%>
-                        <%--<li>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者:&nbsp; <span>2017-01-12</span></li>--%>
-                        <%--<li>板&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;块:&nbsp; <span>1231</span></li>--%>
-                        <%--<li>创建日期:&nbsp; <span>2017-01-12</span></li>--%>
-                        <%--<li>ST&nbsp;&nbsp;&nbsp;信息:&nbsp; <span>123333</span></li>--%>
-                        <%--<li>开始日期:&nbsp; <span>13</span></li>--%>
-                        <%--<li>结束日期:&nbsp; <span>14</span></li>--%>
-                        <%--<li>调仓周期:&nbsp; <span>1233</span></li>--%>
-                        <%--<li>最大持仓:&nbsp; <span>1233</span></li>--%>
-                        <%--<li>收益基准:&nbsp; <span>1233</span></li>--%>
-                    <%--</ul>--%>
-                    <%--</div>--%>
-                    <%--<div class="row">--%>
-                        <%--<div class="col-md-3 "><p>筛选条件</p></div>--%>
-                        <%--<div class="col-md-9" style="margin-left: -40px">--%>
-                        <%--<div class="row ">--%>
-                            <%--<div class=" col-md-12 ">--%>
-                                <%--<span class="col-md-6">指标</span><span class="col-md-4">比较符</span> <span class="col-md-1">值</span>--%>
-                            <%--</div>--%>
-                            <%--<div class=" col-md-12 ">--%>
-                                <%--<span class="col-md-6">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">20</span>--%>
-                            <%--</div>--%>
-                            <%--<div class=" col-md-12 ">--%>
-                                <%--<span class="col-md-6">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">20</span>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-
-                    <%--</div>--%>
-                    <%--<div class="row" style="margin-top: 5px">--%>
-                        <%--<div class="col-md-3 "><p>排名条件</p></div>--%>
-                        <%--<div class="col-md-9" style="margin-left: -40px">--%>
-                            <%--<div class="row ">--%>
-                                <%--<div class=" col-md-12 ">--%>
-                                    <%--<span class="col-md-6">指标</span><span class="col-md-4">次序</span> <span class="col-md-2" style="padding-right: 0px">权重</span>--%>
-                                <%--</div>--%>
-                                <%--<div class=" col-md-12 ">--%>
-                                    <%--<span class="col-md-6">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-1">1</span>--%>
-                                <%--</div>--%>
-                                <%--<div class=" col-md-12 ">--%>
-                                    <%--<span class="col-md-6">10日平均成交量</span><span class="col-md-4">排名最大</span> <span class="col-md-2">1</span>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
-                <%--</div>--%>
-                <%--<div class="col-md-3">--%>
-                    <%--<div class="col-md-12 ">--%>
-                        <%--策略描述:--%>
-                    <%--</div>--%>
-                    <%--<p class="col-md-12 " style="color:#9e9e9e">--%>
-                        <%--不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的不瞒你说，我们的策略真的赚不了钱的 </p>--%>
-                <%--</div>--%>
-                <%--<div class="col-md-4" style="border-left: 1px solid slategray">--%>
-                    <%--<div id="candlestick" style=" width:100%;height:220px"></div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
-
 <div class="row ">
     <div class="col-md-8 col-md-offset-2">
         <div class="row">
@@ -794,13 +700,14 @@
 
 
 
-    function openStock() {
+    $("#stocks").click(function() {
         $("body").removeClass('loaded');
-        window.location.href="/stocks"
-    }
+        window.location.href = "/stocks"
+        $("#stocks").unbind("click");
+    });
     $("#commity").addClass("act");
 
-
+//TODO fjj 你把下面的注释全部去掉加图表
 
     <%--var numberValues = eval("(" +  ${traceBackNums} + ")");          // List<String>--%>
     <%--var abReturnPeriod = ${absoluteReturnPeriod};            // ReturnPeriod--%>

@@ -1,9 +1,6 @@
 package com.edu.nju.asi.infoCarrier.traceBack;
 
-import com.edu.nju.asi.utilities.enums.AreaType;
-import com.edu.nju.asi.utilities.enums.BlockType;
-import com.edu.nju.asi.utilities.enums.IndustryType;
-import com.edu.nju.asi.utilities.enums.StType;
+import com.edu.nju.asi.utilities.enums.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,31 +22,48 @@ public class StockPoolCriteria {
      */
     public List<BlockType> blockTypes;
 
-
     /**
      * 需要的行业类型
      */
-    public IndustryType industryType;
+    public List<IndustryType> industryTypes;
 
     /**
      * 需要的地域类型
      */
-    public AreaType areaType;
+    public List<AreaType> areaTypes;
 
 
     public StockPoolCriteria() {
     }
 
+    public StockPoolCriteria(StType stType, List<BlockType> blockTypes, List<IndustryType> industryTypes, List<AreaType> areaTypes) {
+        this.stType = stType;
+        this.blockTypes = blockTypes;
+        this.industryTypes = industryTypes;
+        this.areaTypes = areaTypes;
+    }
+
     public StockPoolCriteria(StType stType, List<BlockType> blockTypes) {
         this.stType = stType;
         this.blockTypes = blockTypes;
-        this.industryType = IndustryType.all;
-        this.areaType = AreaType.all;
+
+        industryTypes = new LinkedList<>();
+        for (IndustryType temp : IndustryType.values()) {
+            industryTypes.add(temp);
+        }
+
+        areaTypes = new LinkedList<>();
+        for (AreaType temp : AreaType.values()) {
+            areaTypes.add(temp);
+        }
     }
 
     public StockPoolCriteria(IndustryType industryType, AreaType areaType) {
-        this.industryType = industryType;
-        this.areaType = areaType;
+        industryTypes = new LinkedList<>();
+        areaTypes = new LinkedList<>();
+
+        industryTypes.add(industryType);
+        areaTypes.add(areaType);
 
         this.stType = StType.INCLUDE;
         this.blockTypes = new LinkedList<>();

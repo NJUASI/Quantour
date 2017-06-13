@@ -9,6 +9,8 @@ import java.util.Locale;
 
 /**
  * Created by cuihua on 2017/6/8.
+ *
+ * 行情界面选择板块类型
  */
 public class IndustryTypeFormatter implements Formatter<IndustryType> {
 

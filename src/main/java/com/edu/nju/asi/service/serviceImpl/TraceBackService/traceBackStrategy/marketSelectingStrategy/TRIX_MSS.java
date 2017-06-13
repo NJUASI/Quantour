@@ -22,7 +22,12 @@ public class TRIX_MSS extends AllMarketSelectingStrategy {
     }
 
     @Override
-    public MarketSelectingResult marketSelecting(LocalDate periodStart, int criteria2, int criteria3, int criteria1) {
+    public MarketSelectingResult marketSelecting(int neededSelectDayIndex, int criteria1, int criteria2, int criteria3) {
         return null;
     }
+
+//    private double tr(int neededSelectDayIndex, int trixCri) {
+//        ema(neededSelectDayIndex, trixCri)
+//    }
+
 }

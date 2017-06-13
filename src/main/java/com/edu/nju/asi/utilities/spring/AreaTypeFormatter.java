@@ -9,6 +9,8 @@ import java.util.Locale;
 
 /**
  * Created by cuihua on 2017/6/8.
+ *
+ * 行情界面选择地域类型
  */
 public class AreaTypeFormatter implements Formatter<AreaType> {
 

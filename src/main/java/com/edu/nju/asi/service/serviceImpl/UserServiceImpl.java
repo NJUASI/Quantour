@@ -1,21 +1,26 @@
 package com.edu.nju.asi.service.serviceImpl;
 
+import com.alibaba.fastjson.JSON;
+import com.edu.nju.asi.dao.StockDao;
 import com.edu.nju.asi.dao.UserDao;
 import com.edu.nju.asi.model.User;
+import com.edu.nju.asi.service.UserService;
 import com.edu.nju.asi.utilities.Detector;
 import com.edu.nju.asi.utilities.exceptions.*;
-import com.edu.nju.asi.service.UserService;
 import com.edu.nju.asi.utilities.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by cuihua on 2017/3/4.
  * Last updated by cuihua
  * Update time 2017/3/12
- *
+ * <p>
  * 去除在用户注册时为用户新建一个properties的实现
  */
 @Service("UserService")
@@ -23,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    StockDao stockDao;
 
     public UserServiceImpl() {
 //        userDao = new UserDaoImpl();
@@ -103,6 +111,31 @@ public class UserServiceImpl implements UserService {
             } else {
                 return true;
             }
+        }
+    }
+
+    @Override
+    public boolean modifyMyTraceBackPool(List<String> modifiedTraceBackPool, User curUser) throws TraceBackStockExistedException {
+        Set<String> allStockCodes = stockDao.getAllStocksCode().keySet();
+
+        List<String> notExistCodes = new LinkedList<>();
+
+        for (String nowStockCode : modifiedTraceBackPool) {
+            boolean isCorrect = false;
+            for (String temp : allStockCodes) {
+                if (nowStockCode.equals(temp)) {
+                    isCorrect = true;
+                    break;
+                }
+            }
+
+            if (!isCorrect) notExistCodes.add(nowStockCode);
+        }
+
+        if (notExistCodes.size() != 0) throw new TraceBackStockExistedException(notExistCodes);
+        else {
+            curUser.setTraceBackPool(JSON.toJSONString(modifiedTraceBackPool));
+            return userDao.modify(curUser);
         }
     }
 }

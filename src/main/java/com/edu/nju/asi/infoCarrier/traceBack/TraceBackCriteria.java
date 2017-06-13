@@ -41,6 +41,11 @@ public class TraceBackCriteria {
     public String baseStockName;
 
     /**
+     * 是否使用自选股池
+     */
+    public boolean isCustomized;
+
+    /**
      * 所有的筛选条件（仿果仁网）
      */
     public List<FilterCondition> filterConditions;
@@ -80,13 +85,14 @@ public class TraceBackCriteria {
     public TraceBackCriteria(){
     }
 
-    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int holdingPeriod, StockPoolCriteria stockPoolCriteria, int maxHoldingNum, String baseStockName, List<FilterCondition> filterConditions, List<RankCondition> rankConditions, List<MarketSelectingCondition> marketSelectingConditions, double adjustPositionPercent, int bearToBull_num, int bullToBear_num) {
+    public TraceBackCriteria(LocalDate startDate, LocalDate endDate, int holdingPeriod, StockPoolCriteria stockPoolCriteria, int maxHoldingNum, String baseStockName, boolean isCustomized, List<FilterCondition> filterConditions, List<RankCondition> rankConditions, List<MarketSelectingCondition> marketSelectingConditions, double adjustPositionPercent, int bearToBull_num, int bullToBear_num) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.holdingPeriod = holdingPeriod;
         this.stockPoolCriteria = stockPoolCriteria;
         this.maxHoldingNum = maxHoldingNum;
         this.baseStockName = baseStockName;
+        this.isCustomized = isCustomized;
         this.filterConditions = filterConditions;
         this.rankConditions = rankConditions;
         this.marketSelectingConditions = marketSelectingConditions;
@@ -94,7 +100,6 @@ public class TraceBackCriteria {
         this.bearToBull_num = bearToBull_num;
         this.bullToBear_num = bullToBear_num;
     }
-
 
     public TraceBackCriteria(TraceBackCriteria criteria) {
         this.startDate = criteria.startDate;

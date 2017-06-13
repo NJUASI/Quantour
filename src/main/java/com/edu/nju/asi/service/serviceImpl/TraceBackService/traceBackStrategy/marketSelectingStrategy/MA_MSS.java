@@ -20,7 +20,24 @@ public class MA_MSS extends AllMarketSelectingStrategy {
     }
 
     @Override
-    public MarketSelectingResult marketSelecting(LocalDate periodStart, int criteria2, int criteria3, int criteria1) {
-        return null;
+    public MarketSelectingResult marketSelecting(int neededSelectDayIndex, int criteria1, int criteria2, int criteria3) {
+        double maShort_today = ma(neededSelectDayIndex, criteria1);
+        double maShort_pre = ma(neededSelectDayIndex - 1, criteria1);
+
+        double dma_today = dma(neededSelectDayIndex, criteria1, criteria2);
+        double dma_pre = dma(neededSelectDayIndex - 1, criteria1, criteria2);
+
+        MarketSelectingResult result = new MarketSelectingResult();
+        if (maShort_today > maShort_pre && dma_today > 0 && dma_pre < 0) {
+            result.isGoldenFork = true;
+        }
+
+        if (maShort_today < maShort_pre && dma_today < 0 && dma_pre > 0) {
+            result.isDeathCross = true;
+        }
+
+        System.out.println();
+        System.out.println();
+        return result;
     }
 }

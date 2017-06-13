@@ -18,6 +18,8 @@ public class MarketSelectingResult {
     public boolean isDeathCross;
 
     public MarketSelectingResult() {
+        isGoldenFork = false;
+        isDeathCross = false;
     }
 
     public MarketSelectingResult(boolean isGoldenFork, boolean isDeathCross) {

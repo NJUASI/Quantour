@@ -14,21 +14,29 @@ public class AreaFilter extends StockPoolFilter {
 
     @Override
     public List<StockPool> meetCriteria(List<StockPool> stocks, StockPoolCriteria criteria) {
-        if (criteria.areaType != AreaType.all) {
-            AreaType wantedArea = criteria.areaType;
-            for (int i = 0; i < stocks.size(); ) {
-                if (stocks.get(i).areaType != wantedArea) {
+        // 全部地域板块，则跳过此过滤器
+        if (criteria.areaTypes.get(0) != AreaType.all) {
+            for (int i = 0; i < stocks.size(); i++) {
+                boolean isSelected = false;
+                for (AreaType areaType : criteria.areaTypes) {
+                    if (stocks.get(i).areaType == areaType) {
+                        isSelected = true;
+                        break;
+                    }
+                }
+
+                if (!isSelected) {
                     stocks.remove(i);
                 } else {
                     i++;
                 }
             }
-
         }
 
         if (getNextFilter() == null) {
             return stocks;
         } else {
             return getNextFilter().meetCriteria(stocks, criteria);
-        }    }
+        }
+    }
 }

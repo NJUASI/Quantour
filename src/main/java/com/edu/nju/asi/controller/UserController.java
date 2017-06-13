@@ -10,12 +10,14 @@ import com.edu.nju.asi.service.StrategyService;
 import com.edu.nju.asi.service.UserService;
 import com.edu.nju.asi.utilities.exceptions.PasswordInputException;
 import com.edu.nju.asi.utilities.exceptions.PrivateStockExistedException;
+import com.edu.nju.asi.utilities.exceptions.TraceBackStockExistedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -108,7 +110,7 @@ public class UserController {
             return "-1;未登录";
         }
 
-        System.out.println("已登录："  + thisUser.getUserName());
+        System.out.println("已登录：" + thisUser.getUserName());
         System.out.println(modifiedUser.getUserName() + " " + modifiedUser.getPassword() + " " + modifiedUser.getEmail());
 
         boolean modifyResult = false;
@@ -164,6 +166,28 @@ public class UserController {
             return "-1";
         }
 
+    }
+
+    @PostMapping("/modify_my_trace_back_pool")
+    public @ResponseBody
+    String modifyMyTraceBackPool(@RequestParam("myTraceBackPool") String myTraceBackPoolString,
+                                 HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        System.out.println(user.getUserName());
+
+        try {
+            List<String> myTraceBackPool = new LinkedList<>();
+            for (String temp : myTraceBackPoolString.split(" ")) {
+                System.out.println(temp);
+                myTraceBackPool.add(temp);
+            }
+
+            userService.modifyMyTraceBackPool(myTraceBackPool, user);
+            return "1;修改成功";
+        } catch (TraceBackStockExistedException e) {
+            return "-1;" + e.getMessage();
+        }
     }
 
 

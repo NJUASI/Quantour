@@ -4,6 +4,7 @@ import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.utilities.exceptions.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by cuihua on 2017/3/4.
@@ -46,5 +47,13 @@ public interface UserService{
      * @return 是否登录成功
      */
     boolean logIn(String userName, String password) throws UserNotExistException, PasswordWrongException, PasswordInputException, InvalidInputException;
+
+    /**
+     *
+     * @param modifiedTraceBackPool 修改过的自选回测股池
+     * @param curUser 当前用户
+     * @return 是否返回成功
+     */
+    boolean modifyMyTraceBackPool(List<String> modifiedTraceBackPool, User curUser) throws TraceBackStockExistedException;
 
 }
