@@ -37,6 +37,9 @@ public class OptimizationCriteria {
      */
     public long searchNodes;
 
+    public OptimizationCriteria() {
+    }
+
     /**
      *
      * @param traceBackCriteria 原策略

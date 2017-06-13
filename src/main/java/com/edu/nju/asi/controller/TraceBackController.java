@@ -4,8 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackCriteria;
 import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.User;
+import com.edu.nju.asi.service.StrategyService;
 import com.edu.nju.asi.service.TraceBackService;
-import com.edu.nju.asi.service.UserService;
+import com.edu.nju.asi.service.serviceImpl.optimizationService.optimization.OptimizationCriteria;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
@@ -35,8 +36,6 @@ public class TraceBackController {
     @Autowired
     TraceBackService traceBackService;
 
-    @Autowired
-    UserService userService;
 
     /**
      * 通过选择的条件进行股票回测，同时显示当前用户的自选股池
