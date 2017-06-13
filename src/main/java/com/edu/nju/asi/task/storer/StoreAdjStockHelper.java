@@ -5,6 +5,7 @@ import com.edu.nju.asi.dataHelper.HelperManager;
 import com.edu.nju.asi.dataHelper.StockDataHelper;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.model.StockID;
+import com.edu.nju.asi.model.StockSearch;
 import com.edu.nju.asi.utilities.util.JDBCUtil;
 
 import java.io.File;
@@ -216,4 +217,74 @@ public class StoreAdjStockHelper {
         }
         return date;
     }
+
+//    public static void main(String[] args) {
+//        List<StockSearch> stockSearches = HelperManager.stockSearchDataHelper.getAllStockSearchWithoutBase();
+//        StockDataHelper stockDataHelper = HelperManager.stockDataHelper;
+//        StoreAdjStockHelper storeAdjStockHelper = new StoreAdjStockHelper("");
+//        for(StockSearch stockSearch:stockSearches){
+//            System.out.println("---------------"+stockSearch.getSearchID().getCode()+"---------------------");
+//            List<Stock> oneStock = stockDataHelper.getStockData(stockSearch.getSearchID().getCode());
+//            if(oneStock==null||oneStock.isEmpty()){
+//                continue;
+//            }
+//            oneStock = storeAdjStockHelper.convertAfter(oneStock);
+//            oneStock = storeAdjStockHelper.convertFront(oneStock);
+//            storeAdjStockHelper.update(oneStock);
+//        }
+//    }
+//
+//    public List<Stock> convertAfter(List<Stock> stocks){
+//        System.out.println("-------开始设置" + stocks.get(0).getStockID().getCode() + "复权收盘价------------");
+//        for (int i = stocks.size()-1; i > 0; i--) {
+//            stocks.get(i).setPreAfterAdjClose(stocks.get(i - 1).getAfterAdjClose());
+//            System.out.println("--------设置" + stocks.get(i).getStockID().getDate().toString() + "------------");
+//        }
+//
+//        stocks.get(0).setPreAfterAdjClose(0);
+//        System.out.println("-------完成设置" + stocks.get(0).getStockID().getCode() + "复权收盘价------------");
+//        return stocks;
+//    }
+//
+//    public List<Stock> convertFront(List<Stock> stocks){
+//        System.out.println("-------开始设置" + stocks.get(0).getStockID().getCode() + "复权收盘价------------");
+//        for (int i = stocks.size()-1; i > 0; i--) {
+//            stocks.get(i).setPreFrontAdjClose(stocks.get(i - 1).getFrontAdjClose());
+//            System.out.println("--------设置" + stocks.get(i).getStockID().getDate().toString() + "------------");
+//        }
+//
+//        stocks.get(0).setPreFrontAdjClose(0);
+//        System.out.println("-------完成设置" + stocks.get(0).getStockID().getCode() + "复权收盘价------------");
+//        return stocks;
+//    }
+//
+//    public void update(List<Stock> stocks){
+//        Connection connection = JDBCUtil.getConnection();
+//        PreparedStatement preparedStatement = null;
+//        String sql = "UPDATE stock SET preFrontAdjClose=?,preAfterAdjClose=? WHERE code=? AND date=?";
+//
+//        try {
+//            connection.setAutoCommit(false);
+//            preparedStatement = connection.prepareStatement(sql);
+//            for (Stock stock : stocks) {
+//                preparedStatement.setDouble(1, stock.getPreFrontAdjClose());
+//                preparedStatement.setDouble(2, stock.getPreAfterAdjClose());
+//                preparedStatement.setString(3, stock.getStockID().getCode());
+//                preparedStatement.setObject(4, stock.getStockID().getDate());
+//                System.out.println("更新： "+stock.getStockID().getCode() + " " + stock.getStockID().getDate().toString());
+//                preparedStatement.addBatch();
+//            }
+//            preparedStatement.executeBatch();
+//            connection.commit();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            try {
+//                connection.rollback();
+//            } catch (SQLException e1) {
+//                e1.printStackTrace();
+//            }
+//        } finally {
+//            JDBCUtil.close(preparedStatement, connection);
+//        }
+//    }
 }
