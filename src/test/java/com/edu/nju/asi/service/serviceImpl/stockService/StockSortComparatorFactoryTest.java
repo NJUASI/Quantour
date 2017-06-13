@@ -1,4 +1,4 @@
-package com.edu.nju.asi.service.serviceImpl.StockService;
+package com.edu.nju.asi.service.serviceImpl.stockService;
 
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;

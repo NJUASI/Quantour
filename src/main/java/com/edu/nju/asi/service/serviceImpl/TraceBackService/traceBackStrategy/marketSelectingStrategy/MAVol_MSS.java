@@ -1,4 +1,4 @@
-package com.edu.nju.asi.service.serviceImpl.TraceBackService.traceBackStrategy.marketSelectingStrategy;
+package com.edu.nju.asi.service.serviceImpl.traceBackService.traceBackStrategy.marketSelectingStrategy;
 
 import com.edu.nju.asi.infoCarrier.traceBack.MarketSelectingResult;
 import com.edu.nju.asi.model.BaseStock;

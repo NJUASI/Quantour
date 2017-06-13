@@ -36,6 +36,7 @@
                         <select class="form-control" id="mainFunc">
                             <option value="夏普比率">夏普比率</option>
                             <option value="年化收益">年化收益</option>
+                            <option value="最大回撤率">最大回撤率</option>
                         </select>
                     </div>
 

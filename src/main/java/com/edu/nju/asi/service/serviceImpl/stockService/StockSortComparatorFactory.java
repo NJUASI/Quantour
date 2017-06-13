@@ -1,7 +1,7 @@
-package com.edu.nju.asi.service.serviceImpl.StockService;
+package com.edu.nju.asi.service.serviceImpl.stockService;
 
 import com.edu.nju.asi.model.Stock;
-import com.edu.nju.asi.service.serviceImpl.StockService.stocksComparators.*;
+import com.edu.nju.asi.service.serviceImpl.stockService.stocksComparators.*;
 import com.edu.nju.asi.utilities.enums.StocksSortCriteria;
 
 import java.util.Comparator;

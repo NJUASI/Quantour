@@ -2,6 +2,8 @@
  * Created by 61990 on 2017/6/9.
  */
 var today = new Date();
+
+today.setTime(today.getTime() - 24 * 60 * 60 * 1000);
 var yesterday = new Date();
 yesterday.setTime(today.getTime() - 24 * 60 * 60 * 1000);
 
@@ -55,7 +57,7 @@ $("#datetimeEnd").datetimepicker({
     minView: 'month',
     language: 'zh-CN',
     autoclose: true,
-    endDate: new Date()
+    endDate: today
 }).on("click", function () {
     $("#datetimeEnd").datetimepicker("setStartDate", $("#datetimeStart>input").val())
 });

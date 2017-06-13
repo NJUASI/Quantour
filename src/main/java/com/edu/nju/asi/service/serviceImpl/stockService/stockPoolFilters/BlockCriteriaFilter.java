@@ -1,8 +1,8 @@
-package com.edu.nju.asi.service.serviceImpl.StockService.stockPoolFilters;
+package com.edu.nju.asi.service.serviceImpl.stockService.stockPoolFilters;
 
 import com.edu.nju.asi.infoCarrier.traceBack.StockPool;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;
-import com.edu.nju.asi.service.serviceImpl.StockService.StockPoolFilter;
+import com.edu.nju.asi.service.serviceImpl.stockService.StockPoolFilter;
 
 import java.util.List;
 

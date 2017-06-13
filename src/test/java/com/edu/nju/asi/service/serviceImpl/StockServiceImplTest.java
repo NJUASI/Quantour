@@ -3,7 +3,7 @@ package com.edu.nju.asi.service.serviceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import com.edu.nju.asi.service.StockService;
-import com.edu.nju.asi.service.serviceImpl.StockService.StockServiceImpl;
+import com.edu.nju.asi.service.serviceImpl.stockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.enums.BlockType;
 import com.edu.nju.asi.utilities.enums.StType;
 import com.edu.nju.asi.infoCarrier.traceBack.StockPoolCriteria;

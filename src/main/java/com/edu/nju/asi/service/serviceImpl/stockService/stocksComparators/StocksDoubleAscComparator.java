@@ -1,4 +1,4 @@
-package com.edu.nju.asi.service.serviceImpl.StockService.stocksComparators;
+package com.edu.nju.asi.service.serviceImpl.stockService.stocksComparators;
 
 import com.edu.nju.asi.model.Stock;
 
@@ -8,11 +8,11 @@ import java.util.Comparator;
 /**
  * Created by cuihua on 2017/6/8.
  */
-public class StocksStringDescComparator implements Comparator<Stock> {
+public class StocksDoubleAscComparator implements Comparator<Stock> {
 
     private String stockAttribute;
 
-    public StocksStringDescComparator(String stockAttribute) {
+    public StocksDoubleAscComparator(String stockAttribute) {
         this.stockAttribute = stockAttribute;
     }
 
@@ -26,15 +26,15 @@ public class StocksStringDescComparator implements Comparator<Stock> {
             Field field = stockClass.getDeclaredField(stockAttribute);
             field.setAccessible(true);
 
-            tempResult = field.get(o1).toString().compareTo(field.get(o2).toString());
+            tempResult = new Double(field.get(o1).toString()) - new Double(field.get(o2).toString());
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 
-        if (tempResult < 0) return 1;
-        else if (tempResult > 0) return -1;
+        if (tempResult < 0) return -1;
+        else if (tempResult > 0) return 1;
         else return 0;
     }
 }
