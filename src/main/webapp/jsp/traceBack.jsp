@@ -355,6 +355,9 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col-md-1" style="margin-left:-30px">
+                        <span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                    </div>
                 </div>
                 <div id="timingPanel" hidden>
                     <div style="border-bottom: 1px solid #CCCCCC;width: 88%;margin:20px auto 20px"></div>
@@ -390,27 +393,27 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MA
+                                            style="border: 0px solid white">MA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MACD
+                                            style="border: 0px solid white">MACD <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">DMA
+                                            style="border: 0px solid white">DMA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white" disabled>TRIX
+                                            style="border: 0px solid white" disabled>TRIX <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MAVOL
+                                            style="border: 0px solid white">MAVOL <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                             </div>
@@ -819,7 +822,7 @@
         });
 
         $(".timing").click(function () {
-            var thisName = $(this).html().trim();
+            var thisName = $(this).html().split(" ")[0].trim();
             var isExist;
             $(".timingName").each(function () {
                 if (thisName == $(this).html().trim()) {
@@ -832,9 +835,9 @@
             if (isExist) {
                 return false;
             }
-            var timingName = "<div class='timingName'>" + $(this).html() + "</div>";
+            var timingName = "<div class='timingName'>" + thisName + "</div>";
             var timingParam;
-            var name = $(this).html().trim();
+            var name =thisName.trim();
             switch (name) {
                 case "MA":
                     timingParam = "<div class='timingParam'>沪深300,10,日线,5,60</div>";
