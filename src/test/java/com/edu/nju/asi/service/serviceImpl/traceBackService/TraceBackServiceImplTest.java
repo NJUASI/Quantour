@@ -28,28 +28,28 @@ public class TraceBackServiceImplTest {
     @Before
     public void setUp() throws IOException {
         traceBackService = new TraceBackServiceImpl();
-        start = LocalDate.of(2017,4,18);
-        end = LocalDate.of(2017,5,2);
+        start = LocalDate.of(2017,4,21);
+        end = LocalDate.of(2017,6,9);
     }
 
     @Test
     public void setTraceBackService(){
         List<BlockType> blockTypes = new LinkedList<>();
-        blockTypes.add(BlockType.ZXB);
+        blockTypes.add(BlockType.CYB);
 
         //筛选条件
         List<FilterCondition> filterConditions = new ArrayList<>();
-//        filterConditions.add(new FilterCondition(IndicatorType.TURNOVER_RATE, ComparatorType.RANK_MAX, 10, 5));
+        filterConditions.add(new FilterCondition(IndicatorType.SWING_RATE, ComparatorType.RANK_MAX, 10, 1));
 
         //排名条件
         List<RankCondition> rankConditions = new ArrayList<>();
-        rankConditions.add(new RankCondition(IndicatorType.BOLL_UP_BANDS, RankType.DESC_RANK, 1, 5));
+//        rankConditions.add(new RankCondition(IndicatorType.MACD_DIF, RankType.DESC_RANK, 1, 5));
 
         //择时条件
         List<MarketSelectingCondition> marketSelectingConditions = new ArrayList<>();
 //        marketSelectingConditions.add(new MarketSelectingCondition(MarketSelectingType.MAVol, "上证指数", 1, 5, 60, 0));
 
-        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, new StockPoolCriteria(StType.EXCLUDE, blockTypes),2,
+        TraceBackCriteria criteria = new TraceBackCriteria(start, end, 5, new StockPoolCriteria(StType.INCLUDE, blockTypes),5,
                 "沪深300", false, filterConditions, rankConditions, marketSelectingConditions, 0.5, 1, 1);
 
         List<String> customisedStockPool = new LinkedList<>();
