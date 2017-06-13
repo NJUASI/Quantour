@@ -29,12 +29,12 @@ $("#maxHolding").bind('input propertychange', function () {
 
     if($(this).val()==""||$(this).val()==0||$(this).val()=="0"){
         $('#maxHoldingError').show();
-        $(this).css("border","1px solid red");
+        $(this).css("border","2px solid red");
         return false;
     }
     else if (!reg.test($(this).val())) {
         $('#maxHoldingError').show();
-        $(this).css("border","1px solid red");
+        $(this).css("border","2px solid red");
         return false;
     }else{
         $(this).css("border","1px solid #CCCCCC");

@@ -355,6 +355,9 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col-md-1" style="margin-left:-30px">
+                        <span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
+                    </div>
                 </div>
                 <div id="timingPanel" hidden>
                     <div style="border-bottom: 1px solid #CCCCCC;width: 88%;margin:20px auto 20px"></div>
@@ -390,27 +393,27 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MA
+                                            style="border: 0px solid white">MA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MACD
+                                            style="border: 0px solid white">MACD <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">DMA
+                                            style="border: 0px solid white">DMA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white" disabled>TRIX
+                                            style="border: 0px solid white" disabled>TRIX <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MAVOL
+                                            style="border: 0px solid white">MAVOL <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
                             </div>
@@ -727,10 +730,16 @@
 
     $(document).ready(function () {
 
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
+
         $("#stocks").click(function () {
             $("body").removeClass("loaded");
             window.location.href = "/stocks";
+            $("#stocks").unbind("click");
         });
+
+        $("#holdingDetailPanel").find("th").css("text-align","center");
+
 
         $('.radio_group').iCheck({
             checkboxClass: 'icheckbox_flat-green',
@@ -756,7 +765,7 @@
 
         $('#savePool').click(function () {
             var codes = $("#poolCode").val().trim().split(" ");
-            alert($("#poolCode").val());
+//            alert($("#poolCode").val());
             var reg = /^\d{6}$/;
             for (var i = 0; i < codes.length; i++) {
                 var code = codes[i];
@@ -767,7 +776,7 @@
                 }
             };
 
-            alert("codes: \n" + codes);
+//            alert("codes: \n" + codes);
 
             $.ajax({
                 type: "post",
@@ -813,7 +822,7 @@
         });
 
         $(".timing").click(function () {
-            var thisName = $(this).html().trim();
+            var thisName = $(this).html().split(" ")[0].trim();
             var isExist;
             $(".timingName").each(function () {
                 if (thisName == $(this).html().trim()) {
@@ -826,9 +835,9 @@
             if (isExist) {
                 return false;
             }
-            var timingName = "<div class='timingName'>" + $(this).html() + "</div>";
+            var timingName = "<div class='timingName'>" + thisName + "</div>";
             var timingParam;
-            var name = $(this).html().trim();
+            var name =thisName.trim();
             switch (name) {
                 case "MA":
                     timingParam = "<div class='timingParam'>沪深300,10,日线,5,60</div>";
@@ -1449,8 +1458,9 @@
                     // var formates_win_chart = createAreaChart("formates_win_chart", formateWinData, '赢率');
                     // var holdings_excess_chart = createAreaChart("holdings_excess_chart", holdingExcessData, '胜率');
                     // var holdings_win_chart = createAreaChart("holdings_win_chart", holdingWinData, '赢率');
-
-
+                    $("#holdingDetailPanel").find("td").css("text-align","center");
+                    $("#recentlySoldPanel").find("th").css("text-align","center");
+                    $("#recentlySoldPanel").find("td").css("text-align","center");
                 } else if (array[0] == "-1") {
                     // 提示错误信息
                     $("#coverPanel").show();
@@ -1480,7 +1490,7 @@
      */
     function changeToPercent(num){
         if(!/\d+\.?\d+/.test(num)){
-            alert("必须为数字");
+//            alert(num);
         }
         var result = (num * 100).toString(),
             index = result.indexOf(".");

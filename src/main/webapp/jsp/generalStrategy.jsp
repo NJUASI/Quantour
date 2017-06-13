@@ -75,32 +75,51 @@
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
 
-    <c:forEach items="${generalStrategies}" var="strategy" varStatus="vs">
-        <div class="col-md-3">
-            <div class="strategyPanel">
-                <div class="row">
-                    <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">${strategy.strategyID}</h5>
-                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                        <li class="baseStock" style="font-size: 90%; color:red">
-                            ${strategy.baseStockName}
-                        </li>
-                        <li class="" style="font-size: 90%; color:blueviolet">
-                            策略收益率
-                        </li>
-                    </ul>
-                    <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
-                        <img class="img-responsive " src="../img/traceback4.png">
-                    </figure>
-                    <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>
-                    <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold"">创建者</span><span class="col-md-4 small" style="text-align: right">${strategy.creator}</span>
-                    <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold"">年化收益率</span><span class="col-md-4 small" style="text-align: right">${strategy.annualizedRateOfReturn}</span>
-                    <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold"">最大回撤率</span><span class="col-md-4 small" style="text-align: right">${strategy.maxStrategyTraceBackRate}</span>
-                    <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold"">订阅人数</span><span  class="col-md-4 small" style="text-align: right">${strategy.subscribeNum}</span>
-                    <button class="searchBt col-md-offset-7 btn btn-sm btn-info">查看详情</button>
+        <c:choose>
+            <c:when test="${generalStrategies!=null}">
+
+                <c:forEach items="${generalStrategies}" var="strategy" varStatus="vs">
+                    <div class="col-md-3">
+                        <div class="strategyPanel">
+                            <div class="row">
+                                <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">${strategy.strategyID}</h5>
+                                <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
+                                    <li class="baseStock" style="font-size: 90%; color:red">
+                                            ${strategy.baseStockName}
+                                    </li>
+                                    <li class="" style="font-size: 90%; color:blueviolet">
+                                        策略收益率
+                                    </li>
+                                </ul>
+                                <figure class="col-md-12" style="width: 100%;margin-top: -30px;z-index: 3">
+                                    <img class="img-responsive " src="../img/traceback4.png">
+                                </figure>
+                                <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>
+                                <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">创建者</span><span class="col-md-4 small" style="text-align: right">${strategy.creator}</span>
+                                <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">年化收益率</span><span class="col-md-4 small" style="text-align: right">${strategy.annualizedRateOfReturn}</span>
+                                <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">最大回撤率</span><span class="col-md-4 small" style="text-align: right">${strategy.maxStrategyTraceBackRate}</span>
+                                <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">订阅人数</span><span  class="col-md-4 small" style="text-align: right">${strategy.subscribeNum}</span>
+                                <button class="searchBt col-md-offset-7 btn btn-sm btn-info">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+
+                <div class="row" style="margin-top: 20px;">
+                    <p style="text-align: center"><img src="../img/sad.png" style="margin-left: auto"
+                                                       class="picture"/></p>
+                    <div class="text-center" style="margin-top: 20px;margin-bottom: 40px">
+                        亲，网站还没有人上传策略，你可以自己创建一支哦~~~
+                    </div>
                 </div>
-            </div>
-        </div>
-    </c:forEach>
+            </c:otherwise>
+        </c:choose>
+
+
+
+
     </div>
 </div>
 

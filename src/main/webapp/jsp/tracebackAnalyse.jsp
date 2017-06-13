@@ -10,7 +10,7 @@
 
 <div class="row" style="z-index: 2">
 
-    <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-tabs" role="tablist">
+    <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-pills nav-tabs" role="tablist">
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
         <li><a href="#cyclePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
         <li><a href="#holdingDetailPanel" role="tab" data-toggle="tab">交易详情</a></li>
@@ -114,7 +114,7 @@
     </div>
     <div class="tab-pane" id="recentlySoldPanel">
         <div class="row">
-            <div class="col-md-12 table-responsive">
+            <div class="col-md-12 table-responsive  pre-scrollable" style="max-height: 640px">
                 <table class="table table-hover table-condensed">
                     <thead>
                     <tr>

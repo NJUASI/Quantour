@@ -221,11 +221,10 @@ function quotaChange() {
 
 $(".quota").click(function () {
     var quotaName;
-
     if ($(this).html().substring(0, 1) == "N") {
-        quotaName = "<div class='col-md-4'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $(this).html().substring(1) + "</div>"
+        quotaName = "<div class='col-md-4'><input class='numOfN form-control' value='10'></div><div style='margin-top: 6px' class='quotaName'>" + $(this).html().substring(1).split(" ")[0] + "</div>"
     } else {
-        quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $(this).html() + "</div>"
+        quotaName = "<div class='col-md-4' hidden><input class='numOfN form-control'></div><div style='margin-top: 6px' class='col-md-12 quotaName'>" + $(this).html().trim().split(" ")[0].trim() + "</div>"
     }
 
     var rankType;

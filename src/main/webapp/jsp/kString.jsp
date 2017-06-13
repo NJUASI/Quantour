@@ -46,6 +46,13 @@
         .userBlockLeft {
             margin-top: 60px;
         }
+        .font-green{
+            color:green;
+        }
+        .font-red{
+            color:red;
+        }
+
     </style>
 
 </head>
@@ -67,7 +74,7 @@
 
 
 <div class="row stock" style="margin-top: 70px">
-    <span class="col-md-2 col-md-offset-2"><span id="stockName">${stockOfEndDay.name}</span>&nbsp;<i id="stockCode">${stockOfEndDay.stockID.code}</i></span>
+    <span class="col-md-3 col-md-offset-2"><span id="stockName" style="font-size: 200%">${stockOfEndDay.name}</span>&nbsp;<i style="font-size: 120%" id="stockCode">${stockOfEndDay.stockID.code}</i></span>
     <c:if test="${sessionScope.user!=null}">
         <span id="addBtn"><button class="btn"></button></span>
     </c:if>
@@ -76,18 +83,19 @@
 
 
 <div class="row">
-    <ul id="stockDetail" class="col-md-5 col-md-offset-2 list-inline">
-        <li>开盘 <span class=" font-green ">${stockOfEndDay.open}</span></li>
-        <li>最高 <span class=" font-red ">${stockOfEndDay.high}</span></li>
-        <li>最低 <span class=" font-green ">${stockOfEndDay.low}</span></li>
-        <li>昨收 <span class=" font-black ">${stockOfEndDay.preClose}</span></li>
-        <li>成交量 <span>${stockOfEndDay.volume}</span></li>
-        <li>成交额 <span>${stockOfEndDay.transactionAmount}</span></li>
-        <li>涨跌幅 <span>${stockOfEndDay.increaseMargin}</span></li>
-        <li>涨跌额 <span>${stockOfEndDay.fluctuation}</span></li>
-        <li>换手率 <span>${stockOfEndDay.turnoverRate}</span></li>
-        <li>总市值 <span>${stockOfEndDay.totalValue}</span></li>
-        <li>流通市值 <span>${stockOfEndDay.circulationMarketValue}</span></li>
+    <ul id="stockDetail" class="col-md-6 col-md-offset-2 list-inline">
+        <li><span class="col-md-3" style="font-weight:900">开盘</span> <span class="col-md-offset-2 font-green ">${stockOfEndDay.open}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">收盘</span> <span class="col-md-offset-2 font-red ">${stockOfEndDay.close}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">最高</span> <span class="col-md-offset-2 font-red ">${stockOfEndDay.high}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">最低</span> <span class="col-md-offset-2 font-green ">${stockOfEndDay.low}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">昨收 </span><span class="col-md-offset-2 font-black ">${stockOfEndDay.preClose}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">成交量</span> <span class="col-md-offset-2 ">${stockOfEndDay.volume}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">成交额</span> <span class="col-md-offset-2 ">${stockOfEndDay.transactionAmount}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">涨跌幅</span> <span class="col-md-offset-2 ">${stockOfEndDay.increaseMargin}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">涨跌额 </span><span class="col-md-offset-2 ">${stockOfEndDay.fluctuation}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">换手率</span> <span class="col-md-offset-2 ">${stockOfEndDay.turnoverRate}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">总市值</span> <span class="col-md-offset-2 ">${stockOfEndDay.totalValue}</span></li>
+        <li><span class="col-md-3" style="font-weight:900">流通值 </span><span class="col-md-offset-2 " >${stockOfEndDay.circulationMarketValue}</span></li>
     </ul>
     <div class="col-md-4" style="margin-top: -70px;margin-left: -80px">
         <div id="one_stock_click_chart" style=" width:300px;height: 200px"></div>

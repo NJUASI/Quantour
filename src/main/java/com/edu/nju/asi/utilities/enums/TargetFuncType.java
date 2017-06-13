@@ -10,7 +10,8 @@ import com.edu.nju.asi.utilities.exceptions.NoMatchEnumException;
 public enum TargetFuncType {
 
     SHARP("夏普比率"),
-    ANNUALIZED_RETURN("年化收益率");
+    ANNUALIZED_RETURN("年化收益率"),
+    MAX_RETURN_RATE("最大回撤率");
 
     private String repre;
 

@@ -360,31 +360,35 @@
 
                 success: function (result) {
                     var parts = result.split(";");
-                    var closes01 = JSON.parse(parts[0]);
-                    var closes02 = JSON.parse(parts[1]);
-                    var logarithmicYield01 = JSON.parse(parts[2]);
-                    var logarithmicYield02 = JSON.parse(parts[3]);
-                    var comparisionName = JSON.parse(parts[4]);
+                    if(parts[0]=="-1"){
+                        $("#errorMessage").show();
+                        setTimeout("$('#errorMessage').hide();", 2000);
+                    }else {
+                        var closes01 = JSON.parse(parts[0]);
+                        var closes02 = JSON.parse(parts[1]);
+                        var logarithmicYield01 = JSON.parse(parts[2]);
+                        var logarithmicYield02 = JSON.parse(parts[3]);
+                        var comparisionName = JSON.parse(parts[4]);
 
-                    var closesData = [closes01, closes02];
-                    var logarithmicYield = [logarithmicYield01, logarithmicYield02];
+                        var closesData = [closes01, closes02];
+                        var logarithmicYield = [logarithmicYield01, logarithmicYield02];
 
-                    var numVals = JSON.parse(parts[5]); //二维数组
+                        var numVals = JSON.parse(parts[5]); //二维数组
 
-                    createLineChart("closesChart", closesData, '收盘价', comparisionName);
-                    createLineChart("logarithmicYieldChart", logarithmicYield, "对数收益率方差", comparisionName);
+                        createLineChart("closesChart", closesData, '收盘价', comparisionName);
+                        createLineChart("logarithmicYieldChart", logarithmicYield, "对数收益率方差", comparisionName);
 
-                    $("#analysePanel").fadeIn("slow");
+                        $("#analysePanel").fadeIn("slow");
 
-                    $("#compareChart").empty();
-                    for (var i = 0; i < 2; i++) {
-                        $("#compareChart").append("<tr>");
-                        for (var j = 0; j < 5; j++) {
-                            $("#compareChart").append("<td>" + numVals[i][j] + "</td>");
+                        $("#compareChart").empty();
+                        for (var i = 0; i < 2; i++) {
+                            $("#compareChart").append("<tr>");
+                            for (var j = 0; j < 5; j++) {
+                                $("#compareChart").append("<td>" + numVals[i][j] + "</td>");
+                            }
+                            $("#compareChart").append("</tr>");
                         }
-                        $("#compareChart").append("</tr>");
                     }
-
                 },
 
                 error: function (result) {
