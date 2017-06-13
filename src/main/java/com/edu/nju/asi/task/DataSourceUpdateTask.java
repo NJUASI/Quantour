@@ -57,8 +57,8 @@ public class DataSourceUpdateTask {
 //        crawler.handleStock();
 //        crawler.handleAreaAndIndustry();
 //        storer.storeStock();
-        storer.storeStockSearch();
-//        crawler.handleAdjStock();
+//        storer.storeStockSearch();
+        crawler.handleAdjStock();
 //        storer.storeAdjData();
 //        fileHelper.delete();
 //        taskInfoHelper.clearInfo();

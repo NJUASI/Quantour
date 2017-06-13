@@ -56,7 +56,7 @@ public class TaskInfoHelper {
         File file = new File(taskInfoPath);
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-            bufferedWriter.newLine();
+            bufferedWriter.write("");
             bufferedWriter.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -385,8 +385,8 @@
     $("#stockDetail > li").addClass("col-md-5");
 
 
-
-
+    $("input[name='upPanel']:eq(0)").attr("checked",'checked');
+    $("input[name='downPanel']:eq(0)").attr("checked",'checked');
 
     <%--var candlestickChart = createCandlestickChart("candlestick_chart",${candlestickData},${volumeData});--%>
     function openStock() {

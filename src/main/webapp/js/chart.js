@@ -337,18 +337,20 @@ function createCandlestick(id, candlestickData) {
             scale: true,
             splitArea: {
                 show: false
-            }
+            },
+            splitNumber: 10,
+            boundaryGap: ['10%', '10%']
         }],
         dataZoom: [{
             type: 'inside',
-            start: 1,
-            end: 100
+            start: 10,
+            end: 60
         }, {
             show: false,
             type: 'slider',
             top: '85%',
-            start: 1,
-            end: 100
+            start: 10,
+            end: 60
         }],
         series: [{
             name: '日K',
@@ -683,73 +685,71 @@ function createBULL(id, candlestickData, upData, midData, lowData) {
         yAxis: [{
             scale: true,
             splitArea: {
-                show: true
-            }
-        }],
-        dataZoom: [
-            {
-                type: 'inside',
-                start: 1,
-                end: 100
+                show: false
             },
-            {
-                show: false,
-                type: 'slider',
-                top: '85%',
-                start: 1,
-                end: 100
+            splitNumber: 10,
+            boundaryGap: ['10%', '10%']
+        }],
+        dataZoom: [{
+            type: 'inside',
+            start: 10,
+            end: 60
+        }, {
+            show: false,
+            type: 'slider',
+            top: '85%',
+            start: 10,
+            end: 60
+        }],
+        series: [{
+            name: '日K',
+            type: 'candlestick',
+            data: data.values,
+            itemStyle: {
+                normal: {
+                    color: '#ef232a',
+                    color0: '#14b143',
+                    borderColor: '#ef232a',
+                    borderColor0: '#14b143'
+                }
+            },
+            tooltip: {
+                formatter: function (param) {
+                    param = param[0];
+                    return [
+                        'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
+                        'Open: ' + param.data[0] + '<br/>',
+                        'Close: ' + param.data[1] + '<br/>',
+                        'Lowest: ' + param.data[2] + '<br/>',
+                        'Highest: ' + param.data[3] + '<br/>'
+                    ].join('');
+                }
             }
-        ],
-        series: [
-            {
-                name: '日K',
-                type: 'candlestick',
-                data: data.values,
-                itemStyle: {
-                    normal: {
-                        color: '#ef232a',
-                        color0: '#14b143',
-                        borderColor: '#ef232a',
-                        borderColor0: '#14b143'
-                    }
-                },
-                tooltip: {
-                    formatter: function (param) {
-                        param = param[0];
-                        return [
-                            'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
-                            'Open: ' + param.data[0] + '<br/>',
-                            'Close: ' + param.data[1] + '<br/>',
-                            'Lowest: ' + param.data[2] + '<br/>',
-                            'Highest: ' + param.data[3] + '<br/>'
-                        ].join('');
-                    }
-                }
-            }, {
-                name: 'UPPER',
-                type: 'line',
-                data: upData,
-                smooth: true,
-                lineStyle: {
-                    normal: {opacity: 0.5}
-                }
-            }, {
-                name: 'MID',
-                type: 'line',
-                data: midData,
-                smooth: true,
-                lineStyle: {
-                    normal: {opacity: 0.5}
-                }
-            }, {
-                name: 'LOWER',
-                type: 'line',
-                data: lowData,
-                smooth: true,
-                lineStyle: {
-                    normal: {opacity: 0.5}
-                }
-            }]
+        }, {
+            name: 'UPPER',
+            type: 'line',
+            data: upData,
+            smooth: true,
+            lineStyle: {
+                normal: {opacity: 0.5}
+            }
+        }, {
+            name: 'MID',
+            type: 'line',
+            data: midData,
+            smooth: true,
+            lineStyle: {
+                normal: {opacity: 0.5}
+            }
+        }, {
+            name: 'LOWER',
+            type: 'line',
+            data: lowData,
+            smooth: true,
+            lineStyle: {
+                normal: {opacity: 0.5}
+            }
+        }]
     };
     chart.setOption(option, true);
     chart.hideLoading();
@@ -1640,7 +1640,7 @@ function createRelationChart(id, data) {
     });
 }
 
-function createWithoutDecorationChart(id,data1,data2){
+function createWithoutDecorationChart(id, data1, data2) {
     function splitSeriesData(rawData) {
         var categoryData = [];
         var values = [];
