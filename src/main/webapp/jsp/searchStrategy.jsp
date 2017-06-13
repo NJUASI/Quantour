@@ -55,9 +55,9 @@
 </header>
 
 <div class="row ">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="row">
-            <h3 class="col-md-2" style="color:#4890c8">${nowStrategy.strategyID}</h3>
+    <div class="col-md-10 col-md-offset-1">
+        <div class="row" style="margin-bottom: 30px">
+            <h3 class="col-md-6" style="color:#4890c8">${nowStrategy.strategyID}</h3>
 
             <div hidden id="favor">
                 <button class="btn btn-primary btn  col-md-1 col-md-offset-1"  style="margin-top: 20px">
@@ -70,14 +70,9 @@
                 <span class="txt">取消收藏</span>
             </button>
             </div>
-            <div hidden id="modify">
-            <button id="modifyBt" class="btn btn-primary btn  col-md-1 col-md-offset-1"  style="margin-top: 20px">
-                <span class="txt">编辑</span>
-            </button>
-            </div>
-            <div id="optimization">
-                <button id="optimizationBt" class="btn btn-primary btn  col-md-1 col-md-offset-1"  style="margin-top: 20px">
-                    <span class="txt">编辑</span>
+            <div hidden  id="optimization">
+                <button id="optimizationBt" class="btn btn-primary btn  col-md-1 col-md-offset-2"  style="margin-top: 20px">
+                    <span class="txt">优化策略</span>
                 </button>
             </div>
             <div hidden id="delete">
@@ -92,7 +87,7 @@
 </div>
 
 <div class="row">
-    <div class="panel panel-default col-md-8 col-md-offset-2">
+    <div class="panel panel-default col-md-10 col-md-offset-1">
         <div class="panel-body">
             <div class="row" style="margin-top: 20px">
                 <div class="col-md-5 row ">
@@ -1008,10 +1003,10 @@
     })
 
     var user = "<%= ((User)session.getAttribute("user")).getUserName()%>";
-    var creator="${nowStrategy.creator}";;
+    var creator="${nowStrategy.creator}";
     if(user==creator){
             $("#delete").show();
-            $("#modify").show();
+            $("#optimization").show();
     }else{
             var hasSub=${hasSubscribe};
             if(hasSub){
@@ -1024,8 +1019,30 @@
     $("#strategyDetail").find("li").addClass("col-md-6 ");
     $("#strategyDetail").find("li").find("span").css("color", "#9e9e9e");
     $("#strategyDetail").find("li").css("margin-bottom", "10px")
-    
-    
+
+    $("#cancelFavor").click(function () {
+        $("#favor").hide();
+        $("#cancelFavor").show();
+        //TODO fjj 取消收藏
+    });
+
+
+    $("#favor").click(function () {
+        //TODO fjj 收藏
+        $("#cancelFavor").show();
+        $("#favor").hide();
+    });
+
+    $("#delete").click(function () {
+        //TODO fjj 删除 此策略
+
+
+        //TODO fjj 跳转到userManager界面
+
+//        window.location.href=""
+    });
+
+
     $(function () {
         $("#modifyBt").click(function () {
 //            alert(123);
