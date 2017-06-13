@@ -42,7 +42,7 @@ public class BiasFormateStrategy extends AllFormateStrategy {
 
             double total = 0;
             for(int j = 0; j < stockList.size(); j++){
-                total += stockList.get(i).getClose();
+                total += stockList.get(j).getClose();
             }
 
             double average = total / stockList.size();
