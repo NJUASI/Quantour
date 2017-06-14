@@ -113,7 +113,7 @@ public class UserController {
         }
 
         System.out.println("已登录：" + thisUser.getUserName());
-        System.out.println(modifiedUser.getUserName() + " " + modifiedUser.getPassword() + " " + modifiedUser.getEmail());
+//        System.out.println(modifiedUser.getUserName() + " " + modifiedUser.getPassword() + " " + modifiedUser.getEmail());
 
         boolean modifyResult = false;
         try {
@@ -157,7 +157,7 @@ public class UserController {
     public String deletePrivateStock(@PathVariable String stockCode, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        System.out.println(user.getUserName());
+//        System.out.println(user.getUserName());
         OptionalStockID optionalStockID = new OptionalStockID(user.getUserName(), stockCode);
 
         if (privateStockService.deletePrivateStock(optionalStockID)) {
@@ -176,7 +176,7 @@ public class UserController {
                                  HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        System.out.println(user.getUserName());
+//        System.out.println(user.getUserName());
 
         try {
             List<String> myTraceBackPool = new LinkedList<>();

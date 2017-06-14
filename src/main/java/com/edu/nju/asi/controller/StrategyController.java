@@ -218,8 +218,8 @@ public class StrategyController {
             return "-1;未登录";
         }
 
-        System.out.println("已登录：" + thisUser.getUserName());
-        System.out.println("filterAdjust: " + criteria.filterAdjust.size() + "  ranAdjust: " + criteria.rankAdjust.size());
+//        System.out.println("已登录：" + thisUser.getUserName());
+//        System.out.println("filterAdjust: " + criteria.filterAdjust.size() + "  ranAdjust: " + criteria.rankAdjust.size());
 
         // 将该策略的原有标准set回去
         String criteriaStringRepre = strategyService.getOneStrategy(strategyID).getContent();

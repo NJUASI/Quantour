@@ -272,7 +272,7 @@ public class StockController {
             return "-1;未知错误";
         }
 
-        System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
+//        System.out.println(criteria.stockCode1 + "  " + criteria.stockCode2 + "  " + criteria.start + "  " + criteria.end);
 
         List<StockComparision> result = null;
         String closes01, closes02, logarithmicYield01, logarithmicYield02, comparisionName, numVals;

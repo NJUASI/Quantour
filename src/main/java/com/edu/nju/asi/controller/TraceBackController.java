@@ -85,7 +85,7 @@ public class TraceBackController {
         }
 
         System.out.println("已登录：" + thisUser.getUserName());
-        System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.filterConditions.get(0).value + "  " + criteria.holdingPeriod);
+//        System.out.println(criteria.startDate + "  " + criteria.endDate + "  " + criteria.filterConditions.get(0).value + "  " + criteria.holdingPeriod);
 
         TraceBackInfo traceBackInfo = null;
         try {
