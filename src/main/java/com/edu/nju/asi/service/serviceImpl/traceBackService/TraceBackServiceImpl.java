@@ -34,6 +34,9 @@ public class TraceBackServiceImpl implements TraceBackService {
     //    @Autowired
     private BaseStockDao baseStockDao;
 
+    //自选股票池，用户回测自选股票池时才对此成员变量赋值
+    private List<String> privateStockPool;
+
     private List<String> traceBackStockPool;
 
     private List<CumulativeReturn> baseCumulativeReturn;
@@ -97,6 +100,18 @@ public class TraceBackServiceImpl implements TraceBackService {
         long enter = System.currentTimeMillis();
 
         TraceBackInfo traceBackInfo = new TraceBackInfo();
+
+        // 选取回测的股票池为自选股票池／板块股票池
+
+//        //是自选股票池
+        if (traceBackCriteria.isCustomized){
+            traceBackStockPool = customizedStockPool;
+        }
+//        //不是自选股票池
+        else {
+            traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
+        }
+        setUpStockData(traceBackCriteria);
 
         traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
         setUpStockData(traceBackCriteria);
