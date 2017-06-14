@@ -73,18 +73,20 @@ public class UserController {
             List<GeneralStrategy> mySubscribe = new LinkedList<>();
 
             List<Strategy> myStrategies = strategyService.getMyStrategies(user);
-            for (Strategy temp : myStrategies) {
-                if (temp.getCreator().equals(user.getUserName())) myOwn.add(new GeneralStrategy(temp));
-                else mySubscribe.add(new GeneralStrategy(temp));
+            if (myStrategies != null) {
+                for (Strategy temp : myStrategies) {
+                    if (temp.getCreator().equals(user.getUserName())) myOwn.add(new GeneralStrategy(temp));
+                    else mySubscribe.add(new GeneralStrategy(temp));
+                }
+
+                System.out.println("psList size: " + psList.size());
+                System.out.println("myOwn size: " + myOwn.size());
+                System.out.println("mySubscribe size: " + mySubscribe.size());
             }
-
-            System.out.println("psList size: " + psList.size());
-            System.out.println("myOwn size: " + myOwn.size());
-            System.out.println("mySubscribe size: " + mySubscribe.size());
-
             mv.addObject("ps_list", psList);
             mv.addObject("myOwn", myOwn);
             mv.addObject("mySubscribe", mySubscribe);
+
             return mv;
 
         } else if (userType.equals("admin")) {

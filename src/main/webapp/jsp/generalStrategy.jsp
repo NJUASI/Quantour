@@ -77,7 +77,7 @@
     <div class="col-md-offset-1 col-md-10">
 
         <c:choose>
-            <c:when test="${generalStrategies!=null}">
+            <c:when test="${generalStrategies!=null && generalStrategies.size() != 0}">
 
                 <c:forEach items="${generalStrategies}" var="strategy" varStatus="vs">
                     <div class="col-md-3">
