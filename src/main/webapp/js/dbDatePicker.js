@@ -46,7 +46,7 @@ $("#datetimeStart").datetimepicker({
     minView: 'month',
     language: 'zh-CN',
     autoclose: true,
-    startDate: new Date(2005 - 04 - 03),
+    startDate: new Date(2014 - 01 - 01),
     endDate: new Date()
 }).on("click", function () {
     $("#datetimeStart").datetimepicker('setEndDate', $("#datetimeEnd>input").val())

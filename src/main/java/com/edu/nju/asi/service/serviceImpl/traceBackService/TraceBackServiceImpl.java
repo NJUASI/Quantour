@@ -109,8 +109,8 @@ public class TraceBackServiceImpl implements TraceBackService {
         }
         setUpStockData(traceBackCriteria);
 
-        traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
-        setUpStockData(traceBackCriteria);
+//        traceBackStockPool = stockService.getStockPool(traceBackCriteria.stockPoolCriteria);
+//        setUpStockData(traceBackCriteria);
 
         System.out.println("---------------set完毕------------");
 
