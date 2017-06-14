@@ -411,7 +411,9 @@
 
     if (${base_stock_list == null}) {
         $("#analysePanel").hide();
+        $("#dateMessage").show();
     } else {
+        $("#analysePanel").show();
         $("#dateMessage").hide();
     }
     // 画出热搜榜的图
@@ -632,7 +634,8 @@
 
                 if (array[0] == "1") {
                     // js修改jsp中数据
-
+                    $("#dateMessage").hide();
+                    $("#analysePanel").show();
                     // 处理表格数据
                     var stock_page = eval("(" + array[1] + ")");
 

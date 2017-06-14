@@ -47,7 +47,7 @@ public class StockController {
 
 
     // 因为可能数据库中没有今天的数据，所以默认显示昨日
-    private final static LocalDate defaultDate = LocalDate.now().minusDays(1);
+    private final static LocalDate defaultDate = LocalDate.of(2017, 6,13);
 
     /**
      * 默认页面跳转，默认日期股票市场查看（所有股票数据、市场温度计）

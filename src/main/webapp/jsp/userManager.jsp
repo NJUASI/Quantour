@@ -200,7 +200,7 @@
                                                     <c:choose>
                                                         <c:when test="${strategy.annualizedRateOfReturn=='-1'}">
                                                             <div class="col-md-12" class="" style="width: 100%;height:20px;z-index: 3">
-                                                                <p style="color:red">正在创建策略</p>
+                                                                <p class='col-md-offset-2' style="color:red">正在创建策略</p>
                                                             </div>
                                                             <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>
                                                             <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">创建者</span><span class="col-md-4 small" style="text-align: right">${strategy.creator}</span>

@@ -43,17 +43,20 @@ function changeSingleStockDetail() {
 
 
                 $("#stockDetail").empty();
-                $("#stockDetail").append("<li>开盘 <span class=\" font-green \">"+stockOfEndDay["open"]+"</span></li>" +
-                    "  <li>最高 <span class=\" font-red \">"+stockOfEndDay["high"]+"</span></li>" +
-                    " <li>最低 <span class=\" font-green \">"+stockOfEndDay["low"]+"</span></li>" +
-                    "<li>昨收 <span class=\" font-black \">"+stockOfEndDay["preClose"]+"</span></li>" +
-                    " <li>成交量 <span>"+stockOfEndDay["volume"]+"</span></li>" +
-                    "<li>成交额 <span>"+stockOfEndDay["transactionAmount"]+"</span></li>"+
-                    "<li>涨跌幅 <span>"+stockOfEndDay["increaseMargin"]+"</span></li>"+
-                    "<li>涨跌额 <span>"+stockOfEndDay["fluctuation"]+"</span></li>"+
-                    "<li>换手率 <span>"+stockOfEndDay["turnoverRate"]+"</span></li>"+
-                    "<li>总市值 <span>"+stockOfEndDay["totalValue"]+"</span></li>"+
-                    "<li>流通市值 <span>"+stockOfEndDay["circulationMarketValue"]+"</span></li>");
+                $("#stockDetail").append(
+                    '<li><span class="col-md-3" style="font-weight:900">开盘</span> <span class="col-md-offset-2 font-green ">'+stockOfEndDay["open"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">收盘</span> <span class="col-md-offset-2 font-red ">'+stockOfEndDay["high"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">最高</span> <span class="col-md-offset-2 font-red ">'+stockOfEndDay["close"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">最低</span> <span class="col-md-offset-2 font-green ">'+stockOfEndDay["low"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">昨收 </span><span class="col-md-offset-2 font-black ">'+stockOfEndDay["preClose"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">成交量</span> <span class="col-md-offset-2 ">'+stockOfEndDay["volume"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">成交额</span> <span class="col-md-offset-2 ">'+stockOfEndDay["transactionAmount"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">涨跌幅</span> <span class="col-md-offset-2 ">'+stockOfEndDay["increaseMargin"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">涨跌额 </span><span class="col-md-offset-2 ">'+stockOfEndDay["fluctuation"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">换手率</span> <span class="col-md-offset-2 ">'+stockOfEndDay["turnoverRate"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">总市值</span> <span class="col-md-offset-2 ">'+stockOfEndDay["totalValue"]+'</span></li>'+
+                    '<li><span class="col-md-3" style="font-weight:900">流通值 </span><span class="col-md-offset-2 " >'+stockOfEndDay["circulationMarketValue"]+'</span></li>'
+                );
                 $("#stockDetail > li").addClass("col-md-5");
 
                 $("#datetimeStart>input").attr('value', startDate);

@@ -5,7 +5,7 @@ var today = new Date();
 
 today.setTime(today.getTime() - 24 * 60 * 60 * 1000);
 var yesterday = new Date();
-yesterday.setTime(today.getTime() - 24 * 60 * 60 * 1000);
+yesterday.setTime(today.getTime() - 29*24 * 60 * 60 * 1000);
 
 var endTime = today.getFullYear() + "-";
 var startTime = yesterday.getFullYear() + "-";

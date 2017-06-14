@@ -446,7 +446,7 @@
                 <button class="btn btn-primary col-md-offset-6" id="submitBt" style="margin-top: 20px;margin-bottom: 30px">提交调优</button>
 
                 <div class="row" id="optimizationTable">
-                    <div class="col-md-12 table-responsive pre-scrollable" style="max-height: 640px">
+                    <div class="col-md-8 col-md-offset-2 table-responsive pre-scrollable" style="max-height: 640px">
                         <table class="table table-hover table-condensed">
                             <thead>
                             <tr id="optimizationHead">
@@ -679,9 +679,10 @@
             var max=parseInt($(this).find(".max_num").eq(0).val());
             var min=parseInt($(this).find(".min_num").eq(0).val());
             if(thisValue < min || thisValue > max){
-                alert(thisValue);
-                alert(max);
-                alert(min);
+//                alert(thisValue);
+//                alert(max);
+//                alert(min);
+                $("#inputError").html(' <strong style="color:indianred">参数原值不得超出最大最小值范围</strong>');
                 $("#inputError").show();
                 setTimeout('$("#inputError").hide();',2000);
                 isValid=false;
@@ -693,6 +694,7 @@
             var max=parseInt($(this).find(".max_num").eq(0).val());
             var min=parseInt($(this).find(".min_num").eq(0).val());
             if(thisValue<min||thisValue>max){
+                $("#inputError").html(' <strong style="color:indianred">参数原值不得超出最大最小值范围</strong>');
                 $("#inputError").show();
                 setTimeout('$("#inputError").hide();',2000);
                 isValid=false;
@@ -739,8 +741,10 @@
             "targetFuncType": $("#mainFunc").val(),
             "searchNodes": $("#resultNum").html().trim()
         };
-        alert(JSON.stringify(optimizationCriteriaData));
-        alert("${nowStrategy.strategyID}");
+//        alert(JSON.stringify(optimizationCriteriaData));
+        <%--alert("${nowStrategy.strategyID}");--%>
+        $("#inputError").html(' <strong style="color:indianred">参数原值不得超出最大最小值范围</strong>');
+        $("#inputError").show();
 
         $.ajax({
             type: "post",
@@ -768,7 +772,7 @@
                     // 加调优后的结果
                     for (var ii = 0; ii < indicators.length; ii++) {
                         $("#optimizationHead").append('<th>' + indicators[ii] + '</th>');
-                        alert(indicators[ii]);
+//                        alert(indicators[ii]);
                     }
 
                     // 遍历添加数据
@@ -777,8 +781,8 @@
 
                         var values = eval("(" + array[i] + ")");
 
-                        alert(values);
-                        alert(values.length);
+//                        alert(values);
+//                        alert(values.length);
                         $("#optimizationList").append(
                             "<td>" + (i-1) + "</td>" +
                             "<td>" + values[0] + "</td>" +
@@ -791,8 +795,10 @@
                             $("#optimizationList").append("<td>" + values[j+4] + "</td>");
                         }
                     }
+                    $("#inputError").hide();
 
-                    alert("666");
+
+//                    alert("666");
                 }
 
             },

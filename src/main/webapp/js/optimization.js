@@ -26,6 +26,7 @@ function calculateNum() {
         var min=parseInt($(this).find(".min_num").eq(0).val());
         var length=parseInt($(this).find(".length_num").eq(0).val());
             if(thisValue<min||thisValue>max){
+                $("#inputError").html(' <strong style="color:indianred">参数原值不得超出最大最小值范围</strong>');
                 $("#inputError").show();
                 setTimeout('$("#inputError").hide();',2000);
             }
@@ -37,6 +38,7 @@ function calculateNum() {
         var min=parseInt($(this).find(".min_num").eq(0).val());
         var length=parseInt($(this).find(".length_num").eq(0).val());
             if(thisValue<min||thisValue>max){
+                $("#inputError").html(' <strong style="color:indianred">参数原值不得超出最大最小值范围</strong>');
                 $("#inputError").show();
                 setTimeout('$("#inputError").hide();', 2000);
             }
