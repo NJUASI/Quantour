@@ -95,14 +95,32 @@
                                         <%--${strategy.strategyCumulativeReturnChart}--%>
                                     <%--</li>--%>
                                 <%--</ul>--%>
-                                <div class="col-md-12" class="" style="width: 100%;height:20px;z-index: 3">
 
-                                </div>
-                                <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>
-                                <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">创建者</span><span class="col-md-4 small" style="text-align: right">${strategy.creator}</span>
-                                <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">年化收益率</span><span class="col-md-4 small" style="text-align: right">${strategy.annualizedRateOfReturn}</span>
-                                <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">最大回撤率</span><span class="col-md-4 small" style="text-align: right">${strategy.maxStrategyTraceBackRate}</span>
-                                <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">订阅人数</span><span  class="col-md-4 small" style="text-align: right">${strategy.subscribeNum}</span>
+                                <c:choose>
+                                    <c:when test="${strategy.annualizedRateOfReturn=='-1'}">
+                                        <div class="col-md-12" class="" style="width: 100%;height:20px;z-index: 3">
+                                            <p style="color:red">正在创建策略</p>
+                                        </div>
+                                        <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>
+                                        <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">创建者</span><span class="col-md-4 small" style="text-align: right">${strategy.creator}</span>
+                                        <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">年化收益率</span><span class="col-md-4 small" style="text-align: right">......</span>
+                                        <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">最大回撤率</span><span class="col-md-4 small" style="text-align: right">......</span>
+                                        <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">订阅人数</span><span  class="col-md-4 small" style="text-align: right">......</span>
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="col-md-12" class="" style="width: 100%;height:20px;z-index: 3">
+
+                                        </div>
+                                        <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>
+                                        <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">创建者</span><span class="col-md-4 small" style="text-align: right">${strategy.creator}</span>
+                                        <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">年化收益率</span><span class="col-md-4 small" style="text-align: right">${strategy.annualizedRateOfReturn}</span>
+                                        <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">最大回撤率</span><span class="col-md-4 small" style="text-align: right">${strategy.maxStrategyTraceBackRate}</span>
+                                        <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">订阅人数</span><span  class="col-md-4 small" style="text-align: right">${strategy.subscribeNum}</span>
+
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <button class="searchBt col-md-offset-7 btn btn-sm btn-info">查看详情</button>
                             </div>
                         </div>

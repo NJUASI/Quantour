@@ -18,6 +18,11 @@ $(document).ready(function () {
 
 });
 
+function logout() {
+    //TODO fjj 清空user
+    window.location.href='/';
+}
+
 function login() {
     var userName = $("#login_username").val();
     var password = $("#login_password").val();
