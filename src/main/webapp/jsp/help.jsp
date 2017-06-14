@@ -67,7 +67,7 @@
         <div class="jumbotron">
         </div>
         <div class="row">
-            <div class="col-xs-3" id="myScrollspy">
+            <div class="col-md-3" id="myScrollspy">
                 <ul class="nav nav-tabs nav-stacked affix"  style="margin-top: 110px" id="myNav">
                     <li class="active"><a href="#section-1">行情指标</a></li>
                     <li><a href="#section-2">技术指标</a></li>
@@ -76,7 +76,7 @@
                     <li><a href="#section-5">市场择时</a></li>
                 </ul>
             </div>
-            <div class="col-xs-9">
+            <div class="col-md-9">
                 <h2 id="section-1">行情指标</h2>
                 <p>开盘价/收盘价/最高价/最低价/前日收盘价 ：股票在用户指定日期的价格</p>
 
