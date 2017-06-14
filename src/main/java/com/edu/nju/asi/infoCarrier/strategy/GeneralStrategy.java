@@ -75,17 +75,19 @@ public class GeneralStrategy {
         TraceBackCriteria criteria = JSON.parseObject(strategy.getContent(), TraceBackCriteria.class);
         this.baseStockName = criteria.baseStockName;
 
-        String[] parts = strategy.getTraceBackInfo().split(";");
+        if (strategy.getTraceBackInfo() != null) {
+            String[] parts = strategy.getTraceBackInfo().split(";");
 
-        TraceBackInfo info = JSON.parseObject(parts[0], TraceBackInfo.class);
-        this.annualizedRateOfReturn = NumberFormat.percentFormat(info.traceBackNumVal.annualizedRateOfReturn, 2);
-        this.maxStrategyTraceBackRate = NumberFormat.percentFormat(info.maxTraceBack.maxStrategyTraceBackRate, 2);
-        try {
-            // 加入累计收益率
-            this.strategyCumulativeReturnChart = JsonConverter.convertTraceBack(info.strategyCumulativeReturn);
-            this.baseCumulativeReturnChart = JsonConverter.convertTraceBack(info.baseCumulativeReturn);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            TraceBackInfo info = JSON.parseObject(parts[0], TraceBackInfo.class);
+            this.annualizedRateOfReturn = NumberFormat.percentFormat(info.traceBackNumVal.annualizedRateOfReturn, 2);
+            this.maxStrategyTraceBackRate = NumberFormat.percentFormat(info.maxTraceBack.maxStrategyTraceBackRate, 2);
+            try {
+                // 加入累计收益率
+                this.strategyCumulativeReturnChart = JsonConverter.convertTraceBack(info.strategyCumulativeReturn);
+                this.baseCumulativeReturnChart = JsonConverter.convertTraceBack(info.baseCumulativeReturn);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
     }
     public String getStrategyID() {

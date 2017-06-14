@@ -2,14 +2,13 @@ package com.edu.nju.asi.service.serviceImpl.traceBackService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.BaseStockDaoImpl;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
-import com.edu.nju.asi.service.serviceImpl.stockService.StockServiceImpl;
+import com.edu.nju.asi.service.serviceImpl.optimizationService.GenEngine;
+import com.edu.nju.asi.service.serviceImpl.optimizationService.optimization.OptimizationCriteria;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
@@ -218,6 +217,12 @@ public class TraceBackServiceImpl implements TraceBackService {
         traceBackInfo.traceBackNumVal = param.getNumericalVal();
         System.out.println("---------------计算统计数据------------");
         return traceBackInfo;
+    }
+
+    @Override
+    public Map<TraceBackCriteria, TraceBackInfo> optimization(OptimizationCriteria optimizationCriteria) throws IOException, DateNotWithinException, DataSourceFirstDayException, NoDataWithinException, UnhandleBlockTypeException {
+        GenEngine genEngine = new GenEngine(this);
+        return genEngine.optimization(optimizationCriteria);
     }
 
     private void setUpStockData(TraceBackCriteria criteria) throws IOException {

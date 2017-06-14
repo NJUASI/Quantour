@@ -27,7 +27,7 @@ public class TraceBackSaver implements Callable<Boolean> {
     User thisUser;
 
 
-    final LocalDate defaultDate = LocalDate.of(2017, 5, 1);
+    final LocalDate defaultDate = LocalDate.of(2016, 5, 1);
 
     public TraceBackSaver(TraceBackService traceBackService, StrategyDao strategyDao, Strategy strategy, User thisUser) {
         this.traceBackService = traceBackService;

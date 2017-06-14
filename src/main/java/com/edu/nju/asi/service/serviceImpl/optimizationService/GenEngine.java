@@ -76,8 +76,8 @@ public class GenEngine {
      */
     Map<TraceBackCriteria, TraceBackInfo> allTraceBackInfo;
 
-    public GenEngine() throws IOException {
-        traceBackService = new TraceBackServiceImpl();
+    public GenEngine(TraceBackService traceBackService) throws IOException {
+        this.traceBackService = traceBackService;
         allTraceBackInfo = new TreeMap<>();
     }
 

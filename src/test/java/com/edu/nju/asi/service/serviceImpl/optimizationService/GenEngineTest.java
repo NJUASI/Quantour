@@ -34,7 +34,7 @@ public class GenEngineTest {
         traceBackService = new TraceBackServiceImpl();
         start = LocalDate.of(2017,2,1);
         end = LocalDate.of(2017,5,29);
-        genEngine = new GenEngine();
+        genEngine = new GenEngine(new TraceBackServiceImpl());
     }
 
     @Test

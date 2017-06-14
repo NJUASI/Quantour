@@ -139,4 +139,9 @@ public class UserServiceImpl implements UserService {
             return userDao.modify(curUser);
         }
     }
+
+    @Override
+    public User getOne(String userName) {
+        return userDao.get(userName);
+    }
 }
