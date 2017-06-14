@@ -196,18 +196,8 @@
                                             <div class="strategyPanel">
                                                 <div class="row">
                                                     <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">${strategy.strategyID}</h5>
-                                                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                                                        <li class="baseStock" style="font-size: 90%; color:red">
-                                                                ${strategy.baseStockName}
-                                                        </li>
-                                                        <li class="" style="font-size: 90%; color:blueviolet">
-                                                            策略收益率
+                                                    <div class="col-md-12" class="" style="width: 100%;height:20px;z-index: 3">
 
-                                                                <%--${strategy.baseCumulativeReturnChart}--%>
-                                                                <%--${strategy.strategyCumulativeReturnChart}--%>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="col-md-12" class="isCreating" style="width: 100%;height:80px;margin-top: -30px;z-index: 3">
                                                     </div>
                                                     <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>
                                                     <span class="col-md-4 col-md-offset-2" style="font-size: 85%;font-weight: bold">创建者</span><span class="col-md-4 small" style="text-align: right">${strategy.creator}</span>
@@ -240,17 +230,8 @@
                                             <div class="strategyPanel">
                                                 <div class="row">
                                                     <h5 class="col-md-offset-1 col-md-11 strategyID" style="font-size: 130%">${strategy.strategyID}</h5>
-                                                    <ul class="col-md-7 col-md-offset-2" style="z-index: 5">
-                                                        <li class="baseStock" style="font-size: 90%; color:red">
-                                                                ${strategy.baseStockName}
-                                                        </li>
-                                                        <li class="" style="font-size: 90%; color:blueviolet">
-                                                            策略收益率
-                                                                <%--${strategy.baseCumulativeReturnChart}--%>
-                                                                <%--${strategy.strategyCumulativeReturnChart}--%>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="col-md-12" class="isCreating" style="width: 100%;height:80px;margin-top: -30px;z-index: 3">
+
+                                                    <div class="col-md-12" class="" style="width: 100%;height:20px;z-index: 3">
 
                                                     </div>
                                                     <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>

@@ -523,8 +523,8 @@
      * 取消收藏策略
      */
     $("#cancelFavor").click(function () {
-
-        var strategyID = ${nowStrategy.strategyID};
+        alert(123);
+        var strategyID = "${nowStrategy.strategyID}";
 
         $.ajax({
             type: "post",
@@ -562,9 +562,9 @@
      * 收藏策略
      */
     $("#favor").click(function () {
-
-        var strategyID = ${nowStrategy.strategyID};
-
+        alert("123");
+        var strategyID ='${nowStrategy.strategyID}';
+        alert(strategyID);
         $.ajax({
             type: "post",
             async: true,
@@ -602,7 +602,7 @@
      */
     $("#delete").click(function () {
 
-        var strategyID = ${nowStrategy.strategyID};
+        var strategyID = '${nowStrategy.strategyID}';
 
         $.ajax({
             type: "post",
