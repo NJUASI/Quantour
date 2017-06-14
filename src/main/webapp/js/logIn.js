@@ -18,9 +18,25 @@ $(document).ready(function () {
 
 });
 
+/**
+ * 登出
+ */
 function logout() {
-    //TODO fjj 清空user
-    window.location.href='/';
+    // alert("aaaa");
+    $.ajax({
+        type: "post",
+        async: true,
+        url: "/req_log_out",
+
+        success: function (result) {
+            if (result == "1"){
+                window.location.href='/';
+            }
+        },
+        error: function (result) {
+            alert("错误" + result);
+        }
+    });
 }
 
 function login() {

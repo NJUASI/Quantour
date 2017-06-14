@@ -94,4 +94,27 @@ public class LogInController {
         } else return "-1;服务器开了一个小差。。请稍后重试";
     }
 
+
+    /**
+     * 【请求】用户登出
+     */
+    @PostMapping(value = "/req_log_out", produces = "text/html;charset=UTF-8;")
+    public @ResponseBody
+    String reqLogOut(HttpServletRequest request, HttpServletResponse response) {
+        // 限制进入
+        HttpSession session = request.getSession(false);
+        User thisUser = (User) request.getSession().getAttribute("user");
+        if (session == null || thisUser == null) {
+            System.out.println("未登录");
+            return "-1";
+        }
+
+        session.setAttribute("userType", null);
+        session.setAttribute("user", null);
+
+        System.out.println("成功登出");
+        return "1";
+    }
+
+
 }

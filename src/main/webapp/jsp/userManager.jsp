@@ -360,6 +360,7 @@
 
 <script src="../js/startLoaded.js"></script>
 <script src="../js/strategy.js"></script>
+<script src="../js/logIn.js"></script>
 
 <script type="text/javascript">
 

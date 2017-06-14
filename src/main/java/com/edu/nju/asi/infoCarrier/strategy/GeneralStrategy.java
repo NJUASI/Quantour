@@ -88,6 +88,12 @@ public class GeneralStrategy {
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
+        } else {
+            // 让界面知道此策略正在创建中
+            this.annualizedRateOfReturn = "-1";
+            this.maxStrategyTraceBackRate = "-1";
+            this.strategyCumulativeReturnChart = "-1";
+            this.baseCumulativeReturnChart = "-1";
         }
     }
     public String getStrategyID() {
