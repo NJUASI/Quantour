@@ -32,6 +32,7 @@
             <c:choose>
                 <c:when test="${sessionScope.user!=null}">
                     <li><a href="/user/welcome">用户管理</a></li>
+                    <li><a href="/user/welcome">退出</a></li>
                 </c:when>
                 <c:otherwise>
                     <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>

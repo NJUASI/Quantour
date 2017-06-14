@@ -73,7 +73,7 @@
 </div>
 <div style="width:85%;margin:0 auto;2px;margin-bottom: 20px;border-top:1px solid #ddd"></div>
 
-<div class="row">
+<div class="row" style="margin-bottom: 500px">
     <div class="col-md-offset-1 col-md-10">
 
         <c:choose>
@@ -129,7 +129,7 @@
 
 <%@ include file="logIn.jsp" %>
 
-<footer>
+<footer class="">
     <div class="col-md-offset-5">
         <figure  style="width: 200px;height:60px;z-index: 3">
             <img class="img-responsive " src="../img/web_logo.png">
