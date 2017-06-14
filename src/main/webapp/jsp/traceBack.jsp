@@ -409,16 +409,16 @@
                                             style="border: 0px solid white">DMA <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
                                     </button>
                                 </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white" disabled>TRIX <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
-                                    </button>
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-default timing"
-                                            style="border: 0px solid white">MAVOL <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>
-                                    </button>
-                                </div>
+                                <%--<div class="col-md-4">--%>
+                                    <%--<button type="button" class="btn btn-default timing"--%>
+                                            <%--style="border: 0px solid white" disabled>TRIX <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>--%>
+                                    <%--</button>--%>
+                                <%--</div>--%>
+                                <%--<div class="col-md-4">--%>
+                                    <%--<button type="button" class="btn btn-default timing"--%>
+                                            <%--style="border: 0px solid white">MAVOL <span> </span><span  data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip" class="glyphicon glyphicon-question-sign"  style="color:#337ab7"></span>--%>
+                                    <%--</button>--%>
+                                <%--</div>--%>
                             </div>
                             <strong class="row col-md-offset-4" id="timingError"
                                     style="color:indianred;margin-left: 4px" hidden><span
