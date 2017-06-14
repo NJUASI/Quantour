@@ -53,11 +53,11 @@ public class GenEngineTest {
 
         //筛选条件
         List<FilterCondition> filterConditions = new ArrayList<>();
-//        filterConditions.add(new FilterCondition(IndicatorType.TURNOVER_RATE, ComparatorType.RANK_MAX, 10, 5));
+        filterConditions.add(new FilterCondition(IndicatorType.TURNOVER_RATE, ComparatorType.RANK_MAX, 5, 5));
 
         //排名条件
         List<RankCondition> rankConditions = new ArrayList<>();
-        rankConditions.add(new RankCondition(IndicatorType.TURNOVER_RATE, RankType.DESC_RANK, 1, 5));
+//        rankConditions.add(new RankCondition(IndicatorType.TURNOVER_RATE, RankType.DESC_RANK, 1, 5));
 
         //择时条件
         List<MarketSelectingCondition> marketSelectingConditions = new ArrayList<>();
@@ -70,7 +70,7 @@ public class GenEngineTest {
         List<AdjustCriteria> filterAdjustCriteria = new ArrayList<>();
         List<AdjustCriteria> rankAdjustCriteria = new ArrayList<>();
 
-        rankAdjustCriteria.add(new AdjustCriteria(0, 100, 2));
+        filterAdjustCriteria.add(new AdjustCriteria(0, 23, 2));
 
         OptimizationCriteria optimizationCriteria = new OptimizationCriteria(criteria,filterAdjustCriteria,rankAdjustCriteria,TargetFuncType.ANNUALIZED_RETURN,51);
 

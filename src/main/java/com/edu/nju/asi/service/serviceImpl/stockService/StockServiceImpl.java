@@ -37,14 +37,14 @@ import java.util.*;
 @Service("StockService")
 public class StockServiceImpl implements StockService {
 
-//    @Autowired
+    @Autowired
     StockDao stockDao;
-//    @Autowired
+    @Autowired
     BaseStockDao baseStockDao;
 
     public StockServiceImpl() {
-        stockDao = new StockDaoImpl();
-        baseStockDao = new BaseStockDaoImpl();
+//        stockDao = new StockDaoImpl();
+//        baseStockDao = new BaseStockDaoImpl();
     }
 
     /**

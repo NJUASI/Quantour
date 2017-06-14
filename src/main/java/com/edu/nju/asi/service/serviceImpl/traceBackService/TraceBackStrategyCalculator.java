@@ -644,7 +644,10 @@ public class TraceBackStrategyCalculator {
      */
     private List<RankConditionRate> rankCodes(List<String> codesNeedToRank, LocalDate periodStart) {
 
-        if (rankConditions.size() == 0) {
+        boolean isEmpty = false;
+
+        if (rankConditions.isEmpty()) {
+            isEmpty = true;
             //若排名条件为空，则默认以当日成交额从大到小排名
             rankConditions.add(new RankCondition(IndicatorType.TRANSACTION_AMOUNT, RankType.DESC_RANK, 1, 1));
         }
@@ -683,6 +686,10 @@ public class TraceBackStrategyCalculator {
                     }
                 }
             }
+        }
+
+        if(isEmpty) {
+            rankConditions.remove(0);
         }
 
         return rankConditionRates;
