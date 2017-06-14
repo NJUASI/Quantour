@@ -19,6 +19,7 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
 
     <link href="../css/startLoader.css" rel="stylesheet">
+    <link href="../css/reset.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
     <link href="../css/stocks.css" rel="stylesheet">
 
@@ -347,6 +348,11 @@
     <div class="loader-section section-right"></div>
 </div>
 <footer>
+    <div class="col-md-offset-5">
+        <figure  style="width: 200px;height:60px;z-index: 3">
+            <img class="img-responsive " src="../img/web_logo.png">
+        </figure>
+    </div>
 </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>

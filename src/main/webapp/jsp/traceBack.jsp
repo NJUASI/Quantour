@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
     <link href="../css/startLoader.css" rel="stylesheet">
     <link href="../css/bootstrap-slider.css" rel="stylesheet">
+    <link href="../css/reset.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
     <link href="../css/flat/green.css" rel="stylesheet">
     <link href="../css/spinner.css" rel="stylesheet">
@@ -615,6 +616,22 @@
     </div><!-- /.modal -->
 </div>
 
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:40%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <%--<h4 class="modal-title">创建策略</h4>--%>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-title">正在创建策略，请稍后查看</h4>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+
 <div class="modal fade" id="strategyPool" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 40%">
         <div class="modal-content">
@@ -702,7 +719,11 @@
 <%@ include file="logIn.jsp" %>
 
 <footer>
-
+    <div class="col-md-offset-5">
+        <figure  style="width: 200px;height:60px;z-index: 3">
+            <img class="img-responsive " src="../img/web_logo.png">
+        </figure>
+    </div>
 </footer>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -1580,8 +1601,9 @@
                 var array = result.split(";");
 
                 if (array[0] == "1") {
-
-
+                    $("#mymodal").modal("toggle");
+                    $("#messageModal").modal().css({"margin-top":"100px"});
+                    setTimeout("$('#messageModal').modal('toggle')",2000);
                 } else if (array[0] == "-1") {
                     // 提示错误信息
                     $('#nameErrorPanel').show();
