@@ -27,11 +27,11 @@ import java.util.*;
 @Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
-    @Autowired
+//    @Autowired
     private StockService stockService;
-    @Autowired
+//    @Autowired
     private StockDao stockDao;
-    @Autowired
+//    @Autowired
     private BaseStockDao baseStockDao;
 
     private List<String> traceBackStockPool;
@@ -71,9 +71,9 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     public TraceBackServiceImpl() throws IOException {
-//        stockService = new StockServiceImpl();
-//        stockDao = new StockDaoImpl();
-//        baseStockDao = new BaseStockDaoImpl();
+        stockService = new StockServiceImpl();
+        stockDao = new StockDaoImpl();
+        baseStockDao = new BaseStockDaoImpl();
 
         //获取所有数据的日期
 //        allDatesWithData = stockDao.getDateWithData();

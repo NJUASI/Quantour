@@ -3,12 +3,14 @@ package com.edu.nju.asi.infoCarrier.traceBack;
 import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.enums.ComparatorType;
 
+import java.io.Serializable;
+
 /**
  * Created by Harvey on 2017/4/19.
  *
  * 筛选条件（仿果仁网）
  */
-public class FilterCondition implements Comparable<FilterCondition>{
+public class FilterCondition implements Comparable<FilterCondition> ,Serializable{
 
     /**
      * 指标

@@ -299,7 +299,7 @@ public class TraceBackStrategyCalculator {
         // 根据市场情况进行市场择时，调整仓位比例（holdingPeriod = endIndex - startIndex）
         boolean nowIsBullPosition = isBullPositions.get(periodSerial * (endIndex - startIndex));
         if (nowIsBullPosition) nowPosition = 1;
-        else nowPosition = traceBackCriteria.adjustPositionPercent;
+        else nowPosition = traceBackCriteria.adjustPositionPercent / 100;
 
         // 对挑选的股票做精细处理
         pickedStockCodes = dealPickedStockCodes(pickedStockCodes, periodStart, periodEnd, periodSerial, startIndex, endIndex, maxHoldingNum);
