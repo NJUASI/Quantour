@@ -55,20 +55,21 @@ public class MailNotification implements Callable<Boolean> {
     }
 
     private boolean notifyOne(Session session, MailInfo mailInfo, String nowUser, boolean isCreator) throws MessagingException {
-        String action;
-        if (isCreator) action = "创建";
-        else action = "订阅";
+        if (nowUser != null) {
+            String action;
+            if (isCreator) action = "创建";
+            else action = "订阅";
 
-        Message msg = new MimeMessage(session);
-        msg.setSubject("asiquantour_" + mailInfo.strategyID);
+            Message msg = new MimeMessage(session);
+            msg.setSubject("asiquantour_" + mailInfo.strategyID);
 
-        StringBuffer mailContent = new StringBuffer();
+            StringBuffer mailContent = new StringBuffer();
 
-        mailContent.append("<p>亲爱的asiquantour用户你好！</p><br>");
-        mailContent.append("<p>你" + action + "的策略 <strong><em><u>" + mailInfo.strategyID + "</u></em></strong> 已" + mailInfo.type.getRepre()
-                + "！详情请点击查看<a href=\"" + mailInfo.url + "\">" + mailInfo.strategyID + "</a>。</p><br>");
-        mailContent.append("<p>asiquantour感谢您一直以来的支持，谢谢！</p>");
-        msg.setContent(mailContent.toString(), "text/html;charset=UTF-8");
+            mailContent.append("<p>亲爱的asiquantour用户你好！</p><br>");
+            mailContent.append("<p>你" + action + "的策略 <strong><em><u>" + mailInfo.strategyID + "</u></em></strong> 已" + mailInfo.type.getRepre()
+                    + "！详情请点击查看<a href=\"" + mailInfo.url + "\">" + mailInfo.strategyID + "</a>。</p><br>");
+            mailContent.append("<p>asiquantour感谢您一直以来的支持，谢谢！</p>");
+            msg.setContent(mailContent.toString(), "text/html;charset=UTF-8");
 
 
 
@@ -77,15 +78,17 @@ public class MailNotification implements Callable<Boolean> {
 //        mailContent.append("asiquantour感谢您一直以来的支持，谢谢！");
 //        msg.setText(mailContent.toString());
 
-        msg.setFrom(new InternetAddress(senderName + "@163.com"));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(nowUser));
+            msg.setFrom(new InternetAddress(senderName + "@163.com"));
+            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(nowUser));
 
-        System.out.println(mailContent.toString());
+            System.out.println(mailContent.toString());
 
-        Transport transport = session.getTransport();
-        transport.connect("smtp.163.com", senderName, password);
-        transport.sendMessage(msg, new Address[]{new InternetAddress(nowUser)});
-        transport.close();
+            Transport transport = session.getTransport();
+            transport.connect("smtp.163.com", senderName, password);
+            transport.sendMessage(msg, new Address[]{new InternetAddress(nowUser)});
+            transport.close();
+        }
+
         return true;
     }
 }

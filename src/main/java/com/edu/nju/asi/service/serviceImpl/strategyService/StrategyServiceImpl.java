@@ -100,11 +100,13 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public boolean delete(User curUser, String strategyID) {
+        // 先暂时保存一下，不然等会删了取不到
+        Strategy deleteStrategy = strategyDao.getStrategy(strategyID);
+
         boolean fakeDelete = strategyDao.deleteStrategy(curUser.getUserName(), strategyID);
 
         if (fakeDelete) {
             // 邮件通知用户
-            Strategy deleteStrategy = strategyDao.getStrategy(strategyID);
             notify(deleteStrategy, MailNotificationType.DELETE);
         }
 

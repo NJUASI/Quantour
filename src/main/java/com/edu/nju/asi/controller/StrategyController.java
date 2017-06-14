@@ -70,13 +70,17 @@ public class StrategyController {
         List<GeneralStrategy> generalStrategies = new LinkedList<>();
 
         List<Strategy> allStrategies = strategyService.getAllStrategies();
-        for (Strategy nowStrategy : allStrategies) {
-            if (!nowStrategy.isPrivate()) {
-                generalStrategies.add(new GeneralStrategy(nowStrategy));
+        if (allStrategies != null) {
+
+            for (Strategy nowStrategy : allStrategies) {
+                if (!nowStrategy.isPrivate()) {
+                    generalStrategies.add(new GeneralStrategy(nowStrategy));
+                }
             }
+
+            mv.addObject("generalStrategies", generalStrategies);
         }
 
-        mv.addObject("generalStrategies", generalStrategies);
         return mv;
     }
 
@@ -261,6 +265,7 @@ public class StrategyController {
         System.out.println("已登录：" + thisUser.getUserName());
 
         boolean deleteResult = strategyService.delete(thisUser, deleteStrategyID);
+        System.out.println("delete: " + deleteResult);
         if (deleteResult) return "1;删除成功";
         else return "-1;删除失败";
     }

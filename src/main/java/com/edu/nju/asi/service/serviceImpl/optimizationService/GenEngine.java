@@ -14,6 +14,7 @@ import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
 import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
+import com.edu.nju.asi.utilities.util.CopyUtil;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.rank.Max;
 import org.apache.commons.math3.stat.descriptive.rank.Min;
@@ -77,12 +78,7 @@ public class GenEngine {
 
     public GenEngine(TraceBackService traceBackService) throws IOException {
         this.traceBackService = traceBackService;
-        allTraceBackInfo = new TreeMap<>(new Comparator<TraceBackCriteria>() {
-            @Override
-            public int compare(TraceBackCriteria o1, TraceBackCriteria o2) {
-                return 0;
-            }
-        });
+        allTraceBackInfo = new TreeMap<>();
     }
 
     /**
@@ -115,11 +111,11 @@ public class GenEngine {
             System.out.println("--------------------------第"+generation+"代-------------------------");
             //保存当前代的回测结果
             List<TraceBackInfo> curTracBackInfo = new ArrayList<>();
+            //原来回测筛选条件和排名条件
+            List<FilterCondition> filterConditions = optimizationCriteria.originTraceBackCriteria.filterConditions;
+            List<RankCondition> rankConditions = optimizationCriteria.originTraceBackCriteria.rankConditions;
             //TODO 回测
             for (int i = 0; i < popSize; i++) {
-                //原来回测筛选条件和排名条件
-                List<FilterCondition> filterConditions = optimizationCriteria.originTraceBackCriteria.filterConditions;
-                List<RankCondition> rankConditions = optimizationCriteria.originTraceBackCriteria.rankConditions;
 
                 for (int j = 0; j < filterConditions.size(); j++) {
                     filterConditions.get(j).value = curGeneration.get(i).filterGenome.get(j).intValue();
@@ -129,7 +125,11 @@ public class GenEngine {
                     rankConditions.get(j).weight = curGeneration.get(i).rankGenome.get(j).intValue();
                 }
 
+                List<FilterCondition> copy_filter = CopyUtil.deepCopyList(filterConditions);
+                List<RankCondition> copy_rank = CopyUtil.deepCopyList(rankConditions);
+
                 curTracBackInfo.add(traceBackService.optimize(filterConditions, rankConditions));
+                allTraceBackInfo.put(new TraceBackCriteria(optimizationCriteria.originTraceBackCriteria, copy_filter, copy_rank), curTracBackInfo.get(i));
             }
 
             //填入当前代的适应度
@@ -152,13 +152,13 @@ public class GenEngine {
             }
 
             Sum sum = new Sum();
-            Max max = new Max();
-            Min min = new Min();
-            Mean mean = new Mean();
+//            Max max = new Max();
+//            Min min = new Min();
+//            Mean mean = new Mean();
             double totalFitness = sum.evaluate(thisGenFitness);
-            double bestFitness = max.evaluate(thisGenFitness);
-            double worstFitness = min.evaluate(thisGenFitness);
-            double meanFitness = mean.evaluate(thisGenFitness);
+//            double bestFitness = max.evaluate(thisGenFitness);
+//            double worstFitness = min.evaluate(thisGenFitness);
+//            double meanFitness = mean.evaluate(thisGenFitness);
 
 
             //选择运算,轮盘赌，选择出popSize个前代作为下一代的基础
@@ -195,25 +195,6 @@ public class GenEngine {
                 System.out.println("变异开始:第"+(i+1)+"次");
                 curGeneration.set(i, mutate(curGeneration.get(i)));
                 System.out.println("变异完成:第"+(i+1)+"次");
-            }
-
-            //结果处理
-
-            //原来回测筛选条件和排名条件
-            TraceBackCriteria originTraceBackCriteria = optimizationCriteria.originTraceBackCriteria;
-            List<FilterCondition> filterConditions = optimizationCriteria.originTraceBackCriteria.filterConditions;
-            List<RankCondition> rankConditions = optimizationCriteria.originTraceBackCriteria.rankConditions;
-            for (int i = 0; i < popSize; i++) {
-
-                for (int j = 0; j < filterConditions.size(); j++) {
-                    filterConditions.get(j).value = curGeneration.get(i).filterGenome.get(j).intValue();
-                }
-
-                for (int j = 0; j < rankConditions.size(); j++) {
-                    rankConditions.get(j).weight = curGeneration.get(i).rankGenome.get(j).intValue();
-                }
-
-                allTraceBackInfo.put(new TraceBackCriteria(originTraceBackCriteria, filterConditions, rankConditions), curTracBackInfo.get(i));
             }
 
             generation++;

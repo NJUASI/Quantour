@@ -3,12 +3,14 @@ package com.edu.nju.asi.infoCarrier.traceBack;
 import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.enums.RankType;
 
+import java.io.Serializable;
+
 /**
  * Created by Harvey on 2017/6/7.
  *
  * 表示排名条件
  */
-public class RankCondition implements Comparable<RankCondition>{
+public class RankCondition implements Comparable<RankCondition> ,Serializable{
 
     /**
      * 指标

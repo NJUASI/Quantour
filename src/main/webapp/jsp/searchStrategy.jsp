@@ -522,9 +522,10 @@
     /**
      * 取消收藏策略
      */
-    $("#cancelFavor").click(function () {
-        alert(123);
+    $("#favor").click(function () {
+
         var strategyID = "${nowStrategy.strategyID}";
+//        alert(strategyID);
 
         $.ajax({
             type: "post",
@@ -539,32 +540,34 @@
                 var array = result.split(";");
 
                 if (array[0] == "1") {
-                    alert("666\n订阅成功");
+//                    alert("666\n订阅成功");
+
+                    $("#cancelFavor").show();
+                    $("#favor").hide();
+
                 } else if (array[0] == "-1") {
                     // 提示错误信息
-                    alert(array[1]);
+//                    alert(array[1]);
                 } else {
-                    alert("未知错误类型orz");
+//                    alert("未知错误类型orz");
                 }
             },
             error: function (result) {
-                alert("错误" + result);
+//                alert("错误" + result);
             }
 
         });
-
-        $("#favor").hide();
-        $("#cancelFavor").show();
 
     });
 
     /**
      * 收藏策略
      */
-    $("#favor").click(function () {
-        alert("123");
+    $("#cancelFavor").click(function () {
+
         var strategyID ='${nowStrategy.strategyID}';
-        alert(strategyID);
+//        alert(strategyID);
+
         $.ajax({
             type: "post",
             async: true,
@@ -578,7 +581,11 @@
                 var array = result.split(";");
 
                 if (array[0] == "1") {
-                    alert("666\n取消订阅成功");
+//                    alert("666\n取消订阅成功");
+
+                    $("#favor").show();
+                    $("#cancelFavor").hide();
+
                 } else if (array[0] == "-1") {
                     // 提示错误信息
                     alert(array[1]);
@@ -592,9 +599,6 @@
 
         });
 
-
-        $("#cancelFavor").show();
-        $("#favor").hide();
     });
 
     /**
@@ -603,6 +607,7 @@
     $("#delete").click(function () {
 
         var strategyID = '${nowStrategy.strategyID}';
+//        alert(strategyID);
 
         $.ajax({
             type: "post",
@@ -618,21 +623,22 @@
 
                 if (array[0] == "1") {
                     alert("666\n删除成功");
+
+                    // 跳转到userManager界面
+                    window.location.href = "/user/welcome";
+
                 } else if (array[0] == "-1") {
                     // 提示错误信息
-                    alert(array[1]);
+//                    alert(array[1]);
                 } else {
-                    alert("未知错误类型orz");
+//                    alert("未知错误类型orz");
                 }
             },
             error: function (result) {
-                alert("错误" + result);
+//                alert("错误" + result);
             }
 
         });
-
-        // 跳转到userManager界面
-        window.location.href = "/user/welcome";
 
     });
 
