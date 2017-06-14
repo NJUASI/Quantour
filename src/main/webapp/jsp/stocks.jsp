@@ -18,7 +18,7 @@
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="../css/stocks.css" rel="stylesheet">
     <link href="../css/bootstrap-select.css" rel="stylesheet">
-    <%--<link href="../css/reset.css" rel="stylesheet">--%>
+    <link href="../css/reset.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
     <link href="../css/startLoader.css" rel="stylesheet">
 
@@ -386,6 +386,11 @@
 <%@ include file="logIn.jsp" %>
 
 <footer>
+    <div class="col-md-offset-5">
+        <figure  style="width: 200px;height:60px;z-index: 3">
+            <img class="img-responsive " src="../img/web_logo.png">
+        </figure>
+    </div>
 </footer>
 
 <script src="../js/chart.js"></script>

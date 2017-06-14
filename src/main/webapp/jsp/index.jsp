@@ -88,7 +88,11 @@
     </div>
 </div>
 <footer>
-
+    <div class="col-md-offset-5">
+    <figure  style="width: 200px;height:60px;z-index: 3">
+        <img class="img-responsive " src="../img/web_logo.png">
+    </figure>
+    </div>
 </footer>
 
 <!-- 登录模态框（Modal） -->

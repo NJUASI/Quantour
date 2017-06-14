@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="../css/bootstrap-select.css">
     <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
     <link href="../css/startLoader.css" rel="stylesheet">
+    <link href="../css/reset.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
     <style type="text/css" rel="stylesheet">
         footer {
@@ -156,7 +157,7 @@
 
 <div class="row" style="z-index: 2">
 
-    <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-tabs" role="tablist">
+    <ul id="myTab" class="col-md-offset-1 col-md-10 nav nav-pills nav-tabs" role="tablist">
         <li class="active"><a href="#chartPanel" role="tab" data-toggle="tab">收益曲线</a></li>
         <li><a href="#cyclePanel" role="tab" data-toggle="tab">收益周期统计</a></li>
         <li><a href="#holdingDetailPanel" role="tab" data-toggle="tab">交易详情</a></li>
@@ -467,7 +468,11 @@
 </div>
 
 <footer style="margin-top: 700px">
-
+    <div class="col-md-offset-5">
+        <figure  style="width: 200px;height:60px;z-index: 3">
+            <img class="img-responsive " src="../img/web_logo.png">
+        </figure>
+    </div>
 </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>
