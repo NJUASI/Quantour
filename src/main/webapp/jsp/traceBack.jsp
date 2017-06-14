@@ -166,8 +166,8 @@
                                         class=" selectpicker show-tick form-control"
                                         multiple data-live-search="false" placeholder="请选择板块">
                                     <option value="ZB" selected>主板</option>
-                                    <option value="ZXB" selected>中小板</option>
-                                    <option value="CYB" selected>创业板</option>
+                                    <option value="ZXB">中小板</option>
+                                    <option value="CYB">创业板</option>
                                 </select>
                             </div>
                         </div>
