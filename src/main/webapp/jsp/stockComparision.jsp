@@ -205,13 +205,7 @@
         </div><!-- /.modal -->
     </div>
     <%@ include file="logIn.jsp" %>
-    <footer>
-        <div class="col-md-offset-5">
-            <figure  style="width: 200px;height:60px;z-index: 3">
-                <img class="img-responsive " src="../img/web_logo.png">
-            </figure>
-        </div>
-    </footer>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/jquery.validate.js"></script>
