@@ -56,4 +56,9 @@ public interface UserService{
      */
     boolean modifyMyTraceBackPool(List<String> modifiedTraceBackPool, User curUser) throws TraceBackStockExistedException;
 
+    /**
+     * 根据用户ID获取单只用户
+     */
+    User getOne(String userName);
+
 }

@@ -12,6 +12,12 @@ import com.edu.nju.asi.infoCarrier.traceBack.TraceBackInfo;
 import com.edu.nju.asi.model.Strategy;
 import com.edu.nju.asi.model.User;
 import com.edu.nju.asi.service.StrategyService;
+import com.edu.nju.asi.service.TraceBackService;
+import com.edu.nju.asi.service.serviceImpl.optimizationService.optimization.OptimizationCriteria;
+import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
+import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
+import com.edu.nju.asi.utilities.exceptions.UnhandleBlockTypeException;
 import com.edu.nju.asi.utilities.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +32,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cuihua on 2017/6/2.
@@ -38,6 +45,9 @@ public class StrategyController {
 
     @Autowired
     StrategyService strategyService;
+
+    @Autowired
+    TraceBackService traceBackService;
 
 
     /**
@@ -167,14 +177,35 @@ public class StrategyController {
         else return "-1;保存失败";
     }
 
+//    /**
+//     * 创建者用户修改股票策略
+//     *
+//     * @param modifiedStrategy 被修改过的策略实体
+//     */
+//    @PostMapping("/modify")
+//    public @ResponseBody
+//    String modifyStrategy(@RequestParam("strategy") Strategy modifiedStrategy, HttpServletRequest request, HttpServletResponse response) {
+//        // 限制进入
+//        HttpSession session = request.getSession(false);
+//        User thisUser = (User) request.getSession().getAttribute("user");
+//        if (session == null || thisUser == null) {
+//            System.out.println("未登录");
+//            return "-1;未登录";
+//        }
+//        System.out.println("已登录：" + thisUser.getUserName());
+//
+//        boolean modifyResult = strategyService.modify(modifiedStrategy, thisUser);
+//        if (modifyResult) return "1;修改成功";
+//        else return "-1;修改失败";
+//    }
+
     /**
-     * 创建者用户修改股票策略
-     *
-     * @param modifiedStrategy 被修改过的策略实体
+     * 【请求】通过自己定义的条件，进行股票智能调优，返回后JS修改页面的数据
      */
-    @PostMapping("/modify")
+    @PostMapping(value = "/req_optimization", produces = "text/html;charset=UTF-8;")
     public @ResponseBody
-    String modifyStrategy(@RequestParam("strategy") Strategy modifiedStrategy, HttpServletRequest request, HttpServletResponse response) {
+    String reqOptimization(@RequestParam("optimization") OptimizationCriteria criteria, @RequestParam("strategyID") String strategyID,
+                           HttpServletRequest request, HttpServletResponse response) {
         // 限制进入
         HttpSession session = request.getSession(false);
         User thisUser = (User) request.getSession().getAttribute("user");
@@ -182,12 +213,35 @@ public class StrategyController {
             System.out.println("未登录");
             return "-1;未登录";
         }
-        System.out.println("已登录：" + thisUser.getUserName());
 
-        boolean modifyResult = strategyService.modify(modifiedStrategy, thisUser);
-        if (modifyResult) return "1;修改成功";
-        else return "-1;修改失败";
+        System.out.println("已登录：" + thisUser.getUserName());
+        System.out.println("filterAdjust: " + criteria.filterAdjust.size() + "  ranAdjust: " + criteria.rankAdjust.size());
+
+        // 将该策略的原有标准set回去
+        String criteriaStringRepre = strategyService.getOneStrategy(strategyID).getContent();
+        criteria.originTraceBackCriteria = JSON.parseObject(criteriaStringRepre, TraceBackCriteria.class);
+
+        Map<TraceBackCriteria, TraceBackInfo> optimizationResult;
+        try {
+
+            optimizationResult = traceBackService.optimization(criteria);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-1;IO读取失败！";
+        } catch (DataSourceFirstDayException | DateNotWithinException | NoDataWithinException | UnhandleBlockTypeException e) {
+            e.printStackTrace();
+            return "-1;" + e.getMessage();
+        }
+
+
+        if (optimizationResult != null) {
+            System.out.println("Success");
+            return "1;" + JsonConverter.convertOptimizationResult(optimizationResult);
+        } else return "-1;服务器开了一个小差。。请稍后重试";
+
     }
+
+
 
     /**
      * 创建者用户删除股票策略

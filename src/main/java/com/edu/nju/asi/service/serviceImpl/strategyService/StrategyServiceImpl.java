@@ -36,6 +36,8 @@ public class StrategyServiceImpl implements StrategyService {
     @Override
     public List<Strategy> getAllStrategies() {
         List<Strategy> wanted = strategyDao.getAllStrategies();
+        if (wanted == null) return null;
+
         wanted.sort(new StrategyUsersDescComparator());
         return wanted;
     }

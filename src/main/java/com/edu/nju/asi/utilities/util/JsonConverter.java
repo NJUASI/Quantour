@@ -234,7 +234,6 @@ public class JsonConverter {
         List<List<String>> result = new ArrayList<>();
 
         if (topClicks != null) {
-            // TODO 冯俊杰
             topClicks.sort(new StockSearchRandomComparator());
             for (StockSearch stockSearch : topClicks) {
                 List<String> temp = new ArrayList<>();
@@ -495,6 +494,49 @@ public class JsonConverter {
         result.add(JsonConverter.jsonOfObject(data2));
         return result;
     }
+
+
+    /**
+     * 优化的结果
+     */
+    public static String convertOptimizationResult(Map<TraceBackCriteria, TraceBackInfo> optimizationResult) {
+        StringBuffer sb = new StringBuffer();
+
+        if (optimizationResult.keySet().iterator().hasNext()) {
+            for (FilterCondition condition : optimizationResult.keySet().iterator().next().filterConditions) {
+                sb.append(condition.indicatorType.getRepre() + "_值").append("~");
+            }
+            for (RankCondition condition : optimizationResult.keySet().iterator().next().rankConditions) {
+                sb.append(condition.indicatorType.getRepre() + "_权重").append("~");
+            }
+            sb.append(";");
+
+            for (Map.Entry<TraceBackCriteria, TraceBackInfo> entry: optimizationResult.entrySet()) {
+                TraceBackInfo info = entry.getValue();
+
+                List<String> temp = new LinkedList<>();
+                temp.add(NumberFormat.percentFormat(info.traceBackNumVal.annualizedRateOfReturn, 2));
+                temp.add(NumberFormat.decimaFormat(info.traceBackNumVal.sharpeRatio, 4));
+                temp.add(NumberFormat.percentFormat(info.maxTraceBack.maxStrategyTraceBackRate, 2));
+                temp.add(NumberFormat.percentFormat(info.traceBackNumVal.returnVolatility, 2));
+
+                TraceBackCriteria criteria = entry.getKey();
+                for (FilterCondition filterCondition : criteria.filterConditions) {
+                    temp.add(NumberFormat.decimaFormat(filterCondition.value, 2));
+                }
+                for (RankCondition rankCondition : criteria.rankConditions) {
+                    temp.add(NumberFormat.decimaFormat(rankCondition.weight, 2));
+                }
+
+                sb.append(JSON.toJSONString(temp)).append(";");
+            }
+        }
+        return sb.toString();
+    }
+
+
+
+
 
     /**
      * 数据填充

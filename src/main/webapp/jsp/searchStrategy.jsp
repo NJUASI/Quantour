@@ -1,7 +1,4 @@
 <%@ page import="com.edu.nju.asi.model.User" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.edu.nju.asi.infoCarrier.traceBack.StageDetail" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -374,8 +371,8 @@
                     </div>
                     <div class="col-md-2">
                         <select class="form-control" id="mainFunc">
-                            <option value="夏普比率">夏普比率</option>
-                            <option value="年化收益">年化收益</option>
+                            <option value='SHARP'>夏普比率</option>
+                            <option value='ANNUALIZED_RETURN'>年化收益</option>
                         </select>
                     </div>
 
@@ -400,11 +397,12 @@
                                </div>
                                <div class=" col-md-6 ">
                                    <div class="col-md-4">
-                                       <input type="text" class="form-control max_num num"    placeholder="最大">
-                                   </div>
-                                   <div class="col-md-4">
                                        <input type="text" class="form-control min_num num"   placeholder="最小">
                                    </div>
+                                   <div class="col-md-4">
+                                       <input type="text" class="form-control max_num num"    placeholder="最大">
+                                   </div>
+
                                    <div class="col-md-4">
                                        <input type="text" class="form-control length_num num"   placeholder="步长">
                                    </div>
@@ -430,11 +428,12 @@
                             </div>
                             <div class=" col-md-6 ">
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control max_num num"    placeholder="最大">
-                                </div>
-                                <div class="col-md-4">
                                     <input type="text" class="form-control min_num num"   placeholder="最小">
                                 </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control max_num num"    placeholder="最大">
+                                </div>
+
                                 <div class="col-md-4">
                                     <input type="text" class="form-control length_num num"   placeholder="步长">
                                 </div>
@@ -519,29 +518,123 @@
     $("#strategyDetail").find("li").find("span").css("color", "#9e9e9e");
     $("#strategyDetail").find("li").css("margin-bottom", "10px")
 
+
+    /**
+     * 取消收藏策略
+     */
     $("#cancelFavor").click(function () {
+
+        var strategyID = ${nowStrategy.strategyID};
+
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/strategy/" + strategyID + "/subscribe",
+            data:{
+                "id": strategyID
+            },
+
+            success: function (result) {
+                // $("body").addClass("loaded");
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    alert("666\n订阅成功");
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
+                }
+            },
+            error: function (result) {
+                alert("错误" + result);
+            }
+
+        });
+
         $("#favor").hide();
         $("#cancelFavor").show();
-        //TODO fjj 取消收藏
+
     });
 
-
+    /**
+     * 收藏策略
+     */
     $("#favor").click(function () {
-        //TODO fjj 收藏
+
+        var strategyID = ${nowStrategy.strategyID};
+
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/strategy/" + strategyID + "/revoke_subscribe",
+            data:{
+                "id": strategyID
+            },
+
+            success: function (result) {
+                // $("body").addClass("loaded");
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    alert("666\n取消订阅成功");
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
+                }
+            },
+            error: function (result) {
+                alert("错误" + result);
+            }
+
+        });
+
+
         $("#cancelFavor").show();
         $("#favor").hide();
     });
 
+    /**
+     * 删除策略
+     */
     $("#delete").click(function () {
-        //TODO fjj 删除 此策略
 
+        var strategyID = ${nowStrategy.strategyID};
 
-        //TODO fjj 跳转到userManager界面
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/strategy/delete",
+            data:{
+                "deleteStrategyID": strategyID
+            },
 
-//        window.location.href=""
+            success: function (result) {
+                // $("body").addClass("loaded");
+                var array = result.split(";");
+
+                if (array[0] == "1") {
+                    alert("666\n删除成功");
+                } else if (array[0] == "-1") {
+                    // 提示错误信息
+                    alert(array[1]);
+                } else {
+                    alert("未知错误类型orz");
+                }
+            },
+            error: function (result) {
+                alert("错误" + result);
+            }
+
+        });
+
+        // 跳转到userManager界面
+        window.location.href = "/user/welcome";
+
     });
-
-
 
 
 
@@ -551,8 +644,6 @@
         $("#stocks").unbind("click");
     });
     $("#commity").addClass("act");
-
-
 
 
     // 处理图表的信息
@@ -570,6 +661,142 @@
     radar[0] = [${rankResult.profit}*100, ${rankResult.antiRisk}*100, ${rankResult.fluidity}*100, ${rankResult.stability}*100, ${rankResult.reality}*100];
     var radar_paramter = ["收益分数", "抗风险分数", "流动性分数", "稳定性分数", "实盘分数"];
     createRadarChart("radar", radar, ["1"], radar_paramter);
+
+
+    /**
+     * 进行智能调优
+     */
+    $("#submitBt").click(function () {
+        var isValid=true;
+        $(".chooseRow").each(function () {
+            var thisValue=parseInt($(this).find(".value").eq(0).html());
+            var max=parseInt($(this).find(".max_num").eq(0).val());
+            var min=parseInt($(this).find(".min_num").eq(0).val());
+            if(thisValue < min || thisValue > max){
+                alert(thisValue);
+                alert(max);
+                alert(min);
+                $("#inputError").show();
+                setTimeout('$("#inputError").hide();',2000);
+                isValid=false;
+                return false;
+            }
+        });
+        $(".rankRow").each(function () {
+            var thisValue=parseInt($(this).find(".weight").eq(0).html());
+            var max=parseInt($(this).find(".max_num").eq(0).val());
+            var min=parseInt($(this).find(".min_num").eq(0).val());
+            if(thisValue<min||thisValue>max){
+                $("#inputError").show();
+                setTimeout('$("#inputError").hide();',2000);
+                isValid=false;
+                return false;
+            }
+        });
+        $(".num").each(function () {
+            isValid=validate($(this).val());
+            if(isValid==false) {
+                return false;
+            }
+        });
+        if(isValid==false){
+            return false;
+        }
+
+        var filterAdjust = [];
+        var filterAdjustNum = 0;
+        $(".chooseRow").each(function () {
+            filterAdjust[filterAdjustNum] = {
+                "minVal": $(this).find(".min_num").eq(0).val(),
+                "maxVal": $(this).find(".max_num").eq(0).val(),
+                "step": $(this).find(".length_num").eq(0).val()
+            };
+            filterAdjustNum++;
+        });
+
+        var rankAdjust = [];
+        var rankAdjustNum = 0;
+        $(".rankRow").each(function (){
+            rankAdjust[rankAdjustNum] = {
+                "minVal": $(this).find(".min_num").eq(0).val(),
+                "maxVal": $(this).find(".max_num").eq(0).val(),
+                "step": $(this).find(".length_num").eq(0).val()
+            };
+            rankAdjustNum++;
+        });
+
+
+        var optimizationCriteriaData = {
+            "originTraceBackCriteria": null,
+            "filterAdjust": filterAdjust,
+            "rankAdjust": rankAdjust,
+            "targetFuncType": $("#mainFunc").val(),
+            "searchNodes": $("#resultNum").html().trim()
+        };
+        alert(JSON.stringify(optimizationCriteriaData));
+        alert("${nowStrategy.strategyID}");
+
+        $.ajax({
+            type: "post",
+            async: true,
+            url: "/strategy/req_optimization",
+            data: {
+                "optimization": JSON.stringify(optimizationCriteriaData),
+                "strategyID": "${nowStrategy.strategyID}"
+            },
+
+            success: function (result) {
+                var array = result.split(";");
+                if (array[0] == "1") {
+                    // 初始化表头
+                    var indicators = array[1].split("~");
+                    $("#optimizationHead").empty();
+                    $("#optimizationHead").append(
+                        "<th>策略定义</th>" +
+                        "<th>年化收益</th>" +
+                        "<th>夏普比率</th>" +
+                        "<th>最大回撤率</th>" +
+                        "<th>收益波动率</th>"
+                    );
+
+                    // 加调优后的结果
+                    for (var ii = 0; ii < indicators.length; ii++) {
+                        $("#optimizationHead").append('<th>' + indicators[ii] + '</th>');
+                        alert(indicators[ii]);
+                    }
+
+                    // 遍历添加数据
+                    $("#optimizationList").empty();
+                    for (var i = 2; i < array.length; i++) {
+
+                        var values = eval("(" + array[i] + ")");
+
+                        alert(values);
+                        alert(values.length);
+                        $("#optimizationList").append(
+                            "<td>" + (i-1) + "</td>" +
+                            "<td>" + values[0] + "</td>" +
+                            "<td>" + values[1] + "</td>" +
+                            "<td>" + values[2] + "</td>" +
+                            "<td>" + values[3] + "</td>"
+                        );
+
+                        for (var j = 0; j < values.length - 4; j++) {
+                            $("#optimizationList").append("<td>" + values[j+4] + "</td>");
+                        }
+                    }
+
+                    alert("666");
+                }
+
+            },
+            error: function (result) {
+                alert("错误" + result);
+            }
+        });
+    });
+
+
 
 </script>
 </body>
