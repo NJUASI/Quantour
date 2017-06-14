@@ -1144,6 +1144,7 @@
                 setTimeout("$('#timingError2').hide();", 3000);
                 window.location.href = "#timePanel";
             }
+            var numOfTiming=$(".timingName").length;
             if ($("#timing_text1").val()>numOfTiming) {
                 isZero == false;
                 $('#timingError3').html("条件数不能大于选择数");

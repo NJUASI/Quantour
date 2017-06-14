@@ -181,6 +181,29 @@ public class TraceBackCriteria implements Comparable<TraceBackCriteria>{
 
     @Override
     public int compareTo(TraceBackCriteria o) {
-        return 0;
+        boolean isEqual = true;
+        for(int i = 0; i < filterConditions.size(); i++){
+            if(filterConditions.get(i).compareTo(o.filterConditions.get(i)) != 0){
+                isEqual = false;
+                break;
+            }
+        }
+        if(!isEqual){
+            return 1;
+        }
+        else {
+            for(int i = 0; i < rankConditions.size(); i++){
+                if(rankConditions.get(i).compareTo(o.rankConditions.get(i)) != 0){
+                    isEqual = false;
+                    break;
+                }
+            }
+        }
+        if(isEqual){
+            return 0;
+        }
+        else {
+            return -1;
+        }
     }
 }

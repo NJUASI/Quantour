@@ -33,7 +33,7 @@ public class Test {
 //        TraceBackCriteria criteria = JSON.parseObject(criteriaString, TraceBackCriteria.class);
 
 
-//        String criString = "{\"startDate\":\"2017-06-08\",\"endDate\":\"2017-06-09\",\"holdingPeriod\":\"10\",\"stockPoolCriteria\":{\"stType\":\"EXCLUDE\",\"blockTypes\":[\"ZXB\"]},\"maxHoldingNum\":\"5\",\"baseStockName\":\"沪深300\",\"filterConditions\":[{\"indicatorType\":\"VOLUME\",\"comparatorType\":\"RANK_MAX\",\"value\":\"10\",\"formativePeriod\":\"5\"}],\"rankConditions\":[]}";
+//        String criString = "{\"startDate\":\"2017-04-21\",\"endDate\":\"2017-06-13\",\"holdingPeriod\":\"5\",\"stockPoolCriteria\":{\"stType\":\"INCLUDE\",\"blockTypes\":[\"CYB\"],\"industryTypes\":[\"房地产\"],\"areaTypes\":[\"深圳\",\"北京\",\"吉林\",\"江苏\",\"辽宁\",\"广东\",\"浙江\",\"湖南\",\"河北\",\"新疆\",\"山东\",\"河南\",\"山西\",\"江西\",\"安徽\",\"湖北\",\"内蒙\",\"海南\",\"四川\",\"重庆\",\"陕西\",\"广西\",\"福建\",\"天津\",\"云南\",\"贵州\",\"甘肃\",\"黑龙江\",\"宁夏\",\"青海\",\"上海\",\"西藏\",\"none\"]},\"maxHoldingNum\":\"5\",\"baseStockName\":\"沪深300\",\"isCustomized\":false,\"filterConditions\":[{\"indicatorType\":\"TRANSACTION_AMOUNT\",\"comparatorType\":\"RANK_MAX\",\"value\":\"10\",\"formativePeriod\":1},{\"indicatorType\":\"VOLUME\",\"comparatorType\":\"RANK_MAX\",\"value\":\"10\",\"formativePeriod\":1}],\"rankConditions\":[],\"marketSelectingConditions\":[],\"adjustPositionPercent\":\"\",\"bearToBull_num\":\"\",\"bullToBear_num\":\"\"}\n";
 //        TraceBackCriteria criteria = JSON.parseObject(criString, TraceBackCriteria.class);
 
 

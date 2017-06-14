@@ -94,7 +94,7 @@
                                         <%--${strategy.strategyCumulativeReturnChart}--%>
                                     </li>
                                 </ul>
-                                <div class="col-md-12" id="${strategy.strategyID}" style="width: 100%;height:80px;margin-top: -30px;z-index: 3">
+                                <div class="col-md-12" class="isCreating" style="width: 100%;height:80px;margin-top: -30px;z-index: 3">
 
                                 </div>
                                 <span class="col-md-4 col-md-offset-2"  style="font-size: 85%;font-weight: bold">创建日期</span><span class="col-md-4 small" style="text-align: right">${strategy.createDate}</span>

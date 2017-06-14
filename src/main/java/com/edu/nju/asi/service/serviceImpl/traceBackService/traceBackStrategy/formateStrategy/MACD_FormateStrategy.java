@@ -4,6 +4,7 @@ import com.edu.nju.asi.infoCarrier.traceBack.FormateRate;
 import com.edu.nju.asi.model.Stock;
 import com.edu.nju.asi.utilities.enums.IndicatorType;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class MACD_FormateStrategy extends AllFormateStrategy{
         //长期——26天
         List<Stock> stockList_long = getDataWithoutHaltDay(code, endIndex, 26);
 
-        if(stockList_long == null){
+        if(stockList_long == null || stockList_short == null){
             // 若数据不存在，indicatorVal为null
             return null;
         }
@@ -138,6 +139,21 @@ public class MACD_FormateStrategy extends AllFormateStrategy{
         for(int i = 1; i < stockList.size(); i++){
             //第二天以后，当天收盘价 * 系数 加上昨天的ema*系数-1
             ema = k*stockList.get(i).getAfterAdjClose() + (1 - k) * ema;
+        }
+
+        return ema;
+    }
+
+    static double ema(double[] test){
+
+        //平滑指数, 一般取作2/(N+1)
+        double k = 2.0 / (test.length + 1);
+
+        //第一天ema等于当天的收盘价
+        double ema = test[0];
+        for(int i = 1; i < test.length; i++){
+            //第二天以后，当天收盘价 * 系数 加上昨天的ema*系数-1
+            ema = k*test[i] + (1 - k) * ema;
         }
 
         return ema;

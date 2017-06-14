@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,19 @@ public class BasicDataHelperImpl implements BasicDataHelper {
      */
     @Override
     public Map<String, List<BasicData>> getAllBasicData(List<String> codes) {
-        return null;
+        Map<String, List<BasicData>> map =new HashMap<>();
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "from BasicData where basicDataID.code=:code";
+        for(String code: codes){
+            Query query = session.createQuery(hql);
+            query.setParameter("code",code);
+            map.put(code,(List<BasicData>)query.list());
+        }
+        transaction.commit();
+        session.close();
+        return map;
     }
 
     /**

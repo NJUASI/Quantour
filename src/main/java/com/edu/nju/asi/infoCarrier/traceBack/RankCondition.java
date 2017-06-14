@@ -8,7 +8,7 @@ import com.edu.nju.asi.utilities.enums.RankType;
  *
  * 表示排名条件
  */
-public class RankCondition {
+public class RankCondition implements Comparable<RankCondition>{
 
     /**
      * 指标
@@ -38,5 +38,10 @@ public class RankCondition {
         this.rankType = rankType;
         this.weight = weight;
         this.formativePeriod = formativePeriod;
+    }
+
+    @Override
+    public int compareTo(RankCondition o) {
+        return o.weight - this.weight;
     }
 }

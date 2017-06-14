@@ -118,6 +118,11 @@ public abstract class FinancialFormateStrategy extends AllFormateStrategy{
         LocalDate target = findQuarter(date);
 
         List<BasicData> thisFinancialData = financialData.get(code);
+
+        if(thisFinancialData == null || thisFinancialData.isEmpty()){
+            return null;
+        }
+
         //如果target超出最小范围，则返回null
         if(target.isBefore(thisFinancialData.get(0).getBasicDataID().getDate())){
             return null;
@@ -145,11 +150,16 @@ public abstract class FinancialFormateStrategy extends AllFormateStrategy{
      */
     protected List<BasicData> findBasicData(String code, LocalDate date, int num){
 
+        System.out.println(code);
+
         List<BasicData> basicDatas = new ArrayList<>();
 
         LocalDate target = findQuarter(date);
 
         List<BasicData> thisFinancialData = financialData.get(code);
+        if(thisFinancialData == null || thisFinancialData.isEmpty()){
+            return null;
+        }
         //如果target超出最小范围，则返回null
         if(target.isBefore(thisFinancialData.get(0).getBasicDataID().getDate())){
             return null;

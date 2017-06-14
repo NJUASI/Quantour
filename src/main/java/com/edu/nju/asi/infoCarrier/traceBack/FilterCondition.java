@@ -8,7 +8,7 @@ import com.edu.nju.asi.utilities.enums.ComparatorType;
  *
  * 筛选条件（仿果仁网）
  */
-public class FilterCondition {
+public class FilterCondition implements Comparable<FilterCondition>{
 
     /**
      * 指标
@@ -38,5 +38,10 @@ public class FilterCondition {
         this.comparatorType = comparatorType;
         this.value = value;
         this.formativePeriod = formativePeriod;
+    }
+
+    @Override
+    public int compareTo(FilterCondition o) {
+        return o.value - this.value;
     }
 }
