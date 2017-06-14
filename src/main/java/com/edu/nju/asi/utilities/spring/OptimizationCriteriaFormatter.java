@@ -14,7 +14,7 @@ public class OptimizationCriteriaFormatter implements Formatter<OptimizationCrit
 
     @Override
     public OptimizationCriteria parse(String text, Locale locale) throws ParseException {
-        System.out.println("--------------FORMAT TraceBackCriteria--------------");
+        System.out.println("--------------FORMAT OptimizationCriteria--------------");
         System.out.println(text);
         return JSON.parseObject(text, OptimizationCriteria.class);
     }

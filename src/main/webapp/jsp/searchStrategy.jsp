@@ -1,7 +1,4 @@
 <%@ page import="com.edu.nju.asi.model.User" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.edu.nju.asi.infoCarrier.traceBack.StageDetail" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -744,33 +741,49 @@
             },
 
             success: function (result) {
-//
-//                //TODO fjj 初始化表头
-//                $("#optimizationHead").empty()
-//                $("#optimizationHead").append("<th>策略定义</th>" +
-//                    "<th>年化收益</th>" +
-//                    "<th>夏普比率</th>" +
-//                    "<th>最大回撤率</th>" +
-//                    "<th>收益波动率</th>" +//TODO 加你传下来自己的名称的权重
-//                    "<th>收盘价_权重</th>" +
-//                    "<th>总市值_权重</th>"
-//                );
-//                $("#optimizationList").empty();
-//                //TODO 遍历添加你自己的数据
-////        for (var i = 0; i < transferDetails.length; i++) {
-//                $("#optimizationList").append("<tr>" +
-////                "<td>" + transferDetails[i]["stockName"] + "</td>" +
-////                "<td>" + transferDetails[i]["stockCode"] + "</td>" +
-////                "<td>" + transferDetails[i]["buyDate"] + "</td>" +
-////                "<td>" + transferDetails[i]["sellDate"] + "</td>" +
-////                "<td>" + transferDetails[i]["buyPrice"] + "</td>" +
-////                "<td>" + transferDetails[i]["sellPrice"] + "</td>" +
-////                "<td>" + (transferDetails[i]["changeRate"] * 100).toFixed(2) + "%" + "</td>" +
-//                    "</tr>");
-//
-//
-//
-//                alert("666");
+                var array = result.split(";");
+                if (array[0] == "1") {
+                    // 初始化表头
+                    var indicators = array[1].split("~");
+                    $("#optimizationHead").empty();
+                    $("#optimizationHead").append(
+                        "<th>策略定义</th>" +
+                        "<th>年化收益</th>" +
+                        "<th>夏普比率</th>" +
+                        "<th>最大回撤率</th>" +
+                        "<th>收益波动率</th>"
+                    );
+
+                    // 加调优后的结果
+                    for (var ii = 0; ii < indicators.length; ii++) {
+                        $("#optimizationHead").append('<th>' + indicators[ii] + '</th>');
+                        alert(indicators[ii]);
+                    }
+
+                    // 遍历添加数据
+                    $("#optimizationList").empty();
+                    for (var i = 2; i < array.length; i++) {
+
+                        var values = eval("(" + array[i] + ")");
+
+                        alert(values);
+                        alert(values.length);
+                        $("#optimizationList").append(
+                            "<td>" + (i-1) + "</td>" +
+                            "<td>" + values[0] + "</td>" +
+                            "<td>" + values[1] + "</td>" +
+                            "<td>" + values[2] + "</td>" +
+                            "<td>" + values[3] + "</td>"
+                        );
+
+                        for (var j = 0; j < values.length - 4; j++) {
+                            $("#optimizationList").append("<td>" + values[j+4] + "</td>");
+                        }
+                    }
+
+                    alert("666");
+                }
+
             },
             error: function (result) {
                 alert("错误" + result);

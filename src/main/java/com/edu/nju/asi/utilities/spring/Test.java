@@ -33,7 +33,7 @@ public class Test {
 //        TraceBackCriteria criteria = JSON.parseObject(criteriaString, TraceBackCriteria.class);
 
 
-//        String criString = "{\"startDate\":\"2017-04-21\",\"endDate\":\"2017-06-13\",\"holdingPeriod\":\"5\",\"stockPoolCriteria\":{\"stType\":\"INCLUDE\",\"blockTypes\":[\"CYB\"],\"industryTypes\":[\"房地产\"],\"areaTypes\":[\"深圳\",\"北京\",\"吉林\",\"江苏\",\"辽宁\",\"广东\",\"浙江\",\"湖南\",\"河北\",\"新疆\",\"山东\",\"河南\",\"山西\",\"江西\",\"安徽\",\"湖北\",\"内蒙\",\"海南\",\"四川\",\"重庆\",\"陕西\",\"广西\",\"福建\",\"天津\",\"云南\",\"贵州\",\"甘肃\",\"黑龙江\",\"宁夏\",\"青海\",\"上海\",\"西藏\",\"none\"]},\"maxHoldingNum\":\"5\",\"baseStockName\":\"沪深300\",\"isCustomized\":false,\"filterConditions\":[{\"indicatorType\":\"TRANSACTION_AMOUNT\",\"comparatorType\":\"RANK_MAX\",\"value\":\"10\",\"formativePeriod\":1},{\"indicatorType\":\"VOLUME\",\"comparatorType\":\"RANK_MAX\",\"value\":\"10\",\"formativePeriod\":1}],\"rankConditions\":[],\"marketSelectingConditions\":[],\"adjustPositionPercent\":\"\",\"bearToBull_num\":\"\",\"bullToBear_num\":\"\"}\n";
+//        String criString = "{\"originTraceBackCriteria\":null,\"filterAdjust\":[{\"minVal\":\"2\",\"maxVal\":\"456\",\"step\":\"2\"}],\"rankAdjust\":[],\"targetFuncType\":\"SHARP\",\"searchNodes\":\"228\"}";
 //        TraceBackCriteria criteria = JSON.parseObject(criString, TraceBackCriteria.class);
 
 
@@ -53,7 +53,7 @@ public class Test {
 //        String ddd = "{\"stType\":\"ONLY\",\"blockTypes\":[\"ZB\",\"ZXB\",\"CYB\"],\"industryTypes\":[\"金融行业\",\"房地产\",\"综合行业\",\"建筑建材\",\"玻璃行业\",\"家电行业\",\"纺织行业\",\"食品行业\",\"电子信息\",\"交通运输\",\"汽车制造\",\"商业百货\",\"电力行业\",\"酒店旅游\",\"机械行业\",\"农林牧渔\",\"电器行业\",\"电子器件\",\"石油行业\",\"有色金属\",\"生物制药\",\"医疗器械\",\"物资外贸\",\"传媒娱乐\",\"发电设备\",\"水泥行业\",\"塑料制品\",\"钢铁行业\",\"化纤行业\",\"农药化肥\",\"公路桥梁\",\"造纸行业\",\"化工行业\",\"环保行业\",\"煤炭行业\",\"酿酒行业\",\"供水供气\",\"开发区\",\"印刷包装\",\"纺织机械\",\"仪器仪表\",\"飞机制造\",\"其它行业\",\"家具行业\",\"摩托车\",\"服装鞋类\",\"陶瓷行业\",\"船舶制造\",\"次新股\",\"none\"],\"areaTypes\":[\"深圳\",\"北京\",\"吉林\",\"江苏\",\"辽宁\",\"广东\",\"浙江\",\"湖南\",\"河北\",\"新疆\",\"山东\",\"河南\",\"山西\",\"江西\",\"安徽\",\"湖北\",\"内蒙\",\"海南\",\"四川\",\"重庆\",\"陕西\",\"广西\",\"福建\",\"天津\",\"云南\",\"贵州\",\"甘肃\",\"黑龙江\",\"宁夏\",\"青海\",\"上海\",\"西藏\",\"none\"]}";
 //        StockPoolCriteria poolCriteria = JSON.parseObject(ddd, StockPoolCriteria.class);
 
-        String e = "{\"originTraceBackCriteria\":null,\"filterAdjust\":[{\"minVal\":\"10\",\"maxVal\":\"20\",\"step\":\"2\"}],\"rankAdjust\":[],\"targetFuncType\":\"SHARP\",\"searchNodes\":\"6\"}";
+        String e = "{\"originTraceBackCriteria\":null,\"filterAdjust\":[{\"minVal\":\"2\",\"maxVal\":\"467\",\"step\":\"2\"}],\"rankAdjust\":[],\"targetFuncType\":\"SHARP\",\"searchNodes\":\"233\"}";
         OptimizationCriteria criteria = JSON.parseObject(e, OptimizationCriteria.class);
     }
 }

@@ -215,7 +215,7 @@ public class StrategyController {
         }
 
         System.out.println("已登录：" + thisUser.getUserName());
-        System.out.println(criteria.filterAdjust.size() + "  " + criteria.rankAdjust.size());
+        System.out.println("filterAdjust: " + criteria.filterAdjust.size() + "  ranAdjust: " + criteria.rankAdjust.size());
 
         // 将该策略的原有标准set回去
         String criteriaStringRepre = strategyService.getOneStrategy(strategyID).getContent();
@@ -236,7 +236,7 @@ public class StrategyController {
 
         if (optimizationResult != null) {
             System.out.println("Success");
-            return "1;";
+            return "1;" + JsonConverter.convertOptimizationResult(optimizationResult);
         } else return "-1;服务器开了一个小差。。请稍后重试";
 
     }

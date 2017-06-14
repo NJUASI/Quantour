@@ -2,8 +2,6 @@ package com.edu.nju.asi.service.serviceImpl.traceBackService;
 
 import com.edu.nju.asi.dao.BaseStockDao;
 import com.edu.nju.asi.dao.StockDao;
-import com.edu.nju.asi.dao.daoImpl.BaseStockDaoImpl;
-import com.edu.nju.asi.dao.daoImpl.StockDaoImpl;
 import com.edu.nju.asi.infoCarrier.traceBack.*;
 import com.edu.nju.asi.model.BaseStock;
 import com.edu.nju.asi.model.Stock;
@@ -11,7 +9,6 @@ import com.edu.nju.asi.service.StockService;
 import com.edu.nju.asi.service.TraceBackService;
 import com.edu.nju.asi.service.serviceImpl.optimizationService.GenEngine;
 import com.edu.nju.asi.service.serviceImpl.optimizationService.optimization.OptimizationCriteria;
-import com.edu.nju.asi.service.serviceImpl.stockService.StockServiceImpl;
 import com.edu.nju.asi.utilities.exceptions.DataSourceFirstDayException;
 import com.edu.nju.asi.utilities.exceptions.DateNotWithinException;
 import com.edu.nju.asi.utilities.exceptions.NoDataWithinException;
@@ -29,11 +26,11 @@ import java.util.*;
 @Service("TraceBackService")
 public class TraceBackServiceImpl implements TraceBackService {
 
-    //    @Autowired
+    @Autowired
     private StockService stockService;
-    //    @Autowired
+    @Autowired
     private StockDao stockDao;
-    //    @Autowired
+    @Autowired
     private BaseStockDao baseStockDao;
 
     //自选股票池，用户回测自选股票池时才对此成员变量赋值
@@ -76,9 +73,9 @@ public class TraceBackServiceImpl implements TraceBackService {
 
 
     public TraceBackServiceImpl() throws IOException {
-        stockService = new StockServiceImpl();
-        stockDao = new StockDaoImpl();
-        baseStockDao = new BaseStockDaoImpl();
+//        stockService = new StockServiceImpl();
+//        stockDao = new StockDaoImpl();
+//        baseStockDao = new BaseStockDaoImpl();
 
         //获取所有数据的日期
 //        allDatesWithData = stockDao.getDateWithData();
@@ -227,7 +224,7 @@ public class TraceBackServiceImpl implements TraceBackService {
 
     @Override
     public Map<TraceBackCriteria, TraceBackInfo> optimization(OptimizationCriteria optimizationCriteria) throws IOException, DateNotWithinException, DataSourceFirstDayException, NoDataWithinException, UnhandleBlockTypeException {
-        GenEngine genEngine = new GenEngine();
+        GenEngine genEngine = new GenEngine(this);
         return genEngine.optimization(optimizationCriteria);
     }
 
