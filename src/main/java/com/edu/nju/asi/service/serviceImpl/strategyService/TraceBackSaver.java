@@ -27,7 +27,7 @@ public class TraceBackSaver implements Callable<Boolean> {
     User thisUser;
 
 
-    final LocalDate defaultDate = LocalDate.of(2016, 5, 1);
+    final LocalDate defaultDate = LocalDate.now().minusDays(1);
 
     public TraceBackSaver(TraceBackService traceBackService, StrategyDao strategyDao, Strategy strategy, User thisUser) {
         this.traceBackService = traceBackService;
@@ -41,11 +41,9 @@ public class TraceBackSaver implements Callable<Boolean> {
 
         TraceBackCriteria criteria = JSON.parseObject(strategy.getContent(), TraceBackCriteria.class);
 
-        // TODO 默认回测一年
-//        criteria.endDate = LocalDate.now();
-//        criteria.startDate = criteria.endDate.minusYears(1);
+        // 默认回测半年
         criteria.endDate = defaultDate;
-        criteria.startDate = defaultDate.minusMonths(1);
+        criteria.startDate = defaultDate.minusMonths(6);
 
         String traceBackPoolStringRepre = thisUser.getTraceBackPool();
         List<String> customizedStockPool = JSON.parseArray(traceBackPoolStringRepre, String.class);
